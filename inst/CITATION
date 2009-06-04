@@ -1,0 +1,50 @@
+citHeader("Please cite aroma.affymetrix as");
+
+
+citEntry(
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # BibTeX entry:
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  entry="Article",
+  author = "H. Bengtsson and K. Simpson and J. Bullard and K. Hansen",
+  title = "{aroma.affymetrix}: A generic framework in {R} for analyzing small
+	to very large {Affymetrix} data sets in bounded memory",
+  institution = "Department of Statistics, University of California, Berkeley",
+  year = "2008",
+  month = "February",
+  number = "745",
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # Plain-text citation:
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  textVersion = paste(sep="",
+    "H. Bengtsson; K. Simpson; J. Bullard; K. Hansen. ",
+    "aroma.affymetrix: A generic framework in R for analyzing small to very large Affymetrix data sets in bounded memory, ",
+    "Tech Report #745, ",
+    "Department of Statistics, University of California, Berkeley, ",
+    "February 2008"
+  )
+);
+
+
+citEntry(
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # BibTeX entry:
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  entry="Article",
+  author = "Henrik Bengtsson and R. Irizarry and B. Carvalho and T.P. Speed",
+  title = "Estimation and assessment of raw copy numbers at the single locus level",
+  journal = "Bioinformatics",
+  year = "2008",
+  url = "http://dx.doi.org/10.1093/bioinformatics/btn016",
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # Plain-text citation:
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  textVersion = paste(sep="",
+    "H. Bengtsson, R. Irizarry, B. Carvalho, & T.P. Speed. ",
+    "Estimation and assessment of raw copy numbers at the single locus level, ",
+    "Bioinformatics, ", 
+    "2008"
+  )
+);

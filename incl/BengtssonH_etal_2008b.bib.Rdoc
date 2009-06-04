@@ -1,0 +1,1 @@
+H. Bengtsson, K. Simpson, J. Bullard, and K. Hansen, \emph{aroma.affymetrix: A generic framework in R for analyzing small to very large Affymetrix data sets in bounded memory}, Tech Report \#745, Department of Statistics, University of California, Berkeley, February 2008.

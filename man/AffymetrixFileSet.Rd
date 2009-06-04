@@ -1,0 +1,74 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Do not modify this file since it was automatically generated from:
+% 
+%  AffymetrixFileSet.R
+% 
+% by the Rdoc compiler part of the R.oo package.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ \name{AffymetrixFileSet}
+\docType{class}
+\alias{AffymetrixFileSet}
+
+
+ \title{The AffymetrixFileSet class}
+
+ \description{
+  Package:  aroma.affymetrix \cr
+\bold{Class AffymetrixFileSet}\cr
+
+\code{\link[R.oo]{Object}}\cr
+\code{~~|}\cr
+\code{~~+--}\code{\link[aroma.core]{GenericDataFileSet}}\cr
+\code{~~~~~~~|}\cr
+\code{~~~~~~~+--}\code{\link[aroma.core]{AromaMicroarrayDataSet}}\cr
+\code{~~~~~~~~~~~~|}\cr
+\code{~~~~~~~~~~~~+--}\code{\link[aroma.core]{AromaPlatformInterface}}\cr
+\code{~~~~~~~~~~~~~~~~~|}\cr
+\code{~~~~~~~~~~~~~~~~~+--}\emph{\code{AffymetrixFileSet}}\cr
+
+\bold{Directly known subclasses:}\cr
+\link[aroma.affymetrix]{AffymetrixCelSet}, \emph{\link[aroma.affymetrix]{AffymetrixCnChpSet}}, \link[aroma.affymetrix]{ChipEffectSet}, \link[aroma.affymetrix]{CnChipEffectSet}, \emph{\link[aroma.affymetrix]{DChipDcpSet}}, \link[aroma.affymetrix]{ExonChipEffectSet}, \link[aroma.affymetrix]{FirmaSet}, \link[aroma.affymetrix]{ParameterCelSet}, \link[aroma.affymetrix]{QualityAssessmentSet}, \link[aroma.affymetrix]{ResidualSet}, \link[aroma.affymetrix]{SnpChipEffectSet}, \link[aroma.affymetrix]{WeightsSet}\cr
+
+public abstract static class \bold{AffymetrixFileSet}\cr
+extends \emph{\link[aroma.core]{AromaPlatformInterface}}\cr
+
+
+
+  An AffymetrixFileSet object represents a set of \code{\link{AffymetrixFile}}s
+  with \emph{identical} chip types.
+ }
+
+ \usage{AffymetrixFileSet(files=NULL, ...)}
+
+ \arguments{
+   \item{files}{A \code{\link[base]{list}} of \code{\link{AffymetrixFile}}:s.}
+   \item{...}{Arguments passed to \code{\link[aroma.core]{GenericDataFileSet}}.}
+ }
+
+ \section{Fields and Methods}{
+  \bold{Methods:}\cr
+\tabular{rll}{
+ \tab \code{as} \tab  -\cr
+ \tab \code{\link[aroma.affymetrix:as.AffymetrixFileSet.AffymetrixFileSet]{as.AffymetrixFileSet}} \tab Coerce an object to an AffymetrixFileSet object.\cr
+ \tab \code{\link[aroma.affymetrix:fromFiles.AffymetrixFileSet]{fromFiles}} \tab Defines an AffymetrixFileSet object by searching for Affymetrix files.\cr
+}
+
+
+ \bold{Methods inherited from AromaPlatformInterface}:\cr
+getAromaPlatform, getPlatform, getUnitNamesFile
+
+ \bold{Methods inherited from AromaMicroarrayDataSet}:\cr
+getChipType, getPlatform, nbrOfArrays, setAttributesBy, setAttributesBySampleAnnotationFile, setAttributesBySampleAnnotationSet, validate
+
+ \bold{Methods inherited from GenericDataFileSet}:\cr
+append, appendFiles, as.list, byName, clearCache, copyTo, equals, extract, findByName, fromFiles, getAlias, getFile, getFileClass, getFileSize, getFullName, getFullNames, getFullNameTranslator, getName, getNames, getPath, getPathnames, getTags, hasFile, hasTag, hasTags, indexOf, lapply, nbrOfFiles, sapply, seq, setAlias, setFullName, setFullNamesTranslator, setFullNameTranslator, setName, setTags, update2, validate
+
+ \bold{Methods inherited from Object}:\cr
+asThis, $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, save
+
+
+ }
+
+ \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\keyword{classes}

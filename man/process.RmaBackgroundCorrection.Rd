@@ -1,0 +1,39 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Do not modify this file since it was automatically generated from:
+% 
+%  RmaBackgroundCorrection.R
+% 
+% by the Rdoc compiler part of the R.oo package.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\name{process.RmaBackgroundCorrection}
+\alias{process.RmaBackgroundCorrection}
+\alias{RmaBackgroundCorrection.process}
+\alias{process.RmaBackgroundCorrection}
+\alias{process,RmaBackgroundCorrection-method}
+
+
+\title{Performs background correction}
+
+\description{
+ Performs background correction.
+}
+
+\usage{\method{process}{RmaBackgroundCorrection}(this, ..., force=FALSE, verbose=FALSE)}
+
+\arguments{
+  \item{...}{Not used.}
+  \item{verbose}{See \code{\link[R.utils]{Verbose}}.}
+}
+
+\value{
+ Returns a \code{\link[base]{double}} \code{\link[base]{vector}}.
+}
+
+\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+
+\seealso{
+  For more information see \code{\link{RmaBackgroundCorrection}}.
+}
+\keyword{internal}
+\keyword{methods}

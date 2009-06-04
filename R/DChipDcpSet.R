@@ -1,0 +1,367 @@
+###########################################################################/**
+# @RdocClass DChipDcpSet
+#
+# @title "The DChipDcpSet class"
+#
+# \description{
+#  @classhierarchy
+#
+#  A DChipDcpSet object represents a set of DChip DCP files 
+#  for \emph{identical} chip types.
+# }
+# 
+# @synopsis 
+#
+# \arguments{
+#   \item{files}{A @list of @see "DChipDcpFile":s.}
+#   \item{...}{Not used.}
+# }
+#
+# \section{Fields and Methods}{
+#  @allmethods "public"  
+# }
+# 
+# \seealso{
+#   @see "DChipDcpFile".
+# }
+#
+# @author
+#*/###########################################################################
+setConstructorS3("DChipDcpSet", function(files=NULL, ...) {
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Validate arguments
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Arguments 'files':
+  if (is.null(files)) {
+  } else if (is.list(files)) {
+    reqFileClass <- "DChipDcpFile";
+    lapply(files, FUN=function(df) {
+      if (!inherits(df, reqFileClass))
+        throw("Argument 'files' contains a non-", reqFileClass, 
+                                                  " object: ", class(df)[1]);
+    })
+  } else if (inherits(files, "DChipDcpSet")) {
+    return(as.DChipDcpSet(files));
+  } else {
+    throw("Argument 'files' is of unknown type: ", mode(files));
+  }
+
+
+  extend(AffymetrixFileSet(files=files, ...), "DChipDcpSet");
+})
+
+
+
+###########################################################################/**
+# @RdocMethod as.character
+#
+# @title "Returns a short string describing the DChip CHP set"
+#
+# \description{
+#  @get "title".
+# }
+#
+# @synopsis
+#
+# \arguments{
+#   \item{...}{Not used.}
+# }
+#
+# \value{
+#  Returns a @character string.
+# }
+#
+# @author
+#
+# \seealso{
+#   @seeclass
+# }
+#
+# @keyword IO
+# @keyword programming
+#*/###########################################################################
+setMethodS3("as.character", "DChipDcpSet", function(x, ...) {
+  # To please R CMD check
+  this <- x;
+
+  s <- sprintf("%s:", class(this)[1]);
+  s <- c(s, sprintf("Name: %s", getName(this)));
+  tags <- getTags(this);
+  tags <- paste(tags, collapse=",");
+  s <- c(s, sprintf("Tags: %s", tags));
+  s <- c(s, sprintf("Path: %s", getPath(this)));
+  n <- nbrOfArrays(this);
+  s <- c(s, sprintf("Number of arrays: %d", n));
+  names <- getNames(this);
+  if (n >= 5)
+    names <- c(names[1:2], "...", names[n]);
+  names <- paste(names, collapse=", ");
+  s <- c(s, sprintf("Names: %s", names));
+  s <- c(s, sprintf("Total file size: %.2fMB", getFileSize(this)/1024^2));
+  s <- c(s, sprintf("RAM: %.2fMB", objectSize(this)/1024^2));
+  class(s) <- "GenericSummary";
+  s;
+}, private=TRUE)
+
+
+
+setMethodS3("findByName", "DChipDcpSet", function(static, name, tags=NULL, chipType=NULL, paths=c("rawData", "probeData"), ...) {
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Validate arguments
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Arguments 'name':
+  name <- Arguments$getCharacter(name, length=c(1,1));
+  if (nchar(name) == 0) {
+    throw("A ", class(static)[1], " must have a non-empty name: ''");
+  }
+
+  # Arguments 'paths':
+  if (is.null(paths)) {
+    paths <- eval(formals(findByName.DChipDcpSet)[["paths"]]);
+  }
+
+
+  # Look only in existing directories
+  paths <- sapply(paths, FUN=filePath, expandLinks="any");
+  paths0 <- paths;
+  paths <- paths[sapply(paths, FUN=isDirectory)];
+  if (length(paths) == 0) {
+    throw("None of the data directories exist: ", 
+                                           paste(paths0, collapse=", "));
+  }
+
+  # The full name of the data set
+  fullname <- paste(c(name, tags), collapse=",");
+
+  # Look for matching data sets
+  paths <- file.path(paths, fullname);
+  paths <- paths[sapply(paths, FUN=isDirectory)];
+  if (length(paths) == 0)
+    return(NULL);
+
+  # Look for matching chip type sets?
+  if (!is.null(chipType)) {
+    paths <- file.path(paths, chipType);
+    paths <- paths[sapply(paths, FUN=isDirectory)];
+    if (length(paths) == 0)
+      return(NULL);
+  }
+
+  if (length(paths) > 1) {
+    warning("Found duplicated data set: ", paste(paths, collapse=", "));
+    paths <- paths[1];
+  }
+  
+  paths;
+}, static=TRUE)
+
+
+setMethodS3("fromName", "DChipDcpSet", function(static, ...) {
+  byName(static, ...);
+}, static=TRUE)
+
+
+setMethodS3("byName", "DChipDcpSet", function(static, name, tags=NULL, chipType, paths=NULL, ...) {
+  # Argument 'chipType':
+  chipType <- Arguments$getCharacter(chipType, length=c(1,1));
+
+  suppressWarnings({
+    path <- findByName(static, name, tags=tags, chipType=chipType, paths=paths, ...);
+  })
+  if (is.null(path)) {
+    path <- file.path(paste(c(name, tags), collapse=","), chipType);
+    throw("Cannot create ", class(static)[1], ".  No such directory: ", path);
+  }
+
+  suppressWarnings({
+    fromFiles(static, path=path, ...);
+  })
+}, static=TRUE)
+
+
+setMethodS3("fromFiles", "DChipDcpSet", function(static, path="rawData/", pattern="[.](dcp|DCP)$", ..., fileClass="DChipDcpFile", verbose=FALSE) {
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Validate arguments
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # Argument 'verbose':
+  verbose <- Arguments$getVerbose(verbose);
+  if (verbose) {
+    pushState(verbose);
+    on.exit(popState(verbose));
+  }
+
+  
+  verbose && enter(verbose, "Defining ", class(static)[1], " from files");
+
+  this <- fromFiles.AffymetrixFileSet(static, path=path, pattern=pattern, ..., fileClass=fileClass, verbose=less(verbose));
+
+  verbose && enter(verbose, "Retrieved files: ", nbrOfFiles(this));
+
+
+  if (nbrOfFiles(this) > 0) {
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+    # Scan all CHP files for possible chip types
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+    # Chip type according to the directory structure
+    path <- getPath(this);
+    chipType <- basename(path);
+    verbose && cat(verbose, 
+                   "The chip type according to the path is: ", chipType);
+  }
+
+  verbose && exit(verbose);
+
+  this;
+})
+
+
+
+
+###########################################################################/**
+# @RdocMethod nbrOfArrays
+#
+# @title "Gets the number of arrays in the file set"
+#
+# \description{
+#   @get "title".
+#   This is just a wrapper for \code{nbrOfFiles()}.
+# }
+#
+# @synopsis
+#
+# \arguments{
+#  \item{...}{Not used.}
+# }
+#
+# \value{
+#   Returns an @integer.
+# }
+#
+# @author
+#
+# \seealso{
+#   @seeclass
+# }
+#*/###########################################################################
+setMethodS3("nbrOfArrays", "DChipDcpSet", function(this, ...) {
+  nbrOfFiles(this, ...);
+})
+
+
+
+###########################################################################/**
+# @RdocMethod as.DChipDcpSet
+# @alias as.DChipDcpSet.list
+# @alias as.DChipDcpSet.default
+#
+# @title "Coerce an object to an DChipDcpSet object"
+#
+# \description{
+#   @get "title".
+# }
+#
+# @synopsis
+#
+# \arguments{
+#  \item{...}{Other arguments passed to @see "base::list.files".}
+# }
+#
+# \value{
+#   Returns an @see "DChipDcpSet" object.
+# }
+#
+# @author
+#
+# \seealso{
+#   @seeclass
+# }
+#*/###########################################################################
+setMethodS3("as.DChipDcpSet", "DChipDcpSet", function(object, ...) {
+  object;
+})
+
+setMethodS3("as.DChipDcpSet", "list", function(object, ...) {
+  DChipDcpSet(object, ...);
+})
+
+setMethodS3("as.DChipDcpSet", "default", function(object, ...) {
+  throw("Cannot coerce object to an DChipDcpSet object: ", mode(object));
+})
+
+
+
+setMethodS3("getFullName", "DChipDcpSet", function(this, parent=1, ...) {
+  NextMethod("getFullName", this, parent=parent, ...);
+})
+
+
+setMethodS3("extractTheta", "DChipDcpSet", function(this, units=NULL, ..., drop=FALSE, verbose=FALSE) {
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Validate arguments
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # Argument 'units':
+
+  # Argument 'verbose':
+  verbose <- Arguments$getVerbose(verbose);
+  if (verbose) {
+    pushState(verbose);
+    on.exit(popState(verbose));
+  }
+
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # Extract the thetas
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  data <- NULL;
+  nbrOfArrays <- nbrOfArrays(this);
+  gcCount <- 0;
+  for (kk in seq(length=nbrOfArrays)) {
+    df <- getFile(this, kk);
+    verbose && enter(verbose, sprintf("Array #%d ('%s') of %d", kk, getName(df), nbrOfArrays));
+
+    dataKK <- extractTheta(df, units=units, ..., verbose=less(verbose, 5));
+    verbose && str(verbose, dataKK);
+    if (is.null(data)) {
+      dim <- c(nrow(dataKK), ncol(dataKK), nbrOfArrays);
+      dimnames <- list(NULL, NULL, getNames(this));
+      naValue <- as.double(NA);
+      data <- array(naValue, dim=dim, dimnames=dimnames);
+    }
+    data[,,kk] <- dataKK;
+    rm(dataKK);
+
+    # Garbage collect?
+    gcCount <- gcCount + 1;
+    if (gcCount %% 10 == 0) {
+      gc <- gc();
+      verbose && print(verbose, gc);
+    }
+
+    verbose && exit(verbose);
+  } # for (kk ...)
+
+  # Drop singleton dimensions
+  if (drop) {
+    data <- drop(data);
+  }
+
+  verbose && cat(verbose, "Thetas:");
+  verbose && str(verbose, data);
+
+  data;
+})
+
+
+############################################################################
+# HISTORY:
+# 2008-08-20
+# o Added extractTheta().
+# 2008-07-21
+# o Now findByName() assert that the data set name is not empty.
+# 2008-05-09
+# o Now DChipDcpSet inherits from GenericDataFileSet.
+# 2008-05-08
+# o If paths=NULL in findByName(), it becomes the default argument value.
+# 2008-01-30
+# o Created.
+############################################################################

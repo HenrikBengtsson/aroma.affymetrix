@@ -1,0 +1,238 @@
+###########################################################################/**
+# @RdocClass WeightsSet
+#
+# @title "The WeightsSet class"
+#
+# \description{
+#  @classhierarchy
+#
+#  This class represents probe-level weights.
+# }
+# 
+# @synopsis
+#
+# \arguments{
+#   \item{...}{Arguments passed to @see "AffymetrixCelSet".}
+#   \item{probeModel}{The specific type of model, e.g. \code{"pm"}.}
+# }
+#
+# \section{Fields and Methods}{
+#  @allmethods "public"
+# }
+#
+# @author
+# 
+# \seealso{
+#   An object of this class is typically obtained through the
+#   \code{getWeightsSet()} method for the @see "ProbeLevelModel" class.
+# }
+#
+#*/###########################################################################
+setConstructorS3("WeightsSet", function(..., probeModel=c("pm")) {
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Validate arguments
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Argument 'probeModel':
+  probeModel <- match.arg(probeModel);
+
+  extend(AffymetrixCelSet(...), "WeightsSet",
+    "cached:.firstCells" = NULL,
+    probeModel = probeModel
+  )
+})
+
+setMethodS3("clearCache", "WeightsSet", function(this, ...) {
+  # Clear all cached values.
+  # /AD HOC. clearCache() in Object should be enough! /HB 2007-01-16
+  for (ff in c(".firstCells")) {
+    this[[ff]] <- NULL;
+  }
+
+  # Then for this object
+  NextMethod(generic="clearCache", object=this, ...);
+}, private=TRUE)
+
+
+setMethodS3("as.character", "WeightsSet", function(x, ...) {
+  # To please R CMD check
+  this <- x;
+
+  s <- NextMethod(generic="as.character", this, ...);
+  params <- paste(getParametersAsString(this), collapse=", ");
+  s <- c(s, sprintf("Parameters: (%s)", params));
+  class(s) <- "GenericSummary";
+  s;
+}, private=TRUE)
+
+
+setMethodS3("getParameters", "WeightsSet", function(this, ...) {
+  rf <- getFile(this, 1);
+  getParameters(rf, ...);
+})
+
+setMethodS3("getParametersAsString", "WeightsSet", function(this, ...) {
+  params <- getParameters(this);
+  params <- trim(capture.output(str(params)))[-1];
+  params <- gsub("^[$][ ]*", "", params);
+  params <- gsub(" [ ]*", " ", params);
+  params <- gsub("[ ]*:", ":", params);
+  params;
+}, private=TRUE)
+
+
+setMethodS3("getWeightsFileClass", "WeightsSet", function(static, ...) {
+  WeightsFile;
+}, static=TRUE, private=TRUE)
+
+
+setMethodS3("fromFiles", "WeightsSet", function(static, ..., pattern=",weights[.](c|C)(e|E)(l|L)$", fileClass=NULL) {
+  # Argument 'fileClass':
+  if (is.null(fileClass))
+    fileClass <- gsub("Set$", "File", class(static)[1]);
+
+  fromFiles.AffymetrixFileSet(static, ..., pattern=pattern, fileClass=fileClass);
+}, protected=TRUE, static=TRUE)
+
+
+setMethodS3("fromDataSet", "WeightsSet", function(static, dataSet, path, fullname=getFullName(dataSet), cdf=NULL, ..., verbose=FALSE) {
+  # Argument 'verbose':
+  verbose <- Arguments$getVerbose(verbose);
+
+  # Get the WeightsFile class specific for this set
+  clazz <- getWeightsFileClass(static);
+
+  verbose && enter(verbose, "Retrieving probe-level weights from data set");
+  ws <- vector("list", length(dataSet));
+  verbose && cat(verbose, "Data set: ", fullname);
+  for (kk in seq(dataSet)) {
+    df <- getFile(dataSet, kk);
+    verbose && enter(verbose, 
+                           sprintf("Retrieving weights file #%d of %d (%s)",
+                                               kk, length(ws), getName(df)));
+    wf <- clazz$fromDataFile(df, path=path, name=fullname, cdf=cdf, ..., 
+                                                       verbose=less(verbose));
+    if (is.null(cdf)) {
+      verbose && enter(verbose, "Retrieving the CDF for the weights file");
+      cdf <- getCdf(wf);
+      verbose && exit(verbose);
+    }
+    ws[[kk]] <- wf;
+    verbose && exit(verbose);
+  }
+  verbose && exit(verbose);
+
+  # Create an WeightsSet
+  newInstance(static, ws);
+})
+
+setMethodS3("getCellIndices", "WeightsSet", function(this, ...) {
+  # Use the first weights file to get the CDF structure.
+  # Note: Ideally we want to define a special CDF class doing this
+  # instead of letting the data file do this. /HB 2006-12-18
+  wf <- getFile(this, 1);
+  getCellIndices(wf, ...);
+})
+
+
+setMethodS3("readUnits", "WeightsSet", function(this, units=NULL, cdf=NULL, ..., verbose=FALSE) {
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Validate arguments
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Argument 'verbose':
+  verbose <- Arguments$getVerbose(verbose);
+  if (verbose) {
+    pushState(verbose);
+    on.exit(popState(verbose));
+  }
+
+  verbose && enter(verbose, "Reading weights unit by unit for ", nbrOfArrays(this), " arrays");
+
+  if (is.null(cdf)) {
+    verbose && enter(verbose, "Getting cell indices from CDF");
+    cdf <- getCellIndices(this, units=units, ..., verbose=less(verbose));
+    verbose && exit(verbose);
+  }
+
+  # Note that the actually call to the decoding is done in readUnits()
+  # of the superclass.
+  verbose && enter(verbose, "Calling readUnits() in superclass");
+  res <- NextMethod("readUnits", this, units=cdf, ..., verbose=less(verbose));
+  verbose && exit(verbose);
+
+  # Get first weights file and use that to decode the read structure
+  # This takes some time for a large number of units /HB 2006-10-04
+  wf <- getFile(this, 1);
+  res <- decode(wf, res, verbose=less(verbose));
+
+  verbose && exit(verbose);
+
+  res;
+})
+
+
+setMethodS3("updateUnits", "WeightsSet", function(this, units=NULL, cdf=NULL, data, ..., verbose=FALSE) {
+  # Argument 'verbose': 
+  verbose <- Arguments$getVerbose(verbose);
+
+  # Get the CDF structure for all weights files
+  if (is.null(cdf))
+    cdf <- getCellIndices(this, units=units);
+
+  # Update each file one by one
+  n <- length(this);
+  verbose && enter(verbose, "Updating ", n, " weights files");
+  names <- getNames(this);
+  verbose <- less(verbose);
+  for (kk in seq(this)) {
+    verbose && enter(verbose, sprintf("Array #%d of %d: %s", kk, n, names[kk]));
+    wf <- getFile(this, kk);
+
+    verbose <- less(verbose, 50);
+    verbose && enter(verbose, "Extracting estimates");  # 3-4s
+    dataOne <- base::lapply(data, FUN=base::lapply, function(group) {
+      # wts = group$wts[,kk] = ...
+      list(
+        wts=.subset(.subset2(group, "wts"), kk)
+      );
+    });
+    verbose && exit(verbose);
+
+    verbose && enter(verbose, "Updating file");  # 6-7s ~98% in encode()
+    updateUnits(wf, cdf=cdf, data=dataOne, verbose=less(verbose, 50));
+    verbose && exit(verbose);
+    verbose <- more(verbose, 50);
+
+    verbose && exit(verbose);
+  } # for (kk ...)
+  verbose <- more(verbose);
+  verbose && exit(verbose);
+}, protected=TRUE)
+
+
+
+setMethodS3("getAverageFile", "WeightsSet", function(this, ..., verbose=FALSE, indices="remaining") {
+  # Argument 'indices':
+  if (identical(indices, "remaining")) {
+  } else if (is.null(indices)) {
+    # Update only cells which stores values
+    indices <- getCellIndices(this, verbose=verbose);
+    indices <- unlist(indices, use.names=FALSE);
+  }
+
+  NextMethod(generic="getAverageFile", object=this, ..., indices=indices, verbose=verbose);
+})
+
+
+setMethodS3("findUnitsTodo", "WeightsSet", function(this, ...) {
+  # Look into the last weights file since that is updated last
+  wf <- getFile(this, length(this));
+  findUnitsTodo(wf, ...);
+})
+
+############################################################################
+# HISTORY:
+# 2008-05-08
+# o Made fromFiles() protected.
+# 2007-02-15
+# o Created from ResidualSet.R.
+############################################################################

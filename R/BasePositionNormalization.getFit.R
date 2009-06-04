@@ -1,0 +1,29 @@
+setMethodS3("getFit", "BasePositionNormalization", function(this, array, ...) {
+  # Assert that the normalization has been done
+  if (!isDone(this)) {
+    throw("Cannot get fit: Data is not processed: ", getFullName(this));
+  }
+
+  # Argument 'array':
+  inSet <- getInputDataSet(this);
+  array <- Arguments$getIndices(array, range=c(1, nbrOfArrays(inSet)));
+
+  outSet <- getOutputDataSet(this);
+  outDf <- getFile(outSet, array);
+  path <- getPath(this);
+  filename <- sprintf("%s,fit.RData", getFullName(outDf));
+  pathname <- Arguments$getReadablePathname(filename, path=path, mustExist=TRUE);  
+  res <- loadObject(pathname);
+  fit <- res$fit;
+  rm(res);
+
+  fit;
+}, protected=TRUE);
+
+
+
+############################################################################
+# HISTORY:
+# 2008-12-15
+# o Add getFit().
+############################################################################

@@ -2,7 +2,7 @@
 # @RdocDocumentation "Non-documented objects"
 #
 # % Other missing docs
-# @eval "t <- readLines('999.missingdocs.txt'); t <- trim(unlist(strsplit(t, split=' '))); t <- t[nchar(t) > 0]; t2 <- gsub('\\[', '\\\\[', t); t <- unique(t); t <- sprintf('\\alias{%s}', t); paste(t, collapse='\n')"
+# @eval "t <- readLines('../incl/999.missingdocs.txt'); t <- trim(unlist(strsplit(t, split=' '))); t <- t[nchar(t) > 0]; t2 <- gsub('\\[', '\\\\[', t); t <- unique(t); t <- sprintf('\\alias{%s}', t); paste(t, collapse='\n')"
 #
 # \description{
 #   This page contains aliases for all "non-documented" objects that 

@@ -2,10 +2,12 @@
 # @set "class=AffymetrixCdfFile"
 # @RdocMethod isResequenceChip
 #
-# @title "Static method to check if a chip is a resequence (CustomSeq) chip"
+# @title "Static method to check if a CDF is for a resequencing (CustomSeq) chip"
 #
 # \description{
-#   @get "title".
+#   @get "title".  Note, this method is not bullet proof.  Several
+#   resequencing CDF does not carry that information.  For such, we add
+#   tests based on their chip type, as we become aware of them.
 # }
 #
 # @synopsis
@@ -24,13 +26,19 @@
 # \seealso{
 #   @seeclass
 # }
+#
+# @keyword internal
 #*/###########################################################################
 setMethodS3("isResequenceChip", "AffymetrixCdfFile", function(this, ...) {
   chipType <- getChipType(this);
 
   # First some hardwired return values
-  if (regexpr("^Mitochip_2.*$", chipType) != -1)
+  if (regexpr("^Mitochip_2.*$", chipType) != -1) {
     return(TRUE);
+  }
+  if (regexpr("^MitoP-.*$", chipType) != -1) {
+    return(TRUE);
+  }
 
   # Then, check for resequencing units
   types <- getUnitTypes(this, ...);
@@ -75,6 +83,7 @@ setMethodS3("readUnitsByQuartets", "AffymetrixCdfFile", function(this, units=NUL
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'units':
   if (is.null(units)) {
+    units <- seq(length=nbrOfUnits(this));
   } else {
     units <- Arguments$getIndices(units, range=c(1, nbrOfUnits(this)));
   }
@@ -113,17 +122,25 @@ setMethodS3("readUnitsByQuartets", "AffymetrixCdfFile", function(this, units=NUL
       pbase <- t(pbase);
       pbase <- unique(pbase);
       if (nrow(pbase) != 1) {
-        throw("Assumption exception: The probes are not ordered consistently.");
+        throw("Assumption exception: The probe bases ('pbase') are not ordered consistently for this unit: ", units[uu]);
       }
       pbase <- as.vector(pbase);
+      pbase <- toupper(pbase);
 
       tbase <- cdfGroup$tbase;
       tbase <- matrix(tbase, nrow=4, byrow=FALSE);
-      tbase <- tbase[1,,drop=TRUE];
+      tbase1 <- tbase[1,,drop=TRUE];
+      # Sanity check
+      if (!all(apply(tbase, MARGIN=1, FUN=identical, tbase1))) {
+        throw("Assumption exception: The target bases ('tbase') are not ordered consitently for this unit: ", units[uu]);
+      }
+      tbase <- tbase1;
+      tbase <- toupper(tbase);
 
       cells <- cdfGroup$indices;
       cells <- matrix(cells, nrow=4, byrow=FALSE);
       rownames(cells) <- pbase;
+#      colnames(cells) <- tbase;
 
       cdfGroup <- list(indices=cells, tbase=tbase);
 
@@ -192,10 +209,12 @@ setMethodS3("getCellQuartets", "AffymetrixCdfFile", function(this, units=NULL, m
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   pbase <- rownames(cdfUnits[[1]]$groups[[1]]$indices);
   # Sanity check
-  if (is.null(pbase))
+  if (is.null(pbase)) {
     throw("No resequencing cell indices available.");
-  if (!all(is.element(c("A", "C", "G", "T"), pbase)))
+  }
+  if (!all(is.element(c("A", "C", "G", "T"), pbase))) {
     throw("No resequencing cell indices available.");
+  }
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -264,6 +283,12 @@ setMethodS3("getCellQuartets", "AffymetrixCdfFile", function(this, units=NULL, m
 
 ############################################################################
 # HISTORY:
+# 2008-09-29
+# o ROBUSTNESS: Now readUnitsByQuartets() for AffymetrixCdfFile translates
+#   lower-case pbase and tbase letter to upper case.  It also asserts that
+#   order of the 'tbase' is consistent with the expectations.
+#   TODO: This method should be renamed to indicate that it is intended
+#   for the resequencing arrays.
 # 2008-08-29
 # o Added argument 'mergeGroups' to getCellQuartets().
 # 2008-08-18

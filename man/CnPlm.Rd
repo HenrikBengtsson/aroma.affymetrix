@@ -56,7 +56,7 @@ extends \link[aroma.affymetrix]{SnpPlm}\cr
 getCellIndices, getChipEffectSet, getMergeStrands, getProbeAffinityFile, setMergeStrands
 
  \bold{Methods inherited from Interface}:\cr
-extend, print, uses
+extend, getFields, print, uses
 
 
  }

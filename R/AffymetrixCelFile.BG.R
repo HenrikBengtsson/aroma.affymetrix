@@ -190,6 +190,8 @@ setMethodS3("bgAdjustGcrma", "AffymetrixCelFile", function(this, path=NULL, type
     throw("bgAdjustGcrma() is deprecated.  Please use the GcRmaBackgroundCorrection class");
   }
 
+  # require("gcrma") || throw("Package not loaded: gcrma");
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

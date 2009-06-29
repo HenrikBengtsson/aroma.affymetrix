@@ -14,10 +14,12 @@
 \alias{isResequenceChip,AffymetrixCdfFile-method}
 
 
-\title{Static method to check if a chip is a resequence (CustomSeq) chip}
+\title{Static method to check if a CDF is for a resequencing (CustomSeq) chip}
 
 \description{
-  Static method to check if a chip is a resequence (CustomSeq) chip.
+  Static method to check if a CDF is for a resequencing (CustomSeq) chip.  Note, this method is not bullet proof.  Several
+  resequencing CDF does not carry that information.  For such, we add
+  tests based on their chip type, as we become aware of them.
 }
 
 \usage{\method{isResequenceChip}{AffymetrixCdfFile}(this, ...)}
@@ -36,5 +38,7 @@
 \seealso{
   For more information see \code{\link{AffymetrixCdfFile}}.
 }
+
+
 \keyword{internal}
 \keyword{methods}

@@ -19,7 +19,7 @@
 
 \code{\link[R.oo]{Object}}\cr
 \code{~~|}\cr
-\code{~~+--}\code{\link[aroma.affymetrix]{Explorer}}\cr
+\code{~~+--}\code{\link[aroma.core]{Explorer}}\cr
 \code{~~~~~~~|}\cr
 \code{~~~~~~~+--}\code{ChromosomeExplorer}\cr
 
@@ -27,7 +27,7 @@
 \cr
 
 public static class \bold{ChromosomeExplorer}\cr
-extends \emph{\link[aroma.affymetrix]{Explorer}}\cr
+extends \emph{\link[aroma.core]{Explorer}}\cr
 
 
  }
@@ -60,7 +60,7 @@ extends \emph{\link[aroma.affymetrix]{Explorer}}\cr
 
 
  \bold{Methods inherited from Explorer}:\cr
-addIncludes, addIndexFile, display, getAlias, getArrays, getAsteriskTags, getFullName, getIncludePath, getMainPath, getName, getNameOfInput, getParallelSafe, getPath, getReportPathPattern, getSampleLayerPrefix, getSubname, getTags, getTagsOfInput, getTemplatePath, nbrOfArrays, process, setAlias, setArrays, setParallelSafe, setReportPathPattern, setSubname, setup, splitByReportPathPattern
+addIncludes, addIndexFile, display, getAlias, getArrays, getArraysOfInput, getAsteriskTags, getFullName, getIncludePath, getMainPath, getName, getNameOfInput, getParallelSafe, getPath, getReportPathPattern, getSampleLayerPrefix, getSubname, getTags, getTagsOfInput, getTemplatePath, nbrOfArrays, process, setAlias, setArrays, setParallelSafe, setReportPathPattern, setSubname, setup, splitByReportPathPattern
 
  \bold{Methods inherited from Object}:\cr
 asThis, $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, save

@@ -919,4 +919,4 @@ getParameters.NormExpBgCorrection
   getFitFunction.GladModel getFitFunction.HaarSegModel
 fitOne getAsteriskTags.CopyNumberSegmentationModel
 getExpectedOutputFiles.MatSmoothing
- 
+ getExpectedOutputFullnames.MatSmoothing

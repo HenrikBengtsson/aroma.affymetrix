@@ -19,7 +19,7 @@
 
 \code{\link[R.oo]{Object}}\cr
 \code{~~|}\cr
-\code{~~+--}\code{\link[aroma.core]{GenericDataFileSet}}\cr
+\code{~~+--}\code{\link[R.filesets]{GenericDataFileSet}}\cr
 \code{~~~~~~~|}\cr
 \code{~~~~~~~+--}\code{CnagCfhSet}\cr
 
@@ -27,7 +27,7 @@
 \cr
 
 public static class \bold{CnagCfhSet}\cr
-extends \link[aroma.core]{GenericDataFileSet}\cr
+extends \link[R.filesets]{GenericDataFileSet}\cr
 
 
 

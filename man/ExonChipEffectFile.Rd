@@ -19,7 +19,7 @@
 
 \code{\link[R.oo]{Object}}\cr
 \code{~~|}\cr
-\code{~~+--}\code{\link[aroma.core]{GenericDataFile}}\cr
+\code{~~+--}\code{\link[R.filesets]{GenericDataFile}}\cr
 \code{~~~~~~~|}\cr
 \code{~~~~~~~+--}\code{\link[aroma.core]{AromaMicroarrayDataFile}}\cr
 \code{~~~~~~~~~~~~|}\cr

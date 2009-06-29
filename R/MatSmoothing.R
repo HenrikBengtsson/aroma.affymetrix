@@ -136,7 +136,7 @@ setMethodS3("getParameters", "MatSmoothing", function(this, ...) {
 
 
 
-setMethodS3("getExpectedOutputFiles", "MatSmoothing", function(this, ..., verbose=FALSE) {
+setMethodS3("getExpectedOutputFullnames", "MatSmoothing", function(this, ..., verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -158,13 +158,20 @@ setMethodS3("getExpectedOutputFiles", "MatSmoothing", function(this, ..., verbos
   # Sanity check (backup)
   stopifnot(!is.null(fullnames));
 
-  # "Dummy" filenames
-  filenames <- sprintf("%s.CEL", fullnames);
-
   verbose && exit(verbose);
 
   fullnames;
 }, protected=TRUE)
+
+
+setMethodS3("getExpectedOutputFiles", "MatSmoothing", function(this, ...) {
+  fullnames <- getExpectedOutputFullnames(this, ...);
+
+  # "Dummy" filenames
+  filenames <- sprintf("%s.CEL", fullnames);
+
+  filenames;
+}, protected=TRUE, deprecated=TRUE)
 
 
 
@@ -198,6 +205,9 @@ setMethodS3("getExpectedOutputFiles", "MatSmoothing", function(this, ..., verbos
 # }
 #*/###########################################################################
 setMethodS3("process", "MatSmoothing", function(this, ..., units=NULL, force=FALSE, verbose=FALSE) {
+  # gsmoothr::tmeanC()
+  require("gsmoothr") || throw("Package not loaded: gsmoothr");
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local functions
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -639,6 +649,8 @@ setMethodS3("process", "MatSmoothing", function(this, ..., units=NULL, force=FAL
 
 ############################################################################
 # HISTORY:
+# 2009-06-28 [HB]
+# o BUG FIX: Added missing getExpectedOutputFullnames() for MatSmoothing.
 # 2009-05-27 [HB]
 # o SPEED UP: Preloading acp[] data speeds things up > 5 times.
 # o SPEED UP: Replaces two calcNullDist() calls with one calcNullDists()

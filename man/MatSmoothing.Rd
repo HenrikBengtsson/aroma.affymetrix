@@ -44,15 +44,14 @@ extends \emph{\link[aroma.affymetrix]{ProbeLevelTransform}}\cr
   \item{...}{Arguments passed to \code{\link{ProbeLevelTransform}}.}
   \item{design}{A design \code{\link[base]{matrix}}.}
   \item{probeWindow}{Bandwidth to use.  Effectively the width is
-     2*probeWindow since it looks probeWindow bases in either direction}
+     2*probeWindow since it looks probeWindow bases in either direction.}
   \item{nProbes}{The minimum number of probes to calculate a MAT score for.}
-  \item{meanTrim}{The amount of trimming of the mean.}
+  \item{meanTrim}{The amount of trimming of the mean in [0,0.5].}
 }
 
 \section{Fields and Methods}{
  \bold{Methods:}\cr
 \tabular{rll}{
- \tab \code{isDone} \tab  -\cr
  \tab \code{\link[aroma.affymetrix:process.MatSmoothing]{process}} \tab Processes the data set.\cr
 }
 
@@ -61,7 +60,7 @@ extends \emph{\link[aroma.affymetrix]{ProbeLevelTransform}}\cr
 getOutputDataSet, getOutputDataSetOLD20090509, getOutputFiles
 
  \bold{Methods inherited from AromaTransform}:\cr
-getFullName, getInputDataSet, getName, getOutputDataSet, getOutputFiles, getPath, getTags, isDone, process, setTags
+getExpectedOutputFiles, getExpectedOutputFullnames, getFullName, getInputDataSet, getName, getOutputDataSet, getOutputDataSet0, getOutputFiles, getPath, getTags, isDone, process, setTags
 
  \bold{Methods inherited from Object}:\cr
 asThis, $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, save

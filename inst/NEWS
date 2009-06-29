@@ -1,6 +1,14 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 1.1.1 [2009-06-29]
+o BUG FIX: Added missing getExpectedOutputFullnames() for MatSmoothing.
+o Moved packages 'gcrma' and 'gsmoothr' from "Imports:" to "Suggests:",
+  because the former class of packages is required by R CMD check,
+  whereas the latter is not (via an option).  This will allow the
+  package to build and pass the checks on the CRAN servers.
+
+
 Version: 1.1.0 [2009-05-29]
 o New public release. No updates.
 o Package passes R CMD check on R v2.9.0 and all redundancy tests.

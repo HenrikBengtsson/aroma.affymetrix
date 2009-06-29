@@ -51,7 +51,7 @@ extends \link[aroma.core]{Interface}\cr
 
 
  \bold{Methods inherited from Interface}:\cr
-extend, print, uses
+extend, getFields, print, uses
 
 
  }

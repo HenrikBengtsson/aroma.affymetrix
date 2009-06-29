@@ -19,9 +19,9 @@
 
 \code{\link[R.oo]{Object}}\cr
 \code{~~|}\cr
-\code{~~+--}\code{\link[aroma.core]{GenericDataFileSet}}\cr
+\code{~~+--}\code{\link[R.filesets]{GenericDataFileSet}}\cr
 \code{~~~~~~~|}\cr
-\code{~~~~~~~+--}\code{\link[aroma.core]{GenericTabularFileSet}}\cr
+\code{~~~~~~~+--}\code{\link[R.filesets]{GenericTabularFileSet}}\cr
 \code{~~~~~~~~~~~~|}\cr
 \code{~~~~~~~~~~~~+--}\code{\link[aroma.core]{AromaTabularBinarySet}}\cr
 \code{~~~~~~~~~~~~~~~~~|}\cr

@@ -426,17 +426,33 @@ setMethodS3("process", "AbstractProbeSequenceNormalization", function(this, ...,
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       verbose && enter(verbose, "Storing normalized data");
     
+      # Write to a temporary file
+      pathnameT <- sprintf("%s.tmp", pathname);
+      verbose && cat(verbose, "Temporary pathname: ", pathnameT);
+    
       # Create CEL file to store results, if missing
       verbose && enter(verbose, "Creating CEL file for results, if missing");
-      createFrom(df, filename=pathname, path=NULL, verbose=less(verbose));
+      createFrom(df, filename=pathnameT, path=NULL, verbose=less(verbose));
       verbose && exit(verbose);
 
       # Write calibrated data to file
       verbose2 <- -as.integer(verbose)-2;
-      updateCel(pathname, indices=cellsToUpdateKK, intensities=y, verbose=verbose2);
+      updateCel(pathnameT, indices=cellsToUpdateKK, intensities=y, verbose=verbose2);
       rm(y, cellsToUpdateKK, verbose2);
       gc <- gc();
       verbose && print(verbose, gc);
+
+      # Rename temporary file
+      verbose && enter(verbose, "Renaming temporary file");
+      res <- file.rename(pathnameT, pathname);
+      if (!isFile(pathname)) {
+        throw("Failed to rename temporary file (final file does not exist): ", pathnameT, " -> ", pathname);
+      }
+      if (isFile(pathnameT)) {
+        throw("Failed to rename temporary file (temporary file still exists): ", pathnameT, " -> ", pathname);
+      }
+      rm(pathnameT);
+      verbose && exit(verbose);
 
       verbose && exit(verbose);
     }
@@ -466,6 +482,10 @@ setMethodS3("process", "AbstractProbeSequenceNormalization", function(this, ...,
 
 ############################################################################
 # HISTORY:
+# 2009-07-08
+# o ROBUSTNESS: Updated process() of AbstractProbeSequenceNormalization to 
+#   write to a tempory file which is the renamed.  This will lower the risk
+#   for generating corrupt files in case of interrupts.
 # 2008-12-03
 # o SPEED UP: Now the "expanded" algorithm parameters ('params') are passed 
 #   to fitOne() and predictOne().  It is up to the implementation of these

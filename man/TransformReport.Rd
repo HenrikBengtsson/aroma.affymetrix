@@ -50,6 +50,7 @@ extends \link[R.oo]{Object}\cr
  \tab \code{\link[aroma.affymetrix:getPath.TransformReport]{getPath}} \tab Gets the path of the output data set.\cr
  \tab \code{\link[aroma.affymetrix:getTags.TransformReport]{getTags}} \tab Gets the tags of the output data set.\cr
  \tab \code{getUnitNamesFile} \tab  -\cr
+ \tab \code{getUnitTypesFile} \tab  -\cr
  \tab \code{getYY} \tab  -\cr
  \tab \code{nbrOfArrays} \tab  -\cr
  \tab \code{plotXYCurve} \tab  -\cr
@@ -62,7 +63,7 @@ extends \link[R.oo]{Object}\cr
 
 
  \bold{Methods inherited from Object}:\cr
-asThis, $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, save
+asThis, $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save
 
 
  }

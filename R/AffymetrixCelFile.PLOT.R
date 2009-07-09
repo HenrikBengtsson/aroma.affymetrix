@@ -118,19 +118,6 @@ setMethodS3("getAm", "AffymetrixCelFile", function(this, reference, indices=NULL
     indices <- Arguments$getIndices(indices, range=c(1,nbrOfCells));
   }
 
-#  # Argument 'indices' & 'units':
-#  if (!is.null(indices) && !is.null(units)) {
-#    throw("Arguments 'indices' and 'units' must not be non-NULL at the same time.");
-#  }
-#
-#  # Argument 'units':
-#  unf <- getUnitNamesFile(this);
-#  nbrOfUnits <- nbrOfUnits(unf);
-#  if (is.null(units)) {
-#  } else {
-#    units <- Arguments$getIndices(units, range=c(1,nbrOfUnits));
-#  }
-
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
   # Further validation

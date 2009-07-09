@@ -238,6 +238,11 @@ setMethodS3("getListOfUnitNamesFiles", "ChromosomalModel", function(this, ...) {
   getListOfUnitNamesFiles(getSetTuple(this), ...);
 }, private=TRUE)
 
+setMethodS3("getListOfUnitTypesFiles", "ChromosomalModel", function(this, ...) {
+  getListOfUnitTypesFiles(getSetTuple(this), ...);
+}, private=TRUE)
+
+
 
 setMethodS3("getChipTypes", "ChromosomalModel", function(this, ...) {
   getChipTypes(getSetTuple(this), ...);
@@ -729,6 +734,8 @@ setMethodS3("getListOfGenomeInformations", "ChromosomalModel", function(this, ..
 
 ##############################################################################
 # HISTORY:
+# 2009-07-08
+# o Added getListOfUnitTypesFiles() for ChromosomalModel.
 # 2009-01-26
 # o Removed get[]ListOfCdfs() from ChromosomalModel.
 # o Removed deprectated get[]ListOfChipEffects() from ChromosomalModel.

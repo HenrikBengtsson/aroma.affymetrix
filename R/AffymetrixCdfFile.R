@@ -23,7 +23,7 @@
 #*/###########################################################################
 setConstructorS3("AffymetrixCdfFile", function(...) {
   this <- extend(AromaChipTypeAnnotationFile(...), c("AffymetrixCdfFile", 
-                             uses("UnitNamesFile", "AromaPlatformInterface")),
+            uses("UnitNamesFile", "UnitTypesFile", "AromaPlatformInterface")),
     "cached:.header" = NULL,
     "cached:.unitNames" = NULL,
     "cached:.cellIndices" = NULL,
@@ -53,6 +53,11 @@ setMethodS3("clearCache", "AffymetrixCdfFile", function(this, ...) {
 
 
 setMethodS3("getUnitNamesFile", "AffymetrixCdfFile", function(this, ...) {
+  this;
+}, protected=TRUE)
+
+
+setMethodS3("getUnitTypesFile", "AffymetrixCdfFile", function(this, ...) {
   this;
 }, protected=TRUE)
 
@@ -1551,6 +1556,9 @@ setMethodS3("convertUnits", "AffymetrixCdfFile", function(this, units=NULL, keep
 
 ############################################################################
 # HISTORY:
+# 2009-07-08
+# o Added getUnitTypesFile() for AffymetrixCdfFile.
+# o Now AffymetrixCdfFile implements also the UnitTypesFile interface.
 # 2009-05-09
 # o Added names to the returned dimension of getDimension().
 # 2009-02-10

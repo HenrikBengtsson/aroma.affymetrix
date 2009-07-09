@@ -158,6 +158,10 @@ setMethodS3("getListOfUnitNamesFiles", "ArrayExplorer", function(this, ...) {
   getListOfUnitNamesFiles(getSetTuple(this));
 }, private=TRUE)
 
+setMethodS3("getListOfUnitTypesFiles", "ArrayExplorer", function(this, ...) {
+  getListOfUnitTypesFiles(getSetTuple(this));
+}, private=TRUE)
+
 
 setMethodS3("getArraysOfInput", "ArrayExplorer", function(this, ...) {
   setTuple <- getSetTuple(this);
@@ -423,6 +427,8 @@ setMethodS3("process", "ArrayExplorer", function(this, arrays=NULL, ..., verbose
 
 ##############################################################################
 # HISTORY:
+# 2009-07-08
+# o Added getListOfUnitTypesFiles() for ArrayExplorer.
 # 2009-05-19
 # o Now testing for file permissions for creating/writing/updating files/dirs.
 # 2009-01-26

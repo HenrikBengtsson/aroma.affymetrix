@@ -100,10 +100,18 @@ setMethodS3("getListOfUnitNamesFiles", "AffymetrixCelSetTuple", function(this, .
 }, private=TRUE)
 
 
+setMethodS3("getListOfUnitTypesFiles", "AffymetrixCelSetTuple", function(this, ...) {
+  csList <- getListOfSets(this);
+  lapply(csList, FUN=getCdf);
+}, private=TRUE)
+
+
 
 
 ##############################################################################
 # HISTORY:
+# 2009-07-08
+# o Added getListOfUnitTypesFiles() to AffymetrixCelSetTuple.
 # 2009-01-26
 # o Added getListOfUnitNamesFiles() to AffymetrixCelSetTuple.
 # o Removed obsolete clearCache() for AffymetrixCelSetTuple.

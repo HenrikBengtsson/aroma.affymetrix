@@ -1,7 +1,21 @@
 Package: aroma.affymetrix
 =========================
 
-Version: 1.1.1 [2009-06-29]
+Version: 1.1.2 [2009-07-08]
+o Added getListOfUnitTypesFiles() to AffymetrixCelSetTuple, 
+  ArrayExplorer, and ChromosomalModel.
+o Added getUnitTypesFile() for AffymetrixCdfFile, AffymetrixCel{File|Set},
+  AffymetrixCnChpFile, AffymetrixPlatform and TransformReport.
+o Now AffymetrixCdfFile implements also the UnitTypesFile interface.
+o ROBUSTNESS: Updated process() of AbstractProbeSequenceNormalization to 
+  write to a tempory file which is the renamed.  This will lower the risk
+  for generating corrupt files in case of interrupts.
+
+
+Version: 1.1.1 [2009-06-30]
+o ROBUSTNESS/BUG FIX: Now plot() of CopyNumberSegmentationModel asserts 
+  that the RColorBrewer package is available at the very beginning.  This
+  will avoid generating image files where the data points are missing.
 o BUG FIX: Added missing getExpectedOutputFullnames() for MatSmoothing.
 o Moved packages 'gcrma' and 'gsmoothr' from "Imports:" to "Suggests:",
   because the former class of packages is required by R CMD check,

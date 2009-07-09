@@ -121,6 +121,10 @@ setMethodS3("getUnitNamesFile", "AffymetrixCnChpFile", function(this, ...) {
   getCdf(this, ...);
 })
 
+setMethodS3("getUnitTypesFile", "AffymetrixCnChpFile", function(this, ...) {
+  getCdf(this, ...);
+})
+
 setMethodS3("getCdf", "AffymetrixCnChpFile", function(this, ...) {
   cdf <- this$.cdf;
   if (is.null(cdf)) {
@@ -419,6 +423,8 @@ setMethodS3("extractLogRatios", "AffymetrixCnChpFile", function(this, units=NULL
 
 ############################################################################
 # HISTORY:
+# 2009-07-08
+# o Added getUnitTypesFile() for AffymetrixCnChpFile.
 # 2008-08-22
 # o Added extractLogRatios().
 # 2008-05-18

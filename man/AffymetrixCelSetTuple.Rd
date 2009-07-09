@@ -51,7 +51,7 @@ extends \emph{\link[aroma.core]{AromaMicroarrayDataSetTuple}}\cr
 asMatrixOfFiles, byPath, extract, getAlias, getArrays, getArrayTuple, getAsteriskTags, getChipTypes, getFullName, getFullNames, getListOfSets, getName, getNames, getTableOfArrays, getTags, nbrOfArrays, nbrOfChipTypes, setAlias, setTags
 
  \bold{Methods inherited from Object}:\cr
-asThis, $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, save
+asThis, $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save
 
 
  }

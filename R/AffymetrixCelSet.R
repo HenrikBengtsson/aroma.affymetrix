@@ -314,6 +314,11 @@ setMethodS3("getUnitNamesFile", "AffymetrixCelSet", function(this, ...) {
   getUnitNamesFile(aFile, ...);
 })
 
+setMethodS3("getUnitTypesFile", "AffymetrixCelSet", function(this, ...) {
+  aFile <- getFile(this, 1);
+  getUnitTypesFile(aFile, ...);
+})
+
 
 
 ###########################################################################/**
@@ -1502,6 +1507,8 @@ setMethodS3("getUnitGroupCellMap", "AffymetrixCelSet", function(this, ...) {
 
 ############################################################################
 # HISTORY:
+# 2009-07-08
+# o Added getUnitTypesFile() for AffymetrixCelSet.
 # 2009-05-23
 # o Now the chip type validation of fromFiles() for AffymetrixCelSet
 #   is aware of tags in the chip type of the CEL files. This may happen

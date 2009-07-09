@@ -342,6 +342,11 @@ setMethodS3("getUnitNamesFile", "TransformReport", function(this, ...) {
   getUnitNamesFile(dsOut);
 })
 
+setMethodS3("getUnitTypesFile", "TransformReport", function(this, ...) { 
+  dsOut <- getOutputDataSet(this);
+  getUnitTypesFile(dsOut);
+})
+
 
 setMethodS3("nbrOfArrays", "TransformReport", function(this, ...) { 
   nbrOfArrays(getOutputDataSet(this));
@@ -552,6 +557,8 @@ setMethodS3("writeImageCombined", "TransformReport", function(this, path=NULL, w
 
 ############################################################################
 # HISTORY:
+# 2009-07-08
+# o Added getUnitTypesFile() for TransformReport.
 # 2008-05-18
 # o Made class less platform specific by utilizing UnitNamesFile interface.
 # 2007-03-24

@@ -2,6 +2,14 @@ setMethodS3("plot", "CopyNumberSegmentationModel", function(x, xlim=NULL, ..., p
   # To please R CMD check.
   this <- x;
 
+  # If 'RColorBrewer' is missing, the below tryCatch() will plot the framwork
+  # but not the data points and "nicely" catch the error and report it in
+  # the verbose output.  This will cause PNGs with no data points.  Thus,
+  # here we assert that RColorBrewer is available.
+  # See thread '[aroma.affymetrix] No plot CNV analysis (Myriam)' on 
+  # Jun 22-July 1, 2009. /HB 2009-07-01
+  require("RColorBrewer") || throw("Package not loaded: RColorBrewer");
+
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local functions
@@ -283,6 +291,10 @@ setMethodS3("plot", "CopyNumberSegmentationModel", function(x, xlim=NULL, ..., p
 
 ##############################################################################
 # HISTORY:
+# 2009-07-01
+# o ROBUSTNESS/BUG FIX: Now plot() of CopyNumberSegmentationModel asserts 
+#   that the RColorBrewer package is avaiable at the very beginning.  This
+#   will avoid generating image files where the data points are missing.
 # 2007-09-15
 # o Now the cytoband is only drawn for some genomes, which currently is
 #   hardwired to the "Human" genome. 

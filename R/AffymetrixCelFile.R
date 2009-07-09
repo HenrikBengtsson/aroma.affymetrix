@@ -257,6 +257,10 @@ setMethodS3("getUnitNamesFile", "AffymetrixCelFile", function(this, ...) {
   getCdf(this, ...);
 })
 
+setMethodS3("getUnitTypesFile", "AffymetrixCelFile", function(this, ...) {
+  getCdf(this, ...);
+})
+
 
 ###########################################################################/**
 # @RdocMethod setCdf
@@ -906,6 +910,8 @@ setMethodS3("getRectangle", "AffymetrixCelFile", function(this, ...) {
 
 ############################################################################
 # HISTORY:
+# 2009-07-08
+# o Added getUnitTypesFile() for AffymetrixCelFile.
 # 2009-05-19
 # o Now testing for file permissions before trying to update a CEL file.
 # o Using getPathname() instead of this$.pathname everywhere.

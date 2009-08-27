@@ -6,7 +6,8 @@ o Now findByName() of AffymetrixCnChpSet, CnagCfhSet, and DChipDcpSet
   also utilize ditto of AffymetrixCelSet, because the code was
   identical to the latter.
 o Now findByName() of AffymetrixCelSet calls ditto of 
-  GenericDataFileSet of the R.filesets packages.
+  GenericDataFileSet of the R.filesets packages, which means that
+  Windows Shortcut links also in subdirectories are recognized.
 
 
 Version: 1.1.2 [2009-07-08]

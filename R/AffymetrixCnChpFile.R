@@ -65,7 +65,7 @@ setMethodS3("getFileFormat", "AffymetrixCnChpFile", function(this, ...) {
   pathname <- getPathname(this);
 
   # Read CEL header
-  raw <- readBin(pathname, what="raw", n=10);
+  raw <- readBin(pathname, what=raw(), n=10);
 
   if (raw[1] == 59)
     return("v1 (binary; CC)");

@@ -1753,6 +1753,16 @@
 \alias{getAsteriskTags.CopyNumberSegmentationModel}
 \alias{getExpectedOutputFiles.MatSmoothing}
 \alias{getExpectedOutputFullnames.MatSmoothing}
+\alias{getListOfUnitTypesFiles}
+\alias{getListOfUnitTypesFiles.AffymetrixCelSetTuple}
+\alias{getListOfUnitTypesFiles.ArrayExplorer}
+\alias{getListOfUnitTypesFiles.ChromosomalModel}
+\alias{getUnitTypesFile.AffymetrixCdfFile}
+\alias{getUnitTypesFile.AffymetrixCelFile}
+\alias{getUnitTypesFile.AffymetrixCelSet}
+\alias{getUnitTypesFile.AffymetrixCnChpFile}
+\alias{getUnitTypesFile.AffymetrixPlatform}
+\alias{getUnitTypesFile.TransformReport}
 
 \description{
   This page contains aliases for all "non-documented" objects that

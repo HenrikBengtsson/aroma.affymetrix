@@ -66,7 +66,7 @@ setMethodS3("getFileFormat", "AffymetrixCdfFile", function(this, ...) {
   pathname <- getPathname(this);
 
   # Read CDF header
-  raw <- readBin(pathname, what="raw", n=10);
+  raw <- readBin(pathname, what=raw(), n=10);
 
   if (raw[1] == 59)
     return("v5 (binary; CC)");
@@ -438,6 +438,7 @@ setMethodS3("hasUnitTypes", "AffymetrixCdfFile", function(this, types, ..., verb
 #
 # \arguments{
 #   \item{units}{The units of interest. If @NULL, all units are considered.}
+#   \item{map}{A @character string specifying the mapping used.}
 #   \item{...}{Not used.}
 # }
 #
@@ -511,12 +512,14 @@ setMethodS3("getUnitTypes", "AffymetrixCdfFile", function(this, units=NULL, ...,
 
 ## ISSUE: readCdfUnits() does not translate the unit types, which means
 ## that the unit type integer different for ASCII and binary CDFs.
+## types <- readCdfUnits(getPathname(this), readType=TRUE, readDirection=FALSE, readIndices=FALSE, readXY=FALSE, readBases=FALSE, readExpos=FALSE);
 ## WORKAROUND: Use readCdf() which return unit type strings.
 ## Requires: affxparser v1.13.5 or newer.
-## types <- readCdfUnits(getPathname(this), readType=TRUE, readDirection=FALSE, readIndices=FALSE, readXY=FALSE, readBases=FALSE, readExpos=FALSE);
 
         types <- readCdf(getPathname(this), readXY=FALSE, readBases=FALSE, readIndexpos=FALSE, readAtoms=FALSE, readUnitType=TRUE, readUnitDirection=FALSE, readUnitNumber=FALSE, readUnitAtomNumbers=FALSE, readGroupAtomNumbers=FALSE, readGroupDirection=FALSE, readIndices=FALSE, readIsPm=FALSE);
         types <- unlist(types, use.names=FALSE);
+
+        # Sanity check
         if (length(types) != nbrOfUnits(this)) {
           throw("Internal error: Number of read unit types does not match the number of units in the CDF: ", length(types), " != ", nbrOfUnits(this));
         }

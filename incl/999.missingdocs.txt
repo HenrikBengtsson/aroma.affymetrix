@@ -927,3 +927,10 @@ getExpectedOutputFiles.MatSmoothing
   getUnitTypesFile.AffymetrixCelSet
   getUnitTypesFile.AffymetrixCnChpFile
   getUnitTypesFile.AffymetrixPlatform getUnitTypesFile.TransformReport
+  getListOfUnitTypesFiles getListOfUnitTypesFiles.AffymetrixCelSetTuple
+  getListOfUnitTypesFiles.ArrayExplorer
+  getListOfUnitTypesFiles.ChromosomalModel
+  getUnitTypesFile.AffymetrixCdfFile getUnitTypesFile.AffymetrixCelFile
+  getUnitTypesFile.AffymetrixCelSet
+  getUnitTypesFile.AffymetrixCnChpFile
+  getUnitTypesFile.AffymetrixPlatform getUnitTypesFile.TransformReport

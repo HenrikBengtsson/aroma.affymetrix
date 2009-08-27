@@ -93,7 +93,7 @@ setMethodS3("getFileFormat", "AffymetrixCelFile", function(this, asString=TRUE, 
   pathname <- getPathname(this);
 
   # Read CEL header
-  raw <- readBin(pathname, what="raw", n=10);
+  raw <- readBin(pathname, what=raw(), n=10);
 
   if (raw[1] == 59) {
     ver <- 1;

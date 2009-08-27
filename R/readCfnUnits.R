@@ -43,7 +43,7 @@ setMethodS3("readCfnUnits", "default", function(pathname, cnagId=NULL, ..., verb
   # Retrieve data
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Read all data
-  raw <- readBin(pathname, what="raw", n=nbrOfBytes);
+  raw <- readBin(pathname, what=raw(), n=nbrOfBytes);
 
   # Bytes 13:16 contains (M) as floats
   rrM <- 13:16;
@@ -53,8 +53,8 @@ setMethodS3("readCfnUnits", "default", function(pathname, cnagId=NULL, ..., verb
 rr <- rrM;
   ncol <- length(rr) / 4;
   map <- map[rr,,drop=FALSE];
-  theta <- readBin(raw[map], what="double", size=4, endian="little", 
-#  theta <- readBin(raw[map], what="integer", size=4, endian="little", 
+  theta <- readBin(raw[map], what=double(), size=4, endian="little", 
+#  theta <- readBin(raw[map], what=integer(), size=4, endian="little", 
                                                            n=ncol*ncol(map));
   theta <- matrix(theta, ncol=ncol, byrow=TRUE);
 

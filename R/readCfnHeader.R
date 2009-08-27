@@ -3,23 +3,23 @@ setMethodS3("readCfnHeader", "default", function(pathname, ..., verbose=FALSE) {
   # Local functions
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   readByte <- function(con, n=1, ...) {
-    value <- readBin(con, what="integer", size=1, n=n);
+    value <- readBin(con, what=integer(), size=1, n=n);
     value;
   }
 
   readInt <- function(con, n=1, ...) {
-    value <- readBin(con, what="integer", size=4, n=n);
+    value <- readBin(con, what=integer(), size=4, n=n);
     value;
   }
 
   readRaw <- function(con, n=1, ...) {
-    value <- readBin(con, what="raw", n=n);
+    value <- readBin(con, what=raw(), n=n);
     value;
   }
 
   readString <- function(con, ...) {
     len <- readByte(con, n=1);
-    s <- readBin(con, what="raw", n=len);
+    s <- readBin(con, what=raw(), n=len);
     s <- rawToChar(s);
     s;
   }
@@ -109,7 +109,7 @@ setMethodS3("readCfnHeader", "default", function(pathname, ..., verbose=FALSE) {
   # Read the rest of the header as raw bytes
   currPos <- seek(con, rw="r");
   verbose && cat(verbose, "Current file position: ", currPos);
-  raw <- readBin(con, what="raw", n=dataOffset - currPos);
+  raw <- readBin(con, what=raw(), n=dataOffset - currPos);
 
   hdr <- list(
     nbrOfBytes = nbrOfBytes,

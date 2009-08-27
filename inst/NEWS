@@ -1,6 +1,14 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 1.1.3 [2009-08-12]
+o Now findByName() of AffymetrixCnChpSet, CnagCfhSet, and DChipDcpSet
+  also utilize ditto of AffymetrixCelSet, because the code was
+  identical to the latter.
+o Now findByName() of AffymetrixCelSet calls ditto of 
+  GenericDataFileSet of the R.filesets packages.
+
+
 Version: 1.1.2 [2009-07-08]
 o Added getListOfUnitTypesFiles() to AffymetrixCelSetTuple, 
   ArrayExplorer, and ChromosomalModel.
@@ -8,8 +16,8 @@ o Added getUnitTypesFile() for AffymetrixCdfFile, AffymetrixCel{File|Set},
   AffymetrixCnChpFile, AffymetrixPlatform and TransformReport.
 o Now AffymetrixCdfFile implements also the UnitTypesFile interface.
 o ROBUSTNESS: Updated process() of AbstractProbeSequenceNormalization to 
-  write to a tempory file which is the renamed.  This will lower the risk
-  for generating corrupt files in case of interrupts.
+  write to a temporary file which is the renamed.  This will lower the 
+  risk for generating corrupt files in case of interrupts.
 
 
 Version: 1.1.1 [2009-06-30]
@@ -370,7 +378,7 @@ o MEMORY OPTIMIZATION: When calling extractRawCopyNumbers(obj) on an
   no longer cache results.  To cache, the method has to be called with
   argument 'cache=TRUE'.  Thanks Jason Li for reporting this.
 o BUG FIX: extractMatrix() of AffymetrixCelSet returned cells in a 
-  different than requested.  Thanks Mark Robinson for reporting tihs.
+  different than requested.  Thanks Mark Robinson for reporting this.
 o BUG FIX: getChipType() of AffymetrixCelFile did not pass down '...'
   causing for instance getChipType(..., fullname=FALSE) to still return
   tags for ChipEffectFile:s.

@@ -3,27 +3,27 @@ setMethodS3("readCfhHeader", "default", function(pathname, ..., verbose=FALSE) {
   # Local functions
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   readByte <- function(con, n=1, ...) {
-    value <- readBin(con, what="integer", size=1, n=n, ...);
+    value <- readBin(con, what=integer(), size=1, n=n, ...);
     value;
   }
 
   readChar <- function(con, n=1, ...) {
-    value <- readBin(con, what="character", n=n, ...);
+    value <- readBin(con, what=character(), n=n, ...);
     value;
   }
 
   readInt <- function(con, n=1, ...) {
-    value <- readBin(con, what="integer", size=4, n=n, ...);
+    value <- readBin(con, what=integer(), size=4, n=n, ...);
     value;
   }
 
   readShort <- function(con, n=1, ...) {
-    value <- readBin(con, what="integer", size=2, n=n, ...);
+    value <- readBin(con, what=integer(), size=2, n=n, ...);
     value;
   }
 
   readRaw <- function(con, n=1, ...) {
-    value <- readBin(con, what="raw", n=n, ...);
+    value <- readBin(con, what=raw(), n=n, ...);
     value;
   }
 
@@ -31,7 +31,7 @@ setMethodS3("readCfhHeader", "default", function(pathname, ..., verbose=FALSE) {
     len <- readByte(con, n=1, signed=FALSE);
     if (len == 255)
       len <- readShort(con, n=1, signed=FALSE);
-    s <- readBin(con, what="raw", n=len, ...);
+    s <- readBin(con, what=raw(), n=len, ...);
     s <- rawToChar(s);
     s;
   }
@@ -181,7 +181,7 @@ setMethodS3("readCfhHeader", "default", function(pathname, ..., verbose=FALSE) {
   # Read the rest of the header as raw bytes
   currPos <- seek(con, rw="r");
   verbose && cat(verbose, "Current file position: ", currPos);
-  raw <- readBin(con, what="raw", n=dataOffset - currPos);
+  raw <- readBin(con, what=raw(), n=dataOffset - currPos);
 
   hdr <- list(
     pathname = pathname,

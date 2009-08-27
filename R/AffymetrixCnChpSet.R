@@ -105,54 +105,20 @@ setMethodS3("as.character", "AffymetrixCnChpSet", function(x, ...) {
 
 
 
-setMethodS3("findByName", "AffymetrixCnChpSet", function(static, name, tags=NULL, chipType=NULL, paths=c("chpData"), ...) {
+setMethodS3("findByName", "AffymetrixCnChpSet", function(static, ..., paths="chpData/") {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Arguments 'name':
-  name <- Arguments$getCharacter(name, length=c(1,1));
-  if (nchar(name) == 0) {
-    throw("A ", class(static)[1], " must have a non-empty name: ''");
-  }
-
   # Arguments 'paths':
   if (is.null(paths)) {
     paths <- eval(formals(findByName.AffymetrixCnChpSet)[["paths"]]);
   }
 
 
-  # Look only in existing directories
-  paths <- sapply(paths, FUN=filePath, expandLinks="any");
-  paths0 <- paths;
-  paths <- paths[sapply(paths, FUN=isDirectory)];
-  if (length(paths) == 0) {
-    throw("None of the data directories exist: ", 
-                                           paste(paths0, collapse=", "));
-  }
-
-  # The full name of the data set
-  fullname <- paste(c(name, tags), collapse=",");
-
-  # Look for matching data sets
-  paths <- file.path(paths, fullname);
-  paths <- paths[sapply(paths, FUN=isDirectory)];
-  if (length(paths) == 0)
-    return(NULL);
-
-  # Look for matching chip type sets?
-  if (!is.null(chipType)) {
-    paths <- file.path(paths, chipType);
-    paths <- paths[sapply(paths, FUN=isDirectory)];
-    if (length(paths) == 0)
-      return(NULL);
-  }
-
-  if (length(paths) > 1) {
-    warning("Found duplicated data set: ", paste(paths, collapse=", "));
-    paths <- paths[1];
-  }
+  # Unfortunately method dispatching does not work here.
+  path <- findByName.AffymetrixCelSet(static, ..., paths=paths);
   
-  paths;
+  path;
 }, static=TRUE)
 
 
@@ -438,6 +404,9 @@ setMethodS3("setCdf", "AffymetrixCnChpSet", function(this, cdf, verbose=FALSE, .
 
 ############################################################################
 # HISTORY:
+# 2009-08-12
+# o Now findByName() of AffymetrixCnChpSet utilizes ditto of 
+#   AffymetrixCelSet, because its code was identical to the latter.
 # 2008-08-22
 # o Created.
 ############################################################################

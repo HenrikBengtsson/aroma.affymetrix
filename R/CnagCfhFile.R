@@ -138,8 +138,8 @@ setMethodS3("fromFile", "CnagCfhFile", function(static, filename, path=NULL, ...
 
 
   readString <- function(con, ...) {
-    len <- readBin(con, what="integer", size=1, n=1);
-    s <- readBin(con, what="raw", n=len);
+    len <- readBin(con, what=integer(), size=1, n=1);
+    s <- readBin(con, what=raw(), n=len);
     s <- rawToChar(s);
     s;
   } # readString();
@@ -431,11 +431,11 @@ setMethodS3("readUnits", "CnagCfhFile", function(this, units=NULL, ..., verbose=
   
   # Read from file
   pathname <- getPathname(this);
-  raw <- readBin(pathname, what="raw", n=nbrOfBytes);
+  raw <- readBin(pathname, what=raw(), n=nbrOfBytes);
 
   # Bytes 1:8 contains (thetaA,thetaB) as floats
   map <- map[1:8,,drop=FALSE];
-  theta <- readBin(raw[map], what="double", size=4, endian="little", 
+  theta <- readBin(raw[map], what=double(), size=4, endian="little", 
                                                            n=2*ncol(map));
   theta <- matrix(theta, ncol=2, byrow=TRUE);
 

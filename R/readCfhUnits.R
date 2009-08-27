@@ -40,7 +40,7 @@ setMethodS3("readCfhUnits", "default", function(pathname, snps=NULL, ..., verbos
   # Retrieve data
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Read all data
-  raw <- readBin(pathname, what="raw", n=nbrOfBytes);
+  raw <- readBin(pathname, what=raw(), n=nbrOfBytes);
 
   # Bytes 1:8 contains (thetaA,thetaB) as floats
   rr <- c(1:8,10:13);
@@ -48,7 +48,7 @@ setMethodS3("readCfhUnits", "default", function(pathname, snps=NULL, ..., verbos
   verbose && cat(verbose, "Number of integers: ", ncol);
 
   map <- map[rr,,drop=FALSE];
-  theta <- readBin(raw[map], what="double", size=4, endian="little", 
+  theta <- readBin(raw[map], what=double(), size=4, endian="little", 
                                                            n=ncol*ncol(map));
   theta <- matrix(theta, ncol=ncol, byrow=TRUE);
 

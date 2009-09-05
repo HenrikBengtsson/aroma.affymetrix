@@ -279,15 +279,13 @@ setMethodS3("plotMvsA", "AffymetrixCelFile", function(this, reference, indices=N
 #
 # \seealso{
 #   @seemethod "plotMvsA".
-#   Internally @see "geneplotter::smoothScatter" is used.
+#   Internally @see "graphics::smoothScatter" is used.
 #   @seeclass
 # }
 #*/###########################################################################
 setMethodS3("smoothScatterMvsA", "AffymetrixCelFile", function(this, reference, indices=NULL, pch=176, xlim=c(0,16), ylim=c(-1,1)*diff(xlim), xlab=expression(A==1/2%*%log[2](y[1]*y[2])), ylab=expression(M==log[2](y[1]/y[2])), ..., annotate=TRUE) {
-  require("geneplotter") || throw("Package 'geneplotter' not loaded.");
-
   ma <- getAm(this, reference, indices=indices);
-  geneplotter::smoothScatter(ma, pch=pch, xlab=xlab, ylab=ylab, xlim=xlim, ylim=ylim, ...);
+  smoothScatter(ma, pch=pch, xlab=xlab, ylab=ylab, xlim=xlim, ylim=ylim, ...);
   if (annotate) {
     annotateMvsA(this, reference);
     stextSize(this, size=nrow(ma));
@@ -784,6 +782,8 @@ setMethodS3("writeImage", "AffymetrixCelFile", function(this, filename=NULL, ful
 
 ############################################################################
 # HISTORY:
+# 2009-09-04
+# o Now smoothScatter() is loaded via aroma.core.
 # 2009-09-17
 # o Now argument 'subset' of plotDensity() of AffymetrixCelFile defaults 
 #   to NULL (all probes).  Before it was 1/2 (a fraction).

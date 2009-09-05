@@ -132,7 +132,7 @@ setMethodS3("plotCovariateEffects", "GcContentNormalization2", function(this, ar
     verbose && enter(verbose, "smoothScatter(x,y, ...):");
     verbose && str(verbose, x);
     verbose && str(verbose, y);
-    geneplotter::smoothScatter(x, y, pch=pch, xlab=xlab, ylab=ylab, xlim=xlim, ylim=ylim);
+    smoothScatter(x, y, pch=pch, xlab=xlab, ylab=ylab, xlim=xlim, ylim=ylim);
     verbose && exit(verbose);
     stext(side=3, pos=1, name);
     if (!is.null(yR)) {
@@ -152,6 +152,8 @@ setMethodS3("plotCovariateEffects", "GcContentNormalization2", function(this, ar
 
 ############################################################################
 # HISTORY:
+# 2009-09-04
+# o Now smoothScatter() is loaded via aroma.core.
 # 2009-03-22
 # o Created.
 ############################################################################

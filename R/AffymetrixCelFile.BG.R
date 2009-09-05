@@ -212,7 +212,7 @@ setMethodS3("bgAdjustGcrma", "AffymetrixCelFile", function(this, path=NULL, type
   filename <- basename(getPathname(this));
   filename <- gsub("[.]cel$", ".CEL", filename);  # Only output upper case!
   pathname <- Arguments$getWritablePathname(filename, path=path,
-                                            mustNotExist=(!overwrite && !skip));
+                                         mustNotExist=(!overwrite && !skip));
   
   cdf <- getCdf(this);
 

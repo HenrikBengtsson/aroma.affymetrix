@@ -309,7 +309,9 @@ setMethodS3("bgAdjustGcrma", "AffymetrixCelSet", function(this, path=NULL, name=
 
   # Argument 'path':
   if (is.null(path)) {
-    path <- file.path("probeData", paste(getName(this),getTags(this),sep=","), getChipType(cdf));
+    rootPath <- "probeData";
+    chipType <- getChipType(cdf);
+    path <- file.path(rootPath, getFullName(this), chipType);
   }
   if (!is.null(path)) {
     # Verify this path (and create if missing)
@@ -451,7 +453,10 @@ setMethodS3("bgAdjustRma", "AffymetrixCelSet", function(this, path=NULL, tags="R
   # Argument 'path':
   if (is.null(path)) {
     # Path structure: /bgRma/<data set name>/chip_data/<chip type>/
-    path <- file.path("probeData", paste(getName(this),tags,sep=","), getChipType(cdf));
+    rootPath <- "probeData";
+    fullname <- paste(c(getFullName(this), tags), collapse=",");
+    chipType <- getChipType(cdf);
+    path <- file.path(rootPath, fullname, chipType);
   }
   if (!is.null(path)) {
     # Verify this path (and create if missing)
@@ -498,6 +503,8 @@ setMethodS3("bgAdjustRma", "AffymetrixCelSet", function(this, path=NULL, tags="R
 
 ############################################################################
 # HISTORY:
+# 2009-08-31 [HB]
+# o CLEAN UP: Updated how 'path' is set internally if not specified.
 # 2009-04-06 [HB]
 # o BUG FIX: The output path of bgAdjustRma() of AffymetrixCelSet would
 #   include the full chip type.  It would also give an error if no tags

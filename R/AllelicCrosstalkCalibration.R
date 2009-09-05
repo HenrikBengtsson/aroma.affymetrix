@@ -1024,9 +1024,6 @@ setMethodS3("process", "AllelicCrosstalkCalibration", function(this, ..., force=
 
 
 setMethodS3("plotBasepair", "AllelicCrosstalkCalibration", function(this, array, basepairs=NULL, what=c("before", "after"), ..., plotFcn=NULL, xlim=c(-500,65535), ylim=xlim, linesFcn=NULL, lwd=4, lcol="red", scale=1, force=FALSE, verbose=FALSE) {
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Local functions
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   linesAllelicCrosstalk <- function(a, B, max=1e5, ...) {
     bA <- B[1,2]/B[1,1]; 
     bB <- B[2,1]/B[2,2]; 
@@ -1080,7 +1077,7 @@ setMethodS3("plotBasepair", "AllelicCrosstalkCalibration", function(this, array,
   # Argument 'plotFcn':
   if (is.null(plotFcn)) {
     plotFcn <- function(..., pch=NA, transformation=function(x) x^0.33) {
-      geneplotter::smoothScatter(..., pch=pch, transformation=transformation);
+      smoothScatter(..., pch=pch, transformation=transformation);
     }
   } else if (!is.function(plotFcn)) {
     throw("Argument 'plotFcn' is not a function: ", mode(plotFcn));
@@ -1222,6 +1219,8 @@ setMethodS3("getDataPairs", "AllelicCrosstalkCalibration", function(this, array,
 
 ############################################################################
 # HISTORY:
+# 2009-09-04
+# o Now smoothScatter() is loaded via aroma.core.
 # 2008-12-17
 # o process() had a nested for loop with the same iteration variable 'kk'
 #   was used for in the inner and the outer loop.  I was surprised to find

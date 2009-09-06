@@ -123,8 +123,11 @@ setMethodS3("findByName", "DChipDcpSet", function(static, ..., paths=c("rawData/
 
 
 setMethodS3("fromName", "DChipDcpSet", function(static, ...) {
-  byName(static, ...);
-}, static=TRUE)
+  className <- class(static)[1];
+  msg <- sprintf("%s$fromName() is defunct. Use %s$byName() instead.", 
+                                                className, className);
+  throw(msg);
+}, static=TRUE, deprecated=TRUE)
 
 
 setMethodS3("byName", "DChipDcpSet", function(static, name, tags=NULL, chipType, paths=NULL, ...) {

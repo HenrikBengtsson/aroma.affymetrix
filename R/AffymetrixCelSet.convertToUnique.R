@@ -130,7 +130,8 @@ setMethodS3("convertToUnique", "AffymetrixCelSet", function(this, ..., tags="UNQ
       verbose && exit(verbose);
   } # for (kk ...)
 
-  outputDataSet <- AffymetrixCelSet$fromName(getName(this), tags=allTags, cdf=cdfUnique, verbose=verbose, checkChipType=FALSE);
+  outputDataSet <- AffymetrixCelSet$byName(getName(this), tags=allTags, 
+                      cdf=cdfUnique, verbose=verbose, checkChipType=FALSE);
   verbose && exit(verbose);
   
   invisible(outputDataSet);

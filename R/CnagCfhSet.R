@@ -340,8 +340,12 @@ setMethodS3("findByName", "CnagCfhSet", function(static, ..., paths="cnagData/")
 
 
 setMethodS3("fromName", "CnagCfhSet", function(static, ...) {
-  byName(static, ...);
-}, private=TRUE);
+  className <- class(static)[1];
+  msg <- sprintf("%s$fromName() is defunct. Use %s$byName() instead.", 
+                                                className, className);
+  throw(msg);
+}, static=TRUE, deprecated=TRUE)
+
 
 setMethodS3("byName", "CnagCfhSet", function(static, name, tags=NULL, chipType, paths=NULL, ...) {
   suppressWarnings({

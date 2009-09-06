@@ -461,8 +461,12 @@ setMethodS3("findByName", "AffymetrixCelSet", function(static, ..., chipType=NUL
 
 
 setMethodS3("fromName", "AffymetrixCelSet", function(static, ...) {
-  byName(static, ...);
-}, static=TRUE)
+  className <- class(static)[1];
+  msg <- sprintf("%s$fromName() is defunct. Use %s$byName() instead.", 
+                                                className, className);
+  throw(msg);
+}, static=TRUE, deprecated=TRUE)
+
 
 setMethodS3("byName", "AffymetrixCelSet", function(static, name, tags=NULL, chipType=NULL, cdf=NULL, paths=NULL, ...) {
   # Argument 'cdf':

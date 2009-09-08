@@ -100,7 +100,7 @@ if (!devIsOpen(fig <- fig + 1)) {
     ok <- (is.finite(X) & -1 < X & X < 30);
     ok <- ok[,1] & ok[,2];
     X <- X[ok,];
-    geneplotter::smoothScatter(X, xlim=Clim, ylim=Clim, xlab=CAlab, ylab=CBlab);
+    smoothScatter(X, xlim=Clim, ylim=Clim, xlab=CAlab, ylab=CBlab);
     abline(h=0:3, lty=3, lwd=1);
     abline(v=0:3, lty=3, lwd=1);
     abline(a=2, b=-1, lty=1, lwd=1, col="white");
@@ -127,7 +127,7 @@ if (!devIsOpen(fig <- fig + 1)) {
     ok <- (is.finite(X) & -1 < X & X < 30);
     ok <- ok[,1] & ok[,2];
     X <- X[ok,];
-    geneplotter::smoothScatter(X, xlim=c(0,1), ylim=Clim, xlab=xlab, ylab=Clab);
+    smoothScatter(X, xlim=c(0,1), ylim=Clim, xlab=xlab, ylab=Clab);
     abline(h=0:3, lty=3, lwd=1);
     abline(v=0:2/2, lty=3, lwd=1);
   

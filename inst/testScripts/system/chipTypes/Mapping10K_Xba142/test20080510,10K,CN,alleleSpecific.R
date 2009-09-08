@@ -111,7 +111,7 @@ lowerPanel <- function(x,y, pch=".", ...) {
 diagPanel <- function(x, pch=".", ...) {
   xy <- data[,,x];
   xy[,1] <- (xy[,1] - tlim[1])/diff(tlim);
-  geneplotter::smoothScatter(xy, add=TRUE);
+  smoothScatter(xy, add=TRUE);
   abline(h=1/2, col="#999999");
 }
 

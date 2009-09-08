@@ -82,9 +82,9 @@ for (kk in seq(length=ncol(C))) {
   stext(side=3, pos=0, paste(pairs[kk,], collapse="/"));
   stext(side=3, pos=1, sprintf("Chr %d", chromosome));
   plot(pos, B[,kk,"tumor"], ylim=Blim, ylab=BTlab);
-#  geneplotter::smoothScatter(pos, B[,kk,"tumor"], bandwidth=c(1,0.0001), ylim=Blim, ylab=BTlab);
+#  smoothScatter(pos, B[,kk,"tumor"], bandwidth=c(1,0.0001), ylim=Blim, ylab=BTlab);
   plot(pos, F[,kk], cex=F2, ylim=Flim, ylab=Flab);
-#  geneplotter::smoothScatter(pos, F[,kk], bandwidth=c(1,0.0001), ylim=Flim, ylab=Flab);
+#  smoothScatter(pos, F[,kk], bandwidth=c(1,0.0001), ylim=Flim, ylab=Flab);
   abline(h=0, lty=3, col="red");
 }
 

@@ -144,8 +144,11 @@ setMethodS3("byChipType", "DChipGenomeInformation", function(static, chipType, v
 })
 
 setMethodS3("fromChipType", "DChipGenomeInformation", function(static, ...) {
-  byChipType(static, ...);
-}, static=TRUE) 
+  className <- class(static)[1];
+  msg <- sprintf("%s$fromChipType() is defunct. Use %s$byChipType() instead.", 
+                                                        className, className);
+  throw(msg);
+}, static=TRUE, deprecated=TRUE)
 
 
 setMethodS3("verify", "DChipGenomeInformation", function(this, ...) {

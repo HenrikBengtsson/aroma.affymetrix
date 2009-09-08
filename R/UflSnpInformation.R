@@ -38,8 +38,12 @@ setMethodS3("findByChipType", "UflSnpInformation", function(static, ...) {
 
 
 setMethodS3("fromChipType", "UflSnpInformation", function(static, ...) {
-  byChipType(static, ...);
-}, static=TRUE) 
+  className <- class(static)[1];
+  msg <- sprintf("%s$fromChipType() is defunct. Use %s$byChipType() instead.", 
+                                                        className, className);
+  throw(msg);
+}, static=TRUE, deprecated=TRUE)
+
 
 setMethodS3("byChipType", "UflSnpInformation", function(static, chipType, tags=NULL, nbrOfUnits=NULL, ..., verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

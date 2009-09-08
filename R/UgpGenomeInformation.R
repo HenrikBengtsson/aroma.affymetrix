@@ -131,8 +131,11 @@ setMethodS3("byChipType", "UgpGenomeInformation", function(static, chipType, tag
 
 
 setMethodS3("fromChipType", "UgpGenomeInformation", function(static, ...) {
-  byChipType(static, ...);
-}, static=TRUE) 
+  className <- class(static)[1];
+  msg <- sprintf("%s$fromChipType() is defunct. Use %s$byChipType() instead.", 
+                                                        className, className);
+  throw(msg);
+}, static=TRUE, deprecated=TRUE)
 
 
 setMethodS3("nbrOfUnits", "UgpGenomeInformation", function(this, ...) {

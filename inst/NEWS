@@ -20,9 +20,9 @@ o BUG FIX: A few plot functions would generate "Error: 'smoothScatter'
   geneplotter::smoothScatter(), but that function was moved from 
   geneplotter v1.21.4 to the graphics package of R v2.9.0.  For
   backward compatibility, we now provide a patch (in aroma.core).
-o CLEAN UP: Now AffymetrixCelSet$fromName() is defunct in favor of
-  AffymetrixCelSet$byName().  The same update was done for the 
-  CnagCfhSet and the DChipDcpSet classes.
+o CLEAN UP: Now static methods fromChipType() and fromName() of
+  AffymetrixCelSet and other classes are defunct.  Instead, use static
+  methods byChipType() and byName() instead.
 o CLEAN UP: Removed the geneplotter package from Suggests:.
 
 

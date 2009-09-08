@@ -7,16 +7,26 @@
 #
 # Author: Mark Robinson (and Henrik Bengtsson)
 # Created: 2008-12-09
-# Last modified: 2009-06-28
+# Last modified: 2009-09-07
 #
 # Data set:
+#  annotationData/
+#    chipTypes/
+#      Hs_PromPR_v02/
+#        Hs_PromPR_v02.cdf
+#        Hs_PromPR_v02.acs
+#        Hs_PromPR_v02.acm
+#        Hs_PromPR_v02,unique.acp
 #  rawData/
 #    MATtest/
 #      Hs_PromPR_v02/
 #        Prec1_MeDNA_IP1.CEL
 #        Prec1_MeDNA_IP2.CEL
 #        Prec1_MeDNA_Input1.CEL
-#       TESTIP.bar.txt (estimates by MAT)
+#        # Validation files
+#        Prec1_MeDNA_600_IP1-Input.tsv
+#        Prec1_MeDNA_600_IP1-Input.bar.txt
+#        Prec1_MeDNA_800_IPs-Input.bar.txt
 ###########################################################################
 library("aroma.affymetrix");
 library("limma");  # makeContrast()
@@ -24,11 +34,27 @@ log <- Arguments$getVerbose(-20, timestamp=TRUE);
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# Setup the tiling array data set
+# Assert that required annotation data files exist
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 cdf <- AffymetrixCdfFile$byChipType("Hs_PromPR_v02");
 print(cdf);
 
+acs <- AromaCellSequenceFile$byChipType(getChipType(cdf));
+print(acs);
+
+acm <- AromaCellMatchScoreFile$byChipType(getChipType(cdf));
+print(acm);
+
+cdfU <- getUniqueCdf(cdf, verbose=log);
+print(cdfU);
+
+acp <- AromaCellPositionFile$byChipType(getChipType(cdfU));
+print(acp);
+
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Setup the tiling array data set
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 csR <- AffymetrixCelSet$byName("MATtest", cdf=cdf);
 print(csR);
 

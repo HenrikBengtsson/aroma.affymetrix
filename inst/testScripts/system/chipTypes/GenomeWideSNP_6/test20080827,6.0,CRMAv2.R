@@ -79,7 +79,7 @@ print(cesN);
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 cdf <- getCdf(cesN);
 gi <- getGenomeInformation(cdf);
-units <- getUnitsOnChromosome(gi, 1:22);
+units <- getUnitsOnChromosomes(gi, 1:22);
 theta <- extractTheta(cesN, units=units, drop=TRUE);
 str(theta);
 print(theta[1:10,,]);

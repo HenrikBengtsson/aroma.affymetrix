@@ -82,7 +82,7 @@ setMethodS3("getSubsetOfUnits", "AffymetrixCdfFile", function(this, units=NULL, 
       verbose && cat(verbose, "Chromosomes to exclude:");
       verbose && str(verbose, chromosomes);
 
-      unitsExcl <- getUnitsOnChromosome(gi, chromosomes, .checkArgs=FALSE);
+      unitsExcl <- getUnitsOnChromosomes(gi, chromosomes, .checkArgs=FALSE);
       rm(chromosomes);
 
       verbose && exit(verbose);

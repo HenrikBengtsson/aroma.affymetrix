@@ -300,11 +300,11 @@ setMethodS3("getSubsetToFit", "AdditiveCovariatesNormalization", function(this, 
   
         # Identify units to be excluded
         if (subsetToFit == "-X") {
-          subset <- getUnitsOnChromosome(gi, 23, .checkArgs=FALSE);
+          subset <- getUnitsOnChromosomes(gi, 23, .checkArgs=FALSE);
         } else if (subsetToFit == "-Y") {
-          subset <- getUnitsOnChromosome(gi, 24, .checkArgs=FALSE);
+          subset <- getUnitsOnChromosomes(gi, 24, .checkArgs=FALSE);
         } else if (subsetToFit == "-XY") {
-          subset <- getUnitsOnChromosome(gi, 23:24, .checkArgs=FALSE);
+          subset <- getUnitsOnChromosomes(gi, 23:24, .checkArgs=FALSE);
         }
   
         verbose && cat(verbose, "Units to exclude: ");

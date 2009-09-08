@@ -913,6 +913,8 @@
 \alias{getUnitSizes}
 \alias{getUnitsOnChromosome}
 \alias{getUnitsOnChromosome.GenomeInformation}
+\alias{getUnitsOnChromosomes}
+\alias{getUnitsOnChromosomes.GenomeInformation}
 \alias{getUnitsOnChromosome.UgpGenomeInformation}
 \alias{getUnitTypes}
 \alias{getWeights}

@@ -444,6 +444,7 @@
   getUnitNamesFile.TransformReport getUnitReadMap
   getUnitReadMap.AffymetrixCnChpFile getUnitSizes getUnitsOnChromosome
   getUnitsOnChromosome.GenomeInformation
+  getUnitsOnChromosomes  getUnitsOnChromosomes.GenomeInformation
   getUnitsOnChromosome.UgpGenomeInformation getUnitTypes
   getWeights getWeightsFileClass
   getWeightsFileClass.WeightsSet getWeightsSet

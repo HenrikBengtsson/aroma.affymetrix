@@ -129,7 +129,7 @@ setMethodS3("doCRMA", "default", function(dataSet, chipTypes=NULL, ..., logName=
 
     # Identify units on sex chromosomes
     chromosomes <- intersect(23:24, getChromosomes(gi));
-    unitsXY <- getUnitsOnChromosome(gi, chromosomes); 
+    unitsXY <- getUnitsOnChromosomes(gi, chromosomes); 
     nbrOfUnits <- nbrOfUnits(cdf);
     log && printf(log, "Identified %d units (%.1f%%) on sex chromosomes out of %d\n", length(unitsXY), 100*length(unitsXY)/nbrOfUnits, nbrOfUnits);
 
@@ -232,7 +232,7 @@ setMethodS3("doCRMA", "default", function(dataSet, chipTypes=NULL, ..., logName=
 
     # Identify units on sex chromosomes
     chromosomes <- intersect(23:24, getChromosomes(gi));
-    unitsXY <- getUnitsOnChromosome(gi, chromosomes); 
+    unitsXY <- getUnitsOnChromosomes(gi, chromosomes); 
     nbrOfUnits <- nbrOfUnits(cdf);
     unitsNotXY <- setdiff(1:nbrOfUnits, unitsXY); 
     log && printf(log, "Identified %d units (%.1f%%) on sex chromosomes out of %d\n", length(unitsXY), 100*length(unitsXY)/nbrOfUnits, nbrOfUnits);

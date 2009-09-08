@@ -208,7 +208,7 @@ setMethodS3("getUnitGroupCellChromosomePositionMap", "AffymetrixCdfFile", functi
     verbose && str(verbose, units);
     verbose && cat(verbose, "Subset by chromosomes:");
     verbose && str(verbose, chromosomes);
-    units <- getUnitsOnChromosome(gi, chromosomes);
+    units <- getUnitsOnChromosomes(gi, chromosomes);
     verbose && cat(verbose, "Units:");
     verbose && str(verbose, units);
     if (!is.null(units0)) {

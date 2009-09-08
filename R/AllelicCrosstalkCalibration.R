@@ -301,11 +301,11 @@ setMethodS3("getSubsetToAvg", "AllelicCrosstalkCalibration", function(this, ...,
   
         # Identify units to be excluded
         if (subsetToAvg == "-X") {
-          subset <- getUnitsOnChromosome(gi, 23, .checkArgs=FALSE);
+          subset <- getUnitsOnChromosomes(gi, 23, .checkArgs=FALSE);
         } else if (subsetToAvg == "-Y") {
-          subset <- getUnitsOnChromosome(gi, 24, .checkArgs=FALSE);
+          subset <- getUnitsOnChromosomes(gi, 24, .checkArgs=FALSE);
         } else if (subsetToAvg == "-XY") {
-          subset <- getUnitsOnChromosome(gi, 23:24, .checkArgs=FALSE);
+          subset <- getUnitsOnChromosomes(gi, 23:24, .checkArgs=FALSE);
         }
   
         verbose && cat(verbose, "Units to exclude: ");

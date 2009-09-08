@@ -1,6 +1,18 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 1.2.0 [2009-09-07]
+o New public release. No updates.
+o Package passes R CMD check on R v2.9.2 and all redundancy tests.
+
+
+Version: 1.1.5 [2009-09-07]
+o Renamed getUnitsOnChromosome() to getUnitsOnChromosomes() for the
+  GenomeInformation class.  The former now calls the latter for backward
+  compatibility.  This was done to make it more consistent with a 
+  similar method in aroma.core.
+
+
 Version: 1.1.4 [2009-09-05]
 o BUG FIX: A few plot functions would generate "Error: 'smoothScatter'
   is not an exported object from 'namespace:geneplotter'".  This would

@@ -402,7 +402,13 @@ setMethodS3("getResiduals", "QualityAssessmentModel", function(this, units=NULL,
 # @synopsis
 #
 # \arguments{
-#  \item{}{}
+#  \item{path}{}
+#  \item{name}{}
+#  \item{tags}{}
+#  \item{...}{}
+#  \item{ram}{}
+#  \item{force}{}
+#  \item{verbose}{}
 # }
 #
 # \value{
@@ -415,7 +421,7 @@ setMethodS3("getResiduals", "QualityAssessmentModel", function(this, units=NULL,
 #   @seeclass
 # }
 #*/###########################################################################
-setMethodS3("getWeights", "QualityAssessmentModel", function(this, path=NULL, name="qcData", tags="*", ram=NULL, force=FALSE, verbose=FALSE, ...) {
+setMethodS3("getWeights", "QualityAssessmentModel", function(this, path=NULL, name="qcData", tags="*", ..., ram=NULL, force=FALSE, verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local functions
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

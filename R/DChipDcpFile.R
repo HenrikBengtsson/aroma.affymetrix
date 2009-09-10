@@ -12,7 +12,7 @@
 # @synopsis 
 #
 # \arguments{
-#   \item{...}{Arguments passed to @see "aroma.core::GenericDataFile".}
+#   \item{...}{Arguments passed to @see "AffymetrixFile".}
 # }
 #
 # \section{Fields and Methods}{

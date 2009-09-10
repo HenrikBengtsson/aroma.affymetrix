@@ -37,7 +37,7 @@
 \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
 
 \seealso{
-  To compare two CDFs, see \code{\link[aroma.affymetrix:equals.AffymetrixCdfFile]{*equals}()}.
+  To compare two CDFs, use \code{equals()}.
   Internally \code{\link[affxparser]{convertCdf}} is used.
   For more information see \code{\link{AffymetrixCdfFile}}.
 }

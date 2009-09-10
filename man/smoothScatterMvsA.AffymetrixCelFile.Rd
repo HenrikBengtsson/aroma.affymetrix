@@ -42,7 +42,7 @@
 
 \seealso{
   \code{\link[aroma.affymetrix:plotMvsA.AffymetrixCelFile]{*plotMvsA}()}.
-  Internally \code{\link[geneplotter]{smoothScatter}} is used.
+  Internally \code{\link[graphics]{smoothScatter}} is used.
   For more information see \code{\link{AffymetrixCelFile}}.
 }
 \keyword{internal}

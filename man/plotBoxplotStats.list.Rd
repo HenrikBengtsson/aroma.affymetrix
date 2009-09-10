@@ -32,10 +32,6 @@
 
  \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
 
- \seealso{
-   \code{\link[aroma.affymetrix:mergeBoxplotStats.list]{*mergeBoxplotStats}()}.
- }
-
 
 \keyword{methods}
 \keyword{internal}

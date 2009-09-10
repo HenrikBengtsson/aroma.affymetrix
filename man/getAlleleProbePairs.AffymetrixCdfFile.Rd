@@ -46,7 +46,6 @@
 \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
 
 \seealso{
-  \code{\link[aroma.affymetrix:getAllelePairUnitSets.AffymetrixCdfFile]{*getAllelePairUnitSets}()}.
   For more information see \code{\link{AffymetrixCdfFile}}.
 }
 \keyword{internal}

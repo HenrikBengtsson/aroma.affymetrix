@@ -101,7 +101,7 @@ byChipType, getAromaUgpFile, getChipType, getPlatform, nbrOfUnits
 getAromaPlatform, getPlatform, getUnitAnnotationDataFile, getUnitNamesFile, getUnitTypesFile
 
  \bold{Methods inherited from AromaChipTypeAnnotationFile}:\cr
-byChipType, byName, findByChipType, fromChipType, fromFile, getChipType, getHeader, getPlatform
+byChipType, byName, findByChipType, fromFile, getChipType, getHeader, getPlatform
 
  \bold{Methods inherited from AromaMicroarrayDataFile}:\cr
 getAttributeXY, getChipType, getPlatform, getPloidy, hasAttributeXY, setAttributesByTags, setAttributeXY

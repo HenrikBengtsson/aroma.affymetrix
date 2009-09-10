@@ -71,8 +71,5 @@ asThis, $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clone
 
  }
 
- \examples{\dontrun{
- }}
-
  \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
 \keyword{classes}

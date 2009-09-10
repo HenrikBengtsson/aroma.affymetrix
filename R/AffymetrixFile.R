@@ -10,13 +10,13 @@
 #  e.g. an Affymetrix CEL file or an Affymetrix CDF file.
 #  Note that this class is abstract and can not be instanciated, but
 #  instead you have to use one of the subclasses or the generic 
-#  @seemethod "fromFile" method.
+#  \code{fromFile()} method.
 # }
 # 
 # @synopsis
 #
 # \arguments{
-#   \item{...}{Arguments passed to @see "aroma.core::GenericDataFile".}
+#   \item{...}{Arguments passed to @see "R.filesets::GenericDataFile".}
 # }
 #
 # \section{Fields and Methods}{

@@ -394,7 +394,6 @@ setMethodS3("getChipType", "CnagCfhFile", function(this, ...) {
 # @author
 #
 # \seealso{
-#   @seemethod "updateUnits".
 #   @seeclass
 # }
 #

@@ -94,7 +94,7 @@ asThis, $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clone
    we can choose to encode/decode our structure/information to fit the
    structure of the CEL file.  This abstract class provides transparent
    methods for encoding and decoding such information through methods
-   \code{\link[aroma.affymetrix:encodeUnitGroup.ParameterCelFile]{*encodeUnitGroup}()} and \code{\link[aroma.affymetrix:decodeUnitGroup.ParameterCelFile]{*decodeUnitGroup}()}.
+   \code{encodeUnitGroup()} and \code{decodeUnitGroup()}.
    By subclassing you can implement different types of data structures.
  }
 

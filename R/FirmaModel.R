@@ -27,7 +27,7 @@
 # \author{Ken Simpson (ksimpson[at]wehi.edu.au).}
 #
 #*/###########################################################################
-setConstructorS3("FirmaModel", function(rmaPlm=NULL, summaryMethod=c("median","upperQuartile","max"), operateOn=c("residuals","weights"), ...) {
+setConstructorS3("FirmaModel", function(rmaPlm=NULL, summaryMethod=c("median", "upperQuartile", "max"), operateOn=c("residuals", "weights"), ...) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -457,13 +457,12 @@ setMethodS3("findUnitsTodo", "FirmaModel", function(this, ...) {
 #     If @NULL, all units are considered.
 #     If \code{remaining}, only non-fitted units are considered.
 #   }
-#   \item{...}{Arguments passed to @seemethod "readUnits".}
-#   \item{force}{If @TRUE, already fitted units are re-fitted, and
-#     cached data is re-read.}
+#   \item{...}{Arguments passed to \code{readUnits()}.}
 #   \item{ram}{A @double indicating if more or less units should
 #     be loaded into memory at the same time.}
+#   \item{force}{If @TRUE, already fitted units are re-fitted, and
+#     cached data is re-read.}
 #   \item{verbose}{See @see "R.utils::Verbose".}
-#   \item{moreUnits}{Deprected. Use \code{ram} instead.}
 # }
 #
 # \value{
@@ -519,7 +518,7 @@ setMethodS3("fit", "FirmaModel", function(this, units="remaining", ..., ram=NULL
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   ds <- getDataSet(this$.plm);
   cdf <- getCdf(ds);
-  if (this$operateOn=="weights")
+  if (this$operateOn == "weights")
     ws <- calculateWeights(this, verbose = verbose)
   else
     ws <- calculateResiduals(this, verbose = verbose)

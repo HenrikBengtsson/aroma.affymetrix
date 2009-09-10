@@ -42,7 +42,7 @@
 \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
 
 \seealso{
-  To update to file footer afterwards, see \code{\link[aroma.affymetrix:writeFooter.AromaUnitTabularBinaryFile]{*writeFooter}()}.
+  To update to file footer afterwards, see \code{writeFooter()}.
 }
 
 

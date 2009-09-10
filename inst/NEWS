@@ -1,8 +1,9 @@
 Package: aroma.affymetrix
 =========================
 
-Version: 1.2.0 [2009-09-07]
-o New public release. No updates.
+Version: 1.2.0 [2009-09-09]
+o New public release.
+o Fixed broken/missing Rd links.
 o Package passes R CMD check on R v2.9.2 and all redundancy tests.
 
 

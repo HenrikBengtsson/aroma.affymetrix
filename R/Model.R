@@ -504,7 +504,6 @@ setMethodS3("getDataSet", "Model", function(this, ...) {
 # @author
 #
 # \seealso{
-#   @seemethod "setCdf".
 #   @seeclass
 # }
 #

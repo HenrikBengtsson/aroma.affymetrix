@@ -36,9 +36,6 @@
 #  @allmethods "public"  
 # }
 # 
-# \examples{\dontrun{
-# }}
-#
 # @author
 #*/###########################################################################
 setConstructorS3("ScaleNormalization", function(dataSet=NULL, ..., targetAvg=4400, subsetToUpdate=NULL, typesToUpdate=NULL, subsetToAvg="-XY", typesToAvg=typesToUpdate, shift=0) {

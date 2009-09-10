@@ -39,13 +39,13 @@ extends \emph{\link[aroma.core]{AromaPlatformInterface}}\cr
   e.g. an Affymetrix CEL file or an Affymetrix CDF file.
   Note that this class is abstract and can not be instanciated, but
   instead you have to use one of the subclasses or the generic
-  \code{\link[aroma.affymetrix:fromFile.AffymetrixFile]{*fromFile}()} method.
+  \code{fromFile()} method.
  }
 
  \usage{AffymetrixFile(...)}
 
  \arguments{
-   \item{...}{Arguments passed to \code{\link[aroma.core]{GenericDataFile}}.}
+   \item{...}{Arguments passed to \code{\link[R.filesets]{GenericDataFile}}.}
  }
 
  \section{Fields and Methods}{

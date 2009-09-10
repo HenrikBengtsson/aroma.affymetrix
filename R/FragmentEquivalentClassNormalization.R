@@ -41,9 +41,6 @@
 #   Affymetrix' Genotype Console v2.
 # }
 #
-# \examples{\dontrun{
-# }}
-#
 # @author
 #*/###########################################################################
 setConstructorS3("FragmentEquivalentClassNormalization", function(dataSet=NULL, ..., targetAvgs=NULL, subsetToFit="-XY") {

@@ -22,10 +22,6 @@
 #
 # @author
 #
-# \seealso{
-#   @seemethod "mergeBoxplotStats".
-# }
-#
 # @keyword internal
 #*/########################################################################### 
 setMethodS3("plotBoxplotStats", "list", function(stats, ylim=NULL, outline=FALSE, las=2, ...) {

@@ -163,7 +163,6 @@ setMethodS3("getFitUnitFunction", "MultiArrayUnitModel", function(this, ...) {
 # @author
 #
 # \seealso{
-#   @seemethod "updateUnits".
 #   @seeclass
 # }
 #

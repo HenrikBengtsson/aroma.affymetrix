@@ -47,7 +47,7 @@ extends \emph{\link[aroma.core]{UnitNamesFile}}\cr
  \usage{DChipCdfBinFile(...)}
 
  \arguments{
-   \item{...}{Arguments passed to \code{\link[aroma.core]{GenericDataFile}}.}
+   \item{...}{Arguments passed to \code{\link{AffymetrixFile}}.}
  }
 
  \section{Fields and Methods}{

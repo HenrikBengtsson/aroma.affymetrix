@@ -35,7 +35,7 @@ extends \link[R.filesets]{GenericDataFile}\cr
  \usage{SnpInformation(...)}
 
  \arguments{
-   \item{...}{Arguments passed to \code{\link[aroma.core]{GenericDataFile}}.}
+   \item{...}{Arguments passed to \code{\link[R.filesets]{GenericDataFile}}.}
  }
 
  \section{Fields and Methods}{
@@ -43,7 +43,6 @@ extends \link[R.filesets]{GenericDataFile}\cr
 \tabular{rll}{
  \tab \code{\link[aroma.affymetrix:byChipType.SnpInformation]{byChipType}} \tab Static method to define a genome information set by chip type.\cr
  \tab \code{\link[aroma.affymetrix:fromCdf.SnpInformation]{fromCdf}} \tab Static method to define a genome information set from a CDF.\cr
- \tab \code{fromChipType} \tab  -\cr
  \tab \code{fromDataSet} \tab  -\cr
  \tab \code{\link[aroma.affymetrix:getChipType.SnpInformation]{getChipType}} \tab Gets the chip type of this genome information set.\cr
  \tab \code{\link[aroma.affymetrix:getData.SnpInformation]{getData}} \tab Gets all or a subset of the genome information data.\cr

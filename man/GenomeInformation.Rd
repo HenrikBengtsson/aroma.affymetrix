@@ -35,7 +35,7 @@ extends \link[R.filesets]{GenericDataFile}\cr
  \usage{GenomeInformation(..., .verify=TRUE)}
 
  \arguments{
-   \item{...}{Arguments passed to \code{\link[aroma.core]{GenericDataFile}}.}
+   \item{...}{Arguments passed to \code{\link[R.filesets]{GenericDataFile}}.}
    \item{.verify}{For internal use only.}
  }
 
@@ -44,7 +44,6 @@ extends \link[R.filesets]{GenericDataFile}\cr
 \tabular{rll}{
  \tab \code{\link[aroma.affymetrix:byChipType.GenomeInformation]{byChipType}} \tab Static method to define a genome information set by chip type.\cr
  \tab \code{\link[aroma.affymetrix:fromCdf.GenomeInformation]{fromCdf}} \tab Static method to define a genome information set from a CDF.\cr
- \tab \code{fromChipType} \tab  -\cr
  \tab \code{fromDataSet} \tab  -\cr
  \tab \code{\link[aroma.affymetrix:getChipType.GenomeInformation]{getChipType}} \tab Gets the chip type of this genome information set.\cr
  \tab \code{getChromosomes} \tab  -\cr
@@ -52,6 +51,7 @@ extends \link[R.filesets]{GenericDataFile}\cr
  \tab \code{\link[aroma.affymetrix:getData.GenomeInformation]{getData}} \tab Gets all or a subset of the genome information data.\cr
  \tab \code{\link[aroma.affymetrix:getPositions.GenomeInformation]{getPositions}} \tab Gets the physical positions for a set of units.\cr
  \tab \code{getUnitsOnChromosome} \tab  -\cr
+ \tab \code{getUnitsOnChromosomes} \tab  -\cr
  \tab \code{nbrOfUnits} \tab  -\cr
  \tab \code{\link[aroma.affymetrix:plotDensity.GenomeInformation]{plotDensity}} \tab Plots the density of SNPs for a given chromosome.\cr
 }

@@ -38,7 +38,6 @@
 \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
 
 \seealso{
-  \code{\link[aroma.affymetrix:updateUnits.MultiArrayUnitModel]{*updateUnits}()}.
   For more information see \code{\link{MultiArrayUnitModel}}.
 }
 

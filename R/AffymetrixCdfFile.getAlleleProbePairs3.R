@@ -34,7 +34,6 @@
 # @author
 #
 # \seealso{
-#   @seemethod "getAllelePairUnitSets".
 #   @seeclass
 # }
 #*/###########################################################################

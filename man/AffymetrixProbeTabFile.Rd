@@ -53,7 +53,6 @@ extends \emph{\link[aroma.core]{AromaPlatformInterface}}\cr
 \tabular{rll}{
  \tab \code{byChipType} \tab  -\cr
  \tab \code{fromCdf} \tab  -\cr
- \tab \code{fromChipType} \tab  -\cr
  \tab \code{getCdf} \tab  -\cr
  \tab \code{getChipType} \tab  -\cr
  \tab \code{getColumnNames} \tab  -\cr

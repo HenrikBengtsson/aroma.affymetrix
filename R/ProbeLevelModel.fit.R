@@ -15,7 +15,7 @@
 #     If @NULL, all units are considered.
 #     If \code{remaining}, only non-fitted units are considered.
 #   }
-#   \item{...}{Arguments passed to @seemethod "readUnits".}
+#   \item{...}{Arguments passed to \code{readUnits()}.}
 #   \item{force}{If @TRUE, already fitted units are re-fitted, and
 #     cached data is re-read.}
 #   \item{ram}{A @double indicating if more or less units should

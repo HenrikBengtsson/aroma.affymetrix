@@ -41,7 +41,6 @@
 \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
 
 \seealso{
-  \code{\link[aroma.affymetrix:updateUnits.CnagCfhFile]{*updateUnits}()}.
   For more information see \code{\link{CnagCfhFile}}.
 }
 

@@ -102,7 +102,7 @@ setMethodS3("getCdf", "AromaUnitTabularBinaryFile", function(this, ..., force=FA
 # @author
 #
 # \seealso{
-#   To update to file footer afterwards, see @seemethod "writeFooter".
+#   To update to file footer afterwards, see \code{writeFooter()}.
 # }
 #
 # @keyword IO

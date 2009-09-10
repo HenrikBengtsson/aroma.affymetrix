@@ -48,13 +48,12 @@ extends \emph{\link[aroma.affymetrix]{SnpInformation}}\cr
   \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{\link[aroma.affymetrix:byChipType.DChipSnpInformation]{byChipType}} \tab Defines a DChipSnpInformation object by chip type.\cr
- \tab \code{fromChipType} \tab  -\cr
  \tab \code{readDataFrame} \tab  -\cr
 }
 
 
  \bold{Methods inherited from SnpInformation}:\cr
-byChipType, fromCdf, fromChipType, fromDataSet, getChipType, getData, getFields, getFragmentLengths, getFragmentStarts, getFragmentStops, isCompatibleWithCdf, nbrOfEnzymes, nbrOfUnits, readDataFrame
+byChipType, fromCdf, fromDataSet, getChipType, getData, getFields, getFragmentLengths, getFragmentStarts, getFragmentStops, isCompatibleWithCdf, nbrOfEnzymes, nbrOfUnits, readDataFrame
 
  \bold{Methods inherited from GenericDataFile}:\cr
 compareChecksum, copyTo, equals, fromFile, getAlias, getAttribute, getAttributes, getChecksum, getCreatedOn, getFilename, getFileSize, getFileType, getFullName, getFullNameTranslator, getLastAccessedOn, getLastModifiedOn, getName, getPath, getPathname, getTags, gunzip, gzip, hasBeenModified, hasTag, hasTags, isFile, readChecksum, renameTo, renameToUpperCaseExt, setAlias, setAttribute, setAttributes, setAttributesBy, setAttributesByTags, setFullName, setFullNameTranslator, setName, testAttributes, validateChecksum, writeChecksum

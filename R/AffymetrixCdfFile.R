@@ -132,7 +132,6 @@ setMethodS3("as.character", "AffymetrixCdfFile", function(x, ...) {
 # @author
 #
 # \seealso{
-#   @seemethod "byChipType".
 #   @seeclass
 # }
 #
@@ -181,7 +180,6 @@ setMethodS3("fromFile", "AffymetrixCdfFile", function(static, filename, path=NUL
 # @author
 #
 # \seealso{
-#   @seemethod "byChipType".
 #   @seeclass
 # }
 #
@@ -1253,7 +1251,7 @@ setMethodS3("compare", "AffymetrixCdfFile", function(this, other, ...) {
 # @author
 #
 # \seealso{
-#   To compare two CDFs, see @seemethod "equals".
+#   To compare two CDFs, use \code{equals()}.
 #   Internally @see "affxparser::convertCdf" is used.
 #   @seeclass
 # }

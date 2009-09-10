@@ -22,9 +22,6 @@
 #  @allmethods "public"  
 # }
 # 
-# \examples{\dontrun{
-# }}
-#
 # @author
 #*/###########################################################################
 setConstructorS3("UnitTypeScaleNormalization", function(..., targetAvg=4400) {

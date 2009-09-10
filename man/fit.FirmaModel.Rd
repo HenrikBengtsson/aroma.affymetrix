@@ -26,13 +26,12 @@
      If \code{\link[base]{NULL}}, all units are considered.
      If \code{remaining}, only non-fitted units are considered.
    }
-   \item{...}{Arguments passed to \code{\link[aroma.affymetrix:readUnits.FirmaModel]{*readUnits}()}.}
-   \item{force}{If \code{\link[base:logical]{TRUE}}, already fitted units are re-fitted, and
-     cached data is re-read.}
+   \item{...}{Arguments passed to \code{readUnits()}.}
    \item{ram}{A \code{\link[base]{double}} indicating if more or less units should
      be loaded into memory at the same time.}
+   \item{force}{If \code{\link[base:logical]{TRUE}}, already fitted units are re-fitted, and
+     cached data is re-read.}
    \item{verbose}{See \code{\link[R.utils]{Verbose}}.}
-   \item{moreUnits}{Deprected. Use \code{ram} instead.}
  }
 
  \value{

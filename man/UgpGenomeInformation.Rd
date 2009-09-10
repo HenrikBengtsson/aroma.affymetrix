@@ -49,7 +49,6 @@ extends \emph{\link[aroma.affymetrix]{GenomeInformation}}\cr
 \tabular{rll}{
  \tab \code{\link[aroma.affymetrix:byChipType.UgpGenomeInformation]{byChipType}} \tab Defines a UgpGenomeInformation object by chip type.\cr
  \tab \code{clearCache} \tab  -\cr
- \tab \code{fromChipType} \tab  -\cr
  \tab \code{getChipType} \tab  -\cr
  \tab \code{getChromosomes} \tab  -\cr
  \tab \code{getData} \tab  -\cr
@@ -61,7 +60,7 @@ extends \emph{\link[aroma.affymetrix]{GenomeInformation}}\cr
 
 
  \bold{Methods inherited from GenomeInformation}:\cr
-byChipType, fromCdf, fromChipType, fromDataSet, getChipType, getChromosomes, getChromosomeStats, getData, getPositions, getUnitIndices, getUnitsOnChromosome, isCompatibleWithCdf, nbrOfUnits, plotDensity, readDataFrame
+byChipType, fromCdf, fromDataSet, getChipType, getChromosomes, getChromosomeStats, getData, getPositions, getUnitIndices, getUnitsOnChromosome, getUnitsOnChromosomes, isCompatibleWithCdf, nbrOfUnits, plotDensity, readDataFrame
 
  \bold{Methods inherited from GenericDataFile}:\cr
 compareChecksum, copyTo, equals, fromFile, getAlias, getAttribute, getAttributes, getChecksum, getCreatedOn, getFilename, getFileSize, getFileType, getFullName, getFullNameTranslator, getLastAccessedOn, getLastModifiedOn, getName, getPath, getPathname, getTags, gunzip, gzip, hasBeenModified, hasTag, hasTags, isFile, readChecksum, renameTo, renameToUpperCaseExt, setAlias, setAttribute, setAttributes, setAttributesBy, setAttributesByTags, setFullName, setFullNameTranslator, setName, testAttributes, validateChecksum, writeChecksum

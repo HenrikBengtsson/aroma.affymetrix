@@ -27,7 +27,7 @@
      If \code{\link[base]{NULL}}, all units are considered.
      If \code{remaining}, only non-fitted units are considered.
    }
-   \item{...}{Arguments passed to \code{\link[aroma.affymetrix:readUnits.ProbeLevelModel]{*readUnits}()}.}
+   \item{...}{Arguments passed to \code{readUnits()}.}
    \item{force}{If \code{\link[base:logical]{TRUE}}, already fitted units are re-fitted, and
      cached data is re-read.}
    \item{ram}{A \code{\link[base]{double}} indicating if more or less units should

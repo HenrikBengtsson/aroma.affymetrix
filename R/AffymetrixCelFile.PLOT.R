@@ -401,8 +401,7 @@ setMethodS3("highlight", "AffymetrixCelFile", function(this, indices=NULL, ...) 
 #          coordinates of the cells to be returned.}
 #   \item{yrange}{A @numeric @vector of length two giving the top and bottom
 #          coordinates of the cells to be returned.}
-#   \item{...}{Additional arguments passed to @seemethod "readRectangle",
-#      but also @see "graphics::image".}
+#   \item{...}{Additional arguments passed @see "graphics::image" and [...].}
 #   \item{field}{The data field to be displayed.}
 #   \item{col}{The color map to be used.}
 #   \item{main}{The main title of the plot.}

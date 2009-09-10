@@ -43,7 +43,7 @@ extends \emph{\link[aroma.core]{AromaPlatformInterface}}\cr
 
  \arguments{
    \item{files}{A \code{\link[base]{list}} of \code{\link{AffymetrixFile}}:s.}
-   \item{...}{Arguments passed to \code{\link[aroma.core]{GenericDataFileSet}}.}
+   \item{...}{Arguments passed to \code{\link[R.filesets]{GenericDataFileSet}}.}
  }
 
  \section{Fields and Methods}{

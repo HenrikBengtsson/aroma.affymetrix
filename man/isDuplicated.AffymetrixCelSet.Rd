@@ -34,20 +34,6 @@
   has the same time stamp as another preceeding CEL file.
 }
 
-\examples{\dontrun{
-  # The data set of interest
-  ds <- AffymetrixCelSet$fromFiles(path=...)
-
-  # Added other data sets to be used as a reference
-  for (path in refPaths) {
-    dsR <- AffymetrixCelSet$fromFiles(path=path)
-    append(ds, dsR)
-  }
-
-  # Keep only unique arrays
-  ds <- extract(ds, !isDuplicated(ds))
-}}
-
 \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
 
 \seealso{

@@ -493,7 +493,7 @@ setMethodS3("byName", "AffymetrixCelSet", function(static, name, tags=NULL, chip
   }
 
   suppressWarnings({
-    fromFiles(static, path=path, cdf=cdf, ...);
+    byPath(static, path=path, cdf=cdf, ...);
   })
 }, static=TRUE)
 
@@ -550,7 +550,7 @@ setMethodS3("updateSampleAnnotationSet", "AffymetrixCelSet", function(this, ...,
 }, private=TRUE)  # updateSampleAnnotationSet()
 
 
-setMethodS3("fromFiles", "AffymetrixCelSet", function(static, path="rawData/", pattern="[.](c|C)(e|E)(l|L)$", cdf=NULL, checkChipType=is.null(cdf), ..., onDuplicates=c("keep", "exclude", "error"), fileClass="AffymetrixCelFile", force=TRUE, verbose=FALSE) {
+setMethodS3("byPath", "AffymetrixCelSet", function(static, path="rawData/", pattern="[.](c|C)(e|E)(l|L)$", cdf=NULL, checkChipType=is.null(cdf), ..., onDuplicates=c("keep", "exclude", "error"), fileClass="AffymetrixCelFile", force=TRUE, verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
@@ -570,7 +570,7 @@ setMethodS3("fromFiles", "AffymetrixCelSet", function(static, path="rawData/", p
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Look for cached results (useful for extremely large data set)
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  key <- list(method="fromFiles", class=class(static)[1], path=path, pattern=pattern, cdf=cdf, checkChipType=checkChipType, ..., fileClass=fileClass);
+  key <- list(method="byPath", class=class(static)[1], path=path, pattern=pattern, cdf=cdf, checkChipType=checkChipType, ..., fileClass=fileClass);
   dirs <- "aroma.affymetrix";
   res <- loadCache(key=key, dirs=dirs);
   if (!force && !is.null(res)) {
@@ -579,7 +579,7 @@ setMethodS3("fromFiles", "AffymetrixCelSet", function(static, path="rawData/", p
     return(res);
   }
 
-  set <- fromFiles.AffymetrixFileSet(static, path=path, pattern=pattern, ..., fileClass=fileClass, verbose=less(verbose));
+  set <- byPath.AffymetrixFileSet(static, path=path, pattern=pattern, ..., fileClass=fileClass, verbose=less(verbose));
 
   verbose && enter(verbose, "Retrieved files: ", nbrOfFiles(set));
 
@@ -788,20 +788,6 @@ setMethodS3("as.AffymetrixCelSet", "default", function(object, ...) {
 #   An element with value @TRUE indicates that the corresponding CEL file
 #   has the same time stamp as another preceeding CEL file.
 # }
-#
-# \examples{\dontrun{
-#   # The data set of interest
-#   ds <- AffymetrixCelSet$fromFiles(path=...)
-#
-#   # Added other data sets to be used as a reference
-#   for (path in refPaths) {
-#     dsR <- AffymetrixCelSet$fromFiles(path=path)
-#     append(ds, dsR)
-#   }
-#
-#   # Keep only unique arrays
-#   ds <- extract(ds, !isDuplicated(ds))
-# }}
 #
 # @author
 #
@@ -1456,11 +1442,6 @@ setMethodS3("[", "AffymetrixCelSet", function(this, units=NULL, ..., drop=FALSE)
 
 setMethodS3("[[", "AffymetrixCelSet", function(this, units=NULL, ...) {
   this[units=units, ..., drop=TRUE];
-})
-
-
-setMethodS3("getFullName", "AffymetrixCelSet", function(this, parent=1, ...) {
-  NextMethod("getFullName", this, parent=parent, ...);
 })
 
 

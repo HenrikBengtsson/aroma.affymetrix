@@ -143,12 +143,12 @@ setMethodS3("byName", "DChipDcpSet", function(static, name, tags=NULL, chipType,
   }
 
   suppressWarnings({
-    fromFiles(static, path=path, ...);
+    byPath(static, path=path, ...);
   })
 }, static=TRUE)
 
 
-setMethodS3("fromFiles", "DChipDcpSet", function(static, path="rawData/", pattern="[.](dcp|DCP)$", ..., fileClass="DChipDcpFile", verbose=FALSE) {
+setMethodS3("byPath", "DChipDcpSet", function(static, path="rawData/", pattern="[.](dcp|DCP)$", ..., fileClass="DChipDcpFile", verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
@@ -162,7 +162,7 @@ setMethodS3("fromFiles", "DChipDcpSet", function(static, path="rawData/", patter
   
   verbose && enter(verbose, "Defining ", class(static)[1], " from files");
 
-  this <- fromFiles.AffymetrixFileSet(static, path=path, pattern=pattern, ..., fileClass=fileClass, verbose=less(verbose));
+  this <- byPath.AffymetrixFileSet(static, path=path, pattern=pattern, ..., fileClass=fileClass, verbose=less(verbose));
 
   verbose && enter(verbose, "Retrieved files: ", nbrOfFiles(this));
 
@@ -257,11 +257,6 @@ setMethodS3("as.DChipDcpSet", "default", function(object, ...) {
   throw("Cannot coerce object to an DChipDcpSet object: ", mode(object));
 })
 
-
-
-setMethodS3("getFullName", "DChipDcpSet", function(this, parent=1, ...) {
-  NextMethod("getFullName", this, parent=parent, ...);
-})
 
 
 setMethodS3("extractTheta", "DChipDcpSet", function(this, units=NULL, ..., drop=FALSE, verbose=FALSE) {

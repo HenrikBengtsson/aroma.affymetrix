@@ -45,12 +45,12 @@ setMethodS3("getFileClass", "FirmaSet", function(static, ...) {
   FirmaFile;
 }, static=TRUE, private=TRUE)
 
-setMethodS3("fromFiles", "FirmaSet", function(static, ..., pattern=",FIRMAscores[.](c|C)(e|E)(l|L)$", fileClass=NULL) {
+setMethodS3("byPath", "FirmaSet", function(static, ..., pattern=",FIRMAscores[.](c|C)(e|E)(l|L)$", fileClass=NULL) {
   # Argument 'fileClass':
   if (is.null(fileClass))
     fileClass <- gsub("Set$", "File", class(static)[1]);
 
-  fromFiles.AffymetrixFileSet(static, ..., pattern=pattern, fileClass=fileClass);
+  byPath.AffymetrixFileSet(static, ..., pattern=pattern, fileClass=fileClass);
 }, protected=TRUE, static=TRUE)
 
 

@@ -39,7 +39,7 @@ setMethodS3("allocateFromCdf", "AromaCellSequenceFile", function(static, cdf, pa
 
 
 
-setMethodS3("importFromAffymetrixProbeTabFile", "AromaCellSequenceFile", function(this, srcFile, rows=NULL, ..., ram=NULL, verbose=FALSE) {
+setMethodS3("importFromAffymetrixProbeTabFile", "AromaCellSequenceFile", function(this, srcFile, rows=NULL, ..., onDuplicates=c("warning", "error", "ignore"), keepSequenceLengths=NULL, ram=NULL, verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
@@ -64,6 +64,14 @@ setMethodS3("importFromAffymetrixProbeTabFile", "AromaCellSequenceFile", functio
   } else {
     rows <- Arguments$getIndices(rows, range=c(1,nbrOfCells));
     rows <- sort(unique(rows));
+  }
+
+  # Argument 'onDuplicates':
+  onDuplicates <- match.arg(onDuplicates);
+
+  # Argument 'keepSequenceLengths':
+  if (!is.null(keepSequenceLengths)) {
+    keepSequenceLengths <- Arguments$getIndices(keepSequenceLengths);
   }
 
   # Argument 'ram':
@@ -127,15 +135,22 @@ setMethodS3("importFromAffymetrixProbeTabFile", "AromaCellSequenceFile", functio
 
     cells <- nbrOfColumns*df[,"probeYPos"] + df[,"probeXPos"] + as.integer(1);
 
-    # Sanity check
+    # Check for duplicated cell indices
     dups <- duplicated(cells);
     hasDuplicates <- any(dups);
     if (hasDuplicates) {
       setOfDups <- cells[dups];
       n <- length(setOfDups);
+      msg <- paste("Identified ", n, " duplicated cell indices: ", 
+                             paste(head(setOfDups), collapse=", "), sep="");
+      verbose && cat(verbose, msg);
       verbose && print(verbose, head(df[dups,]));
-      throw("Identified ", n, " duplicated cell indices: ", 
-                                   paste(head(setOfDups), collapse=", "));
+      if (onDuplicates == "error") {
+        throw(msg);
+      } else if (onDuplicates == "warning") {
+        warning(msg);
+      } else if (onDuplicates == "ignore") {
+      }
     }
     rm(dups);
 
@@ -148,6 +163,30 @@ setMethodS3("importFromAffymetrixProbeTabFile", "AromaCellSequenceFile", functio
     verbose && str(verbose, cells);
     verbose && str(verbose, seqs);
     verbose && str(verbose, strands);
+
+    verbose && cat(verbose, "Unique probe-sequence lengths:");
+    verbose && str(verbose, seqs);
+    n <- nchar(seqs);
+    verbose && print(verbose, table(n));
+
+    # Identify probe sequences to be kept?
+    if (!is.null(keepSequenceLengths)) {
+      keep <- is.element(n, keepSequenceLengths);
+      keep <- whichVector(keep);
+      if (length(keep) != length(seqs)) {
+        verbose && enter(verbose, "Dropping probe sequence with odd lengths");
+        msg <- paste("Dropped ", length(seqs)-length(keep), 
+                     " sequences, because they are of unwanted lengths: ", 
+                     paste(keepSequenceLengths, collapse=", "), sep="");
+        verbose && cat(verbose, msg);
+        cells <- cells[keep];
+        seqs <- seqs[keep];
+        strands <- strands[keep];
+        warning(msg);
+        verbose && exit(verbose);
+      }
+      rm(keep);
+    }
 
     updateSequences(this, cells=cells, seqs=seqs, verbose=less(verbose, 25));
     updateTargetStrands(this, cells=cells, strands=strands, verbose=less(verbose, 25));
@@ -351,6 +390,15 @@ setMethodS3("inferMmFromPm", "AromaCellSequenceFile", function(this, cdf, units=
 
 ############################################################################
 # HISTORY:
+# 2009-09-27
+# o Added argument 'keepSequenceLengths' to importFromAffymetrixProbeTabFile() 
+#   for AromaCellSequenceFile so that one can drop sequences of incorrect
+#   lengths, cf. HuGene-1_0-st-v1.probe.tab.
+# o Added argument 'onDuplicates' to importFromAffymetrixProbeTabFile() for
+#   AromaCellSequenceFile.  If "error" ("warning"), an exception (warning)
+#   is generated whenever duplicated cell indices are detected in the probe
+#   tab file.  If "ignore", they are ignored, which means that the last
+#   duplicated probe sequence will be what is finally imported.
 # 2008-07-10
 # o Renamed inferMmFromPmSequences() to inferMmFromPm(), because now it also
 #   infers target strandedness.

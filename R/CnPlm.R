@@ -34,8 +34,8 @@
 # }
 #
 # \section{Requirements}{
-#   Classes inheriting from this @see "aroma.core::Interface" must provide the following
-#   fields, in addition to the ones according to @see "SnpPlm":
+#   Classes inheriting from this @see "R.oo::Interface" must provide the 
+#   following fields, in addition to the ones according to @see "SnpPlm":
 #   \itemize{
 #    \item{combineAlleles}{A @logical indicating if total or allele-specific
 #      copy numbers should be estimated according to the above averaging.}

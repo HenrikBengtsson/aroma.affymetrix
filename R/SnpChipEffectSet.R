@@ -31,8 +31,8 @@ setConstructorS3("SnpChipEffectSet", function(..., mergeStrands="byFirstFile") {
 })
 
   
-setMethodS3("fromFiles", "SnpChipEffectSet", function(static, ..., mergeStrands="auto") {
-  fromFiles.ChipEffectSet(static, ..., mergeStrands=mergeStrands);
+setMethodS3("byPath", "SnpChipEffectSet", function(static, ..., mergeStrands="auto") {
+  byPath.ChipEffectSet(static, ..., mergeStrands=mergeStrands);
 }, protected=TRUE, static=TRUE)
 
 

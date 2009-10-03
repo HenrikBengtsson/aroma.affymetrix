@@ -143,12 +143,12 @@ setMethodS3("getOutputDataSetOLD20090509", "Transform", function(this, ..., forc
       verbose && str(verbose, str);
 
       clazz <- Class$forName(class(ds)[1]);
-      staticMethod <- clazz$fromFiles;
+      staticMethod <- clazz$byPath;
       args$verbose <- less(verbose);
       outputDataSet <- do.call("staticMethod", args=args);
       rm(staticMethod, args); # Not needed anymore
 
-##      outputDataSet <- clazz$fromFiles(path=getPath(this), ...,
+##      outputDataSet <- clazz$byPath(path=getPath(this), ...,
 ##                             checkChipType=FALSE, verbose=less(verbose));
 
       verbose && exit(verbose);

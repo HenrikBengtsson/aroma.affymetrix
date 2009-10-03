@@ -34,12 +34,12 @@ setMethodS3("byName", "CrlmmParametersSet", function(static, name, tags=NULL, ..
                                            ..., paths=paths, mustExist=TRUE);
   })
 
-  fromFiles(static, path=path, ...);
+  byPath(static, path=path, ...);
 }, static=TRUE) 
 
-setMethodS3("fromFiles", "CrlmmParametersSet", function(static, ...) {
+setMethodS3("byPath", "CrlmmParametersSet", function(static, ...) {
   suppressWarnings({
-    fromFiles.GenericDataFileSet(static, ..., pattern=".*,CRLMM[.]atb$$");
+    byPath.GenericDataFileSet(static, ..., pattern=".*,CRLMM[.]atb$$");
   })
 })
 

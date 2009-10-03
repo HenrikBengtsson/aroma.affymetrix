@@ -85,7 +85,7 @@ setMethodS3("getResidualFileClass", "ResidualSet", function(static, ...) {
 }, static=TRUE, private=TRUE)
 
 
-setMethodS3("fromFiles", "ResidualSet", function(static, ..., pattern=",residuals[.](c|C)(e|E)(l|L)$", cdf=NULL, fileClass=NULL) {
+setMethodS3("byPath", "ResidualSet", function(static, ..., pattern=",residuals[.](c|C)(e|E)(l|L)$", cdf=NULL, fileClass=NULL) {
   # Argument 'cdf':
   if (!is.null(cdf)) {
     if (!inherits(cdf, "AffymetrixCdfFile"))
@@ -96,7 +96,7 @@ setMethodS3("fromFiles", "ResidualSet", function(static, ..., pattern=",residual
   if (is.null(fileClass))
     fileClass <- gsub("Set$", "File", class(static)[1]);
 
-  res <- fromFiles.AffymetrixFileSet(static, ..., pattern=pattern, fileClass=fileClass);
+  res <- byPath.AffymetrixFileSet(static, ..., pattern=pattern, fileClass=fileClass);
 
   # Set CDF?
   if (!is.null(cdf))

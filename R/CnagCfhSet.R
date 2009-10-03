@@ -357,11 +357,11 @@ setMethodS3("byName", "CnagCfhSet", function(static, name, tags=NULL, chipType, 
   }
 
   suppressWarnings({
-    fromFiles(static, path=path, ...);
+    byPath(static, path=path, ...);
   })
 }, static=TRUE)
 
-setMethodS3("fromFiles", "CnagCfhSet", function(static, path="rawData/", pattern="[.](c|C)(f|F)(h|H)$", checkChipType=TRUE, ..., onDuplicates=c("keep", "exclude", "error"), fileClass="CnagCfhFile", verbose=FALSE) {
+setMethodS3("byPath", "CnagCfhSet", function(static, path="rawData/", pattern="[.](c|C)(f|F)(h|H)$", checkChipType=TRUE, ..., onDuplicates=c("keep", "exclude", "error"), fileClass="CnagCfhFile", verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
@@ -378,7 +378,7 @@ setMethodS3("fromFiles", "CnagCfhSet", function(static, path="rawData/", pattern
   
   verbose && enter(verbose, "Defining ", class(static)[1], " from files");
 
-  this <- fromFiles.GenericDataFileSet(static, path=path, pattern=pattern, ..., fileClass=fileClass, verbose=less(verbose));
+  this <- byPath.GenericDataFileSet(static, path=path, pattern=pattern, ..., fileClass=fileClass, verbose=less(verbose));
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Handle duplicates
@@ -580,20 +580,6 @@ setMethodS3("as.CnagCfhSet", "default", function(object, ...) {
 #   An element with value @TRUE indicates that the corresponding CFH file
 #   has the same time stamp as another preceeding CFH file.
 # }
-#
-# \examples{\dontrun{
-#   # The data set of interest
-#   ds <- CnagCfhSet$fromFiles(path=...)
-#
-#   # Added other data sets to be used as a reference
-#   for (path in refPaths) {
-#     dsR <- CnagCfhSet$fromFiles(path=path)
-#     append(ds, dsR)
-#   }
-#
-#   # Keep only unique arrays
-#   ds <- extract(ds, !isDuplicated(ds))
-# }}
 #
 # @author
 #
@@ -1063,8 +1049,8 @@ setMethodS3("[[", "CnagCfhSet", function(this, units=NULL, ...) {
 })
 
 
-setMethodS3("getFullName", "CnagCfhSet", function(this, parent=1, ...) {
-  NextMethod("getFullName", this, parent=parent, ...);
+setMethodS3("getDefaultFullName", "CnagCfhSet", function(this, parent=1, ...) {
+  NextMethod("getDefaultFullName", this, parent=parent, ...);
 })
 
 

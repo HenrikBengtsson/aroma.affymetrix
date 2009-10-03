@@ -301,7 +301,7 @@ setMethodS3("process", "ChipEffectGroupMerge", function(this, ..., force=FALSE, 
   } # for (kk in ...)
 
   # Create the output set by re-reading it from files
-  outputSet <- fromFiles(ces, path, cdf=cdf, ...);
+  outputSet <- byPath(ces, path, cdf=cdf, ...);
 
   # Update the output data set
   this$outputSet <- outputSet;

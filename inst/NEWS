@@ -1,6 +1,23 @@
 Package: aroma.affymetrix
 =========================
 
+
+Version: 1.2.1 [2009-10-02]
+o Added argument 'onDuplicates' to importFromAffymetrixProbeTabFile() for
+  AromaCellSequenceFile.  If "error" ("warning"), an exception (warning)
+  is generated whenever duplicated cell indices are detected in the probe
+  tab file.  If "ignore", they are ignored, which means that the last
+  duplicated probe sequence will be what is finally imported.
+o Added argument 'keepSequenceLengths' to importFromAffymetrixProbeTabFile() 
+  for AromaCellSequenceFile so that one can drop sequences of incorrect
+  lengths, cf. HuGene-1_0-st-v1.probe.tab.
+o Added getDefaultFullName() to AffymetrixFileSet and CnagCfhSet.
+o CLEAN UP: Updated to use byPath() instead fromFiles().
+o CLEAN UP: Removed all getFullName() for all GenericDatFileSet classes.
+o BUG FIX: Now getCdf() for AffymetrixProbeTabFile first searches
+  for a CDF with filename <chipType>.cdf, then <chipType>,.*.cdf.
+
+
 Version: 1.2.0 [2009-09-09]
 o New public release.
 o Fixed broken/missing Rd links.

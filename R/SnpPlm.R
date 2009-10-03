@@ -6,7 +6,7 @@
 # \description{
 #  @classhierarchy
 #
-#  An @see "aroma.core::Interface" implementing methods special for 
+#  An @see "R.oo::Interface" implementing methods special for 
 #  @see "ProbeLevelModel"s specific to SNP arrays.
 # }
 # 
@@ -21,8 +21,8 @@
 # }
 #
 # \section{Requirements}{
-#   Classes inheriting from this @see "aroma.core::Interface" must provide the following
-#   fields:
+#   Classes inheriting from this @see "R.oo::Interface" must provide the
+#   following fields:
 #   \itemize{
 #    \item{mergeStrands}{A @logical value indicating if strands should be
 #       merged or not.}

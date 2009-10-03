@@ -347,9 +347,11 @@ setMethodS3("getCdf", "AffymetrixProbeTabFile", function(this, ...) {
     chipType <- getChipType(this);
     cdf <- NULL;
     tryCatch({
-      cdf <- AffymetrixCdfFile$byChipType(chipType, tags=".*");
+      cdf <- AffymetrixCdfFile$byChipType(chipType);
     }, error = function(ex) {});
-    cdf <- AffymetrixCdfFile$byChipType(chipType);
+    if (is.null(cdf)) {
+      cdf <- AffymetrixCdfFile$byChipType(chipType, tags=".*");
+    }
     this$.cdf <- cdf;
   }
   cdf;
@@ -701,6 +703,9 @@ setMethodS3("readSequenceDataFrame", "AffymetrixProbeTabFile", function(this, ..
 
 ############################################################################
 # HISTORY:
+# 2009-09-27
+# o BUG FIX: Now getCdf() for AffymetrixProbeTabFile first searches for a
+#   CDF with filename <chipType>.cdf, then <chipType>,.*.cdf.
 # 2009-05-19
 # o BUG FIX: getCdf() for AffymetrixProbeTabFile would fail if the CDF
 #   had no tags.

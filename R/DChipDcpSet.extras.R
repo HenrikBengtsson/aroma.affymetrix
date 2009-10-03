@@ -145,7 +145,7 @@ setMethodS3("exportTotalAndFracB", "DChipDcpSet", function(this, ..., overwrite=
 
   verbose && enter(verbose, "Setting up output data sets");
   res <- list(
-    total = AromaUnitTotalCnBinarySet$fromFiles(outPath),
+    total = AromaUnitTotalCnBinarySet$byPath(outPath),
     fracB = NA
   );
   verbose && exit(verbose);

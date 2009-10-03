@@ -135,7 +135,7 @@ setMethodS3("getCallSet", "CrlmmModel", function(this, ..., verbose=FALSE) {
   } # for (kk ...)
   verbose && exit(verbose);
 
-  res <- AromaUnitGenotypeCallSet$fromFiles(outPath);
+  res <- AromaUnitGenotypeCallSet$byPath(outPath);
 
   res;
 }) # getCallSet()
@@ -194,7 +194,7 @@ setMethodS3("getConfidenceScoreSet", "CrlmmModel", function(this, ..., verbose=F
   } # for (kk ...)
   verbose && exit(verbose);
 
-  res <- AromaUnitSignalBinarySet$fromFiles(outPath, pattern=",confidenceScores.acf$");
+  res <- AromaUnitSignalBinarySet$byPath(outPath, pattern=",confidenceScores.acf$");
 
   res;
 }) # getConfidenceScoreSet()
@@ -250,7 +250,7 @@ setMethodS3("getCrlmmParametersSet", "CrlmmModel", function(this, ..., verbose=F
   } # for (kk ...)
   verbose && exit(verbose);
 
-  res <- CrlmmParametersSet$fromFiles(outPath);
+  res <- CrlmmParametersSet$byPath(outPath);
 
   res;
 }) # getCrlmmParametersSet()

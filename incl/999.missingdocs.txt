@@ -935,3 +935,9 @@ getExpectedOutputFiles.MatSmoothing
   getUnitTypesFile.AffymetrixCelSet
   getUnitTypesFile.AffymetrixCnChpFile
   getUnitTypesFile.AffymetrixPlatform getUnitTypesFile.TransformReport
+  byPath.AffymetrixCelSet byPath.AffymetrixCnChpSet
+  byPath.ChipEffectSet byPath.CnagCfhSet byPath.CnChipEffectSet
+  byPath.CrlmmParametersSet byPath.DChipDcpSet byPath.ExonChipEffectSet
+  byPath.FirmaSet byPath.ResidualSet byPath.SnpChipEffectSet
+  byPath.WeightsSet getDefaultFullName.AffymetrixFileSet
+  getDefaultFullName.CnagCfhSet

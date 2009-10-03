@@ -147,12 +147,12 @@ setMethodS3("byName", "AffymetrixCnChpSet", function(static, name, tags=NULL, ch
   }
 
   suppressWarnings({
-    fromFiles(static, path=path, cdf=cdf, ...);
+    byPath(static, path=path, cdf=cdf, ...);
   })
 }, static=TRUE)
 
 
-setMethodS3("fromFiles", "AffymetrixCnChpSet", function(static, path="rawData/", pattern="[.](cnchp|CNCHP)$", cdf=NULL, checkChipType=is.null(cdf), ..., fileClass="AffymetrixCnChpFile", verbose=FALSE) {
+setMethodS3("byPath", "AffymetrixCnChpSet", function(static, path="rawData/", pattern="[.](cnchp|CNCHP)$", cdf=NULL, checkChipType=is.null(cdf), ..., fileClass="AffymetrixCnChpFile", verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
@@ -166,7 +166,7 @@ setMethodS3("fromFiles", "AffymetrixCnChpSet", function(static, path="rawData/",
   
   verbose && enter(verbose, "Defining ", class(static)[1], " from files");
 
-  set <- fromFiles.AffymetrixFileSet(static, path=path, pattern=pattern, ..., fileClass=fileClass, verbose=less(verbose));
+  set <- byPath.AffymetrixFileSet(static, path=path, pattern=pattern, ..., fileClass=fileClass, verbose=less(verbose));
 
   verbose && enter(verbose, "Retrieved files: ", nbrOfFiles(set));
 
@@ -289,11 +289,6 @@ setMethodS3("as.AffymetrixCnChpSet", "default", function(object, ...) {
   throw("Cannot coerce object to an AffymetrixCnChpSet object: ", mode(object));
 })
 
-
-
-setMethodS3("getFullName", "AffymetrixCnChpSet", function(this, parent=1, ...) {
-  NextMethod("getFullName", this, parent=parent, ...);
-})
 
 
 setMethodS3("extractLogRatios", "AffymetrixCnChpSet", function(this, units=NULL, ..., drop=FALSE, verbose=FALSE) {

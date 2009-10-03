@@ -96,7 +96,7 @@ setMethodS3("exportTotalCnRatioSet", "AffymetrixCnChpSet", function(this, ..., o
 
   verbose && enter(verbose, "Setting up output data sets");
   res <- list(
-    total = AromaUnitTotalCnBinarySet$fromFiles(outPath),
+    total = AromaUnitTotalCnBinarySet$byPath(outPath),
     fracB = NA
   );
   verbose && exit(verbose);

@@ -5,7 +5,7 @@ citEntry(
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
   # BibTeX entry:
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-  entry = "Article",
+  entry = "TechReport",
   author = "H. Bengtsson and K. Simpson and J. Bullard and K. Hansen",
   title = "{aroma.affymetrix}: A generic framework in {R} for analyzing small
 	to very large {Affymetrix} data sets in bounded memory",

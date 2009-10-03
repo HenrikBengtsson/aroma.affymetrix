@@ -86,7 +86,7 @@ setMethodS3("createBlankSet", "AffymetrixCelSet", function(static, name, tags=NU
   } # for (kk ...)
 
   # Finally, return the AffymetrixCelSet object
-  fromFiles(static, path);
+  byPath(static, path);
 }, static=TRUE, private=TRUE)
 
 

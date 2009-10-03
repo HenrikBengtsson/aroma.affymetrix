@@ -24,7 +24,7 @@
 #   \item{rootPath}{The root path where to store the data set.}
 #   \item{rotateBack}{If @TRUE, the dChip-rotated array data is rotated
 #     back. If @NA, this is inferred from the chip type name.}
-#   \item{...}{Additional arguments passed to @seemethod "fromFiles".}
+#   \item{...}{Additional arguments passed to \code{byPath()}.}
 #   \item{skip}{If @TRUE, already converted files are not re-converted.}
 #   \item{verbose}{See @see "R.utils::Verbose".}
 # }
@@ -78,7 +78,7 @@ setMethodS3("importFromDChip", "AffymetrixCelSet", function(static, path, name=N
   # Get the dChip CEL set
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   verbose && enter(verbose, "Getting the dChip CEL set");
-  cs <- fromFiles(static, path=path, ..., verbose=less(verbose));
+  cs <- byPath(static, path=path, ..., verbose=less(verbose));
   verbose && cat(verbose, "Number of arrays: ", nbrOfArrays(cs));  
   verbose && exit(verbose);
 
@@ -171,7 +171,7 @@ setMethodS3("importFromDChip", "AffymetrixCelSet", function(static, path, name=N
   verbose && exit(verbose);
 
   # Get the imported CEL set
-  res <- fromFiles(static, path=destPath, verbose=less(verbose));
+  res <- byPath(static, path=destPath, verbose=less(verbose));
 
   # Return the imported data
   res;

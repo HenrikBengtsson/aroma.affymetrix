@@ -102,13 +102,13 @@ setMethodS3("findByName", "ChipEffectSet", function(static, ..., paths="plmData/
   path;
 }, static=TRUE)
 
-setMethodS3("fromFiles", "ChipEffectSet", function(static, path="plmData/", pattern=",chipEffects[.](c|C)(e|E)(l|L)$", checkChipType=FALSE, ..., fileClass=NULL) {
+setMethodS3("byPath", "ChipEffectSet", function(static, path="plmData/", pattern=",chipEffects[.](c|C)(e|E)(l|L)$", checkChipType=FALSE, ..., fileClass=NULL) {
   # Argument 'fileClass':
   if (is.null(fileClass))
     fileClass <- gsub("Set$", "File", class(static)[1]);
 
   # Unfortunately, method dispatching does not work here.
-  fromFiles.AffymetrixCelSet(static, path=path, pattern=pattern, ..., fileClass=fileClass, checkChipType=checkChipType);
+  byPath.AffymetrixCelSet(static, path=path, pattern=pattern, ..., fileClass=fileClass, checkChipType=checkChipType);
 }, protected=TRUE, static=TRUE)
 
 

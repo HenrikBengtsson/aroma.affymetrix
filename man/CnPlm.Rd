@@ -17,7 +17,7 @@
   Package:  aroma.affymetrix \cr
 \bold{Class CnPlm}\cr
 
-\code{\link[aroma.core]{Interface}}\cr
+\code{\link[R.oo]{Interface}}\cr
 \code{~~|}\cr
 \code{~~+--}\code{\link[aroma.affymetrix]{SnpPlm}}\cr
 \code{~~~~~~~|}\cr
@@ -56,7 +56,7 @@ extends \link[aroma.affymetrix]{SnpPlm}\cr
 getCellIndices, getChipEffectSet, getMergeStrands, getProbeAffinityFile, setMergeStrands
 
  \bold{Methods inherited from Interface}:\cr
-extend, getFields, print, uses
+extend, print, uses
 
 
  }
@@ -75,8 +75,8 @@ extend, getFields, print, uses
  }
 
  \section{Requirements}{
-   Classes inheriting from this \code{\link[aroma.core]{Interface}} must provide the following
-   fields, in addition to the ones according to \code{\link{SnpPlm}}:
+   Classes inheriting from this \code{\link[R.oo]{Interface}} must provide the
+   following fields, in addition to the ones according to \code{\link{SnpPlm}}:
    \itemize{
     \item{combineAlleles}{A \code{\link[base]{logical}} indicating if total or allele-specific
       copy numbers should be estimated according to the above averaging.}

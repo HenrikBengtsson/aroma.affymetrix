@@ -293,7 +293,7 @@ setMethodS3("calculateResidualSet", "ProbeLevelModel", function(this, units=NULL
   # Define residual set
   # Inherit the CDF from the input data set.
   cdf <- getCdf(ds);
-  rs <- ResidualSet$fromFiles(path, cdf=cdf, ...);
+  rs <- ResidualSet$byPath(path, cdf=cdf, ...);
   
   verbose && exit(verbose);
 

@@ -303,7 +303,7 @@ setMethodS3("importFromApt", "CnChipEffectSet", function(static, filename, path=
   verbose && exit(verbose);
 
   # Define chip-effect set
-  ces <- fromFiles(static, path=outPath, cdf=monocellCdf, ...);
+  ces <- byPath(static, path=outPath, cdf=monocellCdf, ...);
 
   verbose && exit(verbose);
 

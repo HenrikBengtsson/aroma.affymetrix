@@ -185,7 +185,7 @@ setMethodS3("getPath", "QualityAssessmentModel", function(this, ...) {
 # @synopsis
 #
 # \arguments{
-#  \item{...}{Additional arguments passed \code{fromFiles()} of 
+#  \item{...}{Additional arguments passed \code{byPath()} of 
 #     @see "QualityAssessmentSet".}
 # }
 #
@@ -380,7 +380,7 @@ setMethodS3("getResiduals", "QualityAssessmentModel", function(this, units=NULL,
   } # while (length(unitsToDo) > 0)
 
   # Return residual set
-  res <- QualityAssessmentSet$fromFiles(path=path, ...,
+  res <- QualityAssessmentSet$byPath(path=path, ...,
                                           pattern=",residuals.[cC][eE][lL]$");
 
   verbose && exit(verbose);
@@ -562,7 +562,7 @@ setMethodS3("getWeights", "QualityAssessmentModel", function(this, path=NULL, na
     count <- count + 1;
   }
 
-  res <- QualityAssessmentSet$fromFiles(path=path, pattern=",weights.[cC][eE][lL]$");
+  res <- QualityAssessmentSet$byPath(path=path, pattern=",weights.[cC][eE][lL]$");
   setAlias(res, getName(this));
 
   res;

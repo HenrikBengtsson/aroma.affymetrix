@@ -93,7 +93,7 @@ setMethodS3("as.AffymetrixFileSet", "default", function(object, ...) {
 
 
 ###########################################################################/**
-# @RdocMethod fromFiles
+# @RdocMethod byPath
 #
 # @title "Defines an AffymetrixFileSet object by searching for Affymetrix files"
 #
@@ -133,16 +133,22 @@ setMethodS3("as.AffymetrixFileSet", "default", function(object, ...) {
 #   @seeclass
 # }
 #*/###########################################################################
-setMethodS3("fromFiles", "AffymetrixFileSet", function(static, ..., fileClass="AffymetrixFile") {
+setMethodS3("byPath", "AffymetrixFileSet", function(static, ..., fileClass="AffymetrixFile") {
   # NextMethod() does not work here
-  fromFiles.GenericDataFileSet(static, ..., fileClass=fileClass);
+  byPath.GenericDataFileSet(static, ..., fileClass=fileClass);
 }, static=TRUE)
 
+
+setMethodS3("getDefaultFullName", "AffymetrixFileSet", function(this, parent=1, ...) {
+  NextMethod("getDefaultFullName", this, parent=parent, ...);
+})
 
 
 
 ############################################################################
 # HISTORY:
+# 2009-10-02
+# o Added getDefaultFullName() to AffymetrixFileSet.
 # 2008-05-18
 # o Now "provides" AffymetrixPlatform methods.
 # 2008-05-09

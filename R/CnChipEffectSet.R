@@ -30,8 +30,8 @@ setConstructorS3("CnChipEffectSet", function(..., combineAlleles="byFirstFile") 
   this;
 })
 
-setMethodS3("fromFiles", "CnChipEffectSet", function(static, ..., combineAlleles="auto") {
-  fromFiles.SnpChipEffectSet(static, ..., combineAlleles=combineAlleles);
+setMethodS3("byPath", "CnChipEffectSet", function(static, ..., combineAlleles="auto") {
+  byPath.SnpChipEffectSet(static, ..., combineAlleles=combineAlleles);
 }, protected=TRUE, static=TRUE)
 
 

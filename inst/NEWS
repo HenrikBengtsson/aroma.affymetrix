@@ -2,6 +2,10 @@ Package: aroma.affymetrix
 =========================
 
 
+Version: 1.2.2 [2009-10-16]
+o CLEAN UP: Cleaned up dependencies in DESCRIPTION.
+
+
 Version: 1.2.1 [2009-10-02]
 o Added argument 'onDuplicates' to importFromAffymetrixProbeTabFile() for
   AromaCellSequenceFile.  If "error" ("warning"), an exception (warning)

@@ -26,10 +26,10 @@
 \code{~~~~~~~~~~~~+--}\emph{\code{GenomeInformation}}\cr
 
 \bold{Directly known subclasses:}\cr
-\link[aroma.affymetrix]{AffymetrixCsvGenomeInformation}, \link[aroma.affymetrix]{DChipGenomeInformation}, \link[aroma.affymetrix]{UgpGenomeInformation}\cr
+\emph{\link[aroma.affymetrix]{AffymetrixCsvGenomeInformation}}, \emph{\link[aroma.affymetrix]{DChipGenomeInformation}}, \emph{\link[aroma.affymetrix]{UgpGenomeInformation}}\cr
 
 public abstract static class \bold{GenomeInformation}\cr
-extends \link[R.filesets]{GenericDataFile}\cr
+extends \emph{\link[R.filesets]{GenericDataFile}}\cr
 
 
  }
@@ -60,10 +60,10 @@ extends \link[R.filesets]{GenericDataFile}\cr
 
 
  \bold{Methods inherited from GenericDataFile}:\cr
-compareChecksum, copyTo, equals, fromFile, getAlias, getAttribute, getAttributes, getChecksum, getCreatedOn, getDefaultFullName, getFilename, getFileSize, getFileType, getLastAccessedOn, getLastModifiedOn, getPath, getPathname, gunzip, gzip, hasBeenModified, isFile, readChecksum, renameTo, renameToUpperCaseExt, setAlias, setAttribute, setAttributes, setAttributesBy, setAttributesByTags, testAttributes, validateChecksum, writeChecksum
+compareChecksum, copyTo, equals, fromFile, getAlias, getAttribute, getAttributes, getChecksum, getCreatedOn, getDefaultFullName, getExtension, getExtensionPattern, getFilename, getFilenameExtension, getFileSize, getFileType, getLastAccessedOn, getLastModifiedOn, getOutputExtension, getPath, getPathname, gunzip, gzip, hasBeenModified, isFile, readChecksum, renameTo, renameToUpperCaseExt, setAlias, setAttribute, setAttributes, setAttributesBy, setAttributesByTags, setExtensionPattern, testAttributes, validateChecksum, writeChecksum
 
  \bold{Methods inherited from FullNameInterface}:\cr
-getDefaultFullName, getFullName, getFullNameTranslator, getName, getTags, hasTag, hasTags, setFullName, setFullNameTranslator, setFullNameTranslatorByfunction, setFullNameTranslatorByNULL, setName, setTags, updateFullName
+appendFullNameTranslator, appendFullNameTranslatorBycharacter, appendFullNameTranslatorByfunction, appendFullNameTranslatorBylist, appendFullNameTranslatorByNULL, clearFullNameTranslator, clearListOfFullNameTranslators, getDefaultFullName, getFullName, getFullNameTranslator, getListOfFullNameTranslators, getName, getTags, hasTag, hasTags, setFullName, setFullNameTranslator, setListOfFullNameTranslators, setName, setTags, updateFullName
 
  \bold{Methods inherited from Object}:\cr
 asThis, $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save

@@ -61,6 +61,12 @@ setMethodS3("clone", "AffymetrixCnChpFile", function(this, ..., verbose=TRUE) {
 }) 
 
 
+setMethodS3("getExtensionPattern", "AffymetrixCnChpFile", function(static, ...) {
+  "[.](cnchp|CNCHP)$";
+}, static=TRUE, protected=TRUE)
+
+
+
 setMethodS3("getFileFormat", "AffymetrixCnChpFile", function(this, ...) {
   pathname <- getPathname(this);
 

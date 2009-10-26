@@ -78,6 +78,13 @@ setMethodS3("as.character", "CnagCfhFile", function(x, ...) {
 }, private=TRUE)
 
 
+setMethodS3("getExtensionPattern", "CnagCfhFile", function(static, ...) {
+  "[.](cfh|CFH)$";
+}, static=TRUE, protected=TRUE)
+
+
+
+
 setMethodS3("getIdentifier", "CnagCfhFile", function(this, ..., force=FALSE) {
   identifier <- this$.identifier;
   if (force || is.null(identifier)) {

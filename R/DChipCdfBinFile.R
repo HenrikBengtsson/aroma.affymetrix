@@ -66,6 +66,7 @@ setMethodS3("getFileFormat", "DChipCdfBinFile", function(this, ...) {
   ver;
 })
  
+
 setMethodS3("getChipType", "DChipCdfBinFile", function(this, fullname=TRUE, ...) {
   hdr <- getHeader(this);
   chipType <- hdr$ChipType;

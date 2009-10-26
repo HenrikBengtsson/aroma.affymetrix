@@ -14,6 +14,11 @@ setMethodS3("getFilenameExtension", "AromaUnitGcContentFile", function(static, .
 }, static=TRUE, protected=TRUE);
 
 
+setMethodS3("getExtensionPattern", "AromaUnitGcContentFile", function(static, ...) {
+  "[.](ugc)$";
+}, static=TRUE, protected=TRUE)
+
+
 setMethodS3("getColumnNames", "AromaUnitGcContentFile", function(this, ...) {
   "gcContent";
 })

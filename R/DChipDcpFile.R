@@ -68,6 +68,12 @@ setMethodS3("getFileFormat", "DChipDcpFile", function(this, ...) {
 })
  
 
+setMethodS3("getExtensionPattern", "DChipDcpFile", function(static, ...) {
+  "[.](dcp|DCP)$";
+}, static=TRUE, protected=TRUE)
+
+
+
 setMethodS3("fromFile", "DChipDcpFile", function(static, filename, path=NULL, ..., verbose=FALSE, .checkArgs=TRUE) {
   df <- newInstance(static, filename=filename, path=path, ...);
 

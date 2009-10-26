@@ -40,6 +40,12 @@ setConstructorS3("AffymetrixCdfFile", function(...) {
 })
 
 
+setMethodS3("getExtensionPattern", "AffymetrixCdfFile", function(static, ...) {
+  "[.](cdf|CDF)$";
+}, static=TRUE, protected=TRUE)
+
+
+
 setMethodS3("clearCache", "AffymetrixCdfFile", function(this, ...) {
   # Clear all cached values.
   # /AD HOC. clearCache() in Object should be enough! /HB 2007-01-16

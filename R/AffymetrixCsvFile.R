@@ -6,6 +6,12 @@ setConstructorS3("AffymetrixCsvFile", function(..., sep=",", .verify=TRUE) {
   this;
 })
 
+
+setMethodS3("getExtensionPattern", "AffymetrixCsvFile", function(static, ...) {
+  "[.](csv|CSV)$";
+}, static=TRUE, protected=TRUE)
+
+
 setMethodS3("findByChipType", "AffymetrixCsvFile", function(static, chipType, pattern=sprintf("^%s.*[.](csv|CSV)$", chipType), ...) {
   findByChipType.AffymetrixTabularFile(static, chipType=chipType, pattern=pattern, ...);
 }, static=TRUE, protected=TRUE)

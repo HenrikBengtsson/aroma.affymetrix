@@ -14,6 +14,13 @@ setMethodS3("getFilenameExtension", "AromaUfcFile", function(static, ...) {
 }, static=TRUE, protected=TRUE);
 
 
+
+setMethodS3("getExtensionPattern", "AromaUfcFile", function(static, ...) {
+  "[.](ufc)$";
+}, static=TRUE, protected=TRUE)
+
+
+
 setMethodS3("nbrOfEnzymes", "AromaUfcFile", function(this, ...) {
   nbrOfColumns(this, ...);
 })

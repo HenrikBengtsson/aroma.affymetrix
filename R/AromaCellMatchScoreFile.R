@@ -27,6 +27,11 @@ setMethodS3("getFilenameExtension", "AromaCellMatchScoreFile", function(static, 
 }, static=TRUE)
 
 
+setMethodS3("getExtensionPattern", "AromaCellMatchScoreFile", function(static, ...) {
+  "[.](acm)$";
+}, static=TRUE, protected=TRUE)
+
+
 setMethodS3("getColumnNames", "AromaCellMatchScoreFile", function(this, ...) {
   c(sprintf("b%02d", seq(from=1, to=nbrOfColumns(this)-1)), "targetStrand");
 })

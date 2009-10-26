@@ -1,6 +1,12 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 1.2.3 [2009-10-26]
+o Added getExtensionPattern() to those GenericDataFile classes that
+  have "single" filename extension, e.g. *.cfh but not *.cdf.bin.
+  The other will be incorporated when we have thoroughly gone through
+  the impact of including those as well.
+
 
 Version: 1.2.2 [2009-10-16]
 o CLEAN UP: Cleaned up dependencies in DESCRIPTION.

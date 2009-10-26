@@ -18,6 +18,11 @@ setMethodS3("getChipType", "AffymetrixTsvFile", function(this, ...) {
   getName(this);
 })
 
+setMethodS3("getExtensionPattern", "AffymetrixTsvFile", function(static, ...) {
+  "[.](tsv|TSV)$";
+}, static=TRUE, protected=TRUE)
+
+
 setMethodS3("findByChipType", "AffymetrixTsvFile", function(static, chipType, ...) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Search in annotationData/chipTypes/<chipType>/

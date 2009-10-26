@@ -941,3 +941,14 @@ getExpectedOutputFiles.MatSmoothing
   byPath.FirmaSet byPath.ResidualSet byPath.SnpChipEffectSet
   byPath.WeightsSet getDefaultFullName.AffymetrixFileSet
   getDefaultFullName.CnagCfhSet
+  extractSnpFeatureSet extractSnpFeatureSet.AffymetrixCelSet
+  getExtensionPattern.AffymetrixCdfFile
+  getExtensionPattern.AffymetrixCelFile
+  getExtensionPattern.AffymetrixCnChpFile
+  getExtensionPattern.AffymetrixCsvFile
+  getExtensionPattern.AffymetrixTsvFile
+  getExtensionPattern.AromaCellMatchScoreFile
+  getExtensionPattern.AromaUfcFile getExtensionPattern.AromaUflFile
+  getExtensionPattern.AromaUnitGcContentFile
+  getExtensionPattern.CnagCfhFile getExtensionPattern.DChipDcpFile
+

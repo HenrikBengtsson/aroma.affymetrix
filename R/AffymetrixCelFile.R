@@ -65,6 +65,8 @@ setConstructorS3("AffymetrixCelFile", function(..., cdf=NULL) {
   this;
 })
 
+
+
 setMethodS3("clearCache", "AffymetrixCelFile", function(this, ...) {
   # Clear all cached values.
   # /AD HOC. clearCache() in Object should be enough! /HB 2007-01-16
@@ -87,6 +89,11 @@ setMethodS3("clone", "AffymetrixCelFile", function(this, ..., verbose=TRUE) {
 
   object;
 })
+
+
+setMethodS3("getExtensionPattern", "AffymetrixCelFile", function(static, ...) {
+  "[.](cel|CEL)$";
+}, static=TRUE, protected=TRUE)
 
 
 setMethodS3("getFileFormat", "AffymetrixCelFile", function(this, asString=TRUE, ...) {

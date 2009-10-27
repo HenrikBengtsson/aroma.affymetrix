@@ -251,7 +251,7 @@ setMethodS3("getFitUnitGroupFunction", "ExonRmaPlm", function(this, ..., verbose
       );
     } else {
       # Fit model using affyPLM code
-      fit <- .Call("R_rlm_rma_default_model", y, psiCode, psiK, PACKAGE=rlmPkg);      
+      fit <- rlm(y, psiCode, psiK)
     }
 
         
@@ -340,10 +340,12 @@ setMethodS3("getFitUnitGroupFunction", "ExonRmaPlm", function(this, ..., verbose
     shift <- 0;
   verbose && cat(verbose, "Amount of shift: ", shift);
 
-  # Get 'affyPLM' or 'preprocessCore', depending on versions
-  rlmPkg <- getRlmPkg(verbose=less(verbose));
-  verbose && cat(verbose, "rlmPkg: ", rlmPkg);
-  require(rlmPkg, character.only=TRUE) || throw("Package not loaded: ", rlmPkg);
+
+  fcnList <- RmaPlm$getRlmFitFunctions(verbose=less(verbose));
+  verbose && str(verbose, fcnList);
+  # To please R CMD check
+  rlm <- wrlm <- NULL; rm(rlm, wrlm);
+  attachLocally(fcnList);
   rmaModel <- exonRmaModel;
   verbose && str(verbose, rmaModel);
 

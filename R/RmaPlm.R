@@ -163,6 +163,95 @@ setMethodS3("getProbeAffinityFile", "RmaPlm", function(this, ...) {
   
 
 
+setMethodS3("getRlmFitFunctions", "RmaPlm", function(static, ..., verbose=FALSE) {
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Validate arguments
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Argument 'verbose':
+  verbose <- Arguments$getVerbose(verbose);
+  if (verbose) {
+    pushState(verbose);
+    on.exit(popState(verbose));
+  }
+
+
+  fcnList <- NULL;
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # First, try the preprocessCore package
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  pkg <- "preprocessCore";
+  pkgDesc <- packageDescription(pkg);
+  if (is.list(pkgDesc)) {
+    ver <- pkgDesc$Version;
+    verbose && cat(verbose, pkg, " version: ", ver);
+    if (compareVersion(ver, "1.7.1") >= 0) {
+      fcnList <- list(
+        wrlm = function(y, psiCode, psiK, w, scale=NULL) {
+          .Call("R_wrlm_rma_default_model", 
+                y, psiCode, psiK, w, scale, PACKAGE="preprocessCore");
+        },
+        rlm = function(y, psiCode, psiK, w, scale=NULL) {
+          .Call("R_rlm_rma_default_model", 
+                y, psiCode, psiK, scale, PACKAGE="preprocessCore");
+        }
+      );
+    } else if (compareVersion(ver, "0.99.14") >= 0) {
+      fcnList <- list(
+        wrlm = function(y, psiCode, psiK, w) {
+          .Call("R_wrlm_rma_default_model", 
+                y, psiCode, psiK, w, PACKAGE="preprocessCore");
+        },
+        rlm = function(y, psiCode, psiK, w) {
+          .Call("R_rlm_rma_default_model", 
+                y, psiCode, psiK, PACKAGE="preprocessCore");
+        }
+      );
+    }
+  }
+
+  if (!is.null(fcnList)) {
+    require(pkg, character.only=TRUE) || throw("Package not loaded: ", pkg);
+    return(fcnList);
+  }
+
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Second, try the affyPLM package
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  pkg <- "affyPLM";
+  pkgDesc <- packageDescription(pkg);
+  if (is.list(pkgDesc)) {
+    ver <- pkgDesc$Version;
+    verbose && cat(verbose, pkg, " version: ", ver);
+    if (compareVersion(ver, "1.13.8") <= 0) {
+      fcnList <- list(
+        wrlm = function(y, psiCode, psiK, w) {
+          .Call("R_wrlm_rma_default_model", 
+                y, psiCode, psiK, w, PACKAGE="affyPLM");
+        },
+        rlm = function(y, psiCode, psiK) {
+          .Call("R_rlm_rma_default_model", 
+                y, psiCode, psiK, PACKAGE="affyPLM");
+        }
+      );
+    }
+  }
+
+  if (!is.null(fcnList)) {
+    require(pkg, character.only=TRUE) || throw("Package not loaded: ", pkg);
+    return(fcnList);
+  }
+
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Failure
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  throw("Neither preprocessCore v0.99.14+ nor affyPLM v1.13.8- is available.");
+}, static=TRUE, protected=TRUE) # getRlmFitFunctions()
+
+
+
 ###########################################################################/**
 # @RdocMethod getFitUnitGroupFunction
 #
@@ -333,11 +422,11 @@ setMethodS3("getFitUnitGroupFunction", "RmaPlm", function(this, ..., verbose=FAL
         StdErrors = rep(0, length(c(mp$row, mp$col)))
       );
     } else {
-      # Fit model using affyPLM code
+      # Fit model using preprocessCore/affyPLM code
       if (!is.null(w)) {
-        fit <- .Call("R_wrlm_rma_default_model", y, psiCode, psiK, w, PACKAGE=rlmPkg);
+        fit <- wrlm(y, psiCode, psiK, w);
       } else {
-        fit <- .Call("R_rlm_rma_default_model", y, psiCode, psiK, PACKAGE=rlmPkg);
+        fit <- rlm(y, psiCode, psiK);
       }
     }
 
@@ -604,31 +693,6 @@ setMethodS3("getFitUnitGroupFunction", "RmaPlm", function(this, ..., verbose=FAL
 
 
 
-  getRlmPkg <- function(..., verbose=FALSE) {
-    # First, try to see if preprocessCore > v0.99.14 is available
-    pkg <- "preprocessCore";
-    pkgDesc <- packageDescription(pkg);
-    if (is.list(pkgDesc)) {
-      ver <- pkgDesc$Version;
-      verbose && cat(verbose, pkg, " version: ", ver);
-      if (compareVersion(ver, "0.99.14") >= 0)
-        return(pkg);
-    }
-
-    # Second, try to see if affyPLM <= v1.13.8 is available
-    pkg <- "affyPLM";
-    pkgDesc <- packageDescription(pkg);
-    if (is.list(pkgDesc)) {
-      ver <- pkgDesc$Version;
-      verbose && cat(verbose, pkg, " version: ", ver);
-      if (compareVersion(ver, "1.13.8") <= 0)
-        return(pkg);
-    }
-
-    throw("Neither preprocessCore v0.99.14+ nor affyPLM v1.13.8- is available.");
-  } # getRlmPkg()
-
-
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Main
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -654,9 +718,11 @@ setMethodS3("getFitUnitGroupFunction", "RmaPlm", function(this, ..., verbose=FAL
   verbose && cat(verbose, "treatNAsAs: ", treatNAsAs);
 
   if (flavor == "affyPLM") {
-    rlmPkg <- getRlmPkg(verbose=less(verbose));
-    verbose && cat(verbose, "rlmPkg: ", rlmPkg);
-    require(rlmPkg, character.only=TRUE) || throw("Package not loaded: ", rlmPkg);
+    fcnList <- RmaPlm$getRlmFitFunctions(verbose=less(verbose));
+    verbose && str(verbose, fcnList);
+    # To please R CMD check
+    rlm <- wrlm <- NULL; rm(rlm, wrlm);
+    attachLocally(fcnList);
     rmaModel <- rmaModelAffyPlm;
   } else if (flavor == "affyPLMold") {
     require("affyPLM") || throw("Package not loaded: affyPLM");

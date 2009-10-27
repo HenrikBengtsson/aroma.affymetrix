@@ -951,4 +951,5 @@ getExpectedOutputFiles.MatSmoothing
   getExtensionPattern.AromaUfcFile getExtensionPattern.AromaUflFile
   getExtensionPattern.AromaUnitGcContentFile
   getExtensionPattern.CnagCfhFile getExtensionPattern.DChipDcpFile
-
+  getRlmFitFunctions.RmaPlm  getRlmFitFunctions
+getRlmFitFunctions getRlmFitFunctions.RmaPlm

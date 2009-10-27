@@ -2,6 +2,9 @@ Package: aroma.affymetrix
 =========================
 
 Version: 1.2.3 [2009-10-26]
+o BUG FIX: Fitting RlmPlm() would give an error reporting on a
+  call to an internal preprocessCore function is incompatible.
+  This occured with preprocessCore v1.7.1 or newer.
 o Added getExtensionPattern() to those GenericDataFile classes that
   have "single" filename extension, e.g. *.cfh but not *.cdf.bin.
   The other will be incorporated when we have thoroughly gone through

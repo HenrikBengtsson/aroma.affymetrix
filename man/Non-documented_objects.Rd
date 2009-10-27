@@ -1792,6 +1792,8 @@
 \alias{getExtensionPattern.AromaUnitGcContentFile}
 \alias{getExtensionPattern.CnagCfhFile}
 \alias{getExtensionPattern.DChipDcpFile}
+\alias{getRlmFitFunctions.RmaPlm}
+\alias{getRlmFitFunctions}
 
 \description{
   This page contains aliases for all "non-documented" objects that

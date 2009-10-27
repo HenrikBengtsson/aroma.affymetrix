@@ -14,7 +14,7 @@
  \title{The RmaPlm class}
 
  \description{
-  Package:  aroma.affymetrix \cr
+  Package:   \cr
 \bold{Class RmaPlm}\cr
 
 \code{\link[R.oo]{Object}}\cr
@@ -30,7 +30,7 @@
 \code{~~~~~~~~~~~~~~~~~~~~~~+--}\code{RmaPlm}\cr
 
 \bold{Directly known subclasses:}\cr
-\link[aroma.affymetrix]{ExonRmaPlm}, \link[aroma.affymetrix]{HetLogAddCnPlm}, \link[aroma.affymetrix]{HetLogAddPlm}, \link[aroma.affymetrix]{HetLogAddSnpPlm}, \link[aroma.affymetrix]{RmaCnPlm}, \link[aroma.affymetrix]{RmaSnpPlm}\cr
+\link{ExonRmaPlm}, \link[aroma.affymetrix]{HetLogAddCnPlm}, \link[aroma.affymetrix]{HetLogAddPlm}, \link[aroma.affymetrix]{HetLogAddSnpPlm}, \link[aroma.affymetrix]{RmaCnPlm}, \link[aroma.affymetrix]{RmaSnpPlm}\cr
 
 public static class \bold{RmaPlm}\cr
 extends \link[aroma.affymetrix]{ProbeLevelModel}\cr
@@ -53,6 +53,7 @@ extends \link[aroma.affymetrix]{ProbeLevelModel}\cr
  \section{Fields and Methods}{
   \bold{Methods:}\cr
 \tabular{rll}{
+ \tab \code{getAsteriskTags} \tab  -\cr
  \tab \code{getAsteriskTags} \tab  -\cr
 }
 

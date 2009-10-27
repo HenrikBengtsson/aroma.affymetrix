@@ -27,7 +27,7 @@
 \code{~~~~~~~~~~~~~~~~~|}\cr
 \code{~~~~~~~~~~~~~~~~~+--}\code{\link[aroma.affymetrix]{ProbeLevelModel}}\cr
 \code{~~~~~~~~~~~~~~~~~~~~~~|}\cr
-\code{~~~~~~~~~~~~~~~~~~~~~~+--}\code{\link[aroma.affymetrix]{RmaPlm}}\cr
+\code{~~~~~~~~~~~~~~~~~~~~~~+--}\code{\link{RmaPlm}}\cr
 \code{~~~~~~~~~~~~~~~~~~~~~~~~~~~|}\cr
 \code{~~~~~~~~~~~~~~~~~~~~~~~~~~~+--}\code{\link[aroma.affymetrix]{HetLogAddPlm}}\cr
 \code{~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|}\cr
@@ -74,7 +74,7 @@ getAsteriskTags
 getAsteriskTags
 
  \bold{Methods inherited from RmaPlm}:\cr
-getAsteriskTags, getCalculateResidualsFunction
+getAsteriskTags, getCalculateResidualsFunction, getRlmFitFunctions, getAsteriskTags, getCalculateResidualsFunction, getRlmFitFunctions
 
  \bold{Methods inherited from ProbeLevelModel}:\cr
 calculateResidualSet, calculateWeights, fit, getAsteriskTags, getCalculateResidualsFunction, getChipEffectSet, getProbeAffinityFile, getResidualSet, getWeightsSet

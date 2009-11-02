@@ -298,7 +298,7 @@ setMethodS3("extractMatrix", "ChipEffectSet", function(this, ..., field=c("theta
 
 
   if (toupper(field) == "RLE") {
-    verbose && enter(verbose, "Extracting chip effects and calculates RLE scores");
+    verbose && enter(verbose, "Extracting chip effects and calculating RLE scores");
 
     # RLE - Relative Log2 Expression values
     # Get chip effect estimates (on the log scale)

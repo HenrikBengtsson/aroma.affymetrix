@@ -1,50 +1,6 @@
-setConstructorS3("AromaUflFile", function(...) {
-  this <- extend(AromaUnitTabularBinaryFile(...), "AromaUflFile");
-
-  # Parse attributes (all subclasses must call this in the constructor).
-  if (!is.null(this$.pathname))
-    setAttributesByTags(this);
-
-  this;
-})
-
-
-setMethodS3("getFilenameExtension", "AromaUflFile", function(static, ...) {
-  "ufl";
-}, static=TRUE, protected=TRUE);
-
-setMethodS3("getExtensionPattern", "AromaUflFile", function(static, ...) {
-  "[.](ufl)$";
-}, static=TRUE, protected=TRUE)
-
-
-
-setMethodS3("nbrOfEnzymes", "AromaUflFile", function(this, ...) {
-  nbrOfColumns(this, ...);
-})
-
-
-setMethodS3("getColumnNames", "AromaUflFile", function(this, ...) {
-  nbrOfColumns <- nbrOfColumns(this);
-  names <- rep("length", nbrOfColumns);
-  tags <- sprintf(".%02d", 1:nbrOfColumns);
-  tags[1] <- "";
-  names <- paste(names, tags, sep="");
-  names;
-})
-
-setMethodS3("readDataFrame", "AromaUflFile", function(this, ...) {
-  data <- NextMethod("readDataFrame", this, ...);
-
-  # Interpret zeros as NAs
-  for (cc in seq(length=ncol(data))) {
-    nas <- (data[,cc] == 0);
-    data[nas,cc] <- NA;
-  }
-
-  data;
-})
-
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# BEGIN: AFFX
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 setMethodS3("allocateFromCdf", "AromaUflFile", function(static, cdf, nbrOfEnzymes=1, ...) {
   # Argument 'nbrOfEnzymes':
   nbrOfEnzymes <- Arguments$getInteger(nbrOfEnzymes, range=c(1,10));
@@ -129,6 +85,10 @@ setMethodS3("importFromAffymetrixNetAffxCsvFile", "AromaUflFile", function(this,
 
   invisible(units);
 })
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# END: AFFX
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 
 ############################################################################

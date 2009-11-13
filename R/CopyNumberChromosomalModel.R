@@ -52,6 +52,8 @@ setConstructorS3("CopyNumberChromosomalModel", function(cesTuple=NULL, refTuple=
         if (!ces$combineAlleles) {
           throw("Unsupported copy-number chip effects. Currently only total copy-number estimates are supported: ces$combineAlleles == FALSE");
         }
+      } else {
+        throw("Unsupported chip effects. Currently only (total) copy-number chip effects are supported: ", class(ces)[1]);
       }
     }
   }
@@ -111,6 +113,8 @@ setConstructorS3("CopyNumberChromosomalModel", function(cesTuple=NULL, refTuple=
         if (!ref$combineAlleles) {
           throw("Unsupported copy-number chip effects. Currently only total copy-number estimates are supported: ref$combineAlleles == FALSE");
         }
+      } else {
+        throw("Unsupported chip effects. Currently only (total) copy-number chip effects are supported: ", class(ref)[1]);
       }
     }
 
@@ -719,6 +723,11 @@ setMethodS3("estimateSds", "CopyNumberChromosomalModel", function(this, arrays=s
 
 ##############################################################################
 # HISTORY:
+# 2009-11-13
+# o ROBUSTNESS: Now arguments 'ces' and 'ref' and CopyNumberChromosomalModel
+#   have to be CnChipEffectFile|Set, otherwise an exception is thrown.
+#   Before it was possible to pass a SnpChipEffectSet unnoticed, although
+#   only total CNs are modelled.  Thanks Pierre Neuvial for this report.
 # 2008-07-20
 # o Updated the following methods to preallocate matrixes with the correct
 #   data type to avoid coercing later: estimateSds().

@@ -1,8 +1,13 @@
 Package: aroma.affymetrix
 =========================
 
-Version: 1.3.1 [2009-11-11]
-o Moved most of AromaUflFile to aroma.core (from aroma.affymetrix).
+Version: 1.3.1 [2009-11-13]
+o ROBUSTNESS: Now arguments 'ces' and 'ref' and CopyNumberChromosomalModel
+  have to be CnChipEffectFile|Set, otherwise an exception is thrown.
+  Before it was possible to pass a SnpChipEffectSet unnoticed, although
+  only total CNs are modelled.  Added a test to testScripts/robustness/ 
+  asserting this.  Thanks Pierre Neuvial at UC Berkeley for this report.
+o CLEAN UP: Moved most of AromaUflFile to aroma.core (from aroma.affymetrix).
 
 
 Version: 1.3.0 [2009-11-01]

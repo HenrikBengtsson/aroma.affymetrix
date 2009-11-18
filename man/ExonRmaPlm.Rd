@@ -14,7 +14,7 @@
  \title{The ExonRmaPlm class}
 
  \description{
-  Package:   \cr
+  Package:  aroma.affymetrix \cr
 \bold{Class ExonRmaPlm}\cr
 
 \code{\link[R.oo]{Object}}\cr
@@ -27,7 +27,7 @@
 \code{~~~~~~~~~~~~~~~~~|}\cr
 \code{~~~~~~~~~~~~~~~~~+--}\code{\link[aroma.affymetrix]{ProbeLevelModel}}\cr
 \code{~~~~~~~~~~~~~~~~~~~~~~|}\cr
-\code{~~~~~~~~~~~~~~~~~~~~~~+--}\code{\link{RmaPlm}}\cr
+\code{~~~~~~~~~~~~~~~~~~~~~~+--}\code{\link[aroma.affymetrix]{RmaPlm}}\cr
 \code{~~~~~~~~~~~~~~~~~~~~~~~~~~~|}\cr
 \code{~~~~~~~~~~~~~~~~~~~~~~~~~~~+--}\code{ExonRmaPlm}\cr
 
@@ -35,7 +35,7 @@
 \cr
 
 public static class \bold{ExonRmaPlm}\cr
-extends \link{RmaPlm}\cr
+extends \link[aroma.affymetrix]{RmaPlm}\cr
 
 
 
@@ -57,12 +57,6 @@ extends \link{RmaPlm}\cr
  \section{Fields and Methods}{
   \bold{Methods:}\cr
 \tabular{rll}{
- \tab \code{getCellIndices} \tab  -\cr
- \tab \code{getChipEffects} \tab  -\cr
- \tab \code{getChipEffectSet} \tab  -\cr
- \tab \code{getProbeAffinities} \tab  -\cr
- \tab \code{getProbeAffinityFile} \tab  -\cr
- \tab \code{setMergeGroups} \tab  -\cr
  \tab \code{calculateWeights} \tab  -\cr
  \tab \code{getCellIndices} \tab  -\cr
  \tab \code{getChipEffects} \tab  -\cr
@@ -74,7 +68,7 @@ extends \link{RmaPlm}\cr
 
 
  \bold{Methods inherited from RmaPlm}:\cr
-getAsteriskTags, getCalculateResidualsFunction, getRlmFitFunctions, getAsteriskTags, getCalculateResidualsFunction, getRlmFitFunctions
+getAsteriskTags, getCalculateResidualsFunction, getRlmFitFunctions
 
  \bold{Methods inherited from ProbeLevelModel}:\cr
 calculateResidualSet, calculateWeights, fit, getAsteriskTags, getCalculateResidualsFunction, getChipEffectSet, getProbeAffinityFile, getResidualSet, getWeightsSet

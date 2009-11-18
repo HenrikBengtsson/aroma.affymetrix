@@ -37,9 +37,10 @@ extends \emph{\link[aroma.affymetrix]{ChromosomalModel}}\cr
  \usage{CopyNumberChromosomalModel(cesTuple=NULL, refTuple=NULL, tags="*", genome="Human", ...)}
 
  \arguments{
-   \item{cesTuple}{A \code{\link{ChipEffectSetTuple}}.}
-   \item{refTuple}{An optional \code{\link{ChipEffectSetTuple}} for pairwise
-     comparisons.}
+   \item{cesTuple}{A \code{\link{CopyNumberDataSetTuple}}.}
+   \item{refTuple}{An optional \code{\link{CopyNumberDataFile}},
+      or \code{\link{CopyNumberDataSet}} or \code{\link{CopyNumberDataSetTuple}}
+      for pairwise comparisons.}
    \item{tags}{A \code{\link[base]{character}} \code{\link[base]{vector}} of tags.}
    \item{genome}{A \code{\link[base]{character}} string specifying what genome is process.}
    \item{...}{Not used.}

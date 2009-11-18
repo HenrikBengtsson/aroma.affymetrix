@@ -31,11 +31,15 @@
 # }
 #*/###########################################################################
 setConstructorS3("SmoothMultiarrayModel", function(..., typoOfWeights=c("none", "1/s2"), bandwidth=10e3, tags="*") {
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Validate arguments
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'typoOfWeights':
   typoOfWeights <- match.arg(typoOfWeights);
 
   # Argument 'bandwidth':
   bandwidth <- Arguments$getDouble(bandwidth, range=c(1,Inf));
+
 
   extend(ChromosomalModel(..., tags=tags), "SmoothMultiarrayModel",
     .outTuple = NULL,

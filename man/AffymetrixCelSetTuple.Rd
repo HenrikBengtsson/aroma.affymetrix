@@ -24,7 +24,7 @@
 \code{~~~~~~~+--}\code{AffymetrixCelSetTuple}\cr
 
 \bold{Directly known subclasses:}\cr
-\link[aroma.affymetrix]{ChipEffectSetTuple}\cr
+\link[aroma.affymetrix]{ChipEffectSetTuple}, \link[aroma.affymetrix]{CnChipEffectSetTuple}\cr
 
 public static class \bold{AffymetrixCelSetTuple}\cr
 extends \emph{\link[aroma.core]{AromaMicroarrayDataSetTuple}}\cr
@@ -48,7 +48,7 @@ extends \emph{\link[aroma.core]{AromaMicroarrayDataSetTuple}}\cr
 
 
  \bold{Methods inherited from AromaMicroarrayDataSetTuple}:\cr
-asMatrixOfFiles, byPath, extract, getAlias, getArrays, getArrayTuple, getAsteriskTags, getChipTypes, getFullName, getFullNames, getListOfSets, getName, getNames, getTableOfArrays, getTags, nbrOfArrays, nbrOfChipTypes, setAlias, setTags
+as, as.AromaMicroarrayDataSetTuple, asMatrixOfFiles, byPath, extract, getAlias, getArrays, getArrayTuple, getAsteriskTags, getChipTypes, getFullName, getFullNames, getListOfSets, getName, getNames, getTableOfArrays, getTags, nbrOfArrays, nbrOfChipTypes, setAlias, setTags
 
  \bold{Methods inherited from Object}:\cr
 asThis, $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save

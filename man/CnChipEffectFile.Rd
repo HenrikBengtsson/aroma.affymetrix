@@ -37,13 +37,15 @@
 \code{~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|}\cr
 \code{~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~+--}\code{\link[aroma.affymetrix]{SnpChipEffectFile}}\cr
 \code{~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|}\cr
-\code{~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~+--}\emph{\code{CnChipEffectFile}}\cr
+\code{~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~+--}\code{\link[aroma.affymetrix]{CopyNumberDataFile}}\cr
+\code{~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|}\cr
+\code{~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~+--}\emph{\code{CnChipEffectFile}}\cr
 
 \bold{Directly known subclasses:}\cr
 \cr
 
 public abstract static class \bold{CnChipEffectFile}\cr
-extends \emph{\link[aroma.affymetrix]{SnpChipEffectFile}}\cr
+extends \emph{\link[aroma.affymetrix]{CopyNumberDataFile}}\cr
 
 
 
@@ -69,10 +71,15 @@ extends \emph{\link[aroma.affymetrix]{SnpChipEffectFile}}\cr
  \tab \code{getCellIndices} \tab  -\cr
  \tab \code{getExpandedCellMap} \tab  -\cr
  \tab \code{getParameters} \tab  -\cr
+ \tab \code{hasAlleleBFractions} \tab  -\cr
+ \tab \code{hasStrandiness} \tab  -\cr
  \tab \code{mergeStrands} \tab  -\cr
  \tab \code{readUnits} \tab  -\cr
 }
 
+
+ \bold{Methods inherited from CopyNumberDataFile}:\cr
+as, as.CopyNumberDataFile, hasAlleleBFractions, hasStrandiness
 
  \bold{Methods inherited from SnpChipEffectFile}:\cr
 exportTotalAndFracB, extractCNT, extractTheta, extractTotalAndFracB, getCellIndices, getExpandedCellMap, getParameters, mergeStrands, readUnits, writeCNT
@@ -84,7 +91,7 @@ extractChromosomalDataFrame, extractMatrix, extractTheta, findUnitsTodo, getAM, 
 extractDataFrame, extractMatrix, getParameters, readUnits
 
  \bold{Methods inherited from AffymetrixCelFile}:\cr
-[, [[, allocateFromCdf, clone, createFrom, extractMatrix, fromFile, getAm, getCdf, getExtensionPattern, getFileFormat, getImage, getUnitNamesFile, getUnitTypesFile, highlight, image270, nbrOfCells, plotDensity, plotImage, plotMvsA, plotMvsX, setCdf, smoothScatterMvsA, writeImage
+[, [[, allocateFromCdf, clone, createFrom, extractMatrix, fromFile, getAm, getCdf, getExtensionPattern, getFileFormat, getImage, getUnitNamesFile, getUnitTypesFile, highlight, image270, isAverageFile, nbrOfCells, plotDensity, plotImage, plotMvsA, plotMvsX, setCdf, smoothScatterMvsA, writeImage
 
  \bold{Methods inherited from AromaPlatformInterface}:\cr
 getAromaPlatform, getPlatform, getUnitAnnotationDataFile, getUnitNamesFile, getUnitTypesFile

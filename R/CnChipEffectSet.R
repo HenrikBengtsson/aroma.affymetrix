@@ -25,10 +25,21 @@
 # 
 #*/###########################################################################
 setConstructorS3("CnChipEffectSet", function(..., combineAlleles="byFirstFile") {
-  this <- extend(SnpChipEffectSet(...), "CnChipEffectSet");
+  this <- extend(SnpChipEffectSet(...), c("CnChipEffectSet", uses("CopyNumberDataSet")));
   setCombineAlleles(this, combineAlleles);
   this;
 })
+
+setMethodS3("hasAlleleBFractions", "CnChipEffectSet", function(this, ...) {
+  res <- (!this$combineAlleles);
+  res;
+})
+
+setMethodS3("hasStrandiness", "CnChipEffectSet", function(this, ...) {
+  res <- (!this$mergeStrands);
+  res;
+})
+
 
 setMethodS3("byPath", "CnChipEffectSet", function(static, ..., combineAlleles="auto") {
   byPath.SnpChipEffectSet(static, ..., combineAlleles=combineAlleles);
@@ -159,10 +170,17 @@ setMethodS3("inferParameters", "CnChipEffectSet", function(this, ..., verbose=FA
 }, private=TRUE)
 
 
+setMethodS3("as.CopyNumberDataSetTuple", "CnChipEffectSet", function(this, ...) {
+  CnChipEffectSetTuple(this, ...);
+})
 
 
 ############################################################################
 # HISTORY:
+# 2009-11-18
+# o Added as.CopyNumberDataSetTuple().
+# 2009-11-17
+# o Now CnChipEffectSet implements CopyNumberDataSet.
 # 2008-05-16
 # o Added support for setCombineAlleles(..., "byFirstFile").
 # 2008-05-08

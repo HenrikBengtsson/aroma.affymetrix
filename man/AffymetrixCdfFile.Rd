@@ -97,7 +97,7 @@ getUnitNames, indexOf, nbrOfUnits
 getUnitTypes, nbrOfUnits
 
  \bold{Methods inherited from UnitAnnotationDataFile}:\cr
-byChipType, getAromaUgpFile, getChipType, getPlatform, nbrOfUnits
+byChipType, getAromaUflFile, getAromaUgpFile, getChipType, getPlatform, nbrOfUnits
 
  \bold{Methods inherited from AromaPlatformInterface}:\cr
 getAromaPlatform, getPlatform, getUnitAnnotationDataFile, getUnitNamesFile, getUnitTypesFile

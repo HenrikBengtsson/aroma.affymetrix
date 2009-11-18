@@ -953,3 +953,30 @@ getExpectedOutputFiles.MatSmoothing
   getExtensionPattern.CnagCfhFile getExtensionPattern.DChipDcpFile
   getRlmFitFunctions.RmaPlm  getRlmFitFunctions
 getRlmFitFunctions getRlmFitFunctions.RmaPlm
+  as.AromaMicroarrayDataSetTuple
+  as.AromaMicroarrayDataSetTuple.AromaMicroarrayDataSet
+  as.AromaMicroarrayDataSetTuple.AromaMicroarrayDataSetTuple
+  as.ChipEffectSetTuple as.ChipEffectSetTuple.ChipEffectSetTuple
+  as.ChipEffectSetTuple.default as.CnChipEffectSetTuple
+  as.CnChipEffectSetTuple.CnChipEffectSetTuple
+  as.CnChipEffectSetTuple.default as.CopyNumberDataFile
+  as.CopyNumberDataFile.CopyNumberDataFile as.CopyNumberDataSet
+  as.CopyNumberDataSet.CopyNumberDataSet as.CopyNumberDataSetTuple
+  as.CopyNumberDataSetTuple.CnChipEffectSet
+  as.CopyNumberDataSetTuple.CopyNumberDataSetTuple
+  as.CopyNumberDataSetTuple.list CnChipEffectSetTuple
+  CopyNumberDataFile CopyNumberDataSet CopyNumberDataSetTuple
+  getAverageFile.AromaMicroarrayDataSet getDataFileMatrix
+  getDataFileMatrix.CopyNumberChromosomalModel getNumberOfFilesAveraged
+  getNumberOfFilesAveraged.CnChipEffectFile hasAlleleBFractions
+  hasAlleleBFractions.CnChipEffectFile
+  hasAlleleBFractions.CnChipEffectSet
+  hasAlleleBFractions.CnChipEffectSetTuple
+  hasAlleleBFractions.CopyNumberDataFile
+  hasAlleleBFractions.CopyNumberDataSet
+  hasAlleleBFractions.CopyNumberDataSetTuple hasStrandiness
+  hasStrandiness.CnChipEffectFile hasStrandiness.CnChipEffectSet
+  hasStrandiness.CnChipEffectSetTuple hasStrandiness.CopyNumberDataFile
+  hasStrandiness.CopyNumberDataSet
+  hasStrandiness.CopyNumberDataSetTuple isAverageFile
+  isAverageFile.AffymetrixCelFile

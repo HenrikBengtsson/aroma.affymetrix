@@ -35,21 +35,12 @@ setConstructorS3("ChromosomalModel", function(cesTuple=NULL, tags="*", genome="H
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'cesTuple':
   if (!is.null(cesTuple)) {
-    # Coerce to ChipEffectSetTuple
-    if (!inherits(cesTuple, "ChipEffectSetTuple")) {
-      cesTuple <- ChipEffectSetTuple(cesTuple);
+    # BEGIN: AFFX
+    # Coerce to AromaMicroarrayDataSetTuple, if needed
+    if (!inherits(cesTuple, "AromaMicroarrayDataSetTuple")) {
+      cesTuple <- as.AromaMicroarrayDataSetTuple(cesTuple);
     }
-
-    # Assert that we are dealing with CnChipEffectSet:s
-    for (ces in getListOfSets(cesTuple)) {
-      # Assert special properties for CnChipEffectSet:s AD HOC /HB 2006-12-20
-      if (inherits(ces, "CnChipEffectSet")) {
-        # Currently only total copy-number estimates are accepted
-        if (!ces$combineAlleles) {
-          throw("Unsupported copy-number chip effects. Currently only total copy-number estimates are supported: ces$combineAlleles == FALSE");
-        }
-      }
-    }
+    # END: AFFX
   }
 
   # Argument 'tags':
@@ -87,21 +78,23 @@ setMethodS3("as.character", "ChromosomalModel", function(x, ...) {
   s <- c(s, paste("Tags:", getTags(this, collapse=",")));
   s <- c(s, paste("Chip type (virtual):", getChipType(this)));
   s <- c(s, sprintf("Path: %s", getPath(this)));
-  nbrOfChipTypes <- nbrOfChipTypes(this);
+  setTuple <- getSetTuple(this);
+  chipTypes <- getChipTypes(setTuple);
+  nbrOfChipTypes <- length(chipTypes);
   s <- c(s, sprintf("Number of chip types: %d", nbrOfChipTypes));
-  s <- c(s, "Chip-effect set:");
-  cesList <- getListOfSets(getSetTuple(this));
-  chipTypes <- sapply(cesList, FUN=function(ces) {
-    getChipType(ces);
-  })
+  s <- c(s, sprintf("Chip types: %d", paste(chipTypes, collapse=", ")));
+
+  s <- c(s, "Data-set tuple:");
+  cesList <- getListOfSets(setTuple);
   for (kk in seq(along=cesList)) {
+    chipType <- getChipType(cesList);
     s <- c(s, sprintf("Chip type #%d of %d ('%s'):", 
-                                    kk, nbrOfChipTypes, chipTypes[kk]));
+                                    kk, nbrOfChipTypes, chipType));
     s <- c(s, "Chip-effect set:");
     ces <- cesList[[kk]];
     s <- c(s, as.character(ces));
   }
-#  s <- c(s, "Genome information:", as.character(getGenomeInformation(this)));
+
   s <- c(s, sprintf("RAM: %.2fMB", objectSize(this)/1024^2));
   class(s) <- "GenericSummary";
   s;
@@ -115,8 +108,9 @@ setMethodS3("clearCache", "ChromosomalModel", function(this, ...) {
     this[[ff]] <- NULL;
   }
 
-  if (!is.null(this$.cesTuple))
+  if (!is.null(this$.cesTuple)) {
     clearCache(this$.cesTuple);
+  }
 
   # Then for this object
   NextMethod(generic="clearCache", object=this, ...);
@@ -142,8 +136,9 @@ setMethodS3("getParentPath", "ChromosomalModel", function(this, ...) {
   # Create path?
   if (!isDirectory(path)) {
     mkdirs(path);
-    if (!isDirectory(path))
+    if (!isDirectory(path)) {
       throw("Failed to create directory: ", path);
+    }
   }
 
   path;
@@ -155,14 +150,15 @@ setMethodS3("getPath", "ChromosomalModel", function(this, ...) {
   # Chip type
   chipType <- getChipType(this);
 
-	  # The full path
+  # The full path
   path <- filePath(path, chipType, expandLinks="any");
 
   # Create path?
   if (!isDirectory(path)) {
     mkdirs(path);
-    if (!isDirectory(path))
+    if (!isDirectory(path)) {
       throw("Failed to create output directory: ", path);
+    }
   }
 
   path;
@@ -428,23 +424,6 @@ setMethodS3("getName", "ChromosomalModel", function(this, collapse="+", ...) {
   name;
 })
 
-setMethodS3("getAlias", "ChromosomalModel", function(this, ...) {
-  this$.alias;
-})
-
-
-setMethodS3("setAlias", "ChromosomalModel", function(this, alias=NULL, ...) {
-  # Argument 'alias':
-  if (!is.null(alias)) {
-    alias <- Arguments$getCharacter(alias, length=c(1,1));
-  }
-  this$.alias <- alias;
-  invisible(this);
-})
-
-
-
-
 
 setMethodS3("getAsteriskTags", "ChromosomalModel", function(this, collapse=NULL, ...) {
   # Create a default asterisk tags for any class by extracting all
@@ -541,8 +520,8 @@ setMethodS3("getFullName", "ChromosomalModel", function(this, ...) {
 # }
 #*/###########################################################################
 setMethodS3("getChromosomes", "ChromosomalModel", function(this, ...) {
-  gis <- getListOfGenomeInformations(this);
-  chromosomes <- lapply(gis, getChromosomes);
+  ugpList <- getListOfAromaUgpFiles(this);
+  chromosomes <- lapply(ugpList, getChromosomes);
   chromosomes <- unlist(chromosomes, use.names=TRUE);
   chromosomes <- sort(unique(chromosomes));
   chromosomes;
@@ -562,10 +541,20 @@ setMethodS3("getListOfAromaUgpFiles", "ChromosomalModel", function(this, ..., ve
     on.exit(popState(verbose));
   }
 
-  verbose && enter(verbose, "Retrieving UGP files");
-  unfList <- getListOfUnitNamesFiles(this);
-  ugpList <- lapply(unfList, getAromaUgpFile, verbose=less(verbose));
-  verbose && exit(verbose);
+  verbose && enter(verbose, "Retrieving list of UGP files");
+  ugpList <- NULL;
+  tryCatch({
+    verbose && enter(verbose, "Retrieving unit names files");
+    unfList <- getListOfUnitNamesFiles(this);
+    verbose && exit(verbose);
+    verbose && enter(verbose, "Retrieving UGP files from unit names files");
+    ugpList <- lapply(unfList, getAromaUgpFile, verbose=less(verbose));
+    verbose && exit(verbose);
+    verbose && exit(verbose);
+  }, error = function(ex) {
+    msg <- sprintf("Failed to located UGP files for one of the chip types (%s). Please note that DChip GenomeInformation files are no longer supported.  There error message was: %s", paste(getChipTypes(this), collapse=", "), ex$message);
+    throw(msg);
+  });
 
   ugpList;
 })
@@ -705,35 +694,35 @@ setMethodS3("getSetTag", "ChromosomalModel", function(this, ...) {
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-# BEGIN: AFFX specific
+# BEGIN: DEPRECATED
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-setMethodS3("getListOfGenomeInformations", "ChromosomalModel", function(this, ..., verbose=FALSE) {
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Validate arguments
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
-  if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
-  }
-
-  verbose && enter(verbose, "Retrieving genome informations");
-  cdfList <- getListOfCdfs(getSetTuple(this), ...);
-  giList <- lapply(cdfList, getGenomeInformation, verbose=less(verbose));
-  verbose && exit(verbose);
-
-  giList;
+setMethodS3("getAlias", "ChromosomalModel", function(this, ...) {
+  this$.alias;
 })
 
+
+setMethodS3("setAlias", "ChromosomalModel", function(this, alias=NULL, ...) {
+  # Argument 'alias':
+  if (!is.null(alias)) {
+    alias <- Arguments$getCharacter(alias, length=c(1,1));
+  }
+  this$.alias <- alias;
+  invisible(this);
+})
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-# END: AFFX specific
+# END: DEPRECATED
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 
 
 
 ##############################################################################
 # HISTORY:
+# 2009-11-18
+# o CLEAN UP: Removed all Affymetrix specific classes/methods.
+# 2009-11-16
+# o CLEAN UP: The ChromosomalModel no longer checks 'combineAlleles'.
+# o Now getChromosomes() of ChromosomalModel locates UGP files.
+#   DChip GenomeInformation files are no longer supported for this.
 # 2009-07-08
 # o Added getListOfUnitTypesFiles() for ChromosomalModel.
 # 2009-01-26

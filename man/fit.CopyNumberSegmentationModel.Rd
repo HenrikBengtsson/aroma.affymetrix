@@ -30,8 +30,8 @@
     already fitted.}
   \item{...}{Additional arguments passed to the segmentation method for
     the \code{\link[aroma.core]{RawGenomicSignals}}.}
-  \item{.retResults}{If \code{\link[base:logical]{TRUE}}, CBS fit structures are returned for each
-    fitted array and chromosome.}
+  \item{.retResults}{If \code{\link[base:logical]{TRUE}}, the segmentation fit structures are
+    returned for each fitted array and chromosome.}
   \item{verbose}{A \code{\link[base]{logical}} or \code{\link[R.utils]{Verbose}}.}
 }
 

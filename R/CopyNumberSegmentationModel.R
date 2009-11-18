@@ -29,8 +29,8 @@ setConstructorS3("CopyNumberSegmentationModel", function(...) {
 
 setMethodS3("getAsteriskTags", "CopyNumberSegmentationModel", function(this, collapse=NULL, ..., tag=NULL) {
   if (is.null(tag)) {
-    # Infer 'GLAD' from GladModel, 'CBS' from CbsModel, 'HAARSEG' 
-    # from HaarSegModel, and so on.
+    # Infer 'GLAD' from GladModel, 'CBS' from CbsModel, 
+    # 'HAARSEG' from HaarSegModel, and so on.
     tag <- class(this)[1];
     tag <- gsub("Model$", "", tag);
     tag <- toupper(tag);
@@ -108,8 +108,8 @@ setMethodS3("getFitFunction", "CopyNumberSegmentationModel", abstract=TRUE, prot
 #     already fitted.}
 #   \item{...}{Additional arguments passed to the segmentation method for
 #     the @see "aroma.core::RawGenomicSignals".}
-#   \item{.retResults}{If @TRUE, CBS fit structures are returned for each
-#     fitted array and chromosome.}
+#   \item{.retResults}{If @TRUE, the segmentation fit structures are 
+#     returned for each fitted array and chromosome.}
 #   \item{verbose}{A @logical or @see "R.utils::Verbose".}
 # }
 #
@@ -177,7 +177,7 @@ setMethodS3("fit", "CopyNumberSegmentationModel", function(this, arrays=NULL, ch
   fitFcn <- getFitFunction(this, verbose=less(verbose, 50));
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Retrieving tuple of reference chip effects
+  # Retrieving tuple of reference data files
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Note: Do *not* pass done 'force' to getReferenceFiles(), because then
   # it will calculate the average regardless of reference. /HB 2007-03-24
@@ -196,35 +196,39 @@ setMethodS3("fit", "CopyNumberSegmentationModel", function(this, arrays=NULL, ch
     array <- arrays[aa];
     arrayName <- arrayNames[aa];
 
-    files <- getMatrixChipEffectFiles(this, array=array, 
-                                                    verbose=less(verbose,5));
+    files <- getDataFileMatrix(this, array=array, verbose=less(verbose,5));
+
     ceList <- files[,"test"];
     rfList <- files[,"reference"];
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Get tags for test sample
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    # Get chip-effect tags *common* across chip types
+    # Get copy-number signal tags *common* across chip types
     tags <- lapply(ceList, FUN=function(ce) {
       if (is.null(ce)) NULL else getTags(ce, aliased=aliased);
     });
     tags <- getCommonListElements(tags);
     tags <- unlist(tags, use.names=FALSE);
+    # BEGIN: AFFX
     tags <- setdiff(tags, "chipEffects");
+    # END: AFFX
     tags <- locallyUnique(tags);
     ceTags <- tags;
-    verbose && cat(verbose, "Chip-effect tags: ", paste(ceTags, collapse=","));
+    verbose && cat(verbose, "Genomic-signal tags: ", paste(ceTags, collapse=","));
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Get tags for reference sample
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    # Get chip-effect tags *common* across chip types
+    # Get copy-number signal tags *common* across chip types
     tags <- lapply(rfList, FUN=function(rf) {
       if (is.null(rf)) NULL else getTags(rf, aliased=aliased);
     });
     tags <- getCommonListElements(tags);
     tags <- unlist(tags, use.names=FALSE);
+    # BEGIN: AFFX
     tags <- setdiff(tags, "chipEffects");
+    # END: AFFX
     tags <- locallyUnique(tags);
 
     # HB 2007-02-19 To fix: Should the name and the tags of average files
@@ -274,7 +278,7 @@ setMethodS3("fit", "CopyNumberSegmentationModel", function(this, arrays=NULL, ch
         tTotal <- processTime();
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-        # Get (x, M, stddev, chiptype, unit) data from all chip types
+        # Get (x, M, stddev, chipType, unit) data from all chip types
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
         tRead <- processTime();
         data <- getRawCnData(this, ceList=ceList, refList=rfList, 
@@ -643,7 +647,8 @@ ylim <- c(-1,1);
 
       # Write data
       verbose && str(verbose, df);
-      write.table(df, file=pathname, sep="\t", col.names=FALSE, row.names=FALSE, quote=FALSE, append=oneFile);
+      write.table(df, file=pathname, sep="\t", col.names=FALSE, 
+                  row.names=FALSE, quote=FALSE, append=oneFile);
     }
     verbose && exit(verbose);
     res[[array]] <- df;
@@ -656,6 +661,14 @@ ylim <- c(-1,1);
 
 ##############################################################################
 # HISTORY:
+# 2009-11-16
+# o Except from drop 'chipEffects' tags, the code of this class is completely
+#   generic, that is, it does not assume Affymetrix data.  Note however,
+#   that the code of super classes still assumes Affymetrix data.
+# o CLEAN UP: Using getDataFileMatrix() instead of the old name
+#   getMatrixChipEffectFiles().
+# o CLEAN UP: Cleaning up code and comments so it is less specific to 
+#   Affymetrix data.
 # 2009-05-16
 # o Added generic getAsteriskTags() for CopyNumberSegmentationModel.
 # o Classes extending CopyNumberSegmentationModel do no longer need to have

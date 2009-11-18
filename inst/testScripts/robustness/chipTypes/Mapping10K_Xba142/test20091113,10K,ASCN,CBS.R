@@ -34,6 +34,7 @@ cbs <- NULL;
 tryCatch({
   cbs <- CbsModel(cesN);
 }, error = function(ex) {
+  print(ex);
 })
 print(cbs);
 stopifnot(is.null(cbs));

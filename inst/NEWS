@@ -1,6 +1,17 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 1.3.2 [2009-11-18]
+o GENERALIZATION: Removed all dependencies on Affymetrix data types
+  for ChromosomalModel, CopyNumberChromosomalModel, and
+  CopyNumberSegmentationModel.
+o Added internal getNumberOfFilesAveraged() to CnChipEffectFile.
+o Added isAverageFile() for AffymetrixCelFile.
+o Added CnChipEffectSetTuple extending ChipEffectSetTuple.
+o Now getChromosomes() of ChromosomalModel utilized UGP files (only).
+  DChip GenomeInformation files are no longer supported.
+
+
 Version: 1.3.1 [2009-11-13]
 o ROBUSTNESS: Now arguments 'ces' and 'ref' and CopyNumberChromosomalModel
   have to be CnChipEffectFile|Set, otherwise an exception is thrown.

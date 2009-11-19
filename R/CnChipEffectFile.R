@@ -241,12 +241,6 @@ setMethodS3("mergeStrands", "CnChipEffectFile", function(this, ...) {
 })
 
 
-setMethodS3("isAverageFile", "AffymetrixCelFile", function(this, ...) {
-  name <- getName(this);
-  res <- (regexpr("^[.]average-", name) != -1);
-  res;
-})
-
 setMethodS3("getNumberOfFilesAveraged", "CnChipEffectFile", function(this, ..., verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments

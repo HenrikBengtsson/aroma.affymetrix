@@ -30,7 +30,7 @@
 \code{~~~~~~~~~~~~~~~~~~~~~~+--}\emph{\code{AffymetrixFileSet}}\cr
 
 \bold{Directly known subclasses:}\cr
-\link[aroma.affymetrix]{AffymetrixCelSet}, \emph{\link[aroma.affymetrix]{AffymetrixCnChpSet}}, \link[aroma.affymetrix]{ChipEffectSet}, \link[aroma.affymetrix]{CnChipEffectSet}, \emph{\link[aroma.affymetrix]{DChipDcpSet}}, \link[aroma.affymetrix]{ExonChipEffectSet}, \link[aroma.affymetrix]{FirmaSet}, \link[aroma.affymetrix]{ParameterCelSet}, \link[aroma.affymetrix]{QualityAssessmentSet}, \link[aroma.affymetrix]{ResidualSet}, \link[aroma.affymetrix]{SnpChipEffectSet}, \link[aroma.affymetrix]{WeightsSet}\cr
+\emph{\link[aroma.affymetrix]{AffymetrixCelSet}}, \emph{\link[aroma.affymetrix]{AffymetrixCnChpSet}}, \link[aroma.affymetrix]{ChipEffectSet}, \link[aroma.affymetrix]{CnChipEffectSet}, \emph{\link[aroma.affymetrix]{DChipDcpSet}}, \link[aroma.affymetrix]{ExonChipEffectSet}, \emph{\link[aroma.affymetrix]{FirmaSet}}, \emph{\link[aroma.affymetrix]{ParameterCelSet}}, \emph{\link[aroma.affymetrix]{QualityAssessmentSet}}, \emph{\link[aroma.affymetrix]{ResidualSet}}, \link[aroma.affymetrix]{SnpChipEffectSet}, \emph{\link[aroma.affymetrix]{WeightsSet}}\cr
 
 public abstract static class \bold{AffymetrixFileSet}\cr
 extends \emph{\link[aroma.core]{AromaPlatformInterface}}\cr
@@ -62,7 +62,7 @@ extends \emph{\link[aroma.core]{AromaPlatformInterface}}\cr
 getAromaPlatform, getPlatform, getUnitAnnotationDataFile, getUnitNamesFile, getUnitTypesFile
 
  \bold{Methods inherited from AromaMicroarrayDataSet}:\cr
-as.AromaMicroarrayDataSetTuple, getAverageFile, getChipType, getPlatform, nbrOfArrays, setAttributesBy, setAttributesBySampleAnnotationFile, setAttributesBySampleAnnotationSet, validate
+as.AromaMicroarrayDataSetTuple, getAverageFile, getChipType, getPlatform, getXAM, nbrOfArrays, setAttributesBy, setAttributesBySampleAnnotationFile, setAttributesBySampleAnnotationSet, validate
 
  \bold{Methods inherited from GenericDataFileSet}:\cr
 append, appendFiles, appendFullNamesTranslator, appendFullNamesTranslatorByfunction, appendFullNamesTranslatorBylist, appendFullNamesTranslatorByNULL, as.list, byName, byPath, clearCache, clearFullNamesTranslator, copyTo, equals, extract, findByName, fromFiles, getAlias, getDefaultFullName, getFile, getFileClass, getFileSize, getFullNames, getNames, getPath, getPathnames, hasFile, indexOf, lapply, nbrOfFiles, sapply, seq, setAlias, setFullNamesTranslator, update2, updateFullName, updateFullNames, validate

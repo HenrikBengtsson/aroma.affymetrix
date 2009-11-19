@@ -1,6 +1,12 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 1.3.3 [2009-11-19]
+o GENERALIZATION: Move all (generalized) ChromosomalModel, 
+  CopyNumberChromosomalModel, and CopyNumberSegmentationModel
+  to aroma.core from here. 
+
+
 Version: 1.3.2 [2009-11-18]
 o GENERALIZATION: Removed all dependencies on Affymetrix data types
   for ChromosomalModel, CopyNumberChromosomalModel, and

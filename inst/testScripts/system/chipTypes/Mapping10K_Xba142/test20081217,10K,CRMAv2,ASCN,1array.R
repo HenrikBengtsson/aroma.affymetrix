@@ -32,7 +32,7 @@ print(bpn);
 csN <- process(bpn, verbose=log);
 print(csN);
 
-plm <- AvgCnPlm(csN, mergeStrands=TRUE, combineAlleles=FALSE, tags="1array,*");
+plm <- AvgCnPlm(csN, mergeStrands=TRUE, combineAlleles=FALSE);
 print(plm);
 fit(plm, verbose=log);
 

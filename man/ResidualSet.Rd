@@ -31,13 +31,13 @@
 \code{~~~~~~~~~~~~~~~~~~~~~~~~~~~|}\cr
 \code{~~~~~~~~~~~~~~~~~~~~~~~~~~~+--}\code{\link[aroma.affymetrix]{AffymetrixCelSet}}\cr
 \code{~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|}\cr
-\code{~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~+--}\emph{\code{ResidualSet}}\cr
+\code{~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~+--}\code{ResidualSet}\cr
 
 \bold{Directly known subclasses:}\cr
 \cr
 
-public abstract static class \bold{ResidualSet}\cr
-extends \emph{\link[aroma.affymetrix]{AffymetrixCelSet}}\cr
+public static class \bold{ResidualSet}\cr
+extends \link[aroma.affymetrix]{AffymetrixCelSet}\cr
 
 
 
@@ -73,7 +73,7 @@ as, as.AffymetrixFileSet, byPath, getDefaultFullName
 getAromaPlatform, getPlatform, getUnitAnnotationDataFile, getUnitNamesFile, getUnitTypesFile
 
  \bold{Methods inherited from AromaMicroarrayDataSet}:\cr
-as.AromaMicroarrayDataSetTuple, getAverageFile, getChipType, getPlatform, getXAM, nbrOfArrays, setAttributesBy, setAttributesBySampleAnnotationFile, setAttributesBySampleAnnotationSet, validate
+as.AromaMicroarrayDataSetTuple, getAverageFile, getChipType, getPlatform, nbrOfArrays, setAttributesBy, setAttributesBySampleAnnotationFile, setAttributesBySampleAnnotationSet, validate
 
  \bold{Methods inherited from GenericDataFileSet}:\cr
 append, appendFiles, appendFullNamesTranslator, appendFullNamesTranslatorByfunction, appendFullNamesTranslatorBylist, appendFullNamesTranslatorByNULL, as.list, byName, byPath, clearCache, clearFullNamesTranslator, copyTo, equals, extract, findByName, fromFiles, getAlias, getDefaultFullName, getFile, getFileClass, getFileSize, getFullNames, getNames, getPath, getPathnames, hasFile, indexOf, lapply, nbrOfFiles, sapply, seq, setAlias, setFullNamesTranslator, update2, updateFullName, updateFullNames, validate

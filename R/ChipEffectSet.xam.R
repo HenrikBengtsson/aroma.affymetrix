@@ -38,7 +38,9 @@ setMethodS3("getAM", "ChipEffectSet", function(this, other, units=NULL, ..., ver
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'other':
-  if (!inherits(other, "ChipEffectFile")) {
+  if (is.null(other)) {
+    # Do not calculate ratios relative to a reference
+  } else if (!inherits(other, "ChipEffectFile")) {
     throw("Argument 'other' is not an ChipEffectFile: ", class(other)[1]);
   }
 
@@ -80,21 +82,23 @@ setMethodS3("getAM", "ChipEffectSet", function(this, other, units=NULL, ..., ver
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Get thetas from the other
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  verbose && enter(verbose, "Retrieving other thetas");
-
-  # Workaround for now (just in case). /HB 2006-09-26 TODO
-  if (inherits(other, "SnpChipEffectFile")) {
-    other$mergeStrands <- this$mergeStrands;
-    if (inherits(other, "CnChipEffectFile")) {
-      other$combineAlleles <- this$combineAlleles;
+  if (!is.null(other)) {
+    verbose && enter(verbose, "Retrieving other thetas");
+  
+    # Workaround for now (just in case). /HB 2006-09-26 TODO
+    if (inherits(other, "SnpChipEffectFile")) {
+      other$mergeStrands <- this$mergeStrands;
+      if (inherits(other, "CnChipEffectFile")) {
+        other$combineAlleles <- this$combineAlleles;
+      }
     }
-  }
 
-  # Get the other theta estimates
-  thetaRef <- getDataFlat(other, units=map, fields="theta", verbose=less(verbose))[,"theta"];
-  nTheta <- length(thetaRef);
-  stopifnot(identical(nTheta, nrow(map)));
-  verbose && exit(verbose);
+    # Get the other theta estimates
+    thetaR <- getDataFlat(other, units=map, fields="theta", verbose=less(verbose))[,"theta"];
+    nTheta <- length(thetaR);
+    stopifnot(identical(nTheta, nrow(map)));
+    verbose && exit(verbose);
+  } # if (!is.null(other))
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Get thetas from the samples
@@ -109,11 +113,21 @@ setMethodS3("getAM", "ChipEffectSet", function(this, other, units=NULL, ..., ver
       throw("Internal error: The number of chip-effect values is not equal to the number of units requested: ", length(theta), " != ", nTheta);
     }
 
+    # Calculate raw copy numbers relative to reference?
+    # AD HOC /HB 2009-11-22 (get[X]AM() should be dropped in the future)
+    if (is.null(other)) {
+      M <- theta;
+      A <- theta;
+    } else {
+      M <- theta / thetaR;
+      A <- theta * thetaR;
+    }
+
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    # Calculate raw copy numbers relative to the other
+    # Log2 scale
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    M <- log(theta/thetaRef, base=2);
-    A <- log(theta*thetaRef, base=2)/2;
+    M <- log(M, base=2);
+    A <- log(A, base=2)/2;
     stopifnot(identical(length(M), nTheta));
 
     am[,aa,"A"] <- A;
@@ -171,7 +185,9 @@ setMethodS3("getXAM", "ChipEffectSet", function(this, other, chromosome, units=N
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'other':
-  if (!inherits(other, "ChipEffectFile")) {
+  if (is.null(other)) {
+    # Do not calculate ratios relative to a reference
+  } else if (!inherits(other, "ChipEffectFile")) {
     throw("Argument 'other' is not an ChipEffectFile: ", class(other)[1]);
   }
 
@@ -242,6 +258,8 @@ setMethodS3("getXAM", "ChipEffectSet", function(this, other, chromosome, units=N
 
 ############################################################################
 # HISTORY:
+# 2009-11-22
+# o Now get[X]AM() accepts other=NULL.
 # 2007-03-04
 # o Added getAM().
 # o Created from ChipEffectFile.xam.R.

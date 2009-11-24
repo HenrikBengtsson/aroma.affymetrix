@@ -1,8 +1,14 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 1.3.4 [2009-11-24]
+o CLEAN UP: Removed packages GLAD, DNAcopy and HaarSeg from the
+  list of suggested packages in DESCRIPTION.
+o CLEAN UP: Move more method for 'profileCGH' objects to aroma.core.
+
+
 Version: 1.3.3 [2009-11-19]
-o GENERALIZATION: Move all (generalized) ChromosomalModel, 
+o CLEAN UP: Move all (generalized) ChromosomalModel, 
   CopyNumberChromosomalModel, and CopyNumberSegmentationModel
   to aroma.core from here. 
 

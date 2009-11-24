@@ -75,7 +75,7 @@ extractDataFrame, extractMatrix, getParameters, readUnits
 getAromaPlatform, getPlatform, getUnitAnnotationDataFile, getUnitNamesFile, getUnitTypesFile
 
  \bold{Methods inherited from AromaMicroarrayDataFile}:\cr
-getAttributeXY, getChipType, getPlatform, getPloidy, hasAttributeXY, isAverageFile, setAttributesByTags, setAttributeXY
+getAttributeXY, getChipType, getPlatform, getPloidy, getXAM, hasAttributeXY, isAverageFile, setAttributesByTags, setAttributeXY
 
  \bold{Methods inherited from GenericDataFile}:\cr
 compareChecksum, copyTo, equals, fromFile, getAlias, getAttribute, getAttributes, getChecksum, getCreatedOn, getDefaultFullName, getExtension, getExtensionPattern, getFilename, getFilenameExtension, getFileSize, getFileType, getLastAccessedOn, getLastModifiedOn, getOutputExtension, getPath, getPathname, gunzip, gzip, hasBeenModified, isFile, readChecksum, renameTo, renameToUpperCaseExt, setAlias, setAttribute, setAttributes, setAttributesBy, setAttributesByTags, setExtensionPattern, testAttributes, validateChecksum, writeChecksum

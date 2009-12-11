@@ -423,7 +423,7 @@ setMethodS3("setCdf", "AffymetrixCelSet", function(this, cdf, verbose=FALSE, ...
   #  setSetting(aroma.affymetrix, "rules$allowAsciiCdfs", TRUE)
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   allowAsciiCdfs <- getOption(aromaSettings, "rules/allowAsciiCdfs", FALSE);
-  if (allowAsciiCdfs) {
+  if (!allowAsciiCdfs) {
     # ASCII CDF are *not* allowed
     ff <- getFileFormat(cdf);
     if (regexpr("ASCII", ff) != -1) {
@@ -1454,6 +1454,10 @@ setMethodS3("getUnitGroupCellMap", "AffymetrixCelSet", function(this, ...) {
 
 ############################################################################
 # HISTORY:
+# 2009-12-03
+# o BUG FIX: The test for allowing ASCII CDFs or not in setCdf() of an
+#   AffymetrixCelSet was only applied if getOption(aromaSettings, 
+#   "rules/allowAsciiCdfs") was TRUE (should be FALSE).
 # 2009-08-12
 # o Now findByName() of AffymetrixCelSet calls ditto of 
 #   GenericDataFileSet of the R.filesets packages.

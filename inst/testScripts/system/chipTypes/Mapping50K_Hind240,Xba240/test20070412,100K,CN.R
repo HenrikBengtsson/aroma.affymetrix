@@ -105,10 +105,6 @@ rawCNs <- extractRawCopyNumbers(cnm, array=1, chromosome=1, verbose=log);
 glad <- GladModel(cesNList);
 print(glad);
 
-nbrOfTestArrays <- nbrOfFiles(getSetTuple(glad));
-nbrOfRefArrays <- nbrOfFiles(getReferenceSetTuple(glad));
-stopifnot(identical(nbrOfTestArrays, nbrOfRefArrays));
-
 fit(glad, arrays=1, chromosomes=19, verbose=log);
 
 # Tests the case where one of the set does not have observations.

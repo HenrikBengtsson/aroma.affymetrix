@@ -105,9 +105,8 @@ rawCNs <- extractRawCopyNumbers(cnm, array=1, chromosome=1, verbose=log);
 glad <- GladModel(cesNList);
 print(glad);
 
-print(getTableOfArrays(glad));
-nbrOfTestArrays <- nbrOfArrays(getSetTuple(glad));
-nbrOfRefArrays <- nbrOfArrays(getReferenceSetTuple(glad));
+nbrOfTestArrays <- nbrOfFiles(getSetTuple(glad));
+nbrOfRefArrays <- nbrOfFiles(getReferenceSetTuple(glad));
 stopifnot(identical(nbrOfTestArrays, nbrOfRefArrays));
 
 fit(glad, arrays=1, chromosomes=19, verbose=log);

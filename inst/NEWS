@@ -1,6 +1,10 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 1.3.6 [2009-12-30]
+o Adopted to aroma.core v1.3.7 and R.filesets 0.7.0.
+
+
 Version: 1.3.5 [2009-12-04]
 o BUG FIX: The test for allowing ASCII CDFs or not in setCdf() of an
   AffymetrixCelSet was only applied if getOption(aromaSettings, 

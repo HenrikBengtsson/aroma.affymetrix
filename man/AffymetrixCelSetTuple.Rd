@@ -19,9 +19,13 @@
 
 \code{\link[R.oo]{Object}}\cr
 \code{~~|}\cr
-\code{~~+--}\code{\link[aroma.core]{AromaMicroarrayDataSetTuple}}\cr
+\code{~~+--}\code{\link[R.filesets]{FullNameInterface}}\cr
 \code{~~~~~~~|}\cr
-\code{~~~~~~~+--}\code{AffymetrixCelSetTuple}\cr
+\code{~~~~~~~+--}\code{\link[R.filesets]{GenericDataFileSetList}}\cr
+\code{~~~~~~~~~~~~|}\cr
+\code{~~~~~~~~~~~~+--}\code{\link[aroma.core]{AromaMicroarrayDataSetTuple}}\cr
+\code{~~~~~~~~~~~~~~~~~|}\cr
+\code{~~~~~~~~~~~~~~~~~+--}\code{AffymetrixCelSetTuple}\cr
 
 \bold{Directly known subclasses:}\cr
 \link[aroma.affymetrix]{ChipEffectSetTuple}, \link[aroma.affymetrix]{CnChipEffectSetTuple}\cr
@@ -48,7 +52,13 @@ extends \emph{\link[aroma.core]{AromaMicroarrayDataSetTuple}}\cr
 
 
  \bold{Methods inherited from AromaMicroarrayDataSetTuple}:\cr
-as, as.AromaMicroarrayDataSetTuple, asMatrixOfFiles, byPath, extract, getAlias, getArrays, getArrayTuple, getAsteriskTags, getChipTypes, getFullName, getFullNames, getListOfSets, getName, getNames, getTableOfArrays, getTags, nbrOfArrays, nbrOfChipTypes, setAlias, setTags
+as, as.AromaMicroarrayDataSetTuple, byPath, getAsteriskTags, getChipTypes, getFullNames, getTags, indexOf, nbrOfArrays, nbrOfChipTypes
+
+ \bold{Methods inherited from GenericDataFileSetList}:\cr
+as.character, as.data.frame, as, as.GenericDataFileSetList, as.list, clone, extract, getAsteriskTags, getDefaultFullName, getFileList, getFileListClass, getFullNames, getNames, getSet, getSets, getTags, indexOf, length, nbrOfFiles, nbrOfSets, setTags
+
+ \bold{Methods inherited from FullNameInterface}:\cr
+appendFullNameTranslator, appendFullNameTranslatorBycharacter, appendFullNameTranslatorByfunction, appendFullNameTranslatorBylist, appendFullNameTranslatorByNULL, clearFullNameTranslator, clearListOfFullNameTranslators, getDefaultFullName, getFullName, getFullNameTranslator, getListOfFullNameTranslators, getName, getTags, hasTag, hasTags, setFullName, setFullNameTranslator, setListOfFullNameTranslators, setName, setTags, updateFullName
 
  \bold{Methods inherited from Object}:\cr
 asThis, $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save

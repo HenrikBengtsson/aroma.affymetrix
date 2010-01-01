@@ -19,7 +19,7 @@
  Sets the arrays to be processed by the explorer.
 }
 
-\usage{\method{setArrays}{ArrayExplorer}(this, arrays=NULL, ...)}
+\usage{\method{setArrays}{ArrayExplorer}(this, ...)}
 
 \arguments{
   \item{arrays}{A \code{\link[base]{character}} (or \code{\link[base]{integer}}) \code{\link[base]{vector}} of arrays to be

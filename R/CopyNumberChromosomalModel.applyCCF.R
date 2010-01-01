@@ -1,7 +1,7 @@
 setMethodS3("applyAnyOrder", "CopyNumberChromosomalModel", function(this, chipTypes=NULL, arrays=NULL, chromosomes=NULL, FUN, order=c("cca", "cac"), ..., verbose=FALSE) {
   allChipTypes <- getChipTypes(this);
   allChromosomes <- getChromosomes(this);
-  allArrays <- getArrays(this);
+  allArrays <- getNames(this);
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
@@ -82,10 +82,10 @@ setMethodS3("applyAnyOrder", "CopyNumberChromosomalModel", function(this, chipTy
   verbose && enter(verbose, "Extract chip types");
   # Extract chip types of interest
   if (identical(chipTypes, getChipTypes(cesTuple))) {
-    cesTuple <- newInstance(cesTuple, getListOfSets(cesTuple)[chipTypes]);
+    cesTuple <- newInstance(cesTuple, getSets(cesTuple)[chipTypes]);
   }
   if (identical(chipTypes, getChipTypes(refTuple))) {
-    refTuple <- newInstance(refTuple, getListOfSets(refTuple)[chipTypes]);
+    refTuple <- newInstance(refTuple, getSets(refTuple)[chipTypes]);
   }
   verbose && exit(verbose);
 
@@ -114,7 +114,7 @@ setMethodS3("applyAnyOrder", "CopyNumberChromosomalModel", function(this, chipTy
   }
   rm(arrayTable);
 
-  cesSets <- getListOfSets(cesTuple);
+  cesSets <- getSets(cesTuple);
   nbrOfChipTypes <- nbrOfChipTypes(cesTuple);
   ceFiles <- vector("list", nbrOfChipTypes);
   names(ceFiles) <- chipTypes;
@@ -161,8 +161,8 @@ setMethodS3("applyAnyOrder", "CopyNumberChromosomalModel", function(this, chipTy
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
   # Calculating raw CNs
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-  cesSets <- getListOfSets(cesTuple);
-  refSets <- getListOfSets(refTuple);
+  cesSets <- getSets(cesTuple);
+  refSets <- getSets(refTuple);
 
   if (order == "cca") {
     values <- applyCCF0(this, cesSets=cesSets, refSets=refSets, 

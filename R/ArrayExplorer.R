@@ -72,7 +72,7 @@ setMethodS3("getListOfReporters", "ArrayExplorer", function(this, ...) {
     # of SpatialReporter.  /HB 2008-03-29
 #    tags <- getTags(this);  
     setTuple <- getSetTuple(this);
-    csList <- getListOfSets(setTuple);
+    csList <- getSets(setTuple);
     reporters <- lapply(csList, FUN=function(cs) {
       reporter <- SpatialReporter(cs, tags="*");
       reporter;
@@ -130,7 +130,7 @@ setMethodS3("getAsteriskTags", "ArrayExplorer", function(this, ...) {
 #*/###########################################################################
 setMethodS3("getDataSet", "ArrayExplorer", function(this, ...) {
   csTuple <- getSetTuple(this);
-  csList <- getListOfSets(csTuple);
+  csList <- getSets(csTuple);
   csList[[1]];  # AD HOC for now. /HB 2007-03-19
 })
 
@@ -165,7 +165,7 @@ setMethodS3("getListOfUnitTypesFiles", "ArrayExplorer", function(this, ...) {
 
 setMethodS3("getArraysOfInput", "ArrayExplorer", function(this, ...) {
   setTuple <- getSetTuple(this);
-  getArrays(setTuple);
+  getNames(setTuple);
 }, protected=TRUE)
 
 
@@ -197,15 +197,17 @@ setMethodS3("getArraysOfInput", "ArrayExplorer", function(this, ...) {
 #   @seeclass
 # }
 #*/###########################################################################
-setMethodS3("setArrays", "ArrayExplorer", function(this, arrays=NULL, ...) {
-  # Argument 'arrays':
-  if (!is.null(arrays)) {
-    setTuple <- getSetTuple(this);
-    arrays <- indexOfArrays(setTuple, arrays);
-    arrays <- getArrays(setTuple)[arrays];
-  }
+setMethodS3("setArrays", "ArrayExplorer", function(this, ...) {
+  tuple <- getSetTuple(this);
+  idxs <- indexOf(tuple, ...);
 
-  this$.arrays <- arrays;
+  # Get the names of the arrays
+  arrayNames <- getNames(tuple)[idxs];
+
+  # Sanity check
+  stopifnot(!any(duplicated(arrayNames)));
+
+  this$.arrays <- arrayNames;
 })
 
 

@@ -193,7 +193,7 @@ setMethodS3("createOutputTuple", "SmoothMultiarrayModel", function(this, ..., fo
   inTuple <- getSetTuple(this);
   nbrOfChipTypes <- nbrOfChipTypes(inTuple);
   verbose && cat(verbose, "Number of chip types: ", nbrOfChipTypes);
-  inList <- getListOfSets(inTuple);
+  inList <- getSets(inTuple);
   outList <- vector("list", nbrOfChipTypes);
   names(outList) <- names(inList);
   parentPath <- getParentPath(this);
@@ -351,7 +351,7 @@ setMethodS3("fitOneChromosome", "SmoothMultiarrayModel", function(this, chromoso
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   verbose && enter(verbose, "Storing estimates");
 
-  outList <- getListOfSets(outTuple);
+  outList <- getSets(outTuple);
   verbose && cat(verbose, "List of output data sets:");
   verbose && print(verbose, outList);
 

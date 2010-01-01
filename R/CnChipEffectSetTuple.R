@@ -1,10 +1,10 @@
-setConstructorS3("CnChipEffectSetTuple", function(csList=NULL, ..., .setClass="CnChipEffectSet") {
+setConstructorS3("CnChipEffectSetTuple", function(dsList=list(), ..., .setClass="CnChipEffectSet") {
   # Nothing do to?
-  if (inherits(csList, "CnChipEffectSetTuple")) {
-    return(csList);
+  if (inherits(dsList, "CnChipEffectSetTuple")) {
+    return(dsList);
   }
 
-  extend(ChipEffectSetTuple(csList=csList, ..., .setClass=.setClass), c("CnChipEffectSetTuple", uses("CopyNumberDataSetTuple")));
+  extend(ChipEffectSetTuple(dsList, ..., .setClass=.setClass), c("CnChipEffectSetTuple", uses("CopyNumberDataSetTuple")));
 })
 
 
@@ -21,7 +21,7 @@ setMethodS3("as.CnChipEffectSetTuple", "default", function(this, ...) {
 
 
 setMethodS3("hasAlleleBFractions", "CnChipEffectSetTuple", function(this, ...) {
-  cesList <- getListOfSets(this);
+  cesList <- getSets(this);
   res <- sapply(cesList, FUN=hasAlleleBFractions);
 
   # Sanity check
@@ -34,7 +34,7 @@ setMethodS3("hasAlleleBFractions", "CnChipEffectSetTuple", function(this, ...) {
 })
 
 setMethodS3("hasStrandiness", "CnChipEffectSetTuple", function(this, ...) {
-  cesList <- getListOfSets(this);
+  cesList <- getSets(this);
   res <- sapply(cesList, FUN=hasStrandiness);
 
   # Sanity check

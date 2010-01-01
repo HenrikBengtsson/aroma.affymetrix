@@ -89,19 +89,19 @@ setMethodS3("byPath", "AffymetrixCelSetTuple", function(static, path, ..., verbo
 
 
 setMethodS3("getListOfCdfs", "AffymetrixCelSetTuple", function(this, ...) {
-  csList <- getListOfSets(this);
+  csList <- getSets(this);
   lapply(csList, FUN=getCdf);
 }, private=TRUE)
 
 
 setMethodS3("getListOfUnitNamesFiles", "AffymetrixCelSetTuple", function(this, ...) {
-  csList <- getListOfSets(this);
+  csList <- getSets(this);
   lapply(csList, FUN=getCdf);
 }, private=TRUE)
 
 
 setMethodS3("getListOfUnitTypesFiles", "AffymetrixCelSetTuple", function(this, ...) {
-  csList <- getListOfSets(this);
+  csList <- getSets(this);
   lapply(csList, FUN=getCdf);
 }, private=TRUE)
 
@@ -110,6 +110,8 @@ setMethodS3("getListOfUnitTypesFiles", "AffymetrixCelSetTuple", function(this, .
 
 ##############################################################################
 # HISTORY:
+# 2009-12-31
+# o Replaced all getListOfSets() with getSets().
 # 2009-07-08
 # o Added getListOfUnitTypesFiles() to AffymetrixCelSetTuple.
 # 2009-01-26

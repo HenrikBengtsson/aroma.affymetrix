@@ -1,10 +1,10 @@
-setConstructorS3("ChipEffectSetTuple", function(csList=NULL, ..., .setClass="ChipEffectSet") {
+setConstructorS3("ChipEffectSetTuple", function(dsList=list(), ..., .setClass="ChipEffectSet") {
   # Nothing do to?
-  if (inherits(csList, "ChipEffectSetTuple")) {
-    return(csList);
+  if (inherits(dsList, "ChipEffectSetTuple")) {
+    return(dsList);
   }
 
-  extend(AffymetrixCelSetTuple(csList=csList, ..., .setClass=.setClass), "ChipEffectSetTuple");
+  extend(AffymetrixCelSetTuple(dsList, ..., .setClass=.setClass), "ChipEffectSetTuple");
 })
 
 

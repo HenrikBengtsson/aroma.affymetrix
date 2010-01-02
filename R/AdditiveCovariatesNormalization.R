@@ -51,9 +51,7 @@ setConstructorS3("AdditiveCovariatesNormalization", function(dataSet=NULL, ..., 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'dataSet':
   if (!is.null(dataSet)) {
-    if (!inherits(dataSet, "SnpChipEffectSet"))
-      throw("Argument 'dataSet' is not an SnpChipEffectSet object: ", 
-                                                        class(dataSet)[1]);
+    dataSets <- Arguments$getInstanceOf(dataSet, "SnpChipEffectSet");
   }
 
   # Argument 'target':

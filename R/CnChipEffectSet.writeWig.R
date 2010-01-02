@@ -6,10 +6,7 @@ setMethodS3("writeWig", "CnChipEffectSet", function(this, reference=NULL, arrays
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'reference':
   if (!is.null(reference)) {
-    if (!inherits(reference, "CnChipEffects")) {
-      throw("Argument 'reference' is not a CnChipEffects object: ", 
-                                                            class(reference));
-    }
+    reference <- Arguments$getInstanceOf(reference, "CnChipEffects");
 
     if (reference$combineAlleles != this$combineAlleles) {
        throw("The reference chip effects are not compatible with the chip-effect set. One is combining the alleles the other is not.");

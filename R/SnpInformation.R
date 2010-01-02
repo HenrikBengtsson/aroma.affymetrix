@@ -209,9 +209,7 @@ setMethodS3("fromDataSet", "SnpInformation", function(static, dataSet, ...) {
 
 setMethodS3("isCompatibleWithCdf", "SnpInformation", function(this, cdf, ...) {
   # Argument 'cdf':
-  if (!inherits(cdf, "AffymetrixCdfFile")) {
-    throw("Argument 'cdf' is not an AffymetrixCdfFile: ", class(cdf)[1]);
-  }
+  cdf <- Arguments$getInstanceOf(cdf, "AffymetrixCdfFile");
 
   # By default, be naive and always return FALSE.
   TRUE;

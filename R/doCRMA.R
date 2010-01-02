@@ -16,8 +16,7 @@ setMethodS3("doCRMA", "default", function(dataSet, chipTypes=NULL, ..., logName=
     csRawList <- dataSet;
     # Validate elements
     lapply(csRawList, FUN=function(cs) {
-      if (!inherits(cs, "AffymetrixCelSet"))
-        throw("Argument 'dataSet' is a list, but it does not contain AffymetrixCelSet objects: ", class(cs));
+      cs <- Arguments$getInstanceOf(cs, "AffymetrixCelSet", .name="dataSet");
     });
     chipTypes <- sapply(csRawList, FUN=function(cs) {
       getChipType(getCdf(cs));

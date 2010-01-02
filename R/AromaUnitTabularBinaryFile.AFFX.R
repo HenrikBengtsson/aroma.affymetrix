@@ -109,9 +109,7 @@ setMethodS3("getCdf", "AromaUnitTabularBinaryFile", function(this, ..., force=FA
 #*/########################################################################### 
 setMethodS3("allocateFromCdf", "AromaUnitTabularBinaryFile", function(static, cdf, ...) {
   # Argument 'cdf':
-  if (!inherits(cdf, "AffymetrixCdfFile")) {
-    throw("Argument 'cdf' is not an AffymetrixCdfFile: ", class(cdf)[1]);
-  }
+  cdf <- Arguments$getInstanceOf(cdf, "AffymetrixCdfFile");
 
   allocateFromUnitNamesFile(static, unf=cdf, ...);
 }, static=TRUE)
@@ -129,9 +127,7 @@ setMethodS3("importFromGenericTabularFile", "AromaUnitTabularBinaryFile", abstra
 
 setMethodS3("importFromAffymetrixTabularFile", "AromaUnitTabularBinaryFile", function(this, src, ...) {
   # Argument 'src':
-  if (!inherits(src, "AffymetrixTabularFile")) {
-    throw("Argument 'src' is not a AffymetrixTabularFile file: ", class(src)[1]);
-  }
+  src <- Arguments$getInstanceOf(src, "AffymetrixTabularFile");
 
   importFromGenomeInformation(this, src, ...);
 });
@@ -141,9 +137,7 @@ setMethodS3("importFromAffymetrixNetAffxCsvFile", "AromaUnitTabularBinaryFile", 
 
 setMethodS3("importFromDChipGenomeInformation", "AromaUnitTabularBinaryFile", function(this, src, ...) {
   # Argument 'src':
-  if (!inherits(src, "DChipGenomeInformation")) {
-    throw("Argument 'src' is not a DChipGenomeInformation file: ", class(src)[1]);
-  }
+  src <- Arguments$getInstanceOf(src, "DChipGenomeInformation");
 
   importFromGenomeInformation(this, src, ...);
 })

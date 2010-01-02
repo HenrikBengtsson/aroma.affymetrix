@@ -51,8 +51,7 @@ setConstructorS3("FragmentEquivalentClassNormalization", function(dataSet=NULL, 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'dataSet':
   if (!is.null(dataSet)) {
-    if (!inherits(dataSet, "CnChipEffectSet"))
-      throw("Argument 'dataSet' is not an CnChipEffectSet object: ", class(dataSet));
+    dataSet <- Arguments$getInstanceOf(dataSet, "CnChipEffectSet");
 
     if (dataSet$combineAlleles != TRUE) {
       throw("Currently only total copy-number chip effects can be normalized, i.e. 'combineAlleles' must be TRUE");

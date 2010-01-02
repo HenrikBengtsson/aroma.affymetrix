@@ -36,9 +36,7 @@ setConstructorS3("AffymetrixCnChpSet", function(files=NULL, ...) {
   } else if (is.list(files)) {
     reqFileClass <- "AffymetrixCnChpFile";
     lapply(files, FUN=function(df) {
-      if (!inherits(df, reqFileClass))
-        throw("Argument 'files' contains a non-", reqFileClass, 
-                                                  " object: ", class(df)[1]);
+      df <- Arguments$getInstanceOf(df, reqFileClass, .name="files");
     })
   } else if (inherits(files, "AffymetrixCnChpSet")) {
     return(as.AffymetrixCnChpSet(files));
@@ -125,8 +123,7 @@ setMethodS3("findByName", "AffymetrixCnChpSet", function(static, ..., paths="chp
 setMethodS3("byName", "AffymetrixCnChpSet", function(static, name, tags=NULL, chipType=NULL, cdf=NULL, paths=NULL, ...) {
   # Argument 'cdf':
   if (!is.null(cdf)) {
-    if (!inherits(cdf, "AffymetrixCdfFile"))
-      throw("Argument 'cdf' must be an AffymetrixCdfFile object: ", class(cdf)[1]);
+    cdf <- Arguments$getInstanceOf(cdf, "AffymetrixCdfFile");
   }
 
   # Argument 'chipType':
@@ -366,9 +363,7 @@ setMethodS3("setCdf", "AffymetrixCnChpSet", function(this, cdf, verbose=FALSE, .
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (.checkArgs) {
     # Argument 'cdf':
-    if (!inherits(cdf, "AffymetrixCdfFile")) {
-      throw("Argument 'cdf' is not an AffymetrixCdfFile: ", class(cdf)[1]);
-    }
+    cdf <- Arguments$getInstanceOf(cdf, "AffymetrixCdfFile");
   }
 
   # Argument 'verbose':

@@ -283,9 +283,7 @@ setMethodS3("extractTheta", "DChipDcpFile", function(this, units=NULL, ..., drop
 # setMethodS3("setCdf", "DChipDcpFile", function(this, cdf, ...) {
 #   # Argument 'cdf':
 #   if (!is.null(cdf)) {
-#     if (!inherits(cdf, "AffymetrixCdfFile")) {
-#       throw("Argument 'cdf' is not an AffymetrixCdfFile: ", class(cdf)[1]);
-#     }
+#     cdf <- Arguments$getInstanceOf(cdf, "AffymetrixCdfFile");
 #   }
 # 
 #   this$cdf <- cdf;

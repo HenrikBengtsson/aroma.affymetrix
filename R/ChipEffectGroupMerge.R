@@ -33,8 +33,7 @@ setConstructorS3("ChipEffectGroupMerge", function(dataSet=NULL, fcn=NULL, ...) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'dataSet':
   if (!is.null(dataSet)) {
-    if (!inherits(dataSet, "ChipEffectSet"))
-      throw("Argument 'dataSet' is not a ChipEffectSet object: ", class(dataSet));
+    dataSet <- Arguments$getInstanceOf(dataSet, "ChipEffectSet");
   }
 
   this <- extend(ChipEffectTransform(dataSet, ...), "ChipEffectGroupMerge",

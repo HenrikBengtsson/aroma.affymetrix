@@ -58,9 +58,7 @@ setMethodS3("getNormalEquations", "LinearModelProbeSequenceNormalization", funct
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'df':
-  if (!inherits(df, "AffymetrixCelFile")) {
-    throw("Argument 'df' is not an AffymetrixCelFile: ", class(df)[1]);
-  }
+  df <- Arguments$getInstanceOf(df, "AffymetrixCelFile");
 
   # Argument 'ram':
   ram <- getRam(aromaSettings, ram);
@@ -244,9 +242,7 @@ setMethodS3("fitOne", "LinearModelProbeSequenceNormalization", function(this, df
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'df':
-  if (!inherits(df, "AffymetrixCelFile")) {
-    throw("Argument 'df' is not an AffymetrixCelFile: ", class(df)[1]);
-  }
+  df <- Arguments$getInstanceOf(df, "AffymetrixCelFile");
 
   # Argument 'ram':
   ram <- getRam(aromaSettings, ram);

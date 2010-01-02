@@ -36,9 +36,7 @@ setMethodS3("allocateFromCdf", "AffymetrixCelFile", function(static, cdf, name, 
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'cdf':
-  if (!inherits(cdf, "AffymetrixCdfFile")) {
-    throw("Argument 'cdf' is not an AffymetrixCdfFile: ", class(cdf)[1]);
-  } 
+  cdf <- Arguments$getInstanceOf(cdf, "AffymetrixCdfFile");
 
   # Argument 'name':
   name <- Arguments$getCharacter(name, nchar=c(1,256), length=c(1,1));

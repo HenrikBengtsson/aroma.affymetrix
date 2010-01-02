@@ -32,9 +32,7 @@ setConstructorS3("Model", function(dataSet=NULL, tags="*", ...) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'dataSet':
   if (!is.null(dataSet)) {
-    if (!inherits(dataSet, "AffymetrixCelSet"))
-      throw("Argument 'dataSet' is not an AffymetrixCelSet object: ",
-                                                           class(dataSet));
+    dataSet <- Arguments$getInstanceOf(dataSet, "AffymetrixCelSet");
   }
 
   # Arguments '...':

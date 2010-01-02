@@ -5,10 +5,7 @@ setConstructorS3("CrlmmModel", function(dataSet=NULL, balance=1.5, minLLRforCall
   # Argument 'dataSet':
   isMappingChipType <- FALSE;
   if (!is.null(dataSet)) {
-    className <- "SnpChipEffectSet";
-    if (!inherits(dataSet, className))
-      throw("Argument 'dataSet' is not an ", className, ": ",
-                                                       class(dataSet)[1]);
+    dataSet <- Arguments$getInstanceOf(dataSet, "SnpChipEffectSet");
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Sanity check

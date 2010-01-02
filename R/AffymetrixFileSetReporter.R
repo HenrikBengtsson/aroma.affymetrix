@@ -27,9 +27,8 @@ setConstructorS3("AffymetrixFileSetReporter", function(set=NULL, ..., .setClass=
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'set':
-  if (is.null(set)) {
-  } else if (!inherits(set, .setClass)) {
-    throw("Argument 'set' is not a ", .setClass, ": ", class(set)[1]);
+  if (!is.null(set)) {
+    set <- Arguments$getInstanceOf(set, .setClass);
   }
 
 

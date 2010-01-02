@@ -75,16 +75,14 @@ setMethodS3("getReference", "SpatialReporter", function(this, ...) {
 
 
 setMethodS3("setReference", "SpatialReporter", function(this, refFile, ...) {
-  if (is.null(refFile)) {
-  } else {
+  # Argument 'refFile':
+  if (!is.null(refFile)) {
+    refFile <- Arguments$getInstanceOf(refFile, "AffymetrixCelFile");
+
     ds <- getDataSet(this);
     df <- getFile(ds, 1);
-  
-    if (!inherits(refFile, "AffymetrixCelFile")) {
-      throw("Cannot set reference. Argument 'refFile' is not an AffymetrixCelFile: ", class(refFile)[1]);
-    }
 
-    if (!class(refFile)[1] %in% class(df)) {
+    if (!is.element(class(refFile)[1], class(df))) {
       throw("Cannot set reference. Argument 'refFile' is not of a class compatible with the data set: ", class(refFile)[1]);
     } 
   }

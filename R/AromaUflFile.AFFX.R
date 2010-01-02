@@ -19,9 +19,7 @@ setMethodS3("importFromAffymetrixNetAffxCsvFile", "AromaUflFile", function(this,
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'csv':
-  if (!inherits(csv, "AffymetrixNetAffxCsvFile")) {
-    throw("Argument 'csv' is not an AffymetrixNetAffxCsvFile: ", class(csv)[1]);
-  }
+  csv <- Arguments$getInstanceOf(csv, "AffymetrixNetAffxCsvFile");
 
   # Argument 'enzymesToUpdate':
   enzymesToUpdate <- Arguments$getIndices(enzymesToUpdate, max=nbrOfEnzymes(this));

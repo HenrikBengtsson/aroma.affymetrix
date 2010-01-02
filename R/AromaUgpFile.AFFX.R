@@ -2,9 +2,8 @@
 # BEGIN: Platform specific
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 setMethodS3("importFromGenomeInformation", "AromaUgpFile", function(this, gi, ..., verbose=FALSE) {
-  if (!inherits(gi, "GenomeInformation")) {
-    throw("Argument 'gi' is not a GenomeInformation object: ", class(gi)[1]);
-  }
+  # Argument 'gi':
+  gi <- Arguments$getInstanceOf(gi, "GenomeInformation");
 
   # AD HOC patch, since units==NULL does not work./HB 2007-03-03
   units <- seq_len(nbrOfUnits(gi));
@@ -41,9 +40,7 @@ setMethodS3("importFromAffymetrixNetAffxCsvFile", "AromaUgpFile", function(this,
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'csv':
-  if (!inherits(csv, "AffymetrixNetAffxCsvFile")) {
-    throw("Argument 'csv' is not an AffymetrixNetAffxCsvFile: ", class(csv)[1]);
-  }
+  csv <- Arguments$getInstanceOf(csv, "AffymetrixNetAffxCsvFile");
 
   # Argument 'shift':
   if (!identical(shift, "auto"))
@@ -168,9 +165,8 @@ setMethodS3("importFromAffymetrixTabularFile", "AromaUgpFile", function(this, sr
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  if (!inherits(src, "AffymetrixTabularFile")) {
-    throw("Argument 'src' is not an AffymetrixTabularFile: ", class(src)[1]);
-  }
+  # Argument 'src':
+  src <- Arguments$getInstanceOf(src, "AffymetrixTabularFile");
 
   units <- importFromGenericTabularFile(this, src=src, 
             colClassPatterns=colClassPatterns, camelCaseNames=TRUE, ...);

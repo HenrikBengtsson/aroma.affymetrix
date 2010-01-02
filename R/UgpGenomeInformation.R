@@ -145,9 +145,7 @@ setMethodS3("nbrOfUnits", "UgpGenomeInformation", function(this, ...) {
 
 setMethodS3("isCompatibleWithCdf", "UgpGenomeInformation", function(this, cdf, ...) {
   # Argument 'cdf':
-  if (!inherits(cdf, "AffymetrixCdfFile")) {
-    throw("Argument 'cdf' is not an AffymetrixCdfFile: ", class(cdf)[1]);
-  }
+  cdf <- Arguments$getInstanceOf(cdf, "AffymetrixCdfFile");
 
   res <- FALSE;
 

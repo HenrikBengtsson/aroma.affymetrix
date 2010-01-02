@@ -205,8 +205,7 @@ setMethodS3("fromDataFile", "FirmaFile", function(static, df=NULL, filename=spri
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'df':
   if (!is.null(df)) {
-    if (!inherits(df, "AffymetrixCelFile"))
-      throw("Argument 'df' is not an AffymetrixCelFile: ", class(df)[1]);
+    df <- Arguments$getInstanceOf(df, "AffymetrixCelFile");
   }
 
   # Argument 'cdf':
@@ -214,8 +213,7 @@ setMethodS3("fromDataFile", "FirmaFile", function(static, df=NULL, filename=spri
     if (is.null(df))
       throw("Either argument 'df' or 'cdf' must specified.");
   } else {
-    if (!inherits(cdf, "AffymetrixCdfFile"))
-      throw("Argument 'cdf' is not an AffymetrixCdfFile: ", class(cdf)[1]);
+    cdf <- Arguments$getInstanceOf(cdf, "AffymetrixCdfFile");
   }
 
   # Argument 'filename' & 'path':

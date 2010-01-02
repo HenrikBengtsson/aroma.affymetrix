@@ -5,9 +5,7 @@ setMethodS3("mapToUnitNamesFile", "DChipCdfBinFile", function(this, unf=NULL, ..
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'unf':
   if (!is.null(unf)) {
-    if (!inherits(unf, "UnitNamesFile")) {
-      throw("Argument 'unf' is not a UnitNamesFile: ", class(unf)[1]);
-    }
+    unf <- Arguments$getInstanceOf(unf, "UnitNamesFile");
   }
 
   # Argument 'verbose':

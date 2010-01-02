@@ -26,8 +26,7 @@
 setConstructorS3("QualityAssessmentModel", function(plm=NULL, tags="*", ...) {
   # Argument 'plm':
   if (!is.null(plm)) {
-    if (!inherits(plm, "ProbeLevelModel"))
-      throw("Argument 'plm' is not a ProbeLevelModel: ", class(plm)[1]);
+    plm <- Arguments$getInstanceOf(plm, "ProbeLevelModel");
   }
 
   # Argument 'tags':

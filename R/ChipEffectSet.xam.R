@@ -40,8 +40,8 @@ setMethodS3("getAM", "ChipEffectSet", function(this, other, units=NULL, ..., ver
   # Argument 'other':
   if (is.null(other)) {
     # Do not calculate ratios relative to a reference
-  } else if (!inherits(other, "ChipEffectFile")) {
-    throw("Argument 'other' is not an ChipEffectFile: ", class(other)[1]);
+  } else {
+    other <- Arguments$getInstanceOf(other, "ChipEffectFile");
   }
 
   # Argument 'units':
@@ -187,8 +187,8 @@ setMethodS3("getXAM", "ChipEffectSet", function(this, other, chromosome, units=N
   # Argument 'other':
   if (is.null(other)) {
     # Do not calculate ratios relative to a reference
-  } else if (!inherits(other, "ChipEffectFile")) {
-    throw("Argument 'other' is not an ChipEffectFile: ", class(other)[1]);
+  } else {
+    other <- Arguments$getInstanceOf(other, "ChipEffectFile");
   }
 
   # Argument 'chromosome':

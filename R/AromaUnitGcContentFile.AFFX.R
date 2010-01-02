@@ -16,9 +16,7 @@ setMethodS3("importFromAffymetrixNetAffxCsvFile", "AromaUnitGcContentFile", func
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'csv':
-  if (!inherits(csv, "AffymetrixNetAffxCsvFile")) {
-    throw("Argument 'csv' is not an AffymetrixNetAffxCsvFile: ", class(csv)[1]);
-  }
+  csv <- Arguments$getInstanceOf(csv, "AffymetrixNetAffxCsvFile");
 
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);

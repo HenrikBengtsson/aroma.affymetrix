@@ -333,9 +333,7 @@ setMethodS3("fitOne", "BaseCountNormalization", function(this, df, ..., verbose=
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'df':
-  if (!inherits(df, "AffymetrixCelFile")) {
-    throw("Argument 'df' is not an AffymetrixCelFile: ", class(df)[1]);
-  }
+  df <- Arguments$getInstanceOf(df, "AffymetrixCelFile");
 
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);

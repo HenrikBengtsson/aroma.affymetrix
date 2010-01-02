@@ -33,9 +33,7 @@ setConstructorS3("FirmaModel", function(rmaPlm=NULL, summaryMethod=c("median", "
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'rmaPlm':
   if (!is.null(rmaPlm)) {
-    if (!inherits(rmaPlm, "ProbeLevelModel")) {
-      throw("Argument 'rmaPlm' is not a ProbeLevelModel: ", class(rmaPlm)[1]);
-    }
+    rmaPlm <- Arguments$getInstanceOf(rmaPlm, "ProbeLevelModel");
   }
 
   # Argument 'summaryMethod':

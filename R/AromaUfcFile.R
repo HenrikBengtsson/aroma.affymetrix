@@ -65,9 +65,7 @@ setMethodS3("importFromAffymetrixTabularFile", "AromaUfcFile", function(this, at
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'atf':
-  if (!inherits(atf, "AffymetrixTabularFile")) {
-    throw("Argument 'atf' is not an AffymetrixTabularFile: ", class(atf)[1]);
-  }
+  atf <- Arguments$getInstanceOf(atf, "AffymetrixTabularFile");
 
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);

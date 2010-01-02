@@ -18,8 +18,7 @@ setMethodS3("getAromaUflFile", "UflSnpInformation", function(this, ..., force=FA
   }
 
   # Sanity check
-  if (!inherits(ufl, "AromaUflFile"))
-    throw("Internal error: Failed to retrieve UFL file: ", class(ufl)[1]);
+  ufl <- Arguments$getInstanceOf(ufl, "AromaUflFile");
 
   ufl;
 }, protected=TRUE);
@@ -143,9 +142,7 @@ setMethodS3("nbrOfUnits", "UflSnpInformation", function(this, ...) {
 
 setMethodS3("isCompatibleWithCdf", "UflSnpInformation", function(this, cdf, ...) {
   # Argument 'cdf':
-  if (!inherits(cdf, "AffymetrixCdfFile")) {
-    throw("Argument 'cdf' is not an AffymetrixCdfFile: ", class(cdf)[1]);
-  }
+  cdf <- Arguments$getInstanceOf(cdf, "AffymetrixCdfFile");
 
   res <- FALSE;
 

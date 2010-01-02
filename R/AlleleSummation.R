@@ -32,10 +32,7 @@ setConstructorS3("AlleleSummation", function(dataSet=NULL, ignoreNAs=TRUE, ...) 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'dataSet':
   if (!is.null(dataSet)) {
-    if (!inherits(dataSet, "SnpChipEffectSet")) {
-      throw("Argument 'dataSet' is not a SnpChipEffectSet object: ", class(dataSet)[1]);
-
-    }
+    dataSet <- Arguments$getInstanceOf(dataSet, "SnpChipEffectSet");
   }
 
   extend(UnitModel(dataSet=dataSet, ...), "AlleleSummation",

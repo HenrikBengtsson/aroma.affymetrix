@@ -9,10 +9,7 @@ setMethodS3("extractCNT", "SnpChipEffectFile", function(this, reference, units=N
   } else {
     className <- class(this)[1];
   }
-  if (!inherits(reference, className)) {
-    throw("Argument 'reference' is not of class ", className, ": ", 
-                                                     class(reference)[1]);
-  }
+  reference <- Arguments$getInstanceOf(reference, className);
 
   # Argument 'units':
   if (!is.null(units)) {

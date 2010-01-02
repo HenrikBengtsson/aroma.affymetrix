@@ -59,9 +59,7 @@ setMethodS3("fitOne", "UnitTypeScaleNormalization", function(this, df, ..., verb
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'df':
-  if (!inherits(df, "AffymetrixCelFile")) {
-    throw("Argument 'df' is not an AffymetrixCelFile: ", class(df)[1]);
-  }
+  df <- Arguments$getInstanceOf(df, "AffymetrixCelFile");
 
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
@@ -151,9 +149,7 @@ setMethodS3("getNormalizeSignalsOne", "UnitTypeScaleNormalization", function(thi
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'df':
-  if (!inherits(df, "AffymetrixCelFile")) {
-    throw("Argument 'df' is not an AffymetrixCelFile: ", class(df)[1]);
-  }
+  df <- Arguments$getInstanceOf(df, "AffymetrixCelFile");
 
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);

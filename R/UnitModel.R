@@ -35,9 +35,7 @@ setConstructorS3("UnitModel", function(dataSet=NULL, probeModel=c("pm", "mm", "p
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'dataSet':
   if (!is.null(dataSet)) {
-    if (!inherits(dataSet, "AffymetrixCelSet"))
-      throw("Argument 'dataSet' is not an AffymetrixCelSet: ",
-                                                           class(dataSet)[1]);
+    dataSet <- Arguments$getInstanceOf(dataSet, "AffymetrixCelSet");
   }
 
   # Argument 'probeModel':

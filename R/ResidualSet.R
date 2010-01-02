@@ -88,8 +88,7 @@ setMethodS3("getResidualFileClass", "ResidualSet", function(static, ...) {
 setMethodS3("byPath", "ResidualSet", function(static, ..., pattern=",residuals[.](c|C)(e|E)(l|L)$", cdf=NULL, fileClass=NULL) {
   # Argument 'cdf':
   if (!is.null(cdf)) {
-    if (!inherits(cdf, "AffymetrixCdfFile"))
-      throw("Argument 'cdf' must be an AffymetrixCdfFile: ", class(cdf)[1]);     
+    cdf <- Arguments$getInstanceOf(cdf, "AffymetrixCdfFile");
   }
 
   # Argument 'fileClass':

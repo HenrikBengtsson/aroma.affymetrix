@@ -52,9 +52,7 @@ setMethodS3("importFromApt", "CnChipEffectSet", function(static, filename, path=
   pathname <- Arguments$getReadablePathname(filename, path=path, mustExist=TRUE);
 
   # Argument 'cdf':
-  if (!inherits(cdf, "AffymetrixCdfFile")) {
-    throw("Argument 'cdf' is not an AffymetrixCdfFile: ", class(cdf)[1]);
-  }
+  cdf <- Arguments$getInstanceOf(cdf, "AffymetrixCdfFile");
 
   # Argument 'combineAlleles':
   combineAlleles <- Arguments$getLogical(combineAlleles);

@@ -36,9 +36,7 @@ setConstructorS3("DChipDcpSet", function(files=NULL, ...) {
   } else if (is.list(files)) {
     reqFileClass <- "DChipDcpFile";
     lapply(files, FUN=function(df) {
-      if (!inherits(df, reqFileClass))
-        throw("Argument 'files' contains a non-", reqFileClass, 
-                                                  " object: ", class(df)[1]);
+      df <- Arguments$getInstanceOf(df, reqFileClass, .name="files");
     })
   } else if (inherits(files, "DChipDcpSet")) {
     return(as.DChipDcpSet(files));

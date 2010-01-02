@@ -40,10 +40,7 @@ setConstructorS3("ProbeLevelTransform3", function(dataSet=NULL, ..., unitsToFit=
 
   # Argument 'dataSet':
   if (!is.null(dataSet)) {
-    if (!inherits(dataSet, "AffymetrixCelSet")) {
-      throw("Argument 'dataSet' is not an AffymetrixCelSet object: ", 
-                                                          class(dataSet)[1]);
-    }
+    dataSet <- Arguments$getInstanceOf(dataSet, "AffymetrixCelSet");
 
     # Argument 'typesToUpdate':
     if (!is.null(typesToUpdate)) {
@@ -367,11 +364,8 @@ setMethodS3("writeSignals", "ProbeLevelTransform3", function(this, pathname, cel
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Argument 'df':
-  if (!inherits(templateFile, "AffymetrixCelFile")) {
-    throw("Argument 'templateFile' is not an AffymetrixCelFile: ", 
-                                                   class(templateFile)[1]);
-  }
+  # Argument 'templateFile':
+  templateFile <- Arguments$getInstanceOf(templateFile, "AffymetrixCelFile");
 
   # Argument 'cells':
   if (is.null(cells)) {

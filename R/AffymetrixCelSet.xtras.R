@@ -1,9 +1,6 @@
 setMethodS3("createBlankSet", "AffymetrixCelSet", function(static, name, tags=NULL, sampleNames, celTemplate, path="cel", overwrite=FALSE, ..., verbose=FALSE) {
   # Argument 'celTemplate':
-  if (!inherits(celTemplate, "AffymetrixCelFile")) {
-    throw("Argument 'celTemplate' is not an AffymetrixCelFile: ", 
-                                                      class(celTemplate)[1]);
-  }
+  celTemplate <- Arguments$getInstanceOf(celTemplate, "AffymetrixCelFile");
 
   # Argument 'name':
   name <- Arguments$getCharacter(name, length=c(1,1));

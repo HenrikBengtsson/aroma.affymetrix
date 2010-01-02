@@ -40,9 +40,7 @@ setConstructorS3("AffymetrixCelSet", function(files=NULL, ...) {
   } else if (is.list(files)) {
     reqFileClass <- "AffymetrixCelFile";
     base::lapply(files, FUN=function(df) {
-      if (!inherits(df, reqFileClass))
-        throw("Argument 'files' contains a non-", reqFileClass, 
-                                                  " object: ", class(df)[1]);
+      df <- Arguments$getInstanceOf(df, reqFileClass, .name="files");
     })
   } else if (inherits(files, "AffymetrixCelSet")) {
     return(as.AffymetrixCelSet(files));
@@ -127,6 +125,9 @@ setMethodS3("clone", "AffymetrixCelSet", function(this, ..., verbose=FALSE) {
 
 
 setMethodS3("append", "AffymetrixCelSet", function(this, other, clone=TRUE, ..., verbose=FALSE) {
+  # Argument 'other':
+  other <- Arguments$getInstanceOf(other, class(this)[1]);
+
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
   if (verbose) {
@@ -134,10 +135,6 @@ setMethodS3("append", "AffymetrixCelSet", function(this, other, clone=TRUE, ...,
     on.exit(popState(verbose));
   }
 
-  if (!inherits(other, class(this)[1])) {
-    throw("Argument 'other' is not an ", class(this)[1], " object: ", 
-                                                      class(other)[1]);
-  }
 
   verbose && enter(verbose, "Appending CEL set");
   verbose && print(verbose, other);
@@ -392,9 +389,7 @@ setMethodS3("setCdf", "AffymetrixCelSet", function(this, cdf, verbose=FALSE, ...
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (.checkArgs) {
     # Argument 'cdf':
-    if (!inherits(cdf, "AffymetrixCdfFile")) {
-      throw("Argument 'cdf' is not an AffymetrixCdfFile: ", class(cdf)[1]);
-    }
+    cdf <- Arguments$getInstanceOf(cdf, "AffymetrixCdfFile");
   
     # Assure that the CDF is compatible with the CEL file
     if (nbrOfFiles(this) > 0) {
@@ -471,8 +466,7 @@ setMethodS3("fromName", "AffymetrixCelSet", function(static, ...) {
 setMethodS3("byName", "AffymetrixCelSet", function(static, name, tags=NULL, chipType=NULL, cdf=NULL, paths=NULL, ...) {
   # Argument 'cdf':
   if (!is.null(cdf)) {
-    if (!inherits(cdf, "AffymetrixCdfFile"))
-      throw("Argument 'cdf' must be an AffymetrixCdfFile object: ", class(cdf)[1]);
+    cdf <- Arguments$getInstanceOf(cdf, "AffymetrixCdfFile");
   }
 
   # Argument 'chipType':

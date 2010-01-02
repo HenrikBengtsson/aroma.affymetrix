@@ -1396,9 +1396,7 @@ setMethodS3("setGenomeInformation", "AffymetrixCdfFile", function(this, gi=NULL,
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'gi':
   if (!is.null(gi)) {
-    if (!inherits(gi, "GenomeInformation")) {
-      throw("Argument 'gi' is not a GenomeInformation object:", class(gi)[1]);
-    }
+    gi <- Arguments$getInstanceOf(gi, "GenomeInformation");
   }
 
 
@@ -1482,9 +1480,7 @@ setMethodS3("setSnpInformation", "AffymetrixCdfFile", function(this, si=NULL, ..
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'si':
   if (!is.null(si)) {
-    if (!inherits(si, "SnpInformation")) {
-      throw("Argument 'si' is not a SnpInformation object:", class(si)[1]);
-    }
+    si <- Arguments$getInstanceOf(si, "SnpInformation");
   }
 
 

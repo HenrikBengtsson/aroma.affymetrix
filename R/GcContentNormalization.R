@@ -35,10 +35,7 @@ setConstructorS3("GcContentNormalization", function(dataSet=NULL, ..., targetFun
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'dataSet':
   if (!is.null(dataSet)) {
-    className <- "CnChipEffectSet";
-    if (!inherits(dataSet, className))
-      throw("Argument 'dataSet' is not an ", className, " object: ", 
-                                                          class(dataSet)[1]);
+    dataSet <- Arguments$getInstanceOf(dataSet, "CnChipEffectSet");
 
     if (dataSet$combineAlleles != TRUE) {
       throw("Currently only total copy-number chip effects can be normalized, i.e. 'combineAlleles' must be TRUE");

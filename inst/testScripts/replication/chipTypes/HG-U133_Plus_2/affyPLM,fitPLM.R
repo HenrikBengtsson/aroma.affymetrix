@@ -26,6 +26,11 @@
 library("aroma.affymetrix");
 library("affyPLM");          # fitPLM()
 
+# Detach 'oligoClasses' in case it is loaded.  If not, there an error
+# related to probeNames() will be thrown.
+tryCatch(detach("package:oligoClasses"), error=function(ex) {});
+
+
 verbose <- Arguments$getVerbose(-8, timestamp=TRUE);
 
 doPlot <- TRUE;
@@ -118,6 +123,9 @@ if (doPlot) {
 
 ###########################################################################
 # HISTORY:
+# 2010-01-02 [HB]
+# o BUG FIX: If loaded, detaching oligoClasses, because otherwise it will
+#   cause name conflict with affy::probeNames().
 # 2008-07-17 [HB]
 # o Added some more quantile-based assertions too.
 # o Had to lower the similarity threshold from 1e-4 to 1e-3. I don't know

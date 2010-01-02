@@ -21,7 +21,7 @@ setMethodS3("fixSearchPath", "AromaAffymetrix", function(this, ...) {
   # last on the search path.
   aheadPkgs <- c("aroma.affymetrix", "aroma.light", "R.huge", "R.oo");
 
-  # Problematic package that must be after this package on the search path
+  # Problematic package that must be after the packages on the search path
   behindPkgs <- c("affy", "affyPLM", "EBImage", "oligo");
 
   res <- fixSearchPathInternal(this, aheadPkgs=aheadPkgs, 

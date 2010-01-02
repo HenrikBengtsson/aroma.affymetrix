@@ -6,7 +6,7 @@ setMethodS3("getFit", "BasePositionNormalization", function(this, array, ...) {
 
   # Argument 'array':
   inSet <- getInputDataSet(this);
-  array <- Arguments$getIndices(array, range=c(1, nbrOfArrays(inSet)));
+  array <- Arguments$getIndices(array, max=nbrOfArrays(inSet));
 
   outSet <- getOutputDataSet(this);
   outDf <- getFile(outSet, array);

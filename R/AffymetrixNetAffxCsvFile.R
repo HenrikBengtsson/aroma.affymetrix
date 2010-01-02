@@ -115,7 +115,7 @@ setMethodS3("readDataUnitFragmentLength", "AffymetrixNetAffxCsvFile", function(t
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'enzymes':
   if (is.numeric(enzymes)) {
-    enzymes <- Arguments$getIndices(enzymes, range=c(1,10));
+    enzymes <- Arguments$getIndices(enzymes, max=10);
   } else {
     enzymes <- Arguments$getCharacters(enzymes);
   }

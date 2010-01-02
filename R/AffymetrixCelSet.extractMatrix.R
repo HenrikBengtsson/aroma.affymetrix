@@ -42,7 +42,7 @@ setMethodS3("extractMatrix", "AffymetrixCelSet", function(this, cells=NULL, ...,
   if (is.null(cells)) {
     ncells <- nbrOfCells(cdf);
   } else {
-    cells <- Arguments$getIndices(cells, range=c(1,nbrOfCells(cdf)));
+    cells <- Arguments$getIndices(cells, max=nbrOfCells(cdf));
     ncells <- length(cells);
   }
 

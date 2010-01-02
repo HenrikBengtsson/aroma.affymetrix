@@ -37,7 +37,7 @@ setMethodS3("getAlleleCellPairs", "AffymetrixCdfFile", function(this, units=NULL
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'units':
   if (!is.null(units)) {
-    units <- Arguments$getIndices(units, range=c(1, nbrOfUnits(this)));
+    units <- Arguments$getIndices(units, max=nbrOfUnits(this));
   }
 
   # Argument 'stratifyBy':

@@ -4,7 +4,7 @@ setMethodS3("extractChromosomalDataFrame", "ChipEffectFile", function(this, unit
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
   # Argument 'chromosomes':
   if (!is.null(chromosomes)) {
-    chromosomes <- Arguments$getIndices(chromosomes, range=c(1,999));
+    chromosomes <- Arguments$getIndices(chromosomes, max=999);
     chromosomes <- sort(unique(chromosomes));
   }
 

@@ -8,7 +8,7 @@ setMethodS3("plotAllelePairs", "AllelicCrosstalkCalibration", function(this, arr
   # Argument 'pairs':
   if (is.null(pairs)) {
   } else {
-    pairs <- Arguments$getIndices(pairs, range=c(1, 999));
+    pairs <- Arguments$getIndices(pairs, max=999);
   }
 
   # Argument 'what':
@@ -47,7 +47,7 @@ setMethodS3("plotAllelePairs", "AllelicCrosstalkCalibration", function(this, arr
   if (is.null(pairs)) {
     pairs <- seq(length=nbrOfPairs);
   } else {
-    pairs <- Arguments$getIndices(pairs, range=c(1, nbrOfPairs));
+    pairs <- Arguments$getIndices(pairs, max=nbrOfPairs);
     nbrOfPairs <- length(pairs);
   }
   

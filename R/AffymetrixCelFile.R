@@ -791,7 +791,7 @@ setMethodS3("readRawData", "AffymetrixCelFile", function(this, indices=NULL, fie
   nbrOfCells <- nbrOfCells(getCdf(this));
   if (is.null(indices)) {
   } else {
-    indices <- Arguments$getIndices(indices, range=c(1,nbrOfCells), disallow="NaN");
+    indices <- Arguments$getIndices(indices, max=nbrOfCells, disallow="NaN");
     nbrOfCells <- length(indices);
   }
 

@@ -61,7 +61,7 @@ setConstructorS3("ProbeLevelTransform3", function(dataSet=NULL, ..., unitsToFit=
     } else {
       df <- getFile(dataSet, 1);
       nbrOfCells <- nbrOfCells(df);
-      unitsToUpdate <- Arguments$getIndices(unitsToUpdate, range=c(1, nbrOfCells));
+      unitsToUpdate <- Arguments$getIndices(unitsToUpdate, max=nbrOfCells);
       unitsToUpdate <- unique(unitsToUpdate);
       unitsToUpdate <- sort(unitsToUpdate);
     }
@@ -82,7 +82,7 @@ setConstructorS3("ProbeLevelTransform3", function(dataSet=NULL, ..., unitsToFit=
     } else {
       df <- getFile(dataSet, 1);
       nbrOfCells <- nbrOfCells(df);
-      unitsToFit <- Arguments$getIndices(unitsToFit, range=c(1, nbrOfCells));
+      unitsToFit <- Arguments$getIndices(unitsToFit, max=nbrOfCells);
       unitsToFit <- unique(unitsToFit);
       unitsToFit <- sort(unitsToFit);
     }

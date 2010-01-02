@@ -51,7 +51,7 @@ setMethodS3("getAM", "ChipEffectFile", function(this, other, units=NULL, ..., ve
   } else if (isUnitGroupCellMap(units)) {
     ugcMap <- units;
   } else {
-    units <- Arguments$getIndices(units, range=c(1, nbrOfUnits(cdf)));
+    units <- Arguments$getIndices(units, max=nbrOfUnits(cdf));
   }
   
   # Argument 'verbose':

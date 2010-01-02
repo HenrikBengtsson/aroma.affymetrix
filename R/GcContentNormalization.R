@@ -118,7 +118,7 @@ setMethodS3("getGcContent", "GcContentNormalization", function(this, units=NULL,
 
   # Argument 'units':
   cdf <- getCdf(this);
-  units <- Arguments$getIndices(units, range=c(1, nbrOfUnits));
+  units <- Arguments$getIndices(units, max=nbrOfUnits);
 
 
   verbose && enter(verbose, "Retrieving GC content");
@@ -198,7 +198,7 @@ setMethodS3("getSubsetToFit", "GcContentNormalization", function(this, force=FAL
   units <- sort(units);
 
   # Assert correctness
-  units <- Arguments$getIndices(units, range=c(1, nbrOfUnits(cdf)));
+  units <- Arguments$getIndices(units, max=nbrOfUnits(cdf));
 
   # Cache
   this$.units <- units;

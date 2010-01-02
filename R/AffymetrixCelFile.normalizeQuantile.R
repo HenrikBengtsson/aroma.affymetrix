@@ -58,8 +58,7 @@ setMethodS3("normalizeQuantile", "AffymetrixCelFile", function(this, path=file.p
   getFraction <- (length(subsetToUpdate) == 1) && 
                                (subsetToUpdate >= 0) && (subsetToUpdate < 1);
   if (!getFraction) {
-    subsetToUpdate <- Arguments$getIndices(subsetToUpdate,  
-                                                     range=c(1, nbrOfCells));
+    subsetToUpdate <- Arguments$getIndices(subsetToUpdate, max=nbrOfCells);
   }
 
   # Argument 'verbose':

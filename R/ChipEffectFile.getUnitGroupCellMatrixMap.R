@@ -13,14 +13,14 @@ setMethodS3("getUnitGroupCellMatrixMap", "ChipEffectFile", function(this, units=
     units <- unique(ugcMap[,"unit"]);
     nbrOfUnits <- length(units);
   } else {
-    units <- Arguments$getIndices(units, range=c(1, nbrOfUnits(cdf)));
+    units <- Arguments$getIndices(units, max=nbrOfUnits(cdf));
     nbrOfUnits <- length(units);
     ugcMap <- NULL;
   }
 
   # Argument 'groups':
   if (!is.null(groups)) {
-    groups <- Arguments$getIndices(groups, range=c(1, 999));
+    groups <- Arguments$getIndices(groups, max=999);
   }
 
   # Argument 'verbose':
@@ -97,14 +97,14 @@ setMethodS3("getUnitGroupCellArrayMap", "ChipEffectFile", function(this, units=N
     units <- unique(ugcMap[,"unit"]);
     nbrOfUnits <- length(units);
   } else {
-    units <- Arguments$getIndices(units, range=c(1, nbrOfUnits(cdf)));
+    units <- Arguments$getIndices(units, max=nbrOfUnits(cdf));
     nbrOfUnits <- length(units);
     ugcMap <- NULL;
   }
 
   # Argument 'groups':
   if (!is.null(groups)) {
-    groups <- Arguments$getIndices(groups, range=c(1, 999));
+    groups <- Arguments$getIndices(groups, max=999);
   }
 
   # Argument 'groupCells':

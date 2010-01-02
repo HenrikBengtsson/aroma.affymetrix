@@ -210,7 +210,7 @@ setMethodS3("getOrderedFragmentPairMap", "AromaUfcFile", function(static, values
 
 setMethodS3("getOrderedFragmentPairs", "AromaUfcFile", function(this, units=NULL, asHex=FALSE, ...) {
   if (!is.null(units)) {
-    units <- Arguments$getIndices(units, range=c(1, nbrOfUnits(this)));
+    units <- Arguments$getIndices(units, max=nbrOfUnits(this));
   }
 
   # Get equivalent-class map

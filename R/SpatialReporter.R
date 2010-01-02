@@ -209,7 +209,7 @@ setMethodS3("writeImages", "SpatialReporter", function(this, arrays=NULL, aliase
   if (is.null(arrays)) {
     arrays <- seq(length=nbrOfArrays);
   } else {
-    arrays <- Arguments$getIndices(arrays, range=c(1,nbrOfArrays));
+    arrays <- Arguments$getIndices(arrays, max=nbrOfArrays);
     nbrOfArrays <- length(arrays);
   }
 

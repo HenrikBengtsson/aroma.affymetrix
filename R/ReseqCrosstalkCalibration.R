@@ -64,8 +64,7 @@ setConstructorS3("ReseqCrosstalkCalibration", function(dataSet=NULL, ..., target
       }
       extraTags <- c(extraTags, subsetToAvg=subsetToAvg);
     } else {
-      subsetToAvg <- Arguments$getIndices(subsetToAvg, 
-                                          range=c(1, nbrOfCells(cdf)));
+      subsetToAvg <- Arguments$getIndices(subsetToAvg, max=nbrOfCells(cdf));
       subsetToAvg <- unique(subsetToAvg);
       subsetToAvg <- sort(subsetToAvg);
     }

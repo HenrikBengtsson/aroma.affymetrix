@@ -66,13 +66,13 @@ setMethodS3("fitOneArray", "SingleArrayUnitModel", function(this, array="remaini
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  array <- Arguments$getIndex(array, range=c(1, nbrOfArrays));
+  array <- Arguments$getIndex(array, max=nbrOfArrays);
 
   # Argument 'units':
   doRemaining <- FALSE;
   if (is.null(units)) {
   } else if (is.numeric(units)) {
-    units <- Arguments$getIndices(units, range=c(1, nbrOfUnits(cdf)));
+    units <- Arguments$getIndices(units, max=nbrOfUnits(cdf));
   } else if (identical(units, "remaining")) {
     doRemaining <- TRUE;
   } else {

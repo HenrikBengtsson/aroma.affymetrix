@@ -115,7 +115,7 @@ setMethodS3("getAm", "AffymetrixCelFile", function(this, reference, indices=NULL
   nbrOfCells <- nbrOfCells(this);
   if (is.null(indices)) {
   } else {
-    indices <- Arguments$getIndices(indices, range=c(1,nbrOfCells));
+    indices <- Arguments$getIndices(indices, max=nbrOfCells);
   }
 
 

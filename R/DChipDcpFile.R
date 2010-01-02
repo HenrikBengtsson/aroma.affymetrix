@@ -136,7 +136,7 @@ setMethodS3("hasMbeiData", "DChipDcpFile", function(this, ...) {
 
 setMethodS3("getRawIntensities", "DChipDcpFile", function(this, cells=NULL, force=FALSE, ...) {
   if (!is.null(cells)) {
-    cells <- Arguments$getIndices(cells, range=c(1, nbrOfCells(this)));
+    cells <- Arguments$getIndices(cells, max=nbrOfCells(this));
   }
 
   nbrOfUnits <- nbrOfUnits(this);
@@ -151,7 +151,7 @@ setMethodS3("getRawIntensities", "DChipDcpFile", function(this, cells=NULL, forc
 
 setMethodS3("getNormalizedIntensities", "DChipDcpFile", function(this, cells=NULL, force=FALSE, ...) {
   if (!is.null(cells)) {
-    cells <- Arguments$getIndices(cells, range=c(1, nbrOfCells(this)));
+    cells <- Arguments$getIndices(cells, max=nbrOfCells(this));
   }
 
   nbrOfUnits <- nbrOfUnits(this);
@@ -167,7 +167,7 @@ setMethodS3("getNormalizedIntensities", "DChipDcpFile", function(this, cells=NUL
 setMethodS3("getCalls", "DChipDcpFile", function(this, units=NULL, force=FALSE, ...) {
   nbrOfUnits <- nbrOfUnits(this);
   if (!is.null(units)) {
-    units <- Arguments$getIndices(units, range=c(1, nbrOfUnits));
+    units <- Arguments$getIndices(units, max=nbrOfUnits);
   }
 
   field <- "calls";
@@ -188,7 +188,7 @@ setMethodS3("getCalls", "DChipDcpFile", function(this, units=NULL, force=FALSE, 
 setMethodS3("getThetas", "DChipDcpFile", function(this, units=NULL, force=FALSE, ...) {
   nbrOfUnits <- nbrOfUnits(this);
   if (!is.null(units)) {
-    units <- Arguments$getIndices(units, range=c(1, nbrOfUnits));
+    units <- Arguments$getIndices(units, max=nbrOfUnits);
   }
 
   field <- "thetas";
@@ -203,7 +203,7 @@ setMethodS3("getThetas", "DChipDcpFile", function(this, units=NULL, force=FALSE,
 setMethodS3("getThetaStds", "DChipDcpFile", function(this, units=NULL, force=FALSE, ...) {
   nbrOfUnits <- nbrOfUnits(this);
   if (!is.null(units)) {
-    units <- Arguments$getIndices(units, range=c(1, nbrOfUnits));
+    units <- Arguments$getIndices(units, max=nbrOfUnits);
   }
 
   field <- "thetaStds";
@@ -218,7 +218,7 @@ setMethodS3("getThetaStds", "DChipDcpFile", function(this, units=NULL, force=FAL
 setMethodS3("getExcludes", "DChipDcpFile", function(this, units=NULL, force=FALSE, ...) {
   nbrOfUnits <- nbrOfUnits(this);
   if (!is.null(units)) {
-    units <- Arguments$getIndices(units, range=c(1, nbrOfUnits));
+    units <- Arguments$getIndices(units, max=nbrOfUnits);
   }
 
   field <- "excludes";
@@ -233,7 +233,7 @@ setMethodS3("getExcludes", "DChipDcpFile", function(this, units=NULL, force=FALS
 setMethodS3("getThetasAB", "DChipDcpFile", function(this, units=NULL, force=FALSE, ...) {
   nbrOfUnits <- nbrOfUnits(this);
   if (!is.null(units)) {
-    units <- Arguments$getIndices(units, range=c(1, nbrOfUnits));
+    units <- Arguments$getIndices(units, max=nbrOfUnits);
   }
 
   fields <- c("thetas", "thetaStds");

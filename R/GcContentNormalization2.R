@@ -43,7 +43,7 @@ setMethodS3("getCovariates", "GcContentNormalization2", function(this, units=NUL
   cdf <- getCdf(this);
   if (!is.null(units)) {
     nbrOfUnits <- nbrOfUnits(cdf);
-    units <- Arguments$getIndices(units, range=c(1, nbrOfUnits));
+    units <- Arguments$getIndices(units, max=nbrOfUnits);
   }
 
 

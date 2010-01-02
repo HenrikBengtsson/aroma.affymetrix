@@ -183,7 +183,7 @@ setMethodS3("readDataFrame", "DChipGenomeInformation", function(this, units=NULL
   if (!is.null(units)) {
     # Locate the CDF
     cdf <- AffymetrixCdfFile$byChipType(chipType);
-    units <- Arguments$getIndices(units, range=c(1, nbrOfUnits(cdf)));
+    units <- Arguments$getIndices(units, max=nbrOfUnits(cdf));
   }  
 
   # Try to read with the designated read function.

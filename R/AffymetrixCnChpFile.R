@@ -336,7 +336,7 @@ setMethodS3("getData", "AffymetrixCnChpFile", function(this, units=NULL, fields=
   nbrOfUnits <- nbrOfUnits(getCdf(this));
   if (is.null(units)) {
   } else {
-    units <- Arguments$getIndices(units, range=c(1,nbrOfUnits));
+    units <- Arguments$getIndices(units, max=nbrOfUnits);
     nbrOfUnits <- length(units);
   }
 

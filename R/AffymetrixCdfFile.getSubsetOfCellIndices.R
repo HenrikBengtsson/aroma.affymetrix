@@ -13,7 +13,7 @@ setMethodS3("getSubsetOfCellIndices", "AffymetrixCdfFile", function(this, units=
       throw("Unknown value on argument 'units': ", units);
     }
   } else {
-    units <- Arguments$getIndices(units, range=c(1, nbrOfUnits(this)));
+    units <- Arguments$getIndices(units, max=nbrOfUnits(this));
   }
 
   # Argument 'verbose':
@@ -98,7 +98,7 @@ setMethodS3("getSubsetOfCellIndices", "AffymetrixCdfFile", function(this, units=
     }
   } else {
     verbose && str(verbose, units);
-    unitsIncl <- Arguments$getIndices(units, range=c(1, nbrOfUnits(this)));
+    unitsIncl <- Arguments$getIndices(units, max=nbrOfUnits(this));
   }
 
   verbose && cat(verbose, "Units to include:");

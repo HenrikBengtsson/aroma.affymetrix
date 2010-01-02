@@ -11,7 +11,7 @@ setMethodS3("plotCovariateEffects", "GcContentNormalization2", function(this, ar
   dataSet <- getInputDataSet(this);
   # Argument 'arrays':
   if (!is.null(arrays)) {
-    arrays <- Arguments$getIndices(arrays, range=c(1, nbrOfArrays(dataSet)));
+    arrays <- Arguments$getIndices(arrays, max=nbrOfArrays(dataSet));
   }
 
   if (is.null(ref)) {
@@ -27,7 +27,7 @@ setMethodS3("plotCovariateEffects", "GcContentNormalization2", function(this, ar
   if (is.null(units)) {
     units <- seq(length=nbrOfUnits(unf));
   } else {
-    units <- Arguments$getIndices(units, range=c(1, nbrOfUnits(unf)));
+    units <- Arguments$getIndices(units, max=nbrOfUnits(unf));
   }
 
   # Argument 'verbose':

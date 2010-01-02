@@ -84,8 +84,7 @@ setConstructorS3("FragmentEquivalentClassNormalization", function(dataSet=NULL, 
     extraTags <- c(extraTags, subsetToFit=subsetToFit);
   } else {
     cdf <- getCdf(dataSet);
-    subsetToFit <- Arguments$getIndices(subsetToFit, 
-                                        range=c(1, nbrOfUnits(cdf)));
+    subsetToFit <- Arguments$getIndices(subsetToFit, max=nbrOfUnits(cdf));
     subsetToFit <- unique(subsetToFit);
     subsetToFit <- sort(subsetToFit);
   }
@@ -333,7 +332,7 @@ setMethodS3("getSubsetToFit", "FragmentEquivalentClassNormalization", function(t
   units <- sort(units);
 
   # Assert correctness
-  units <- Arguments$getIndices(units, range=c(1, nbrOfUnits(cdf)));
+  units <- Arguments$getIndices(units, max=nbrOfUnits(cdf));
 
   # Cache
   this$.units <- units;

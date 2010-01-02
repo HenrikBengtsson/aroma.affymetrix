@@ -26,7 +26,7 @@ setMethodS3("readCfhUnits", "default", function(pathname, snps=NULL, ..., verbos
 
   # Validating units
   if (!is.null(snps))
-    snps <- Arguments$getIndices(snps, range=c(1, nbrOfSnps));
+    snps <- Arguments$getIndices(snps, max=nbrOfSnps);
 
   map <- matrix(1:(bytesPerSnp*nbrOfSnps), nrow=bytesPerSnp);
   map <- map + hdr$dataOffset;

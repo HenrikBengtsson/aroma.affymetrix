@@ -20,7 +20,7 @@ setMethodS3("extractSnpQSet", "SnpChipEffectSet", function(this, units=NULL, sor
     # Identify all SNP_A-* units (as what is returned by oligo)
     units <- indexOf(cdf, pattern="^SNP_A-");
   } else {
-    units <- Arguments$getIndices(units, range=c(1, nbrOfUnits(cdf)));
+    units <- Arguments$getIndices(units, max=nbrOfUnits(cdf));
   }
 
   # Argument 'verbose':

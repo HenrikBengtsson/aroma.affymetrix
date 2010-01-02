@@ -1554,7 +1554,7 @@ setMethodS3("convertUnits", "AffymetrixCdfFile", function(this, units=NULL, keep
     }
   } else {
     # Validate unit indices
-    units <- Arguments$getIndices(units, range=c(1, nbrOfUnits(this)));
+    units <- Arguments$getIndices(units, max=nbrOfUnits(this));
   }
 
   units;

@@ -34,7 +34,7 @@ setMethodS3("calculateFieldBoxplotStats", "ChipEffectSet", function(this, field=
   if (is.null(arrays)) {
     arrays <- seq(length=nbrOfArrays);
   } else {
-    arrays <- Arguments$getIndices(arrays, range=c(1, nbrOfArrays));
+    arrays <- Arguments$getIndices(arrays, max=nbrOfArrays);
     nbrOfArrays <- length(arrays);
   }
 
@@ -49,7 +49,7 @@ setMethodS3("calculateFieldBoxplotStats", "ChipEffectSet", function(this, field=
   if (!(is.null(subset))) {
     getFraction <- (length(subset) == 1) && (subset >= 0) && (subset < 1);
     if (!getFraction) {
-      units <- Arguments$getIndices(subset, range=c(1, nbrOfUnits));
+      units <- Arguments$getIndices(subset, max=nbrOfUnits);
     } else {
       units <- identifyCells(cdfMono, indices=subset, verbose=less(verbose));
     }
@@ -113,7 +113,7 @@ setMethodS3("calculateRleBoxplotStats", "ChipEffectSet", function(this, arrays=N
   if (is.null(arrays)) {
     arrays <- seq(length=nbrOfArrays);
   } else {
-    arrays <- Arguments$getIndices(arrays, range=c(1, nbrOfArrays));
+    arrays <- Arguments$getIndices(arrays, max=nbrOfArrays);
     nbrOfArrays <- length(arrays);
   }
 
@@ -128,7 +128,7 @@ setMethodS3("calculateRleBoxplotStats", "ChipEffectSet", function(this, arrays=N
   if (!(is.null(subset))) {
     getFraction <- (length(subset) == 1) && (subset >= 0) && (subset < 1);
     if (!getFraction) {
-      units <- Arguments$getIndices(subset, range=c(1, nbrOfUnits));
+      units <- Arguments$getIndices(subset, max=nbrOfUnits);
     } else {
       units <- identifyCells(cdfMono, indices=subset, verbose=less(verbose));
     }
@@ -204,7 +204,7 @@ setMethodS3("calculateNuseBoxplotStats", "ChipEffectSet", function(this, arrays=
   if (is.null(arrays)) {
     arrays <- seq(length=nbrOfArrays);
   } else {
-    arrays <- Arguments$getIndices(arrays, range=c(1, nbrOfArrays));
+    arrays <- Arguments$getIndices(arrays, max=nbrOfArrays);
     nbrOfArrays <- length(arrays);
   }
 
@@ -219,7 +219,7 @@ setMethodS3("calculateNuseBoxplotStats", "ChipEffectSet", function(this, arrays=
   if (!(is.null(subset))) {
     getFraction <- (length(subset) == 1) && (subset >= 0) && (subset < 1);
     if (!getFraction) {
-      units <- Arguments$getIndices(subset, range=c(1, nbrOfUnits));
+      units <- Arguments$getIndices(subset, max=nbrOfUnits);
     } else {
       units <- identifyCells(cdfMono, indices=subset, verbose=less(verbose));
     }

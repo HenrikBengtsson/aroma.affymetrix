@@ -14,7 +14,7 @@ setMethodS3("extractTotalAndFreqB", "CnChipEffectSet", function(this, units=NULL
     nbrOfUnits <- length(units);
     rm(units);
   } else {
-    units <- Arguments$getIndices(units, range=c(1, nbrOfUnits(cdf)));
+    units <- Arguments$getIndices(units, max=nbrOfUnits(cdf));
     nbrOfUnits <- length(units);
     ugcMap <- NULL;
   }

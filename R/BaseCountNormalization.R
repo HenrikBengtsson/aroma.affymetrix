@@ -174,7 +174,7 @@ setMethodS3("getDesignMatrix", "BaseCountNormalization", function(this, cells=NU
     verbose && cat(verbose, "Cells:");
     verbose && str(verbose, cells);
     nbrOfCells <- nrow(designMatrix);
-    cells <- Arguments$getIndices(cells, range=c(1,nbrOfCells));
+    cells <- Arguments$getIndices(cells, max=nbrOfCells);
     designMatrix <- designMatrix[cells,,drop=FALSE];
     rm(cells);
 

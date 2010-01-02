@@ -21,7 +21,7 @@ setMethodS3("writeWig", "CnChipEffectSet", function(this, reference=NULL, arrays
   }
 
   # Argument 'arrays':
-  arrays <- Arguments$getIndices(arrays, range=c(1,nbrOfArrays(this)));
+  arrays <- Arguments$getIndices(arrays, max=nbrOfArrays(this));
 
   # Argument 'chromosomes':
   chromosomes <- Arguments$getCharacters(chromosomes);

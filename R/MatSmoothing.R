@@ -366,7 +366,7 @@ setMethodS3("process", "MatSmoothing", function(this, ..., units=NULL, force=FAL
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'units':
   if (!is.null(units)) {
-    units <- Arguments$getIndices(units, range=c(1, nbrOfUnits(cdf)));
+    units <- Arguments$getIndices(units, max=nbrOfUnits(cdf));
   }
 
   # Argument 'verbose':

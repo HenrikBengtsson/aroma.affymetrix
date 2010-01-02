@@ -388,7 +388,7 @@ setMethodS3("process", "ArrayExplorer", function(this, arrays=NULL, ..., verbose
   # Argument 'arrays':
   if (is.null(arrays)) {
   } else {
-    arrays <- Arguments$getIndices(arrays, range=c(1, nbrOfArrays(this)));
+    arrays <- Arguments$getIndices(arrays, max=nbrOfArrays(this));
   }
 
   # Argument 'verbose':

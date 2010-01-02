@@ -85,7 +85,7 @@ setMethodS3("readUnitsByQuartets", "AffymetrixCdfFile", function(this, units=NUL
   if (is.null(units)) {
     units <- seq(length=nbrOfUnits(this));
   } else {
-    units <- Arguments$getIndices(units, range=c(1, nbrOfUnits(this)));
+    units <- Arguments$getIndices(units, max=nbrOfUnits(this));
   }
 
   # Argument 'verbose':

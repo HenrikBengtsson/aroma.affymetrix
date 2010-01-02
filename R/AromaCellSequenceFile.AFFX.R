@@ -62,7 +62,7 @@ setMethodS3("importFromAffymetrixProbeTabFile", "AromaCellSequenceFile", functio
   if (is.null(rows)) {
     rows <- 1:nbrOfCells;
   } else {
-    rows <- Arguments$getIndices(rows, range=c(1,nbrOfCells));
+    rows <- Arguments$getIndices(rows, max=nbrOfCells);
     rows <- sort(unique(rows));
   }
 
@@ -276,7 +276,7 @@ setMethodS3("inferMmFromPm", "AromaCellSequenceFile", function(this, cdf, units=
   if (is.null(units)) {
     units <- seq(length=nbrOfUnits(cdf));
   } else {
-    units <- Arguments$getIndices(units, range=c(1,nbrOfUnits(cdf)));
+    units <- Arguments$getIndices(units, max=nbrOfUnits(cdf));
   }
 
   CHUNK.SIZE <- as.integer(ram*100e3);

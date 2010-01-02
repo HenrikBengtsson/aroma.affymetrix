@@ -193,7 +193,7 @@ setMethodS3("readDataFrame", "UgpGenomeInformation", function(this, units=NULL, 
       units <- 1:nrow;
     }
   }
-  units <- Arguments$getIndices(units, range=c(1, nbrOfUnits(ugp)));
+  units <- Arguments$getIndices(units, max=nbrOfUnits(ugp));
 
 
   verbose && enter(verbose, "Reading ", length(units), " units");

@@ -140,7 +140,7 @@ setMethodS3("getHeader", "DChipCdfBinFile", function(this, force=FALSE, ...) {
 setMethodS3("getUnitNames", "DChipCdfBinFile", function(this, units=NULL, ...) {
   # Arguments 'units':
   if (!is.null(units)) {
-    units <- Arguments$getIndices(units, range=c(1, nbrOfUnits(this)));
+    units <- Arguments$getIndices(units, max=nbrOfUnits(this));
   }
 
   names <- this$.unitNames;
@@ -165,7 +165,7 @@ setMethodS3("getUnitSizes", "DChipCdfBinFile", function(this, ...) {
 setMethodS3("readDataFrame", "DChipCdfBinFile", function(this, units=NULL, fields=c("unitName", "unitSize", "cellPos"), ...) {
   # Arguments 'units':
   if (!is.null(units)) {
-    units <- Arguments$getIndices(units, range=c(1, nbrOfUnits(this)));
+    units <- Arguments$getIndices(units, max=nbrOfUnits(this));
   }
 
   data <- dChipIO::readCdfBin(getPathname(this), units=units, ...);

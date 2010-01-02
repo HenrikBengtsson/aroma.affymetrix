@@ -365,7 +365,7 @@ setMethodS3("getYY", "TransformReport", function(this, array, transform=NULL, su
     indices <- seq(from=1, to=nbrOfCells(cdf), length=subset*nbrOfCells(cdf));
     indices <- as.integer(indices);
   } else if (length(subset) > 1) {
-    indices <- Arguments$getIndices(subset, range=c(1, nbrOfCells(cdf)));
+    indices <- Arguments$getIndices(subset, max=nbrOfCells(cdf));
   } else {
     indices <- subset;
   }

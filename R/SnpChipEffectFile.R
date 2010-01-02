@@ -69,7 +69,7 @@ setMethodS3("getCellIndices", "SnpChipEffectFile", function(this, units=NULL, ..
   if (is.null(units)) {
   } else if (is.numeric(units)) {
     cdf <- getCdf(this);
-    units <- Arguments$getIndices(units, range=c(1, nbrOfUnits(cdf)));
+    units <- Arguments$getIndices(units, max=nbrOfUnits(cdf));
   }
 
   # Argument 'verbose':

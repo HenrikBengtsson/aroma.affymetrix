@@ -180,8 +180,7 @@ setConstructorS3("AllelicCrosstalkCalibration", function(dataSet=NULL, ..., mode
       }
       extraTags <- c(extraTags, subsetToAvg=subsetToAvg);
     } else {
-      subsetToAvg <- Arguments$getIndices(subsetToAvg, 
-                                          range=c(1, nbrOfCells(cdf)));
+      subsetToAvg <- Arguments$getIndices(subsetToAvg, max=nbrOfCells(cdf));
       subsetToAvg <- unique(subsetToAvg);
       subsetToAvg <- sort(subsetToAvg);
     }
@@ -1054,7 +1053,7 @@ setMethodS3("plotBasepair", "AllelicCrosstalkCalibration", function(this, array,
   }
 
   # Argument 'array':
-  array <- Arguments$getIndex(array, length=nbrOfArrays(cs));
+  array <- Arguments$getIndex(array, max=nbrOfArrays(cs));
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

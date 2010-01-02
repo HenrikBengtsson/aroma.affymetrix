@@ -55,7 +55,7 @@ setMethodS3("extractTotalAndFreqB", "CnChipEffectFile", function(this, units=NUL
     nbrOfUnits <- length(units);
     rm(units);
   } else {
-    units <- Arguments$getIndices(units, range=c(1, nbrOfUnits(cdf)));
+    units <- Arguments$getIndices(units, max=nbrOfUnits(cdf));
     nbrOfUnits <- length(units);
     ugcMap <- NULL;
   }
@@ -168,7 +168,7 @@ setMethodS3("extractTotalAndFracB", "SnpChipEffectFile", function(this, units=NU
     nbrOfUnits <- length(units);
     rm(units);
   } else {
-    units <- Arguments$getIndices(units, range=c(1, nbrOfUnits(cdf)));
+    units <- Arguments$getIndices(units, max=nbrOfUnits(cdf));
     nbrOfUnits <- length(units);
     ugcMap <- NULL;
   }

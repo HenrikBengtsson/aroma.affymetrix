@@ -155,7 +155,7 @@ setMethodS3("readUnits", "SingleArrayUnitModel", function(this, array, units=NUL
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'array':
-  array <- Arguments$getIndex(array, range=c(1, nbrOfArrays));
+  array <- Arguments$getIndex(array, max=nbrOfArrays);
 
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);

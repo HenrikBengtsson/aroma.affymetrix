@@ -16,14 +16,14 @@ setMethodS3("extractCNT", "SnpChipEffectFile", function(this, reference, units=N
 
   # Argument 'units':
   if (!is.null(units)) {
-    units <- Arguments$getIndices(units, range=c(1, nbrOfUnits(cdf)));
+    units <- Arguments$getIndices(units, max=nbrOfUnits(cdf));
   } else {
     units <- 1:nbrOfUnits(cdf);
   }
 
   # Argument 'chromosomes':
   if (!is.null(chromosomes)) {
-    chromosomes <- Arguments$getIndices(chromosomes, range=c(1, 999));
+    chromosomes <- Arguments$getIndices(chromosomes, max=999);
   }
 
   # Argument 'addNames':

@@ -14,14 +14,14 @@ setMethodS3("extractTheta", "ChipEffectSet", function(this, units=NULL, groups=N
     nbrOfUnits <- length(units);
     rm(units);
   } else {
-    units <- Arguments$getIndices(units, range=c(1, nbrOfUnits(cdf)));
+    units <- Arguments$getIndices(units, max=nbrOfUnits(cdf));
     nbrOfUnits <- length(units);
     ugcMap <- NULL;
   }
 
   # Argument 'groups':
   if (!is.null(groups)) {
-    groups <- Arguments$getIndices(groups, range=c(1, 999));
+    groups <- Arguments$getIndices(groups, max=999);
   }
 
   # Argument 'verbose':

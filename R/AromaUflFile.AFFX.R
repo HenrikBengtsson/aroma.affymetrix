@@ -24,8 +24,7 @@ setMethodS3("importFromAffymetrixNetAffxCsvFile", "AromaUflFile", function(this,
   }
 
   # Argument 'enzymesToUpdate':
-  enzymesToUpdate <- Arguments$getIndices(enzymesToUpdate, 
-                                         range=c(1, nbrOfEnzymes(this)));
+  enzymesToUpdate <- Arguments$getIndices(enzymesToUpdate, max=nbrOfEnzymes(this));
 
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);

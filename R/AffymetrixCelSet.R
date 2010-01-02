@@ -841,7 +841,7 @@ setMethodS3("getData", "AffymetrixCelSet", function(this, indices=NULL, fields=c
   # Argument 'indices':
   nbrOfCells <- nbrOfCells(getCdf(this));
   if (!is.null(indices)) {
-    indices <- Arguments$getIndices(indices, range=c(1, nbrOfCells));
+    indices <- Arguments$getIndices(indices, max=nbrOfCells);
     nbrOfCells <- length(indices);
   }
 
@@ -1235,7 +1235,7 @@ setMethodS3("getAverageFile", "AffymetrixCelSet", function(this, name=NULL, pref
     indices <- 1:nbrOfCells; 
   } else if (identical(indices, "remaining")) {
   } else {
-    indices <- Arguments$getIndices(indices, range=c(1, nbrOfCells));
+    indices <- Arguments$getIndices(indices, max=nbrOfCells);
   }
 
   # Argument 'cellsPerChunk':

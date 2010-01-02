@@ -85,7 +85,7 @@ setMethodS3("extractMatrix", "ParameterCelSet", function(this, units=NULL, ..., 
     ugcMap <- units;
     units <- unique(ugcMap[,"unit"]);
   } else {
-    units <- Arguments$getIndices(units, range=c(1,nbrOfUnits(cdf)));
+    units <- Arguments$getIndices(units, max=nbrOfUnits(cdf));
     nunits <- length(units);
   }
 

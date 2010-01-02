@@ -154,7 +154,7 @@ setMethodS3("getUnitGroupCellChromosomePositionMap", "AffymetrixCdfFile", functi
     units <- ugcMap[,"unit"];
   }
   if (!is.null(units)) {
-    units <- Arguments$getIndices(units, range=c(1, nbrOfUnits(this)));
+    units <- Arguments$getIndices(units, max=nbrOfUnits(this));
   }
   units0 <- units;
 

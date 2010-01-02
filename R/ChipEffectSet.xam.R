@@ -49,7 +49,7 @@ setMethodS3("getAM", "ChipEffectSet", function(this, other, units=NULL, ..., ver
   if (is.null(units)) {
     nunits <- nbrOfUnits(cdf);
   } else {
-    units <- Arguments$getIndices(units, range=c(1,nbrOfUnits(cdf)));
+    units <- Arguments$getIndices(units, max=nbrOfUnits(cdf));
     nunits <- length(units);
   }
 

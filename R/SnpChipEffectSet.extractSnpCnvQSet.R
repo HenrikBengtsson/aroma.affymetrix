@@ -18,7 +18,7 @@ setMethodS3("extractSnpCnvQSet", "SnpChipEffectSet", function(this, units=NULL, 
   # Argument 'units':  
   if (is.null(units)) {
   } else {
-    units <- Arguments$getIndices(units, range=c(1, nbrOfUnits(cdf)));
+    units <- Arguments$getIndices(units, max=nbrOfUnits(cdf));
   }
 
   # Argument 'verbose':

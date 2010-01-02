@@ -85,7 +85,7 @@ setMethodS3("fit", "ProbeLevelModel", function(this, units="remaining", ..., for
   doRemaining <- FALSE;
   if (is.null(units)) {
   } else if (is.numeric(units)) {
-    units <- Arguments$getIndices(units, range=c(1, nbrOfUnits(cdf)));
+    units <- Arguments$getIndices(units, max=nbrOfUnits(cdf));
   } else if (identical(units, "remaining")) {
     doRemaining <- TRUE;
   } else {

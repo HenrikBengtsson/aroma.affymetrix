@@ -58,8 +58,7 @@ setConstructorS3("ScaleNormalization", function(dataSet=NULL, ..., targetAvg=440
       extraTags <- c(extraTags, subsetToAvg=subsetToAvg);
     } else {
       cdf <- getCdf(dataSet);
-      subsetToAvg <- Arguments$getIndices(subsetToAvg, 
-                                          range=c(1, nbrOfUnits(cdf)));
+      subsetToAvg <- Arguments$getIndices(subsetToAvg, max=nbrOfUnits(cdf));
       subsetToAvg <- unique(subsetToAvg);
       subsetToAvg <- sort(subsetToAvg);
     } 

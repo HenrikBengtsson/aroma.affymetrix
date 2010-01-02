@@ -91,7 +91,7 @@ setMethodS3("readMatchScores", "AromaCellMatchScoreFile", function(this, cells=N
   # Argument 'cells':
   nbrOfCells <- nbrOfCells(this);
   if (!is.null(cells)) {
-    cells <- Arguments$getIndices(cells, range=c(1, nbrOfCells));
+    cells <- Arguments$getIndices(cells, max=nbrOfCells);
     nbrOfCells <- length(cells);
   }
 
@@ -126,7 +126,7 @@ setMethodS3("updateMatchScores", "AromaCellMatchScoreFile", function(this, cells
   # Argument 'cells':
   nbrOfCells <- nbrOfCells(this);
   if (!is.null(cells)) {
-    cells <- Arguments$getIndices(cells, range=c(1, nbrOfCells));
+    cells <- Arguments$getIndices(cells, max=nbrOfCells);
     nbrOfCells <- length(cells);
   }
 

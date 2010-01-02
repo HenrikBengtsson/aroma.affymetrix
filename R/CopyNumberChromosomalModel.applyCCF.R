@@ -10,8 +10,7 @@ setMethodS3("applyAnyOrder", "CopyNumberChromosomalModel", function(this, chipTy
   if (is.null(chipTypes)) {
     chipTypes <- allChipTypes;
   } else if (is.numeric(chipTypes)) {
-    chipTypes <- Arguments$getIndices(chipTypes, 
-                                         range=c(1, length(allChipTypes)));
+    chipTypes <- Arguments$getIndices(chipTypes, max=length(allChipTypes));
     chipTypes <- allChipTypes[chipTypes];
   } else {
     if (!all(chipTypes %in% allChipTypes)) {
@@ -24,8 +23,7 @@ setMethodS3("applyAnyOrder", "CopyNumberChromosomalModel", function(this, chipTy
   if (is.null(chromosomes)) {
     chromosomes <- allChromosomes;
   } else if (is.numeric(chromosomes)) {
-    chromosomes <- Arguments$getIndices(chromosomes, 
-                                       range=c(1, length(allChromosomes)));
+    chromosomes <- Arguments$getIndices(chromosomes, max=length(allChromosomes));
     chromosomes <- allChromosomes[chromosomes];
   } else {
     if (!all(chromosomes %in% allChromosomes)) {
@@ -46,8 +44,7 @@ setMethodS3("applyAnyOrder", "CopyNumberChromosomalModel", function(this, chipTy
     arrayNames <- arrays;
     arrays <- match(arrayNames, allArrays);
   } else {
-    arrays <- Arguments$getIndices(arrays, 
-                                       range=c(1, length(allArrays)));
+    arrays <- Arguments$getIndices(arrays, max=length(allArrays));
     arrayNames <- allArrays[arrays];
   }
 

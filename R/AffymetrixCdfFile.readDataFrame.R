@@ -7,7 +7,7 @@ setMethodS3("readDataFrame", "AffymetrixCdfFile", function(this, units=NULL, fie
   if (is.null(units)) {
   } else {
     # Validate unit indices
-    units <- Arguments$getIndices(units, range=c(1, nbrOfUnits));
+    units <- Arguments$getIndices(units, max=nbrOfUnits);
     nbrOfUnits <- length(units);
   }
 

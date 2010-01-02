@@ -607,7 +607,7 @@ setMethodS3("getData", "CnagCfhSet", function(this, indices=NULL, fields=c("x", 
   # Argument 'indices':
   nbrOfCells <- nbrOfCells(getCdf(this));
   if (!is.null(indices)) {
-    indices <- Arguments$getIndices(indices, range=c(1, nbrOfCells));
+    indices <- Arguments$getIndices(indices, max=nbrOfCells);
     nbrOfCells <- length(indices);
   }
 
@@ -858,7 +858,7 @@ setMethodS3("getAverageFile", "CnagCfhSet", function(this, name=NULL, prefix="av
     indices <- 1:nbrOfCells; 
   } else if (identical(indices, "remaining")) {
   } else {
-    indices <- Arguments$getIndices(indices, range=c(1, nbrOfCells));
+    indices <- Arguments$getIndices(indices, max=nbrOfCells);
   }
 
   # Argument 'cellsPerChunk':

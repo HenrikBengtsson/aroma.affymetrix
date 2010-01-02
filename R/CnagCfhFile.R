@@ -410,6 +410,7 @@ setMethodS3("readUnits", "CnagCfhFile", function(this, units=NULL, ..., verbose=
   # Argument 'units':
   cdf <- getCdf(this);
   if (!is.null(units)) {
+    # A zero-offset index? /HB 2010-01-01
     units <- Arguments$getIndices(units, range=c(0, nbrOfUnits(cdf)));
   }
 

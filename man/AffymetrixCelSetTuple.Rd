@@ -52,10 +52,10 @@ extends \emph{\link[aroma.core]{AromaMicroarrayDataSetTuple}}\cr
 
 
  \bold{Methods inherited from AromaMicroarrayDataSetTuple}:\cr
-as, as.AromaMicroarrayDataSetTuple, byPath, getAsteriskTags, getChipTypes, getFullNames, getTags, indexOf, nbrOfArrays, nbrOfChipTypes
+as, as.AromaMicroarrayDataSetTuple, byPath, getAsteriskTags, getChipTypes, getFullNames, getSets, getTags, indexOf, nbrOfArrays, nbrOfChipTypes
 
  \bold{Methods inherited from GenericDataFileSetList}:\cr
-as.character, as.data.frame, as, as.GenericDataFileSetList, as.list, clone, extract, getAsteriskTags, getDefaultFullName, getFileList, getFileListClass, getFullNames, getNames, getSet, getSets, getTags, indexOf, length, nbrOfFiles, nbrOfSets, setTags
+as.character, as.data.frame, as, as.GenericDataFileSetList, as.list, assertDuplicates, clone, extract, getAsteriskTags, getDefaultFullName, getFileList, getFileListClass, getFullNames, getNames, getSet, getSets, getTags, indexOf, length, nbrOfFiles, nbrOfSets, setTags
 
  \bold{Methods inherited from FullNameInterface}:\cr
 appendFullNameTranslator, appendFullNameTranslatorBycharacter, appendFullNameTranslatorByfunction, appendFullNameTranslatorBylist, appendFullNameTranslatorByNULL, clearFullNameTranslator, clearListOfFullNameTranslators, getDefaultFullName, getFullName, getFullNameTranslator, getListOfFullNameTranslators, getName, getTags, hasTag, hasTags, setFullName, setFullNameTranslator, setListOfFullNameTranslators, setName, setTags, updateFullName

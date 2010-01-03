@@ -1,7 +1,12 @@
 Package: aroma.affymetrix
 =========================
 
-Version: 1.3.6 [2010-01-01]
+Version: 1.4.0 [2010-01-02]
+o Package passes R CMD check on R v2.10.1 and R v2.11.0 devel and
+  all of its redundancy tests.
+
+
+Version: 1.3.6 [2010-01-02]
 o Adopted to work with aroma.core v1.3.7 and R.filesets 0.7.0.
 o ROBUSTNESS: Using new Arguments$getInstanceOf() were possible. 
 o ROBUSTNESS: Now all index arguments are validated correctly 

@@ -56,6 +56,7 @@
 \alias{applyToUnitIntensities.AffymetrixCelSet}
 \alias{AromaAffymetrix}
 \alias{AromaCellMatchScoreFile}
+\alias{AromaPipeline}
 \alias{AromaUfcFile}
 \alias{AromaUgcFile}
 \alias{AromaUnitGcContentFile}
@@ -98,6 +99,9 @@
 \alias{as.CnChipEffectSetTuple.default}
 \alias{as.CopyNumberDataSetTuple.CnChipEffectSet}
 \alias{as.DChipDcpSet}
+\alias{ASCRMAv2}
+\alias{assertAnnotationData}
+\alias{assertAnnotationData.ASCRMAv2}
 \alias{bgAdjustGcrma}
 \alias{bgAdjustOptical}
 \alias{bgAdjustRma}
@@ -921,6 +925,9 @@
 \alias{getSnpNames}
 \alias{getSpar}
 \alias{getSpar.SpatialRowColumnNormalization}
+\alias{getSteps}
+\alias{getSteps.AromaPipeline}
+\alias{getSteps.ASCRMAv2}
 \alias{getSubsetOfCellIndices}
 \alias{getSubsetOfCellIndices.AffymetrixCdfFile}
 \alias{getSubsetOfUnits}
@@ -1139,6 +1146,8 @@
 \alias{nbrOfRows.AffymetrixCdfFile}
 \alias{nbrOfSnps}
 \alias{nbrOfSnps.CnagCfhFile}
+\alias{nbrOfSteps}
+\alias{nbrOfSteps.AromaPipeline}
 \alias{nbrOfUnits.AffymetrixCdfFile}
 \alias{nbrOfUnits.DChipCdfBinFile}
 \alias{nbrOfUnits.DChipDcpFile}
@@ -1177,6 +1186,7 @@
 \alias{predictOne.LinearModelProbeSequenceNormalization}
 \alias{predictOne.MatNormalization}
 \alias{process.AlleleSummation}
+\alias{process.AromaPipeline}
 \alias{process.SpatialRowColumnNormalization}
 \alias{range.AffymetrixCelFile}
 \alias{range.AffymetrixCelSet}

@@ -16,7 +16,7 @@
   applyCCF0.CopyNumberChromosomalModel applyCFC0
   applyCFC0.CopyNumberChromosomalModel applyToUnitIntensities
   applyToUnitIntensities.AffymetrixCelSet AromaAffymetrix
-  AromaCellMatchScoreFile AromaUfcFile AromaUgcFile
+  AromaCellMatchScoreFile AromaPipeline AromaUfcFile AromaUgcFile
   AromaUnitGcContentFile as.AffymetrixCelSet as.AffymetrixCnChpSet
   as.AffymetrixFileSet as.character.AffymetrixCdfFile
   as.character.AffymetrixCelFile as.character.AffymetrixCelSetReporter
@@ -36,9 +36,10 @@
   as.ChipEffectSetTuple.default as.CnagCfhSet as.CnChipEffectSetTuple
   as.CnChipEffectSetTuple.CnChipEffectSetTuple
   as.CnChipEffectSetTuple.default
-  as.CopyNumberDataSetTuple.CnChipEffectSet as.DChipDcpSet
-  bgAdjustGcrma bgAdjustOptical bgAdjustRma boxplotStats
-  boxplotStats.ChipEffectSet byChipType.AffymetrixCsvGenomeInformation
+  as.CopyNumberDataSetTuple.CnChipEffectSet as.DChipDcpSet ASCRMAv2
+  assertAnnotationData assertAnnotationData.ASCRMAv2 bgAdjustGcrma
+  bgAdjustOptical bgAdjustRma boxplotStats boxplotStats.ChipEffectSet
+  byChipType.AffymetrixCsvGenomeInformation
   byChipType.AffymetrixProbeTabFile byChipType.AffymetrixTabularFile
   byChipType.AffymetrixTsvFile byChipType.AromaCellMatchScoreFile
   byChipType.DChipCdfBinFile byChipType.UflSnpInformation
@@ -462,7 +463,8 @@
   getSignalTransform.BasePositionNormalization
   getSignalTransform.LinearModelProbeSequenceNormalization
   getSnpInformation getSnpInformation.AffymetrixCdfFile getSnpNames
-  getSpar getSpar.SpatialRowColumnNormalization getSubsetOfCellIndices
+  getSpar getSpar.SpatialRowColumnNormalization getSteps
+  getSteps.AromaPipeline getSteps.ASCRMAv2 getSubsetOfCellIndices
   getSubsetOfCellIndices.AffymetrixCdfFile getSubsetOfUnits
   getSubsetOfUnits.AffymetrixCdfFile getSubsetToAvg
   getSubsetToAvg.AllelicCrosstalkCalibration
@@ -589,10 +591,11 @@
   nbrOfEnzymes.SnpInformation nbrOfEnzymes.UflSnpInformation
   nbrOfGroupsPerUnit nbrOfQcUnits nbrOfQcUnits.AffymetrixCdfFile
   nbrOfRows.AffymetrixCdfFile nbrOfSnps nbrOfSnps.CnagCfhFile
-  nbrOfUnits.AffymetrixCdfFile nbrOfUnits.DChipCdfBinFile
-  nbrOfUnits.DChipDcpFile nbrOfUnits.GenomeInformation
-  nbrOfUnits.SnpInformation nbrOfUnits.UflSnpInformation
-  nbrOfUnits.UgpGenomeInformation normalizeOneArrayVector
+  nbrOfSteps nbrOfSteps.AromaPipeline nbrOfUnits.AffymetrixCdfFile
+  nbrOfUnits.DChipCdfBinFile nbrOfUnits.DChipDcpFile
+  nbrOfUnits.GenomeInformation nbrOfUnits.SnpInformation
+  nbrOfUnits.UflSnpInformation nbrOfUnits.UgpGenomeInformation
+  normalizeOneArrayVector
   normalizeOneArrayVector.FragmentEquivalentClassNormalization
   patch.AromaAffymetrix PdInfo2Cdf plasqGaussian plotAllelePairs
   plotAllelePairs.AllelicCrosstalkCalibration plotBasepair
@@ -607,10 +610,11 @@
   predictOne.BaseCountNormalization
   predictOne.LinearModelProbeSequenceNormalization
   predictOne.MatNormalization process.AlleleSummation
-  process.SpatialRowColumnNormalization range.AffymetrixCelFile
-  range.AffymetrixCelSet range.CnagCfhFile range.CnagCfhSet read10K
-  read10K.DChipSnpInformation read250K read250K.DChipSnpInformation
-  read250KHg17 read250KHg17.DChipGenomeInformation read50K
+  process.AromaPipeline process.SpatialRowColumnNormalization
+  range.AffymetrixCelFile range.AffymetrixCelSet range.CnagCfhFile
+  range.CnagCfhSet read10K read10K.DChipSnpInformation read250K
+  read250K.DChipSnpInformation read250KHg17
+  read250KHg17.DChipGenomeInformation read50K
   read50K.DChipSnpInformation read50KHg17
   read50KHg17.DChipGenomeInformation readArrays
   readArrays.AffymetrixAptSummaryFile readCdfGroupStrands readCfhHeader
@@ -707,3 +711,4 @@
   writeRegions.profileCGH writeSgr writeSgr.AffymetrixCelSet
   writeSignals writeSignals.ProbeLevelTransform3 writeWig
   writeWig.CnChipEffectSet
+

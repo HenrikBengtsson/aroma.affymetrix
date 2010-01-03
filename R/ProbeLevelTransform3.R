@@ -181,7 +181,7 @@ setMethodS3("getCellsToInternal", "ProbeLevelTransform3", function(this, units, 
 
   verbose && cat(verbose, "Dataset class:");
   verbose && cat(verbose, class(dataSet)[1]);
-  verbose && cat(verbose, "chipType: ", chipType);
+  verbose && cat(verbose, "Chip type: ", chipType);
   verbose && cat(verbose, "Units:");
   verbose && str(verbose, units);
 

@@ -2,6 +2,10 @@ Package: aroma.affymetrix
 =========================
 
 Version: 1.4.0 [2010-01-02]
+o BUG FIX: After loading aroma.affymetrix, findCdf() would give "Error in
+  if (regexpr(pattern, chipType) != -1) { : argument is of length zero",
+  because AffymetrixCdfFile$findByChipType(chipType=NULL) was not valid.
+  Now the latter returns NULL without complaining.
 o Package passes R CMD check on R v2.10.1 and R v2.11.0 devel and
   all of its redundancy tests.
 

@@ -182,7 +182,6 @@ setMethodS3("getConfidenceScoreSet", "CrlmmModel", function(this, ..., verbose=F
       verbose && enter(verbose, "Allocating new file");
      chipTypeF <- getChipType(this);
       agc <- AromaUnitSignalBinaryFile$allocate(filename=pathname, platform=platform, chipType=chipTypeF, nbrOfRows=nbrOfUnits, verbose=log);
-      naValue <- as.integer(NA);
       agc[,1] <- naValue;
       verbose && exit(verbose);
     }
@@ -920,6 +919,9 @@ setMethodS3("calculateConfidenceScores", "CrlmmModel", function(this, ..., force
 
 ############################################################################
 # HISTORY:
+# 2010-01-06
+# o CLEAN UP: No need for assign NAs when allocating new files; this is now
+#   always the default way (in aroma.core v1.4.1). 
 # 2009-05-17
 # o BUG FIX: fit() for CrlmmModel was calling oligo::getM(), but that 
 #   method was later moved to oligoClasses.  Now we just do getM().

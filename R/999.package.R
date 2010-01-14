@@ -17,12 +17,12 @@
 # \section{Installation and updates}{
 #
 #   To install this package, see instructions at 
-#   \url{http://www.braju.com/R/aroma.affymetrix/}.
+#   \url{@eval "getUrl(aroma.affymetrix)"}.
 # } 
 #
 # \section{To get started}{
 #   To get started, see the online user guides and the vignettes
-#   at \url{http://www.braju.com/R/aroma.affymetrix/}.
+#   \url{@eval "getUrl(aroma.affymetrix)"}.
 # }
 # 
 # \section{How to cite this package}{

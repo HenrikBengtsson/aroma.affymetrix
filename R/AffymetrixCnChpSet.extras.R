@@ -58,7 +58,7 @@ setMethodS3("exportTotalCnRatioSet", "AffymetrixCnChpSet", function(this, ..., o
     tmpPathname <- sprintf("%s.tmp", pathname);
     tmpPathname <- Arguments$getWritablePathname(tmpPathname, mustNotExist=TRUE);
     asb <- AromaUnitSignalBinaryFile$allocate(tmpPathname, nbrOfRows=nbrOfUnits, platform=platform, chipType=chipType);
-    asb[,1] <- as.double(NA);
+
     verbose && print(verbose, asb);
     verbose && exit(verbose);
   
@@ -109,6 +109,9 @@ setMethodS3("exportTotalCnRatioSet", "AffymetrixCnChpSet", function(this, ..., o
 
 ############################################################################
 # HISTORY:
+# 2010-01-06
+# o CLEAN UP: No need for assign NAs when allocating new files; this is now
+#   always the default way (in aroma.core v1.4.1). 
 # 2009-02-14
 # o Created.
 ############################################################################

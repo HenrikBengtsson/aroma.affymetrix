@@ -182,6 +182,7 @@ setMethodS3("getConfidenceScoreSet", "CrlmmModel", function(this, ..., verbose=F
       verbose && enter(verbose, "Allocating new file");
      chipTypeF <- getChipType(this);
       agc <- AromaUnitSignalBinaryFile$allocate(filename=pathname, platform=platform, chipType=chipTypeF, nbrOfRows=nbrOfUnits, verbose=log);
+      naValue <- as.double(NA);
       agc[,1] <- naValue;
       verbose && exit(verbose);
     }

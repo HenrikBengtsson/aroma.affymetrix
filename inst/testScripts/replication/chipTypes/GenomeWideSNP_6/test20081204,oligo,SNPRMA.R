@@ -93,6 +93,9 @@ dimnames(theta)[[1]] <- unitNames;
 rm(o, units, unitNames);
 
 
+# For debugging purposes
+print(sessionInfo());
+
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # SNPRMA according to oligo
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

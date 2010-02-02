@@ -110,6 +110,10 @@ setMethodS3("getTags", "QualityAssessmentModel", function(this, collapse=NULL, .
 
   # Get class-specific tags
   tags <- this$.tags;
+
+  # In case this$.tags is not already split
+  tags <- strsplit(tags, split=",", fixed=TRUE)[[1]];
+
   # Expand asterisk tags
   if (any(tags == "*")) {
     tags[tags == "*"] <- getAsteriskTags(this, collapse=",");

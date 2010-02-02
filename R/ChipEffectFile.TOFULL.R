@@ -112,7 +112,7 @@ setMethodS3("writeAsFullCelFile", "ChipEffectFile", function(this, name=getName(
 
   if (!is.null(tags)) {
     tags <- paste(tags, collapse=",");
-    tags <- unlist(strsplit(tags, split=","));
+    tags <- unlist(strsplit(tags, split=",", fixed=TRUE));
     idx <- which(tags == "*");
     if (length(idx) > 0)
       tags <- insert(tags[-idx], at=idx, getTags(this));
@@ -186,7 +186,7 @@ setMethodS3("getAsFullCelFile", "ChipEffectFile", function(this, name=getName(th
 
   if (!is.null(tags)) {
     tags <- paste(tags, collapse=",");
-    tags <- unlist(strsplit(tags, split=","));
+    tags <- unlist(strsplit(tags, split=",", fixed=TRUE));
     idx <- which(tags == "*");
     if (length(idx) > 0) {
       tags <- insert(tags[-idx], at=idx, getTags(this));

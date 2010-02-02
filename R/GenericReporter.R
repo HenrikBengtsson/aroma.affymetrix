@@ -205,6 +205,10 @@ setMethodS3("getTags", "GenericReporter", function(this, collapse=NULL, ...) {
   tags <- getInputTags(this);
 
   tags <- c(tags, this$.tags);
+
+  # In case this$.tags is not already split
+  tags <- strsplit(tags, split=",", fixed=TRUE)[[1]];
+
   tags <- locallyUnique(tags);
 
   # Update asterisk tags
@@ -265,7 +269,7 @@ setMethodS3("getMainPath", "GenericReporter", function(this, ...) {
 
   # Tags
   tags <- getTags(this, collapse=",");
-  if (nchar(tags) == 0) {
+  if (length(tags) == 0 || nchar(tags) == 0) {
     tags <- "raw";  # Default
   }
 

@@ -1,8 +1,12 @@
 Package: aroma.affymetrix
 =========================
 
-Version: 1.4.2 [2010-02-01]
-o
+Version: 1.4.3 [2010-02-03]
+o Package passes all redundancy tests.
+
+
+Version: 1.4.2 [2010-02-02]
+o Updated to work with R.filesets v0.7.4 and aroma.core v1.4.4.
 
 
 Version: 1.4.1 [2010-01-06]

@@ -28,9 +28,6 @@ library("gcrma");  # gcrma()
 
 verbose <- Arguments$getVerbose(-8, timestamp=TRUE);
 
-doPlot <- TRUE;
-saveImg <- TRUE;
-
 # ----------------------------------
 # RMA estimates by aroma.affymetrix 
 # ----------------------------------
@@ -53,9 +50,9 @@ fit(plm, verbose=verbose);
 
 # Extract chip effects on the log2 scale
 ces <- getChipEffectSet(plm);
-theta <- extractMatrix(ces, returnUgcMap=TRUE);
-theta <- log2(theta);
+theta <- extractMatrix(ces);
 rownames(theta) <- getUnitNames(cdf);
+theta <- log2(theta);
 verbose && str(verbose, theta);
 
 verbose && exit(verbose);
@@ -100,30 +97,31 @@ stopifnot(quantile(abs(e), 0.99) < 0.20);
 stopifnot(max(abs(e)) < 1.5);
 verbose && exit(verbose);
 
-if (doPlot) {
-  if (saveImg) {
-    pngDev <- findPngDevice();
-    devNew("pngDev", "replication-gcrma.png", width=640, height=640);
-  }
+# (c) Visual comparison
+devNew("png", "replication-gcrma,gcrma.png", width=800, height=800);
+par(mar=c(5,5,4,2)+0.1, cex.main=2, cex.lab=2, cex.axis=1.5);
 
-  layout(matrix(1:9, ncol=3, byrow=TRUE));
+layout(matrix(1:9, ncol=3, byrow=TRUE));
 
-  xlab <- expression(log[2](theta[gcrma]));
-  ylab <- expression(log[2](theta[aroma.affymetrix]));
-  for (kk in seq(length=ncol(theta))) {
-    main <- colnames(theta)[kk];
-    plot(theta0[,kk], theta[,kk], pch=".", xlab=xlab, ylab=ylab, main=main);
-    abline(0,1, col="blue");
-  }
-
-  xlab <- expression(log[2](theta[aroma.affymetrix]/theta[gcrma]));
-  plotDensity(e, xlab=xlab);
-
-  devDone();
+xlab <- expression(log[2](theta[gcrma]));
+ylab <- expression(log[2](theta[aroma.affymetrix]));
+for (kk in seq(length=ncol(theta))) {
+  main <- colnames(theta)[kk];
+  plot(theta0[,kk], theta[,kk], pch=".", xlab=xlab, ylab=ylab, main=main);
+  abline(0,1, col="blue");
 }
+
+xlab <- expression(log[2](theta[aroma.affymetrix]/theta[gcrma]));
+plotDensity(e, xlab=xlab);
+
+devDone();
+
+verbose && print(verbose, sessionInfo());
 
 ###########################################################################
 # HISTORY:
-# 2009-05-17 [HB]
+# 2010-02-05 [HB]
+# o Harmonized with the corresponding RMA test script.
+ 2009-05-17 [HB]
 # o Adopted from Mark Robinson's test script.
 ###########################################################################

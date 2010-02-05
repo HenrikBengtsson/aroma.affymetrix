@@ -33,16 +33,13 @@ tryCatch(detach("package:oligoClasses"), error=function(ex) {});
 
 verbose <- Arguments$getVerbose(-8, timestamp=TRUE);
 
-doPlot <- TRUE;
-saveImg <- TRUE;
-
 # ----------------------------------
 # RMA estimates by aroma.affymetrix 
 # ----------------------------------
 verbose && enter(verbose, "RMA by aroma.affymetrix");
 
-csR <- AffymetrixCelSet$byName("Affymetrix-HeartBrain", 
-                              chipType="HG-U133_Plus_2");
+cdf <- AffymetrixCdfFile$byChipType("HG-U133_Plus_2");
+csR <- AffymetrixCelSet$byName("Affymetrix-HeartBrain", cdf=cdf);
 
 # RMA background correction
 bc <- RmaBackgroundCorrection(csR);
@@ -58,10 +55,9 @@ fit(plm, verbose=verbose);
 
 # Extract chip effects on the log2 scale
 ces <- getChipEffectSet(plm);
-theta <- extractMatrix(ces, returnUgcMap=TRUE);
+theta <- extractMatrix(ces);
+rownames(theta) <- getUnitNames(cdf);
 theta <- log2(theta);
-ugcMap <- attr(theta, "unitGroupCellMap");
-rownames(theta) <- getUnitNames(getCdf(ces), ugcMap[,"unit"]);
 
 verbose && exit(verbose);
 
@@ -99,30 +95,31 @@ stopifnot(sd(as.vector(e^2)) < 1e-3);
 stopifnot(quantile(abs(e), 0.99) < 0.05);
 stopifnot(max(abs(e)) < 0.085);
 
-if (doPlot) {
-  if (saveImg) {
-    pngDev <- findPngDevice();
-    devNew("pngDev", "replication-affyPLM,fitPLM.png", width=640, height=640);
-  }
+# (c) Visual comparison
+devNew("png", "replication-affyPLM,fitPLM.png", width=800, height=800);
+par(mar=c(5,5,4,2)+0.1, cex.main=2, cex.lab=2, cex.axis=1.5);
 
-  layout(matrix(1:9, ncol=3, byrow=TRUE));
+layout(matrix(1:9, ncol=3, byrow=TRUE));
 
-  xlab <- expression(log[2](theta[affyPLM]));
-  ylab <- expression(log[2](theta[aroma.affymetrix]));
-  for (kk in seq(length=ncol(theta))) {
-    main <- colnames(theta)[kk];
-    plot(theta0[,kk], theta[,kk], pch=".", xlab=xlab, ylab=ylab, main=main);
-    abline(0,1, col="blue");
-  }
-
-  xlab <- expression(log[2](theta[aroma.affymetrix]/theta[affyPLM]));
-  plotDensity(e, xlab=xlab);
-
-  devDone();
+xlab <- expression(log[2](theta[affyPLM]));
+ylab <- expression(log[2](theta[aroma.affymetrix]));
+for (kk in seq(length=ncol(theta))) {
+  main <- colnames(theta)[kk];
+  plot(theta0[,kk], theta[,kk], pch=".", xlab=xlab, ylab=ylab, main=main);
+  abline(0,1, col="blue");
 }
+
+xlab <- expression(log[2](theta[aroma.affymetrix]/theta[affyPLM]));
+plotDensity(e, xlab=xlab);
+
+devDone();
+
+verbose && print(verbose, sessionInfo());
 
 ###########################################################################
 # HISTORY:
+# 2010-02-05 [HB]
+# o Harmonized with the corresponding gcRMA test script.
 # 2010-01-02 [HB]
 # o BUG FIX: If loaded, detaching oligoClasses, because otherwise it will
 #   cause name conflict with affy::probeNames().

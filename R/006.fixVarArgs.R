@@ -4,9 +4,15 @@
 write <- appendVarArgs(write);
 getPackageName <- appendVarArgs(getPackageName);
 
+# So that one can call plotRle(qa, show.names=FALSE)
+boxplot.stats <- appendVarArgs(boxplot.stats);
+
 
 ############################################################################
 # HISTORY:
+# 2010-02-08 [HB]
+# o Added appendVarArgs(boxplot.stats) so that one can pass argument
+#   'show.names' to bxp() via plotRle().
 # 2007-02-27 [HB]
 # o BUG FIX: Removed explicit reference to 'base' etc again. The reason is 
 #   that if a previous package already modified, say, write(), to become a 

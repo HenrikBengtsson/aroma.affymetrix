@@ -1,8 +1,18 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 1.4.5 [2010-02-10]
+o Added redundancy test for calculating bias-corrected sex-chromosome
+  copy numbers.
+
+
+Version: 1.4.4 [2010-02-08]
+o Added appendVarArgs(boxplot.stats) so that one can pass argument
+  'show.names' to bxp() via plotRle().
+
+
 Version: 1.4.3 [2010-02-03]
-o Package passes all redundancy tests.
+o Package passes R CMD check and all redundancy tests.
 
 
 Version: 1.4.2 [2010-02-02]

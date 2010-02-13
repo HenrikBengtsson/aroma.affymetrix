@@ -1,6 +1,13 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 1.4.6 [2010-02-13]
+o Added an internal version of doCRMAv2().
+o BUG FIX: exportTotalAndFracB() of SnpChipEffectSet returned all arrays
+  in the output data set directory and not only the ones part of the
+  input data set.
+
+
 Version: 1.4.5 [2010-02-10]
 o Added redundancy test for calculating bias-corrected sex-chromosome
   copy numbers.

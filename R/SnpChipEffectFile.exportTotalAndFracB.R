@@ -123,72 +123,6 @@ setMethodS3("exportTotalAndFracB", "SnpChipEffectFile", function(this, fields=c(
 }, protected=TRUE) # exportTotalAndFracB()
 
 
-setMethodS3("exportTotalAndFracB", "SnpChipEffectSet", function(this, fields=c("total", "fracB"), rootPath="totalAndFracBData", ..., drop=TRUE, verbose=FALSE) {
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Validate arguments
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Argument 'fields':
-  fields <- match.arg(fields, several.ok=TRUE);
-
-  # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
-  if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
-  }
-
-
-  signalClassList <- lapply(fields, FUN=function(field) {
-    if (field == "total") {
-      signalClass <- AromaUnitTotalCnBinarySet;
-    } else if (is.element(field, c("fracB", "freqB"))) {
-      signalClass <- AromaUnitFracBCnBinarySet;
-    }
-    signalClass;
-  });
-
-  names <- paste(sapply(signalClassList, FUN=getName), collapse=" and ");
-  verbose && enter(verbose, "Exporting ", class(this)[1], " as ", names);
-
-  dataSetName <- getFullName(this);
-  chipType <- NULL;
-  for (kk in seq(this)) {
-    cf <- getFile(this, kk);
-    verbose && enter(verbose, sprintf("Array #%d ('%s') of %d", kk, getName(cf), length(this)));
-    asbList <- exportTotalAndFracB(cf, fields=fields, dataSet=dataSetName, ..., drop=FALSE, verbose=less(verbose, 1));
-    if (is.null(chipType)) {
-      chipType <- getChipType(asbList[[1]], fullname=FALSE);
-    }
-    verbose && print(verbose, asbList);
-    rm(asbList);
-    verbose && exit(verbose);
-  } # for (kk ...)
-  verbose && exit(verbose);
-  
-
-  assList <- lapply(signalClassList, function(signalClass) {
-    verbose && enter(verbose, "Setting up the ", getName(signalClass));
-    ass <- NULL;
-    tryCatch({
-      ass <- signalClass$byName(dataSetName, chipType=chipType, paths=rootPath);
-      verbose && print(verbose, ass);
-    }, error = function(ex) {
-    })
-    verbose && exit(verbose);
-    ass;
-  });
-  names(assList) <- fields;
-
-  assList <- assList[!sapply(assList, is.null)];
-
-  if (drop && length(assList) == 1) {
-    assList <- assList[[1]];
-  }
-
-  invisible(assList);
-}, protected=TRUE) # exportTotalAndFracB()
-
-
 setMethodS3("exportTotalAndFracB", "CnChipEffectFile", function(this, fields=c("total", "fracB"), ...) {
   # Don't export fracB signals, if they are not available
   if (this$combineAlleles) {
@@ -199,29 +133,10 @@ setMethodS3("exportTotalAndFracB", "CnChipEffectFile", function(this, fields=c("
 })
 
 
-setMethodS3("exportTotalAndFracB", "CnChipEffectSet", function(this, fields=c("total", "fracB"), ...) {
-  # Don't export fracB signals, if they are not available
-  if (getCombineAlleles(this)) {
-    fields <- setdiff(fields, "fracB");
-  }
-
-  NextMethod("exportTotalAndFracB", this, fields=fields, ...);
-})
-
-
-
-setMethodS3("getAromaUnitTotalCnBinarySet", "default", function(this, ...) {
-  exportTotalAndFracB(this, fields="total", ...);
-})
-
-setMethodS3("getAromaUnitFracBCnBinarySet", "default", function(this, ...) {
-  exportTotalAndFracB(this, fields="fracB", ...);
-})
-
-
-
 ############################################################################
 # HISTORY:
+# 2010-02-13
+# o Move the methods specific to sets to its own file.
 # 2009-02-24
 # o BUG FIX: exportTotalAndFracB() of SnpChipEffectFile return an empty
 #   list for chip types with tags.

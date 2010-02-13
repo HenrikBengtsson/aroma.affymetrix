@@ -1405,6 +1405,10 @@
 \alias{writeSignals.ProbeLevelTransform3}
 \alias{writeWig}
 \alias{writeWig.CnChipEffectSet}
+\alias{boxplot.stats}
+\alias{doCRMAv2}
+\alias{doCRMAv2.AffymetrixCelSet}
+\alias{doCRMAv2.character}
 
 \description{
   This page contains aliases for all "non-documented" objects that

@@ -23,7 +23,10 @@ setMethodS3("doCRMAv2", "AffymetrixCelSet", function(csR, combineAlleles=TRUE, a
   verbose && enter(verbose, "CRMAv2");
   verbose && cat(verbose, "Arguments:");
   verbose && cat(verbose, "combineAlleles: ", combineAlleles);
-  verbose && cat(verbose, "arrays: ", arrays);
+  arraysTag <- seqToHumanReadable(arrays);
+  verbose && cat(verbose, "arrays:");
+  verbose && str(verbose, arraysTag);
+
 
   verbose && cat(verbose, "Data set");
   verbose && print(verbose, csR);

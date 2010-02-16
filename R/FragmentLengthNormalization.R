@@ -875,6 +875,12 @@ setMethodS3("process", "FragmentLengthNormalization", function(this, ..., force=
     verbose && exit(verbose);
   } # for (kk in ...)
 
+  # Garbage collect
+  rm(fl);
+#  clearCache(this);
+  gc <- gc();
+  verbose && print(verbose, gc);
+
   # Create the output set
   outputSet <- getOutputDataSet(this, verbose=less(verbose,5));
 
@@ -885,6 +891,9 @@ setMethodS3("process", "FragmentLengthNormalization", function(this, ..., force=
 
 ############################################################################
 # HISTORY:
+# 2010-02-15
+## o MEMORY OPTIMIZATION: Now process() of FragmentLengthNormalization
+##   clears the in-memory cache when finished.
 # 2008-12-03
 # o BUG FIX: Missing 'si' object.
 # 2008-12-01

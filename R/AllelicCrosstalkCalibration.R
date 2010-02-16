@@ -1005,6 +1005,7 @@ setMethodS3("process", "AllelicCrosstalkCalibration", function(this, ..., force=
 
   # Garbage collect
   rm(ds, setsOfProbes);
+#  clearCache(this);
   gc <- gc();
   verbose && print(verbose, gc);
 
@@ -1214,6 +1215,9 @@ setMethodS3("getDataPairs", "AllelicCrosstalkCalibration", function(this, array,
 
 ############################################################################
 # HISTORY:
+## 2010-02-15
+## o MEMORY OPTIMIZATION: Now process() of AllelicCrosstalkCalibration 
+##   clears the in-memory cache when finished.
 # 2009-09-04
 # o Now smoothScatter() is loaded via aroma.core.
 # 2008-12-17

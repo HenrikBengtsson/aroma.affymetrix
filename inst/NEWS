@@ -1,6 +1,17 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 1.4.7 [2010-02-16]
+o MEMORY OPTIMIZATION: Now process() of AllelicCrosstalkCalibration 
+  clears the in-memory cache when finished.
+o MEMORY OPTIMIZATION: Now AbstractProbeSequenceNormalization classes
+  cleans out more unneeded objects.
+o MEMORY OPTIMIZATION: Now doCRMAv2() removes as much as possible.
+o BUG FIX: readDataUnitChromosomePosition() of AffymetrixNetAffxCsvFile
+  failed to map chromosome 'MT' to 25.  This bug was introduced
+  in aroma.affymetrix v1.0.7.
+
+
 Version: 1.4.6 [2010-02-13]
 o Added an internal version of doCRMAv2().
 o BUG FIX: exportTotalAndFracB() of SnpChipEffectSet returned all arrays

@@ -45,13 +45,23 @@ setMethodS3("doCRMAv2", "AffymetrixCelSet", function(csR, combineAlleles=TRUE, a
   csC <- process(acc, verbose=verbose);
   verbose && print(verbose, csC);
   verbose && exit(verbose);
-  
+
+  # Clean up
+  rm(csR, acc);
+  gc <- gc();
+  verbose && print(verbose, gc);
+
   verbose && enter(verbose, "CRMAv2/Base position normalization");
   bpn <- BasePositionNormalization(csC, target="zero");
   verbose && print(verbose, bpn);
   csN <- process(bpn, verbose=verbose);
   verbose && print(verbose, csN);
   verbose && exit(verbose);
+
+  # Clean up
+  rm(csC, bpn);
+  gc <- gc();
+  verbose && print(verbose, gc);
   
   verbose && enter(verbose, "CRMAv2/Probe summarization");
   plm <- AvgCnPlm(csN, mergeStrands=TRUE, combineAlleles=combineAlleles);
@@ -63,10 +73,16 @@ setMethodS3("doCRMAv2", "AffymetrixCelSet", function(csR, combineAlleles=TRUE, a
     # Fit remaining units, i.e. SNPs (~5-10min/array)
     units <- fit(plm, verbose=verbose);
     verbose && str(verbose, units);
+    rm(units);
   }  
+  verbose && print(verbose, gc);
   ces <- getChipEffectSet(plm);
   verbose && print(verbose, ces);
   verbose && exit(verbose);
+
+  # Clean up
+  rm(plm, csN);
+  gc <- gc();
   
   verbose && enter(verbose, "CRMAv2/PCR fragment-length normalization");
   fln <- FragmentLengthNormalization(ces, target="zero");
@@ -74,11 +90,19 @@ setMethodS3("doCRMAv2", "AffymetrixCelSet", function(csR, combineAlleles=TRUE, a
   cesN <- process(fln, verbose=verbose);
   verbose && print(verbose, cesN);
   verbose && exit(verbose);
+
+  # Clean up
+  rm(fln, ces);
+  gc <- gc();
   
   verbose && enter(verbose, "CRMAv2/Export to technology-independent data files");
   dsN <- exportTotalAndFracB(cesN, verbose=verbose);
   verbose && print(verbose, dsN);
   verbose && exit(verbose);
+
+  # Clean up
+  rm(cesN);
+  gc <- gc();
 
   verbose && exit(verbose);
 
@@ -107,6 +131,10 @@ setMethodS3("doCRMAv2", "character", function(dataSet, ..., verbose=FALSE) {
 
   dsN <- doCRMAv2(csR, ..., verbose=verbose);
 
+  # Clean up
+  rm(csR);
+  gc <- gc();
+
   verbose && exit(verbose);
 
   dsN;
@@ -115,6 +143,8 @@ setMethodS3("doCRMAv2", "character", function(dataSet, ..., verbose=FALSE) {
 
 ############################################################################
 # HISTORY:
+# 2010-02-15
+# o MEMORY OPTIMIZATION: Now doCRMAv2() removes as much as possible.
 # 2010-02-13
 # o Restructured.  Now there is a doCRMAv2() for AffymetrixCelSet:s and
 #   one for character strings.

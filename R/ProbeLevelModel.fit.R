@@ -219,17 +219,28 @@ setMethodS3("fit", "ProbeLevelModel", function(this, units="remaining", ..., for
   # Get (and create if missing) the chip-effect files (one per array)
   ces <- getChipEffectSet(this, ram=ram, verbose=less(verbose));
 
-  # Number of units to load into memory and fit at the same time
+  verbose && enter(verbose, "Calculating number of units to fit per chunk");
+  verbose && cat(verbose, "RAM scale factor: ", ram);
+
   bytesPerChunk <- 100e6;       # 100Mb
+  verbose && cat(verbose, "Bytes per chunk: ", bytesPerChunk);
+
   bytesPerUnitAndArray <- 500;  # Just a rough number; good enough?
+  verbose && cat(verbose, "Bytes per unit and array: ", bytesPerUnitAndArray);
+
   bytesPerUnit <- nbrOfArrays * bytesPerUnitAndArray;
+  verbose && cat(verbose, "Bytes per unit: ", bytesPerUnit);
+
   unitsPerChunk <- ram * bytesPerChunk / bytesPerUnit;
   unitsPerChunk <- as.integer(max(unitsPerChunk,1));
+  verbose && cat(verbose, "Number of units per chunk: ", unitsPerChunk);
+
+  nbrOfChunks <- ceiling(nbrOfUnits / unitsPerChunk);
+  verbose && cat(verbose, "Number of chunks: ", nbrOfChunks);
+  verbose && exit(verbose);
 
   idxs <- 1:nbrOfUnits;
   head <- 1:unitsPerChunk;
-  nbrOfChunks <- ceiling(nbrOfUnits / unitsPerChunk);
-  verbose && cat(verbose, "Number units per chunk: ", unitsPerChunk);
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -392,6 +403,8 @@ setMethodS3("fit", "ProbeLevelModel", function(this, units="remaining", ..., for
 
 ############################################################################
 # HISTORY:
+# 2010-02-16
+# o Added additional startup verbose output in fit() for ProbeLevelModel.R.
 # 2009-02-21
 # o Removed deprecated argument 'moreUnits' of fit() of ProbeLevelModel.
 # 2008-12-08

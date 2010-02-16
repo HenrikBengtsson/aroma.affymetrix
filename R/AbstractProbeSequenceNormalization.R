@@ -82,16 +82,43 @@ setMethodS3("getTargetFile", "AbstractProbeSequenceNormalization", function(this
 })
 
 
-setMethodS3("getAromaCellSequenceFile", "AbstractProbeSequenceNormalization", function(this, ..., force=FALSE) {
+setMethodS3("getAromaCellSequenceFile", "AbstractProbeSequenceNormalization", function(this, ..., force=FALSE, verbose=FALSE) {
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Validate arguments
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Argument 'verbose':
+  verbose <- Arguments$getVerbose(verbose);
+  if (verbose) {
+    pushState(verbose);
+    on.exit(popState(verbose));
+  }
+
+  verbose && enter(verbose, "Getting AromaCellSequenceFile");
+
   aps <- this$.aps;
 
   if (force || is.null(aps)) {
+    verbose && enter(verbose, "Locating");
+
     dataSet <- getInputDataSet(this);
     cdf <- getCdf(dataSet);
     chipType <- getChipType(cdf, fullname=FALSE);
-    aps <- AromaCellSequenceFile$byChipType(chipType, nbrOfCells=nbrOfCells(cdf), ...);
+    nbrOfCells <- nbrOfCells(cdf);
+    rm(dataSet, cdf);
+
+    verbose && cat(verbose, "Chip type:", chipType);
+    verbose && cat(verbose, "Number of cells:", nbrOfCells);
+
+    aps <- AromaCellSequenceFile$byChipType(chipType, 
+                            nbrOfCells=nbrOfCells, ..., verbose=verbose);
+
+    verbose && exit(verbose);
+
     this$.aps <- aps;
   }
+
+  verbose && print(verbose, aps);
+  verbose && exit(verbose);
 
   aps;
 }, protected=TRUE)
@@ -114,7 +141,7 @@ setMethodS3("indexOfMissingSequences", "AbstractProbeSequenceNormalization", fun
   # Locate AromaCellSequenceFile holding probe sequences
   acs <- getAromaCellSequenceFile(this, verbose=less(verbose, 5));
 
-	idxs <- isMissing(acs, verbose=less(verbose, 5));
+  idxs <- isMissing(acs, verbose=less(verbose, 5));
   idxs <- whichVector(idxs);
   verbose && cat(verbose, "Cells with unknown sequences:");
   verbose && str(verbose, idxs);
@@ -164,9 +191,8 @@ setMethodS3("process", "AbstractProbeSequenceNormalization", function(this, ...,
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local functions
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  readSeqs <- function(...) {    
+  readSeqs <- function(this, cells, ...) {    
     verbose && enter(verbose, "Reading probe sequences");
-    cells <- cellsToUpdate;
     verbose && cat(verbose, "Cells:");
     verbose && str(verbose, cells);
 
@@ -234,6 +260,11 @@ setMethodS3("process", "AbstractProbeSequenceNormalization", function(this, ...,
   nbrOfCells <- nbrOfCells(df);
   verbose && enter(verbose, "Normalizing ", nbrOfArrays, " arrays");
   verbose && enter(verbose, "Path: ", outputPath);
+  rm(df);
+
+  # Garbage collection
+  gc <- gc();
+  verbose && print(verbose, gc);
 
   paramsShort <- NULL;
   muT <- NULL;
@@ -267,7 +298,7 @@ setMethodS3("process", "AbstractProbeSequenceNormalization", function(this, ...,
       # Setting up model fit parameters
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       modelFit <- list(
-        paramsShort=paramsShort
+        paramsShort = paramsShort
       );
 
 
@@ -279,7 +310,7 @@ setMethodS3("process", "AbstractProbeSequenceNormalization", function(this, ...,
         verbose && enter(verbose, "Modelling effects of target array");
 
         modelFitT <- list(
-          paramsShort=paramsShort
+          paramsShort = paramsShort
         );
 
         dfT <- getTargetFile(this, verbose=less(verbose, 5));
@@ -314,8 +345,9 @@ setMethodS3("process", "AbstractProbeSequenceNormalization", function(this, ...,
 
   
         verbose && enter(verbose, "Predicting probe affinities");
-        if (is.null(seqs))
-          seqs <- readSeqs();
+        if (is.null(seqs)) {
+          seqs <- readSeqs(this, cells=cellsToUpdate);
+        }
         muT <- predictOne(this, fit=fitT, params=params, seqs=seqs, verbose=less(verbose, 5));
         rm(fitT);
         verbose && cat(verbose, "muT:");
@@ -341,7 +373,6 @@ setMethodS3("process", "AbstractProbeSequenceNormalization", function(this, ...,
       modelFit$fit <- fit;
       verbose && exit(verbose);
 
-      # Store model fit 
       verbose && enter(verbose, "Saving model fit");
       # Store fit and parameters (in case someone are interested in looking
       # at them later; no promises of backward compatibility though).
@@ -376,8 +407,9 @@ setMethodS3("process", "AbstractProbeSequenceNormalization", function(this, ...,
       verbose && exit(verbose);
 
       verbose && enter(verbose, "Predicting mean log2 probe signals");
-      if (is.null(seqs))
-        seqs <- readSeqs();
+      if (is.null(seqs)) {
+        seqs <- readSeqs(this, cells=cellsToUpdate);
+      }
       mu <- predictOne(this, fit=fit, params=params, seqs=seqs, verbose=less(verbose, 5));
       rm(fit);
       verbose && cat(verbose, "mu:");
@@ -462,12 +494,17 @@ setMethodS3("process", "AbstractProbeSequenceNormalization", function(this, ...,
 
     rm(df, dfC);
 
+    # Garbage collection
+    gc <- gc();
+    verbose && print(verbose, gc);
+
     verbose && exit(verbose);
   } # for (kk in ...)
   verbose && exit(verbose);
 
   # Garbage collect
-  rm(ds);
+  rm(ds, seqs, muT);
+#  clearCache(this);
   gc <- gc();
   verbose && print(verbose, gc);
 
@@ -482,6 +519,11 @@ setMethodS3("process", "AbstractProbeSequenceNormalization", function(this, ...,
 
 ############################################################################
 # HISTORY:
+# 2010-02-16
+# o Added verbose output to getAromaCellSequenceFile().
+## 2010-02-15
+## o MEMORY OPTIMIZATION: Now process() of AbstractProbeSequenceNormalization
+##   clears the in-memory cache when finished.
 # 2009-07-08
 # o ROBUSTNESS: Updated process() of AbstractProbeSequenceNormalization to 
 #   write to a tempory file which is the renamed.  This will lower the risk

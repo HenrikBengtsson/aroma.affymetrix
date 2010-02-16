@@ -81,11 +81,16 @@ setMethodS3("readDataUnitChromosomePosition", "AffymetrixNetAffxCsvFile", functi
   if (length(cc) == 0 || is.na(cc)) {
     throw("Failed to locate chromosome column.");
   }
+
   map <- c(X=23, Y=24, M=25, MT=25, Z=25);
+  values <- data[[cc]];
   for (kk in seq(along=map)) {
-    data[[cc]] <- gsub(names(map)[kk], map[kk], data[[cc]]);
+    idxs <- whichVector(values == names(map)[kk]);
+    values[idxs] <- map[kk];
   }
-  data[[cc]] <- as.integer(data[[cc]]);
+  values <- as.integer(values);
+  data[[cc]] <- values;
+  rm(values, idxs);
   gc <- gc();
 
 
@@ -357,6 +362,10 @@ setMethodS3("readDataUnitFragmentLength", "AffymetrixNetAffxCsvFile", function(t
 
 ############################################################################
 # HISTORY:
+# 2010-02-15
+# o BUG FIX: readDataUnitChromosomePosition() of AffymetrixNetAffxCsvFile
+#   failed to map chromosome 'MT' to 25.  This bug was introduced
+#   in aroma.affymetrix v1.0.7.
 # 2009-05-19
 # o Now readDataUnitChromosomePosition() for AffymetrixNetAffxCsvFile
 #   also recognize 'M' for chromosome 25.

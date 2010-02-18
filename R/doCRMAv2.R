@@ -1,4 +1,4 @@
-setMethodS3("doCRMAv2", "AffymetrixCelSet", function(csR, combineAlleles=TRUE, arrays=NULL, ..., verbose=FALSE) {
+setMethodS3("doCRMAv2", "AffymetrixCelSet", function(csR, combineAlleles=TRUE, arrays=NULL, ..., ram=NULL, verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
@@ -26,6 +26,7 @@ setMethodS3("doCRMAv2", "AffymetrixCelSet", function(csR, combineAlleles=TRUE, a
   arraysTag <- seqToHumanReadable(arrays);
   verbose && cat(verbose, "arrays:");
   verbose && str(verbose, arraysTag);
+  verbose && cat(verbose, "ram: ", ram);
 
 
   verbose && cat(verbose, "Data set");
@@ -71,7 +72,7 @@ setMethodS3("doCRMAv2", "AffymetrixCelSet", function(csR, combineAlleles=TRUE, a
     units <- fitCnProbes(plm, verbose=verbose);
     verbose && str(verbose, units);
     # Fit remaining units, i.e. SNPs (~5-10min/array)
-    units <- fit(plm, verbose=verbose);
+    units <- fit(plm, ram=ram, verbose=verbose);
     verbose && str(verbose, units);
     rm(units);
   }  

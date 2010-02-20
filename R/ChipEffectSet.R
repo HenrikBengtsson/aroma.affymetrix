@@ -209,29 +209,45 @@ setMethodS3("updateUnits", "ChipEffectSet", function(this, units=NULL, cdf=NULL,
   }
 
 
+  verbose && enter(verbose, "Updating chip-effect files");
+
   # Get the CDF structure for all chip-effect files
-  if (is.null(cdf))
-    cdf <- getCellIndices(this, units=units);
+  if (is.null(cdf)) {
+    cdf <- getCellIndices(this, units=units, verbose=less(verbose, 1));
+  }
 
   # Update each file one by one
-  n <- length(this);
-  verbose && enter(verbose, "Updating ", n, " chip-effect files");
+  arrays <- seq(this);
+  nbrOfArrays <- length(arrays);
+  verbose && cat(verbose, "Number of files: ", nbrOfArrays);
+
   names <- getNames(this);
+
+  verbose && enter(verbose, "Making sure the files are updated in lexicographic is updated last order");
+  # Reorder such that the file with the "last" name is saved last
+  fullnames <- getFullNames(this);
+  o <- order(fullnames, decreasing=FALSE);
+  arrays <- arrays[o];
+  verbose && str(verbose, arrays);
+  verbose && cat(verbose, "Last array: ", fullnames[arrays[nbrOfArrays]]);
+  rm(fullnames, o);
+  verbose && exit(verbose);
+
   verbose <- less(verbose);
-  for (kk in seq(this)) {
+  for (ii in arrays) {
     verbose && enter(verbose, sprintf("Array #%d of %d ('%s')",
-                                                      kk, n, names[kk]));
-    ce <- getFile(this, kk);
+                                         ii, nbrOfArrays, names[ii]));
+    ce <- getFile(this, ii);
 
     verbose <- less(verbose, 50);
     verbose && enter(verbose, "Extracting estimates");  # 3-4s
     dataOne <- base::lapply(data, FUN=base::lapply, function(group) {
-      # theta = group$theta[kk] = ...
-      # stdvs = group$sdTheta[kk] = ...
+      # theta = group$theta[ii] = ...
+      # stdvs = group$sdTheta[ii] = ...
       list(
-        theta=.subset(.subset2(group, "theta"), kk),
-        sdTheta=.subset(.subset2(group, "sdTheta"), kk),
-        thetaOutliers=.subset(.subset2(group, "thetaOutliers"), kk)
+        theta=.subset(.subset2(group, "theta"), ii),
+        sdTheta=.subset(.subset2(group, "sdTheta"), ii),
+        thetaOutliers=.subset(.subset2(group, "thetaOutliers"), ii)
       );
     });
     verbose && str(verbose, dataOne[1]);
@@ -247,11 +263,16 @@ setMethodS3("updateUnits", "ChipEffectSet", function(this, units=NULL, cdf=NULL,
 #    verbose && printf(verbose, "class(ce)[1]: %s\n", class(ce)[1]);
 #    updateUnits(ce, cdf=cdf, data=dataOne, verbose=less(verbose, 50));
     updateUnits(ce, cdf=cdf, data=dataOne, verbose=verbose);
+    rm(dataOne, ce);
     verbose && exit(verbose);
+
     verbose <- more(verbose, 50);
 
+    gc <- gc();
+    verbose <- print(verbose, gc);
+
     verbose && exit(verbose);
-  } # for (kk ...)
+  } # for (ii ...)
   verbose <- more(verbose);
   verbose && exit(verbose);
 }, protected=TRUE)
@@ -350,6 +371,13 @@ setMethodS3("extractMatrix", "ChipEffectSet", function(this, ..., field=c("theta
 
 ############################################################################
 # HISTORY:
+# 2010-02-20
+# o ROBUSTNESS: Now updateUnits() of ChipEffectSet updates the files in
+#   lexicographic order.  Before there was a risk that this was not done
+#   if fullname translators are changing the lexicographic ordering.
+# o MEMORY OPTIMIZATION: Now updateUnits() of ChipEffectSet cleans out the
+#   temporary data object extracted for each chip-effect file written.
+#   It also calls the garbage collector after each file written.
 # 2008-07-09
 # o Added argument drop=FALSE to extractMatrix().
 # 2008-05-08

@@ -1,6 +1,16 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 1.4.8 [2010-02-20]
+o ROBUSTNESS: Now updateUnits() of ChipEffectSet updates the files in
+  lexicographic order.  Before there was a risk that this was not done
+  if fullname translators are changing the lexicographic ordering.
+o MEMORY OPTIMIZATION: Now updateUnits() of ChipEffectSet cleans out the
+  temporary data object extracted for each chip-effect file written.
+  It also calls the garbage collector after each file written.
+o Added verbose output to updateUnits() of ProbeAffinityFile.
+
+
 Version: 1.4.7 [2010-02-16]
 o MEMORY OPTIMIZATION: Now process() of AllelicCrosstalkCalibration 
   clears the in-memory cache when finished.

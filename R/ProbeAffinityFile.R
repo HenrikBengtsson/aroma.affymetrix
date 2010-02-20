@@ -82,16 +82,37 @@ setMethodS3("clearCache", "ProbeAffinityFile", function(this, ...) {
 }, private=TRUE)
 
 
-setMethodS3("getCellIndices", "ProbeAffinityFile", function(this, ...) {
+setMethodS3("getCellIndices", "ProbeAffinityFile", function(this, ..., verbose=FALSE) {
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Validate arguments
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Argument 'verbose':
+  verbose <- Arguments$getVerbose(verbose);
+  if (verbose) {
+    pushState(verbose);
+    on.exit(popState(verbose));
+  }
+
+  verbose && enter(verbose, "Getting cell indices");
+  verbose && cat(verbose, "Probe model: ", this$probeModel);
+
   stratifyBy <- switch(this$probeModel, "pm"="pm", "mm"="mm", "pm-mm"="pm", "min1(pm-mm)"="pm", "pm+mm"="pm");
+  verbose && cat(verbose, "stratifyBy: ", stratifyBy);
+
   cdf <- getCdf(this);
-  getCellIndices(cdf, ..., stratifyBy=stratifyBy);
+
+  res <- getCellIndices(cdf, ..., stratifyBy=stratifyBy, 
+                                             verbose=less(verbose, 5));
+  verbose && exit(verbose);
+
+  res;
 })
 
 
 setMethodS3("readUnits", "ProbeAffinityFile", function(this, units=NULL, cdf=NULL, ...) {
-  if (is.null(cdf))
+  if (is.null(cdf)) {
     cdf <- getCellIndices(this, units=units);
+  }
 
   # Note that the actually call to the decoding is done in readUnits()
   # of the superclass.
@@ -99,13 +120,33 @@ setMethodS3("readUnits", "ProbeAffinityFile", function(this, units=NULL, cdf=NUL
 });
 
 
-setMethodS3("updateUnits", "ProbeAffinityFile", function(this, units=NULL, cdf=NULL, data, ...) {
-  if (is.null(cdf))
-    cdf <- getCellIndices(this, units=units);
+setMethodS3("updateUnits", "ProbeAffinityFile", function(this, units=NULL, cdf=NULL, data, ..., verbose=FALSE) {
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Validate arguments
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Argument 'verbose':
+  verbose <- Arguments$getVerbose(verbose);
+  if (verbose) {
+    pushState(verbose);
+    on.exit(popState(verbose));
+  }
+
+  verbose && enter(verbose, "Updating units of ", class(this)[1]);
+  verbose && cat(verbose, "Units:");
+  verbose && str(verbose, units);
+
+  if (is.null(cdf)) {
+    cdf <- getCellIndices(this, units=units, verbose=less(verbose, 1));
+  }
 
   # Note that the actually call to the encoding is done in updateUnits()
   # of the superclass.
-  NextMethod("updateUnits", this, cdf=cdf, data=data, ...);
+  res <- NextMethod("updateUnits", this, cdf=cdf, data=data, ..., 
+                                               verbose=less(verbose, 1));
+
+  verbose && exit(verbose);
+
+  res;
 }, private=TRUE)
 
 
@@ -115,6 +156,8 @@ setMethodS3("updateUnits", "ProbeAffinityFile", function(this, units=NULL, cdf=N
 
 ############################################################################
 # HISTORY:
+# 2010-02-20
+# o Added verbose output to updateUnits() of ProbeAffinityFile.
 # 2007-05-09
 # o Removed writeSpatial().
 # 2007-01-03

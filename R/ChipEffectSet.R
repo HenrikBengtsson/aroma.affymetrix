@@ -269,7 +269,7 @@ setMethodS3("updateUnits", "ChipEffectSet", function(this, units=NULL, cdf=NULL,
     verbose <- more(verbose, 50);
 
     gc <- gc();
-    verbose <- print(verbose, gc);
+    verbose && print(verbose, gc);
 
     verbose && exit(verbose);
   } # for (ii ...)

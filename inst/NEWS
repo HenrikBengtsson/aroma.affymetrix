@@ -1,7 +1,7 @@
 Package: aroma.affymetrix
 =========================
 
-Version: 1.4.8 [2010-02-20]
+Version: 1.4.8 [2010-02-21]
 o ROBUSTNESS: Now updateUnits() of ChipEffectSet updates the files in
   lexicographic order.  Before there was a risk that this was not done
   if fullname translators are changing the lexicographic ordering.

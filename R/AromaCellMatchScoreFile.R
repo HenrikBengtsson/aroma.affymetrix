@@ -1,6 +1,6 @@
 # @RdocClass "AromaCellMatchScoreFile"
 # 
-# @title "A binary file holding match scores for each cell"
+# @title "A binary file holding match scores for each cell (probe/feature)"
 #
 # \description{
 #   @get "title".
@@ -196,6 +196,8 @@ setMethodS3("allocate", "AromaCellMatchScoreFile", function(static, ..., nbrOfCe
 
 ############################################################################
 # HISTORY:
+# 2010-02-18 [MR]
+# o corrected the column names for AromaCellMatchscoreFile class
 # 2009-02-10 [HB]
 # o Added optional validation of number of cells to byChipType().
 # o Static method byChipType() was not declared static.

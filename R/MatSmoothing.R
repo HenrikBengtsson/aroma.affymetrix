@@ -351,9 +351,9 @@ setMethodS3("process", "MatSmoothing", function(this, ..., units=NULL, force=FAL
       yList <- lapply(YList, FUN=function(Y) Y[,kk, drop=TRUE]);
       y <- unlist(yList, use.names=FALSE);
       y <- y[y > -Inf];
-      m[kk] <- median(y);
+      m[kk] <- median(y, na.rm=TRUE);
       y <- y[y <= m[kk]];
-      sd[kk] <- sd(c(y,-y+2*m[kk]));
+      sd[kk] <- sd(c(y,-y+2*m[kk]), na.rm=TRUE);
     }
 
     list(m=m, sd=sd);

@@ -25,7 +25,8 @@
 #   \item{mergeGroups}{A @logical ...}
 #   \item{flavor}{A @character string specifying what algorithm is used
 #     to fit the crosstalk calibration.} 
-#   \item{alpha, q, Q}{}
+#   \item{alpha, q, Q}{Additional arguments passed to
+#    \code{fitMultiDimensionalCone()}.}
 # }
 #
 # \section{Fields and Methods}{

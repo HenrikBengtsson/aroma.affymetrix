@@ -46,12 +46,9 @@ extends \emph{\link[aroma.affymetrix]{BackgroundCorrection}}\cr
 \arguments{
   \item{...}{Arguments passed to the constructor of
      \code{\link{ProbeLevelTransform}}.}
-  \item{indicesNegativeControl}{}
-  \item{affinities}{}
-  \item{type}{}
-  \item{opticalAdjust}{}
-  \item{gsbAdjust}{}
-  \item{gsbParameters}{}
+  \item{indicesNegativeControl, affinities, type, opticalAdjust,
+     gsbAdjust, gsbParameters}{Additional arguments passed to the
+     internal \code{bgAdjustGcrma()} method.}
 }
 
 \section{Fields and Methods}{

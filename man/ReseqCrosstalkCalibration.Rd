@@ -54,7 +54,8 @@ extends \emph{\link[aroma.affymetrix]{ProbeLevelTransform}}\cr
    \item{mergeGroups}{A \code{\link[base]{logical}} ...}
    \item{flavor}{A \code{\link[base]{character}} string specifying what algorithm is used
      to fit the crosstalk calibration.}
-   \item{alpha, q, Q}{}
+   \item{alpha, q, Q}{Additional arguments passed to
+    \code{fitMultiDimensionalCone()}.}
  }
 
  \section{Fields and Methods}{

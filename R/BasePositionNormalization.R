@@ -144,17 +144,18 @@ setMethodS3("getDesignMatrix", "BasePositionNormalization", function(this, cells
 
   verbose && enter(verbose, "Building probe-position design matrix");
   verbose && cat(verbose, "Degrees of freedom: ", df);
-  X <- getProbePositionEffectDesignMatrix(seqs, df=df, verbose=less(verbose, 5));
+  X <- getProbePositionEffectDesignMatrix(seqs, df=df, 
+                                               verbose=less(verbose, 5));
   rm(seqs);
+
+  # Garbage collect
+  gc <- gc();
+  verbose && print(verbose, gc);
 
   verbose && cat(verbose, "Design matrix:");
   verbose && str(verbose, X);
   verbose && cat(verbose, "RAM: ", object.size(X));
   verbose && exit(verbose);
-
-  # Garbage collect
-  gc <- gc();
-  verbose && print(verbose, gc);
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
   # Cache results?

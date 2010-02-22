@@ -15,11 +15,13 @@ setMethodS3("allocateFromCdf", "AromaCellMatchScoreFile", function(static, cdf, 
   filename <- sprintf("%s.%s", fullname, ext);
   allocate(static, filename=filename, path=path, nbrOfCells=nbrOfCells, 
                    platform=platform, chipType=chipType, ...);
-})
+}, static=TRUE)
 
 
 ############################################################################
 # HISTORY:
+# 2009-02-22 [HB]
+# o Forgot to make allocateFromCdf() of AromaCellMatchScoreFile static.
 # 2009-02-10 [HB]
 # o Added optional validation of number of cells to byChipType().
 # o Static method byChipType() was not declared static.

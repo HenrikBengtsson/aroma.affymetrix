@@ -223,7 +223,7 @@ setMethodS3("updateUnits", "ChipEffectSet", function(this, units=NULL, cdf=NULL,
 
   names <- getNames(this);
 
-  verbose && enter(verbose, "Making sure the files are updated in lexicographic is updated last order");
+  verbose && enter(verbose, "Making sure the files are updated in lexicographic order");
   # Reorder such that the file with the "last" name is saved last
   fullnames <- getFullNames(this);
   o <- order(fullnames, decreasing=FALSE);

@@ -126,6 +126,10 @@ setMethodS3("getNormalEquations", "LinearModelProbeSequenceNormalization", funct
   verbose && cat(verbose, "Signals to be fitted:");
   verbose && str(verbose, y);
 
+  # Garbage collect
+  gc <- gc();
+  verbose && print(verbose, gc);
+
   verbose && exit(verbose);
 
 
@@ -207,7 +211,10 @@ setMethodS3("getNormalEquations", "LinearModelProbeSequenceNormalization", funct
     rm(keep);
     verbose && exit(verbose);
 
-  
+    # Garbage collect
+    gc <- gc();
+    verbose && print(verbose, gc);
+
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Calculating cross products X'X and X'y
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

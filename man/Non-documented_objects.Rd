@@ -1409,6 +1409,7 @@
 \alias{doCRMAv2}
 \alias{doCRMAv2.AffymetrixCelSet}
 \alias{doCRMAv2.character}
+\alias{allocateFromCdf.AromaCellCpgFile}
 
 \description{
   This page contains aliases for all "non-documented" objects that

@@ -39,15 +39,23 @@ setMethodS3("updateSettings", "Package", function(this, ...) {
   # Update the options list
   setSettings(this, settings);
 
+  # aromaSettings? /HB 2009-05-17  ('settings' does not work)
+  # The solution here is still ad hoc. /HB 2010-02-22
   flat <- getLeaves(Options(settings));
   for (key in names(flat)) {
-    # aromaSettings? /HB 2009-05-17  ('settings' does not work)
-    setOption(aromaSettings, key, flat[[key]]);
+    # Update only settings not already set.
+    if (!hasOption(aromaSettings, key)) {
+      setOption(aromaSettings, key, flat[[key]]);
+    }
   }
 })
 
 ############################################################################
 # HISTORY:
+# 2010-02-22
+# o BUG FIX: The settings in 'aromaSettings' loaded by aroma.core was
+#   overridden by defaults settings of aroma.affymetrix, even if they 
+#   already existed.
 # 2009-02-22
 # o Created.
 ############################################################################

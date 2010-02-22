@@ -14,11 +14,13 @@ setMethodS3("allocateFromCdf", "AromaCellPositionFile", function(static, cdf, pa
   filename <- sprintf("%s.%s", fullname, ext);
   allocate(static, filename=filename, path=path, nbrOfCells=nbrOfCells, 
       platform=platform, chipType=chipType, ...);
-})
+}, static=TRUE)
 
 
 ############################################################################
 # HISTORY:
+# 2009-02-22 [HB]
+# o Forgot to make allocateFromCdf() of AromaCellPositionFile static.
 # 2009-02-16 [HB]
 # Removed argument 'validate' from byChipType() of AromaCellPositionFile.
 # 2009-02-10 [HB]

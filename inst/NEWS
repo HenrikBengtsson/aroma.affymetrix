@@ -2,9 +2,12 @@ Package: aroma.affymetrix
 =========================
 
 Version: 1.4.9 [2010-02-22]
-o Added AromaCellCpgFile.AFFX.R, fixed docs
-o Added test script for AromaCellCpgFile and AromaCellPostionFile
-  objects
+o Added AromaCellCpgFile.
+o Added test script for AromaCellCpgFile and AromaCellPostionFile.
+o BUG FIX: The settings in 'aromaSettings' loaded by aroma.core was
+  overridden by defaults settings of aroma.affymetrix, even if they 
+  already existed.
+
 
 Version: 1.4.8 [2010-02-21]
 o ROBUSTNESS: Now updateUnits() of ChipEffectSet updates the files in

@@ -122,6 +122,6 @@ verbose && print(verbose, sessionInfo());
 # HISTORY:
 # 2010-02-05 [HB]
 # o Harmonized with the corresponding RMA test script.
- 2009-05-17 [HB]
+# 2009-05-17 [HB]
 # o Adopted from Mark Robinson's test script.
 ###########################################################################

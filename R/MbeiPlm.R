@@ -6,7 +6,8 @@
 # \description{
 #  @classhierarchy
 #
-#  This class represents the multiplicative model in Li \& Wong (2001).
+#  This class represents the \emph{model-based expression indexes} (MBEI) 
+#  multiplicative model in Li \& Wong (2001).
 # }
 # 
 # @synopsis
@@ -20,7 +21,7 @@
 # }
 #
 # \section{Model}{
-#   For a single unit group, the multiplicative model of dChip is:
+#   For a single unit group, the multiplicative model is:
 #
 #    \deqn{y_{ik} = \theta_i \phi_k + \varepsilon_{ik}}
 #
@@ -32,6 +33,10 @@
 # }
 #
 # @author
+#
+# \seealso{
+#   Internally @see "affy::fit.li.wong" is used.
+# }
 #
 # \references{
 #   Li, C. and Wong, W.H. (2001), Genome Biology 2, 1-11.\cr

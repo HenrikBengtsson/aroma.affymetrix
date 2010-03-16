@@ -240,7 +240,7 @@ setMethodS3("findByChipType", "AffymetrixCdfFile", function(static, chipType, ta
   fullname <- paste(c(chipType, tags), collapse=",");
 
   # Extract the name and the tags
-  parts <- unlist(strsplit(fullname, split=","));
+  parts <- unlist(strsplit(fullname, split=",", fixed=TRUE));
   chipType <- parts[1];
   tags <- parts[-1];
 
@@ -328,7 +328,7 @@ setMethodS3("getChipType", "AffymetrixCdfFile", function(this, fullname=TRUE, ..
 
       # Keep anything after the data-set name (and the separator).
       tags <- substring(chipType, nchar(name)+2);
-      tags <- unlist(strsplit(tags, split=","));
+      tags <- unlist(strsplit(tags, split=",", fixed=TRUE));
       if (length(tags) == 0)
         tags <- NULL;
 

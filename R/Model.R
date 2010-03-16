@@ -292,7 +292,7 @@ setMethodS3("getTags", "Model", function(this, collapse=NULL, ...) {
   tags <- this$.tags;
 
   # In case this$.tags is not already split
-  tags <- strsplit(tags, split=",", fixed=TRUE)[[1]];
+  tags <- Arguments$getTags(tags, collapse=NULL);
 
   # Expand asterisk tags
   if (any(tags == "*")) {
@@ -350,9 +350,7 @@ setMethodS3("getTags", "Model", function(this, collapse=NULL, ...) {
 setMethodS3("setTags", "Model", function(this, tags=NULL, ...) {
   # Argument 'tags':
   if (!is.null(tags)) {
-    tags <- Arguments$getCharacters(tags);
-    tags <- trim(unlist(strsplit(tags, split=",")));
-    tags <- tags[nchar(tags) > 0];
+    tags <- Arguments$getTags(tags, collapse=NULL);
   }
   
   this$.tags <- tags;

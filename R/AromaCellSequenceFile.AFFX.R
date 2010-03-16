@@ -7,13 +7,14 @@ setMethodS3("allocateFromCdf", "AromaCellSequenceFile", function(static, cdf, pa
   cdf <- Arguments$getInstanceOf(cdf, "AffymetrixCdfFile");
 
   # Argument 'tags':
-  tags <- strsplit(tags, split=",", fixed=TRUE)[[1]];
+  tags <- Arguments$getTags(tags, collapse=NULL);
 
   # Generate filename: <chipType>(,tags)*.<ext>
   chipType <- getChipType(cdf);
 
   # Move chip type tags to the other tags, if asterisk is used.
-  parts <- strsplit(chipType, split=",", fixed=TRUE)[[1]];
+  parts <- strsplit(chipType, split=",", fixed=TRUE);
+  parts <- unlist(parts, use.names=FALSE);
   tags[tags == "*"] <- paste(parts[-1], collapse=",");
   chipType <- parts[1];
 
@@ -386,6 +387,9 @@ setMethodS3("inferMmFromPm", "AromaCellSequenceFile", function(this, cdf, units=
 
 ############################################################################
 # HISTORY:
+# 2010-03-14 [HB]
+# o BUG FIX: allocateFromCdf() of AromaCellPositionFile would drop all
+#   but the first tag.
 # 2009-09-27
 # o Added argument 'keepSequenceLengths' to importFromAffymetrixProbeTabFile() 
 #   for AromaCellSequenceFile so that one can drop sequences of incorrect

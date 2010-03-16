@@ -31,8 +31,7 @@ setConstructorS3("QualityAssessmentModel", function(plm=NULL, tags="*", ...) {
 
   # Argument 'tags':
   if (!is.null(tags)) {
-    tags <- Arguments$getCharacters(tags);
-    tags <- trim(unlist(strsplit(tags, split=",")));
+    tags <- Arguments$getTags(tags, collapse=NULL);
   }
 
   extend(Object(), "QualityAssessmentModel",

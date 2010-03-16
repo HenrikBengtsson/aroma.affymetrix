@@ -1,6 +1,11 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 1.5.1 [2010-03-14]
+o BUG FIX: allocateFromCdf() of AromaCellCpgFile, AromaCellPositionFile,
+  and AromaCellMatchScoreFile would drop all but the first tag.
+
+
 Version: 1.5.0 [2010-02-22]
 o Submitted to CRAN.  No changes since v1.4.9. 
 o Package passes R CMD check on R v2.10.1 patch and R v2.11.0 devel.
@@ -11,7 +16,7 @@ Version: 1.4.9 [2010-02-22]
 o Added AromaCellCpgFile.
 o Added test script for AromaCellCpgFile and AromaCellPostionFile.
 o BUG FIX: The settings in 'aromaSettings' loaded by aroma.core was
-  overridden by defaults settings of aroma.affymetrix, even if they 
+  overridden by default settings of aroma.affymetrix, even if they 
   already existed.
 
 

@@ -94,7 +94,7 @@ setMethodS3("getTags", "FirmaModel", function(this, collapse=NULL, ...) {
   tags <- this$.tags;
 
   # In case this$.tags is not already split
-  tags <- strsplit(tags, split=",", fixed=TRUE)[[1]];
+  tags <- Arguments$getTags(tags, collapse=NULL);
 
   # Expand asterisk tags
   if (any(tags == "*")) {

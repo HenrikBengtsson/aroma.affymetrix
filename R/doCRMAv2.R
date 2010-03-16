@@ -97,8 +97,8 @@ setMethodS3("doCRMAv2", "AffymetrixCelSet", function(csR, combineAlleles=TRUE, a
   gc <- gc();
   
   verbose && enter(verbose, "CRMAv2/Export to technology-independent data files");
-  dsN <- exportTotalAndFracB(cesN, verbose=verbose);
-  verbose && print(verbose, dsN);
+  dsNList <- exportTotalAndFracB(cesN, verbose=verbose);
+  verbose && print(verbose, dsNList);
   verbose && exit(verbose);
 
   # Clean up
@@ -107,7 +107,7 @@ setMethodS3("doCRMAv2", "AffymetrixCelSet", function(csR, combineAlleles=TRUE, a
 
   verbose && exit(verbose);
 
-  dsN;
+  dsNList;
 }) # doCRMAv2()
 
 
@@ -130,7 +130,7 @@ setMethodS3("doCRMAv2", "character", function(dataSet, ..., verbose=FALSE) {
   verbose && print(verbose, csR);
   verbose && exit(verbose);
 
-  dsN <- doCRMAv2(csR, ..., verbose=verbose);
+  dsNList <- doCRMAv2(csR, ..., verbose=verbose);
 
   # Clean up
   rm(csR);
@@ -138,7 +138,7 @@ setMethodS3("doCRMAv2", "character", function(dataSet, ..., verbose=FALSE) {
 
   verbose && exit(verbose);
 
-  dsN;
+  dsNList;
 })
 
 

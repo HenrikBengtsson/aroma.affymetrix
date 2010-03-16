@@ -27,9 +27,7 @@ setConstructorS3("GenericReporter", function(tags="*", ...) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'tags':
   if (!is.null(tags)) {
-    tags <- Arguments$getCharacters(tags);
-    tags <- trim(unlist(strsplit(tags, split=",")));
-    tags <- tags[nchar(tags) > 0];
+    tags <- Arguments$getTags(tags, collapse=NULL);
   }
  
 
@@ -207,7 +205,7 @@ setMethodS3("getTags", "GenericReporter", function(this, collapse=NULL, ...) {
   tags <- c(tags, this$.tags);
 
   # In case this$.tags is not already split
-  tags <- strsplit(tags, split=",", fixed=TRUE)[[1]];
+  tags <- Arguments$getTags(tags, collapse=NULL);
 
   tags <- locallyUnique(tags);
 

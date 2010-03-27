@@ -1,6 +1,11 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 1.5.2 [2010-03-26]
+o Added argument 'defValue' to createFrom() for AffymetrixCelFile
+  so that one can specify the default value for cleared elements.
+
+
 Version: 1.5.1 [2010-03-14]
 o BUG FIX: allocateFromCdf() of AromaCellCpgFile, AromaCellPositionFile,
   and AromaCellMatchScoreFile would drop all but the first tag.

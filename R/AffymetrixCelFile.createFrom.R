@@ -19,6 +19,7 @@
 #     scratch from the template file.}
 #  \item{clear}{If @TRUE, the fields of the CEL file are cleared (zeroed),
 #     otherwise they contain the same information as the source file.}
+#  \item{defValue}{A @numeric value that cleared/allocated elements have.}
 #  \item{...}{Not used.}
 #  \item{verbose}{See "R.utils::Verbose".}
 # }
@@ -36,7 +37,7 @@
 # @keyword IO
 # @keyword programming
 #*/###########################################################################
-setMethodS3("createFrom", "AffymetrixCelFile", function(this, filename, path=NULL, overwrite=FALSE, skip=!overwrite, version=c("4", "3"), methods=c("copy", "create"), clear=FALSE, ..., verbose=FALSE) {
+setMethodS3("createFrom", "AffymetrixCelFile", function(this, filename, path=NULL, overwrite=FALSE, skip=!overwrite, version=c("4", "3"), methods=c("copy", "create"), clear=FALSE, defValue=0, ..., verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -60,6 +61,9 @@ setMethodS3("createFrom", "AffymetrixCelFile", function(this, filename, path=NUL
     throw("Unknown value of argument 'methods': ", 
                                               paste(methods, collapse=", "));
   }
+
+  # Argument 'defValue':
+  defValue <- Arguments$getNumeric(defValue);
 
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
@@ -122,7 +126,8 @@ setMethodS3("createFrom", "AffymetrixCelFile", function(this, filename, path=NUL
     
       # 2. Update the temporary file
       if (clear) {
-        clearData(res, ..., .forSure=TRUE, verbose=less(verbose));
+        clearData(res, ..., value=defValue, .forSure=TRUE, 
+                                              verbose=less(verbose));
       }
 
       # 3. Rename the temporary file
@@ -172,7 +177,14 @@ setMethodS3("createFrom", "AffymetrixCelFile", function(this, filename, path=NUL
       verbose && exit(verbose);
 
       # 2. Update the temporary file
-      if (!clear) {
+      if (clear) {
+        if (defValue != 0) {
+          res <- newInstance(this, tmpPathname);
+          clearData(res, ..., value=defValue, .forSure=TRUE, 
+                                                verbose=less(verbose));
+          rm(res);
+        }
+      } else {
         verbose && enter(verbose, "Copying CEL data");
         cells <- seq(length=nbrOfCells(this));
         lapplyInChunks(cells, function(cells) {
@@ -237,6 +249,9 @@ setMethodS3("createFrom", "AffymetrixCelFile", function(this, filename, path=NUL
 
 ############################################################################
 # HISTORY:
+# 2010-03-26
+# o Added argument 'defValue' to createFrom() for AffymetrixCelFile
+#   so that one can specify the default value for cleared elements.
 # 2008-12-12
 # o createFrom() for AffymetrixCelFile had verbose=TRUE as default.
 # 2007-09-16

@@ -20,7 +20,7 @@
  Creates a CEL file using another as a template.
 }
 
-\usage{\method{createFrom}{AffymetrixCelFile}(this, filename, path=NULL, overwrite=FALSE, skip=!overwrite, version=c("4", "3"), methods=c("copy", "create"), clear=FALSE, ..., verbose=FALSE)}
+\usage{\method{createFrom}{AffymetrixCelFile}(this, filename, path=NULL, overwrite=FALSE, skip=!overwrite, version=c("4", "3"), methods=c("copy", "create"), clear=FALSE, defValue=0, ..., verbose=FALSE)}
 
 \arguments{
  \item{filename, path}{The filename and path of to the CEL
@@ -31,6 +31,7 @@
     scratch from the template file.}
  \item{clear}{If \code{\link[base:logical]{TRUE}}, the fields of the CEL file are cleared (zeroed),
     otherwise they contain the same information as the source file.}
+ \item{defValue}{A \code{\link[base]{numeric}} value that cleared/allocated elements have.}
  \item{...}{Not used.}
  \item{verbose}{See "R.utils::Verbose".}
 }

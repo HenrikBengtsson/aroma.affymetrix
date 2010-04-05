@@ -10,7 +10,7 @@ Version: 1.5.3 [2010-03-31]
 o Updated getProbeSequenceData() for AffymetrixCdfFile to recognize 
   more NetAffx probe-tab files, e.g. MoEx-1_0-st-v1.probe.tab.
 o KNOWN ISSUES: getProbeSequenceData() for AffymetrixCdfFile requires
-  that the unit names in the probe-tab file matches the ones in the
+  that the unit names in the probe-tab file match the ones in the
   CDF.  This may cause issues if custom CDFs with custom unit names
   are used.  This is another reason why we should move away from 
   probe-tab files and instead use aroma binary cell sequence files.

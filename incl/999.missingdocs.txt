@@ -713,3 +713,4 @@
   writeWig.CnChipEffectSet
 boxplot.stats doCRMAv2 doCRMAv2.AffymetrixCelSet doCRMAv2.character
 allocateFromCdf.AromaCellCpgFile
+doCRMAv1 doCRMAv1.AffymetrixCelSet doCRMAv1.character

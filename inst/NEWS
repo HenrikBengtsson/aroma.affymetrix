@@ -1,6 +1,11 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 1.5.4 [2010-04-05]
+o Added an internal version of doCRMAv1().
+o Added argument 'plm' to existing doCRMAv2().
+
+
 Version: 1.5.3 [2010-03-31]
 o Updated getProbeSequenceData() for AffymetrixCdfFile to recognize 
   more NetAffx probe-tab files, e.g. MoEx-1_0-st-v1.probe.tab.

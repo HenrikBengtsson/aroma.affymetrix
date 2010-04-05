@@ -1,4 +1,4 @@
-setMethodS3("doCRMAv2", "AffymetrixCelSet", function(csR, combineAlleles=TRUE, arrays=NULL, ..., ram=NULL, verbose=FALSE) {
+setMethodS3("doCRMAv2", "AffymetrixCelSet", function(csR, combineAlleles=TRUE, arrays=NULL, ..., plm=c("AvgCnPlm", "RmaCnPlm"), ram=NULL, verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
@@ -11,9 +11,15 @@ setMethodS3("doCRMAv2", "AffymetrixCelSet", function(csR, combineAlleles=TRUE, a
   # Argument 'combineAlleles':
   combineAlleles <- Arguments$getLogical(combineAlleles);
 
+  # Argument 'plm':
+  plm <- match.arg(plm);
+
   # Argument 'arrays':
   if (!is.null(arrays)) {
     arrays <- Arguments$getIndices(arrays, max=nbrOfArrays(csR));
+    if (plm == "RmaCnPlm") {
+      throw(sprintf("Argument 'arrays' must not be specified when argument 'plm' is \"%s\".", plm));
+    }
   }
 
   # Argument 'verbose':
@@ -65,7 +71,11 @@ setMethodS3("doCRMAv2", "AffymetrixCelSet", function(csR, combineAlleles=TRUE, a
   verbose && print(verbose, gc);
   
   verbose && enter(verbose, "CRMAv2/Probe summarization");
-  plm <- AvgCnPlm(csN, mergeStrands=TRUE, combineAlleles=combineAlleles);
+  cnPlm <- AvgCnPlm;
+  if (plm == "RmaCnPlm") {
+    cnPlm <- RmaCnPlm;
+  }
+  plm <- cnPlm(csN, mergeStrands=TRUE, combineAlleles=combineAlleles);
   verbose && print(verbose, plm);
   if (length(findUnitsTodo(plm)) > 0) {
     # Fit CN probes quickly (~5-10s/array + some overhead)
@@ -144,6 +154,8 @@ setMethodS3("doCRMAv2", "character", function(dataSet, ..., verbose=FALSE) {
 
 ############################################################################
 # HISTORY:
+# 2010-04-04
+# o Added argument 'plm' to doCRMAv2().
 # 2010-02-15
 # o MEMORY OPTIMIZATION: Now doCRMAv2() removes as much as possible.
 # 2010-02-13

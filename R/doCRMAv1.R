@@ -42,7 +42,7 @@ setMethodS3("doCRMAv1", "AffymetrixCelSet", function(csR, combineAlleles=TRUE, a
   }
 
   verbose && enter(verbose, "CRMAv1/Allelic crosstalk calibration");
-  acc <- AllelicCrosstalkCalibration(csR, model="CRMAv1");
+  acc <- AllelicCrosstalkCalibration(csR, model="CRMA");
   verbose && print(verbose, acc);
   csC <- process(acc, verbose=verbose);
   verbose && print(verbose, csC);

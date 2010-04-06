@@ -1,7 +1,7 @@
 Package: aroma.affymetrix
 =========================
 
-Version: 1.5.4 [2010-04-05]
+Version: 1.5.4 [2010-04-06]
 o Added an internal version of doCRMAv1().
 o Added argument 'plm' to existing doCRMAv2().
 

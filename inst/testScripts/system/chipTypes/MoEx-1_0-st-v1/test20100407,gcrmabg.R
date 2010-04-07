@@ -1,0 +1,31 @@
+if (interactive()) savehistory();
+library("aroma.affymetrix");
+
+verbose <- Arguments$getVerbose(-10, timestamp=TRUE);
+
+
+dataSet <- "Affymetrix-Tissues";
+chipType <- "MoEx-1_0-st-v1";
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+# Setup data set
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+cdf <- AffymetrixCdfFile$byChipType(chipType, tags="coreR1,A20080718,MR");
+print(cdf);
+csR <- AffymetrixCelSet$byName(dataSet, chipType=chipType);
+print(csR);
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+# gcRMA-style background correction
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+# Currently, you must use the standard CDF file.
+cdf <- getCdf(csR);
+cdfS <- AffymetrixCdfFile$byChipType(getChipType(cdf, fullname=FALSE));
+setCdf(csR, cdfS);
+bc <- GcRmaBackgroundCorrection(csR, type="affinities");
+print(bc);
+csB <- process(bc, verbose=verbose);
+print(csB);
+# Now, use the custom CDF in what follows
+setCdf(csB, cdf);
+print(csB);

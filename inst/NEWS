@@ -1,6 +1,11 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 1.5.5 [2010-04-07]
+o ROBUSTNESS: Added a test script for gcRMA background correction
+  on the MoEx-1_0-st-v1 chip type.
+
+
 Version: 1.5.4 [2010-04-06]
 o Added an internal version of doCRMAv1().
 o Added argument 'plm' to existing doCRMAv2().

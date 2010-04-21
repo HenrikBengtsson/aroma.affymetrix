@@ -2,7 +2,9 @@ Package: aroma.affymetrix
 =========================
 
 Version: 1.5.7 [2010-04-21]
-Added groupUnitsByDimension() to AffymetrixCdfFile.
+o Added groupUnitsByDimension() to AffymetrixCdfFile.
+o BUG FIX: doCRMAv1() for AffymetrixCelSet used undefined 'csN' 
+  internally instead of 'csC'.
 
 
 Version: 1.5.6 [2010-04-15]

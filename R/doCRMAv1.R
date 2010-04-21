@@ -54,7 +54,7 @@ setMethodS3("doCRMAv1", "AffymetrixCelSet", function(csR, combineAlleles=TRUE, a
   verbose && print(verbose, gc);
 
   verbose && enter(verbose, "CRMAv1/Probe summarization");
-  plm <- RmaCnPlm(csN, mergeStrands=TRUE, combineAlleles=combineAlleles);
+  plm <- RmaCnPlm(csC, mergeStrands=TRUE, combineAlleles=combineAlleles);
   verbose && print(verbose, plm);
   if (length(findUnitsTodo(plm)) > 0) {
     # Fit CN probes quickly (~5-10s/array + some overhead)
@@ -71,7 +71,7 @@ setMethodS3("doCRMAv1", "AffymetrixCelSet", function(csR, combineAlleles=TRUE, a
   verbose && exit(verbose);
 
   # Clean up
-  rm(plm, csN);
+  rm(plm, csC);
   gc <- gc();
   
   verbose && enter(verbose, "CRMAv1/PCR fragment-length normalization");
@@ -133,6 +133,9 @@ setMethodS3("doCRMAv1", "character", function(dataSet, ..., verbose=FALSE) {
 
 ############################################################################
 # HISTORY:
+# 2010-04-21
+# o BUG FIX: doCRMAv1() for AffymetrixCelSet used undefined 'csN' internally
+#   instead of 'csC'.
 # 2010-04-04
 # o Created from doCRMAv2.R.
 # o (Re)created.

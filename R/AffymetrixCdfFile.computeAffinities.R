@@ -189,15 +189,19 @@ setMethodS3("computeAffinities", "AffymetrixCdfFile", function(this, paths=NULL,
     sequences <- sequenceInfo$sequence;
     rm(sequenceInfo);
 
+    pb <- NULL;
     if (verbose) {
       cat(verbose, "Progress (counting to 100): ");
-      pb <- ProgressBar(stepLength=100/(nbrOfSequences/1000));
-      reset(pb);
+      if (isVisible(verbose)) {
+        pb <- ProgressBar(stepLength=100/(nbrOfSequences/1000));
+        reset(pb);
+      }
     }
   
     for (ii in seq(along=apm)) {
-      if (verbose && ii %% 1000 == 0)
+      if (!is.null(pb) && (ii %% 1000 == 0)) {
         increase(pb);
+      }
 
       # Get a 4x25 matrix with rows A, C, G, and T.
       charMtrx <- getSeqMatrix(sequences[ii]);
@@ -223,7 +227,10 @@ setMethodS3("computeAffinities", "AffymetrixCdfFile", function(this, paths=NULL,
       }
     } # for (ii in ...)
     rm(charMtrx, A); # Not needed anymore
-    reset(pb);
+
+    if (!is.null(pb)) {
+      reset(pb);
+    }
     verbose && cat(verbose, "");
 
     # create a vector to hold affinities and assign values to the 
@@ -253,15 +260,19 @@ setMethodS3("computeAffinities", "AffymetrixCdfFile", function(this, paths=NULL,
       warning("Detected ", nbrOfNon25mers, " sequence that are not of length 25 nucleotides. For those probes, the affinities are defined to be NA.");
     }
 
+    pb <- NULL;
     if (verbose) {
       cat(verbose, "Progress (counting to 100): ");
-      pb <- ProgressBar(stepLength=100/(length(idxs)/1000));
-      reset(pb);
+      if (isVisible(verbose)) {
+        pb <- ProgressBar(stepLength=100/(length(idxs)/1000));
+        reset(pb);
+      }
     }
   
     for (ii in seq(along=idxs)) {
-      if (verbose && ii %% 1000 == 0)
+      if (!is.null(pb) && (ii %% 1000 == 0)) {
         increase(pb);
+      }
       idx <- idxs[ii];
       # Get a 4x25 matrix with rows A, C, G, and T.
       charMtrx <- getSeqMatrix(sequences[idx]);
@@ -272,7 +283,10 @@ setMethodS3("computeAffinities", "AffymetrixCdfFile", function(this, paths=NULL,
                  charMtrx[3,,drop=TRUE] %*% affinity.basis.matrix);
       apm[idx] <- A %*% affinity.spline.coefs;
     } # for (ii in ...)
-    reset(pb);
+
+    if (!is.null(pb)) {
+      reset(pb);
+    }
 
     affinities[indexAll] <- apm;
 
@@ -295,6 +309,10 @@ setMethodS3("computeAffinities", "AffymetrixCdfFile", function(this, paths=NULL,
 
 ############################################################################
 # HISTORY:
+# 2010-04-15
+# o BUG FIX: computeAffinities(..., verbose=FALSE) of AffymetrixCdfFile
+#   would give throw "Error in reset(pb) : object 'pb' not found". 
+#   Thanks Stephen ? at Mnemosyne BioSciences, Finland.
 # 2009-05-09 [HB]
 # o CLEAN UP: computeAffinities() of AffymetrixCdfFile no longer need to
 #   load 'gcrma'.  However, it still needs to load a small set of 

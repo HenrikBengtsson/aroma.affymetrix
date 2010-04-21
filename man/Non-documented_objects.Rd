@@ -1413,6 +1413,7 @@
 \alias{doCRMAv1}
 \alias{doCRMAv1.AffymetrixCelSet}
 \alias{doCRMAv1.character}
+\alias{groupUnitsByDimension}
 
 \description{
   This page contains aliases for all "non-documented" objects that

@@ -1,6 +1,16 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 1.5.7 [2010-04-21]
+Added groupUnitsByDimension() to AffymetrixCdfFile.
+
+
+Version: 1.5.6 [2010-04-15]
+o BUG FIX: computeAffinities(..., verbose=FALSE) of AffymetrixCdfFile
+  would give throw "Error in reset(pb) : object 'pb' not found". 
+  Thanks Stephen ? at Mnemosyne BioSciences, Finland, for this report.
+
+
 Version: 1.5.5 [2010-04-07]
 o ROBUSTNESS: Added a test script for gcRMA background correction
   on the MoEx-1_0-st-v1 chip type.

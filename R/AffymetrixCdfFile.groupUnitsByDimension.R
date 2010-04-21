@@ -58,7 +58,7 @@ setMethodS3("groupUnitsByDimension", "AffymetrixCdfFile", function(this, units=N
   verbose && str(verbose, allUnits);
 
   # Identify SNPs with equal number of cells
-  sizes <- nbrOfCellsPerUnitGroup(this, units=units);
+  sizes <- nbrOfCellsPerUnitGroup(this, units=units, verbose=less(verbose,1));
 
   # Identify sets of units of equal dimensions
   nbrOfGroupsPerUnit <- sapply(sizes, FUN=length);
@@ -114,7 +114,7 @@ setMethodS3("groupUnitsByDimension", "AffymetrixCdfFile", function(this, units=N
       verbose && enter(verbose, sprintf("Dimension %d of %d", kk, nrow(uDimsUU)));
       verbose && cat(verbose, "Number of cells per group: ", paste(dimKK, collapse=", "));
 
-      keep <- rep(TRUE, times=length(sizesUU));
+      keep <- rep(TRUE, times=length(unitsUU));
       for (cc in seq(length=ncol(uDimsUU))) {
         keep <- keep & (dimKK[cc] == sizesUU[,cc, drop=TRUE]);
       }

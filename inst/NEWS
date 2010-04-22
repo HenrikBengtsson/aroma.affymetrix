@@ -1,8 +1,10 @@
 Package: aroma.affymetrix
 =========================
 
-Version: 1.5.7 [2010-04-21]
+Version: 1.5.7 [2010-04-22]
 o Added groupUnitsByDimension() to AffymetrixCdfFile.
+o ROBUSTNESS: Added redundancy tests for doCRMAv2() and 
+  writeDataFrame().
 o BUG FIX: doCRMAv1() for AffymetrixCelSet used undefined 'csN' 
   internally instead of 'csC'.
 

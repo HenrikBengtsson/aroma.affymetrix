@@ -1,6 +1,19 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 1.5.8 [2010-05-06]
+o Now CrlmmModel(..., recalibrate=TRUE) is the default.
+o Now justSNPRMA(..., returnESet=TRUE) for AffymetrixCelSet 
+  returns an AlleleSet due to updates in oligo v1.12.0.
+o Added extractAlleleSet() to SnpChipEffectSet.  Replaces 
+  extractSnpQSet(), because the SnpQSet class was dropped
+  in oligo v1.12.0 and replaced by the AlleleSet class.
+o BUG FIX: fit() of CrlmmModel would not work with oligo v1.12.0 
+  and newer.
+o BUG FIX: getCallSet() and getCrlmmParametersSet() of CrlmmModel 
+  used non-existing verbose object 'log' instead of 'verbose'.
+
+
 Version: 1.5.7 [2010-04-22]
 o Added groupUnitsByDimension() to AffymetrixCdfFile.
 o ROBUSTNESS: Added redundancy tests for doCRMAv2() and 

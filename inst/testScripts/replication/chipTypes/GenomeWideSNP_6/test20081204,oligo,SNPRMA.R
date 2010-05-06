@@ -9,7 +9,7 @@
 #
 # Author: Henrik Bengtsson
 # Created: 2008-12-04
-# Last modified: 2008-12-04
+# Last modified: 2010-05-06
 #
 # Data set:
 #  rawData/
@@ -29,15 +29,30 @@ log <- Arguments$getVerbose(-8, timestamp=TRUE);
 chipType <- "GenomeWideSNP_6";
 
 normalizeToHapmap <- TRUE;
+normalizeToHapmap <- FALSE;
+
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Local functions
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-pkgName <- "oligo";
-pkgVer <- packageDescription(pkgName)$Version;
-if (compareVersion(pkgVer, "1.8.0") < 0) {
+pkg <- Package("oligo");
+if (isOlderThan(pkg, "1.8.0")) {
+  # oligo v1.7.x and older
   thetaA <- oligo:::thetaA;
   thetaB <- oligo:::thetaB;
+} else if (isOlderThan(pkg, "1.12.0")) {
+  # oligo v1.11.x and older
+  # Nothing to do
+} else {
+  # oligo v1.12.0 and newer
+  thetaA <- function(eSet) {
+    ad <- assayData(eSet);
+    ad$senseAlleleA;
+  }
+  thetaB <- function(eSet) {
+    ad <- assayData(eSet);
+    ad$senseAlleleB;
+  }
 }
 
 
@@ -51,6 +66,7 @@ print(csR);
 if (normalizeToHapmap) {
   # Load target from PD package
   pdPkgName <- oligo::cleanPlatformName(chipType);
+  stopifnot(isPackageInstalled(pdPkgName));
   path <- system.file("extdata", package=pdPkgName);
   filename <- sprintf("%sRef.rda", pdPkgName);
   pathname <- Arguments$getReadablePathname(filename, path=path, 
@@ -62,7 +78,7 @@ if (normalizeToHapmap) {
   refTag <- NULL;
 }
 
-# justSNPRMA() operates only on SNP* units (CN units ignored).
+# justSNPRMA() operates only on *SNP* units (CN units ignored).
 # For this reason we here *estimate* the normalization function based
 # on these units only, but for convenience we will apply it to all
 # units including CN units.

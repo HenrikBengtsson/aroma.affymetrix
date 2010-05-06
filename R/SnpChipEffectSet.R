@@ -189,8 +189,6 @@ setMethodS3("inferParameters", "SnpChipEffectSet", function(this, ..., verbose=F
 # o Added inferParameters().
 # 2006-11-22
 # o Now getAverageFile() finally sets 'mergeStrands'.
-# 2006-10-02
-# o Added extractSnpQSet() so that we can run crlmm().
 # 2006-09-11
 # o Created.
 ############################################################################

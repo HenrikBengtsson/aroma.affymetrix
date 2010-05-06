@@ -61,7 +61,7 @@ setMethodS3("extractSnpCnvQSet", "SnpChipEffectSet", function(this, units=NULL, 
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Allocate and populate SnpQSet
+  # Allocate and populate SnpCnvQSet
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   verbose && enter(verbose, "Allocate and populate SnpCnvQSet");
   res <- new("SnpCnvQSet", 

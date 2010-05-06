@@ -9,7 +9,7 @@
 #
 # Author: Henrik Bengtsson
 # Created: 2008-12-04
-# Last modified: 2008-12-05
+# Last modified: 2010-05-06
 #
 # Data set:
 #  rawData/
@@ -27,19 +27,31 @@ log <- Arguments$getVerbose(-8, timestamp=TRUE);
 
 # Local functions
 compareESets <- function(eSet1, eSet2, FUN=NULL, tolerance=1e-4) {
-  if (is.null(FUN)) {
-    fcns <- list(senseThetaA, senseThetaB, 
-                 antisenseThetaA, antisenseThetaB, 
-                 featureNames);
-    for (fcn in fcns) {
-      compareESets(eSet, eSet2, FUN=fcn, tolerance=tolerance);
-    }
+  pkg <- Package("oligo");
+  if (!isOlderThan(pkg, "1.12.0")) {
+    # For oligo v1.12.0 or newer
+    stopifnot(all.equal(featureNames(eSet1), featureNames(eSet2)));
+
+    ad1 <- assayData(eSet1);
+    l1 <- as.list(ad1);
+    ad2 <- assayData(eSet2);
+    l2 <- as.list(ad2);
+    stopifnot(all.equal(l1, l2, tolerance=tolerance));
   } else {
-    stopifnot(all.equal(FUN(eSet), FUN(eSet0), tolerance=tolerance));
+    # For oligo v1.11.x or older
+    if (is.null(FUN)) {
+      fcns <- list(senseThetaA, senseThetaB, 
+                   antisenseThetaA, antisenseThetaB, 
+                   featureNames);
+      for (fcn in fcns) {
+        compareESets(eSet1, eSet2, FUN=fcn, tolerance=tolerance);
+      }
+    } else {
+      stopifnot(all.equal(FUN(eSet1), FUN(eSet2), tolerance=tolerance));
+    }
   }
   TRUE;
 } # compareESets()
-
 
 dataSet <- "HapMap270,500K,CEU,testSet";
 chipType <- "Mapping250K_Nsp";
@@ -68,4 +80,4 @@ print(eSet);
 eSet0 <- justSNPRMA(getPathnames(csR), normalizeToHapmap=normalizeToHapmap, verbose=TRUE);
 print(eSet0);
 
-stopifnot(compareESets(eSet, eSet2));
+stopifnot(compareESets(eSet, eSet0));

@@ -41,7 +41,8 @@ print(csR);
 ces <- justSNPRMA(csR, normalizeToHapmap=TRUE, returnESet=FALSE, verbose=log);
 print(ces);
 
-crlmm <- CrlmmModel(ces, tags="*,oligo");
+recalibrate <- TRUE;
+crlmm <- CrlmmModel(ces, tags="*,oligo", recalibrate=recalibrate);
 print(crlmm);
 
 units <- fit(crlmm, ram="oligo", verbose=log);
@@ -59,7 +60,7 @@ path <- file.path("oligoData", getFullName(csR),
 path <- Arguments$getWritablePathname(path);
 if (!isDirectory(path)) {
   mkdirs(getParent(path));
-  oligo:::justCRLMMv2(getPathnames(csR), tmpdir=path, recalibrate=FALSE, balance=1.5, verbose=TRUE);
+  oligo:::justCRLMMv2(getPathnames(csR), tmpdir=path, recalibrate=recalibrate, balance=1.5, verbose=TRUE);
 }
 
 

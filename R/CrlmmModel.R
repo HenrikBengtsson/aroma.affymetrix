@@ -1,4 +1,4 @@
-setConstructorS3("CrlmmModel", function(dataSet=NULL, balance=1.5, minLLRforCalls=c(5, 1, 5), recalibrate=FALSE, flavor="v2", ...) {
+setConstructorS3("CrlmmModel", function(dataSet=NULL, balance=1.5, minLLRforCalls=c(5, 1, 5), recalibrate=TRUE, flavor="v2", ...) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -124,7 +124,7 @@ setMethodS3("getCallSet", "CrlmmModel", function(this, ..., verbose=FALSE) {
     } else {
       verbose && enter(verbose, "Allocating new file");
      chipTypeF <- getChipType(this);
-      agc <- AromaUnitGenotypeCallFile$allocate(filename=pathname, platform=platform, chipType=chipTypeF, nbrOfRows=nbrOfUnits, verbose=log);
+      agc <- AromaUnitGenotypeCallFile$allocate(filename=pathname, platform=platform, chipType=chipTypeF, nbrOfRows=nbrOfUnits, verbose=verbose);
       verbose && exit(verbose);
     }
     agcList[[kk]] <- agc;
@@ -181,7 +181,7 @@ setMethodS3("getConfidenceScoreSet", "CrlmmModel", function(this, ..., verbose=F
     } else {
       verbose && enter(verbose, "Allocating new file");
      chipTypeF <- getChipType(this);
-      agc <- AromaUnitSignalBinaryFile$allocate(filename=pathname, platform=platform, chipType=chipTypeF, nbrOfRows=nbrOfUnits, verbose=log);
+      agc <- AromaUnitSignalBinaryFile$allocate(filename=pathname, platform=platform, chipType=chipTypeF, nbrOfRows=nbrOfUnits, verbose=verbose);
       naValue <- as.double(NA);
       agc[,1] <- naValue;
       verbose && exit(verbose);
@@ -239,7 +239,7 @@ setMethodS3("getCrlmmParametersSet", "CrlmmModel", function(this, ..., verbose=F
     } else {
       verbose && enter(verbose, "Allocating new file");
       chipTypeF <- getChipType(this);
-      atb <- CrlmmParametersFile$allocate(filename=pathname, platform=platform, chipType=chipTypeF, nbrOfRows=nbrOfUnits, verbose=log);
+      atb <- CrlmmParametersFile$allocate(filename=pathname, platform=platform, chipType=chipTypeF, nbrOfRows=nbrOfUnits, verbose=verbose);
       verbose && exit(verbose);
     }
     atbList[[kk]] <- atb;
@@ -296,6 +296,43 @@ setMethodS3("findUnitsTodo", "CrlmmModel", function(this, units=NULL, safe=TRUE,
 
 setMethodS3("fit", "CrlmmModel", function(this, units="remaining", force=FALSE, ram=NULL, ..., verbose=FALSE) {
   require("oligo") || throw("Package not loaded: oligo");
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Local functions
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  pkg <- Package("oligo");
+  if (!isOlderThan(Package("oligo"), "1.12.0")) {
+    # For oligo v1.12.0 and newer
+
+    extractESet <- function(..., hasQuartets=TRUE) {
+      eSet <- extractAlleleSet(...);
+      eSet;
+    } # extractESet()
+
+    extractLogRatios <- function(eSet, ...) {
+      ad <- assayData(eSet);
+      M <- ad$senseAlleleA - ad$senseAlleleB;
+      rm(ad);
+      M;
+    } # extractLogRatios()
+  } else {
+    # For oligo v1.11.x and older
+
+    extractESet <- function(..., hasQuartets=TRUE) {
+      if (hasQuartets) {
+        eSet <- extractSnpQSet(...);
+      } else {
+        eSet <- extractSnpCnvQSet(...);
+      }
+      eSet;
+    } # extractESet()
+
+    extractLogRatios <- function(eSet, ...) {
+      M <- oligo:::thetaA(eSet) - oligo:::thetaB(eSet);
+      M;
+    } # extractLogRatios()
+  }
+  
 
   maleIndex <- c();
 
@@ -444,11 +481,8 @@ setMethodS3("fit", "CrlmmModel", function(this, units="remaining", force=FALSE, 
     unitList <- unitList[-1];
 
     verbose && enter(verbose, "Extracting data");
-    if (hasQuartets) {
-      eSet <- extractSnpQSet(ces, units=unitsChunk, sortUnits=FALSE, verbose=verbose);
-    } else {
-      eSet <- extractSnpCnvQSet(ces, units=unitsChunk, sortUnits=FALSE, verbose=verbose);
-    }
+    eSet <- extractESet(ces, units=unitsChunk, sortUnits=FALSE, 
+                             hasQuartets=hasQuartets, verbose=verbose);
     phenoData(eSet) <- phenoData;
     verbose && exit(verbose);
 
@@ -488,19 +522,25 @@ setMethodS3("fit", "CrlmmModel", function(this, units="remaining", force=FALSE, 
       verbose && enter(verbose, "Initial SNP calling");
       verbose && str(verbose, index);
       if (isMappingChipType) {
-        calls[index,] <- oligo:::getInitialAffySnpCalls(correction, index, sqsClass=class(eSet), verbose=as.logical(verbose));
+        # NOTE: Do not specify sqsClass=class(eSet). Instead it should
+        # default to sqsClass="SnpQSet" regardless of the class of 'eSet'.
+        # See oligo:::justCRLMMv3() of oligo v1.12.0. /HB 2010-05-06
+        calls[index,] <- oligo:::getInitialAffySnpCalls(correction, index, verbose=as.logical(verbose));
       } else {
-        throw("Not implemented for GWS");
+        throw("Not implemented for GWS chip types");
       }
       verbose && exit(verbose);
     }
     verbose && exit(verbose);
 
     verbose && enter(verbose, "Estimate genotype regions");
-    if (isMappingChipType) {
-      rparams <- oligo:::getAffySnpGenotypeRegionParams(eSet, calls, correction$fs, subset=index, sqsClass=class(eSet), verbose=as.logical(verbose));
+  if (isMappingChipType) {
+      # NOTE: Do not specify sqsClass=class(eSet). Instead it should
+      # default to sqsClass="SnpQSet" regardless of the class of 'eSet'.
+      # See oligo:::justCRLMMv3() of oligo v1.12.0. /HB 2010-05-06
+      rparams <- oligo:::getAffySnpGenotypeRegionParams(eSet, calls, correction$fs, subset=index, verbose=as.logical(verbose));
     } else {
-      M <- oligo:::thetaA(eSet) - oligo:::thetaB(eSet);
+      M <- extractLogRatios(eSet);
       rparams <- oligo:::getGenotypeRegionParams(M, calls, correction$fs, verbose=as.logical(verbose));
     }
     verbose && exit(verbose);
@@ -532,7 +572,10 @@ setMethodS3("fit", "CrlmmModel", function(this, units="remaining", force=FALSE, 
     rm(params, index);
 
     indexX <- whichVector(is.element(unitNames, names(snpsOnChrX)));
-    calls <- oligo:::getAffySnpCalls(dist, indexX, maleIndex, sqsClass=class(eSet), verbose=as.logical(verbose));
+    # NOTE: Do not specify sqsClass=class(eSet). Instead it should
+    # default to sqsClass="SnpQSet" regardless of the class of 'eSet'.
+    # See oligo:::justCRLMMv3() of oligo v1.12.0. /HB 2010-05-06
+    calls <- oligo:::getAffySnpCalls(dist, indexX, maleIndex, verbose=as.logical(verbose));
     llr <- oligo:::getAffySnpConfidence(dist, calls, indexX, maleIndex, verbose=as.logical(verbose));
     
     if (recalibrate) {
@@ -920,6 +963,12 @@ setMethodS3("calculateConfidenceScores", "CrlmmModel", function(this, ..., force
 
 ############################################################################
 # HISTORY:
+# 2010-05-06
+# o Now CrlmmModel(..., recalibrate=TRUE) is the default.
+# o BUG FIX: fit() of CrlmmModel would not work with oligo v1.12.0 
+#   and newer.
+# o BUG FIX: getCallSet() and getCrlmmParametersSet() of CrlmmModel used
+#   non-existing verbose object 'log' instead of 'verbose'.
 # 2010-01-06
 # o CLEAN UP: No need for assign NAs when allocating new files; this is now
 #   always the default way (in aroma.core v1.4.1). 

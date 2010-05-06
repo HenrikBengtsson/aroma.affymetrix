@@ -170,10 +170,17 @@ setMethodS3("justSNPRMA", "AffymetrixCelSet", function(this, ..., normalizeToHap
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (returnESet) {
     verbose && enter(verbose, "Extracting eSet");
-    if (hasCNs) {
-      eSet <- extractSnpCnvQSet(ces, verbose=log);
+    pkg <- Package("oligo");
+    if (!isOlderThan(Package("oligo"), "1.12.0")) {
+      # For oligo v1.12.0 and newer
+      eSet <- extractAlleleSet(ces, verbose=log);
     } else {
-      eSet <- extractSnpQSet(ces, verbose=log);
+      # For oligo v1.11.x and older
+      if (hasCNs) {
+        eSet <- extractSnpCnvQSet(ces, verbose=log);
+      } else {
+        eSet <- extractSnpQSet(ces, verbose=log);
+      }
     }
     verbose && print(verbose, eSet);
     verbose && exit(verbose);
@@ -190,6 +197,9 @@ setMethodS3("justSNPRMA", "AffymetrixCelSet", function(this, ..., normalizeToHap
 
 ############################################################################
 # HISTORY:
+# 2010-05-06
+# o Now justSNPRMA(..., returnESet=TRUE) for AffymetrixCelSet returns an
+#   AlleleSet due to updates of classes in oligo v1.12.0.
 # 2009-05-10
 # o BUG FIX: In the most recent version of oligo, its justSNPRMA() requires
 #   that oligo is loaded.  Updated justSNPRMA() for character

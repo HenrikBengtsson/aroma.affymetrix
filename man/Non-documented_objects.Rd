@@ -1414,6 +1414,8 @@
 \alias{doCRMAv1.AffymetrixCelSet}
 \alias{doCRMAv1.character}
 \alias{groupUnitsByDimension}
+\alias{extractAlleleSet}
+\alias{extractAlleleSet.SnpChipEffectSet}
 
 \description{
   This page contains aliases for all "non-documented" objects that

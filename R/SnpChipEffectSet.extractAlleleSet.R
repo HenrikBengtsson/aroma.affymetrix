@@ -1,20 +1,20 @@
-setMethodS3("extractSnpQSet", "SnpChipEffectSet", function(this, units=NULL, sortUnits=TRUE, transform=log2, ..., verbose=FALSE) {
+setMethodS3("extractAlleleSet", "SnpChipEffectSet", function(this, units=NULL, sortUnits=TRUE, transform=log2, ..., verbose=FALSE) {
   require("oligo") || throw("Package not loaded: oligo");
 
   # Assert oligo version
   pkg <- Package("oligo");
-  if (!isOlderThan(pkg, "1.12.0")) {
-    throw("extractSnpQSet() requires oligo v1.12.0 or older. Instead use extractAlleleSet(): ", getVersion(pkg));
+  if (isOlderThan(Package("oligo"), "1.12.0")) {
+    throw("extractAlleleSet() requires oligo v1.12.0 or newer: ", getVersion(pkg));
   }
-
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Sanity check
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   chipType <- getChipType(this, fullname=FALSE);
 
+  # TO DO: Relax this test, because it should work. /HB 2010-05-06
   if (regexpr("^GenomeWideSNP_(5|6)$", chipType) != -1) {
-    throw("Cannot extract SnpQSet: Unsupported chip type: ", chipType);
+    throw("Cannot extract AlleleSet: Unsupported chip type: ", chipType);
   }
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -78,7 +78,7 @@ setMethodS3("extractSnpQSet", "SnpChipEffectSet", function(this, units=NULL, sor
   }
 
   # Extract the direction/strand of the first group
-#  dirs <- lapply(dirs, FUN=function(groups) groups[1]);
+  # dirs <- lapply(dirs, FUN=function(groups) groups[1]);
   dirs <- lapply(dirs, FUN=.subset, 1);
   dirs <- unlist(dirs, use.names=FALSE);
 
@@ -92,16 +92,25 @@ setMethodS3("extractSnpQSet", "SnpChipEffectSet", function(this, units=NULL, sor
   rm(idxs);   # Not needed anymore
   verbose && exit(verbose);
 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Transform data
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  if (!is.null(transform)) {
+    verbose && enter(verbose, "Transforming signals");
+    theta <- transform(theta);
+    verbose && str(verbose, theta);
+    verbose && exit(verbose);
+  }
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Allocate and populate SnpQSet
+  # Allocate and populate AlleleSet
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  verbose && enter(verbose, "Allocate and populate SnpQSet");
-  res <- new("SnpQSet", 
-    senseThetaA     = transform(theta[,1,,drop=TRUE]),
-    senseThetaB     = transform(theta[,2,,drop=TRUE]),
-    antisenseThetaA = transform(theta[,3,,drop=TRUE]),
-    antisenseThetaB = transform(theta[,4,,drop=TRUE])
+  verbose && enter(verbose, "Allocate and populate AlleleSet");
+  res <- new("AlleleSet", 
+    antisenseAlleleA = theta[,3,,drop=TRUE],
+    senseAlleleA     = theta[,1,,drop=TRUE],
+    antisenseAlleleB = theta[,4,,drop=TRUE],
+    senseAlleleB     = theta[,2,,drop=TRUE]
   );
 
   # Not needed anymore
@@ -130,7 +139,6 @@ setMethodS3("extractSnpQSet", "SnpChipEffectSet", function(this, units=NULL, sor
 ############################################################################
 # HISTORY:
 # 2010-05-06
-# o extractSnpQSet() now asserts that oligo v1.12.0 or older is installed.
-# 2008-12-05
-# o Created.
+# o extractAlleleSet() now asserts that oligo v1.12.0 or older is installed.
+# o Created from extractSnpQSet().
 ############################################################################

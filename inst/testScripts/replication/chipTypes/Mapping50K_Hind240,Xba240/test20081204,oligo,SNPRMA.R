@@ -9,7 +9,7 @@
 #
 # Author: Henrik Bengtsson
 # Created: 2008-12-04
-# Last modified: 2008-12-04
+# Last modified: 2010-05-06
 #
 # Data set:
 #  rawData/
@@ -92,15 +92,24 @@ rm(units,dirs,idxs);
 eSet <- justSNPRMA(getPathnames(csR), normalizeToHapmap=normalizeToHapmap, verbose=TRUE);
 print(eSet);
 
-
-
 # Extract theta array
 naValue <- as.double(NA);
 theta0 <- array(naValue, dim=c(nrow(eSet), 4, ncol(eSet)));
-theta0[,1,] <- senseThetaA(eSet);
-theta0[,2,] <- senseThetaB(eSet);
-theta0[,3,] <- antisenseThetaA(eSet);
-theta0[,4,] <- antisenseThetaB(eSet);
+if (!isOlderThan(Package("oligo"), "1.12.0")) {
+  # oligo v1.12.0 and newer
+  ad <- assayData(eSet);
+  theta0[,1,] <- ad$senseAlleleA;
+  theta0[,2,] <- ad$senseAlleleB;
+  theta0[,3,] <- ad$antisenseAlleleA;
+  theta0[,4,] <- ad$antisenseAlleleB;
+  rm(ad);
+} else {
+  # oligo v1.11.x and older
+  theta0[,1,] <- senseThetaA(eSet);
+  theta0[,2,] <- senseThetaB(eSet);
+  theta0[,3,] <- antisenseThetaA(eSet);
+  theta0[,4,] <- antisenseThetaB(eSet);
+}
 dimnames(theta0) <- list(NULL, NULL, NULL);
 dimnames(theta0)[[1]] <- featureNames(eSet);
 dimnames(theta0)[[3]] <- getNames(csR);
@@ -117,3 +126,4 @@ tol <- 1e-4;
 res <- all.equal(theta, theta0, tolerance=tol);
 print(res);
 stopifnot(res);
+

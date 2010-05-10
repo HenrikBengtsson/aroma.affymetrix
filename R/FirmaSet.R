@@ -141,39 +141,60 @@ setMethodS3("updateUnits", "FirmaSet", function(this, units=NULL, cdf=NULL, data
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
 
+  verbose && enter(verbose, "Updating ", nbrOfArrays, " FIRMA result files");
+
   # Get the CDF structure for all files
   if (is.null(cdf))
     cdf <- getCellIndices(this, units=units);
 
   # Update each file one by one
-  n <- length(this);
-  verbose && enter(verbose, "Updating ", n, " FIRMA result files");
+  nbrOfArrays <- length(this);
+  verbose && enter(verbose, "Updating ", nbrOfArrays, " FIRMA result files");
+
   names <- getNames(this);
+
+  verbose && enter(verbose, "Making sure the files are updated in lexicographic order");
+  # Reorder such that the file with the "last" name is saved last
+  fullnames <- getFullNames(this);
+  o <- order(fullnames, decreasing=FALSE);
+  arrays <- arrays[o];
+  verbose && str(verbose, arrays);
+  verbose && cat(verbose, "Last array: ", fullnames[arrays[nbrOfArrays]]);
+  rm(fullnames, o);
+  verbose && exit(verbose);
+
   verbose <- less(verbose);
-  for (kk in seq(this)) {
-    verbose && enter(verbose, sprintf("Array #%d of %d: %s", kk, n, names[kk]));    ff <- as.list(this)[[kk]];
+  for (ii in arrays) {
+    verbose && enter(verbose, sprintf("Array #%d of %d: %s", 
+                                       ii, nbrOfArrays, names[ii]));
+    ff <- getFile(this, ii);
 
     verbose <- less(verbose, 50);
     verbose && enter(verbose, "Extracting estimates");  # 3-4s
     dataOne <- base::lapply(data, FUN=base::lapply, function(group) {
-      # theta = group$theta[kk] = ...
-      # stdvs = group$sdTheta[kk] = ...
+      # theta = group$theta[ii] = ...
+      # stdvs = group$sdTheta[ii] = ...
       list(
-        intensities=.subset(.subset2(group, "intensities"), kk),
-        stdvs=.subset(.subset2(group, "stdvs"), kk),
-        pixels=.subset(.subset2(group, "pixels"), kk)
+        intensities=.subset(.subset2(group, "intensities"), ii),
+        stdvs=.subset(.subset2(group, "stdvs"), ii),
+        pixels=.subset(.subset2(group, "pixels"), ii)
       );
     });
     verbose && exit(verbose);
 
     verbose && enter(verbose, "Updating file");  # 6-7s ~98% in encode()
     updateUnits(ff, cdf=cdf, data=dataOne, verbose=less(verbose, 50));
+    rm(dataOne, ff);
     verbose && exit(verbose);
     verbose <- more(verbose, 50);
 
+    gc <- gc();
+    verbose && print(verbose, gc);
+
     verbose && exit(verbose);
-  } # for (kk ...)
+  } # for (ii ...)
   verbose <- more(verbose);
+
   verbose && exit(verbose);
 }, protected=TRUE)
 
@@ -188,6 +209,12 @@ setMethodS3("extractMatrix", "FirmaSet", function (this, ..., field=c("intensiti
 
 ############################################################################
 # HISTORY:
+# 2010-05-08
+# o Now all findUnitsTodo() for data sets checks the data file that comes
+#   last in a lexicographic ordering.  This is now consistent with how
+#   the summarization methods updates the files.  Before it was use to be
+#   the one that is last in the data set.
+# o Now updateUnits() updates the data files in lexicographic order.
 # 2008-05-08
 # o Made fromFiles() protected.
 # 2008-02-22 [HB]

@@ -38,28 +38,36 @@ for (what in c("input", "output")) {
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 plm <- AvgSnpPlm(csC, mergeStrands=TRUE);
 print(plm);
-units <- fit(plm, verbose=log);
-str(units);
+if (length(findUnitsTodo(plm)) > 0) {
+  # Fit CN probes quickly (~5-10s/array + some overhead)
+  units <- fitCnProbes(plm, verbose=log);
+  str(units);
+  # int [1:2377527] 401698 401699 401700 401701 401702 401703 ...
+
+  # Fit remaining units, i.e. SNPs (~5-10min/array)
+  units <- fit(plm, verbose=log);
+  str(units);
+  # int [1:418181] 1 2 3 4 5 6 7 8 9 10 ...
+}
+
 ces <- getChipEffectSet(plm);
 print(ces);
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# Allele summation
+# Export (theta, beta) for all arrays
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-as <- AlleleSummation(ces);
-cesS <- process(as, verbose=log);
-print(cesS);
-
+dsList <- exportTotalAndFracB(ces, verbose=log);
+print(dsList);
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# Segmentation and plotting
+# TCN Segmentation and plotting
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-cns <- CbsModel(cesS);
+cns <- CbsModel(dsList$total);
 print(cns);
 
 ce <- ChromosomeExplorer(cns);
-setZooms(ce, 2^0:5);
+setZooms(ce, 2^(0:5));
 print(ce);
 process(ce, chromosomes=c(19, 22, 23), verbose=log);

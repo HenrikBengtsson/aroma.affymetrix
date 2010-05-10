@@ -1,7 +1,7 @@
 library("aroma.affymetrix");
 log <- Arguments$getVerbose(-8, timestamp=TRUE);
 
-chipType <- "GenomeWideSNP_6,Full";
+chipType <- "GenomeWideSNP_6";
 
 cdf <- AffymetrixCdfFile$byChipType(chipType);
 csR <- AffymetrixCelSet$byName("HapMap270,6.0,CEU,testSet", cdf=cdf);

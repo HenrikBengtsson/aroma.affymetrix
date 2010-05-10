@@ -193,37 +193,57 @@ setMethodS3("updateUnits", "ResidualSet", function(this, units=NULL, cdf=NULL, d
   # Argument 'verbose': 
   verbose <- Arguments$getVerbose(verbose);
 
+  verbose && enter(verbose, "Updating residual files");
+
   # Get the CDF structure for all residual files
   if (is.null(cdf))
     cdf <- getCellIndices(this, units=units);
 
   # Update each file one by one
-  n <- length(this);
-  verbose && enter(verbose, "Updating ", n, " residual files");
+  nbrOfArrays <- length(this);
+  verbose && cat(verbose, "Number of files: ", nbrOfArrays);
+
   names <- getNames(this);
+
+  verbose && enter(verbose, "Making sure the files are updated in lexicographic order");
+  # Reorder such that the file with the "last" name is saved last
+  fullnames <- getFullNames(this);
+  o <- order(fullnames, decreasing=FALSE);
+  arrays <- arrays[o];
+  verbose && str(verbose, arrays);
+  verbose && cat(verbose, "Last array: ", fullnames[arrays[nbrOfArrays]]);
+  rm(fullnames, o);
+  verbose && exit(verbose);
+
   verbose <- less(verbose);
-  for (kk in seq(this)) {
-    verbose && enter(verbose, sprintf("Array #%d of %d: %s", kk, n, names[kk]));
-    rf <- getFile(this, kk);
+  for (ii in seq(this)) {
+    verbose && enter(verbose, sprintf("Array #%d of %d: %s", 
+                                       ii, nbrOfArrays, names[ii]));
+    rf <- getFile(this, ii);
 
     verbose <- less(verbose, 50);
     verbose && enter(verbose, "Extracting estimates");  # 3-4s
     dataOne <- base::lapply(data, FUN=base::lapply, function(group) {
-      # eps = group$eps[,kk] = ...
+      # eps = group$eps[,ii] = ...
       list(
-        eps=.subset(.subset2(group, "eps"), kk)
+        eps=.subset(.subset2(group, "eps"), ii)
       );
     });
     verbose && exit(verbose);
 
     verbose && enter(verbose, "Updating file");  # 6-7s ~98% in encode()
     updateUnits(rf, cdf=cdf, data=dataOne, verbose=less(verbose, 50));
+    rm(dataOne, rf);
     verbose && exit(verbose);
     verbose <- more(verbose, 50);
 
+    gc <- gc();
+    verbose && print(verbose, gc);
+
     verbose && exit(verbose);
-  } # for (kk ...)
+  } # for (ii ...)
   verbose <- more(verbose);
+
   verbose && exit(verbose);
 }, protected=TRUE)
 
@@ -243,13 +263,23 @@ setMethodS3("getAverageFile", "ResidualSet", function(this, ..., verbose=FALSE, 
 
 
 setMethodS3("findUnitsTodo", "ResidualSet", function(this, ...) {
-  # Look into the last residual file since that is updated last
-  rf <- getFile(this, length(this));
-  findUnitsTodo(rf, ...);
+  # Look into the chip-effect file that comes last in a lexicographic
+  # order, becuase that is updated last.
+  names <- getFullNames(this);
+  idx <- order(names, decreasing=TRUE)[1];
+  df <- getFile(this, idx);
+  findUnitsTodo(df, ...);
 })
+
 
 ############################################################################
 # HISTORY:
+# 2010-05-08
+# o Now all findUnitsTodo() for data sets checks the data file that comes
+#   last in a lexicographic ordering.  This is now consistent with how
+#   the summarization methods updates the files.  Before it was use to be
+#   the one that is last in the data set.
+# o Now updateUnits() updates the data files in lexicographic order.
 # 2008-05-08
 # o Made fromFiles() protected.
 # 2007-12-08

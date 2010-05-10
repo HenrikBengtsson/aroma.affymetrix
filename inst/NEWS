@@ -1,7 +1,25 @@
 Package: aroma.affymetrix
 =========================
 
-Version: 1.5.8 [2010-05-06]
+Version: 1.5.9 [2010-05-10]
+o Now the constructor AllelicCrosstalkCalibration() is set to recognize
+  the Cytogenetics_Array chip type.  This avoids having to scan the CDF
+  for unit types and check for SNPs, which is slow and not really wanted
+  for a constructor function.  The allele pairs are inferred from the
+  CDF (by default).
+o ROBUSTNESS: Added a redundancy test of CRMA "v1.5" for the
+  Cytogenetics_Array chip type.
+
+
+Version: 1.5.8 [2010-05-09]
+o Made justSNPRMA(..., normalizeSNPsOnly="auto") for AffymetrixCelSet
+  the default.
+o Now all findUnitsTodo() for data sets checks the data file that 
+  comes last in a lexicographic ordering.  This is now consistent 
+  with how the summarization methods updates the files.  Before it
+  was use to be the one that is last in the data set.
+o Now all updateUnits() for data sets updates the data files in
+  lexicographic order.
 o Now CrlmmModel(..., recalibrate=TRUE) is the default.
 o Now justSNPRMA(..., returnESet=TRUE) for AffymetrixCelSet 
   returns an AlleleSet due to updates in oligo v1.12.0.

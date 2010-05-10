@@ -296,9 +296,12 @@ setMethodS3("getAverageFile", "ChipEffectSet", function(this, indices="remaining
 
 
 setMethodS3("findUnitsTodo", "ChipEffectSet", function(this, ...) {
-  # Look into the last chip-effect file since that is updated last
-  ce <- getFile(this, length(this));
-  findUnitsTodo(ce, ...);
+  # Look into the chip-effect file that comes last in a lexicographic
+  # order, becuase that is updated last.
+  names <- getFullNames(this);
+  idx <- order(names, decreasing=TRUE)[1];
+  df <- getFile(this, idx);
+  findUnitsTodo(df, ...);
 })
 
 
@@ -371,6 +374,11 @@ setMethodS3("extractMatrix", "ChipEffectSet", function(this, ..., field=c("theta
 
 ############################################################################
 # HISTORY:
+# 2010-05-08
+# o Now all findUnitsTodo() for data sets checks the data file that comes
+#   last in a lexicographic ordering.  This is now consistent with how
+#   the summarization methods updates the files.  Before it was use to be
+#   the one that is last in the data set.
 # 2010-02-20
 # o ROBUSTNESS: Now updateUnits() of ChipEffectSet updates the files in
 #   lexicographic order.  Before there was a risk that this was not done

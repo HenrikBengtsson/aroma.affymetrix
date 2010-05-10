@@ -596,19 +596,43 @@ setMethodS3("getGroupDirections", "AffymetrixCdfFile", function(this, units=NULL
     }
 
     if (is.null(groupDirections)) {    
-      verbose && enter(verbose, "Reading types for *all* units");
+      verbose && enter(verbose, "Reading directions for *all* unit groups");
       # Have to read some group field in order to get group directions
-      groupDirections <- readCdfUnits(getPathname(this), readExpos=TRUE, readBases=FALSE, readXY=FALSE, readType=FALSE, readDirection=TRUE);
+      groupDirections <- readCdfUnits(getPathname(this), readExpos=TRUE, 
+        readBases=FALSE, readXY=FALSE, readType=FALSE, readDirection=TRUE);
+
+      gc <- gc();
+      verbose && print(verbose, gc);
+      verbose && exit(verbose);
+
       # Remove all 'expos'
+      verbose && enter(verbose, "Removing all 'expos'");
       groupDirections <- base::lapply(groupDirections, FUN=function(unit) {
         groups <- .subset2(unit, 2);
         groups <- base::lapply(groups, FUN=.subset, 2);
         list(groups=groups);
       });
+
+      gc <- gc();
+      verbose && print(verbose, gc);
+      verbose && exit(verbose);
+
+      verbose && enter(verbose, "Restructuring");
       groupDirections <- restruct(this, groupDirections, 
                                                  verbose=less(verbose, 5));
+
+      gc <- gc();
+      verbose && print(verbose, gc);
+      verbose && exit(verbose);
+
+      verbose && enter(verbose, "Unlisting each unit");
       groupDirections <- base::lapply(groupDirections, FUN=unlist, 
                                                           use.names=FALSE);
+
+      gc <- gc();
+      verbose && print(verbose, gc);
+      verbose && exit(verbose);
+
       saveCache(groupDirections, key=key, dirs=dirs);
       verbose && exit(verbose);
     }
@@ -784,7 +808,7 @@ setMethodS3("getCellIndices", "AffymetrixCdfFile", function(this, units=NULL, ..
   }
 
   cdf;
-})
+}) # getCellIndices()
 
 
 
@@ -1569,6 +1593,9 @@ setMethodS3("convertUnits", "AffymetrixCdfFile", function(this, units=NULL, keep
 
 ############################################################################
 # HISTORY:
+# 2010-05-09
+# o Added more explicit garbage collection to getGroupDirections() for
+#   the AffymetrixCdfFile class.
 # 2010-01-03
 # o BUG FIX: After loading aroma.affymetrix, findCdf() would give "Error in
 #   if (regexpr(pattern, chipType) != -1) { : argument is of length zero",

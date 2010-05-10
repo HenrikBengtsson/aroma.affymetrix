@@ -135,7 +135,10 @@ setConstructorS3("AllelicCrosstalkCalibration", function(dataSet=NULL, ..., mode
         rescaleBy <- "groups";
       } else if (regexpr("^GenomeWideSNP_", chipType) != -1) {
         rescaleBy <- "all";
+      } else if (regexpr("^Cytogenetics_Array$", chipType) != -1) {
+        rescaleBy <- "all";
       } else {
+        # Heuristics so that we can work with "future/unknown" chip types.
         types <- getUnitTypes(cdf);
         # 5 == Copy Number
         hasCns <- hasUnitTypes(cdf, types=5);
@@ -1215,9 +1218,15 @@ setMethodS3("getDataPairs", "AllelicCrosstalkCalibration", function(this, array,
 
 ############################################################################
 # HISTORY:
-## 2010-02-15
-## o MEMORY OPTIMIZATION: Now process() of AllelicCrosstalkCalibration 
-##   clears the in-memory cache when finished.
+# 2010-05-10
+# o Now the constructor AllelicCrosstalkCalibration() is set to recognize
+#   the Cytogenetics_Array chip type.  This avoids having to scan the CDF
+#   for unit types and check for SNPs, which is slow and not really wanted
+#   for a constructor function.  The allele pairs are inferred from the
+#   CDF (by default).
+# 2010-02-15
+# o MEMORY OPTIMIZATION: Now process() of AllelicCrosstalkCalibration 
+#   clears the in-memory cache when finished.
 # 2009-09-04
 # o Now smoothScatter() is loaded via aroma.core.
 # 2008-12-17

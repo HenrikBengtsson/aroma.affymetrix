@@ -9,7 +9,7 @@
 #
 # Author: Henrik Bengtsson
 # Created: 2008-12-04
-# Last modified: 2010-05-06
+# Last modified: 2010-05-09
 #
 # Data set:
 #  rawData/
@@ -47,11 +47,11 @@ if (isOlderThan(pkg, "1.8.0")) {
   # oligo v1.12.0 and newer
   thetaA <- function(eSet) {
     ad <- assayData(eSet);
-    ad$senseAlleleA;
+    ad$alleleA;
   }
   thetaB <- function(eSet) {
     ad <- assayData(eSet);
-    ad$senseAlleleB;
+    ad$alleleB;
   }
 }
 

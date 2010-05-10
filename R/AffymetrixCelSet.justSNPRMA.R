@@ -4,7 +4,7 @@ setMethodS3("justSNPRMA", "character", function(...) {
 })
 
 
-setMethodS3("justSNPRMA", "AffymetrixCelSet", function(this, ..., normalizeToHapmap=TRUE, normalizeSNPsOnly=FALSE, returnESet=TRUE, verbose=FALSE) {
+setMethodS3("justSNPRMA", "AffymetrixCelSet", function(this, ..., normalizeToHapmap=TRUE, normalizeSNPsOnly="auto", returnESet=TRUE, verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -12,7 +12,10 @@ setMethodS3("justSNPRMA", "AffymetrixCelSet", function(this, ..., normalizeToHap
   normalizeToHapmap <- Arguments$getLogical(normalizeToHapmap);
 
   # Argument 'normalizeSNPsOnly':
-#  normalizeSNPsOnly <- Arguments$getLogical(normalizeSNPsOnly);
+  if (normalizeSNPsOnly == "auto") {
+  } else {
+    normalizeSNPsOnly <- Arguments$getLogical(normalizeSNPsOnly);
+  }
 
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
@@ -197,6 +200,9 @@ setMethodS3("justSNPRMA", "AffymetrixCelSet", function(this, ..., normalizeToHap
 
 ############################################################################
 # HISTORY:
+# 2010-05-09
+# o Made justSNPRMA(..., normalizeSNPsOnly="auto") for AffymetrixCelSet
+#   the default.
 # 2010-05-06
 # o Now justSNPRMA(..., returnESet=TRUE) for AffymetrixCelSet returns an
 #   AlleleSet due to updates of classes in oligo v1.12.0.

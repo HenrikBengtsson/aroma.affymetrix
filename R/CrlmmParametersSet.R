@@ -45,15 +45,23 @@ setMethodS3("byPath", "CrlmmParametersSet", function(static, ...) {
 
 
 setMethodS3("findUnitsTodo", "CrlmmParametersSet", function(this, ...) {
-  # Look into the last chip-effect file since that is updated last
-  ce <- getFile(this, length(this));
-  findUnitsTodo(ce, ...);
+  # Look into the chip-effect file that comes last in a lexicographic
+  # order, becuase that is updated last.
+  names <- getFullNames(this);
+  idx <- order(names, decreasing=TRUE)[1];
+  df <- getFile(this, idx);
+  findUnitsTodo(df, ...);
 })
 
 
 
 ############################################################################
 # HISTORY:
+# 2010-05-08
+# o Now all findUnitsTodo() for data sets checks the data file that comes
+#   last in a lexicographic ordering.  This is now consistent with how
+#   the summarization methods updates the files.  Before it was use to be
+#   the one that is last in the data set.
 # 2008-12-08
 # o Added findUnitsTodo() and extractCalls().
 # 2008-12-06

@@ -12,11 +12,6 @@ setMethodS3("extractAlleleSet", "SnpChipEffectSet", function(this, units=NULL, s
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   chipType <- getChipType(this, fullname=FALSE);
 
-  # TO DO: Relax this test, because it should work. /HB 2010-05-06
-  if (regexpr("^GenomeWideSNP_(5|6)$", chipType) != -1) {
-    throw("Cannot extract AlleleSet: Unsupported chip type: ", chipType);
-  }
-
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -53,44 +48,88 @@ setMethodS3("extractAlleleSet", "SnpChipEffectSet", function(this, units=NULL, s
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Inferring what unit groups to extract
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  verbose && enter(verbose, "Inferring the number of groups to extract");
+  verbose && cat(verbose, "Chip type: ", getChipType(this));
+  ugcMap <- getUnitGroupCellMap(this, units=units, verbose=verbose);
+  maxGroup <- max(ugcMap$group, na.rm=TRUE);
+  rm(ugcMap);
+  verbose && cat(verbose, "Max number of groups unit (unit,group,cell) map: ", maxGroup);
+  if (maxGroup > 4) {
+    maxGroup <- 4L;
+  }
+
+  # Sanity check
+  if (!is.element(maxGroup, c(2,4))) {
+    throw("Unsupported value on 'maxGroup': ", maxGroup);
+  }
+
+  groups <- 1:maxGroup;
+
+  verbose && cat(verbose, "Groups to extract: ", seqToHumanReadable(groups));
+  verbose && exit(verbose);
+
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Infer which (antisense, sense) unit groups to swap (more below)
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  if (maxGroup == 4) {
+    verbose && enter(verbose, "Inferring which unit groups to be swapped to (sense, antisense)");
+  
+    # Make sure pairs are order as (sense, antisense)
+    dirs <- getGroupDirections(cdf, units=units, verbose=less(verbose, 5));
+    names(dirs) <- NULL;
+    rm(units);
+  
+    gc <- gc();
+    verbose && print(verbose, gc);
+  
+    # Sanity check
+    lens <- sapply(dirs, FUN=length);
+    uLens <- unique(lens);
+    if (any(!is.element(uLens, unique(c(2,maxGroup))))) {
+      throw("Internal error: Unexpected number of unit groups: ", 
+                                                paste(uLens, collapse=", "));
+    }
+  
+    # Extract the direction/strand of the first group
+    # dirs <- lapply(dirs, FUN=function(groups) groups[1]);
+    dirs <- lapply(dirs, FUN=.subset, 1);
+    dirs <- unlist(dirs, use.names=FALSE);
+  
+    # Identify which to swap from (antisense,sense) to (sense,antisense)
+    idxs <- which(dirs == 2);
+    rm(dirs);
+
+    gc <- gc();
+    verbose && print(verbose, gc);
+  
+    verbose && exit(verbose);
+  }
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Extract data
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   verbose && enter(verbose, "Extracting data");
-  theta <- extractTheta(this, groups=1:4, units=units, verbose=verbose);
+  theta <- extractTheta(this, groups=groups, units=units, verbose=verbose);
   verbose && exit(verbose);
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Swap (antisense, sense) unit groups to (sense, antisense)
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  verbose && enter(verbose, "Ordering unit groups to be (sense, antisense)");
-  # Make sure pairs are order as (sense, antisense)
-  dirs <- getGroupDirections(cdf, units=units);
-  names(dirs) <- NULL;
-  rm(units);
-
-  # Sanity check
-  lens <- sapply(dirs, FUN=length);
-  uLens <- unique(lens);
-  if (any(!is.element(uLens, c(2,4)))) {
-    throw("Internal error: Unexpected number of unit groups: ", 
-                                              paste(uLens, collapse=", "));
+  if (maxGroup == 4 && length(idxs) > 0) {
+    verbose && enter(verbose, "Ordering unit groups to be (sense, antisense)");
+    verbose && cat(verbose, "Swapping elements:");
+    verbose && str(verbose, idxs);
+    theta[idxs,,] <- theta[idxs,c(3,4,1,2),,drop=FALSE];
+    rm(idxs);   # Not needed anymore
+    gc <- gc();
+    verbose && print(verbose, gc);
+    verbose && exit(verbose);
   }
 
-  # Extract the direction/strand of the first group
-  # dirs <- lapply(dirs, FUN=function(groups) groups[1]);
-  dirs <- lapply(dirs, FUN=.subset, 1);
-  dirs <- unlist(dirs, use.names=FALSE);
-
-  # Identify which to swap from (antisense,sense) to (sense,antisense)
-  idxs <- which(dirs == 2);
-  rm(dirs);
-
-  verbose && cat(verbose, "Swapping elements:");
-  verbose && str(verbose, idxs);
-  theta[idxs,,] <- theta[idxs,c(3,4,1,2),];
-  rm(idxs);   # Not needed anymore
-  verbose && exit(verbose);
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Transform data
@@ -99,19 +138,29 @@ setMethodS3("extractAlleleSet", "SnpChipEffectSet", function(this, units=NULL, s
     verbose && enter(verbose, "Transforming signals");
     theta <- transform(theta);
     verbose && str(verbose, theta);
+    gc <- gc();
+    verbose && print(verbose, gc);
     verbose && exit(verbose);
   }
+
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Allocate and populate AlleleSet
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   verbose && enter(verbose, "Allocate and populate AlleleSet");
-  res <- new("AlleleSet", 
-    antisenseAlleleA = theta[,3,,drop=TRUE],
-    senseAlleleA     = theta[,1,,drop=TRUE],
-    antisenseAlleleB = theta[,4,,drop=TRUE],
-    senseAlleleB     = theta[,2,,drop=TRUE]
-  );
+  if (maxGroup == 2) {
+    res <- new("AlleleSet", 
+      alleleA = theta[,1,,drop=TRUE],
+      alleleB = theta[,2,,drop=TRUE]
+    );
+  } else if (maxGroup == 4) {
+    res <- new("AlleleSet", 
+      antisenseAlleleA = theta[,3,,drop=TRUE],
+      senseAlleleA     = theta[,1,,drop=TRUE],
+      antisenseAlleleB = theta[,4,,drop=TRUE],
+      senseAlleleB     = theta[,2,,drop=TRUE]
+    );
+  }
 
   # Not needed anymore
   rm(theta);
@@ -138,6 +187,8 @@ setMethodS3("extractAlleleSet", "SnpChipEffectSet", function(this, units=NULL, s
 
 ############################################################################
 # HISTORY:
+# 2010-05-09
+# o Now extractAlleleSet() handles SNP platforms with 2 & 4 unit groups.
 # 2010-05-06
 # o extractAlleleSet() now asserts that oligo v1.12.0 or older is installed.
 # o Created from extractSnpQSet().

@@ -88,15 +88,23 @@ setMethodS3("getFirstCellPerUnitIndices", "ExonChipEffectSet", function(this, ..
 
 
 setMethodS3("findUnitsTodo", "ExonChipEffectSet", function(this, ...) {
-  # Look into the last chip-effect file since that is updated last
-  ece <- getFile(this, length(this));
-  findUnitsTodo(ece, ...);
+  # Look into the chip-effect file that comes last in a lexicographic
+  # order, becuase that is updated last.
+  names <- getFullNames(this);
+  idx <- order(names, decreasing=TRUE)[1];
+  df <- getFile(this, idx);
+  findUnitsTodo(df, ...);
 })
 
 
 
 ############################################################################
 # HISTORY:
+# 2010-05-08
+# o Now all findUnitsTodo() for data sets checks the data file that comes
+#   last in a lexicographic ordering.  This is now consistent with how
+#   the summarization methods updates the files.  Before it was use to be
+#   the one that is last in the data set.
 # 2008-05-08
 # o Made fromFiles() protected.
 # 2007-02-08

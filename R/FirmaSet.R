@@ -141,13 +141,13 @@ setMethodS3("updateUnits", "FirmaSet", function(this, units=NULL, cdf=NULL, data
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
 
-  verbose && enter(verbose, "Updating ", nbrOfArrays, " FIRMA result files");
-
   # Get the CDF structure for all files
-  if (is.null(cdf))
+  if (is.null(cdf)) {
     cdf <- getCellIndices(this, units=units);
+  }
 
   # Update each file one by one
+  arrays <- seq(this);
   nbrOfArrays <- length(this);
   verbose && enter(verbose, "Updating ", nbrOfArrays, " FIRMA result files");
 
@@ -209,6 +209,8 @@ setMethodS3("extractMatrix", "FirmaSet", function (this, ..., field=c("intensiti
 
 ############################################################################
 # HISTORY:
+# 2010-05-11
+# o BUG FIX: Added a stray and erronous verbose statement to updateUnits().
 # 2010-05-08
 # o Now all findUnitsTodo() for data sets checks the data file that comes
 #   last in a lexicographic ordering.  This is now consistent with how

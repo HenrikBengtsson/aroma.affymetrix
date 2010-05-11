@@ -553,7 +553,7 @@ setMethodS3("fit", "FirmaModel", function(this, units="remaining", ..., ram=NULL
   }
 
 
-  verbose && enter(verbose, "Fitting model of class ", class(this)[1], ":");
+  verbose && enter(verbose, "Fitting model of class ", class(this)[1]);
 
   verbose && print(verbose, this);
 

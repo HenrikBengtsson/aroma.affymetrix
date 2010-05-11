@@ -107,7 +107,7 @@ setMethodS3("fit", "ProbeLevelModel", function(this, units="remaining", ..., for
 
 
 
-  verbose && enter(verbose, "Fitting model of class ", class(this)[1], ":");
+  verbose && enter(verbose, "Fitting model of class ", class(this)[1]);
 
   verbose && print(verbose, this);
 

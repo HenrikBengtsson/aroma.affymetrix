@@ -1,7 +1,7 @@
 Package: aroma.affymetrix
 =========================
 
-Version: 1.5.9 [2010-05-10]
+Version: 1.5.9 [2010-05-11]
 o Now the constructor AllelicCrosstalkCalibration() is set to recognize
   the Cytogenetics_Array chip type.  This avoids having to scan the CDF
   for unit types and check for SNPs, which is slow and not really wanted

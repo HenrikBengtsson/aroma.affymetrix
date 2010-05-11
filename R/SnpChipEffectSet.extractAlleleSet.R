@@ -80,7 +80,6 @@ setMethodS3("extractAlleleSet", "SnpChipEffectSet", function(this, units=NULL, s
     # Make sure pairs are order as (sense, antisense)
     dirs <- getGroupDirections(cdf, units=units, verbose=less(verbose, 5));
     names(dirs) <- NULL;
-    rm(units);
   
     gc <- gc();
     verbose && print(verbose, gc);
@@ -113,6 +112,13 @@ setMethodS3("extractAlleleSet", "SnpChipEffectSet", function(this, units=NULL, s
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   verbose && enter(verbose, "Extracting data");
   theta <- extractTheta(this, groups=groups, units=units, verbose=verbose);
+
+  # Not needed anymore
+  rm(units);
+
+  gc <- gc();
+  verbose && print(verbose, gc);
+
   verbose && exit(verbose);
 
 
@@ -187,6 +193,8 @@ setMethodS3("extractAlleleSet", "SnpChipEffectSet", function(this, units=NULL, s
 
 ############################################################################
 # HISTORY:
+# 2010-05-11
+# o BUG FIX: Too early rm(units) in extractAlleleSet().
 # 2010-05-09
 # o Now extractAlleleSet() handles SNP platforms with 2 & 4 unit groups.
 # 2010-05-06

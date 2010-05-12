@@ -16,8 +16,8 @@ o Made justSNPRMA(..., normalizeSNPsOnly="auto") for AffymetrixCelSet
   the default.
 o Now all findUnitsTodo() for data sets checks the data file that 
   comes last in a lexicographic ordering.  This is now consistent 
-  with how the summarization methods updates the files.  Before it
-  was use to be the one that is last in the data set.
+  with how the summarization methods update the files.  Before it
+  used to be the one that is last in the data set.
 o Now all updateUnits() for data sets updates the data files in
   lexicographic order.
 o Now CrlmmModel(..., recalibrate=TRUE) is the default.

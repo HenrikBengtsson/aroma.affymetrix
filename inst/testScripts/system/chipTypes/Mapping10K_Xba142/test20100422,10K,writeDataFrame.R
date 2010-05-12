@@ -15,19 +15,26 @@ subset <- c(2,5,3);
 ds <- doCRMAv2(dataSet, chipType=chipType, arrays=subset, verbose=log);
 print(ds);
 
-dfTxt <- writeDataFrame(ds, verbose=log);
+columns <- c("unitName", "chromosome", "position", "*");
+df <- getFile(ds, 2);
+dfTxt <- writeDataFrame(df, columns=columns, overwrite=TRUE, verbose=log);
 print(dfTxt);
-df <- readDataFrame(dfTxt, row=1:100);
-str(df);
+data <- readDataFrame(dfTxt, row=1:100);
+str(data);
+
+dfTxt <- writeDataFrame(ds, overwrite=TRUE, verbose=log);
+print(dfTxt);
+data <- readDataFrame(dfTxt, row=1:100);
+str(data);
 
 columns <- c("*");
 dfTxt <- writeDataFrame(ds, columns=columns, overwrite=TRUE, verbose=log);
 print(dfTxt);
-df <- readDataFrame(dfTxt, row=1:100);
-str(df);
+data <- readDataFrame(dfTxt, row=1:100);
+str(data);
 
 columns <- c("unitName", "chromosome", "position", "*");
 dfTxt <- writeDataFrame(ds, columns=columns, overwrite=TRUE, verbose=log);
 print(dfTxt);
-df <- readDataFrame(dfTxt, row=1:100);
-str(df);
+data <- readDataFrame(dfTxt, row=1:100);
+str(data);

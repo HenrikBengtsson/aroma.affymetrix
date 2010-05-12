@@ -89,7 +89,7 @@
   clone.AffymetrixCnChpFile clone.CnagCfhFile clone.CnagCfhSet
   CnChipEffectSetTuple compare computeAffinities convert
   convertToUnique convertToUnique.AffymetrixCelSet convertUnits
-  createBlankSet createBlankSet.AffymetrixCelSet createFrom
+  createFrom
   createMonoCell createMonocellCdf createOutputTuple
   createOutputTuple.SmoothMultiarrayModel createParamCdf
   createParamCdf.ChipEffectFile createParamCdf.FirmaFile createUnique

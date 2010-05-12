@@ -213,8 +213,6 @@
 \alias{convertToUnique}
 \alias{convertToUnique.AffymetrixCelSet}
 \alias{convertUnits}
-\alias{createBlankSet}
-\alias{createBlankSet.AffymetrixCelSet}
 \alias{createFrom}
 \alias{createMonoCell}
 \alias{createMonocellCdf}

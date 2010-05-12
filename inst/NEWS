@@ -9,6 +9,15 @@ o Now the constructor AllelicCrosstalkCalibration() is set to recognize
   CDF (by default).
 o ROBUSTNESS: Added a redundancy test of CRMA "v1.5" for the
   Cytogenetics_Array chip type.
+o ROBUSTNESS: Now fromDataFile() of ChipEffectFile and FirmaFile, as
+  well as convertToUnique() of AffymetrixCelSet allocates/creates data
+  files atomically.  As elsewhere, this is done by first creating and
+  writing to a temporary file, which when complete is then renamed.  
+  This lowers the risk of generating incomplete files.
+o CLEAN UP/DEPRECATED: AffymetrixCelSet$createBlankSet() was removed, 
+  because it has not been used anywhere since 2007.
+o BUG FIX: convertToUnique() for AffymetrixCelSet would not recognize
+  Windows Shortcut links.
 
 
 Version: 1.5.8 [2010-05-09]

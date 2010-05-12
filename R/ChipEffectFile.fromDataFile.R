@@ -66,12 +66,13 @@ setMethodS3("fromDataFile", "ChipEffectFile", function(static, df=NULL, filename
 
   # Does the file have to be created?
   if (!isFile(pathname)) {
-    verbose && enter(verbose, "Creating chip-effect file");
+    verbose && enter(verbose, "Allocating empty chip-effect file");
     verbose && cat(verbose, "Pathname: ", pathname);
 
     # Get CDF for chip effects
-    if (is.null(cdf))
+    if (is.null(cdf)) {
       cdf <- createParamCdf(static, getCdf(df), verbose=less(verbose));
+    }
   
     # Get CDF header
     cdfHeader <- getHeader(cdf);
@@ -90,12 +91,28 @@ setMethodS3("fromDataFile", "ChipEffectFile", function(static, df=NULL, filename
     parameters <- gsub(";$", "", parameters);
     celHeader$parameters <- parameters;
 
+    # Write to a temporary file
+    pathnameT <- sprintf("%s.tmp", pathname);
+    verbose && cat(verbose, "Temporary pathname: ", pathnameT);
+
     # Create the CEL file
-    createCel(pathname, header=celHeader, ..., verbose=less(verbose));
+    createCel(pathnameT, header=celHeader, ..., verbose=less(verbose));
 
 ##    # Fill with negative values
 ##    nbrOfProbes <- celHeader$total;
-##    updateCel(pathname, indices=1:nbrOfProbes, intensities=rep(-1,nbrOfProbes), verbose=less(verbose));
+##    updateCel(pathnameT, indices=1:nbrOfProbes, intensities=rep(-1,nbrOfProbes), verbose=less(verbose));
+
+    # Rename temporary file
+    verbose && enter(verbose, "Renaming temporary file");
+    res <- file.rename(pathnameT, pathname);
+    if (!isFile(pathname)) {
+      throw("Failed to rename temporary file (final file does not exist): ", pathnameT, " -> ", pathname);
+    }
+    if (isFile(pathnameT)) {
+      throw("Failed to rename temporary file (temporary file still exists): ", pathnameT, " -> ", pathname);
+    }
+    rm(pathnameT);
+    verbose && exit(verbose);
 
     verbose && exit(verbose);
   } 
@@ -117,6 +134,10 @@ setMethodS3("fromDataFile", "ChipEffectFile", function(static, df=NULL, filename
 
 ############################################################################
 # HISTORY:
+# 2010-05-12
+# o ROBUSTNESS: When fromDataFile() of ChipEffectFile creates a file, it
+#   is created first as a temporary file which is then renamed.  This
+#   lowers the risk of generating incomplete chip-effect files.
 # 2008-03-18
 # o TO DO: Use new static allocateFromCdf() of AffymetrixCelFile.
 # o Removed the backward compatibility patch from 2007-01-10 that made

@@ -233,8 +233,9 @@ setMethodS3("fromDataFile", "FirmaFile", function(static, df=NULL, filename=spri
     verbose && cat(verbose, "Pathname: ", pathname);
 
     # Get CDF for chip effects
-    if (is.null(cdf))
+    if (is.null(cdf)) {
       cdf <- createParamCdf(static, getCdf(df), verbose=less(verbose));
+    }
 
     # Get CDF header
     cdfHeader <- getHeader(cdf);
@@ -253,8 +254,24 @@ setMethodS3("fromDataFile", "FirmaFile", function(static, df=NULL, filename=spri
     parameters <- gsub(";$", "", parameters);
     celHeader$parameters <- parameters;
 
+    # Write to a temporary file
+    pathnameT <- sprintf("%s.tmp", pathname);
+    verbose && cat(verbose, "Temporary pathname: ", pathnameT);
+
     # Create the CEL file
-    createCel(pathname, header=celHeader, ..., verbose=less(verbose));
+    createCel(pathnameT, header=celHeader, ..., verbose=less(verbose));
+
+    # Rename temporary file
+    verbose && enter(verbose, "Renaming temporary file");
+    res <- file.rename(pathnameT, pathname);
+    if (!isFile(pathname)) {
+      throw("Failed to rename temporary file (final file does not exist): ", pathnameT, " -> ", pathname);
+    }
+    if (isFile(pathnameT)) {
+      throw("Failed to rename temporary file (temporary file still exists): ", pathnameT, " -> ", pathname);
+    }
+    rm(pathnameT);
+    verbose && exit(verbose);
 
     verbose && exit(verbose);
   }
@@ -451,6 +468,10 @@ setMethodS3("extractMatrix", "FirmaFile", function (this, ..., field=c("intensit
 
 ############################################################################
 # HISTORY:
+# 2010-05-12
+# o ROBUSTNESS: When fromDataFile() of FirmaFile creates a file, it
+#   is created first as a temporary file which is then renamed.  This
+#   lowers the risk of generating incomplete chip-effect files.
 # 2009-05-19
 # o Now testing for file permissions for creat-/writ-/updating files/dirs.
 # 2008-07-20

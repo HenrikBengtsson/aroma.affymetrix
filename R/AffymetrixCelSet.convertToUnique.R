@@ -26,31 +26,41 @@ setMethodS3("convertToUnique", "AffymetrixCelSet", function(this, ..., tags="UNQ
   }
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # getting output directory
+  # Getting output directory
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  rootPath <- "probeData";
+  verbose && cat(verbose, "Output root:", rootPath);
+
+  srcTags <- getTags(this, collapse=",");
+  verbose && cat(verbose, "Source tags:", srcTags);
+
+  verbose && cat(verbose, "User tags:", tags);
   
-  inputTags <- paste( getTags(this), collapse=",")
-  verbose && cat(verbose, "Input tags:", inputTags);
+  tags <- c(srcTags, tags);
+  tags <- tags[nchar(tags) > 0];
+  tags <- paste(tags, collapse=",");
+  verbose && cat(verbose, "Output tags:", tags);
+
+  chipType <- getChipType(this, fullname=FALSE);
+  verbose && cat(verbose, "Chip type:", chipType);
   
-  curPath <- getPath(this)
-  dataDir <- gsub("rawData","probeData",strsplit(curPath, "/")[[1]][1])
-  allTags <- gsub("^,","",paste( inputTags, tags, sep="," ))
-  chipType <- getChipType(this,fullname=FALSE)
-  
-  outputPath <- paste( dataDir, paste(getName(this),allTags,sep=","), chipType, sep="/" )
-  verbose && cat(verbose, "Input Path: ", curPath);
+  fullname <- paste(c(getName(this), tags), collapse=",");
+  verbose && cat(verbose, "Output fullname:", fullname);
+
+  outputPath <- file.path(rootPath, fullname, chipType);
+  outputPath <- Arguments$getWritablePath(outputPath);
   verbose && cat(verbose, "Output Path:", outputPath);
-  verbose && cat(verbose, "allTags:", allTags);
+
   
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # check if already done
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Check if already done
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   verbose && cat(verbose, "Test whether dataset exists");
   # HB: Don't think argument 'chipType' makes a difference if 'cdf' is given.
   outputDataSet <- NULL
   tryCatch({
-    outputDataSet <- AffymetrixCelSet$byName(getName(this), tags=allTags, verbose=verbose, 
-						  cdf=cdfUnique, paths=dataDir, checkChipType=FALSE);
+    outputDataSet <- AffymetrixCelSet$byName(fullname, cdf=cdfUnique, 
+                     paths=rootPath, checkChipType=FALSE, verbose=verbose);
   }, error = function(ex) {});
   
   if (inherits(outputDataSet, "AffymetrixCelSet")) {
@@ -83,63 +93,85 @@ setMethodS3("convertToUnique", "AffymetrixCelSet", function(this, ..., tags="UNQ
   # Do the conversion from standard CDF to unique CDF
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   for (kk in seq_len(nbrOfArrays)) {
-
       df <- getFile(this, kk);
-      verbose && enter(verbose, paste("Converting CEL data from standard to unique CDF for sample ", kk, " ( ", getName(df), " ) of ", nbrOfArrays,sep=""));
+      verbose && enter(verbose, sprintf("Converting CEL data from standard to unique CDF for sample #%d (%s) of %d", kk, getName(df), nbrOfArrays));
   
+      fullname <- getFullName(df);
+      filename <- sprintf("%s.CEL", fullname);
+      pathname <- Arguments$getWritablePathname(filename, path=outputPath, ...);
+
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       # Read data
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       verbose && enter(verbose, "Reading intensity values according to standard CDF");
       data <- readCelUnits(getPathname(df), cdf=cdfStandard, dropArrayDim=TRUE);
-      #hdr <- readCelHeader(getPathname(df));
       verbose && exit(verbose);
 
-      fullname <- getFullName(df);
-      filename <- sprintf("%s.CEL", fullname);
-      pathname <- Arguments$getWritablePathname(filename, path=outputPath, ...);
-	  
-	  # Build a valid CEL header
+      # Build a valid CEL header
       celHeader <- cdfHeaderToCelHeader(cdfHeader, sampleName=fullname);
 
       # Add some extra information about what the CEL file is for
       params <- c(Descripion="This CEL file was created by the aroma.affymetrix package.");
-      parameters <- gsub(" ", "_", params);
+      parameters <- gsub(" ", "_", params, fixed=TRUE);
       names(parameters) <- names(params);
       parameters <- paste(names(parameters), parameters, sep=":");
       parameters <- paste(parameters, collapse=";");
       parameters <- paste(celHeader$parameters, parameters, "", sep=";");
-      parameters <- gsub(";;", ";", parameters);
+      parameters <- gsub(";;", ";", parameters, fixed=TRUE);
       parameters <- gsub(";$", "", parameters);
       celHeader$parameters <- parameters;
 
-      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       # Write data
-      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       # Create CEL file to store results, if missing
-      verbose && enter(verbose, "Creating CEL file for results, if missing");
-      createCel(pathname, header=celHeader);
+      verbose && enter(verbose, "Creating CEL file for results");
+
+      # Write to a temporary file
+      pathnameT <- sprintf("%s.tmp", pathname);
+      verbose && cat(verbose, "Temporary pathname: ", pathnameT);
+
+      createCel(pathnameT, header=celHeader);
       verbose && cat(verbose, "Writing values according to unique CDF");
-      updateCelUnits(pathname, cdf=cdfUniqueIndices, data=data, verbose=FALSE);
+      updateCelUnits(pathnameT, cdf=cdfUniqueIndices, data=data, verbose=FALSE);
       verbose && exit(verbose);
 
       rm(data);
       gc <- gc();
       verbose && print(verbose, gc);
 
+      # Rename temporary file
+      verbose && enter(verbose, "Renaming temporary file");
+      res <- file.rename(pathnameT, pathname);
+      if (!isFile(pathname)) {
+        throw("Failed to rename temporary file (final file does not exist): ", pathnameT, " -> ", pathname);
+      }
+      if (isFile(pathnameT)) {
+        throw("Failed to rename temporary file (temporary file still exists): ", pathnameT, " -> ", pathname);
+      }
+      rm(pathnameT);
+      verbose && exit(verbose);
+
       verbose && exit(verbose);
   } # for (kk ...)
 
-  outputDataSet <- AffymetrixCelSet$byName(getName(this), tags=allTags, 
-                      cdf=cdfUnique, verbose=verbose, checkChipType=FALSE);
+  res <- AffymetrixCelSet$byName(fullname, cdf=cdfUnique,
+                                      checkChipType=FALSE, verbose=verbose);
   verbose && exit(verbose);
   
-  invisible(outputDataSet);
+  invisible(res);
 })
 
 
 ############################################################################
 # HISTORY:
+# 2010-05-12 [HB]
+# o BUG FIX: convertToUnique() for AffymetrixCelSet would not recognize
+#   Windows Shortcut links.
+# o ROBUSTNESS: Now convertToUnique() for AffymetrixCelSet writes to 
+#   temporary files which are renamed when complete.  This lowers the
+#   risk of generating incomplete files.
+# o CLEAN UP: Code cleanup.
 # 2009-03-18 [MR]
 # o changed the way CEL headers are made ... it now uses cdfHeaderToCelHeader()
 # 2008-12-08 [MR]

@@ -84,12 +84,15 @@ setMethodS3("createBlankSet", "AffymetrixCelSet", function(static, name, tags=NU
 
   # Finally, return the AffymetrixCelSet object
   byPath(static, path);
-}, static=TRUE, private=TRUE)
+}, static=TRUE, private=TRUE, deprecated=TRUE)
 
 
 
 ############################################################################
 # HISTORY:
+# 2010-05-12
+# o CLEAN UP/DEPRECATED: AffymetrixCelSet$createBlankSet() was removed, 
+#   because it has not been used anywhere since 2007.
 # 2007-08-09
 # o AffymetrixCelSet$createBlankSet() now creates CEL files with upper-case
 #   filename extension "*.CEL", not "*.cel".  The reason for this is that

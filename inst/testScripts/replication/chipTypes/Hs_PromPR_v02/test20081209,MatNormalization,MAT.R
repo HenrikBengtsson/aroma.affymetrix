@@ -63,6 +63,7 @@ print(csR);
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 mn <- MatNormalization(csR, numChunks=20);
 csM <- process(mn, verbose=more(log, 3));
+print(csM);
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -72,7 +73,8 @@ csU <- convertToUnique(csM, verbose=log);
 print(csU);
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# Run 2 variations of MatSmoothing that will be compared to external estimates
+# Run 2 variations of MatSmoothing that will be compared to 
+# external estimates
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 sampleNames <- getNames(csU);
 

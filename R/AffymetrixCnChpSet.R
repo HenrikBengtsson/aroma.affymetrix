@@ -165,7 +165,7 @@ setMethodS3("byPath", "AffymetrixCnChpSet", function(static, path="rawData/", pa
 
   set <- byPath.AffymetrixFileSet(static, path=path, pattern=pattern, ..., fileClass=fileClass, verbose=less(verbose));
 
-  verbose && enter(verbose, "Retrieved files: ", nbrOfFiles(set));
+  verbose && cat(verbose, "Retrieved files: ", nbrOfFiles(set));
 
   if (nbrOfFiles(set) > 0) {
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 

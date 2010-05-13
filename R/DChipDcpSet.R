@@ -162,7 +162,7 @@ setMethodS3("byPath", "DChipDcpSet", function(static, path="rawData/", pattern="
 
   this <- byPath.AffymetrixFileSet(static, path=path, pattern=pattern, ..., fileClass=fileClass, verbose=less(verbose));
 
-  verbose && enter(verbose, "Retrieved files: ", nbrOfFiles(this));
+  verbose && cat(verbose, "Retrieved files: ", nbrOfFiles(this));
 
 
   if (nbrOfFiles(this) > 0) {

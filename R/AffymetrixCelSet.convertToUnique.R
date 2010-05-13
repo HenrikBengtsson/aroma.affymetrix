@@ -29,27 +29,27 @@ setMethodS3("convertToUnique", "AffymetrixCelSet", function(this, ..., tags="UNQ
   # Getting output directory
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   rootPath <- "probeData";
-  verbose && cat(verbose, "Output root:", rootPath);
+  verbose && cat(verbose, "Output root: ", rootPath);
 
   srcTags <- getTags(this, collapse=",");
-  verbose && cat(verbose, "Source tags:", srcTags);
+  verbose && cat(verbose, "Source tags: ", srcTags);
 
-  verbose && cat(verbose, "User tags:", tags);
+  verbose && cat(verbose, "User tags: ", tags);
   
   tags <- c(srcTags, tags);
   tags <- tags[nchar(tags) > 0];
   tags <- paste(tags, collapse=",");
-  verbose && cat(verbose, "Output tags:", tags);
+  verbose && cat(verbose, "Output tags: ", tags);
 
   chipType <- getChipType(this, fullname=FALSE);
-  verbose && cat(verbose, "Chip type:", chipType);
+  verbose && cat(verbose, "Chip type: ", chipType);
   
   fullname <- paste(c(getName(this), tags), collapse=",");
-  verbose && cat(verbose, "Output fullname:", fullname);
+  verbose && cat(verbose, "Output fullname: ", fullname);
 
   outputPath <- file.path(rootPath, fullname, chipType);
   outputPath <- Arguments$getWritablePath(outputPath);
-  verbose && cat(verbose, "Output Path:", outputPath);
+  verbose && cat(verbose, "Output Path: ", outputPath);
 
   
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -59,14 +59,19 @@ setMethodS3("convertToUnique", "AffymetrixCelSet", function(this, ..., tags="UNQ
   # HB: Don't think argument 'chipType' makes a difference if 'cdf' is given.
   outputDataSet <- NULL
   tryCatch({
-    outputDataSet <- AffymetrixCelSet$byName(fullname, cdf=cdfUnique, 
+    res <- AffymetrixCelSet$byName(fullname, cdf=cdfUnique, 
                      paths=rootPath, checkChipType=FALSE, verbose=verbose);
   }, error = function(ex) {});
   
-  if (inherits(outputDataSet, "AffymetrixCelSet")) {
-    verbose && cat(verbose, "Dataset already created.");
-    verbose && exit(verbose);
-    return(invisible(outputDataSet));
+  if (inherits(res, "AffymetrixCelSet")) {
+    srcFullnames <- getFullNames(this);
+    fullnames <- getFullNames(res);
+    missing <- setdiff(srcFullnames, fullnames);
+    if (length(missing) == 0) {
+      verbose && cat(verbose, "Dataset already created.");
+      verbose && exit(verbose);
+      return(invisible(res));
+    }
   }
   
   
@@ -96,8 +101,8 @@ setMethodS3("convertToUnique", "AffymetrixCelSet", function(this, ..., tags="UNQ
       df <- getFile(this, kk);
       verbose && enter(verbose, sprintf("Converting CEL data from standard to unique CDF for sample #%d (%s) of %d", kk, getName(df), nbrOfArrays));
   
-      fullname <- getFullName(df);
-      filename <- sprintf("%s.CEL", fullname);
+      dfFullname <- getFullName(df);
+      filename <- sprintf("%s.CEL", dfFullname);
       pathname <- Arguments$getWritablePathname(filename, path=outputPath, ...);
 
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -108,7 +113,8 @@ setMethodS3("convertToUnique", "AffymetrixCelSet", function(this, ..., tags="UNQ
       verbose && exit(verbose);
 
       # Build a valid CEL header
-      celHeader <- cdfHeaderToCelHeader(cdfHeader, sampleName=fullname);
+      celHeader <- cdfHeaderToCelHeader(cdfHeader, sampleName=dfFullname);
+      rm(dfFullname);
 
       # Add some extra information about what the CEL file is for
       params <- c(Descripion="This CEL file was created by the aroma.affymetrix package.");
@@ -165,6 +171,8 @@ setMethodS3("convertToUnique", "AffymetrixCelSet", function(this, ..., tags="UNQ
 
 ############################################################################
 # HISTORY:
+# 2010-05-13 [HB]
+# o Yday's fixes had some hiccups.
 # 2010-05-12 [HB]
 # o BUG FIX: convertToUnique() for AffymetrixCelSet would not recognize
 #   Windows Shortcut links.

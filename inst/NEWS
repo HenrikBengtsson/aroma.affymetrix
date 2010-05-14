@@ -1,12 +1,17 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 1.6.0 [2010-05-14]
+o Package submitted to CRAN.
+o Package pass system and redundancy tests.
+o Package pass R CMD check on R v2.11.0 and v2.12.0 devel.
+
+ 
 Version: 1.5.9 [2010-05-13]
-o Now the constructor AllelicCrosstalkCalibration() is set to recognize
-  the Cytogenetics_Array chip type.  This avoids having to scan the CDF
-  for unit types and check for SNPs, which is slow and not really wanted
-  for a constructor function.  The allele pairs are inferred from the
-  CDF (by default).
+o SPEED UP: Now the constructor AllelicCrosstalkCalibration() is set to
+  recognize the Cytogenetics_Array chip type.  This avoids having to 
+  scan the CDF for unit types and check for SNPs, which is slow and not
+  really wanted for a constructor function.
 o ROBUSTNESS: Added a redundancy test of CRMA "v1.5" for the
   Cytogenetics_Array chip type.
 o ROBUSTNESS: Now fromDataFile() of ChipEffectFile and FirmaFile, as

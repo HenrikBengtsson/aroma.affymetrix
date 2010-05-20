@@ -1,9 +1,35 @@
-PdInfo2Cdf <- function(pdpkg, celfile, verbose=TRUE, overwrite=FALSE) {
-  #### This script has been written to generate a .cdf-file from an 
-  #### "pd.XXXX" package, such as those build with pdInfoBuilder.
-  #### The original was written by Samuel Wuest, modified by Mark Robinson 
-  #### (around 12 Jan 2009) to be generic
-
+###########################################################################/** 
+# @RdocFunction pdInfo2Cdf
+# @alias PdInfo2Cdf
+#
+# @title "Generates an Affymetrix CDF file from a pdInfo package and a auxillary CEL file for the same chip type"
+#
+# \description{
+#   @get "title".
+#
+#   \emph{Disclaimer: This is a user-contributed function.}
+# }
+#
+# @synopsis
+#
+# \arguments{
+#  \item{pdpkg}{A @character string for an existing pdInfo package.}
+#  \item{celfile}{The pathname to an auxillary CEL for the same chip type.}
+#  \item{overwrite}{If @TRUE, an existing CDF is overwritten, otherwise
+#    an exception is thrown.}
+#  \item{verbose}{A @logical or @see "R.utils::Verbose".}
+#  \item{...}{Not used.}
+# }
+#
+# \value{
+#   Returns (invisibly) the pathname to CDF written.
+# }
+#
+# \authors{Maintained by Mark Robinson. Original code by Samuel Wuest.}
+#
+# @keyword internal
+#*/########################################################################### 
+pdInfo2Cdf <- function(pdpkg, celfile, overwrite=FALSE, verbose=TRUE, ...) {
   require("affxparser") || throw("Package not loaded: affxparser");
   require("pdInfoBuilder") || throw("Package not loaded: pdInfoBuilder");
 
@@ -26,6 +52,9 @@ PdInfo2Cdf <- function(pdpkg, celfile, verbose=TRUE, overwrite=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validating arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Argument 'pdpkg':
+  pdpkg <- Arguments$getCharacter(pdpkg);
+
   # Argument 'celfile':
   celfile <- Arguments$getReadablePathname(celfile, mustExist=TRUE);
 
@@ -45,9 +74,7 @@ PdInfo2Cdf <- function(pdpkg, celfile, verbose=TRUE, overwrite=FALSE) {
   require(pdpkg, character.only=TRUE) || 
                  throw("Platform Design (PD) package not loaded: ", pdpkg);
 
-  verbose && cat(verbose, "Reading CEL file.");
-
-  verbose && enter(verbose, "Reading CEL file");
+  verbose && enter(verbose, "Reading auxillary CEL file");
   cel <- read.celfiles(filenames=celfile, pkgname=pdpkg);
   verbose && exit(verbose);
 
@@ -61,7 +88,7 @@ PdInfo2Cdf <- function(pdpkg, celfile, verbose=TRUE, overwrite=FALSE) {
 
   celHead <- readCelHeader(celfile);
   nrows <- celHead$rows;
-  ncols <- celHead$rows;
+  ncols <- celHead$cols;
   rm(celHead);  # Not needed anymore
 
   verbose && enter(verbose, "Creating list from query table");
@@ -98,17 +125,32 @@ PdInfo2Cdf <- function(pdpkg, celfile, verbose=TRUE, overwrite=FALSE) {
   verbose && exit(verbose);
 
   invisible(res);
-} # PdInfo2Cdf()
+} # pdInfo2Cdf()
+
+
+# For backward compatibility
+PdInfo2Cdf <- pdInfo2Cdf;
+
 
 ############################################################################
 # HISTORY:
+# 2010-05-20 [HB]
+# o Renamed PdInfo2Cdf() to pdInfo2Cdf().  Keeping old one for backward
+#   compatibility for a while.
+# 2010-05-19 [HB]
+# o BUG FIX: PdInfo2Cdf() would write dimension (rows,rows) in the CDF 
+#   header instead of (rows,cols).  Thanks Kasper Daniel Hansen for
+#   reporting this.
 # 2009-10-16 [HB]
 # o MEMORY OPTIMIZATION: Cleaning out non needed objects sooner.
 # o Added verbose a'la R.utils.
 # o Added some validation of arguments.
 # o Tidied up the code structure.
 # 2009-01-13 [MR]
-# o Added.
+# o Added. "This script has been written to generate a .cdf-file from an 
+#   "pd.XXXX" package, such as those build with pdInfoBuilder.
+#   The original was written by Samuel Wuest, modified by Mark Robinson 
+#   (around 12 Jan 2009) to be generic."
 # 2008-??-?? [SW]
 # o Created by Samuel Wuest.
 ############################################################################

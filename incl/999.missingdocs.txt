@@ -95,7 +95,7 @@
   createParamCdf.ChipEffectFile createParamCdf.FirmaFile createUnique
   createUniqueCdf CrlmmModel decode decode.ParameterCelFile
   dim.DChipDcpFile doCRMA doCRMA.default encode encode.ParameterCelFile
-  Env2Cdf excludeChrXFromFit
+  excludeChrXFromFit
   excludeChrXFromFit.DChipQuantileNormalization
   exportAromaSignalBinaryFileList
   exportAromaSignalBinaryFileList.CnChipEffectFile exportTotalAndFracB
@@ -597,7 +597,7 @@
   nbrOfUnits.UflSnpInformation nbrOfUnits.UgpGenomeInformation
   normalizeOneArrayVector
   normalizeOneArrayVector.FragmentEquivalentClassNormalization
-  patch.AromaAffymetrix PdInfo2Cdf plasqGaussian plotAllelePairs
+  patch.AromaAffymetrix plasqGaussian plotAllelePairs
   plotAllelePairs.AllelicCrosstalkCalibration plotBasepair
   plotBasepair.AllelicCrosstalkCalibration plotBoxplot
   plotBoxplot.ChipEffectSet plotBoxplotStats plotCovariateEffects
@@ -716,3 +716,4 @@ allocateFromCdf.AromaCellCpgFile
 doCRMAv1 doCRMAv1.AffymetrixCelSet doCRMAv1.character
 groupUnitsByDimension
 extractAlleleSet extractAlleleSet.SnpChipEffectSet
+    env2Cdf Env2Cdf

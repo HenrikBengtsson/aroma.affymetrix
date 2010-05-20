@@ -25,7 +25,7 @@
 #   Returns (invisibly) the pathname to CDF written.
 # }
 #
-# \authors{Maintained by Mark Robinson. Original code by Samuel Wuest.}
+# \author{Maintained by Mark Robinson. Original code by Samuel Wuest.}
 #
 # @keyword internal
 #*/########################################################################### 

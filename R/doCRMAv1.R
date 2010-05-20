@@ -54,7 +54,8 @@ setMethodS3("doCRMAv1", "AffymetrixCelSet", function(csR, combineAlleles=TRUE, a
   verbose && print(verbose, gc);
 
   verbose && enter(verbose, "CRMAv1/Probe summarization");
-  plm <- RmaCnPlm(csC, mergeStrands=TRUE, combineAlleles=combineAlleles);
+  plm <- RmaCnPlm(csC, mergeStrands=TRUE, combineAlleles=combineAlleles, 
+                                                            shift=+300);
   verbose && print(verbose, plm);
   if (length(findUnitsTodo(plm)) > 0) {
     # Fit CN probes quickly (~5-10s/array + some overhead)
@@ -133,6 +134,9 @@ setMethodS3("doCRMAv1", "character", function(dataSet, ..., verbose=FALSE) {
 
 ############################################################################
 # HISTORY:
+# 2010-05-17
+# o CORRECTION: doCRMAv1() forgot to shift +300 the signals before 
+#   doing the probe-level summarization.
 # 2010-04-21
 # o BUG FIX: doCRMAv1() for AffymetrixCelSet used undefined 'csN' internally
 #   instead of 'csC'.

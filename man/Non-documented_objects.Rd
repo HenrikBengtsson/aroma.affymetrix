@@ -231,7 +231,6 @@
 \alias{doCRMA.default}
 \alias{encode}
 \alias{encode.ParameterCelFile}
-\alias{Env2Cdf}
 \alias{excludeChrXFromFit}
 \alias{excludeChrXFromFit.DChipQuantileNormalization}
 \alias{exportAromaSignalBinaryFileList}
@@ -1156,7 +1155,6 @@
 \alias{normalizeOneArrayVector}
 \alias{normalizeOneArrayVector.FragmentEquivalentClassNormalization}
 \alias{patch.AromaAffymetrix}
-\alias{PdInfo2Cdf}
 \alias{plasqGaussian}
 \alias{plotAllelePairs}
 \alias{plotAllelePairs.AllelicCrosstalkCalibration}
@@ -1414,6 +1412,8 @@
 \alias{groupUnitsByDimension}
 \alias{extractAlleleSet}
 \alias{extractAlleleSet.SnpChipEffectSet}
+\alias{env2Cdf}
+\alias{Env2Cdf}
 
 \description{
   This page contains aliases for all "non-documented" objects that

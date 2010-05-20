@@ -22,7 +22,7 @@ print(csR);
 csR <- extract(csR, 1);
 print(csR);
 
-acc <- AllelicCrosstalkCalibration(csR, model="CRMAv2", tags="*,v2");
+acc <- AllelicCrosstalkCalibration(csR, model="CRMAv2");
 print(acc);
 csC <- process(acc, verbose=log);
 print(csC);

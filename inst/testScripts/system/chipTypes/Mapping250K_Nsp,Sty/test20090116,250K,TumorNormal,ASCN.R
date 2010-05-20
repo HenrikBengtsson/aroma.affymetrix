@@ -27,7 +27,7 @@ print(csR);
 # Reorder arrays according to 'pairs' matrix
 csR <- extract(csR, indexOf(csR, pairs));
 
-acc <- AllelicCrosstalkCalibration(csR, model="CRMAv2", tags="*,v2");
+acc <- AllelicCrosstalkCalibration(csR, model="CRMAv2");
 print(acc);
 
 csC <- process(acc, verbose=log);

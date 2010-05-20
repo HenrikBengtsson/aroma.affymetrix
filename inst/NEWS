@@ -1,6 +1,13 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 1.6.1 [2010-05-19]
+o CORRECTION: doCRMAv1() did not shift +300 the signals before 
+  doing the probe-level summarization.
+o BUG FIX: Fixed a bug in PdInfo2Cdf().  Thanks Kasper Daniel Hansen 
+  for reporting this. 
+
+
 Version: 1.6.0 [2010-05-14]
 o Package submitted to CRAN.
 o Package pass system and redundancy tests.

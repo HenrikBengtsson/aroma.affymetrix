@@ -15,24 +15,21 @@ for (kk in seq(length=nbrOfSets)) {
   chipType <- chipTypes[kk];
   ds <- CnChipEffectSet$byName(dataSet, tags=tags, chipType=chipType,
                               mergeStrands=TRUE, combineAlleles=TRUE);
+
+  fnts <- getAromaFullNameTranslatorSet(ds);
+  print(fnts);
+  appendFullNamesTranslator(ds, fnts);
+
+  cat(verbose, "Default fullnames:");
+  print(verbose, getFullNames(ds, translate=FALSE));
+  cat(verbose, "Translated fullnames:");
+  print(verbose, getFullNames(ds));
+
   dsList[[kk]] <- ds;
 }
 print(dsList);
 
 dsTuple <- as.CopyNumberDataSetTuple(dsList);
 print(dsTuple);
+print(getNames(dsTuple));
 
-res <- doCBS(dsTuple, arrays=1:2, chromosomes=c(19,21), verbose=verbose);
-print(res);
-
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# doCBS() with data set tuple names
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-dataSet <- "HapMap270,100K,CEU,testSet";
-tags <- "ACC,-XY,RMA,+300,A+B,FLN,-XY";
-chipTypes <- c("Mapping50K_Hind240", "Mapping50K_Xba240");
-
-res <- doCBS(dataSet, tags=tags, chipTypes=chipTypes,
-             arrays=1:2, chromosomes=c(19,21), verbose=verbose);
-print(res);

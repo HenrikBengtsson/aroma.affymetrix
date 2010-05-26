@@ -1,6 +1,10 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 1.6.2 [2010-05-26]
+o Started to add scripts for downloading example data.
+
+
 Version: 1.6.1 [2010-05-19]
 o CORRECTION: doCRMAv1() did not shift +300 the signals before 
   doing the probe-level summarization.

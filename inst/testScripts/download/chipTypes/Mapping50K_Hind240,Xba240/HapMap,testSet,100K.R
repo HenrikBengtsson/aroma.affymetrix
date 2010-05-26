@@ -3,6 +3,12 @@
 # Created on: 2010-05-26
 # Last updated: 2010-05-26
 #
+# USAGE:
+# path <- "downloadScripts/chipTypes/Mapping50K_Hind240,Xba240";
+# filename <- "HapMap,testSet,100K.R";
+# pathname <- system.file(path, filename, package="aroma.affymetrix");
+# source(pathname);
+#
 # DOWNLOADS:
 # rawData/
 #  HapMap,testSet/

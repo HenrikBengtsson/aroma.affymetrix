@@ -1,35 +1,40 @@
-library("aroma.affymetrix")
+library("aroma.affymetrix");
 
 verbose <- Verbose(threshold=-4, timestamp=TRUE);
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# doCBS() with explicit data set tuple
+# A tuple
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-dataSet <- "HapMap270,100K,CEU,testSet";
-tags <- "ACC,-XY,RMA,+300,A+B,FLN,-XY";
+dataSet <- "HapMap,testSet";
 chipTypes <- c("Mapping50K_Hind240", "Mapping50K_Xba240");
 
-nbrOfSets <- length(chipTypes);
-dsList <- vector("list", nbrOfSets);
-for (kk in seq(length=nbrOfSets)) {
-  chipType <- chipTypes[kk];
-  ds <- CnChipEffectSet$byName(dataSet, tags=tags, chipType=chipType,
-                              mergeStrands=TRUE, combineAlleles=TRUE);
-
-  fnts <- getAromaFullNameTranslatorSet(ds);
-  print(fnts);
-  appendFullNamesTranslator(ds, fnts);
-
-  cat(verbose, "Default fullnames:");
-  print(verbose, getFullNames(ds, translate=FALSE));
-  cat(verbose, "Translated fullnames:");
-  print(verbose, getFullNames(ds));
-
-  dsList[[kk]] <- ds;
-}
+dsList <- lapply(chipTypes, FUN=function(chipType) {
+  AffymetrixCelSet$byName(dataSet, chipType=chipType);
+});
 print(dsList);
+dsTuple <- AffymetrixCelSetTuple(dsList);
+dsTuple <- GenericDataFileSetList(dsList);
+print(dsTuple);
+print(getNames(dsTuple));  # HMM... == NULL?!?
 
-dsTuple <- as.CopyNumberDataSetTuple(dsList);
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Same tuple with fullname translators
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+for (ds in getSets(dsTuple)) {
+  fnts <- getAromaFullNameTranslatorSet(ds);
+  appendFullNamesTranslator(ds, fnts);
+}
 print(dsTuple);
 print(getNames(dsTuple));
 
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Attributes
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ds <- dsList[[1]];
+n23 <- sapply(ds, getAttribute, "n23");
+n24 <- sapply(ds, getAttribute, "n24");
+isFemale <- (n23 == 2 & n24 == 0);
+dsXX <- extract(ds, isFemale);
+print(dsXX);

@@ -133,9 +133,6 @@ setMethodS3("hasColumnHeader", "AffymetrixProbeTabFile", function(this, ...) {
 
 
 setMethodS3("translateColumnNames", "AffymetrixProbeTabFile", function(this, names, ...) {
-##  # Remove all prefixes "PROBE_"
-##  names <- gsub("^PROBE_", "", names);
-
   # Convert 'Foo_baR_dOo' and 'FOO.baR.dOo' to 'Foo baR dOo'?
   if (any(regexpr("[_.]", names) != -1)) {
     names <- gsub("[_.]", " ", names);
@@ -150,6 +147,7 @@ setMethodS3("translateColumnNames", "AffymetrixProbeTabFile", function(this, nam
   names[lcNames == "transcript cluster id"] <- "unitName";
   names[lcNames == "probe x"] <- "probe x pos";
   names[lcNames == "probe y"] <- "probe y pos";
+  names[lcNames == "probe strand"] <- "target strandedness";
 
   # Finally, convert 'foo bar doo' to 'fooBarDoo'
   names <- toCamelCase(names);
@@ -703,6 +701,9 @@ setMethodS3("readSequenceDataFrame", "AffymetrixProbeTabFile", function(this, ..
 
 ############################################################################
 # HISTORY:
+# 2010-05-30
+# o Now translateFullName() of AffymetrixProbeTabFile translates
+#   'PROBE_STRAND' to 'targetStrandedness'.
 # 2009-09-27
 # o BUG FIX: Now getCdf() for AffymetrixProbeTabFile first searches for a
 #   CDF with filename <chipType>.cdf, then <chipType>,.*.cdf.

@@ -1,6 +1,11 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 1.6.3 [2010-05-30]
+o Now translateFullName() of AffymetrixProbeTabFile translates
+  'PROBE_STRAND' to 'targetStrandedness'.
+
+
 Version: 1.6.2 [2010-05-26]
 o Started to add scripts for downloading example data.
 

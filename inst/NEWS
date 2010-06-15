@@ -1,6 +1,10 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 1.6.4 [2010-06-07]
+o Added argument shift=+300 to doCRMAv1().
+
+
 Version: 1.6.3 [2010-05-30]
 o Now translateFullName() of AffymetrixProbeTabFile translates
   'PROBE_STRAND' to 'targetStrandedness'.

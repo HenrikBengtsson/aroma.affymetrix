@@ -1,4 +1,4 @@
-setMethodS3("doCRMAv1", "AffymetrixCelSet", function(csR, combineAlleles=TRUE, arrays=NULL, ..., ram=NULL, verbose=FALSE) {
+setMethodS3("doCRMAv1", "AffymetrixCelSet", function(csR, shift=+300, combineAlleles=TRUE, arrays=NULL, ..., ram=NULL, verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
@@ -7,6 +7,9 @@ setMethodS3("doCRMAv1", "AffymetrixCelSet", function(csR, combineAlleles=TRUE, a
   if (!inherits(csR, className)) {
     throw(sprintf("Argument 'csR' is not a %s: %s", className, class(csR)[1]));
   }
+
+  # Argument 'shift':
+  shift <- Arguments$getNumeric(shift);
 
   # Argument 'combineAlleles':
   combineAlleles <- Arguments$getLogical(combineAlleles);
@@ -55,7 +58,7 @@ setMethodS3("doCRMAv1", "AffymetrixCelSet", function(csR, combineAlleles=TRUE, a
 
   verbose && enter(verbose, "CRMAv1/Probe summarization");
   plm <- RmaCnPlm(csC, mergeStrands=TRUE, combineAlleles=combineAlleles, 
-                                                            shift=+300);
+                                                            shift=shift);
   verbose && print(verbose, plm);
   if (length(findUnitsTodo(plm)) > 0) {
     # Fit CN probes quickly (~5-10s/array + some overhead)
@@ -134,6 +137,8 @@ setMethodS3("doCRMAv1", "character", function(dataSet, ..., verbose=FALSE) {
 
 ############################################################################
 # HISTORY:
+# 2010-06-07
+# o Added argument shift=+300 to doCRMAv1().
 # 2010-05-17
 # o CORRECTION: doCRMAv1() forgot to shift +300 the signals before 
 #   doing the probe-level summarization.

@@ -140,7 +140,8 @@ setMethodS3("getDefaultSettings", "AromaAffymetrix", function(this, ...) {
     ),
 
     rules = list(
-      allowAsciiCdfs = FALSE
+      allowAsciiCdfs = FALSE,
+      allowDChipAnnotationFiles = FALSE
     ),
 
     output = list(
@@ -168,6 +169,9 @@ setMethodS3("getDefaultSettings", "AromaAffymetrix", function(this, ...) {
 
 ############################################################################
 # HISTORY:
+# 2010-06-07
+# o Added setting 'rules/allowDChipAnnotationFiles'. Still to be asserted
+#   by the code.
 # 2009-05-16
 # o Updated fitSearchPath() to utilize new fitSearchPathInternal().
 # o Now AromaAffymetrix inherits from AromaPackage.

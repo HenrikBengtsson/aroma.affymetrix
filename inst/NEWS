@@ -1,6 +1,12 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 1.6.5 [2010-06-16]
+o Added doRMA() for AffymetrixCelSet and data-set names.
+  doRMA() runs in bounded memory and replicates the results of
+  fitPLM() in the affyPLM package with great precision.
+
+
 Version: 1.6.4 [2010-06-07]
 o Added argument shift=+300 to doCRMAv1().
 

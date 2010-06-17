@@ -1414,6 +1414,9 @@
 \alias{extractAlleleSet.SnpChipEffectSet}
 \alias{env2Cdf}
 \alias{Env2Cdf}
+\alias{doRMA}
+\alias{doRMA.AffymetrixCelSet}
+\alias{doRMA.character}
 
 \description{
   This page contains aliases for all "non-documented" objects that

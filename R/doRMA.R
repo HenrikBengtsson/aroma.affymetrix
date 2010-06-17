@@ -41,7 +41,7 @@ setMethodS3("doRMA", "AffymetrixCelSet", function(csR, arrays=NULL, ..., ram=NUL
   }
 
   verbose && enter(verbose, "RMA/Background correction (normal & exponential mixture model)");
-  bc <- RmaBackgroundCorrection(cs);
+  bc <- RmaBackgroundCorrection(csR);
   verbose && print(verbose, bc);
   csB <- process(bc, verbose=verbose);
   verbose && print(verbose, csB);

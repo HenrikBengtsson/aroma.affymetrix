@@ -717,3 +717,4 @@ doCRMAv1 doCRMAv1.AffymetrixCelSet doCRMAv1.character
 groupUnitsByDimension
 extractAlleleSet extractAlleleSet.SnpChipEffectSet
     env2Cdf Env2Cdf
+ doRMA doRMA.AffymetrixCelSet doRMA.character

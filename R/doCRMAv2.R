@@ -152,8 +152,15 @@ setMethodS3("doCRMAv2", "character", function(dataSet, ..., verbose=FALSE) {
 })
 
 
+setMethodS3("doASCRMAv2", "default", function(...) {
+  doCRMAv2(..., combineAlleles=FALSE); 
+})
+
+
 ############################################################################
 # HISTORY:
+# 2010-06-21
+# o Added doASCRMAv2() for a convenient allele-specific CRMAv2 wrapper.
 # 2010-04-04
 # o Added argument 'plm' to doCRMAv2().
 # 2010-02-15

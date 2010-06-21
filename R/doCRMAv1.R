@@ -135,8 +135,15 @@ setMethodS3("doCRMAv1", "character", function(dataSet, ..., verbose=FALSE) {
 })
 
 
+setMethodS3("doASCRMAv1", "default", function(...) {
+  doCRMAv1(..., combineAlleles=FALSE); 
+})
+
+
 ############################################################################
 # HISTORY:
+# 2010-06-21
+# o Added doASCRMAv1() for a convenient allele-specific CRMAv1 wrapper.
 # 2010-06-07
 # o Added argument shift=+300 to doCRMAv1().
 # 2010-05-17

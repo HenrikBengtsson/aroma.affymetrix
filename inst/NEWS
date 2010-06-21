@@ -1,6 +1,11 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 1.6.x [2010-06-21]
+o Added doASCRMAv1() and doASCRMAv2() for convenient allele-specific
+  doCRMAv1() and doCRMAv2() wrappers.
+
+
 Version: 1.6.5 [2010-06-16]
 o Added doRMA() for AffymetrixCelSet and data-set names.
   doRMA() runs in bounded memory and replicates the results of

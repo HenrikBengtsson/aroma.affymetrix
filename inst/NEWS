@@ -1,9 +1,12 @@
 Package: aroma.affymetrix
 =========================
 
-Version: 1.6.x [2010-06-21]
+Version: 1.6.x [2010-06-22]
 o Added doASCRMAv1() and doASCRMAv2() for convenient allele-specific
   doCRMAv1() and doCRMAv2() wrappers.
+o CLEAN UP: Dropped argument 'transforms' from getImage() 
+  for AffymetrixCdfFile.
+
 
 
 Version: 1.6.5 [2010-06-16]

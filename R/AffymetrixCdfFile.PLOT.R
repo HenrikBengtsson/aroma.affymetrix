@@ -4,7 +4,7 @@ setMethodS3("stextChipType", "AffymetrixCdfFile", function(this, ...) {
 
 
 
-setMethodS3("getImage", "AffymetrixCdfFile", function(this, transforms=NULL, xrange=c(0,Inf), yrange=xrange, zrange=c(0,sqrt(2^16)), field=c("isPm"), levels=NULL, zoom=1, ..., verbose=FALSE) {
+setMethodS3("getImage", "AffymetrixCdfFile", function(this, xrange=c(0,Inf), yrange=xrange, zrange=c(0,sqrt(2^16)), field=c("isPm"), levels=NULL, zoom=1, ..., verbose=FALSE) {
   require("EBImage") || throw("Package not loaded: EBImage.");
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
@@ -53,6 +53,10 @@ setMethodS3("getImage", "AffymetrixCdfFile", function(this, transforms=NULL, xra
   verbose && exit(verbose);
 
   verbose && enter(verbose, "Creating Image");
+  verbose && cat(verbose, "Arguments:");
+  args <- list(z=z, scale=zoom, lim=zrange, ...);
+  verbose && str(verbose, args);
+  rm(args);
   img <- getImage(z, scale=zoom, lim=zrange, ..., verbose=less(verbose, 1));
   verbose && print(verbose, img);
   verbose && exit(verbose);
@@ -66,8 +70,11 @@ setMethodS3("getImage", "AffymetrixCdfFile", function(this, transforms=NULL, xra
 })
 
 
+
 ############################################################################
 # HISTORY:
+# 2010-06-22
+# o Dropped argument 'transforms' from getImage() for AffymetrixCdfFile.
 # 2006-09-16
 # o Added getGenomeInformation() and stextChipType().
 ############################################################################

@@ -1,7 +1,10 @@
 Package: aroma.affymetrix
 =========================
 
-Version: 1.6.x [2010-06-22]
+Version: 1.6.x [2010-07-02]
+o Now AffymetrixCelSet$byName(..., chipType="GenomeWideSNP_6,Full") will
+  work (before chiptypes with tags would give an error).  This is now
+  done by first locating the CDF for the chip type (with tags).
 o Added doASCRMAv1() and doASCRMAv2() for convenient allele-specific
   doCRMAv1() and doCRMAv2() wrappers.
 o CLEAN UP: Dropped argument 'transforms' from getImage() 

@@ -1417,6 +1417,10 @@
 \alias{doRMA}
 \alias{doRMA.AffymetrixCelSet}
 \alias{doRMA.character}
+\alias{doASCRMAv1}
+\alias{doASCRMAv2}
+\alias{doASCRMAv1.default}
+\alias{doASCRMAv2.default}
 
 \description{
   This page contains aliases for all "non-documented" objects that

@@ -444,6 +444,9 @@ setMethodS3("setCdf", "AffymetrixCelSet", function(this, cdf, verbose=FALSE, ...
 
 setMethodS3("findByName", "AffymetrixCelSet", function(static, ..., chipType=NULL, paths=c("rawData/", "probeData/")) {
   # Arguments 'chipType':`
+  if (!is.null(chipType)) {
+    chipType <- Arguments$getCharacter(chipType);
+  }
 
   # Arguments 'paths':
   if (is.null(paths)) {
@@ -451,7 +454,7 @@ setMethodS3("findByName", "AffymetrixCelSet", function(static, ..., chipType=NUL
   }
 
   # NextMethod() does not work here.
-  findByName.GenericDataFileSet(static, ..., subdirs=chipType, paths=paths); 
+  findByName.GenericDataFileSet(static, ..., subdirs=chipType, paths=paths);
 }, static=TRUE)
 
 
@@ -464,25 +467,38 @@ setMethodS3("fromName", "AffymetrixCelSet", function(static, ...) {
 
 
 setMethodS3("byName", "AffymetrixCelSet", function(static, name, tags=NULL, chipType=NULL, cdf=NULL, paths=NULL, ...) {
+  # Argument 'chipType':
+  if (!is.null(chipType)) {
+    chipType <- Arguments$getCharacter(chipType);
+  }
+
   # Argument 'cdf':
   if (!is.null(cdf)) {
     cdf <- Arguments$getInstanceOf(cdf, "AffymetrixCdfFile");
   }
 
-  # Argument 'chipType':
-  if (is.null(chipType)) {
-    if (!is.null(cdf)) {
-      chipType <- getChipType(cdf, fullname=FALSE);  # Without tags
-    } else {
-      throw("Argument 'chipType' must be specified unless argument 'cdf' is specified.");
-    }
+  if (is.null(cdf) && is.null(chipType)) {
+    throw("Either argument 'chipType' or argument 'cdf' must be specified.");
   }
 
+#  if (!is.null(cdf) && !is.null(chipType)) {
+#    throw("Only one of argument 'chipType' and argument 'cdf' can be specified.");
+#  }
+
+  # If argument 'cdf' is not specified, infer it from 'chipType'.
+  if (is.null(cdf)) {
+    cdf <- AffymetrixCdfFile$byChipType(chipType);
+  }
+
+  # The chiptype without tags
+  chipTypeShort <- getChipType(cdf, fullname=FALSE);
+
   suppressWarnings({
-    path <- findByName(static, name, tags=tags, chipType=chipType, paths=paths, ...);
+    path <- findByName(static, name, tags=tags, 
+                       chipType=chipTypeShort, paths=paths, ...);
   })
   if (is.null(path)) {
-    path <- file.path(paste(c(name, tags), collapse=","), chipType);
+    path <- file.path(paste(c(name, tags), collapse=","), chipTypeShort);
     throw("Cannot create ", class(static)[1], ".  No such directory: ", path);
   }
 
@@ -1448,6 +1464,10 @@ setMethodS3("getUnitGroupCellMap", "AffymetrixCelSet", function(this, ...) {
 
 ############################################################################
 # HISTORY:
+# 2010-07-02
+# o Now AffymetrixCelSet$byName(..., chipType="GenomeWideSNP_6,Full") will
+#   work (before chiptypes with tags would give an error).  This is now
+#   done by first locating the CDF for the chip type (with tags).
 # 2009-12-03
 # o BUG FIX: The test for allowing ASCII CDFs or not in setCdf() of an
 #   AffymetrixCelSet was only applied if getOption(aromaSettings, 

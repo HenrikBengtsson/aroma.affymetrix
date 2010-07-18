@@ -20,7 +20,7 @@ colnames(pairs) <- c("normal", "tumor");
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Setting up data set
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-cdf <- AffymetrixCdfFile$byName(chipType);
+cdf <- AffymetrixCdfFile$byChipType(chipType);
 csR <- AffymetrixCelSet$byName(dataSetName, cdf=cdf);
 print(csR);
 

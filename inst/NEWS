@@ -1,7 +1,18 @@
 Package: aroma.affymetrix
 =========================
 
-Version: 1.6.x [2010-07-02]
+Version: 1.6.7 [2010-07-19]
+o Now byPath(..., cdf) for ChipEffectSet will silently try to retrieve
+  the the monocell CDF if argument 'cdf' is the main CDF.  If it fails
+  an error is thrown.  This makes it possible to specify the main/regular
+  CDF (or chip type), instead of the monocell CDF, when retrieve a
+  chip-effect data set.
+o BUG FIX: The above byPath(..., cdf) updated was necessary in order to
+  be able to retrieve chip-effect data set byName() after the update of
+  byName() for AffymetrixCelSet in the previous version.
+
+
+Version: 1.6.6 [2010-07-02]
 o Now AffymetrixCelSet$byName(..., chipType="GenomeWideSNP_6,Full") will
   work (before chiptypes with tags would give an error).  This is now
   done by first locating the CDF for the chip type (with tags).
@@ -19,7 +30,7 @@ o Added doRMA() for AffymetrixCelSet and data-set names.
 
 
 Version: 1.6.4 [2010-06-07]
-o Added argument shift=+300 to doCRMAv1().
+o BUG FIX: Added argument shift=+300 to doCRMAv1().
 
 
 Version: 1.6.3 [2010-05-30]

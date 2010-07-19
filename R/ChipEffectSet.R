@@ -102,14 +102,23 @@ setMethodS3("findByName", "ChipEffectSet", function(static, ..., paths="plmData/
   path;
 }, static=TRUE)
 
-setMethodS3("byPath", "ChipEffectSet", function(static, path="plmData/", pattern=",chipEffects[.](c|C)(e|E)(l|L)$", checkChipType=FALSE, ..., fileClass=NULL) {
+setMethodS3("byPath", "ChipEffectSet", function(static, path="plmData/", pattern=",chipEffects[.](c|C)(e|E)(l|L)$", cdf=NULL, checkChipType=FALSE, ..., fileClass=NULL) {
+  # Argument 'cdf':
+  if (!is.null(cdf)) {
+    cdf <- Arguments$getInstanceOf(cdf, "AffymetrixCdfFile");
+    if (!isMonocellCdf(cdf)) {
+      cdf <- getMonocellCdf(cdf);
+    }
+  }
+
   # Argument 'fileClass':
   if (is.null(fileClass))
     fileClass <- gsub("Set$", "File", class(static)[1]);
 
   # Unfortunately, method dispatching does not work here.
-  byPath.AffymetrixCelSet(static, path=path, pattern=pattern, ..., fileClass=fileClass, checkChipType=checkChipType);
+  byPath.AffymetrixCelSet(static, path=path, pattern=pattern, ..., fileClass=fileClass, cdf=cdf, checkChipType=checkChipType);
 }, protected=TRUE, static=TRUE)
+
 
 
 setMethodS3("fromDataSet", "ChipEffectSet", function(static, dataSet, path, name=getName(dataSet), cdf=NULL, ..., verbose=FALSE) {
@@ -374,6 +383,15 @@ setMethodS3("extractMatrix", "ChipEffectSet", function(this, ..., field=c("theta
 
 ############################################################################
 # HISTORY:
+# 2010-07-19
+# o Now byPath(..., cdf) for ChipEffectSet will silently try to retrieve
+#   the the monocell CDF if argument 'cdf' is the main CDF.  If it fails
+#   an error is thrown.  This makes it possible to specify the main/regular
+#   CDF (or chip type), instead of the monocell CDF, when retrieve a
+#   chip-effect data set.
+# o BUG FIX: The above byPath(..., cdf) updated was necessary in order to
+#   be able to retrieve chip-effect data set byName() after the recent
+#   byName() update of AffymetrixCelSet.
 # 2010-05-08
 # o Now all findUnitsTodo() for data sets checks the data file that comes
 #   last in a lexicographic ordering.  This is now consistent with how

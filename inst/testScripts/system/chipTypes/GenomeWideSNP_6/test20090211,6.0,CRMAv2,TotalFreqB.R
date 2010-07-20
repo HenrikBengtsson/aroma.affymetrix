@@ -3,7 +3,7 @@ log <- Arguments$getVerbose(-8, timestamp=TRUE);
 
 dataSet <- "HapMap270"
 tags <- "6.0,CEU,testSet,ACC,ra,-XY,BPN,-XY,AVG,FLN,-XY";
-chipType <- "GenomeWideSNP_6";
+chipType <- "GenomeWideSNP_6,Full";
 cesN <- SnpChipEffectSet$byName(dataSet, tags=tags, chipType=chipType, mergeStrands=TRUE);
 print(cesN);
 

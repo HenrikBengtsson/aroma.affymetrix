@@ -1,6 +1,11 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 1.6.8 [2010-07-21]
+o CLEAN UP: Now getAverageFile() for AffymetrixCelSet no longer writes
+  debug information to ${Rcache}/aroma.affymetrix/idChecks/.
+
+
 Version: 1.6.7 [2010-07-19]
 o Now byPath(..., cdf) for ChipEffectSet will silently try to retrieve
   the the monocell CDF if argument 'cdf' is the main CDF.  If it fails

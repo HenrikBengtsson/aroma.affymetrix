@@ -2,7 +2,7 @@ library("aroma.affymetrix");
 log <- verbose <- Arguments$getVerbose(-8, timestamp=TRUE);
 
 dataSetName <- "Affymetrix_2006-TumorNormal";
-tags <- "ACC,-XY,v2,BPN,-XY,RMA,FLN,-XY";
+tags <- "ACC,-XY,BPN,-XY,RMA,FLN,-XY";
 chipType <- "Mapping250K_Nsp";
 
 pairs <- matrix(c(

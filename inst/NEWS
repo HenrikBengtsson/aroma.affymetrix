@@ -1,6 +1,10 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 1.7.0 [2010-07-26]
+o Committed to CRAN. No updates.
+
+
 Version: 1.6.8 [2010-07-21]
 o CLEAN UP: Now getAverageFile() for AffymetrixCelSet no longer writes
   debug information to ${Rcache}/aroma.affymetrix/idChecks/.

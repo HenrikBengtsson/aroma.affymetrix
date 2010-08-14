@@ -1,6 +1,12 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 1.7.1 [2010-08-14]
+o Added doGCRMA() for AffymetrixCelSet and data-set names.
+  doGCRMA() runs in bounded memory and replicates the results of
+  gcrma() in the gcrma package with great precision.
+
+
 Version: 1.7.0 [2010-07-26]
 o Committed to CRAN. No updates.
 

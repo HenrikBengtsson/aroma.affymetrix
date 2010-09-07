@@ -1,6 +1,12 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 1.7.2 [2010-09-06]
+o ROBUSTNESS: Added extractAffyBatch() for ChipEffectSet that gives 
+  an informative error message explaining why it doesn't make sense 
+  to do so.
+
+
 Version: 1.7.1 [2010-08-14]
 o Added doGCRMA() for AffymetrixCelSet and data-set names.
   doGCRMA() runs in bounded memory and replicates the results of

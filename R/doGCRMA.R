@@ -4,7 +4,7 @@
 #  [1] Z. Wu, R. Irizarry, R. Gentleman, F.M. Murillo & F. Spencer, A Model Based Background Adjustment for Oligonucleotide Expression Arrays, JASA, 2004.
 # }
 
-setMethodS3("doGCRMA", "AffymetrixCelSet", function(csR, arrays=NULL, ..., ram=NULL, verbose=FALSE) {
+setMethodS3("doGCRMA", "AffymetrixCelSet", function(csR, arrays=NULL, type=c("fullmodel", "affinities"), ..., ram=NULL, verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
@@ -19,6 +19,9 @@ setMethodS3("doGCRMA", "AffymetrixCelSet", function(csR, arrays=NULL, ..., ram=N
     throw("Not supported. Argument 'arrays' should be NULL.");
     arrays <- Arguments$getIndices(arrays, max=nbrOfArrays(csR));
   }
+
+  # Argument 'type':
+  type <- match.arg(type);
 
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
@@ -44,10 +47,24 @@ setMethodS3("doGCRMA", "AffymetrixCelSet", function(csR, arrays=NULL, ..., ram=N
   }
 
   verbose && enter(verbose, "GCRMA/Background correction");
-  bc <- GcRmaBackgroundCorrection(csR);
+
+  # Currently, you must use the standard CDF file. 
+  cdf <- getCdf(csR);
+  chipTypeS <- getChipType(cdf, fullname=FALSE);
+  cdfS <- AffymetrixCdfFile$byChipType(chipTypeS);
+  if (!equals(cdfS, cdf)) {
+    setCdf(csR, cdfS);
+  }
+
+  bc <- GcRmaBackgroundCorrection(csR, type=type);
   verbose && print(verbose, bc);
   csB <- process(bc, verbose=verbose);
   verbose && print(verbose, csB);
+
+  if (!equals(cdfS, cdf)) {
+    # Now, use the custom CDF in what follows
+    setCdf(csB, cdf);
+  }
   verbose && exit(verbose);
 
   # Clean up
@@ -124,6 +141,12 @@ setMethodS3("doGCRMA", "character", function(dataSet, ..., verbose=FALSE) {
 
 ############################################################################
 # HISTORY:
+# 2010-09-26
+# o Now doGCRMA() automagically makes sure that the default CDF is used
+#   in the QuantileNormalization step, while use a custom CDF everywhere
+#   else if set.
+# o Added argument 'type' to doGCRMA() which is passed to 
+#   QuantileNormalization().
 # 2010-08-14
 # o Created from doRMA.R.
 ############################################################################

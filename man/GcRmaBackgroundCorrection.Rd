@@ -41,14 +41,27 @@ extends \emph{\link[aroma.affymetrix]{BackgroundCorrection}}\cr
 
 }
 
-\usage{GcRmaBackgroundCorrection(..., indicesNegativeControl=NULL, affinities=NULL, type="fullmodel", opticalAdjust=TRUE, gsbAdjust=TRUE, gsbParameters=NULL)}
+\usage{GcRmaBackgroundCorrection(..., indicesNegativeControl=NULL, affinities=NULL, type=c("fullmodel", "affinities"), opticalAdjust=TRUE, gsbAdjust=TRUE, gsbParameters=NULL)}
 
 \arguments{
   \item{...}{Arguments passed to the constructor of
      \code{\link{ProbeLevelTransform}}.}
-  \item{indicesNegativeControl, affinities, type, opticalAdjust,
-     gsbAdjust, gsbParameters}{Additional arguments passed to the
-     internal \code{bgAdjustGcrma()} method.}
+  \item{indicesNegativeControl}{Locations of any negative control
+      probes (e.g., the anti-genomic controls on the human exon array).
+      If \code{\link[base]{NULL}} and \code{type == "affinities"}, then MMs are used as
+      the negative controls.}
+  \item{affinities}{A \code{\link[base]{numeric}} \code{\link[base]{vector}} of probe affinities, usually as
+      calculated by \code{computeAffinities()} of the
+      \code{\link{AffymetrixCdfFile}} class.}
+  \item{type}{Type (flavor) of background correction, which can
+      be either \code{"fullmodel"} (uses MMs; requires that the chip type
+      has PM/MM pairs) or \code{"affinities"} (uses probe sequence only).}
+  \item{gsbAdjust}{If \code{\link[base:logical]{TRUE}}, adjustment for specific binding is done,
+      otherwise not.}
+  \item{opticalAdjust}{If \code{\link[base:logical]{TRUE}}, correction for optical effect is done
+      first, utilizing \code{\link{OpticalBackgroundCorrection}}.}
+  \item{gsbParameters}{Additional argument passed to the internal
+      \code{bgAdjustGcrma()} method.}
 }
 
 \section{Fields and Methods}{

@@ -1,6 +1,15 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 1.7.3 [2010-09-26]
+o Now doGCRMA() automagically makes sure that the default CDF is used
+  in the QuantileNormalization step, while use a custom CDF everywhere
+  else if set.  Added argument 'type' to doGCRMA() which is passed to 
+  QuantileNormalization().
+o ROBUSTNESS: Added more validation of the arguments passed to 
+  the GcRmaBackgroundCorrection constructor.
+
+
 Version: 1.7.2 [2010-09-06]
 o ROBUSTNESS: Added extractAffyBatch() for ChipEffectSet that gives 
   an informative error message explaining why it doesn't make sense 

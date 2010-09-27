@@ -21,7 +21,7 @@
  Adapted from \code{\link[gcrma]{bg.adjust.gcrma}} in the \pkg{gcrma} package.
 }
 
-\usage{\method{bgAdjustGcrma}{AffymetrixCelFile}(this, path=NULL, type="fullmodel", indicesNegativeControl=NULL, affinities=NULL, gsbAdjust=TRUE, parametersGsb=NULL, k=6 * fast + 0.5 * (1 - fast), rho=0.7, stretch=1.15 * fast + 1 * (1 - fast), fast=TRUE, overwrite=FALSE, skip=!overwrite, ..., verbose=FALSE, .deprecated=TRUE)}
+\usage{\method{bgAdjustGcrma}{AffymetrixCelFile}(this, path=NULL, type=c("fullmodel", "affinities"), indicesNegativeControl=NULL, affinities=NULL, gsbAdjust=TRUE, parametersGsb=NULL, k=6 * fast + 0.5 * (1 - fast), rho=0.7, stretch=1.15 * fast + 1 * (1 - fast), fast=TRUE, overwrite=FALSE, skip=!overwrite, ..., verbose=FALSE, .deprecated=TRUE)}
 
 \arguments{
   \item{path}{The path where to save the adjusted data files.}
@@ -30,13 +30,13 @@
       probe sequence only).}
   \item{indicesNegativeControl}{Locations of any negative control
       probes (e.g., the anti-genomic controls on the human exon array).
-      If \code{\link[base]{NULL}} and type=="affinities", MMs are used as the negative
-      controls.}
+      If \code{\link[base]{NULL}} and \code{type == "affinities"}, then MMs are used as
+      the negative controls.}
   \item{affinities}{A \code{\link[base]{numeric}} \code{\link[base]{vector}} of probe affinities, usually as
       calculated by \code{computeAffinities()} of the
       \code{\link{AffymetrixCdfFile}} class.}
-  \item{gsbAdjust}{Should we adjust for specific binding (defaults to
-       \code{\link[base:logical]{TRUE}})?}
+  \item{gsbAdjust}{If \code{\link[base:logical]{TRUE}}, adjustment for specific binding is done,
+      otherwise not.}
   \item{parametersGsb}{Specific binding parameters as estimated by
       \code{calculateParametersGsb()} for the \code{\link{AffymetrixCelSet}}
       class.}

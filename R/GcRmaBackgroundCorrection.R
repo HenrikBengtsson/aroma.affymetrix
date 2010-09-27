@@ -15,9 +15,22 @@
 # \arguments{
 #   \item{...}{Arguments passed to the constructor of
 #      @see "ProbeLevelTransform".}
-#   \item{indicesNegativeControl, affinities, type, opticalAdjust, 
-#      gsbAdjust, gsbParameters}{Additional arguments passed to the
-#      internal \code{bgAdjustGcrma()} method.}
+#   \item{indicesNegativeControl}{Locations of any negative control
+#       probes (e.g., the anti-genomic controls on the human exon array).
+#       If @NULL and \code{type == "affinities"}, then MMs are used as
+#       the negative controls.}
+#   \item{affinities}{A @numeric @vector of probe affinities, usually as
+#       calculated by \code{computeAffinities()} of the 
+#       @see "AffymetrixCdfFile" class.}
+#   \item{type}{Type (flavor) of background correction, which can
+#       be either \code{"fullmodel"} (uses MMs; requires that the chip type
+#       has PM/MM pairs) or \code{"affinities"} (uses probe sequence only).}
+#   \item{gsbAdjust}{If @TRUE, adjustment for specific binding is done,
+#       otherwise not.}
+#   \item{opticalAdjust}{If @TRUE, correction for optical effect is done
+#       first, utilizing @see "OpticalBackgroundCorrection".}
+#   \item{gsbParameters}{Additional argument passed to the internal
+#       \code{bgAdjustGcrma()} method.}
 # }
 #
 # \section{Fields and Methods}{
@@ -26,7 +39,32 @@
 #
 # \author{Ken Simpson (ksimpson[at]wehi.edu.au).}
 #*/###########################################################################
-setConstructorS3("GcRmaBackgroundCorrection", function(..., indicesNegativeControl=NULL, affinities=NULL, type="fullmodel", opticalAdjust=TRUE, gsbAdjust=TRUE, gsbParameters=NULL) {
+setConstructorS3("GcRmaBackgroundCorrection", function(..., indicesNegativeControl=NULL, affinities=NULL, type=c("fullmodel", "affinities"), opticalAdjust=TRUE, gsbAdjust=TRUE, gsbParameters=NULL) {
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Validate arguments
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # Argument 'indicesNegativeControl':
+  if (!is.null(indicesNegativeControl)) {
+    indicesNegativeControl <- Arguments$getIndices(indicesNegativeControl);
+  }
+
+  # Argument 'affinities':
+  if (!is.null(affinities)) {
+    affinities <- Arguments$getNumerics(affinities);
+  }
+
+  # Argument 'type':
+  type <- match.arg(type);
+
+  # Argument 'opticalAdjust':
+  opticalAdjust <- Arguments$getLogical(opticalAdjust);
+
+  # Argument 'gsbAdjust':
+  gsbAdjust <- Arguments$getLogical(gsbAdjust);
+
+  # Argument 'gsbParameters':
+
+
   extend(BackgroundCorrection(..., typesToUpdate="pm"), "GcRmaBackgroundCorrection",
     .indicesNegativeControl=indicesNegativeControl,
     .affinities=affinities,
@@ -133,6 +171,10 @@ setMethodS3("process", "GcRmaBackgroundCorrection", function(this, ..., force=FA
 
 ############################################################################
 # HISTORY:
+# 2010-09-26
+# o Added explicit descriptions to the arguments list of the Rdocs.
+# o ROBUSTNESS: Added more validation of the arguments passed to 
+#   the GcRmaBackgroundCorrection constructor.
 # 2007-08-24
 # o BUG FIX: Forgot to pass argument '.deprecated=FALSE' to bgAdjustGcrma()
 #   because the latter is deprecated at the user-API level.

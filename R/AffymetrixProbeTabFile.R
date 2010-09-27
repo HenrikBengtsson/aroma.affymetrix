@@ -418,7 +418,11 @@ setMethodS3("findByChipType", "AffymetrixProbeTabFile", function(static, chipTyp
                    sep=";", collapse=";");
     pathname <- findFiles(pattern, paths=paths, recursive=TRUE);
     verbose && print(verbose, pathname);
-    throw("Found probe-tab file only by means of deprectated (v1) search rules: ", pathname);
+    if (is.null(pathname)) {
+      throw("Did not find a probe-tab file even by means of deprectated (v1) search rules.  Either way, such files are no longer supported.");
+      throw("Failed to find probe-tab file only by means of deprectated (v1) search rules: ", pathname);
+    }
+    throw("Found a probe-tab file only by means of deprectated (v1) search rules, which is no longer supported: ", pathname);
     verbose && exit(verbose);
   }
 

@@ -49,7 +49,6 @@ setMethodS3("bgAdjustOptical", "AffymetrixCelFile", function(this, path=file.pat
     throw("Cannot background correct data file. Argument 'path' refers to the same path as the path of the data file to be corrected: ", path);
   }
 
-
   cdf <- getCdf(this);
   nbrOfCells <- nbrOfCells(cdf);
 
@@ -149,13 +148,13 @@ setMethodS3("bgAdjustOptical", "AffymetrixCelFile", function(this, path=file.pat
 #       probe sequence only).}
 #   \item{indicesNegativeControl}{Locations of any negative control
 #       probes (e.g., the anti-genomic controls on the human exon array).
-#       If @NULL and type=="affinities", MMs are used as the negative
-#       controls.}
+#       If @NULL and \code{type == "affinities"}, then MMs are used as
+#       the negative controls.}
 #   \item{affinities}{A @numeric @vector of probe affinities, usually as
 #       calculated by \code{computeAffinities()} of the 
 #       @see "AffymetrixCdfFile" class.}
-#   \item{gsbAdjust}{Should we adjust for specific binding (defaults to
-#        @TRUE)?}
+#   \item{gsbAdjust}{If @TRUE, adjustment for specific binding is done,
+#       otherwise not.}
 #   \item{parametersGsb}{Specific binding parameters as estimated by
 #       \code{calculateParametersGsb()} for the @see "AffymetrixCelSet"
 #       class.}
@@ -184,7 +183,7 @@ setMethodS3("bgAdjustOptical", "AffymetrixCelFile", function(this, path=file.pat
 #  @seeclass
 # }
 #*/###########################################################################
-setMethodS3("bgAdjustGcrma", "AffymetrixCelFile", function(this, path=NULL, type="fullmodel", indicesNegativeControl=NULL, affinities=NULL, gsbAdjust=TRUE, parametersGsb=NULL, k=6*fast + 0.5*(1-fast), rho=0.7, stretch=1.15*fast + 1*(1-fast), fast=TRUE, overwrite=FALSE, skip=!overwrite, ..., verbose=FALSE, .deprecated=TRUE) {
+setMethodS3("bgAdjustGcrma", "AffymetrixCelFile", function(this, path=NULL, type=c("fullmodel", "affinities"), indicesNegativeControl=NULL, affinities=NULL, gsbAdjust=TRUE, parametersGsb=NULL, k=6*fast + 0.5*(1-fast), rho=0.7, stretch=1.15*fast + 1*(1-fast), fast=TRUE, overwrite=FALSE, skip=!overwrite, ..., verbose=FALSE, .deprecated=TRUE) {
   if (.deprecated) {
     throw("bgAdjustGcrma() is deprecated.  Please use the GcRmaBackgroundCorrection class");
   }
@@ -200,10 +199,12 @@ setMethodS3("bgAdjustGcrma", "AffymetrixCelFile", function(this, path=NULL, type
     throw("Cannot background correct data file. Argument 'path' refers to the same path as the path of the data file to be normalized: ", path);
   }
 
-  
+  # Argument 'type':
+  type <- match.arg(type);
   
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
+
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Generating output pathname

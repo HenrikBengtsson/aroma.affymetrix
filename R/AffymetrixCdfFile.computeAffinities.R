@@ -16,9 +16,7 @@
 # @synopsis
 #
 # \arguments{
-#   \item{paths}{A @character variable containing location(s) to look for
-#    the probe sequence file.  Multiple locations should be separated by
-#    semi-colons.}
+#   \item{safe}{A @logical argument passed to \code{getProbeSequenceData()}.}
 #   \item{force}{If @FALSE, cached results is returned, if available.}
 #   \item{verbose}{See @see "R.utils::Verbose".}
 #   \item{...}{Not used.}
@@ -33,7 +31,7 @@
 #   Ken Simpson (ksimpson[at]wehi.edu.au).
 # }
 #*/###########################################################################
-setMethodS3("computeAffinities", "AffymetrixCdfFile", function(this, paths=NULL, safe=TRUE, force=FALSE, verbose=FALSE, ...) {
+setMethodS3("computeAffinities", "AffymetrixCdfFile", function(this, safe=TRUE, force=FALSE, verbose=FALSE, ...) {
   isPackageInstalled("gcrma") || throw("Package not installed: gcrma");
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -76,7 +74,8 @@ setMethodS3("computeAffinities", "AffymetrixCdfFile", function(this, paths=NULL,
   chipTypeFull <- getChipType(this, fullname=TRUE);
 
 
-  verbose && enter(verbose, "Computing GCRMA probe affinities for ", nbrOfUnits(this), " units");
+  verbose && enter(verbose, "Computing GCRMA probe affinities");
+  verbose && cat(verbose, "Number of units: ", nbrOfUnits(this));
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Looking for MMs (and PMs) in the CDF
@@ -192,7 +191,7 @@ setMethodS3("computeAffinities", "AffymetrixCdfFile", function(this, paths=NULL,
 
   # Allocate empty vector of affinities
   naValue <- as.double(NA);
-  affinities <- rep(naValue, nbrOfCells);
+  affinities <- rep(naValue, times=nbrOfCells);
 
   if(isPMMMChip) {
     # ---------------------------------------------------------
@@ -201,8 +200,8 @@ setMethodS3("computeAffinities", "AffymetrixCdfFile", function(this, paths=NULL,
     apm <- vector("double", nbrOfSequences);
     amm <- vector("double", nbrOfSequences);
 
-    T13A13 <- T13 - A13;
-    C13G13 <- C13 - G13;
+    # Differencies in affinities between the PM and the MM probe
+    deltas <- c(A=T13-A13, C=G13-C13, G=C13-G13, T=A13-T13);
 
     sequences <- sequenceInfo$sequence;
     rm(sequenceInfo);
@@ -230,19 +229,12 @@ setMethodS3("computeAffinities", "AffymetrixCdfFile", function(this, paths=NULL,
                  charMtrx[3,,drop=TRUE] %*% affinity.basis.matrix);
       apm[ii] <- A %*% affinity.spline.coefs;
 
-      # Calculate the MM affinity
+      # Calculate the MM affinity from the PM affinity by
+      # correcting the mismatch nucleotide.
       base <- whichVector(charMtrx[,13,drop=TRUE] == 1);
-      if (base == 1) {
-        amm[ii] <- apm[ii] + T13A13;  # + T13 - A13
-      } else if (base == 4) {
-        amm[ii] <- apm[ii] - T13A13;  # + A13 - T13
-      } else if (base == 3) {
-        amm[ii] <- apm[ii] + C13G13;  # + C13 - G13
-      } else if (base == 2) {
-        amm[ii] <- apm[ii] - C13G13;  # + G13 - C13
-      } else {
-        throw("Unknown nucleotide index: ", base);
-      }
+      # Sanity check
+      if (length(beta) != 1) throw("Unknown nucleotide index: ", base);
+      amm[ii] <- apm[ii] + deltas[base];
     } # for (ii in ...)
     rm(charMtrx, A); # Not needed anymore
 
@@ -273,7 +265,7 @@ setMethodS3("computeAffinities", "AffymetrixCdfFile", function(this, paths=NULL,
     idxs <- whichVector(n == 25);
     nbrOfNon25mers <- nbrOfSequences - length(idxs);
     if (nbrOfNon25mers > 0) {
-      apm[-idxs] <- naValue;  # Already NA?!? /HB 2010-09-29
+      apm[-idxs] <- naValue;  # It is already NA?!? /HB 2010-09-29
       warning("Detected ", nbrOfNon25mers, " sequence that are not of length 25 nucleotides. For those probes, the affinities are defined to be NA.");
     }
 
@@ -315,6 +307,9 @@ setMethodS3("computeAffinities", "AffymetrixCdfFile", function(this, paths=NULL,
   gc <- gc();
   verbose && print(verbose, gc);
 
+  # Sanity checks
+  stopifnot(length(affinities) == nbrOfCells(this));
+
   # Saving to cache
   comment <- paste(unlist(key, use.names=FALSE), collapse=";");
   saveCache(key=key, affinities, comment=comment, dirs=dirs);
@@ -324,9 +319,283 @@ setMethodS3("computeAffinities", "AffymetrixCdfFile", function(this, paths=NULL,
   affinities;
 }, private=TRUE)
 
+
+
+
+
+setMethodS3("computeAffinitiesV2", "AffymetrixCdfFile", function(this, ..., method=c("v3", "v2", "v1"), force=FALSE, verbose=FALSE) {
+  isPackageInstalled("gcrma") || throw("Package not installed: gcrma");
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Local functions
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # getSeqMatrix() corresponds to calling the following native function
+  #   .Call("gcrma_getSeq", seq, PACKAGE="gcrma");
+  # However, we do want to avoid to load 'gcrma', because it loads Biostrings
+  # which loads IRanges, which cause problems, e.g. trim(). /HB 2009-05-09
+  getSeqMatrix <- function(seq, ...) {
+    seq <- charToRaw(seq);
+    map <- charToRaw("ACGT");
+    res <- matrix(0L, nrow=4, ncol=length(seq));
+    for (kk in 1:4) {
+      res[kk,(seq == map[kk])] <- 1L;
+    }
+    res;
+  } # getSeqMatrix()
+
+  getGcrmaSplineCoefs <- function(...) {
+    env <- new.env();
+    data("affinity.spline.coefs", package="gcrma", envir=env);
+    env$affinity.spline.coefs;
+  } # getGcrmaSplineCoefs()
+
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Validate arguments
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Argument 'method':
+  method <- match.arg(method);
+
+  # Argument 'verbose':
+  verbose <- Arguments$getVerbose(verbose);
+  if (verbose) {
+    pushState(verbose);
+    on.exit(popState(verbose));
+  }
+
+
+
+  verbose && enter(verbose, "Computing GCRMA probe affinities");
+  chipTypeS <- getChipType(this, fullname=FALSE);
+  verbose && cat(verbose, "Chip type: ", chipTypeS);
+  verbose && cat(verbose, "Number of units: ", nbrOfUnits(this));
+
+
+  # Checking cache
+  key <- list(method="computeAffinities", class=class(this)[1], 
+              chipType=chipTypeS, version="2010-09-29");
+  dirs <- c("aroma.affymetrix", chipTypeS);
+  if (!force) {
+    res <- loadCache(key=key, dirs=dirs);
+    if (!is.null(res)) {
+      verbose && cat(verbose, "Cached results found.");
+      verbose && exit(verbose);
+      return(res);
+    }
+  }
+
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Locate the cell sequence annotation data file
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  verbose && enter(verbose, "Locating the cell sequence annotation data file");
+  acs <- AromaCellSequenceFile$byChipType(chipTypeS);
+  verbose && print(verbose, acs);
+  verbose && exit(verbose);
+
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Calculate basis matrix based on priori probe affinitites (of gcrma)
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  verbose && enter(verbose, "Calculating apriori gcRMA affinities parameters");
+  # now calculate affinities - code reused from compute.affinities() in gcrma
+  verbose && enter(verbose, "Calculating probe affinities");
+
+  # To please R CMD check on R v2.6.0
+  affinity.spline.coefs <- getGcrmaSplineCoefs();
+  df <- length(affinity.spline.coefs) / 3;
+  affinity.basis.matrix <- splines::ns(1:25, df=df);
+  verbose && exit(verbose);
+
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Identifying cells with known probe sequences
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  verbose && enter(verbose, "Identifying cells with known probe sequences");
+  nbrOfCells <- nbrOfCells(this);
+  bp <- readSequenceMatrix(acs, positions=1, what="character");
+  hasSequence <- !is.na(bp);
+  cells <- whichVector(hasSequence);
+  verbose && printf(verbose, "Number of known sequences: %d of %d (%.1f%%)\n",
+                     length(cells), nbrOfCells, 100*length(cells)/nbrOfCells);
+  verbose && exit(verbose);
+
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Predicting probe affinities based on the probe sequences
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  verbose && enter(verbose, "Calculating chip-type specific gcRMA probe affinities");
+
+  # Allocate empty vector of affinities
+  naValue <- as.double(NA);
+  affinities <- rep(naValue, times=nbrOfCells);
+
+  if (method == "v1") {
+    pb <- NULL;
+    if (verbose) {
+      cat(verbose, "Progress (counting to 100): ");
+      if (isVisible(verbose)) {
+        pb <- ProgressBar(stepLength=100/(nbrOfSequences/1000));
+        reset(pb);
+      }
+    }
+
+    verbose && enter(verbose, "Reading all cell sequences");
+    seqMatrix <- readSequenceMatrix(acs, cells=cells);
+    verbose && str(verbose, seqMatrix);
+    verbose && exit(verbose);
+
+    bases <- c("A", "C", "G", "T");
+    for (ii in seq(along=cells)) {
+      if (!is.null(pb) && (ii %% 1000 == 0)) {
+        increase(pb);
+      }
+  
+      seqMatrixII <- seqMatrix[ii,,drop=TRUE];
+      affinity <- 0;
+      for (kk in 1:3) {
+        base <- bases[kk];
+        idxs <- (df*(kk-1)) + 1:5;
+        coefsKK <- affinity.spline.coefs[idxs];
+        baseKK <- as.integer(seqMatrixII == base);
+        Akk <- baseKK %*% affinity.basis.matrix;
+        akk <- sum(Akk * coefsKK);
+        affinity <- affinity + akk;
+      }
+  
+      cell <- cells[ii];
+      affinities[cell] <- affinity;
+    } # for (ii ...)
+    if (!is.null(pb)) {
+      increase(pb);
+    }
+  } else if (method == "v2") {
+    pb <- NULL;
+    if (verbose) {
+      cat(verbose, "Progress (counting to 100): ");
+      if (isVisible(verbose)) {
+        pb <- ProgressBar(stepLength=100/(nbrOfSequences/1000));
+        reset(pb);
+      }
+    }
+
+    verbose && enter(verbose, "Reading all cell sequences");
+    seqMatrix <- readSequenceMatrix(acs, cells=cells);
+    verbose && str(verbose, seqMatrix);
+    verbose && exit(verbose);
+
+    bases <- c("A", "C", "G", "T");
+    affinitiesT <- double(length(cells));
+    # For each nucleotide type...
+    for (kk in 1:3) {
+      base <- bases[kk];
+      idxs <- (df*(kk-1)) + (1:df);
+      coefsKK <- affinity.spline.coefs[idxs];
+  
+      # For each sequence...
+      for (ii in seq(along=cells)) {
+        seqMatrixII <- seqMatrix[ii,,drop=TRUE];
+        isBase <- (seqMatrixII == base);
+        basesII <- which(isBase);
+  
+        # For each position...
+        Bkk <- double(df);
+        for (pp in basesII) {
+          Bpp <- affinity.basis.matrix[pp,,drop=TRUE];
+          Bkk <- Bkk + Bpp;
+        }
+        b <- sum(Bkk * coefsKK);
+        affinitiesT[ii] <- affinitiesT[ii] + b;
+      } # for (ii ...)
+    } # for (kk ...)
+    affinities[cells] <- affinitiesT;
+##    print(affinities[cells] == affinities1[cells]);
+    if (!is.null(pb)) {
+      increase(pb);
+    }
+  } else if (method == "v3") {
+    nbrOfPositions <- ncol(seqMatrix);
+    bases <- c("A", "C", "G", "T");
+    affinitiesT <- double(length(cells));
+    # For each position...
+    for (pp in seq(length=nbrOfPositions)) {
+      verbose && enter(verbose, sprintf("Nucleotide position #%d of %d", pp, nbrOfPositions));
+
+      affinityBasisPP <- affinity.basis.matrix[pp,,drop=TRUE];
+      verbose && cat(verbose, "Affinity basis at this position:");
+      verbose && print(verbose, affinityBasisPP);
+
+      # Nothing to do?
+      if (all(affinityBasisPP == 0)) {
+        verbose && exit(verbose);
+        next;
+      }
+
+      # The nucleotides at this position across all cells
+      verbose && enter(verbose, "Reading cell nucleotides at this position");
+      nucleotides <- readSequenceMatrix(acs, cells=cells, positions=pp, drop=TRUE);
+      verbose && str(verbose, nucleotides);
+      verbose && exit(verbose);
+  
+      # For each nucleotide type...
+      for (tt in 1:3) {
+        base <- bases[tt];
+        verbose && enter(verbose, "Nucleotide ", base);
+  
+        # Identify cells with this nucleotide at this position
+        idxsTT <- whichVector(nucleotides == base);
+
+        verbose && cat(verbose, "Indices of cells with this base:");
+        verbose && str(verbose, idxsTT);
+  
+        # Nothing to do?
+        if (length(idxsTT) == 0) {
+          verbose && exit(verbose);
+          next;
+        }
+  
+        idxs <- (df*(tt-1)) + (1:df);
+        coefsTT <- affinity.spline.coefs[idxs];
+        affinityBasisPPTT <- affinityBasisPP * coefsTT;
+        affinityPPTT <- sum(affinityBasisPPTT);
+
+        verbose && printf(verbose, "Affinity for nucleotide '%s' at position #%d: %.3f\n", base, pp, affinityPPTT);
+  
+        affinitiesT[idxsTT] <- affinitiesT[idxsTT] + affinityPPTT;
+
+        verbose && exit(verbose);
+      } # for (tt ...)
+
+      verbose && exit(verbose);
+    } # for (pp ...)
+    affinities[cells] <- affinitiesT;
+    ##  print(isZero(affinities[cells] - affinities1[cells], neps=5));
+  } # if (method ...)
+
+  verbose && exit(verbose);
+
+  # Garbage collect
+  gc <- gc();
+  verbose && print(verbose, gc);
+
+  # Saving to cache
+  comment <- paste(unlist(key, use.names=FALSE), collapse=";");
+  saveCache(key=key, affinities, comment=comment, dirs=dirs);
+
+  verbose && exit(verbose);
+  
+  affinities;
+}, private=TRUE)
+
+
 ############################################################################
 # HISTORY:
+# 2010-09-30
+# o Added computeAffinitiesV2() for AffymetrixCdfFile, which calculated
+#   gcRMA affinities straight off from cell sequences in ACS file.
+#   It does not have to do funny PM & MM lookups and it is much faster!
 # 2010-09-29
+# o Dropped non-used argument 'path' from computeAffinities().
 # o Now the progress bar produced by computeAffinities() is ended correctly.
 # 2010-04-15
 # o BUG FIX: computeAffinities(..., verbose=FALSE) of AffymetrixCdfFile

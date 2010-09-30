@@ -115,13 +115,30 @@ setMethodS3("computeAffinities", "AffymetrixCdfFile", function(this, paths=NULL,
   verbose && enter(verbose, "Reading probe-sequence data");
   sequenceInfo <- getProbeSequenceData(this, safe=safe, verbose=verbose);
   verbose && str(verbose, sequenceInfo);
-  verbose && exit(verbose);
-
+  # Dropping unused (x,y) columns (not really needed, but towards using ACS files)
+  sequenceInfo <- sequenceInfo[,c("cell", "sequence"), drop=FALSE];
+  # Sorting by cell index (not really needed, but towards using ACS files)
+  o <- order(sequenceInfo$cell);
+  sequenceInfo <- sequenceInfo[o,,drop=FALSE];
+  verbose && str(verbose, sequenceInfo);
   nbrOfSequences <- nrow(sequenceInfo);
-
-  verbose && enter(verbose, "Get CDF cell indices for all units");
-  cells <- getCellIndices(this, useNames=FALSE, unlist=TRUE);
+  verbose && printf(verbose, "Number of known sequences: %d of %d (%.1f%%)\n", 
+               nbrOfSequences, nbrOfCells(this), 100*nbrOfSequences/nbrOfCells(this));
   verbose && exit(verbose);
+
+
+  verbose && enter(verbose, "Getting all CDF cell indices for all units");
+  cells <- getCellIndices(this, useNames=FALSE, unlist=TRUE, verbose=verbose);
+  verbose && str(verbose, cells);
+  n <- length(cells);
+  verbose && printf(verbose, "Number of CDF cell indices: %d of %d (%.1f%%)\n", 
+                                   n, nbrOfCells(this), 100*n/nbrOfCells(this));
+  verbose && exit(verbose);
+
+  sum(is.element(sequenceInfo$cell, cells));
+  verbose && printf(verbose, "Number of known sequences out of all CDF cell indices: %d of %d (%.1f%%)\n", 
+                             nbrOfSequences, n, 100*nbrOfSequences/n);
+
 
   # probe sequence tab-separated files generally only contain the PM
   # sequence (since we know that MM sequence always has base 13 complemented).
@@ -144,6 +161,7 @@ setMethodS3("computeAffinities", "AffymetrixCdfFile", function(this, paths=NULL,
   # for PM+MM arrays, the number of MMs and the number of PMs in the
   # CDF is equal
   isPMMMChip <- (length(indexMm) == length(indexPm));
+  verbose && enter(verbose, "Chip type is an \"PM+MM\" chip: ", isPMMMChip);
   
   rm(indexMmPutative, matches); # Not needed anymore
 
@@ -229,9 +247,8 @@ setMethodS3("computeAffinities", "AffymetrixCdfFile", function(this, paths=NULL,
     rm(charMtrx, A); # Not needed anymore
 
     if (!is.null(pb)) {
-      reset(pb);
+      increase(pb);
     }
-    verbose && cat(verbose, "");
 
     # create a vector to hold affinities and assign values to the 
     # appropriate location in the vector
@@ -256,7 +273,7 @@ setMethodS3("computeAffinities", "AffymetrixCdfFile", function(this, paths=NULL,
     idxs <- whichVector(n == 25);
     nbrOfNon25mers <- nbrOfSequences - length(idxs);
     if (nbrOfNon25mers > 0) {
-      apm[-idxs] <- naValue;
+      apm[-idxs] <- naValue;  # Already NA?!? /HB 2010-09-29
       warning("Detected ", nbrOfNon25mers, " sequence that are not of length 25 nucleotides. For those probes, the affinities are defined to be NA.");
     }
 
@@ -265,7 +282,7 @@ setMethodS3("computeAffinities", "AffymetrixCdfFile", function(this, paths=NULL,
       cat(verbose, "Progress (counting to 100): ");
       if (isVisible(verbose)) {
         pb <- ProgressBar(stepLength=100/(length(idxs)/1000));
-        reset(pb);
+        increase(pb);
       }
     }
   
@@ -285,7 +302,7 @@ setMethodS3("computeAffinities", "AffymetrixCdfFile", function(this, paths=NULL,
     } # for (ii in ...)
 
     if (!is.null(pb)) {
-      reset(pb);
+      increase(pb);
     }
 
     affinities[indexAll] <- apm;
@@ -309,6 +326,8 @@ setMethodS3("computeAffinities", "AffymetrixCdfFile", function(this, paths=NULL,
 
 ############################################################################
 # HISTORY:
+# 2010-09-29
+# o Now the progress bar produced by computeAffinities() is ended correctly.
 # 2010-04-15
 # o BUG FIX: computeAffinities(..., verbose=FALSE) of AffymetrixCdfFile
 #   would give throw "Error in reset(pb) : object 'pb' not found". 

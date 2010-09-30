@@ -13,6 +13,7 @@ chipType <- "MoEx-1_0-st-v1";
 cdf <- AffymetrixCdfFile$byChipType(chipType, tags="coreR1,A20080718,MR");
 print(cdf);
 csR <- AffymetrixCelSet$byName(dataSet, chipType=chipType);
+csR <- extract(csR, 1:6);
 print(csR);
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 

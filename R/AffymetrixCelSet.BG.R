@@ -135,9 +135,9 @@ setMethodS3("calculateParametersGsb", "AffymetrixCelSet", function(this, nbrOfPm
 
   cdf <- getCdf(this);
   
-# get path to affinities  
+  # get path to affinities  
   if (is.null(path)) {
-# try to find affinities file
+    # try to find affinities file
     paths <- getPathnames(this)[1];
     paths <- getParent(paths);
     paths <- getParent(paths);
@@ -154,22 +154,21 @@ setMethodS3("calculateParametersGsb", "AffymetrixCelSet", function(this, nbrOfPm
 
   verbose && enter(verbose, "Extracting PM indices");
   cells <- getCellIndices(cdf, useNames=FALSE, unlist=TRUE, verbose=less(verbose,2));
-  pmi <- cells[isPm(cdf, cache=FALSE)];
+  pmCells <- cells[isPm(cdf, cache=FALSE)];
   rm(cells);
-#  pmi <- getCellIndices(cdf, stratifyBy="pm", useNames=FALSE, unlist=TRUE, verbose=less(verbose,2));
-  pmi <- sort(pmi);
+  pmCells <- sort(pmCells);
   verbose && exit(verbose);
 
   narray <- length(this);
 
-#  set.seed(1);
-#  was present in original gcrma code; left in here to allow for consistency
-#  check between old and new versions
+  #  set.seed(1);
+  #  was present in original gcrma code; left in here to allow for consistency
+  #  check between old and new versions
 
   # get a sorted random subset of PM to use in parameter estimation
-  pmi.random <- sample(pmi, nbrOfPms);
-  pmi.random <- sort(pmi.random);
-  rm(pmi);   # Not needed anymore
+  pmCells.random <- sample(pmCells, nbrOfPms);
+  pmCells.random <- sort(pmCells.random);
+  rm(pmCells);   # Not needed anymore
   
   # Garbage collect
   gc <- gc();
@@ -188,7 +187,7 @@ setMethodS3("calculateParametersGsb", "AffymetrixCelSet", function(this, nbrOfPm
     verbose && enter(verbose, sprintf("Array #%d of %d", aa, narray));
     # Cells to be read for this array
     idxs <- which(iarray == aa);
-    cells <- pmi.random[idxs];
+    cells <- pmCells.random[idxs];
     pm.random2[idxs] <- readCel(pathnames[aa], indices=cells, 
                        readIntensities=TRUE, readStdvs=FALSE)$intensities;
     rm(idxs, cells);
@@ -198,7 +197,7 @@ setMethodS3("calculateParametersGsb", "AffymetrixCelSet", function(this, nbrOfPm
 
 ##   pm.random22 <- pm.random2;
 ##   # TO DO: Don't read all probes from all arrays
-##   pm.random <- readCelIntensities(getPathnames(this), indices=pmi.random);
+##   pm.random <- readCelIntensities(getPathnames(this), indices=pmCells.random);
 ##   pm.random2 <- vector("double", nrow(pm.random));
 ##   for (i in 1:nbrOfPms) {
 ##     pm.random2[i] <- pm.random[i, iarray[i]];
@@ -217,11 +216,11 @@ setMethodS3("calculateParametersGsb", "AffymetrixCelSet", function(this, nbrOfPm
   verbose && enter(verbose, "Extracting probe affinities and fitting linear model")
 
   if (is.null(affinities)) {
-    aff <- readApd(affinityFile, indices=pmi.random)$affinities;
+    aff <- readApd(affinityFile, indices=pmCells.random)$affinities;
   } else {
-    aff <- affinities[pmi.random];
+    aff <- affinities[pmCells.random];
   }
-  rm(pmi.random);  # Not needed anymore
+  rm(pmCells.random);  # Not needed anymore
 
   # Work on the log2 scale
   pm.random2 <- log2(pm.random2);  # Minimize memory usage.
@@ -326,14 +325,16 @@ setMethodS3("bgAdjustGcrma", "AffymetrixCelSet", function(this, path=NULL, name=
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
 
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Calculate probe affinities, if not already existing
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  
   if (is.null(affinities)) {
     filename <- paste(getChipType(cdf), "-affinities.apa", sep="");
     pathname <- filePath(path, filename, expandLinks="any");
+
     verbose && enter(verbose, "Computing probe affinities");
+
     if (isFile(pathname)) {
       verbose && enter(verbose, "Reading saved affinities: ", pathname);
       affinities <- readApd(pathname)$affinities;
@@ -503,6 +504,9 @@ setMethodS3("bgAdjustRma", "AffymetrixCelSet", function(this, path=NULL, tags="R
 
 ############################################################################
 # HISTORY:
+# 2010-09-29 [HB]
+# o ROBUSTNESS: Now bgAdjustGcrma(..., affinities=NULL) is deprecated and
+#   throws an exception.
 # 2009-08-31 [HB]
 # o CLEAN UP: Updated how 'path' is set internally if not specified.
 # 2009-04-06 [HB]

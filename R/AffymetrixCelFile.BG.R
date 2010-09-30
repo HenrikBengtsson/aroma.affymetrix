@@ -184,7 +184,7 @@ setMethodS3("bgAdjustOptical", "AffymetrixCelFile", function(this, path=file.pat
 #  @seeclass
 # }
 #*/###########################################################################
-setMethodS3("bgAdjustGcrma", "AffymetrixCelFile", function(this, path=NULL, type=c("fullmodel", "affinities"), indicesNegativeControl=NULL, affinities=NULL, gsbAdjust=TRUE, parametersGsb=NULL, k=6*fast + 0.5*(1-fast), rho=0.7, stretch=1.15*fast + 1*(1-fast), fast=TRUE, overwrite=FALSE, skip=!overwrite, ..., verbose=FALSE, .deprecated=TRUE) {
+setMethodS3("bgAdjustGcrma", "AffymetrixCelFile", function(this, path=NULL, type=c("fullmodel", "affinities"), indicesNegativeControl=NULL, affinities=NULL, gsbAdjust=TRUE, parametersGsb=NULL, k=ifelse(fast,6,0.5), rho=0.7, stretch=ifelse(fast,1.15,1), fast=TRUE, overwrite=FALSE, skip=!overwrite, ..., verbose=FALSE, .deprecated=TRUE) {
   if (.deprecated) {
     throw("bgAdjustGcrma() is deprecated.  Please use the GcRmaBackgroundCorrection class");
   }
@@ -211,6 +211,21 @@ setMethodS3("bgAdjustGcrma", "AffymetrixCelFile", function(this, path=NULL, type
   if (!is.null(indicesNegativeControl)) {
     indicesNegativeControl <- Arguments$getIndices(indicesNegativeControl, range=c(1, nbrOfCells(this)));
   }
+
+  # Argument 'gsbAdjust':
+  gsbAdjust <- Arguments$getLogical(gsbAdjust);
+
+  # Argument 'k':
+  k <- Arguments$getNumeric(k);
+
+  # Argument 'rho':
+  rho <- Arguments$getNumeric(rho);
+
+  # Argument 'stretch':
+  stretch <- Arguments$getNumeric(stretch);
+
+  # Argument 'fast':
+  fast <- Arguments$getLogical(fast);
   
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
@@ -264,7 +279,7 @@ setMethodS3("bgAdjustGcrma", "AffymetrixCelFile", function(this, path=NULL, type
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Reading probe signals
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  verbose && enter(verbose, "Obtaining PM and MM signals and affinities");
+  verbose && enter(verbose, "Retrieving PM and MM signals and affinities");
  
   chipType <- getChipType(this);
   key <- list(method="bgAdjustGcrma", class=class(this)[1], chipType=chipType, source="gcrma");
@@ -284,9 +299,9 @@ setMethodS3("bgAdjustGcrma", "AffymetrixCelFile", function(this, path=NULL, type
   
   # PM & MM signals
   pm <- getData(this, indices=pmCells)$intensities;
-  mm <- getData(this, indices=mmCells)$intensities;
   verbose && cat(verbose, "PM signals:");
   verbose && str(verbose, pm);
+  mm <- getData(this, indices=mmCells)$intensities;
   verbose && cat(verbose, "MM signals:");
   verbose && str(verbose, mm);
 
@@ -311,8 +326,6 @@ setMethodS3("bgAdjustGcrma", "AffymetrixCelFile", function(this, path=NULL, type
   anc <- NULL;
   ncs <- NULL;
 
-  pmKeep <- NULL;
-  
   if (!is.null(indicesNegativeControl)) {
     verbose && enter(verbose, "Retreaving affinities and probe signals for specified negative controls")
     anc <- affinities[indicesNegativeControl];
@@ -332,7 +345,9 @@ setMethodS3("bgAdjustGcrma", "AffymetrixCelFile", function(this, path=NULL, type
 
     verbose && cat(verbose, "Number of PMs: ", length(pm));
     verbose && cat(verbose, "Number of MMs: ", length(mm));
-    pm <- gcrma::bg.adjust.fullmodel(pms=pm, mms=mm, ncs=ncs, apm=apm, amm=amm, anc=anc, index.affinities=seq(length=length(pm)), k=k, rho=rho, fast=fast);
+
+    pm <- gcrma::bg.adjust.fullmodel(pms=pm, mms=mm, ncs=ncs, apm=apm, amm=amm, anc=anc,
+                      index.affinities=seq(length=length(pm)), k=k, rho=rho, fast=fast);
 
     verbose && exit(verbose);
   } else if (type == "affinities") {
@@ -340,38 +355,64 @@ setMethodS3("bgAdjustGcrma", "AffymetrixCelFile", function(this, path=NULL, type
 
     if (is.null(ncs)) {
       verbose && cat(verbose, "Using mismatch probes (MMs) as negative controls");
-      # use MM as negative controls
-
-      verbose && cat(verbose, "Number of PMs: ", length(pm));
-      verbose && cat(verbose, "Number of MMs (used as negative controls): ", length(mm));
-      pm <- gcrma::bg.adjust.affinities(pms=pm, ncs=mm, apm=apm, anc=amm, index.affinities=seq(length=length(pm)), k=k, fast=fast, nomm=FALSE);
+      ncs <- mm;
+      anc <- amm;
+      nomm <- FALSE;
     } else {
       verbose && cat(verbose, "Using a specified set of negative controls");
-      # use specified negative controls
-
-      verbose && enter(verbose, "Dropping perfect-match probes (PMs) with missing signals or missing affinities");
-      pmKeep <- whichVector(!is.na(pm) & !is.na(apm));
-      pm <- pm[pmKeep];
-      apm <- apm[pmKeep];
-      verbose && exit(verbose);
-
-      verbose && enter(verbose, "Dropping negative controls with missing signals or missing affinities");
-      keep <- whichVector(!is.na(anc) & !is.na(ncs));
-      ncs <- ncs[keep];
-      anc <- anc[keep];
-      verbose && exit(verbose);
-
-      verbose && cat(verbose, "Number of PMs: ", length(pm));
-      verbose && cat(verbose, "Number of negative controls: ", length(ncs));
-
-      pm <- gcrma::bg.adjust.affinities(pms=pm, ncs=ncs, apm=apm, anc=anc, index.affinities=seq(length=length(pm)), k=k, fast=fast, nomm=TRUE);
+      nomm <- TRUE;
     }
+
+    verbose && enter(verbose, "Dropping perfect-match probes (PMs) with missing signals or missing affinities");
+    n0 <- length(pm);
+    keepA <- (!is.na(pm));
+    n <- sum(keepA);
+    verbose && printf(verbose, "Number of finite PMs: %d out of %d (%.1f%%)\n", n, n0, 100*n/n0);
+
+    keepB <- (!is.na(apm));
+    n <- sum(keepB);
+    verbose && printf(verbose, "Number of finite PM affinities: %d out of %d (%.1f%%)\n", n, n0, 100*n/n0);
+
+    keep <- whichVector(keepA & keepB);
+    n <- length(keep);
+    verbose && printf(verbose, "Number of PMs kept: %d out of %d (%.1f%%)\n", n, n0, 100*n/n0);
+
+    pm <- pm[keep];
+    pmCells <- pmCells[keep];
+    apm <- apm[keep];
+    verbose && exit(verbose);
+    rm(keep);
+
+    verbose && enter(verbose, "Dropping negative controls with missing signals or missing affinities");
+    n0 <- length(ncs);
+    keepA <- (!is.na(ncs));
+    n <- sum(keepA);
+    verbose && printf(verbose, "Number of finite negative controls: %d out of %d (%.1f%%)\n", n, n0, 100*n/n0);
+
+    keepB <- (!is.na(anc));
+    n <- sum(keepB);
+    verbose && printf(verbose, "Number of finite negative-control affinities: %d out of %d (%.1f%%)\n", n, n0, 100*n/n0);
+
+    keep <- whichVector(keepA & keepB);
+    n <- length(keep);
+    verbose && printf(verbose, "Number of negative controls kept: %d out of %d (%.1f%%)\n", n, n0, 100*n/n0);
+
+    ncs <- ncs[keep];
+    anc <- anc[keep];
+    verbose && exit(verbose);
+    rm(keep);
+
+    verbose && cat(verbose, "Number of PMs: ", length(pm));
+    verbose && cat(verbose, "Number of negative controls: ", length(ncs));
+
+    pm <- gcrma::bg.adjust.affinities(pms=pm, ncs=ncs, apm=apm, anc=anc, 
+          index.affinities=seq(length=length(pm)), k=k, fast=fast, nomm=nomm);
 
     verbose && exit(verbose);
   } # if (type == ...)
 
   # Not needed anymore
-  rm(anc, ncs, amm, mm);
+  rm(anc, ncs, mm, amm);
 
   verbose && exit(verbose);
 
@@ -416,11 +457,7 @@ setMethodS3("bgAdjustGcrma", "AffymetrixCelFile", function(this, path=NULL, type
   verbose && exit(verbose);
 
   verbose && enter(verbose, "Writing adjusted intensities");
-  cells <- pmCells;
-  if (!is.null(pmKeep)) {
-    cells <- cells[pmKeep];
-  }
-  updateCel(pathname, indices=cells, intensities=pm);
+  updateCel(pathname, indices=pmCells, intensities=pm);
   verbose && exit(verbose);
   verbose && exit(verbose);
 

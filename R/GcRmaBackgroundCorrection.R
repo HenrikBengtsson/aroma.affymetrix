@@ -17,8 +17,8 @@
 #      @see "ProbeLevelTransform".}
 #   \item{indicesNegativeControl}{Locations of any negative control
 #       probes (e.g., the anti-genomic controls on the human exon array).
-#       If @NULL and \code{type == "affinities"}, then MMs are used as
-#       the negative controls.}
+#       If @NULL and \code{type == "affinities"}, then all non-PM probes
+#       are used as the negative controls.}
 #   \item{affinities}{A @numeric @vector of probe affinities, usually as
 #       calculated by \code{computeAffinities()} of the 
 #       @see "AffymetrixCdfFile" class.}
@@ -138,7 +138,8 @@ setMethodS3("process", "GcRmaBackgroundCorrection", function(this, ..., force=FA
     outputDataSet <- getOutputDataSet(this);
     return(invisible(outputDataSet));
   }
-  
+
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Setup
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -539,7 +539,7 @@ setMethodS3("computeAffinitiesByACS", "AffymetrixCdfFile", function(this, ..., m
       increase(pb);
     }
   } else if (method == "v3") {
-    nbrOfPositions <- ncol(seqMatrix);
+    nbrOfPositions <- getProbeLength(acs);
     bases <- c("A", "C", "G", "T");
     affinitiesT <- double(length(cells));
     # For each position...

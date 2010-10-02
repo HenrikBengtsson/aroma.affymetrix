@@ -357,7 +357,19 @@ setMethodS3("bgAdjustGcrma", "AffymetrixCelFile", function(this, path=NULL, type
       verbose && cat(verbose, "Using mismatch probes (MMs) as negative controls");
       ncs <- mm;
       anc <- amm;
-      nomm <- FALSE;
+      nomm <- FALSE;  # However...
+      # AD HOC: If there are equal number of PMs and MMs, then we assume they
+      # are matched, and we will allow gcrma::bg.adjust.affinities() to subset 
+      # also MMs using 'index.affinities', otherwise not.  See its code:
+      #  if (!nomm)
+      #    parameters <- bg.parameters.ns(ncs[index.affinities], anc, apm)
+      #  else
+      #    parameters <- bg.parameters.ns(ncs, anc, apm)
+      # However, since we use 'index.affinities' to use all PMs, this special
+      # case would equal using all MMs as well, and in that case we can equally
+      # well use nomm=TRUE (see its code).
+      # /HB 2010-10-02
+      nomm <- TRUE;
     } else {
       verbose && cat(verbose, "Using a specified set of negative controls");
       nomm <- TRUE;
@@ -440,8 +452,11 @@ setMethodS3("bgAdjustGcrma", "AffymetrixCelFile", function(this, path=NULL, type
   # don't understand this, but it was in original bg.adjust.gcrma(), so
   # we will keep it. /KS
   if (stretch != 1) {
+    verbose && enter(verbose, "Stretching");
+    verbose && cat(verbose, "Stretch factor: ", stretch);
     mu <- mean(log(pm), na.rm=TRUE);
     pm <- exp(mu + stretch * (log(pm) - mu));
+    verbose && exit(verbose);
   }
     
   
@@ -457,6 +472,7 @@ setMethodS3("bgAdjustGcrma", "AffymetrixCelFile", function(this, path=NULL, type
   verbose && exit(verbose);
 
   verbose && enter(verbose, "Writing adjusted intensities");
+  verbose && cat(verbose, "Number of cells (PMs only): ", length(pmCells));
   updateCel(pathname, indices=pmCells, intensities=pm);
   verbose && exit(verbose);
   verbose && exit(verbose);
@@ -620,6 +636,10 @@ setMethodS3("bgAdjustRma", "AffymetrixCelFile", function(this, path=NULL, pmonly
 
 ############################################################################
 # HISTORY:
+# 2010-10-02 [HB]
+# o We now use nomm=TRUE for all cases for type="affinities".  See code
+#   for explanation.  This also solves the problems of using for instance 
+#   chip type MoEx-1_0-st-v1.
 # 2010-09-29 [HB]
 # o ROBUSTNESS: Now bgAdjustGcrma(..., affinities=NULL) is deprecated and
 #   throws an exception.

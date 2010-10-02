@@ -1,11 +1,14 @@
 Package: aroma.affymetrix
 =========================
 
-Version: 1.7.3 [2010-10-01]
+Version: 1.7.3 [2010-10-02]
 o Now doGCRMA() automagically makes sure that the default CDF is used
   in the QuantileNormalization step, while use a custom CDF everywhere
   else if set.  Added argument 'type' to doGCRMA() which is passed to 
   QuantileNormalization().
+o GENERALIZATION: Now GcRmaBackgroundCorrection(..., type="affinities")
+  can process also chip types for which there are no MMs and for
+  which non-specific probes are explicitly specified.
 o GENERALIZATION: Now GcRmaBackgroundCorrection calculates gcRMA probe
   affinites based on Aroma Cell Sequence (ACS) annotation files. 
   For backward compatibility, it turns to Affymetrix probe-tab files

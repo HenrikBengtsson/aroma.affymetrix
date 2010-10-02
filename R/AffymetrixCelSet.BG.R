@@ -330,7 +330,7 @@ setMethodS3("bgAdjustGcrma", "AffymetrixCelSet", function(this, path=NULL, name=
   # Calculate probe affinities, if not already existing
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (is.null(affinities)) {
-    verbose && enter(verbose, "Computing probe affinities");
+    verbose && enter(verbose, "Computing probe affinities (independent of data)");
 
     # Alternative 1: Using ACS annotation file
     affinities <- NULL;
@@ -376,8 +376,10 @@ setMethodS3("bgAdjustGcrma", "AffymetrixCelSet", function(this, path=NULL, name=
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
   if (gsbAdjust) {
-    verbose && enter(verbose, "Estimating specific binding parameters");
+    verbose && enter(verbose, "Estimating specific binding parameters (data dependent)");
     parametersGsb <- calculateParametersGsb(this, affinities=affinities, path=path, ..., verbose=verbose);
+    verbose && cat(verbose, "parametersGsb:");
+    verbose && print(verbose, parametersGsb);
     verbose && exit(verbose);
   }
   

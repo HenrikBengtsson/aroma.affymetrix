@@ -25,12 +25,10 @@ a particular CDF, and matches sequence to probe index in order to assign
 an affinity to each probe.
 }
 
-\usage{\method{computeAffinities}{AffymetrixCdfFile}(this, paths=NULL, safe=TRUE, force=FALSE, verbose=FALSE, ...)}
+\usage{\method{computeAffinities}{AffymetrixCdfFile}(this, safe=TRUE, force=FALSE, verbose=FALSE, ...)}
 
 \arguments{
-  \item{paths}{A \code{\link[base]{character}} variable containing location(s) to look for
-   the probe sequence file.  Multiple locations should be separated by
-   semi-colons.}
+  \item{safe}{A \code{\link[base]{logical}} argument passed to \code{getProbeSequenceData()}.}
   \item{force}{If \code{\link[base:logical]{FALSE}}, cached results is returned, if available.}
   \item{verbose}{See \code{\link[R.utils]{Verbose}}.}
   \item{...}{Not used.}

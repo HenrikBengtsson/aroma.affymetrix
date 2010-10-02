@@ -1,11 +1,15 @@
 Package: aroma.affymetrix
 =========================
 
-Version: 1.7.3 [2010-09-29]
+Version: 1.7.3 [2010-10-01]
 o Now doGCRMA() automagically makes sure that the default CDF is used
   in the QuantileNormalization step, while use a custom CDF everywhere
   else if set.  Added argument 'type' to doGCRMA() which is passed to 
   QuantileNormalization().
+o GENERALIZATION: Now GcRmaBackgroundCorrection calculates gcRMA probe
+  affinites based on Aroma Cell Sequence (ACS) annotation files. 
+  For backward compatibility, it turns to Affymetrix probe-tab files
+  if an ACS file is not located.
 o ROBUSTNESS: Added more validation of the arguments passed to 
   the constructor of GcRmaBackgroundCorrection and its internal 
   functions.  Also added more verbose output during processing.

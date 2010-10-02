@@ -330,20 +330,30 @@ setMethodS3("bgAdjustGcrma", "AffymetrixCelSet", function(this, path=NULL, name=
   # Calculate probe affinities, if not already existing
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (is.null(affinities)) {
-    filename <- paste(getChipType(cdf), "-affinities.apa", sep="");
-    pathname <- filePath(path, filename, expandLinks="any");
-
     verbose && enter(verbose, "Computing probe affinities");
 
-    if (isFile(pathname)) {
-      verbose && enter(verbose, "Reading saved affinities: ", pathname);
-      affinities <- readApd(pathname)$affinities;
-      verbose && exit(verbose);
-    } else {
-      affinities <- computeAffinities(cdf, paths=probePath, ..., verbose=less(verbose));
-      verbose && cat(verbose, "Saving affinities: ", pathname);
-      writeApd(pathname, data=affinities, name="affinities");
+    # Alternative 1: Using ACS annotation file
+    affinities <- NULL;
+    tryCatch({
+      affinities <- computeAffinitiesByACS(cdf, ..., verbose=less(verbose));
+    }, error = function(ex) {});
+
+    if (is.null(affinities)) {
+      # Alternative 2: Using old probe-tab files (deprecated)
+      filename <- paste(getChipType(cdf), "-affinities.apa", sep="");
+      pathname <- filePath(path, filename, expandLinks="any");
+  
+      if (isFile(pathname)) {
+        verbose && enter(verbose, "Reading saved affinities: ", pathname);
+        affinities <- readApd(pathname)$affinities;
+        verbose && exit(verbose);
+      } else {
+        affinities <- computeAffinities(cdf, paths=probePath, ..., verbose=less(verbose));
+        verbose && cat(verbose, "Saving affinities: ", pathname);
+        writeApd(pathname, data=affinities, name="affinities");
+      }
     }
+
     verbose && printf(verbose, "RAM: %.2fMB\n", 
                                          object.size(affinities)/1024^2);
     verbose && exit(verbose);

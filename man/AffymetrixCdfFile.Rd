@@ -62,6 +62,8 @@ extends \emph{\link[aroma.core]{UnitNamesFile}}\cr
  \tab \code{\link[aroma.affymetrix:convert.AffymetrixCdfFile]{convert}} \tab Converts a CDF into the same CDF but with another format.\cr
  \tab \code{createMonoCell} \tab  -\cr
  \tab \code{createUnique} \tab  -\cr
+ \tab \code{getACSFile} \tab  -\cr
+ \tab \code{getAromaCellSequenceFile} \tab  -\cr
  \tab \code{\link[aroma.affymetrix:getCellIndices.AffymetrixCdfFile]{getCellIndices}} \tab Gets the cell indices unit by unit.\cr
  \tab \code{getChipType} \tab  -\cr
  \tab \code{getDimension} \tab  -\cr

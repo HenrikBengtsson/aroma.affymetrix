@@ -321,9 +321,34 @@ setMethodS3("computeAffinities", "AffymetrixCdfFile", function(this, safe=TRUE, 
 
 
 
+setMethodS3("getACSFile", "AffymetrixCdfFile", function(this, ...) {
+  getAromaCellSequenceFile(this, ...);
+})
 
 
-setMethodS3("computeAffinitiesV2", "AffymetrixCdfFile", function(this, ..., method=c("v3", "v2", "v1"), force=FALSE, verbose=FALSE) {
+setMethodS3("getAromaCellSequenceFile", "AffymetrixCdfFile", function(this, ..., verbose=FALSE) {
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Validate arguments
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Argument 'verbose':
+  verbose <- Arguments$getVerbose(verbose);
+  if (verbose) {
+    pushState(verbose);
+    on.exit(popState(verbose));
+  }
+
+  verbose && enter(verbose, "Locating the aroma cell sequence (ACS) annotation data file");
+  chipTypeS <- getChipType(this, fullname=FALSE);
+  verbose && cat(verbose, "Chip type: ", chipTypeS);
+  acs <- AromaCellSequenceFile$byChipType(chipTypeS, nbrOfCells=nbrOfCells);
+  verbose && print(verbose, acs);
+  verbose && exit(verbose);
+
+  acs;
+})
+
+
+setMethodS3("computeAffinitiesByACS", "AffymetrixCdfFile", function(this, ..., method=c("v3", "v2", "v1"), force=FALSE, verbose=FALSE) {
   isPackageInstalled("gcrma") || throw("Package not installed: gcrma");
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -389,7 +414,7 @@ setMethodS3("computeAffinitiesV2", "AffymetrixCdfFile", function(this, ..., meth
   # Locate the cell sequence annotation data file
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   verbose && enter(verbose, "Locating the cell sequence annotation data file");
-  acs <- AromaCellSequenceFile$byChipType(chipTypeS);
+  acs <- getACSFile(this);
   verbose && print(verbose, acs);
   verbose && exit(verbose);
 
@@ -435,7 +460,7 @@ setMethodS3("computeAffinitiesV2", "AffymetrixCdfFile", function(this, ..., meth
     if (verbose) {
       cat(verbose, "Progress (counting to 100): ");
       if (isVisible(verbose)) {
-        pb <- ProgressBar(stepLength=100/(nbrOfSequences/1000));
+        pb <- ProgressBar(stepLength=100/(length(cells)/1000));
         reset(pb);
       }
     }
@@ -474,7 +499,7 @@ setMethodS3("computeAffinitiesV2", "AffymetrixCdfFile", function(this, ..., meth
     if (verbose) {
       cat(verbose, "Progress (counting to 100): ");
       if (isVisible(verbose)) {
-        pb <- ProgressBar(stepLength=100/(nbrOfSequences/1000));
+        pb <- ProgressBar(stepLength=100/(length(cells)/1000));
         reset(pb);
       }
     }
@@ -590,8 +615,10 @@ setMethodS3("computeAffinitiesV2", "AffymetrixCdfFile", function(this, ..., meth
 
 ############################################################################
 # HISTORY:
+# 2010-10-01
+# o Added getAromaCellSequenceFile() and getACSFile() for AffymetrixCdfFile.
 # 2010-09-30
-# o Added computeAffinitiesV2() for AffymetrixCdfFile, which calculated
+# o Added computeAffinitiesByACS() for AffymetrixCdfFile, which calculated
 #   gcRMA affinities straight off from cell sequences in ACS file.
 #   It does not have to do funny PM & MM lookups and it is much faster!
 # 2010-09-29

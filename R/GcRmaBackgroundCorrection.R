@@ -171,6 +171,10 @@ setMethodS3("process", "GcRmaBackgroundCorrection", function(this, ..., force=FA
 
 ############################################################################
 # HISTORY:
+# 2010-10-01
+# o Now GcRmaBackgroundCorrection tries to calculate probe affinites based
+#   on ACS annotation files and then as a backup/backward compatibility
+#   it uses Affymetrix probe-tab files.
 # 2010-09-26
 # o Added explicit descriptions to the arguments list of the Rdocs.
 # o ROBUSTNESS: Added more validation of the arguments passed to 

@@ -1425,6 +1425,11 @@
 \alias{doGCRMA.AffymetrixCelSet}
 \alias{doGCRMA.character}
 \alias{extractAffyBatch.ChipEffectSet}
+\alias{computeAffinitiesByACS}
+\alias{computeAffinitiesByACS.AffymetrixCdfFile}
+\alias{getACSFile}
+\alias{getACSFile.AffymetrixCdfFile}
+\alias{getAromaCellSequenceFile.AffymetrixCdfFile}
 
 \description{
   This page contains aliases for all "non-documented" objects that

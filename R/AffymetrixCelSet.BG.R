@@ -166,7 +166,7 @@ setMethodS3("calculateParametersGsb", "AffymetrixCelSet", function(this, nbrOfPm
   #  check between old and new versions
 
   # get a sorted random subset of PM to use in parameter estimation
-  pmCells.random <- sample(pmCells, nbrOfPms);
+  pmCells.random <- sample(pmCells, size=nbrOfPms);
   pmCells.random <- sort(pmCells.random);
   rm(pmCells);   # Not needed anymore
   
@@ -177,7 +177,7 @@ setMethodS3("calculateParametersGsb", "AffymetrixCelSet", function(this, nbrOfPm
   verbose && enter(verbose, "Extracting ", nbrOfPms, " random PM intensities across CEL set");
   # make sure we don't just sample from a single array; avoids problems
   # if we happened to choose a low quality or otherwise aberrant array
-  iarray <- sample(1:narray, nbrOfPms, replace=TRUE);
+  iarray <- sample(1:narray, size=nbrOfPms, replace=TRUE);
 
   # For each array, read the signals randomized for that array
   # Confirmed to give identical results. /HB 2007-03-26

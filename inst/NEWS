@@ -1,6 +1,11 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 1.7.4 [2010-11-04]
+o ROBUSTNESS: Bumping the required versions of the dependent package
+  in order to make sure we are not affected by old bugs.
+
+
 Version: 1.7.3 [2010-10-02]
 o Now doGCRMA() automagically makes sure that the default CDF is used
   in the QuantileNormalization step, while use a custom CDF everywhere

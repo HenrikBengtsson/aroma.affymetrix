@@ -9,7 +9,7 @@ library("aroma.core");
 verbose <- Arguments$getVerbose(-8, timestamp=TRUE);
 
 dataSet <- "GSE8605"
-tags <- "ACC,-XY,v2,BPN,-XY,RMA,FLN,-XY";
+tags <- "ACC,-XY,BPN,-XY,RMA,FLN,-XY";
 chipType <- "Mapping10K_Xba142";
 
 ds <- AromaUnitTotalCnBinarySet$byName(dataSet, tags=tags, chipType=chipType);

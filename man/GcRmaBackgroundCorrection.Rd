@@ -48,8 +48,8 @@ extends \emph{\link[aroma.affymetrix]{BackgroundCorrection}}\cr
      \code{\link{ProbeLevelTransform}}.}
   \item{indicesNegativeControl}{Locations of any negative control
       probes (e.g., the anti-genomic controls on the human exon array).
-      If \code{\link[base]{NULL}} and \code{type == "affinities"}, then MMs are used as
-      the negative controls.}
+      If \code{\link[base]{NULL}} and \code{type == "affinities"}, then all non-PM probes
+      are used as the negative controls.}
   \item{affinities}{A \code{\link[base]{numeric}} \code{\link[base]{vector}} of probe affinities, usually as
       calculated by \code{computeAffinities()} of the
       \code{\link{AffymetrixCdfFile}} class.}

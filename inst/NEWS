@@ -1,6 +1,10 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 1.8.0 [2010-11-07]
+o Committed to CRAN. No updates.
+
+
 Version: 1.7.4 [2010-11-04]
 o ROBUSTNESS: Bumping the required versions of the dependent package
   in order to make sure we are not affected by old bugs.

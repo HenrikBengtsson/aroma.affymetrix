@@ -53,7 +53,7 @@ setMethodS3("extractAffyBatch", "AffymetrixCelSet", function(this, ..., verbose=
   }
 
   cdf <- getCdf(this);
-  chipType <- getChipType(cdf);
+  chipType <- getChipType(cdf, fullname=FALSE);
   cdfPkgName <- cleancdfname(chipType);
   suppressWarnings({
     res <- require(cdfPkgName, character.only=TRUE);
@@ -65,9 +65,15 @@ setMethodS3("extractAffyBatch", "AffymetrixCelSet", function(this, ..., verbose=
   filenames <- getPathnames(this);
   verbose && enter(verbose, "Creating AffyBatch from ", length(filenames), " CEL files");
   verbose && cat(verbose, "Filenames: ", paste(filenames, collapse=", "));
-  sampleNames <- getNames(this);
+  sampleNames <- getFullNames(this);
   verbose && cat(verbose, "Sample names: ", paste(sampleNames, collapse=", "));
 
+  # Sanity check
+  dups <- sort(sampleNames[duplicated(sampleNames)]);
+  if (length(dups) > 0) {
+    throw(sprintf("Cannot load %s as an AffyBatch. Detected %d files that share the same sample names: %s", class(this)[1], length(dups)+length(unique(dups)), paste(unique(dups), collapse=", ")));
+  }
+  
   # Specify ReadAffy() of 'affy' to avoid conflicts with the one
   # in 'oligo'.
   read.affybatch <- affy::read.affybatch;
@@ -87,6 +93,10 @@ setMethodS3("extractAffyBatch", "ChipEffectSet", function(this, ...) {
 
 ############################################################################
 # HISTORY:
+# 2010-11-17
+# o ROBUSTNESS: Now extractAffyBatch() for AffymetrixCelSet asserts that
+#   the sample names are unique, which affy::ReadAffy() requires.  
+#   Moreover, the sample names are now the fullnames not just the names.
 # 2010-09-06
 # o ROBUSTNESS: Added extractAffyBatch() for ChipEffectSet that gives an
 #   informative error message explaining why it doesn't make sense to do so.

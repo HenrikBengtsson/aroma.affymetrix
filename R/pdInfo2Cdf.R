@@ -2,10 +2,11 @@
 # @RdocFunction pdInfo2Cdf
 # @alias PdInfo2Cdf
 #
-# @title "Generates an Affymetrix CDF file from a pdInfo package and a auxillary CEL file for the same chip type"
+# @title "Generates an Affymetrix CDF file from a Platform Design (PD) package and a auxillary CEL file for the same chip type"
 #
 # \description{
 #   @get "title".
+#   Platform Design (PD) packages are also known as "pdInfo" packages.
 #
 #   \emph{Disclaimer: This is a user-contributed function.}
 # }
@@ -13,7 +14,7 @@
 # @synopsis
 #
 # \arguments{
-#  \item{pdpkg}{A @character string for an existing pdInfo package.}
+#  \item{pdpkg}{A @character string for an existing PD package.}
 #  \item{celfile}{The pathname to an auxillary CEL for the same chip type.}
 #  \item{overwrite}{If @TRUE, an existing CDF is overwritten, otherwise
 #    an exception is thrown.}
@@ -23,9 +24,24 @@
 #
 # \value{
 #   Returns (invisibly) the pathname to CDF written.
+#   The CDF filename is generated from the name of the PD package.
 # }
 #
-# \author{Maintained by Mark Robinson. Original code by Samuel Wuest.}
+# \section{Limitations}{
+#   The information available in the PD package is limited and does
+#   not contain all information needed to populate a CDF file.
+#   In order to workaround these limitations, certain CDF entries
+#   are set to predefined/hardwired values.
+#   The 'pbase' and 'tbase' entries of the generated CDF file is
+#   hardwired to "T" and "A", respectively.  Likewise, the 'groupdirection'
+#   entry is hardwired to "sense".
+# }
+#
+# \author{
+#   Maintained by Mark Robinson.
+#   Original code by Samuel Wuest.
+#   Code improvements by Henrik Bengtsson.
+# }
 #
 # @keyword internal
 #*/########################################################################### 
@@ -65,31 +81,62 @@ pdInfo2Cdf <- function(pdpkg, celfile, overwrite=FALSE, verbose=TRUE, ...) {
   overwrite <- Arguments$getLogical(overwrite);
 
 
-  verbose && enter(verbose, "PdInfo2Cdf()");
+  verbose && enter(verbose, "Generating CDF file from Platform Design (PD) package");
+  verbose && cat(verbose, "Platform Design (PD) package: ", pdpkg);
+
+  pdName <- gsub("\\.", "", pdpkg);
 
   filename <- sprintf("%s.cdf", pdName);
   filename <- Arguments$getWritablePathname(filename, mustNotExist=!overwrite);
 
-  # Load the required PD package.
+  verbose && cat(verbose, "CDF file to be generated: ", filename);
+
+  # Loading the required PD package.
   require(pdpkg, character.only=TRUE) || 
                  throw("Platform Design (PD) package not loaded: ", pdpkg);
 
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Retrieving information from the CEL file
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   verbose && enter(verbose, "Reading auxillary CEL file");
+  verbose && cat(verbose, "Pathname: ", celfile);
+
+  verbose && enter(verbose, "Reading CEL file header");
+  hdr <- readCelHeader(celfile);
+  nrows <- as.integer(hdr$rows);
+  ncols <- as.integer(hdr$cols);
+  chipType <- hdr$chiptype
+  rm(hdr);  # Not needed anymore
+  nbrOfCells <- nrows*ncols;
+  verbose && cat(verbose, "Chip type: ", chipType);
+  verbose && printf(verbose, "Chip type dimensions: %dx%d\n", nrows, ncols);
+  verbose && cat(verbose, "Total number of cells (probes): ", nbrOfCells);
+  verbose && exit(verbose);
+
+  verbose && enter(verbose, "Reading complete CEL file");
   cel <- read.celfiles(filenames=celfile, pkgname=pdpkg);
   verbose && exit(verbose);
 
+  verbose && exit(verbose);
+
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Retrieving information from PD package
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  verbose && enter(verbose, "Retrieving Platform Design database");
   pd <- getPlatformDesign(cel);
   rm(cel);  # Not needed anymore
+  verbose && exit(verbose);
 
   verbose && enter(verbose, "Querying Platform Design database");
   ff <- dbGetQuery(db(pd), "select * from pmfeature");
   rm(pd);  # Not needed anymore
+  verbose && str(verbose, ff);
+  nbrOfPdCells <- nrow(ff);
+  verbose && printf(verbose, "Number of cells (probes) in PD database: %d (%.2f%%) of %d\n",
+                    nbrOfPdCells, 100*nbrOfPdCells/nbrOfCells, nbrOfCells);
   verbose && exit(verbose);
-
-  celHead <- readCelHeader(celfile);
-  nrows <- celHead$rows;
-  ncols <- celHead$cols;
-  rm(celHead);  # Not needed anymore
 
   verbose && enter(verbose, "Creating list from query table");
   # three 3 lines speed up the splitting ...
@@ -97,29 +144,42 @@ pdInfo2Cdf <- function(pdpkg, celfile, overwrite=FALSE, verbose=TRUE, ...) {
   ffs <- lapply(ffs, FUN=function(u) split(u, u$fsetid));
   ffs <- unlist(ffs, recursive=FALSE);
   names(ffs) <- substr(names(ffs), 6, nchar(names(ffs)));
+  nbrOfUnits <- length(ffs);
+  verbose && cat(verbose, "Number of units: ", nbrOfUnits);
+  verbose && printf(verbose, "Average number of cells per units: %.2f\n", nbrOfPdCells/nbrOfUnits);
   verbose && exit(verbose);
 
-  nunits <- length(ffs);
-  pdName <- gsub("\\.", "", pdpkg);
 
-  ## creating the CDF header;
-  newCdfHeader <- list(ncols=ncols, nrows=nrows, nunits=nunits, 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Setting up CDF tree structure
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  verbose && enter(verbose, "Setting up CDF tree structure");
+
+  verbose && enter(verbose, "Setting CDF header");
+  newCdfHeader <- list(ncols=ncols, nrows=nrows, nunits=nbrOfUnits, 
                        nqcunits=0, refseq="", chiptype=pdName, 
                        filename=filename, rows=nrows, 
-                       cols=ncols, probesets= nunits, 
+                       cols=ncols, probesets=nbrOfUnits, 
                        qcprobesets=0, reference="");
+  verbose && exit(verbose);
 
-  verbose && enter(verbose, "Creating CDF list structure");
-  ### make the input-list for writeCdf()
-  verbose && cat(verbose, "Creating CDF list for ", nunits, " units");
+  verbose && enter(verbose, "Setting up CDF units");
+  verbose && cat(verbose, "Number of units: ", nbrOfUnits);
   newCdfList <- lapply(ffs, FUN=pmFeature2List);
   rm(ffs);  # Not needed anymore
   verbose && exit(verbose);
 
-  verbose && enter(verbose, "Writing CDF file");
-  ### writing the CDF file (binary-file)
-  res <- writeCdf(newCdfHeader$filename, cdfheader=newCdfHeader, 
-          cdf=newCdfList, cdfqc=NULL, verbose=verbose, overwrite=overwrite);
+  verbose && exit(verbose);
+
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Writing CDF to file (binary format)
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  verbose && enter(verbose, "Writing (binary) CDF file");
+  pathname <- newCdfHeader$filename;
+  verbose && cat(verbose, "Pathname: ", pathname);
+  res <- writeCdf(pathname, cdfheader=newCdfHeader, cdf=newCdfList,
+                  cdfqc=NULL, verbose=verbose, overwrite=overwrite);
   verbose && exit(verbose);
 
   verbose && exit(verbose);
@@ -134,6 +194,12 @@ PdInfo2Cdf <- pdInfo2Cdf;
 
 ############################################################################
 # HISTORY:
+# 2010-12-04 [HB]
+# o Added more verbose output.
+# o DOCUMENTATION: Added more Rd documentation.
+# o BUG FIX: Local variable 'pdName' of pdInfo2Cdf() was used before it
+#   was defined.  Thanks to Guido Hooiveld at the Wageningen University, 
+#   Netherlands, for reporting this.
 # 2010-05-20 [HB]
 # o Renamed PdInfo2Cdf() to pdInfo2Cdf().  Keeping old one for backward
 #   compatibility for a while.

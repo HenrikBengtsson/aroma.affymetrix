@@ -11,10 +11,11 @@
 
  \alias{PdInfo2Cdf}
 
- \title{Generates an Affymetrix CDF file from a pdInfo package and a auxillary CEL file for the same chip type}
+ \title{Generates an Affymetrix CDF file from a Platform Design (PD) package and a auxillary CEL file for the same chip type}
 
  \description{
-   Generates an Affymetrix CDF file from a pdInfo package and a auxillary CEL file for the same chip type.
+   Generates an Affymetrix CDF file from a Platform Design (PD) package and a auxillary CEL file for the same chip type.
+   Platform Design (PD) packages are also known as "pdInfo" packages.
 
    \emph{Disclaimer: This is a user-contributed function.}
  }
@@ -22,7 +23,7 @@
  \usage{pdInfo2Cdf(pdpkg, celfile, overwrite=FALSE, verbose=TRUE, ...)}
 
  \arguments{
-  \item{pdpkg}{A \code{\link[base]{character}} string for an existing pdInfo package.}
+  \item{pdpkg}{A \code{\link[base]{character}} string for an existing PD package.}
   \item{celfile}{The pathname to an auxillary CEL for the same chip type.}
   \item{overwrite}{If \code{\link[base:logical]{TRUE}}, an existing CDF is overwritten, otherwise
     an exception is thrown.}
@@ -32,9 +33,24 @@
 
  \value{
    Returns (invisibly) the pathname to CDF written.
+   The CDF filename is generated from the name of the PD package.
  }
 
- \author{Maintained by Mark Robinson. Original code by Samuel Wuest.}
+ \section{Limitations}{
+   The information available in the PD package is limited and does
+   not contain all information needed to populate a CDF file.
+   In order to workaround these limitations, certain CDF entries
+   are set to predefined/hardwired values.
+   The 'pbase' and 'tbase' entries of the generated CDF file is
+   hardwired to "T" and "A", respectively.  Likewise, the 'groupdirection'
+   entry is hardwired to "sense".
+ }
+
+ \author{
+   Maintained by Mark Robinson.
+   Original code by Samuel Wuest.
+   Code improvements by Henrik Bengtsson.
+ }
 
 
 \keyword{internal}

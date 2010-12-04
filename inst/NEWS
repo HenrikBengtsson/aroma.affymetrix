@@ -1,6 +1,12 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 1.8.2 [2010-12-04]
+o BUG FIX: Local variable 'pdName' of pdInfo2Cdf() was used before it
+  was defined, which gave an error.  Thanks to Guido Hooiveld at 
+  the Wageningen University, Netherlands, for reporting this.
+
+
 Version: 1.8.1 [2010-11-22]
 o ROBUSTNESS: Now extractAffyBatch() for AffymetrixCelSet asserts that
   the sample names are unique, which affy::ReadAffy() requires.  

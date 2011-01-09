@@ -724,3 +724,4 @@ extractAffyBatch.ChipEffectSet
  computeAffinitiesByACS computeAffinitiesByACS.AffymetrixCdfFile
  getACSFile getACSFile.AffymetrixCdfFile
  getAromaCellSequenceFile.AffymetrixCdfFile
+writeCdf writeCdf.default

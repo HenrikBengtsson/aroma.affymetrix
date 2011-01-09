@@ -1,6 +1,15 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 1.8.3 [2011-01-09]
+o Added writeCdf() for AffyGenePDInfo, which replaces pdInfo2Cdf().
+  An auxillary CEL file is no longer needed to create a CDF from
+  an PDInfo package.  Moreover, contrary pdInfo2Cdf(), the generated
+  CDF now gets a correct/formal Affymetrix chip type.
+o BUG FIX: createMonocellCdf(..., verbose=FALSE) for AffymetrixCdfFile
+  would still create verbose output.
+
+
 Version: 1.8.2 [2010-12-04]
 o BUG FIX: Local variable 'pdName' of pdInfo2Cdf() was used before it
   was defined, which gave an error.  Thanks to Guido Hooiveld at 

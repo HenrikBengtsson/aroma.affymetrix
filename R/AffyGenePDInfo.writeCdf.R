@@ -1,25 +1,22 @@
 ###########################################################################/** 
-# @RdocFunction pdInfo2Cdf
-# @alias PdInfo2Cdf
+# @set "class=AffyGenePDInfo"
+# @RdocMethod writeCdf
 #
-# @title "Generates an Affymetrix CDF file from a Platform Design (PD) package and a auxillary CEL file for the same chip type"
+# @title "Generates an Affymetrix CDF file from a Platform Design (PD) package"
 #
 # \description{
 #   @get "title".
 #   Platform Design (PD) packages are also known as "pdInfo" packages.
-#
-#   \emph{Disclaimer: This is a user-contributed function.}
-#
-#   \emph{Instead of using this method, we recommend to use 
-#   \code{\link[=writeCdf.AffyGenePDInfo]{writeCdf}()}
-#   for the \code{AffyGenePDInfo} class.}
 # }
 #
 # @synopsis
 #
 # \arguments{
-#  \item{pdpkg}{A @character string for an existing PD package.}
-#  \item{celfile}{The pathname to an auxillary CEL for the same chip type.}
+#  \item{tags}{An optional @character @vector of tags to be added to the CDF
+#    filename.}
+#  \item{path}{The output path where the CDF file is written.
+#    If @NULL (default), then it is written to the corresponding
+#    \code{annotationData/chipTypes/<chipType>/} directory.}
 #  \item{overwrite}{If @TRUE, an existing CDF is overwritten, otherwise
 #    an exception is thrown.}
 #  \item{verbose}{A @logical or @see "R.utils::Verbose".}
@@ -28,7 +25,14 @@
 #
 # \value{
 #   Returns (invisibly) the pathname to CDF written.
-#   The CDF filename is generated from the name of the PD package.
+# }
+#
+# \details{
+#   The formal chip type of the CDF is inferred from the AffyGenePDInfo package.
+#   The filename of the CDF is constructed from the chip type and any optional
+#   tags.
+#   To minimize the risk for a corrupt CDF file, the creation of the file
+#   is atomic by first writing to a temporary file which is then renamed.
 # }
 #
 # \section{Limitations}{
@@ -42,20 +46,13 @@
 # }
 #
 # \author{
-#   Maintained by Mark Robinson.
-#   Original code by Samuel Wuest.
-#   Code improvements by Henrik Bengtsson.
-# }
-#
-# \seealso{
-#   Instead of using this method, we recommend to use 
-#   \code{\link[=writeCdf.AffyGenePDInfo]{writeCdf}()}
-#   for the \code{AffyGenePDInfo} class.
+#   Henrik Bengtsson, adopted from \code{pdInfo2Cdf()} written by
+#   Samuel Wuest and Mark Robinson.
 # }
 #
 # @keyword internal
 #*/########################################################################### 
-pdInfo2Cdf <- function(pdpkg, celfile, overwrite=FALSE, verbose=TRUE, ...) {
+setMethodS3("writeCdf", "AffyGenePDInfo", function(this, tags=NULL, path=NULL, overwrite=FALSE, verbose=TRUE, ...) {
   require("affxparser") || throw("Package not loaded: affxparser");
   require("pdInfoBuilder") || throw("Package not loaded: pdInfoBuilder");
 
@@ -78,11 +75,17 @@ pdInfo2Cdf <- function(pdpkg, celfile, overwrite=FALSE, verbose=TRUE, ...) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validating arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Argument 'pdpkg':
-  pdpkg <- Arguments$getCharacter(pdpkg);
+  # Argument 'tags':
+  if (!is.null(tags)) {
+    tags <- Arguments$getCharacters(tags);
+    tags <- paste(tags, collapse=",");
+    tags <- gsub(",,", ",", tags);
+  }
 
-  # Argument 'celfile':
-  celfile <- Arguments$getReadablePathname(celfile, mustExist=TRUE);
+  # Argument 'path':
+  if (!is.null(path)) {
+    path <- Arguments$getWritablePath(path);
+  }
 
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
@@ -91,54 +94,60 @@ pdInfo2Cdf <- function(pdpkg, celfile, overwrite=FALSE, verbose=TRUE, ...) {
   overwrite <- Arguments$getLogical(overwrite);
 
 
+  # Platform Design object
+  pd <- this;
+
   verbose && enter(verbose, "Generating CDF file from Platform Design (PD) package");
-  verbose && cat(verbose, "Platform Design (PD) package: ", pdpkg);
+  pkgName <- pd@annotation;
+  verbose && cat(verbose, "Platform Design (PD) package: ", pkgName);
 
-  pdName <- gsub("\\.", "", pdpkg);
+  # Infer the chip type
+  pkgInfo <- packageDescription(pkgName);
+  title <- pkgInfo$Title;
+  chipType <- gsub(".* ", "", title);
+  rm(pkgInfo, title);
 
-  filename <- sprintf("%s.cdf", pdName);
-  filename <- Arguments$getWritablePathname(filename, mustNotExist=!overwrite);
+  # Chip type package name
+  pkgNameT <- cleanPlatformName(chipType);
 
-  verbose && cat(verbose, "CDF file to be generated: ", filename);
+  # Sanity check
+  stopifnot(pkgNameT == pkgName);
+  rm(pkgNameT);
 
-  # Loading the required PD package.
-  require(pdpkg, character.only=TRUE) || 
-                 throw("Platform Design (PD) package not loaded: ", pdpkg);
+  
+  if (is.null(path)) {
+    path <- file.path("annotationData", "chipTypes", chipType);
+    path <- Arguments$getWritablePath(path);
+  }
+
+  verbose && cat(verbose, "Output path: ", path);
+
+  chipTypeF <- paste(c(chipType, tags), collapse=",");
+  filename <- sprintf("%s.cdf", chipTypeF);
+  verbose && cat(verbose, "Filename: ", filename);
+
+  pathname <- Arguments$getWritablePathname(filename, path=path, mustNotExist=!overwrite);
+  verbose && cat(verbose, "Pathname to generated CDF: ", pathname);
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Retrieving information from the CEL file
+  # Retrieve chip type dimensions
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  verbose && enter(verbose, "Reading auxillary CEL file");
-  verbose && cat(verbose, "Pathname: ", celfile);
+  dim <- geometry(pd);
+  nrows <- dim[1];
+  ncols <- dim[2];
+  rm(dim);
 
-  verbose && enter(verbose, "Reading CEL file header");
-  hdr <- readCelHeader(celfile);
-  nrows <- as.integer(hdr$rows);
-  ncols <- as.integer(hdr$cols);
-  chipType <- hdr$chiptype
-  rm(hdr);  # Not needed anymore
   nbrOfCells <- nrows*ncols;
   verbose && cat(verbose, "Chip type: ", chipType);
+  verbose && cat(verbose, "Tags: ", tags);
   verbose && printf(verbose, "Chip type dimensions: %dx%d\n", nrows, ncols);
   verbose && cat(verbose, "Total number of cells (probes): ", nbrOfCells);
-  verbose && exit(verbose);
-
-  verbose && enter(verbose, "Reading complete CEL file");
-  cel <- read.celfiles(filenames=celfile, pkgname=pdpkg);
-  verbose && exit(verbose);
-
-  verbose && exit(verbose);
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Retrieving information from PD package
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  verbose && enter(verbose, "Retrieving Platform Design database");
-  pd <- getPlatformDesign(cel);
-  rm(cel);  # Not needed anymore
-  verbose && exit(verbose);
-
   verbose && enter(verbose, "Querying Platform Design database");
   ff <- dbGetQuery(db(pd), "select * from pmfeature");
   rm(pd);  # Not needed anymore
@@ -167,8 +176,8 @@ pdInfo2Cdf <- function(pdpkg, celfile, overwrite=FALSE, verbose=TRUE, ...) {
 
   verbose && enter(verbose, "Setting CDF header");
   newCdfHeader <- list(ncols=ncols, nrows=nrows, nunits=nbrOfUnits, 
-                       nqcunits=0, refseq="", chiptype=pdName, 
-                       filename=filename, rows=nrows, 
+                       nqcunits=0, refseq="", chiptype=chipType, 
+                       filename=pathname, rows=nrows, 
                        cols=ncols, probesets=nbrOfUnits, 
                        qcprobesets=0, reference="");
   verbose && exit(verbose);
@@ -188,22 +197,44 @@ pdInfo2Cdf <- function(pdpkg, celfile, overwrite=FALSE, verbose=TRUE, ...) {
   verbose && enter(verbose, "Writing (binary) CDF file");
   pathname <- newCdfHeader$filename;
   verbose && cat(verbose, "Pathname: ", pathname);
-  res <- writeCdf(pathname, cdfheader=newCdfHeader, cdf=newCdfList,
+
+  pathnameT <- sprintf("%s.tmp", pathname);
+  verbose && cat(verbose, "Temporary pathname: ", pathnameT);
+
+  res <- affxparser::writeCdf(pathnameT, cdfheader=newCdfHeader, cdf=newCdfList,
                   cdfqc=NULL, verbose=verbose, overwrite=overwrite);
+
+  # Rename temporary file
+  verbose && enter(verbose, "Renaming temporary file");
+  res <- file.rename(pathnameT, pathname);
+  if (!isFile(pathname)) {
+    throw("Failed to rename temporary file (final file does not exist): ", pathnameT, " -> ", pathname);
+  }
+  if (isFile(pathnameT)) {
+    throw("Failed to rename temporary file (temporary file still exists): ", pathnameT, " -> ", pathname);
+  }
+  rm(pathnameT);
+  verbose && exit(verbose);
+
   verbose && exit(verbose);
 
   verbose && exit(verbose);
 
   invisible(res);
-} # pdInfo2Cdf()
+}) # writeCdf()
 
-
-# For backward compatibility
-PdInfo2Cdf <- pdInfo2Cdf;
 
 
 ############################################################################
 # HISTORY:
+# 2011-01-09 [HB]
+# o Added writeCdf() for AffyGenePDInfo, which replaces pdInfo2Cdf().
+#   An auxillary CEL file is no longer needed to create a CDF from
+#   an PDInfo package.  Moreover, contrary pdInfo2Cdf(), the generated
+#   CDF now gets a correct/formal Affymetrix chip type.
+# 
+# Below history is for pdInfo2Cdf():
+#
 # 2010-12-04 [HB]
 # o Added more verbose output.
 # o DOCUMENTATION: Added more Rd documentation.

@@ -1430,6 +1430,8 @@
 \alias{getACSFile}
 \alias{getACSFile.AffymetrixCdfFile}
 \alias{getAromaCellSequenceFile.AffymetrixCdfFile}
+\alias{writeCdf}
+\alias{writeCdf.default}
 
 \description{
   This page contains aliases for all "non-documented" objects that

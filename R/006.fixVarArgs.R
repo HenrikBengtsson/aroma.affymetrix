@@ -7,9 +7,12 @@ getPackageName <- appendVarArgs(getPackageName);
 # So that one can call plotRle(qa, show.names=FALSE)
 boxplot.stats <- appendVarArgs(boxplot.stats);
 
+writeCdf <- appendVarArgs(writeCdf);
 
 ############################################################################
 # HISTORY:
+# 2011-01-09 [HB]
+# o Added appendVarArgs(writeCdf).
 # 2010-02-08 [HB]
 # o Added appendVarArgs(boxplot.stats) so that one can pass argument
 #   'show.names' to bxp() via plotRle().

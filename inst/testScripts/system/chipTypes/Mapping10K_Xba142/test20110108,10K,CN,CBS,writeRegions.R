@@ -1,17 +1,15 @@
 library("aroma.affymetrix")
-log <- Arguments$getVerbose(-4, timestamp=TRUE);
+verbose <- Arguments$getVerbose(-4, timestamp=TRUE);
 
 
 
-dataSetName <- "Jeremy_2007-10k";
+dataSet <- "GSE8605";
 chipType <- "Mapping10K_Xba142";
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Tests for setting up CEL sets and locating the CDF file
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-cs <- AffymetrixCelSet$byName(dataSetName, chipType=chipType, verbose=log);
-keep <- 1:6;
-cs <- extract(cs, keep);
+cs <- AffymetrixCelSet$byName(dataSet, chipType=chipType);
 print(cs);
 
 
@@ -20,7 +18,7 @@ print(cs);
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 acc <- AllelicCrosstalkCalibration(cs);
 print(acc);
-csC <- process(acc, verbose=log);
+csC <- process(acc, verbose=verbose);
 print(csC);
 
 
@@ -30,7 +28,7 @@ print(csC);
 plm <- RmaCnPlm(csC, mergeStrands=TRUE, combineAlleles=TRUE, shift=300);
 print(plm);
 
-fit(plm, verbose=log);
+fit(plm, verbose=verbose);
 ces <- getChipEffectSet(plm);
 print(ces);
 
@@ -40,22 +38,19 @@ print(ces);
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 fln <- FragmentLengthNormalization(ces);
 print(fln);
-cesN <- process(fln, verbose=log);
+cesN <- process(fln, verbose=verbose);
 print(cesN);
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# HaarSeg model test
+# Segmentation
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-seg <- HaarSegModel(cesN);
+seg <- CbsModel(cesN);
 print(seg);
-fit(seg, arrays=1, chromosomes=19, verbose=log);
+fit(seg, arrays=1, chromosomes=19, verbose=verbose);
 
 
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# ChromosomeExplorer test
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-ce <- ChromosomeExplorer(seg, zooms=2^(0:3));
-print(ce);
-process(ce, chromosomes=c(19,23), verbose=log);
-## process(ce, verbose=log);
+# Write to file
+pathname <- writeRegions(seg, arrays=1, oneFile=FALSE, verbose=verbose);
+print(pathname);
+

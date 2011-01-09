@@ -18,6 +18,10 @@
    Platform Design (PD) packages are also known as "pdInfo" packages.
 
    \emph{Disclaimer: This is a user-contributed function.}
+
+   \emph{Instead of using this method, we recommend to use
+   \code{\link[=writeCdf.AffyGenePDInfo]{writeCdf}()}
+   for the \code{AffyGenePDInfo} class.}
  }
 
  \usage{pdInfo2Cdf(pdpkg, celfile, overwrite=FALSE, verbose=TRUE, ...)}
@@ -50,6 +54,12 @@
    Maintained by Mark Robinson.
    Original code by Samuel Wuest.
    Code improvements by Henrik Bengtsson.
+ }
+
+ \seealso{
+   Instead of using this method, we recommend to use
+   \code{\link[=writeCdf.AffyGenePDInfo]{writeCdf}()}
+   for the \code{AffyGenePDInfo} class.
  }
 
 

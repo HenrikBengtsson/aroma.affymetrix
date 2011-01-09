@@ -125,8 +125,7 @@ setMethodS3("createMonocellCdf", "AffymetrixCdfFile", function(this, chipType=ge
     pushState(verbose);
     on.exit(popState(verbose));
   }
-  verbose2 <- as.integer(verbose)-1;  # For 'affxparser' calls.
-  verbose2 <- 2;
+  verbose2 <- as.integer(verbose)-5;  # For 'affxparser' calls.
 
 
   # Already a monocell CDF?
@@ -656,6 +655,9 @@ setMethodS3("getUnitGroupCellMapWithMonocell", "AffymetrixCdfFile", function(thi
 
 ############################################################################
 # HISTORY:
+# 2011-01-09
+# o BUG FIX: createMonocellCdf(..., verbose=FALSE) for AffymetrixCdfFile
+#   would still create verbose output.
 # 2008-12-15 [MR]
 # o Now getMainCdf() works for "unique" (as well as "monocell") CDFs.
 # 2008-07-22

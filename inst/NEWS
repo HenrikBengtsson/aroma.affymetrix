@@ -1,6 +1,10 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 1.9.0 [2011-01-10]
+o No updates.  Submitted to CRAN.
+
+
 Version: 1.8.3 [2011-01-09]
 o Added writeCdf() for AffyGenePDInfo, which replaces pdInfo2Cdf().
   An auxillary CEL file is no longer needed to create a CDF from

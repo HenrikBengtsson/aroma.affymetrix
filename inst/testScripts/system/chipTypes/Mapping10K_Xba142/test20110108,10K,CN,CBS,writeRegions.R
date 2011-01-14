@@ -9,14 +9,14 @@ chipType <- "Mapping10K_Xba142";
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Tests for setting up CEL sets and locating the CDF file
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-cs <- AffymetrixCelSet$byName(dataSet, chipType=chipType);
-print(cs);
+csR <- AffymetrixCelSet$byName(dataSet, chipType=chipType);
+print(csR);
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Allelic cross-talk calibration tests
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-acc <- AllelicCrosstalkCalibration(cs);
+acc <- AllelicCrosstalkCalibration(csR);
 print(acc);
 csC <- process(acc, verbose=verbose);
 print(csC);

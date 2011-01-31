@@ -502,7 +502,7 @@ setMethodS3("image270", "AffymetrixCelFile", function(this, xrange=c(0,Inf), yra
 # }
 #
 # \value{
-#   Returns an @see "EBImage::Image" object.
+#   Returns an Image object as defined by the EBImage package.
 #   If \code{palette==NULL}, the color code is \code{Grayscale}, otherwise
 #   \code{TrueColor}.
 # }
@@ -510,15 +510,12 @@ setMethodS3("image270", "AffymetrixCelFile", function(this, xrange=c(0,Inf), yra
 # \author{Ken Simpson (ksimpson[at]wehi.edu.au).}
 #
 # \seealso{
-#   @see "EBImage::Image".
 #   @seeclass
 # }
 #
 # @keyword IO
 #*/###########################################################################
 setMethodS3("getImage", "AffymetrixCelFile", function(this, other=NULL, transforms=list(sqrt), xrange=c(0,Inf), yrange=xrange, zrange=c(0,sqrt(2^16)), field=c("intensities", "stdvs", "pixels"), zoom=1, ..., readRectFcn=NULL, verbose=FALSE) {
-  require("EBImage") || throw("Package not loaded: EBImage.");
-
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
   # Local functions
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
@@ -640,7 +637,7 @@ setMethodS3("plotImage", "AffymetrixCelFile", function(this, ...) {
   img <- getImage(this, ...);
 
   # Display image
-  EBImage::display(img);
+  display(img);  # Using display() for Image of aroma.core
 
   invisible(img);
 })
@@ -760,11 +757,7 @@ setMethodS3("writeImage", "AffymetrixCelFile", function(this, filename=NULL, ful
     img <- getImage(this, ..., verbose=less(verbose));
   
     verbose && enter(verbose, "Writing image");
-    if (compareVersion(packageDescription("EBImage")$Version, "2.1.23") >= 0) {
-      EBImage::writeImage(img, file=pathname);
-    } else {
-      EBImage::write.image(img, file=pathname);
-    }
+    writeImage(img, file=pathname);
     verbose && exit(verbose);
   }
 
@@ -778,6 +771,11 @@ setMethodS3("writeImage", "AffymetrixCelFile", function(this, filename=NULL, ful
 
 ############################################################################
 # HISTORY:
+# 2011-01-30
+# o CLEAN UP: getImage(), plotImage() and writeImage() for AffymetrixCelFile
+#   no longer depend explicitly on EBImage but instead calls aroma.core's 
+#   getImage(), display(), and writeImage(), respectively.  The latter
+#   methods depend on EBimage for now.
 # 2009-09-04
 # o Now smoothScatter() is loaded via aroma.core.
 # 2009-09-17

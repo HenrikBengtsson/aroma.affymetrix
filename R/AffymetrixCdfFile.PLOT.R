@@ -5,8 +5,6 @@ setMethodS3("stextChipType", "AffymetrixCdfFile", function(this, ...) {
 
 
 setMethodS3("getImage", "AffymetrixCdfFile", function(this, xrange=c(0,Inf), yrange=xrange, zrange=c(0,sqrt(2^16)), field=c("isPm"), levels=NULL, zoom=1, ..., verbose=FALSE) {
-  require("EBImage") || throw("Package not loaded: EBImage.");
-
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
@@ -73,6 +71,10 @@ setMethodS3("getImage", "AffymetrixCdfFile", function(this, xrange=c(0,Inf), yra
 
 ############################################################################
 # HISTORY:
+# 2011-01-30
+# o CLEAN UP: getImage() for AffymetrixCdfFile no longer explicitly
+#   require the EBImage but instead calls aroma.core's getImage(). 
+#   The latter method depends on EBimage for now.
 # 2010-06-22
 # o Dropped argument 'transforms' from getImage() for AffymetrixCdfFile.
 # 2006-09-16

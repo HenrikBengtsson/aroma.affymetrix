@@ -1,6 +1,13 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 1.9.1 [2011-01-30]
+o CLEAN UP: Removed explicit dependencies on EBImage in the code.
+  The dependencies are still there, but via wrapper methods of
+  aroma.core.  This is a small step of making the aroma framework
+  less dependent on EBImage.
+
+
 Version: 1.9.0 [2011-01-10]
 o No updates.  Submitted to CRAN.
 

@@ -1,6 +1,4 @@
 setMethodS3("getImage", "AromaUnitTabularBinaryFile", function(this, transforms=NULL, xrange=c(0,Inf), yrange=xrange, zrange=c(0,sqrt(2^16)), field, levels=NULL, zoom=1, ..., verbose=FALSE) {
-  require("EBImage") || throw("Package not loaded: EBImage.");
-
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
@@ -68,6 +66,10 @@ setMethodS3("getImage", "AromaUnitTabularBinaryFile", function(this, transforms=
 
 ############################################################################
 # HISTORY:
+# 2011-01-30
+# o CLEAN UP: getImage() for AromaUnitTabularBinaryFile no longer explicitly
+#   require the EBImage but instead calls aroma.core's getImage(). 
+#   The latter method depends on EBimage for now.
 # 2008-04-14
 # o Created from AffymetrixCdfFile.PLOT.R.
 ############################################################################

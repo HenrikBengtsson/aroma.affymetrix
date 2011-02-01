@@ -1,11 +1,13 @@
 Package: aroma.affymetrix
 =========================
 
-Version: 1.9.1 [2011-01-30]
+Version: 1.9.1 [2011-01-31]
+o GENERALIZATION: With aroma.core v1.9.3 it is now possible to
+  display spatial image and write them as PNG files if the 'png'
+  package is installed, alternatively to the EBImage package.
 o CLEAN UP: Removed explicit dependencies on EBImage in the code.
   The dependencies are still there, but via wrapper methods of
-  aroma.core.  This is a small step of making the aroma framework
-  less dependent on EBImage.
+  aroma.core.
 
 
 Version: 1.9.0 [2011-01-10]

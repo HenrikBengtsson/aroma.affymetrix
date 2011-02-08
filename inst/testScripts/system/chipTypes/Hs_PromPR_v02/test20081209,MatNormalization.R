@@ -1,32 +1,38 @@
 library("aroma.affymetrix");
-log <- Arguments$getVerbose(-20, timestamp=TRUE);
+verbose <- Arguments$getVerbose(-20, timestamp=TRUE);
+
+dataSet <- "MNtest";
+chipType <- "Hs_PromPR_v02,Harvard,ROIs";
+
+dataSet <- "E-MEXP-1481";
+chipType <- "Hs_PromPR_v02";
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Setup the tiling array data set
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-cdf <- AffymetrixCdfFile$byChipType("Hs_PromPR_v02", tags="Harvard,ROIs");
+cdf <- AffymetrixCdfFile$byChipType(chipType);
 print(cdf);
 
-csR <- AffymetrixCelSet$byName("MNtest", cdf=cdf);
+csR <- AffymetrixCelSet$byName(dataSet, cdf=cdf);
 print(csR);
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Normalize the data using the MAT model
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-mn <- MatNormalization(csR, numChunks=20);
-csM <- process(mn, verbose=more(log, 30));
+mn <- MatNormalization(csR, numChunks=10);
+csM <- process(mn, verbose=verbose);
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Convert data set such that it maps to the "unique" CDF
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Get the "unique" CDF, which is generated if missing
-cdfU <- getUniqueCdf(cdf, verbose=more(log, 60));
+cdfU <- getUniqueCdf(cdf, verbose=verbose);
 print(cdfU);
 
-csU <- convertToUnique(csM, verbose=log);
+csU <- convertToUnique(csM, verbose=verbose);
 print(csU);
 
 
@@ -47,13 +53,18 @@ str(cells);
 pos <- acp[cells,2,drop=TRUE];
 
 # Extract data for array #1
+cfR <- getAverageFile(cs);
 cf <- getFile(cs, 1);
-y <- extractMatrix(cf, cells=cells, drop=TRUE, verbose=log);
+y <- extractMatrix(cf, cells=cells, drop=TRUE, verbose=verbose);
+yR <- extractMatrix(cfR, cells=cells, drop=TRUE, verbose=verbose);
+
+M <- log2(y/yR);
 
 par(mar=c(3,3,1,1)+0.1, mgp=c(1.8,0.5,0));
 xlab <- "Physical position (Mb)";
 ylab <- expression(log2(PM));
 plot(pos/1e6, log2(y), pch=".", cex=2, xlab=xlab, ylab=ylab);
+plot(pos/1e6, M, pch=".", cex=2, xlab=xlab, ylab=ylab);
 stext(side=3, pos=0, cex=0.7, getFullName(cf));
 stext(side=3, pos=1, cex=0.7, sprintf("Chr%02d (n=%d)", chr, length(pos)));
 stext(side=4, pos=1, cex=0.7, getChipType(cdf));

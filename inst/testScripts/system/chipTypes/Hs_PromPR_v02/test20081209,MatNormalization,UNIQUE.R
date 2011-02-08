@@ -2,13 +2,16 @@ library("aroma.affymetrix");
 log <- Arguments$getVerbose(-20, timestamp=TRUE);
 
 
+dataSet <- "MNtest";
+chipType <- "Hs_PromPR_v02,Harvard,ROIs";
+
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Setup the tiling array data set
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-cdf <- AffymetrixCdfFile$byChipType("Hs_PromPR_v02", tags="Harvard,ROIs");
+cdf <- AffymetrixCdfFile$byChipType(chipType);
 print(cdf);
 
-csR <- AffymetrixCelSet$byName("MNtest", cdf=cdf);
+csR <- AffymetrixCelSet$byName(dataSet, cdf=cdf);
 print(csR);
 
 

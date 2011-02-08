@@ -217,7 +217,9 @@ setMethodS3("as.character", "AffymetrixCelSet", function(x, ...) {
 
   # Get CEL header timestamps?
   maxCount <- getOption(aromaSettings, "output/timestampsThreshold");
-  if (maxCount >= nbrOfArrays(this)) {
+  if (n == 0) {
+    s <- c(s, "Time period: NA");
+  } else if (maxCount >= n) {
     ts <- getTimestamps(this);
     # Note: If ts <- range(ts) is used and the different timestamps uses
     # tifferent 'tzone' attributes, e.g. if some files where scanning during
@@ -297,6 +299,9 @@ setMethodS3("getIdentifier", "AffymetrixCelSet", function(this, ..., force=FALSE
 # @keyword IO
 #*/###########################################################################
 setMethodS3("getChipType", "AffymetrixCelSet", function(this, ...) {
+  if (nbrOfFiles(this) == 0) {
+    return(as.character(NA));
+  }
   unf <- getUnitNamesFile(this);
   getChipType(unf, ...);
 })
@@ -1171,6 +1176,10 @@ setMethodS3("getUnitGroupCellMap", "AffymetrixCelSet", function(this, ...) {
 
 ############################################################################
 # HISTORY:
+# 2011-02-04
+# o BUG FIX: as.character() for an empty AffymetrixCelSet would throw 
+#   exception "Argument 'x' is of length 1 although the range ([0,0])
+#   implies that is should be empty.", while trying to infer the chip type.
 # 2010-07-02
 # o Now AffymetrixCelSet$byName(..., chipType="GenomeWideSNP_6,Full") will
 #   work (before chiptypes with tags would give an error).  This is now

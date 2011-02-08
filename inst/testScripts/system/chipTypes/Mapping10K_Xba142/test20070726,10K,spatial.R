@@ -3,23 +3,16 @@ log <- Arguments$getVerbose(-4, timestamp=TRUE);
 
 
 
-dataSetName <- "Jeremy_2007-10k";
+dataSet <- "GSE8605";
 chipType <- "Mapping10K_Xba142";
-
-# Expected sample names
-sampleNames <- c("0001-7", "0002-10", "0004-13", "0005-14", "0007-18", 
-                      "0008-19", "0010-22", "2-DPrrr", "MH12", "MH18");
-
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Tests for setting up CEL sets and locating the CDF file
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-csR <- AffymetrixCelSet$byName(dataSetName, chipType=chipType, verbose=log);
+csR <- AffymetrixCelSet$byName(dataSet, chipType=chipType, verbose=log);
 keep <- 1:6;
 csR <- extract(csR, keep);
-sampleNames <- sampleNames[keep];
 print(csR);
-stopifnot(identical(getNames(csR), sampleNames));
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -40,7 +33,7 @@ pngDev <- findPngDevice();
 cfR <- getAverageFile(csR, verbose=log);
 reporter <- SpatialReporter(csR, reference=cfR);
 ylab <- expression(log[2](y/y[R]));
-figPath <- "figures";
+figPath <- Arguments$getWritablePath("figures");
 for (array in 1:nbrOfArrays(csR)) {
   df <- getFile(csR, array);
 

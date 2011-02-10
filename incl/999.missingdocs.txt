@@ -725,3 +725,5 @@ extractAffyBatch.ChipEffectSet
  getACSFile getACSFile.AffymetrixCdfFile
  getAromaCellSequenceFile.AffymetrixCdfFile
 writeCdf writeCdf.default
+ getFilteredFragmentLengths
+ getFilteredFragmentLengths.FragmentLengthNormalization

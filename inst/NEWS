@@ -1,6 +1,12 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 1.9.4 [2011-02-08]
+o GENERALIZATION: Now it is possible to specify the range of fragment
+  lengths to be considered when normalizing for PCR fragment-length
+  effects.  See argument 'lengthRange' to FragmentLengthNormalization.
+
+
 Version: 1.9.3 [2011-02-04]
 o BUG FIX: as.character() for an empty AffymetrixCelSet would throw 
   exception "Argument 'x' is of length 1 although the range ([0,0])

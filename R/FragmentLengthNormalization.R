@@ -22,6 +22,9 @@
 #     should be normalized to.}
 #   \item{subsetToFit}{The units from which the normalization curve should
 #     be estimated.  If @NULL, all are considered.}
+#   \item{lengthRange}{If given, a @numeric @vector of length 2 specifying 
+#     the range of fragment lengths considered.  All fragments with lengths
+#     outside this range are treated as if they were missing.}
 #   \item{onMissing}{Specifies how to normalize units for which the 
 #     fragment lengths are unknown.}
 #   \item{shift}{An optional amount the data points should be shifted
@@ -51,7 +54,7 @@
 #
 # @author
 #*/###########################################################################
-setConstructorS3("FragmentLengthNormalization", function(dataSet=NULL, ..., target=targetFunctions, subsetToFit="-XY", shift=0, onMissing=c("median", "ignore"), targetFunctions=NULL) {
+setConstructorS3("FragmentLengthNormalization", function(dataSet=NULL, ..., target=targetFunctions, subsetToFit="-XY", lengthRange=NULL, onMissing=c("median", "ignore"), shift=0, targetFunctions=NULL) {
   extraTags <- NULL;
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -110,6 +113,12 @@ setConstructorS3("FragmentLengthNormalization", function(dataSet=NULL, ..., targ
   # Argument 'shift':
   shift <- Arguments$getDouble(shift, disallow=c("NA", "NaN", "Inf"));
  
+  # Argument 'lengthRange':
+  if (!is.null(lengthRange)) {
+    lengthRange <- Arguments$getDoubles(lengthRange);
+    stopifnot(lengthRange[1] <= lengthRange[2]);
+  }
+
   # Argument 'onMissing':
   onMissing <- match.arg(onMissing);
 
@@ -117,6 +126,7 @@ setConstructorS3("FragmentLengthNormalization", function(dataSet=NULL, ..., targ
   extend(ChipEffectTransform(dataSet, ...), "FragmentLengthNormalization", 
     .subsetToFit = subsetToFit,
     .target = target,
+    .lengthRange = lengthRange,
     .onMissing = onMissing,
     .extraTags = extraTags,
     shift = shift
@@ -162,6 +172,7 @@ setMethodS3("getParameters", "FragmentLengthNormalization", function(this, expan
   # Get parameters of this class
   params <- c(params, list(
     subsetToFit = this$.subsetToFit,
+    lengthRange = this$.lengthRange,
     onMissing = this$.onMissing,
     .target = this$.target,
     shift = this$shift
@@ -237,6 +248,76 @@ setMethodS3("getOutputDataSet00", "FragmentLengthNormalization", function(this, 
   res;
 })
 
+
+setMethodS3("getFilteredFragmentLengths", "FragmentLengthNormalization", function(this, ..., verbose=FALSE) {
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Validate arguments
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Argument 'verbose':
+  verbose <- Arguments$getVerbose(verbose);
+  if (verbose) {
+    pushState(verbose);
+    on.exit(popState(verbose));
+  }
+
+
+  verbose && enter(verbose, "Reading and filtering fragment lengths");
+
+  verbose && enter(verbose, "Reading fragment lengths");
+  # Get SNP information
+  cdf <- getCdf(this);
+  si <- getSnpInformation(cdf);
+  verbose && print(verbose, si);
+
+  fl <- getFragmentLengths(si, ...);
+  verbose && cat(verbose, "Summary of non-filtered fragment lengths:");
+  verbose && str(verbose, fl);
+  verbose && summary(verbose, fl);
+  verbose && exit(verbose);
+
+  verbose && enter(verbose, "Filtering fragment lengths");
+  # Get the range fragment lengths to be considered
+  params <- getParameters(this, expand=FALSE);
+  range <- params$lengthRange;
+
+  if (!is.null(range)) {
+    naValue <- as.double(NA);
+    for (ee in seq(length=ncol(fl))) {
+      flEE <- fl[,ee];
+      ok <- (!is.na(flEE));
+  
+      tooSmall <- (ok & (flEE < range[1]));
+      n <- sum(tooSmall);
+      if (n > 0) {
+        verbose && printf(verbose, "Detected %d fragments on enzyme %d that are too short (< %.0g)\n", n, ee, range[1]);
+      }
+  
+      tooLarge <- (ok & (flEE > range[2]));
+      n <- sum(tooLarge);
+      if (n > 0) {
+        verbose && printf(verbose, "Detected %d fragments on enzyme %d that are too long (> %.0g)\n", n, ee, range[2]);
+      }
+  
+      tooExtreme <- (tooSmall | tooLarge);
+      n <- sum(tooExtreme);
+  
+      verbose && printf(verbose, "Detected %d fragments on enzyme %d with lengths outside of filtered range [%.0g,%.0g]\n", n, ee, range[1], range[2]);
+  
+      fl[tooExtreme,ee] <- naValue;
+    } # for (ee ...)
+  
+    verbose && cat(verbose, "Summary of filtered fragment lengths:");
+    verbose && summary(verbose, fl);
+  
+    verbose && exit(verbose);
+  } # if (!is.null(range))
+
+  verbose && exit(verbose);
+
+  fl;
+}, protected=TRUE)
+
+
 setMethodS3("getSubsetToFit", "FragmentLengthNormalization", function(this, force=FALSE, ..., verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
@@ -281,8 +362,8 @@ setMethodS3("getSubsetToFit", "FragmentLengthNormalization", function(this, forc
   if (onMissing == "ignore") {
     # Keep only those for which we have PCR fragmenth-length information
     # for at least one enzyme
-    verbose && enter(verbose, "Reading fragment lengths");
-    fl <- getFragmentLengths(si, units=units);
+    verbose && enter(verbose, "Identifying finite fragment lengths");
+    fl <- getFilteredFragmentLengths(this, units=units, verbose=less(verbose,3));
     keep <- rep(FALSE, nrow(fl));
     for (ee in seq(length=ncol(fl))) {
       keep <- keep | is.finite(fl[,ee]);
@@ -348,7 +429,7 @@ setMethodS3("getSubsetToFit", "FragmentLengthNormalization", function(this, forc
     }
 
     verbose && enter(verbose, "Reading fragment lengths");
-    fl <- getFragmentLengths(si, units=units);
+    fl <- getFilteredFragmentLengths(this, units=units, verbose=less(verbose,3));
     verbose && exit(verbose);
 
     # Make sure to keep data points at the tails too
@@ -428,7 +509,7 @@ setMethodS3("getTargetFunctions", "FragmentLengthNormalization", function(this, 
     verbose && cat(verbose, "Target type: ", targetType);
 
     # Infer the number of enzymes
-    fl <- getFragmentLengths(si, units=1:5);
+    fl <- getFilteredFragmentLengths(this, units=1:5);
     nbrOfEnzymes <- ncol(fl);
     rm(fl);
 
@@ -509,8 +590,9 @@ setMethodS3("getTargetFunctions", "FragmentLengthNormalization", function(this, 
     verbose && summary(verbose, yR);
     
     # Get PCR fragment lengths for these
-    fl <- getFragmentLengths(si, units=units);
+    fl <- getFilteredFragmentLengths(this, units=units, verbose=less(verbose, 3));
     rm(units); # Not needed anymore
+
     verbose && cat(verbose, "Fragment lengths:");
     verbose && str(verbose, fl);
     verbose && cat(verbose, "Summary of fragment lengths:");
@@ -738,7 +820,7 @@ setMethodS3("process", "FragmentLengthNormalization", function(this, ..., force=
 
     if (is.null(fl)) {
       # For the subset to be fitted, get PCR fragment lengths (for all enzymes) 
-      fl <- getFragmentLengths(si, units=subsetToUpdate);
+      fl <- getFilteredFragmentLengths(this, units=subsetToUpdate, verbose=less(verbose, 3));
       verbose && summary(verbose, fl);
 
       # Get the index in the data vector of subset to be fitted.
@@ -891,6 +973,10 @@ setMethodS3("process", "FragmentLengthNormalization", function(this, ..., force=
 
 ############################################################################
 # HISTORY:
+# 2011-02-08
+# o GENERALIZATION: Now it is possible to specify the range of fragment
+#   lengths to be considered when normalizing for PCR fragment-length
+#   effects.  See argument 'lengthRange' to FragmentLengthNormalization.
 # 2010-02-15
 ## o MEMORY OPTIMIZATION: Now process() of FragmentLengthNormalization
 ##   clears the in-memory cache when finished.

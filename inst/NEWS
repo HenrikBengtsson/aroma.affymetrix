@@ -4,7 +4,8 @@ Package: aroma.affymetrix
 Version: 1.9.4 [2011-02-08]
 o GENERALIZATION: Now it is possible to specify the range of fragment
   lengths to be considered when normalizing for PCR fragment-length
-  effects.  See argument 'lengthRange' to FragmentLengthNormalization.
+  effects.  Lengths outside the range ar treated as missing values.
+  See argument 'lengthRange' to FragmentLengthNormalization.
 
 
 Version: 1.9.3 [2011-02-04]
@@ -15,7 +16,7 @@ o BUG FIX: as.character() for an empty AffymetrixCelSet would throw
 
 Version: 1.9.2 [2011-02-01]
 o CLEANUP/GENERALIZATION: Now all system tests for the 
-  Mapping10K_Xba142 chip type is using public data sets.
+  Mapping10K_Xba142 chip type use public data sets.
   Before some of them used a private data set.
   Remaining data sets that are non-public and used in system tests:
   - GenomeWideSNP_6: TCGA,OV,testSet,pairs,Broad (1 test)

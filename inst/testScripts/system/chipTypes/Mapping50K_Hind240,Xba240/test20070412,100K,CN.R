@@ -47,7 +47,7 @@ for (chipType in names(csList)) {
   cs <- csList[[chipType]];
   plm <- RmaCnPlm(cs, mergeStrands=TRUE, combineAlleles=TRUE, shift=300);
   print(plm);
-  fit(plm, ram=1/2, verbose=log);
+  fit(plm, verbose=log);
   ces <- getChipEffectSet(plm);
   print(ces);
   stopifnot(identical(getNames(ces), getNames(cs)));
@@ -66,6 +66,7 @@ for (chipType in names(cesList)) {
   print(summary(theta));
   thetaList[[chipType]] <- theta;
 }
+
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Fragment-length normalization test
@@ -93,6 +94,7 @@ for (kk in seq(along=cesNList)) {
   cesNList[[kk]] <- ces;
 }
 
+
 cnm <- RawCopyNumberModel(cesNList);
 print(cnm);
 
@@ -102,19 +104,20 @@ rawCNs <- extractRawCopyNumbers(cnm, array=1, chromosome=1, verbose=log);
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Glad model test
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-glad <- GladModel(cesNList);
-print(glad);
+#seg <- GladModel(cesNList);
+seg <- CbsModel(cesNList);
+print(seg);
 
-fit(glad, arrays=1, chromosomes=19, verbose=log);
+fit(seg, arrays=1, chromosomes=19, verbose=log);
 
 # Tests the case where one of the set does not have observations.
-fit(glad, arrays=nbrOfArrays(glad), chromosomes=19, verbose=log);
+fit(seg, arrays=nbrOfArrays(seg), chromosomes=19, verbose=log);
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # ChromosomeExplorer test
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-ce <- ChromosomeExplorer(glad);
+ce <- ChromosomeExplorer(seg);
 print(ce);
 process(ce, arrays=1:2, chromosomes=c(19,23), verbose=log);
 

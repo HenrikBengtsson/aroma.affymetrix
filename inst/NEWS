@@ -1,6 +1,18 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 1.9.5 [2011-02-15]
+o CLEANUP/GENERALIZATION: Now all system tests for the 
+  Hs_PromPR_v02 chip type use public data sets.
+  Before some of them used a private data set.
+  Remaining data sets that are non-public and used in system tests:
+  - GenomeWideSNP_6: TCGA,OV,testSet,pairs,Broad (1 test)
+o HARMONIZATION: Renamed argument 'numBins' of MatNormalization 
+  to 'nbrOfBins'.
+o HARMONIZATION: Now MatNormalization utilized the aroma setting 'ram',
+  which replaced argument 'numChunks' which is now deprecated.
+
+
 Version: 1.9.4 [2011-02-08]
 o GENERALIZATION: Now it is possible to specify the range of fragment
   lengths to be considered when normalizing for PCR fragment-length
@@ -18,9 +30,6 @@ Version: 1.9.2 [2011-02-01]
 o CLEANUP/GENERALIZATION: Now all system tests for the 
   Mapping10K_Xba142 chip type use public data sets.
   Before some of them used a private data set.
-  Remaining data sets that are non-public and used in system tests:
-  - GenomeWideSNP_6: TCGA,OV,testSet,pairs,Broad (1 test)
-  - Hs_PromPR_v02: MATtest (1 test), MNtest (3 tests)
 
 
 Version: 1.9.1 [2011-02-01]

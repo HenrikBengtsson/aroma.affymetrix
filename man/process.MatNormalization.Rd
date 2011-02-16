@@ -19,7 +19,7 @@
  Normalizes the data set.
 }
 
-\usage{\method{process}{MatNormalization}(this, ..., force=FALSE, verbose=FALSE)}
+\usage{\method{process}{MatNormalization}(this, ..., ram=NULL, force=FALSE, verbose=FALSE)}
 
 \arguments{
   \item{...}{Not used.}

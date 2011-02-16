@@ -1,8 +1,8 @@
 library("aroma.affymetrix");
 verbose <- Arguments$getVerbose(-20, timestamp=TRUE);
 
-dataSet <- "MNtest";
-chipType <- "Hs_PromPR_v02,Harvard,ROIs";
+## dataSet <- "MNtest";
+## chipType <- "Hs_PromPR_v02,Harvard,ROIs";
 
 dataSet <- "E-MEXP-1481";
 chipType <- "Hs_PromPR_v02";
@@ -21,7 +21,7 @@ print(csR);
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Normalize the data using the MAT model
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-mn <- MatNormalization(csR, numChunks=10);
+mn <- MatNormalization(csR);
 csM <- process(mn, verbose=verbose);
 
 

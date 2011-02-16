@@ -44,7 +44,7 @@ extends \emph{\link[aroma.affymetrix]{AbstractProbeSequenceNormalization}}\cr
   A, C, G, and T:s and the match scores according to MAT [1].
  }
 
- \usage{MatNormalization(..., unitsToFit=NULL, model=c("lm"), numChunks=25, numBins=200)}
+ \usage{MatNormalization(..., unitsToFit=NULL, model=c("lm"), nbrOfBins=200)}
 
  \arguments{
    \item{...}{Arguments passed to the constructor of
@@ -53,9 +53,7 @@ extends \emph{\link[aroma.affymetrix]{AbstractProbeSequenceNormalization}}\cr
      be estimated.  If \code{\link[base]{NULL}}, all are considered.}
    \item{model}{A \code{\link[base]{character}} string specifying the model used to fit
      the base-count effects.}
-   \item{numChunks}{The number of chunks to split the data into to
-     fit the model}
-   \item{numBins}{The number of bins to use for the variance smoothing step}
+   \item{nbrOfBins}{The number of bins to use for the variance smoothing step.}
  }
 
  \section{Fields and Methods}{

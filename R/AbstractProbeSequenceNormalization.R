@@ -106,8 +106,8 @@ setMethodS3("getAromaCellSequenceFile", "AbstractProbeSequenceNormalization", fu
     nbrOfCells <- nbrOfCells(cdf);
     rm(dataSet, cdf);
 
-    verbose && cat(verbose, "Chip type:", chipType);
-    verbose && cat(verbose, "Number of cells:", nbrOfCells);
+    verbose && cat(verbose, "Chip type: ", chipType);
+    verbose && cat(verbose, "Number of cells: ", nbrOfCells);
 
     aps <- AromaCellSequenceFile$byChipType(chipType, 
                             nbrOfCells=nbrOfCells, ..., verbose=verbose);
@@ -519,6 +519,8 @@ setMethodS3("process", "AbstractProbeSequenceNormalization", function(this, ...,
 
 ############################################################################
 # HISTORY:
+# 2011-02-15
+# o Added forgot space is two verbose statements.
 # 2010-02-16
 # o Added verbose output to getAromaCellSequenceFile().
 ## 2010-02-15

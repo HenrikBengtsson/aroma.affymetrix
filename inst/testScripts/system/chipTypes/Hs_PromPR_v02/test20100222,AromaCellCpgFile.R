@@ -12,7 +12,7 @@
 #*/###########################################################################
 
 library("aroma.affymetrix");
-log <- Arguments$getVerbose(-20, timestamp=TRUE);
+verbose <- Arguments$getVerbose(-20, timestamp=TRUE);
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -28,7 +28,7 @@ print(cdfU);
 # Test allocation, writing and reading of 'acp' object
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 acp <- AromaCellPositionFile$allocateFromCdf(cdfU, tags=c("*", "test"), 
-                                            overwrite=TRUE, verbose=log);
+                                            overwrite=TRUE, verbose=verbose);
 print(acp);
 
 nRandCells <- 20;
@@ -51,7 +51,7 @@ rm(chRand, posRand, tmpMatrix);
 # Test allocation, writing and reading of 'acc' object
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 acc <- AromaCellCpgFile$allocateFromCdf(cdfU, tags=c("*", "test"), 
-                                            overwrite=TRUE, verbose=log);
+                                            overwrite=TRUE, verbose=verbose);
 print(acc);
 
 cells <- sample(seq_len(nbrOfCells(cdfU)), nRandCells);

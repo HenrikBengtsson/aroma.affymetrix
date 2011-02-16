@@ -1,28 +1,34 @@
 library("aroma.affymetrix");
-log <- Arguments$getVerbose(-20, timestamp=TRUE);
+verbose <- Arguments$getVerbose(-20, timestamp=TRUE);
 
+
+## dataSet <- "MNtest";
+## chipType <- "Hs_PromPR_v02,Harvard,ROIs";
+
+dataSet <- "E-MEXP-1481";
+chipType <- "Hs_PromPR_v02"; 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Setup the tiling array data set
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-cdf <- AffymetrixCdfFile$byChipType("Hs_PromPR_v02", tags="Harvard,ROIs");
+cdf <- AffymetrixCdfFile$byChipType(chipType);
 print(cdf);
 
-csR <- AffymetrixCelSet$byName("MNtest", cdf=cdf);
+csR <- AffymetrixCelSet$byName(dataSet, cdf=cdf);
 print(csR);
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Normalize the data using the MAT model
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-mn <- MatNormalization(csR, numChunks=20);
-csM <- process(mn, verbose=more(log, 30));
+mn <- MatNormalization(csR);
+csM <- process(mn, verbose=more(verbose, 30));
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Convert data set such that it maps to the "unique" CDF
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-csU <- convertToUnique(csM, verbose=log);
+csU <- convertToUnique(csM, verbose=verbose);
 print(csU);
 
 dm <- matrix(1, nrow=nbrOfFiles(csU), ncol=3);

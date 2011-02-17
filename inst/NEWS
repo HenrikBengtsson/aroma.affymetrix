@@ -1,6 +1,10 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 2.0.0 [2011-02-16]
+o No updates.  Submitted to CRAN.
+
+
 Version: 1.9.5 [2011-02-15]
 o CLEANUP/GENERALIZATION: Now all system tests for the 
   Hs_PromPR_v02 chip type use public data sets.

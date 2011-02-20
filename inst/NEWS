@@ -1,6 +1,15 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 2.0.1 [2011-02-19]
+o CLEANUP: Replaced calls to deprecated getListOfChipEffectSets() 
+  with getSets().
+o KNOWN ISSUE: install.packages("aroma.affymetrix") does not work
+  because the package depends on the 'affxparser' package which has
+  to be installed from on Bioconductor.  For now, the DESCRIPTION
+  file has been updated with installation instructions.
+
+
 Version: 2.0.0 [2011-02-16]
 o No updates.  Submitted to CRAN.
 

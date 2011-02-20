@@ -549,7 +549,7 @@ setMethodS3("getMonocellCdf", "AffymetrixCdfFile", function(this, ..., verbose=F
 
   # First, try to locate an existing monocell CDF
   verbose && enter(verbose, "Locating monocell CDF");
-  pathname <- findByChipType(this, chipType=chipType, ...);
+  pathname <- findByChipType(this, chipType=chipType, ..., verbose=less(verbose,20));
   verbose && cat(verbose, "Pathname: ", pathname);
   verbose && exit(verbose);
 

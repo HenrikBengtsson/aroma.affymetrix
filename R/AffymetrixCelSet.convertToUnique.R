@@ -60,7 +60,7 @@ setMethodS3("convertToUnique", "AffymetrixCelSet", function(this, ..., tags="UNQ
   outputDataSet <- NULL
   tryCatch({
     res <- AffymetrixCelSet$byName(fullname, cdf=cdfUnique, 
-                     paths=rootPath, checkChipType=FALSE, verbose=verbose);
+                                   checkChipType=FALSE, verbose=verbose);
   }, error = function(ex) {});
   
   if (inherits(res, "AffymetrixCelSet")) {
@@ -171,6 +171,11 @@ setMethodS3("convertToUnique", "AffymetrixCelSet", function(this, ..., tags="UNQ
 
 ############################################################################
 # HISTORY:
+# 2011-02-24 [HB]
+# o Now convertToUnique() for AffymetrixCelSet searches for already 
+#   available data sets using the aroma-wide search rules.  Before it
+#   assumed it would always be located in probeData/, but with the new
+#   rules it can also be in probeData,<tags>/.
 # 2010-05-13 [HB]
 # o Yday's fixes had some hiccups.
 # 2010-05-12 [HB]

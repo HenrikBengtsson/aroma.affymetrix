@@ -318,7 +318,7 @@ setMethodS3("setCdf", "CnagCfhSet", function(this, cdf, verbose=FALSE, ...) {
 })
 
 
-setMethodS3("findByName", "CnagCfhSet", function(static, ..., paths="cnagData/") {
+setMethodS3("findByName", "CnagCfhSet", function(static, ..., paths="cnagData(,.*)/") {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -882,8 +882,18 @@ setMethodS3("getAverageFile", "CnagCfhSet", function(this, name=NULL, prefix="av
   res <- this$.averageFiles[[filename]];
   if (is.null(res)) {
     verbose && enter(verbose, "Creating CFH file to store average signals");
-    verbose && cat(verbose, "Pathname: ", file.path(getPath(this), filename));
-    res <- createFrom(df, filename=filename, path=getPath(this), 
+
+    path <- getPath(this);
+
+    # Drop tags from root path?
+    if (getOption(aromaSettings, "devel/dropRootPathTags", FALSE)) {
+      path <- dropRootPathTags(path, depth=2, verbose=less(verbose, 5));
+    }
+
+    verbose && cat(verbose, "Path: ", path);
+    verbose && cat(verbose, "Filename: ", filename);
+
+    res <- createFrom(df, filename=filename, path=path,
                         methods="create", clear=TRUE, verbose=less(verbose));
     verbose && exit(verbose);
     this$.averageFiles[[filename]] <- res;
@@ -1053,6 +1063,10 @@ setMethodS3("getDefaultFullName", "CnagCfhSet", function(this, parent=1, ...) {
 
 ############################################################################
 # HISTORY:
+# 2011-02-24
+# o GENERALIZATION: Now getAverageFile() for CnagCfhSet drops tags
+#   from the output root path (if 'devel/dropRootPathTags' setting is TRUE).
+# o Expanded the searched root paths to be cnagData(|,.*)/.
 # 2009-08-12
 # o Now findByName() of CnagCfhSet utilizes ditto of AffymetrixCelSet, 
 #   because its code was identical to the latter.

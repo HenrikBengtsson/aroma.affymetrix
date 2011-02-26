@@ -1434,6 +1434,8 @@
 \alias{writeCdf.default}
 \alias{getFilteredFragmentLengths}
 \alias{getFilteredFragmentLengths.FragmentLengthNormalization}
+\alias{findTargetDistributionFile}
+\alias{findTargetDistributionFile.QuantileNormalization}
 
 \description{
   This page contains aliases for all "non-documented" objects that

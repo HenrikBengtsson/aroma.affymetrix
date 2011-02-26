@@ -217,7 +217,7 @@ setMethodS3("getTargetDistribution", "QuantileNormalization", function(this, sor
     this$.targetDistribution <- yTarget;
     verbose && exit(verbose);
   } else if (force || is.null(yTarget)) {
-    pathname <- getTargetDistributionPathname(this, verbose=less(verbose));
+    pathname <- findTargetDistributionFile(this, verbose=less(verbose));
     verbose && print(verbose, pathname);
 
     if (isFile(pathname)) {
@@ -294,18 +294,103 @@ setMethodS3("getTargetDistributionPathname", "QuantileNormalization", function(t
     on.exit(popState(verbose));
   }
 
-  verbose && enter(verbose, "Getting pathname for target distribution");
+  verbose && enter(verbose, "Getting the pathname for target distribution file to be created");
 
   ds <- getInputDataSet(this);
   path <- getPath(ds);
+
+  if (getOption(aromaSettings, "devel/dropRootPathTags", FALSE)) {
+    path <- dropRootPathTags(path, depth=2, verbose=less(verbose, 5));
+  }
+  verbose && cat(verbose, "Path without root-path tags: ", path);
+
   id <- getTargetDistributionIdentifier(this, verbose=less(verbose));
   filename <- sprintf(".averageQuantile-%s.apq", id);
+  verbose && cat(verbose, "Filename: ", filename);
+
   pathname <- filePath(path, filename, expandLinks="any");
+  verbose && cat(verbose, "Pathname:");
+  verbose && print(verbose, pathname);
 
   verbose && exit(verbose);
 
   pathname;
-}, private=TRUE)
+}, private=TRUE) # getTargetDistributionPathname()
+
+
+
+setMethodS3("findTargetDistributionFile", "QuantileNormalization", function(this, ..., verbose=FALSE) {
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Validate arguments
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Argument 'verbose':
+  verbose <- Arguments$getVerbose(verbose);
+  if (verbose) {
+    pushState(verbose);
+    on.exit(popState(verbose));
+  }
+
+  verbose && enter(verbose, "Locating the target distribution file");
+
+  ds <- getInputDataSet(this);
+  path <- getPath(ds);
+
+  if (getOption(aromaSettings, "devel/dropRootPathTags", FALSE)) {
+    path <- dropRootPathTags(path, depth=2, verbose=less(verbose, 5));
+  }
+
+  depth <- 2;
+
+  # Search all possible root paths
+  rootPath <- getParent(path, depth=depth);
+  rootRootPath <- dirname(rootPath);
+  rootPath <- basename(rootPath);
+  pattern <- sprintf("^%s(|,.*)$", rootPath);
+  rootPaths <- list.files(path=rootRootPath, pattern=pattern, full.names=FALSE);
+  if (rootRootPath != ".") {
+    rootPaths <- file.path(rootRootPath, rootPaths);
+  }
+  verbose && cat(verbose, "Root paths to be searched:");
+  verbose && print(verbose, rootPaths);
+
+  # Identify subdirectories
+  subdirs <- sapply(seq(length=depth), FUN=function(d) {
+    basename(getParent(path, depth=d-1L));
+  });
+  subdirs <- rev(subdirs);
+  subdirs <- do.call(file.path, args=as.list(subdirs));
+  verbose && cat(verbose, "Subdirectories: ", subdirs); 
+
+  id <- getTargetDistributionIdentifier(this, verbose=less(verbose));
+  filename <- sprintf(".averageQuantile-%s.apq", id);
+  verbose && cat(verbose, "Filename: ", filename);
+
+  # All potential paths
+  paths <- file.path(rootPaths, subdirs);
+  verbose && cat(verbose, "Paths to be considered:");
+  verbose && print(verbose, paths);
+
+  # Keep only existing paths
+  paths <- paths[sapply(paths, FUN=isDirectory)];
+  verbose && cat(verbose, "Existing paths:");
+  verbose && print(verbose, paths);
+  
+  pathnames <- filePath(paths, filename, expandLinks="any");
+
+  # Keep only existing pathnames
+  pathnames <- pathnames[sapply(pathnames, FUN=isFile)];
+  verbose && cat(verbose, "Existing pathnames:");
+  verbose && print(verbose, pathnames);
+
+  pathname <- pathnames[1];
+  verbose && cat(verbose, "Keeping first pathname:");
+  verbose && print(verbose, pathname);
+
+  verbose && exit(verbose);
+
+  pathname;
+}, protected=TRUE) # findTargetDistributionFile()
+
 
 
 setMethodS3("calculateTargetDistribution", "QuantileNormalization", function(this, ..., verbose=FALSE) {
@@ -337,8 +422,9 @@ setMethodS3("calculateTargetDistribution", "QuantileNormalization", function(thi
   verbose && enter(verbose, "Calculating target distribution");
   verbose && cat(verbose, "Method: average empirical distribution");
 
-  # Get name where to store the target distribution
+  # Get pathname where to store the target distribution
   pathname <- getTargetDistributionPathname(this, verbose=less(verbose));
+  pathname <- Arguments$getWritablePathname(pathname);
 
   targetDataSet <- getInputDataSet(this);
   cdf <- getCdf(targetDataSet);
@@ -487,6 +573,11 @@ setMethodS3("process", "QuantileNormalization", function(this, ..., force=FALSE,
 
 ############################################################################
 # HISTORY:
+# 2011-02-24
+# o Added findTargetDistributionFile() to QuantileNormalization for
+#   locating an existing target-distribution file.  The previously used
+#   getTargetDistributionPathname(), which returns a hardwired pathname,
+#   is now only used for creating a target-distribution file.
 # 2008-07-03
 # o Now process() calls normalizeQuantileRank(), which is the new updated
 #   name for normalizeQuantile().

@@ -138,6 +138,17 @@ setMethodS3("getIdentifier", "AffymetrixCelFile", function(this, ..., force=FALS
   if (force || is.null(identifier)) {
     # Get header
     hdr <- getHeader(this);
+    
+    # AD HOC fix for backward compatibility.  
+    # Ideally we should not create an identifier based
+    # on the pathname. /HB 2011-02-24
+    pathname <- hdr$filename;
+    path <- dirname(pathname);
+    path <- dropRootPathTags(path, depth=2);
+    filename <- basename(pathname);
+    pathname <- file.path(path, filename);
+    hdr$filename <- pathname;
+
     # Get subset of data
     nbrOfCells <- hdr$total;
     mid <- nbrOfCells %/% 2;
@@ -426,28 +437,34 @@ setMethodS3("getTimestamp", "AffymetrixCelFile", function(this, format="%m/%d/%y
   
     # Extract the date timestamp
     pattern <- ".*([01][0-9]/[0-3][0-9]/[0-9][0-9] [0-2][0-9]:[0-5][0-9]:[0-5][0-9]).*";
-    timestamp <- gsub(pattern, "\\1", header);
+
+    hasTimestamp <- (regexpr(pattern, header) != -1);
+    if (hasTimestamp) {
+      timestamp <- gsub(pattern, "\\1", header);
   
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    # Alternative:
-    # Could use a pattern, but if a different timestamp than the American is 
-    # used, this wont work.  Instead assume a fixed location.
-    # From the DAT header specification (Affymetrix Data File Formats, April
-    # 2006), we know that the date and the timestamp is 18 characters long.
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  ##   nTemp <- 7;
-  ##   nPower <- 4;
-  ##   nTimestamp <- 18;
-  ##   # Expected start position
-  ##   pos <- nTemp + 1 + nPower + 1;
-  ##   # ...however, the files we have start at the next position. /HB 2006-12-01
-  ##   pos <- pos + 1;
-  ##   timestamp <- substring(header, first=pos, last=pos+nTimestamp-1);
-  
-    timestamp <- trim(timestamp); # Unnecessary?
-  
-    # Parse the identified timestamp into POSIXct
-    res <- strptime(timestamp, format=format, ...);
+      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      # Alternative:
+      # Could use a pattern, but if a different timestamp than the American is 
+      # used, this wont work.  Instead assume a fixed location.
+      # From the DAT header specification (Affymetrix Data File Formats, April
+      # 2006), we know that the date and the timestamp is 18 characters long.
+      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    ##   nTemp <- 7;
+    ##   nPower <- 4;
+    ##   nTimestamp <- 18;
+    ##   # Expected start position
+    ##   pos <- nTemp + 1 + nPower + 1;
+    ##   # ...however, the files we have start at the next position. /HB 2006-12-01
+    ##   pos <- pos + 1;
+    ##   timestamp <- substring(header, first=pos, last=pos+nTimestamp-1);
+    
+      timestamp <- trim(timestamp); # Unnecessary?
+    
+      # Parse the identified timestamp into POSIXct
+      res <- strptime(timestamp, format=format, ...);
+    } else {
+      res <- NULL;
+    }
   
     # If no valid timestamp was found, return NA.
     if (length(as.character(res)) == 0) {
@@ -468,7 +485,6 @@ setMethodS3("getTimestamp", "AffymetrixCelFile", function(this, format="%m/%d/%y
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'format':
   format <- Arguments$getCharacter(format, length=c(1,1));
-
 
 
   chipType <- getHeader(this)$chiptype;
@@ -912,6 +928,19 @@ setMethodS3("getRectangle", "AffymetrixCelFile", function(this, ...) {
 
 ############################################################################
 # HISTORY:
+# 2011-02-24
+# o BACKWARD COMPATILITY: getIdentifier() for AffymetrixCelFile generates
+#   a checksum id based on the CEL file header among other things.  Part
+#   of this header information is the relative pathname of the CEL file, 
+#   which means that the identifier will be different depending on which
+#   directory it lives in.  Ideally we'll exclude the pathname from this.
+#   However, in the meanwhile we simply drop any tags from the root path
+#   such that it is compatible with earlier version of aroma.*.
+# 2011-02-22
+# o ROBUSTNESS: getTimestamp() for AffymetrixCelFile no longer assumes 
+#   that the file's DAT header contains a timestamp and tries to translate.  
+#   Instead it first tests for the timestamp pattern, and returns NA 
+#   if not found.
 # 2009-07-08
 # o Added getUnitTypesFile() for AffymetrixCelFile.
 # 2009-05-19

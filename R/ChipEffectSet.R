@@ -86,7 +86,7 @@ setMethodS3("getChipEffectFileClass", "ChipEffectSet", function(static, ...) {
 }, static=TRUE, private=TRUE)
 
 
-setMethodS3("findByName", "ChipEffectSet", function(static, ..., paths="plmData/") {
+setMethodS3("findByName", "ChipEffectSet", function(static, ..., paths="plmData(,.*)/") {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -383,6 +383,8 @@ setMethodS3("extractMatrix", "ChipEffectSet", function(this, ..., field=c("theta
 
 ############################################################################
 # HISTORY:
+# 2011-02-24
+# o Expanded the searched root paths to be plmData(|,.*)/.
 # 2010-07-19
 # o Now byPath(..., cdf) for ChipEffectSet will silently try to retrieve
 #   the the monocell CDF if argument 'cdf' is the main CDF.  If it fails

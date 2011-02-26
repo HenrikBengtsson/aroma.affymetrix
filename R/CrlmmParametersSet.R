@@ -28,7 +28,7 @@ setConstructorS3("CrlmmParametersSet", function(...) {
 })
 
 
-setMethodS3("byName", "CrlmmParametersSet", function(static, name, tags=NULL, ..., chipType=NULL, paths="crlmmData") {
+setMethodS3("byName", "CrlmmParametersSet", function(static, name, tags=NULL, ..., chipType=NULL, paths="crlmmData(,.*)/") {
   suppressWarnings({
     path <- findByName(static, name=name, tags=tags, chipType=chipType, 
                                            ..., paths=paths, mustExist=TRUE);
@@ -57,6 +57,8 @@ setMethodS3("findUnitsTodo", "CrlmmParametersSet", function(this, ...) {
 
 ############################################################################
 # HISTORY:
+# 2011-02-24
+# o Expanded the searched root paths to be crlmmData(|,.*)/.
 # 2010-05-08
 # o Now all findUnitsTodo() for data sets checks the data file that comes
 #   last in a lexicographic ordering.  This is now consistent with how

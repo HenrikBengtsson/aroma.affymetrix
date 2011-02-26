@@ -88,7 +88,10 @@ setMethodS3("getExtensionPattern", "CnagCfhFile", function(static, ...) {
 setMethodS3("getIdentifier", "CnagCfhFile", function(this, ..., force=FALSE) {
   identifier <- this$.identifier;
   if (force || is.null(identifier)) {
-    pathname <- getPathname(this);
+    path <- getPath(this);
+    path <- dropRootPathTags(path, depth=2);
+    filename <- getFilename(this);
+    pathname <- file.path(path, filename);
     id <- digest2(pathname, file=TRUE);
     this$.identifier <- id;
   }
@@ -483,6 +486,11 @@ setMethodS3("range", "CnagCfhFile", function(this, ..., na.rm=TRUE) {
 
 ############################################################################
 # HISTORY:
+# 2011-02-24
+# o BACKWARD COMPATILITY: getIdentifier() for CnagCfhFile generates
+#   a checksum id based on the relative pathname.  For now, we simply
+#   drop any tags from the root path such that it is compatible with
+#   earlier version of aroma.*.
 # 2008-07-20
 # o Updated the following methods to preallocate matrixes with the correct
 #   data type to avoid coercing later: readUnits().

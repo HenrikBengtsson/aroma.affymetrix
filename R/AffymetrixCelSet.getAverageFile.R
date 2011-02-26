@@ -156,8 +156,16 @@ setMethodS3("getAverageFile", "AffymetrixCelSet", function(this, name=NULL, pref
 
   if (is.null(res)) {
     verbose && enter(verbose, "Creating CEL file to store average signals");
-    verbose && cat(verbose, "Pathname: ", file.path(getPath(this), filename));
-    res <- createFrom(df, filename=filename, path=getPath(this), methods="create", clear=TRUE, verbose=less(verbose));
+    path <- getPath(this);
+
+    # Drop tags from root path?
+    if (getOption(aromaSettings, "devel/dropRootPathTags", FALSE)) {
+      path <- dropRootPathTags(path, depth=2, verbose=less(verbose, 5));
+    }
+
+    verbose && cat(verbose, "Path: ", path);
+    verbose && cat(verbose, "Filename: ", filename);
+    res <- createFrom(df, filename=filename, path=path, methods="create", clear=TRUE, verbose=less(verbose));
     verbose && exit(verbose);
     this$.averageFiles[[filename]] <- res;
   }
@@ -289,6 +297,9 @@ setMethodS3("getAverageFile", "AffymetrixCelSet", function(this, name=NULL, pref
 
 ############################################################################
 # HISTORY:
+# 2011-02-24
+# o GENERALIZATION: Now getAverageFile() for AffymetrixCelSet drops tags
+#   from the output root path (if 'devel/dropRootPathTags' setting is TRUE).
 # 2010-07-21
 # o CLEAN UP: Now getAverageFile() for AffymetrixCelSet no longer writes
 #   debug information to ${Rcache}/aroma.affymetrix/idChecks/.

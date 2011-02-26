@@ -727,3 +727,5 @@ extractAffyBatch.ChipEffectSet
 writeCdf writeCdf.default
  getFilteredFragmentLengths
  getFilteredFragmentLengths.FragmentLengthNormalization
+findTargetDistributionFile
+findTargetDistributionFile.QuantileNormalization

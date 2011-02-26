@@ -35,12 +35,22 @@ setMethodS3("getBaseline", "ChipEffectSet", function(this, force=FALSE, verbose=
 
 
   verbose && enter(verbose, "Getting CEL file to store baseline signals");
-  path <- getPath(this);
   key <- list(dataset=getFullName(this), samples=getNames(this));
   id <- digest2(key);
 
-  # Generate output pathname
+  path <- getPath(this);
+
+  # Drop tags from root path?
+  if (getOption(aromaSettings, "devel/dropRootPathTags", FALSE)) {
+    path <- dropRootPathTags(path, depth=2, verbose=less(verbose, 5));
+  }
+
   filename <- sprintf(".baseline,%s.CEL", id);
+
+  verbose && cat(verbose, "Path: ", path);
+  verbose && cat(verbose, "Filename: ", filename);
+
+  # Generate output pathname
   pathname <- Arguments$getWritablePathname(filename, path=path);
 
   # Get a template CEL file
@@ -77,6 +87,9 @@ setMethodS3("getBaseline", "CnChipEffectSet", function(this, ...) {
 
 ############################################################################
 # HISTORY:
+# 2011-02-24
+# o GENERALIZATION: Now getBaseline() for ChipEffectSet drops all tags
+#   from the output root path (if 'devel/dropRootPathTags' setting is TRUE).
 # 2007-08-09
 # o getBaseLine() of CnChipEffectSet now creates CEL files with upper-case
 #   filename extension "*.CEL", not "*.cel".  The reason for this is that

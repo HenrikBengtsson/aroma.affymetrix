@@ -17,15 +17,17 @@ chipType <- "Mapping10K_Xba142";
 dsList <- doASCRMAv2(dataSet, chipType=chipType, verbose=verbose);
 print(dsList);
 
-
+# Immitate a paired tumor-normal data set
 dsT <- extract(dsList$total, 1:5);
 dsR <- extract(dsList$total, 6:10);
 
 dsTCN <- exportTotalCnRatioSet(dsT, dsR, logBase=NULL, verbose=verbose);
 
-dfAvg <- getAverageFile(dsTCN, verbose=-10);
-dfAvgLog <- getAverageFile(dsTCN, g=log2, h=function(x) 2^x, verbose=-10);
 
+# Immitate a paired tumor-normal data set will all pairs being replicates
+dfAvg <- getAverageFile(dsTCN, verbose=-10);
+
+dfAvgLog <- getAverageFile(dsTCN, g=log2, h=function(x) 2^x, verbose=-10);
 diff <- dfAvg[,1] - dfAvgLog[,1];
 stopifnot(all(diff == 0));
 
@@ -34,6 +36,7 @@ setFullName(dfAvg, "TumorVsNormal");
 
 # Turn into a data set
 dsAvg <- newInstance(dsT, list(dfAvg));
+
 
 # Segmentation model
 cbs <- CbsModel(dsAvg, tags="*,TCN,avg");

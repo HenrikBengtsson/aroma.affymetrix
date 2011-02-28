@@ -318,7 +318,7 @@ setMethodS3("setCdf", "CnagCfhSet", function(this, cdf, verbose=FALSE, ...) {
 })
 
 
-setMethodS3("findByName", "CnagCfhSet", function(static, ..., paths="cnagData(,.*)/") {
+setMethodS3("findByName", "CnagCfhSet", function(static, ..., paths="cnagData(|,.*)/") {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

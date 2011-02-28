@@ -28,7 +28,7 @@ setConstructorS3("CrlmmParametersSet", function(...) {
 })
 
 
-setMethodS3("byName", "CrlmmParametersSet", function(static, name, tags=NULL, ..., chipType=NULL, paths="crlmmData(,.*)/") {
+setMethodS3("byName", "CrlmmParametersSet", function(static, name, tags=NULL, ..., chipType=NULL, paths="crlmmData(|,.*)/") {
   suppressWarnings({
     path <- findByName(static, name=name, tags=tags, chipType=chipType, 
                                            ..., paths=paths, mustExist=TRUE);

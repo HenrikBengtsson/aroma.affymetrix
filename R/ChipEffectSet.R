@@ -86,7 +86,7 @@ setMethodS3("getChipEffectFileClass", "ChipEffectSet", function(static, ...) {
 }, static=TRUE, private=TRUE)
 
 
-setMethodS3("findByName", "ChipEffectSet", function(static, ..., paths="plmData(,.*)/") {
+setMethodS3("findByName", "ChipEffectSet", function(static, ..., paths="plmData(|,.*)/") {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -30,8 +30,9 @@ library("affyPLM");          # fitPLM()
 # related to probeNames() will be thrown.
 tryCatch(detach("package:oligoClasses"), error=function(ex) {});
 
-
 verbose <- Arguments$getVerbose(-8, timestamp=TRUE);
+pngDev <- findPngDevice();
+
 
 # ----------------------------------
 # RMA estimates by aroma.affymetrix 
@@ -96,7 +97,7 @@ stopifnot(quantile(abs(e), 0.99) < 0.05);
 stopifnot(max(abs(e)) < 0.085);
 
 # (c) Visual comparison
-devNew("png", "replication-affyPLM,fitPLM.png", width=800, height=800);
+devNew("pngDev", "replication-affyPLM,fitPLM.png", width=800, height=800);
 par(mar=c(5,5,4,2)+0.1, cex.main=2, cex.lab=2, cex.axis=1.5);
 
 layout(matrix(1:9, ncol=3, byrow=TRUE));

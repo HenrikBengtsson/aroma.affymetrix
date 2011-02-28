@@ -27,6 +27,8 @@ library("aroma.affymetrix");
 library("gcrma");  # gcrma()
 
 verbose <- Arguments$getVerbose(-8, timestamp=TRUE);
+pngDev <- findPngDevice();
+
 
 # ----------------------------------
 # RMA estimates by aroma.affymetrix 
@@ -98,7 +100,7 @@ stopifnot(max(abs(e)) < 1.5);
 verbose && exit(verbose);
 
 # (c) Visual comparison
-devNew("png", "replication-gcrma,gcrma.png", width=800, height=800);
+devNew("pngDev", "replication-gcrma,gcrma.png", width=800, height=800);
 par(mar=c(5,5,4,2)+0.1, cex.main=2, cex.lab=2, cex.axis=1.5);
 
 layout(matrix(1:9, ncol=3, byrow=TRUE));

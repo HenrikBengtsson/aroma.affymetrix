@@ -1,11 +1,15 @@
 Package: aroma.affymetrix
 =========================
 
-Version: 2.0.4 [2011-02-27]
-o Now byName() for AffymetrixCelSet tries to setup all data set
-  directories matching the query and not just the first one.
+Version: 2.0.4 [2011-02-28]
+o GENERALIZATION: Now byName() for AffymetrixCelSet tries to setup all 
+  data set directories matching the query and not just the first one.
   It also requires that the data sets found by byPath() are 
   non-empty, otherwise they are skipped.
+o STANDARDIZATION: Now the default output path for all allocateFromCdf()
+  is annotationData/chipTypes/<chipType>/.  Before it was the same
+  directory as the CDF, which may for instance have been in a deeper
+  subdirectory, or recently also in a sibling root path.
 
 
 Version: 2.0.3 [2011-02-24]

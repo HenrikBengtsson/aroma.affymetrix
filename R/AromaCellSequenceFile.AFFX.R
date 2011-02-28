@@ -2,7 +2,7 @@
 # BEGIN: Affymetrix specific
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-setMethodS3("allocateFromCdf", "AromaCellSequenceFile", function(static, cdf, path=getPath(cdf), tags="*", ...) {
+setMethodS3("allocateFromCdf", "AromaCellSequenceFile", function(static, cdf, path=NULL, tags="*", ...) {
   # Argument 'cdf':
   cdf <- Arguments$getInstanceOf(cdf, "AffymetrixCdfFile");
 
@@ -20,6 +20,12 @@ setMethodS3("allocateFromCdf", "AromaCellSequenceFile", function(static, cdf, pa
 
   # Exclude 'monocell' tags (AD HOC)
   chipType <- gsub(",monocell", "", chipType);
+
+  # Output path
+  if (is.null(path)) {
+    path <- file.path("annotationData", "chipTypes", chipType);
+  }
+  path <- Arguments$getWritablePath(path);
 
   # Get platform
   platform <- getPlatform(cdf);
@@ -387,6 +393,11 @@ setMethodS3("inferMmFromPm", "AromaCellSequenceFile", function(this, cdf, units=
 
 ############################################################################
 # HISTORY:
+# 2011-02-28
+# o STANDARDIZATION: Now the default output path for all allocateFromCdf()
+#   is annotationData/chipTypes/<chipType>/.  Before it was the same
+#   directory as the CDF, which may for instance have been in a deeper
+#   subdirectory, or recently also in a sibling root path.
 # 2010-03-14 [HB]
 # o BUG FIX: allocateFromCdf() of AromaCellPositionFile would drop all
 #   but the first tag.

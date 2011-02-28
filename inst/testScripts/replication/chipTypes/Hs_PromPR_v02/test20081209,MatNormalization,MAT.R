@@ -61,7 +61,7 @@ print(csR);
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Normalize the data using the MAT model
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-mn <- MatNormalization(csR, numChunks=20);
+mn <- MatNormalization(csR);
 csM <- process(mn, verbose=more(log, 3));
 print(csM);
 

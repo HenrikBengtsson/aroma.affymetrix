@@ -287,28 +287,25 @@ setMethodS3("importFromDChip", "CnChipEffectSet", function(static, filename, pat
     verbose && cat(verbose, "Class: ", getName(clazz));
 
     # Write to a temporary file
-    tmpPathname <- paste(pathname, ".TMP", sep="");
-    if (isFile(tmpPathname)) {
-      throw("Remove already existing temporary data file: ", tmpPathname);
-    }
+    pathnameT <- pushTemporaryFile(pathname, verbose=verbose);
 
     if (isFile(pathname)) {
       # Test if file can be loaded
       cef <- clazz$fromFile(pathname, verbose=less(verbose));
       # Ok, then rename this file
-      res <- file.rename(pathname, tmpPathname);
+      res <- file.rename(pathname, pathnameT);
       if (!res) {
         throw("Failed to rename existing file: ", pathname, 
-                                               " -> ", tmpPathname);
+                                               " -> ", pathnameT);
       }
-      cef <- clazz$fromFile(tmpPathname, verbose=less(verbose));
+      cef <- clazz$fromFile(pathnameT, verbose=less(verbose));
     } else {
-      tmpFilename <- basename(tmpPathname);
+      tmpFilename <- basename(pathnameT);
       cef <- clazz$fromDataFile(filename=tmpFilename, path=outPath, 
                name=sampleName, cdf=monocellCdf, verbose=less(verbose));
       rm(tmpFilename);
     }
-    tmpPathname <- getPathname(cef);
+    pathnameT <- getPathname(cef);
     cef$combineAlleles <- combineAlleles;
     cef$mergeStrands <- TRUE;
     verbose && print(verbose, cef);
@@ -390,24 +387,19 @@ setMethodS3("importFromDChip", "CnChipEffectSet", function(static, filename, pat
       stdvs <- NULL;
     }
     
-    updateCel(tmpPathname, indices=cells, intensities=data[,1], stdvs=stdvs);
+    updateCel(pathnameT, indices=cells, intensities=data[,1], stdvs=stdvs);
     rm(data, stdvs);
     verbose && exit(verbose);
 
-    # Renaming temporary file
-    pathname <- gsub("[.](tmp|TMP)$", "", tmpPathname);
-    res <- file.rename(tmpPathname, pathname);
-    if (!res) {
-      throw("Failed to rename temporary file: ", tmpPathname,
-                                                 " -> ", pathname);
-    }
+    # Rename temporary file
+    pathname <- popTemporaryFile(pathnameT, verbose=verbose);
 
     # Garbage collect
     gc <- gc();
     verbose && print(verbose, gc);
     
     verbose && exit(verbose);
-  }
+  } # for (kk ...)
   verbose && exit(verbose);
 
   # Define chip-effect set

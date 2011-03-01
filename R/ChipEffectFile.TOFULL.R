@@ -122,8 +122,11 @@ setMethodS3("writeAsFullCelFile", "ChipEffectFile", function(this, name=getName(
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   cdfM <- getCdf(this);
   cdf <- getMainCdf(cdfM);
+
+  # Allocate a temporary CEL file (note suffix argument)
   cf <- AffymetrixCelFile$allocateFromCdf(cdf, name=name, tags=tags, suffix=".CEL.tmp", ..., verbose=less(verbose, 10));
   verbose && print(verbose, cf);
+  pathnameT <- getPathname(cf);
 
   # Get the index map that maps monocell-CDF cells to main-CDF cells
   if (is.null(cells)) {
@@ -141,18 +144,12 @@ setMethodS3("writeAsFullCelFile", "ChipEffectFile", function(this, name=getName(
   data <- data[mainCells,,drop=FALSE];
   verbose && str(verbose, data);
 
-  pathname <- getPathname(cf);
-  updateCel(pathname, indices=mainCells, intensities=data);
+  updateCel(pathnameT, indices=mainCells, intensities=data);
 
-  # Rename from temporary to final filename
-  pathname2 <- gsub(".tmp$", "", pathname);
+  # Rename from temporary to final filename (see above)
+  pathname <- popTemporaryFile(pathnameT, verbose=verbose);
 
-  file.rename(pathname, pathname2);
-  if (!isFile(pathname2)) {
-    throw("Failed to rename temporary CEL file to: ", pathname2);
-  }
-
-  res <- AffymetrixCelFile(pathname2);
+  res <- AffymetrixCelFile(pathname);
 
   attr(res, "cells") <- cells;
 

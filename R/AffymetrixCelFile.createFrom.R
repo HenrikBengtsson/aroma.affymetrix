@@ -95,11 +95,7 @@ setMethodS3("createFrom", "AffymetrixCelFile", function(this, filename, path=NUL
 
 
   # First create/copy to a temporary file, then rename
-  tmpPathname <- paste(pathname, "tmp", sep=".");
-  if (isFile(tmpPathname)) {
-    throw("Cannot create CEL file. Temporary file already exists: ", tmpPathname);
-  }
-
+  pathnameT <- pushTemporaryFile(pathname, verbose=verbose);
 
   msgs <- list();
   res <- NULL;
@@ -119,7 +115,7 @@ setMethodS3("createFrom", "AffymetrixCelFile", function(this, filename, path=NUL
       }
 
       # 1. Create a temporary file    
-      res <- copyTo(this, filename=tmpPathname, path=NULL, 
+      res <- copyTo(this, filename=pathnameT, path=NULL, 
                                              verbose=less(verbose));
 #      verbose && cat(verbose, "Temporary file:");
 #      verbose && print(verbose, res);
@@ -171,7 +167,7 @@ setMethodS3("createFrom", "AffymetrixCelFile", function(this, filename, path=NUL
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       # 1. Create a temporary file    
       verbose && enter(verbose, "Creating an empty temporary CEL file");
-      createCel(tmpPathname, header=celHeader, overwrite=overwrite, ...,
+      createCel(pathnameT, header=celHeader, overwrite=overwrite, ...,
                                                         verbose=less(verbose));
       rm(celHeader);
       verbose && exit(verbose);
@@ -179,7 +175,7 @@ setMethodS3("createFrom", "AffymetrixCelFile", function(this, filename, path=NUL
       # 2. Update the temporary file
       if (clear) {
         if (defValue != 0) {
-          res <- newInstance(this, tmpPathname);
+          res <- newInstance(this, pathnameT);
           clearData(res, ..., value=defValue, .forSure=TRUE, 
                                                 verbose=less(verbose));
           rm(res);
@@ -196,7 +192,7 @@ setMethodS3("createFrom", "AffymetrixCelFile", function(this, filename, path=NUL
           gc <- gc();
 
           verbose && enter(verbose, "Writing data to new CEL file");
-          updateCel(tmpPathname, indices=cells, intensities=data);
+          updateCel(pathnameT, indices=cells, intensities=data);
           verbose && exit(verbose);
 
           rm(data);
@@ -209,13 +205,7 @@ setMethodS3("createFrom", "AffymetrixCelFile", function(this, filename, path=NUL
       }
   
       # 3. Rename the temporary file
-      verbose && enter(verbose, "Renaming file");
-      res <- file.rename(tmpPathname, pathname);
-      if (!res) {
-        throw("Failed to rename temporary file: ", 
-                                   tmpPathname, " -> ", pathname);
-      }
-      verbose && exit(verbose);
+      pathname <- popTemporaryFile(pathnameT, verbose=verbose);
       
       res <- newInstance(this, pathname);
 

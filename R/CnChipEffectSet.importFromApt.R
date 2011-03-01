@@ -160,28 +160,25 @@ setMethodS3("importFromApt", "CnChipEffectSet", function(static, filename, path=
     verbose && cat(verbose, "Class: ", getName(clazz));
 
     # Write to a temporary file
-    tmpPathname <- paste(pathname, ".TMP", sep="");
-    if (isFile(tmpPathname)) {
-      throw("Remove already existing temporary data file: ", tmpPathname);
-    }
+    pathnameT <- pushTemporaryFile(pathname, verbose=verbose);
 
     if (isFile(pathname)) {
       # Test if file can be loaded
       cef <- clazz$fromFile(pathname, verbose=less(verbose));
       # Ok, then rename this file
-      res <- file.rename(pathname, tmpPathname);
+      res <- file.rename(pathname, pathnameT);
       if (!res) {
         throw("Failed to rename existing file: ", pathname, 
-                                               " -> ", tmpPathname);
+                                               " -> ", pathnameT);
       }
-      cef <- clazz$fromFile(tmpPathname, verbose=less(verbose));
+      cef <- clazz$fromFile(pathnameT, verbose=less(verbose));
     } else {
-      tmpFilename <- basename(tmpPathname);
+      tmpFilename <- basename(pathnameT);
       cef <- clazz$fromDataFile(filename=tmpFilename, path=outPath, 
                name=arrayName, cdf=monocellCdf, verbose=less(verbose));
       rm(tmpFilename);
     }
-    tmpPathname <- getPathname(cef);
+    pathnameT <- getPathname(cef);
     cef$combineAlleles <- combineAlleles;
     cef$mergeStrands <- TRUE;
     verbose && print(verbose, cef);
@@ -280,17 +277,12 @@ setMethodS3("importFromApt", "CnChipEffectSet", function(static, filename, path=
     verbose && print(verbose, gc);
 
     verbose && enter(verbose, "Storing chip effects");
-    updateCel(tmpPathname, indices=cells, intensities=data);
+    updateCel(pathnameT, indices=cells, intensities=data);
     rm(data);
     verbose && exit(verbose);
 
-    # Renaming temporary file
-    pathname <- gsub("[.](tmp|TMP)$", "", tmpPathname);
-    res <- file.rename(tmpPathname, pathname);
-    if (!res) {
-      throw("Failed to rename temporary file: ", tmpPathname,
-                                                 " -> ", pathname);
-    }
+    # Rename temporary file
+    pathname <- popTemporaryFile(pathnameT, verbose=verbose);
 
     # Garbage collect
     gc <- gc();

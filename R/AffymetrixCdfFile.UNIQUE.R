@@ -145,18 +145,15 @@ setMethodS3("createUniqueCdf", "AffymetrixCdfFile", function(this, chipType=getC
 
   # Write to a temporary file first, and rename it when we know its complete
   name <- paste(c(chipType, tags), collapse=sep);
-  dest <- sprintf("%s.CDF", name);
-  dest <- Arguments$getWritablePathname(dest, path=path);
-  dest <- AffymetrixFile$renameToUpperCaseExt(dest);
-  dest <- Arguments$getWritablePathname(dest, mustNotExist=TRUE);
+  filename <- sprintf("%s.CDF", name);
+  pathname <- Arguments$getWritablePathname(filename, path=path);
+  pathname <- AffymetrixFile$renameToUpperCaseExt(pathname);
+  pathname <- Arguments$getWritablePathname(pathname, mustNotExist=TRUE);
 
-  tmpDest <- sprintf("%s.tmp", dest);
-  tmpDest <- Arguments$getWritablePathname(tmpDest, mustNotExist=TRUE);
-
-  verbose && cat(verbose, "Output pathname (temporary): ", tmpDest);
+  pathnameT <- pushTemporaryFile(pathname, verbose=verbose);
 
   # Assure source and destination is not identical
-  if (identical(src, tmpDest)) {
+  if (identical(src, pathnameT)) {
     throw("Cannot not create CDF file. Destination is same as source: ", src);
   }
 
@@ -295,7 +292,7 @@ setMethodS3("createUniqueCdf", "AffymetrixCdfFile", function(this, chipType=getC
   verbose && print(verbose, gc);
 
   # Open output connection
-  con <- file(tmpDest, open = "wb");
+  con <- file(pathnameT, open = "wb");
   on.exit({
     if (!is.null(con))
       close(con);
@@ -455,8 +452,8 @@ setMethodS3("createUniqueCdf", "AffymetrixCdfFile", function(this, chipType=getC
   con <- NULL;
 
   verbose && cat(verbose, "Temporary CDF file created:");
-  verbose && cat(verbose, "Output pathname: ", tmpDest);
-  verbose && print(verbose, file.info(tmpDest));
+  verbose && cat(verbose, "Output pathname: ", pathnameT);
+  verbose && print(verbose, file.info(pathnameT));
 
   # Garbage collect
   gc <- gc();
@@ -469,7 +466,7 @@ setMethodS3("createUniqueCdf", "AffymetrixCdfFile", function(this, chipType=getC
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   verbose && enter(verbose, "Verifying the written CDF");
   # Checking header
-  header <- readCdfHeader(tmpDest);
+  header <- readCdfHeader(pathnameT);
   if ((header$nrows != nrows) || (header$ncols != ncols)) {
     throw(sprintf("Failed to create a valid unique-cell CDF: The dimension of the written CDF does not match the intended one: (%d,%d) != (%d,%d)", header$nrows, header$ncols, nrows, ncols));
   }
@@ -483,7 +480,7 @@ setMethodS3("createUniqueCdf", "AffymetrixCdfFile", function(this, chipType=getC
     verbose && printf(verbose, "Chunk %d of %d\n", kk, nbrOfChunks);
     from <- (kk-1)*chunkSize+1;
     to <- min(from+chunkSize, nbrOfUnits);
-    cells <- readCdfCellIndices(tmpDest, units=from:to);
+    cells <- readCdfCellIndices(pathnameT, units=from:to);
     cells <- unlist(cells, use.names=FALSE);
     cells <- diff(cells);
     cells <- unique(cells);
@@ -499,17 +496,17 @@ setMethodS3("createUniqueCdf", "AffymetrixCdfFile", function(this, chipType=getC
   gc <- gc();
   verbose && print(verbose, gc);
 
-  verbose && enter(verbose, "Renaming the temporary file");
-  res <- file.rename(tmpDest, dest);
-  verbose && cat(verbose, "Result: ", res);
-  verbose && cat(verbose, "File pathname: ", dest);
-  verbose && print(verbose, file.info(dest));
+  # Rename temporary file
+  pathname <- popTemporaryFile(pathnameT, verbose=verbose);
+
+  verbose && cat(verbose, "File pathname: ", pathname);
+  verbose && print(verbose, file.info(pathname));
   verbose && exit(verbose);
 
   verbose && exit(verbose);
 
   # Return an AffymetrixCdfFile object for the new CDF
-  newInstance(this, dest);
+  newInstance(this, pathname);
 }, private=TRUE) # createUniqueCdf()
 
 

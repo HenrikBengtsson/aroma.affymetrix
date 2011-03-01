@@ -459,8 +459,7 @@ setMethodS3("process", "AbstractProbeSequenceNormalization", function(this, ...,
       verbose && enter(verbose, "Storing normalized data");
     
       # Write to a temporary file
-      pathnameT <- sprintf("%s.tmp", pathname);
-      verbose && cat(verbose, "Temporary pathname: ", pathnameT);
+      pathnameT <- pushTemporaryFile(pathname, verbose=verbose);
     
       # Create CEL file to store results, if missing
       verbose && enter(verbose, "Creating CEL file for results, if missing");
@@ -475,16 +474,7 @@ setMethodS3("process", "AbstractProbeSequenceNormalization", function(this, ...,
       verbose && print(verbose, gc);
 
       # Rename temporary file
-      verbose && enter(verbose, "Renaming temporary file");
-      res <- file.rename(pathnameT, pathname);
-      if (!isFile(pathname)) {
-        throw("Failed to rename temporary file (final file does not exist): ", pathnameT, " -> ", pathname);
-      }
-      if (isFile(pathnameT)) {
-        throw("Failed to rename temporary file (temporary file still exists): ", pathnameT, " -> ", pathname);
-      }
-      rm(pathnameT);
-      verbose && exit(verbose);
+      pathname <- popTemporaryFile(pathnameT, verbose=verbose);
 
       verbose && exit(verbose);
     }

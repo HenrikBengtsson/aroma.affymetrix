@@ -255,23 +255,13 @@ setMethodS3("fromDataFile", "FirmaFile", function(static, df=NULL, filename=spri
     celHeader$parameters <- parameters;
 
     # Write to a temporary file
-    pathnameT <- sprintf("%s.tmp", pathname);
-    verbose && cat(verbose, "Temporary pathname: ", pathnameT);
+    pathnameT <- pushTemporaryFile(pathname, verbose=verbose);
 
     # Create the CEL file
     createCel(pathnameT, header=celHeader, ..., verbose=less(verbose));
 
     # Rename temporary file
-    verbose && enter(verbose, "Renaming temporary file");
-    res <- file.rename(pathnameT, pathname);
-    if (!isFile(pathname)) {
-      throw("Failed to rename temporary file (final file does not exist): ", pathnameT, " -> ", pathname);
-    }
-    if (isFile(pathnameT)) {
-      throw("Failed to rename temporary file (temporary file still exists): ", pathnameT, " -> ", pathname);
-    }
-    rm(pathnameT);
-    verbose && exit(verbose);
+    pathname <- popTemporaryFile(pathnameT, verbose=verbose);
 
     verbose && exit(verbose);
   }

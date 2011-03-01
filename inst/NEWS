@@ -10,6 +10,8 @@ o STANDARDIZATION: Now the default output path for all allocateFromCdf()
   is annotationData/chipTypes/<chipType>/.  Before it was the same
   directory as the CDF, which may for instance have been in a deeper
   subdirectory, or recently also in a sibling root path.
+o CLEAN UP: Harmonized all code for allocating/writing atomically,
+  where we first write to a temporary file which is then renamed.
 
 
 Version: 2.0.3 [2011-02-24]

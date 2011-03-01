@@ -198,23 +198,14 @@ setMethodS3("writeCdf", "AffyGenePDInfo", function(this, tags=NULL, path=NULL, o
   pathname <- newCdfHeader$filename;
   verbose && cat(verbose, "Pathname: ", pathname);
 
-  pathnameT <- sprintf("%s.tmp", pathname);
-  verbose && cat(verbose, "Temporary pathname: ", pathnameT);
+  # Write to a temporary file
+  pathnameT <- pushTemporaryFile(pathname, verbose=verbose);
 
   res <- affxparser::writeCdf(pathnameT, cdfheader=newCdfHeader, cdf=newCdfList,
                   cdfqc=NULL, verbose=verbose, overwrite=overwrite);
 
   # Rename temporary file
-  verbose && enter(verbose, "Renaming temporary file");
-  res <- file.rename(pathnameT, pathname);
-  if (!isFile(pathname)) {
-    throw("Failed to rename temporary file (final file does not exist): ", pathnameT, " -> ", pathname);
-  }
-  if (isFile(pathnameT)) {
-    throw("Failed to rename temporary file (temporary file still exists): ", pathnameT, " -> ", pathname);
-  }
-  rm(pathnameT);
-  verbose && exit(verbose);
+  pathname <- popTemporaryFile(pathnameT, verbose=verbose);
 
   verbose && exit(verbose);
 

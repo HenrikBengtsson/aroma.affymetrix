@@ -478,8 +478,7 @@ setMethodS3("process", "MatSmoothing", function(this, ..., units=NULL, force=FAL
     # Check already here if there is already a tempory output file.  This
     # may be a left over from a interrupted previous run, or the fact that
     # the array is processed by another session elsewhere. /HB
-    pathnameT <- sprintf("%s.tmp", pathname);
-    pathnameT <- Arguments$getWritablePathname(pathnameT, mustNotExist=TRUE);
+    pathnameT <- pushTemporaryFile(pathname, verbose=verbose);
 
     matScoreNeg <- matScorePos <- outputList <- vector("list", nbrOfUnits);
     names(outputList) <- unitNames;
@@ -614,11 +613,9 @@ setMethodS3("process", "MatSmoothing", function(this, ..., units=NULL, force=FAL
                                                         verbose=verbose2);
     verbose && exit(verbose);
 
-    # ...rename temporary file
-    file.rename(pathnameT, pathname);
-    if (!isFile(pathname) || isFile(pathnameT)) {
-      throw("Failed to rename temporary file: ", pathnameT, " -> ", pathname);
-    }
+    # Rename temporary file
+    pathname <- popTemporaryFile(pathnameT, verbose=verbose);
+
     rm(filename, pathname, pathnameT);
     verbose && exit(verbose);
 

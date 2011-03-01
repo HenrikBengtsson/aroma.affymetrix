@@ -54,10 +54,10 @@ setMethodS3("exportTotalCnRatioSet", "AffymetrixCnChpSet", function(this, ..., o
       next;
     }
 
-    verbose && enter(verbose, "Allocating temporary output file");
-    tmpPathname <- sprintf("%s.tmp", pathname);
-    tmpPathname <- Arguments$getWritablePathname(tmpPathname, mustNotExist=TRUE);
-    asb <- AromaUnitSignalBinaryFile$allocate(tmpPathname, nbrOfRows=nbrOfUnits, platform=platform, chipType=chipType);
+    verbose && enter(verbose, "Allocating (temporary) output file");
+    pathnameT <- pushTemporaryFile(pathname, verbose=verbose);
+
+    asb <- AromaUnitSignalBinaryFile$allocate(pathnameT, nbrOfRows=nbrOfUnits, platform=platform, chipType=chipType);
 
     verbose && print(verbose, asb);
     verbose && exit(verbose);
@@ -84,12 +84,8 @@ setMethodS3("exportTotalCnRatioSet", "AffymetrixCnChpSet", function(this, ..., o
     writeFooter(asb, footer);
     verbose && exit(verbose);
 
-    verbose && enter(verbose, "Renaming temporary output file");
-    file.rename(tmpPathname, pathname);
-    if (!isFile(pathname)) {
-      throw("Failed to rename temporary file ('", tmpPathname, "') to final file ('", pathname, "')");
-    }
-    verbose && exit(verbose);
+    # Rename temporary file
+    pathname <- popTemporaryFile(pathnameT, verbose=verbose);
 
     verbose && exit(verbose);
   } # for (kk ...)

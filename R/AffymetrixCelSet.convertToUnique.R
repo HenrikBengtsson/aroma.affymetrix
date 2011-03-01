@@ -134,8 +134,7 @@ setMethodS3("convertToUnique", "AffymetrixCelSet", function(this, ..., tags="UNQ
       verbose && enter(verbose, "Creating CEL file for results");
 
       # Write to a temporary file
-      pathnameT <- sprintf("%s.tmp", pathname);
-      verbose && cat(verbose, "Temporary pathname: ", pathnameT);
+      pathnameT <- pushTemporaryFile(pathname, verbose=verbose);
 
       createCel(pathnameT, header=celHeader);
       verbose && cat(verbose, "Writing values according to unique CDF");
@@ -147,16 +146,7 @@ setMethodS3("convertToUnique", "AffymetrixCelSet", function(this, ..., tags="UNQ
       verbose && print(verbose, gc);
 
       # Rename temporary file
-      verbose && enter(verbose, "Renaming temporary file");
-      res <- file.rename(pathnameT, pathname);
-      if (!isFile(pathname)) {
-        throw("Failed to rename temporary file (final file does not exist): ", pathnameT, " -> ", pathname);
-      }
-      if (isFile(pathnameT)) {
-        throw("Failed to rename temporary file (temporary file still exists): ", pathnameT, " -> ", pathname);
-      }
-      rm(pathnameT);
-      verbose && exit(verbose);
+      pathname <- popTemporaryFile(pathnameT, verbose=verbose);
 
       verbose && exit(verbose);
   } # for (kk ...)

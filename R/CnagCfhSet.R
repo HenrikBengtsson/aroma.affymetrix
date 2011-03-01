@@ -880,24 +880,65 @@ setMethodS3("getAverageFile", "CnagCfhSet", function(this, name=NULL, prefix="av
   if (is.null(this$.averageFiles))
     this$.averageFiles <- list();
   res <- this$.averageFiles[[filename]];
-  if (is.null(res)) {
-    verbose && enter(verbose, "Creating CFH file to store average signals");
 
+  if (is.null(res)) {
+    verbose && enter(verbose, "Obtaining an (existing or new) result file");
+
+    # Searching for the output file in multiple directories
     path <- getPath(this);
+    paths <- c(path);
 
     # Drop tags from root path?
     if (getOption(aromaSettings, "devel/dropRootPathTags", FALSE)) {
       path <- dropRootPathTags(path, depth=2, verbose=less(verbose, 5));
+      paths <- c(paths, path);
+      paths <- unique(paths);
     }
 
-    verbose && cat(verbose, "Path: ", path);
+    verbose && cat(verbose, "Paths:");
+    verbose && print(verbose, paths);
     verbose && cat(verbose, "Filename: ", filename);
 
-    res <- createFrom(df, filename=filename, path=path,
+    pathname <- NULL;
+    for (kk in seq(along=paths)) {
+      path <- paths[kk];
+      verbose && enter(verbose, "Searching path #%d of %d", kk, length(paths));
+
+      verbose && cat(verbose, "Path: ", path);
+      pathnameT <- Arguments$getReadablePathname(filename, path=path, mustExist=FALSE);
+      verbose && cat(verbose, "Pathname: ", pathnameT);
+      if (isFile(pathnameT)) {
+        pathname <- pathnameT;
+        verbose && exit(verbose);
+        break;
+      }
+
+      verbose && exit(verbose);
+    } # for (kk ...)
+    verbose && cat(verbose, "Located pathname: ", pathname);
+
+    verbose && exit(verbose); 
+
+    if (isFile(pathname)) {
+      verbose && enter(verbose, "Loading existing data file");
+      verbose && cat(verbose, "Pathname: ", pathname);
+      res <- newInstance(df, pathname);
+      verbose && exit(verbose);
+    } else { 
+      verbose && enter(verbose, "Creating CFH file to store average signals");
+      path <- paths[length(paths)];
+
+      verbose && cat(verbose, "Path: ", path);
+      verbose && cat(verbose, "Filename: ", filename);
+
+      res <- createFrom(df, filename=filename, path=path,
                         methods="create", clear=TRUE, verbose=less(verbose));
-    verbose && exit(verbose);
+
+      verbose && exit(verbose);
+    } # if (isFile(pathname))
+
     this$.averageFiles[[filename]] <- res;
-  }
+  } # if (is.null(res))
 
   verbose && print(verbose, res);
 
@@ -1063,6 +1104,9 @@ setMethodS3("getDefaultFullName", "CnagCfhSet", function(this, parent=1, ...) {
 
 ############################################################################
 # HISTORY:
+# 2011-02-28
+# o Now getAverageFile() first tries to locate an existing result file
+#   in multiple root paths.  If not found, it creates a new one.
 # 2011-02-24
 # o GENERALIZATION: Now getAverageFile() for CnagCfhSet drops tags
 #   from the output root path (if 'devel/dropRootPathTags' setting is TRUE).

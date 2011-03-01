@@ -2,6 +2,9 @@ Package: aroma.affymetrix
 =========================
 
 Version: 2.0.4 [2011-02-28]
+o GENERALIZATION: Now getAverageFile() and getBaseline() first try to
+  locate an existing result file in one of the root paths. 
+  If not found, a new one is created.
 o GENERALIZATION: Now byName() for AffymetrixCelSet tries to setup all 
   data set directories matching the query and not just the first one.
   It also requires that the data sets found by byPath() are 

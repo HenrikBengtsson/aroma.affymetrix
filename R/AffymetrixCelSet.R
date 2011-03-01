@@ -536,7 +536,7 @@ setMethodS3("byName", "AffymetrixCelSet", function(static, name, tags=NULL, chip
     verbose && cat(verbose, "Path: ", path);
 
     suppressWarnings({
-      res <- byPath(static, path=path, ..., verbose=verbose);
+      res <- byPath(static, path=path, cdf=cdf, ..., verbose=verbose);
     });
 
     if (!is.null(res)) {
@@ -1224,6 +1224,9 @@ setMethodS3("getUnitGroupCellMap", "AffymetrixCelSet", function(this, ...) {
 
 ############################################################################
 # HISTORY:
+# 2011-03-01
+# o BUG FIX: The recent updates of byName() forgot to pass argument 'cdf'
+#   to the byPath() call.
 # 2011-02-25
 # o Now byName() for AffymetrixCelSet tries to setup all data set
 #   directories matching the query and not just the first one.

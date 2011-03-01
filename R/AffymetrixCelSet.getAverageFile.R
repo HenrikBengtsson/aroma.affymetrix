@@ -182,6 +182,7 @@ setMethodS3("getAverageFile", "AffymetrixCelSet", function(this, name=NULL, pref
       verbose && cat(verbose, "Pathname: ", pathnameT);
       if (isFile(pathnameT)) {
         pathname <- pathnameT;
+        verbose && cat(verbose, "Found an existing file.");
         verbose && exit(verbose);
         break;
       }
@@ -189,8 +190,6 @@ setMethodS3("getAverageFile", "AffymetrixCelSet", function(this, name=NULL, pref
       verbose && exit(verbose);
     } # for (kk ...)
     verbose && cat(verbose, "Located pathname: ", pathname);
-
-    verbose && exit(verbose); 
 
 
     if (isFile(pathname)) {
@@ -208,6 +207,7 @@ setMethodS3("getAverageFile", "AffymetrixCelSet", function(this, name=NULL, pref
       verbose && cat(verbose, "Pathname: ", pathname);
 
       res <- createFrom(df, filename=pathname, path=NULL, methods="create", clear=TRUE, verbose=less(verbose));
+      verbose && exit(verbose);
     } # if (isFile(pathname))
  
     verbose && exit(verbose);

@@ -909,6 +909,7 @@ setMethodS3("getAverageFile", "CnagCfhSet", function(this, name=NULL, prefix="av
       verbose && cat(verbose, "Pathname: ", pathnameT);
       if (isFile(pathnameT)) {
         pathname <- pathnameT;
+        verbose && cat(verbose, "Found an existing file.");
         verbose && exit(verbose);
         break;
       }

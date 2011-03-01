@@ -67,6 +67,7 @@ setMethodS3("getBaseline", "ChipEffectSet", function(this, force=FALSE, verbose=
     verbose && cat(verbose, "Pathname: ", pathnameT);
     if (isFile(pathnameT)) {
       pathname <- pathnameT;
+      verbose && cat(verbose, "Found an existing file.");
       verbose && exit(verbose);
       break;
     }

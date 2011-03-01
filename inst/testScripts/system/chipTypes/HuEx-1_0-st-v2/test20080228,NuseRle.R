@@ -13,14 +13,13 @@ tol <- 1e-5;
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Setup data set (from previous file)
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-name <- "Affymetrix-HeartBrain";
+dataSet <- "Affymetrix-HeartBrain";
 chipType <- "HuEx-1_0-st-v2";
-cdf <- AffymetrixCdfFile$byChipType(chipType, 
-                                         tags="coreR3,A20071112,EP");
-cs <- AffymetrixCelSet$byName(name=name, cdf=cdf);
+cdf <- AffymetrixCdfFile$byChipType(chipType, tags="coreR3,A20071112,EP");
+csR <- AffymetrixCelSet$byName(dataSet, cdf=cdf);
 
 # Background correction and normalization
-bc <- RmaBackgroundCorrection(cs);
+bc <- RmaBackgroundCorrection(csR);
 csBC <- process(bc, verbose=log);
 qn <- QuantileNormalization(csBC, typesToUpdate="pm");
 csN <- process(qn, verbose=log);

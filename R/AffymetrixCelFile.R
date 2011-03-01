@@ -315,7 +315,7 @@ setMethodS3("setCdf", "AffymetrixCelFile", function(this, cdf, ..., .checkArgs=T
   
     # Assure that the CDF is compatible with the CEL file
     if (nbrOfCells(cdf) != nbrOfCells(this)) {
-      throw("The specified CDF structure ('", getChipType(cdf), "') is not compatible with the chip type ('", getChipType(this), "') of the CEL file. The number of cells do not match: ", nbrOfCells(cdf), " != ", nbrOfCells(this));
+      throw("Cannot set CDF. The specified CDF structure ('", getChipType(cdf), "') is not compatible with the chip type ('", getChipType(this), "') of the CEL file. The number of cells do not match: ", nbrOfCells(cdf), " != ", nbrOfCells(this));
     }
 
     # Nothing to do?

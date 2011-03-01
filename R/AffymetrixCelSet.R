@@ -400,7 +400,7 @@ setMethodS3("setCdf", "AffymetrixCelSet", function(this, cdf, verbose=FALSE, ...
     if (nbrOfFiles(this) > 0) {
       cf <- getFile(this, 1);
       if (nbrOfCells(cdf) != nbrOfCells(cf)) {
-        throw("The specified CDF structure ('", getChipType(cdf), "') is not compatible with the chip type ('", getChipType(cf), "') of the CEL file. The number of cells do not match: ", nbrOfCells(cdf), " != ", nbrOfCells(cf));
+        throw("Cannot set CDF. The specified CDF structure ('", getChipType(cdf), "') is not compatible with the chip type ('", getChipType(cf), "') of the CEL file. The number of cells do not match: ", nbrOfCells(cdf), " != ", nbrOfCells(cf));
       }
     }
   }
@@ -535,8 +535,13 @@ setMethodS3("byName", "AffymetrixCelSet", function(static, name, tags=NULL, chip
     verbose && enter(verbose, sprintf("Trying path #%d of %d", kk, length(paths)));
     verbose && cat(verbose, "Path: ", path);
 
-    suppressWarnings({
-      res <- byPath(static, path=path, cdf=cdf, ..., verbose=verbose);
+    tryCatch({
+      suppressWarnings({
+        res <- byPath(static, path=path, cdf=cdf, ..., verbose=verbose);
+      });
+    }, error = function(ex) {
+      verbose && cat(verbose, "Data set could not be setup for this path, because:");
+      verbose && cat(verbose, ex$message);
     });
 
     if (!is.null(res)) {
@@ -1225,6 +1230,7 @@ setMethodS3("getUnitGroupCellMap", "AffymetrixCelSet", function(this, ...) {
 ############################################################################
 # HISTORY:
 # 2011-03-01
+# o Now byName() handles if byPath() throws an exception.
 # o BUG FIX: The recent updates of byName() forgot to pass argument 'cdf'
 #   to the byPath() call.
 # 2011-02-25

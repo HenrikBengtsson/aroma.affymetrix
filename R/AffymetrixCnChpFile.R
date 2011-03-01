@@ -154,7 +154,7 @@ setMethodS3("setCdf", "AffymetrixCnChpFile", function(this, cdf, ..., .checkArgs
   
 #    # Assure that the CDF is compatible with the CNCHP file
 #    if (nbrOfCells(cdf) != nbrOfCells(this)) {
-#      throw("The specified CDF structure is not compatible with the CEL file. The number of cells do not match: ", nbrOfCells(cdf), " != ", nbrOfCells(this));
+#      throw("Cannot set CDF. The specified CDF structure is not compatible with the CEL file. The number of cells do not match: ", nbrOfCells(cdf), " != ", nbrOfCells(this));
 #    }
   }
 

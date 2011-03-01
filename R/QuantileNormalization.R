@@ -375,16 +375,22 @@ setMethodS3("findTargetDistributionFile", "QuantileNormalization", function(this
   verbose && cat(verbose, "Existing paths:");
   verbose && print(verbose, paths);
   
-  pathnames <- filePath(paths, filename, expandLinks="any");
+  pathnames <- file.path(paths, filename);
+  pathnames <- sapply(pathnames, FUN=filePath, expandLinks="any");
 
   # Keep only existing pathnames
   pathnames <- pathnames[sapply(pathnames, FUN=isFile)];
   verbose && cat(verbose, "Existing pathnames:");
   verbose && print(verbose, pathnames);
 
-  pathname <- pathnames[1];
-  verbose && cat(verbose, "Keeping first pathname:");
-  verbose && print(verbose, pathname);
+  if (length(pathnames) > 0) {
+    pathname <- pathnames[1];
+    verbose && cat(verbose, "Keeping first pathname:");
+    verbose && print(verbose, pathname);
+  } else {
+    verbose && cat(verbose, "Could not locate a matching pathname.");
+    pathname <- NULL;
+  }
 
   verbose && exit(verbose);
 

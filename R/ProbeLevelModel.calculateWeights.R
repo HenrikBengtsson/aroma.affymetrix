@@ -75,22 +75,20 @@ setMethodS3("calculateWeights", "ProbeLevelModel", function(this, units=NULL, ra
     weightsList <- base::lapply(residualsList, FUN=resFcn);
     verbose && exit(verbose);
     
-# update output files
-    
     verbose && enter(verbose, "Storing weights");
 
     cdf <- getCellIndices(getCdf(ds), units=units, stratifyBy="pm", ...);
     
-    for (kk in seq(ds)) {
-      wf <- getFile(ws, kk);
+    for (ii in seq(ds)) {
+      wf <- getFile(ws, ii);
 
-      verbose && enter(verbose, sprintf("Array #%d ('%s') of %d", kk, getName(wf), length(ds)));
+      verbose && enter(verbose, sprintf("Array #%d ('%s') of %d", ii, getName(wf), length(ds)));
 
       data <- base::lapply(weightsList, function(unit) {
         base::lapply(unit, function(group) {
           nrow <- nrow(group); 
           list(
-            intensities=2^group[,kk], 
+            intensities=2^group[,ii], 
             stdvs=rep(1, times=nrow), 
             pixels=rep(1, times=nrow)
           );
@@ -100,7 +98,7 @@ setMethodS3("calculateWeights", "ProbeLevelModel", function(this, units=NULL, ra
       updateCelUnits(getPathname(wf), cdf=cdf, data=data);
 
       verbose && exit(verbose);
-    } # for (kk ...)
+    } # for (ii ...)
     
     verbose && exit(verbose);
 

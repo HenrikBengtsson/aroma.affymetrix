@@ -118,6 +118,12 @@ print(sessionInfo());
 eSet <- justSNPRMA(getPathnames(csR), normalizeToHapmap=normalizeToHapmap, verbose=TRUE);
 print(eSet);
 
+if (!normalizeToHapmap) {
+  # CLEAN UP: justSNPRMA() stores a target distribution file
+  # in the working directory that we don't need
+  file.remove("pd.genomewidesnp.6.quantileReference.rda");
+}
+
 # Extract theta array
 naValue <- as.double(NA);
 theta0 <- array(naValue, dim=c(nrow(eSet), 2, ncol(eSet)));

@@ -79,12 +79,14 @@ setMethodS3("calculateWeights", "ExonRmaPlm", function(this, units=NULL, ram=NUL
   verbose && enter(verbose, "Extracting unit data");
   count <- 1;
   while (length(unitsToDo) > 0) {
+    verbose && enter(verbose, sprintf("Chunk #%d of %d", count, nbrOfChunks));
+
+    # Identify units to process in this chunk
     if (length(unitsToDo) < unitsPerChunk) {
       head <- 1:length(unitsToDo);
     }
     units <- unitsToDo[head];
-    verbose && printf(verbose, "Chunk #%d of %d (%d units)\n",
-                                        count, nbrOfChunks, length(units));
+    verbose && cat(verbose, "Number of units: ", length(units));
 
     residualsList <- readUnits(rs, units=units, verbose=less(verbose), stratifyBy="pm");
 
@@ -92,38 +94,38 @@ setMethodS3("calculateWeights", "ExonRmaPlm", function(this, units=NULL, ram=NUL
     weightsList <- base::lapply(residualsList, FUN=resFcn, mergeGroups=this$mergeGroups);
     verbose && exit(verbose);
     
-# update output files
-    
     verbose && enter(verbose, "Storing weights");
 
     cdf <- getCellIndices(getCdf(ds), units=units, stratifyBy="pm", ...);
     
-    for (kk in seq(ds)) {
-      wf <- getFile(ws, kk);
+    for (ii in seq(ds)) {
+      wf <- getFile(ws, ii);
 
-      verbose && enter(verbose, sprintf("Array #%d ('%s')", kk, getName(wf)));
+      verbose && enter(verbose, sprintf("Array #%d ('%s') of %d", ii, getName(wf), length(ds)));
 
       data <- base::lapply(weightsList, function(unit) {
         base::lapply(unit, function(group) {
           nrow <- nrow(group); 
           list(
-               intensities=2^group[,kk], 
-               stdvs=rep(1, nrow), 
-               pixels=rep(1, nrow)
-               );
-        })
+            intensities=2^group[,ii], 
+            stdvs=rep(1, times=nrow), 
+            pixels=rep(1, times=nrow)
+          );
+        });
       });
       
       updateCelUnits(getPathname(wf), cdf=cdf, data=data);
 
       verbose && exit(verbose);
-    }
+    } # for (ii ...)
     
     verbose && exit(verbose);
 
     unitsToDo <- unitsToDo[-head];
     count <- count + 1;
-  }
+
+    verbose && exit(verbose);
+  } # while (...)
 
   # Garbage collect
   gc <- gc();
@@ -137,6 +139,8 @@ setMethodS3("calculateWeights", "ExonRmaPlm", function(this, units=NULL, ram=NUL
 
 ##########################################################################
 # HISTORY:
+# 2011-03-01 [HB]
+# o Harmonized the verbose output.
 # 2007-02-15 
 # o Based on ProbeLevelModel.calculateResiduals
 #   and QualityAssessmentModel.getWeights

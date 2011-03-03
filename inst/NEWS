@@ -1,6 +1,18 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 2.0.5 [2011-03-03]
+o GENERALIZATION: Now AffymetrixCelSet and CnagCfhSet locates sample 
+  annotation files and sets the attributes following the new aroma 
+  search convention, i.e. by first loading *.saf files from
+  main root path annotationData/ and then from optional sibling root 
+  paths annotationData,<tags>/.
+o ROBUSTNESS: Added a return contract/sanity check asserting that
+  getUnitsOnChromosomes() for GenomeInformation truly returns valid
+  'unit' indices.  Thanks to Emilie Sohier, France for reporting
+  on a problem related to this.
+
+
 Version: 2.0.4 [2011-03-01]
 o GENERALIZATION: Now getAverageFile() and getBaseline() first try to
   locate an existing result file in one of the root paths. 

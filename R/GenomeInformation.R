@@ -181,6 +181,11 @@ setMethodS3("getUnitsOnChromosomes", "GenomeInformation", function(this, chromos
   units <- rownames(data);
   units <- as.integer(units);
 
+  # CONTRACT
+  # Sanity check, cf. thread 'Error with AllelicCrosstalkCalibration 
+  # and process' on 2011-03-03.
+  units <- Arguments$getIndices(units);
+
   units;
 })
 
@@ -419,6 +424,10 @@ setMethodS3("getUnitIndices", "GenomeInformation", function(this, ..., na.rm=TRU
 
 ############################################################################
 # HISTORY:
+# 2011-03-03
+# o ROBUSTNESS: Added a return contract/sanity check asserting that
+#   getUnitsOnChromosomes() for GenomeInformation truly returns valid
+#   'unit' indices.
 # 2009-09-07
 # o Renamed getUnitsOnChromosome() to getUnitsOnChromosomes() for the
 #   GenomeInformation class.  The former now calls the latter for backward

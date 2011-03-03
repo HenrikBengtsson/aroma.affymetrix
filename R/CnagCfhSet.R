@@ -461,13 +461,12 @@ setMethodS3("byPath", "CnagCfhSet", function(static, path="rawData/", pattern="[
     # Scan for SAF files and apply them
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
     verbose && enter(verbose, "Scanning for and applying sample annotation files");
-    sasPath <- "annotationData/samples/";
-    sas <- SampleAnnotationSet$fromPath(sasPath, verbose=less(verbose));
+    sas <- SampleAnnotationSet$loadAll(verbose=less(verbose));
     if (nbrOfFiles(sas) == 0) {
-      verbose && cat(verbose, "No annotation files found.");
+      verbose && cat(verbose, "No sample annotation files found.");
     } else {
       verbose && print(verbose, sas);
-  #    setAttributesBy(this, sas);
+      setAttributesBy(this, sas);
     }
     # Store the SAFs for now.
     this$.sas <- sas;
@@ -1105,6 +1104,9 @@ setMethodS3("getDefaultFullName", "CnagCfhSet", function(this, parent=1, ...) {
 
 ############################################################################
 # HISTORY:
+# 2011-03-03
+# o GENERALIZATION: Now CnagCfhSet locates sample annotation files and 
+#   sets the attributes following the new aroma search convention.
 # 2011-02-28
 # o Now getAverageFile() first tries to locate an existing result file
 #   in multiple root paths.  If not found, it creates a new one.

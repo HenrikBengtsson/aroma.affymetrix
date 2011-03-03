@@ -597,11 +597,7 @@ setMethodS3("updateSampleAnnotationSet", "AffymetrixCelSet", function(this, ...,
   # Scan for SAF files and apply them
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
   verbose && enter(verbose, "Scanning for and applying sample annotation files");
-  sasPath <- "annotationData/samples/";
-  sasPath <- filePath(sasPath, expandLinks="any");
-  mkdirs(sasPath);
-
-  sas <- SampleAnnotationSet$fromPath(sasPath, verbose=less(verbose));
+  sas <- SampleAnnotationSet$loadAll(verbose=less(verbose));
   if (nbrOfFiles(sas) == 0) {
     verbose && cat(verbose, "No sample annotation files found.");
   } else {
@@ -1226,9 +1222,11 @@ setMethodS3("getUnitGroupCellMap", "AffymetrixCelSet", function(this, ...) {
 })
 
 
-
 ############################################################################
 # HISTORY:
+# 2011-03-03
+# o GENERALIZATION: Now AffymetrixCelSet locates sample annotation files 
+#   and sets the attributes following the new aroma search convention.
 # 2011-03-01
 # o Now byName() handles if byPath() throws an exception.
 # o BUG FIX: The recent updates of byName() forgot to pass argument 'cdf'

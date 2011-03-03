@@ -4,11 +4,11 @@
 library("aroma.affymetrix")
 log <- Arguments$getVerbose(-4, timestamp=TRUE);
 
-dataSetName <- "Jeremy_2007-10k";
+dataSet <- "GSE8605";
 chipType <- "Mapping10K_Xba142";
 
 cdf <- AffymetrixCdfFile$byChipType(chipType);
-cs <- AffymetrixCelSet$byName(dataSetName, cdf=cdf);
+cs <- AffymetrixCelSet$byName(dataSet, cdf=cdf);
 keep <- 1:6;
 cs <- extract(cs, keep);
 print(cs);

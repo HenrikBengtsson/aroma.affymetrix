@@ -1,6 +1,13 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 2.0.6 [2011-03-04]
+o ROBUSTNESS: Now getCellIndices() for AffymetrixCdfFile asserts that
+  argument 'units' can be coerced to integer indices.  Also, after
+  correcting a bug in lapplyInChunks() of aroma.core, getCellIndices()
+  now correctly returns an empty set if argument 'units' is integer(0).
+
+
 Version: 2.0.5 [2011-03-03]
 o GENERALIZATION: Now AffymetrixCelSet and CnagCfhSet locates sample 
   annotation files and sets the attributes following the new aroma 

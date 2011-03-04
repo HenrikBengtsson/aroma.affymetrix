@@ -719,6 +719,11 @@ setMethodS3("getCellIndices", "AffymetrixCdfFile", function(this, units=NULL, ..
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Argument 'units':
+  if (!is.null(units)) {
+    units <- Arguments$getIndices(units, range=c(1, nbrOfCells(this)));
+  }
+
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
   if (verbose) {
@@ -761,11 +766,10 @@ setMethodS3("getCellIndices", "AffymetrixCdfFile", function(this, units=NULL, ..
   verbose2 <- -as.integer(verbose)-1;
 
   units0 <- units;
-  if (is.null(units))
+  if (is.null(units)) {
     units <- seq(length=nbrOfUnits(this));
+  }
   nbrOfUnits <- length(units);
-
-#  cdf <- readCdfCellIndices(getPathname(this), units=units, ..., verbose=verbose);
 
 
   if (unlist) {
@@ -1593,6 +1597,9 @@ setMethodS3("convertUnits", "AffymetrixCdfFile", function(this, units=NULL, keep
 
 ############################################################################
 # HISTORY:
+# 2011-03-04
+# o ROBUSTNESS: Now getCellIndices() for AffymetrixCdfFile asserts that
+#   argument 'units' can be coerced to integer indices.
 # 2010-05-09
 # o Added more explicit garbage collection to getGroupDirections() for
 #   the AffymetrixCdfFile class.

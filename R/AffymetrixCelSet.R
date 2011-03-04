@@ -562,7 +562,8 @@ setMethodS3("byName", "AffymetrixCelSet", function(static, name, tags=NULL, chip
   verbose && exit(verbose);
 
   res;
-}, static=TRUE)
+}, static=TRUE) # byName()
+
 
 
 setMethodS3("update2", "AffymetrixCelSet", function(this, ..., verbose=FALSE) {
@@ -597,15 +598,21 @@ setMethodS3("updateSampleAnnotationSet", "AffymetrixCelSet", function(this, ...,
   # Scan for SAF files and apply them
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
   verbose && enter(verbose, "Scanning for and applying sample annotation files");
-  sas <- SampleAnnotationSet$loadAll(verbose=less(verbose));
-  if (nbrOfFiles(sas) == 0) {
-    verbose && cat(verbose, "No sample annotation files found.");
+
+  # Nothing to do?
+  if (nbrOfFiles(this) > 0) {
+    sas <- SampleAnnotationSet$loadAll(verbose=less(verbose));
+    if (nbrOfFiles(sas) == 0) {
+      verbose && cat(verbose, "No sample annotation files found.");
+    } else {
+      verbose && print(verbose, sas);
+      setAttributesBy(this, sas);
+    }
+    # Store the SAFs for now.
+    this$.sas <- sas;
   } else {
-    verbose && print(verbose, sas);
-    setAttributesBy(this, sas);
+    verbose && cat(verbose, "Empty data set. Nothing to do.");
   }
-  # Store the SAFs for now.
-  this$.sas <- sas;
 
   verbose && exit(verbose);
 
@@ -751,7 +758,7 @@ setMethodS3("byPath", "AffymetrixCelSet", function(static, path="rawData/", patt
   verbose && exit(verbose);
 
   set;
-}, protected=TRUE, static=TRUE)
+}, protected=TRUE, static=TRUE) # byPath()
 
 
 

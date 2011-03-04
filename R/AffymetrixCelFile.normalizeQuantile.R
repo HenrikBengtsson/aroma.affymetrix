@@ -110,15 +110,21 @@ setMethodS3("normalizeQuantile", "AffymetrixCelFile", function(this, path=file.p
   # Write normalized data to file
   verbose && enter(verbose, "Writing normalized probe signals");
 
+  # Write to a temporary file
+  pathnameT <- pushTemporaryFile(pathname, verbose=less(verbose,10));
+
   # Create CEL file to store results, if missing
   verbose && enter(verbose, "Creating CEL file for results, if missing");
-  createFrom(this, filename=pathname, path=NULL, verbose=less(verbose));
+  createFrom(this, filename=pathnameT, path=NULL, verbose=less(verbose));
   verbose && exit(verbose);
 
   verbose && enter(verbose, "Writing normalized intensities");
-  updateCel(pathname, intensities=x);
+  updateCel(pathnameT, intensities=x);
   verbose && exit(verbose);
   verbose && exit(verbose);
+
+  # Rename temporary file
+  pathname <- popTemporaryFile(pathnameT, verbose=less(verbose,10));
 
   # Return new normalized data file object
   res <- fromFile(this, pathname);
@@ -133,6 +139,9 @@ setMethodS3("normalizeQuantile", "AffymetrixCelFile", function(this, path=file.p
 
 ############################################################################
 # HISTORY:
+# 2011-03-03
+# o ROBUSTNESS: Now normalizeQuantile() for AffymetrixCelFile saves
+#   the normalized data to file atomically.
 # 2006-10-06
 # o Made sure cdf association is inherited. /KS
 # 2006-09-14

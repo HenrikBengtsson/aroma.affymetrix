@@ -7,6 +7,9 @@ o GENERALIZATION: Now AffymetrixCelSet and CnagCfhSet locates sample
   search convention, i.e. by first loading *.saf files from
   main root path annotationData/ and then from optional sibling root 
   paths annotationData,<tags>/.
+o ROBUSTNESS: QuantileNormalization now saves normalized data
+  atomically, which lowers the risk for generating incomplete/corrupt
+  data files.
 o ROBUSTNESS: Added a return contract/sanity check asserting that
   getUnitsOnChromosomes() for GenomeInformation truly returns valid
   'unit' indices.  Thanks to Emilie Sohier, France for reporting

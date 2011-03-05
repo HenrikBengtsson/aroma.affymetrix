@@ -33,7 +33,7 @@ for (chipType in names(csList)) {
   cs <- csList[[chipType]];
   plm <- RmaPlm(cs);
   print(plm);
-  fit(plm, ram=1/2, verbose=log);
+  fit(plm, verbose=log);
   ces <- getChipEffectSet(plm);
   print(ces);
   stopifnot(identical(getNames(ces), getNames(cs)));

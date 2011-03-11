@@ -54,7 +54,7 @@ design1 <- makeContrasts(Prec1_MeDNA_IP1-Prec1_MeDNA_Input1, levels=sampleNames)
 colnames(design1) <- "Prec1_IP1_minus_Input";
 print(design1);
 
-ms1 <- MatSmoothing(csU, design=design1, probeWindow=600, tag="singleIP");
+ms1 <- MatSmoothing(csU, design=design1, probeWindow=600, tags="singleIP");
 csMS1 <- process(ms1, units=NULL, verbose=log);
 print(csMS1);
 stopifnot(nbrOfFiles(csMS1) == ncol(design1));
@@ -65,8 +65,8 @@ writeSgr(csMS1, verbose=log);
 design2 <- makeContrasts(Prec1_MeDNA_IP1 + Prec1_MeDNA_IP2-Prec1_MeDNA_Input1, levels=sampleNames);
 colnames(design2) <- "Prec1_IPs_minus_Input";
 
-ms2 <- MatSmoothing(csU, design=design2, probeWindow=800, tag="multipleIP")
-csMS2 <- process(ms2, units=NULL,verbose=log)
+ms2 <- MatSmoothing(csU, design=design2, probeWindow=800, tags="multipleIP")
+csMS2 <- process(ms2, units=NULL, verbose=log)
 print(csMS2);
 stopifnot(nbrOfFiles(csMS2) == ncol(design2));
 

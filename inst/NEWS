@@ -1,6 +1,13 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 2.0.7 [2011-03-10]
+o BUG FIX: append() for AffymetrixCelSet:s would throw 'Error in base::
+  append(this$files, files, ...) : unused argument(s) (other = NA)'.
+  Added a redundancy test.  Thanks Ajanthah Sangaralingam at Queen Mary,
+  University of London, for reporting on this.
+
+
 Version: 2.0.6 [2011-03-04]
 o ROBUSTNESS: Now getCellIndices() for AffymetrixCdfFile asserts that
   argument 'units' can be coerced to integer indices.  Also, after

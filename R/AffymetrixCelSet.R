@@ -124,7 +124,7 @@ setMethodS3("clone", "AffymetrixCelSet", function(this, ..., verbose=FALSE) {
 
 
 
-setMethodS3("append", "AffymetrixCelSet", function(this, other, clone=TRUE, ..., verbose=FALSE) {
+setMethodS3("append", "AffymetrixCelSet", function(this, other, ..., verbose=FALSE) {
   # Argument 'other':
   other <- Arguments$getInstanceOf(other, class(this)[1]);
 
@@ -151,8 +151,13 @@ setMethodS3("append", "AffymetrixCelSet", function(this, other, clone=TRUE, ...,
     }
   }
 
-  # Append other
-  this <- NextMethod("append", this, other=other, clone=clone, ...);
+
+  # Append using append() method in super class
+  # NOTE: Do not pass arguments, they haven't been modified
+  # and do not need to be passed. Indeed, it will give an error
+  # for unknown reasons, cf. aroma.affymetrix thread 'Append function'
+  # on March 10, 2011. /HB 2011-03-10
+  this <- NextMethod("append");
 
   # Set the same CDF for all CEL files
   verbose && enter(verbose, "Updating the CDF for all files");

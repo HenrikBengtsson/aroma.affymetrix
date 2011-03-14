@@ -1,4 +1,4 @@
-setMethodS3("doCRMAv1", "AffymetrixCelSet", function(csR, shift=+300, combineAlleles=TRUE, arrays=NULL, ..., ram=NULL, verbose=FALSE) {
+setMethodS3("doCRMAv1", "AffymetrixCelSet", function(csR, shift=+300, combineAlleles=TRUE, lengthRange=NULL, arrays=NULL, ..., ram=NULL, verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
@@ -79,7 +79,7 @@ setMethodS3("doCRMAv1", "AffymetrixCelSet", function(csR, shift=+300, combineAll
   gc <- gc();
   
   verbose && enter(verbose, "CRMAv1/PCR fragment-length normalization");
-  fln <- FragmentLengthNormalization(ces, target="zero");
+  fln <- FragmentLengthNormalization(ces, target="zero", lengthRange=lengthRange);
   verbose && print(verbose, fln);
   cesN <- process(fln, verbose=verbose);
   verbose && print(verbose, cesN);
@@ -142,6 +142,9 @@ setMethodS3("doASCRMAv1", "default", function(...) {
 
 ############################################################################
 # HISTORY:
+# 2011-03-14
+# o doCRMAv1() gained argument 'lengthRange', which is passed to 
+#   the constructor of FragmentLengthNormalization.
 # 2010-06-21
 # o Added doASCRMAv1() for a convenient allele-specific CRMAv1 wrapper.
 # 2010-06-07

@@ -2,6 +2,8 @@ Package: aroma.affymetrix
 =========================
 
 Version: 2.0.8 [2011-03-14]
+o doCRMAv1() and doCRMAv2() gained argument 'lengthRange', which is 
+  passed to the constructor of FragmentLengthNormalization.
 o SPEEDUP: Added MOUSEDIVm520650 to the set of predefined chip types
   in AllelicCrosstalkCalibration.
 

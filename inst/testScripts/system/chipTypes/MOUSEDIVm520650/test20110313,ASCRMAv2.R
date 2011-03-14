@@ -27,5 +27,5 @@ print(csR);
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # AS-CRMAv2
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-dsList <- doASCRMAv2(csR, verbose=verbose);
+dsList <- doASCRMAv2(csR, lengthRange=c(450,2000), verbose=verbose);
 print(dsList);

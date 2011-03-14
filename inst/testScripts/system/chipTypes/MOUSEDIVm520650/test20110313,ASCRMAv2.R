@@ -17,6 +17,9 @@ print(ugp);
 ufl <- getAromaUflFile(cdf);
 print(ufl);
 
+acs <- getAromaCellSequenceFile(cdf);
+print(acs);
+
 csR <- AffymetrixCelSet$byName(dataSetName, cdf=cdf);
 print(csR);
 

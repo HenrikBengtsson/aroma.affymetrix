@@ -2,7 +2,7 @@ library("aroma.affymetrix")
 
 verbose <- Arguments$getVerbose(-10, timestamp=TRUE);
 
-dataSetName <- "Affymetrix-MouseDiversity,Set1of5";
+dataSetName <- "Affymetrix-MouseDiversity,Set1of5,testSet";
 chipType <- "MOUSEDIVm520650";
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

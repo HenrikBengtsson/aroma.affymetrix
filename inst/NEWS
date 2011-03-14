@@ -1,6 +1,11 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 2.0.8 [2011-03-14]
+o SPEEDUP: Added MOUSEDIVm520650 to the set of predefined chip types
+  in AllelicCrosstalkCalibration.
+
+
 Version: 2.0.7 [2011-03-10]
 o BUG FIX: append() for AffymetrixCelSet:s would throw 'Error in base::
   append(this$files, files, ...) : unused argument(s) (other = NA)'.

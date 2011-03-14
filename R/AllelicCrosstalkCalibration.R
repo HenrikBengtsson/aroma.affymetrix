@@ -137,6 +137,8 @@ setConstructorS3("AllelicCrosstalkCalibration", function(dataSet=NULL, ..., mode
         rescaleBy <- "all";
       } else if (regexpr("^Cytogenetics_Array$", chipType) != -1) {
         rescaleBy <- "all";
+      } else if (regexpr("^MOUSEDIVm520650$", chipType) != -1) {
+        rescaleBy <- "all";
       } else {
         # Heuristics so that we can work with "future/unknown" chip types.
         types <- getUnitTypes(cdf);
@@ -1218,6 +1220,9 @@ setMethodS3("getDataPairs", "AllelicCrosstalkCalibration", function(this, array,
 
 ############################################################################
 # HISTORY:
+# 2011-03-14
+# o SPEEDUP: Added MOUSEDIVm520650 to the set of predefined chip types
+#   in AllelicCrosstalkCalibration.
 # 2010-05-10
 # o Now the constructor AllelicCrosstalkCalibration() is set to recognize
 #   the Cytogenetics_Array chip type.  This avoids having to scan the CDF

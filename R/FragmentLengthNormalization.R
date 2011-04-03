@@ -632,7 +632,7 @@ setMethodS3("getTargetFunctions", "FragmentLengthNormalization", function(this, 
 
       # Sanity check
       if (sum(ok) == 0) {
-        throw("Cannot fit target function to enzyme, because there are no (finite) data points that are unique to this enzyme: ", ee);
+        throw(sprintf("Cannot fit target function to enzyme, because there are no (finite) data points that are unique to this enzyme (%d). Consider using argument 'lengthRange' when setting up the FragmentLengthNormalization.", ee));
       }
 
       # Fit fragment-length effect to single-enzyme units
@@ -973,6 +973,9 @@ setMethodS3("process", "FragmentLengthNormalization", function(this, ..., force=
 
 ############################################################################
 # HISTORY:
+# 2011-03-28
+# o CLARIFICATION: Now the error message thrown when there are not 
+#   enough data points for a unique enzyme gives a hint on what to do.
 # 2011-02-08
 # o GENERALIZATION: Now it is possible to specify the range of fragment
 #   lengths to be considered when normalizing for PCR fragment-length

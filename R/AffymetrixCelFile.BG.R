@@ -417,6 +417,11 @@ setMethodS3("bgAdjustGcrma", "AffymetrixCelFile", function(this, path=NULL, type
     verbose && cat(verbose, "Number of PMs: ", length(pm));
     verbose && cat(verbose, "Number of negative controls: ", length(ncs));
 
+    minNbrOfNegControls <- 1L;
+    if (length(ncs) < minNbrOfNegControls) {
+      throw(sprintf("Cannot perform GCRMA background (type=\"affinities\") correction: The number (%d) of negative control is too small.", length(ncs)));
+    }
+
     pm <- gcrma::bg.adjust.affinities(pms=pm, ncs=ncs, apm=apm, anc=anc, 
           index.affinities=seq(length=length(pm)), k=k, fast=fast, nomm=nomm);
 
@@ -484,7 +489,7 @@ setMethodS3("bgAdjustGcrma", "AffymetrixCelFile", function(this, path=NULL, type
   setCdf(res, cdf);
 
   res;
-}, private=TRUE)
+}, private=TRUE)  # bgAdjustGcrma()
 
 
 ###########################################################################/**
@@ -636,6 +641,9 @@ setMethodS3("bgAdjustRma", "AffymetrixCelFile", function(this, path=NULL, pmonly
 
 ############################################################################
 # HISTORY:
+# o ROBUSTNESS: Now internal bgAdjustGcrma(..., type="affinities") for
+#   AffymetrixCelFile gives a more informative error message when there
+#   are too few negative controls.
 # 2010-10-02 [HB]
 # o We now use nomm=TRUE for all cases for type="affinities".  See code
 #   for explanation.  This also solves the problems of using for instance 

@@ -1,7 +1,7 @@
 #  doRMA() runs in bounded memory and replicates the results of
 #  fitPLM() in the affyPLM package with great precision.
 
-setMethodS3("doRMA", "AffymetrixCelSet", function(csR, arrays=NULL, ..., ram=NULL, verbose=FALSE) {
+setMethodS3("doRMA", "AffymetrixCelSet", function(csR, arrays=NULL, ..., uniquePlm=FALSE, drop=TRUE, ram=NULL, verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
@@ -17,6 +17,12 @@ setMethodS3("doRMA", "AffymetrixCelSet", function(csR, arrays=NULL, ..., ram=NUL
     arrays <- Arguments$getIndices(arrays, max=nbrOfArrays(csR));
   }
 
+  # Argument 'uniquePlm':
+  uniquePlm <- Arguments$getLogical(uniquePlm);
+
+  # Argument 'drop':
+  drop <- Arguments$getLogical(drop);
+
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
 
@@ -26,8 +32,13 @@ setMethodS3("doRMA", "AffymetrixCelSet", function(csR, arrays=NULL, ..., ram=NUL
   arraysTag <- seqToHumanReadable(arrays);
   verbose && cat(verbose, "arrays:");
   verbose && str(verbose, arraysTag);
+  verbose && cat(verbose, "Fit PLM on unique probe sets: ", uniquePlm);
   verbose && cat(verbose, "ram: ", ram);
 
+  res <- list();
+  if (!drop) {
+    res <- c(res, list(csR=csR));
+  }
 
   verbose && cat(verbose, "Data set");
   verbose && print(verbose, csR);
@@ -47,6 +58,10 @@ setMethodS3("doRMA", "AffymetrixCelSet", function(csR, arrays=NULL, ..., ram=NUL
   verbose && print(verbose, csB);
   verbose && exit(verbose);
 
+  if (!drop) {
+    res <- c(res, list(bc=bc, csB=csB));
+  }
+
   # Clean up
   rm(csR, bc);
   gc <- gc();
@@ -59,12 +74,40 @@ setMethodS3("doRMA", "AffymetrixCelSet", function(csR, arrays=NULL, ..., ram=NUL
   verbose && print(verbose, csN);
   verbose && exit(verbose);
 
+  if (!drop) {
+    res <- c(res, list(qn=qn, csN=csN));
+  }
   # Clean up
   rm(csB, qn);
   gc <- gc();
   verbose && print(verbose, gc);
 
+
   verbose && enter(verbose, "RMA/Probe summarization (log-additive model)");
+  verbose && cat(verbose, "Fit PLM on unique probe sets: ", uniquePlm);
+
+  if (uniquePlm) {
+    verbose && enter(verbose, "Probe-summarization using a \"unique\" CDF requested");
+
+    verbose && enter(verbose, "Getting \"unique\" CDF (with non-unique probes dropped)")
+    cdf <- getCdf(csN);
+    verbose && cat(verbose, "CDF:");
+    verbose && print(verbose, cdf);
+    cdfU <- getUniqueCdf(cdf, verbose=less(verbose, 5));
+    verbose && cat(verbose, "CDF with non-unique probes dropped:");
+    verbose && print(verbose, cdfU);
+    verbose && exit(verbose)
+
+    if (equals(cdfU, cdf)) {
+      verbose && cat(verbose, "The \"unique\" CDF equals the original CDF: Skipping.");
+    } else {
+      csNU <- convertToUnique(csN, verbose=verbose);
+      verbose && print(verbose, csNU);
+      csN <- csNU;
+    }
+    verbose && exit(verbose);
+  }
+
   plm <- RmaPlm(csN);
   verbose && print(verbose, plm);
   if (length(findUnitsTodo(plm)) > 0) {
@@ -77,6 +120,10 @@ setMethodS3("doRMA", "AffymetrixCelSet", function(csR, arrays=NULL, ..., ram=NUL
   verbose && print(verbose, ces);
   verbose && exit(verbose);
 
+  if (!drop) {
+    res <- c(res, list(ces=ces, plm=plm));
+  }
+
   # Clean up
   rm(plm, csN);
   gc <- gc();
@@ -84,7 +131,11 @@ setMethodS3("doRMA", "AffymetrixCelSet", function(csR, arrays=NULL, ..., ram=NUL
 
   verbose && exit(verbose);
 
-  ces;
+  if (drop) {
+    res <- ces;
+  }
+
+  res;
 }) # doRMA()
 
 
@@ -121,6 +172,11 @@ setMethodS3("doRMA", "character", function(dataSet, ..., verbose=FALSE) {
 
 ############################################################################
 # HISTORY:
+# 2011-04-04
+# o Added argument 'drop' to doRMA().  If FALSE, all intermediate data
+#   sets and models are returned in a named list, otherwise only the
+#   final data set.
+# o Added argument 'uniquePlm' to doRMA().
 # 2010-06-16
 # o Created from doCRMAv1.R.
 ############################################################################

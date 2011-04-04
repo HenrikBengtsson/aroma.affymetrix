@@ -1580,11 +1580,8 @@ setMethodS3("convertUnits", "AffymetrixCdfFile", function(this, units=NULL, keep
     units <- indexOf(this, names=unitNames);
     if (any(is.na(units))) {
       missing <- unitNames[is.na(units)];
-      nmissing <- length(missing);
-      if (nmissing > 10)
-        missing <- c(missing[1:10], "...");
       throw("Argument 'units' contains ", nmissing, " unknown unit names: ", 
-                                             paste(missing, collapse=", "));
+                                                           hpaste(missing));
     }
   } else {
     # Validate unit indices

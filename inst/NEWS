@@ -1,6 +1,10 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 2.0.10 [2011-04-03]
+o CLEANUP: Utilizing hpaste() internally wherever applicable.
+
+
 Version: 2.0.9 [2011-03-26]
 o ROBUSTNESS: Now internal bgAdjustGcrma(..., type="affinities") for
   AffymetrixCelFile gives a more informative error message when there

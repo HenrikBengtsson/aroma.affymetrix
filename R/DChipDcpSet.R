@@ -91,10 +91,7 @@ setMethodS3("as.character", "DChipDcpSet", function(x, ...) {
   n <- nbrOfArrays(this);
   s <- c(s, sprintf("Number of arrays: %d", n));
   names <- getNames(this);
-  if (n >= 5)
-    names <- c(names[1:2], "...", names[n]);
-  names <- paste(names, collapse=", ");
-  s <- c(s, sprintf("Names: %s", names));
+  s <- c(s, sprintf("Names: %s [%d]", hpaste(names), n));
   s <- c(s, sprintf("Total file size: %.2fMB", getFileSize(this)/1024^2));
   s <- c(s, sprintf("RAM: %.2fMB", objectSize(this)/1024^2));
   class(s) <- "GenericSummary";

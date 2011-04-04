@@ -168,10 +168,7 @@ setMethodS3("as.character", "CnagCfhSet", function(x, ...) {
   n <- nbrOfArrays(this);
   s <- c(s, sprintf("Number of arrays: %d", n));
   names <- getNames(this);
-  if (n >= 5)
-    names <- c(names[1:2], "...", names[n]);
-  names <- paste(names, collapse=", ");
-  s <- c(s, sprintf("Names: %s", names));
+  s <- c(s, sprintf("Names: %s [%d]", hpaste(names), n));
   # Get CFH header timestamps
   ts <- getTimestamps(this);
   # Note: If ts <- range(ts) is used and the different timestamps uses

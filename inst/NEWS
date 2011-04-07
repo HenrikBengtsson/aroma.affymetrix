@@ -74,7 +74,7 @@ o GENERALIZATION: Starting to add support for locating data sets in
   root paths that also have tags, e.g. rawData/ and rawData,shared/.
   When this is in place, it will simplify sharing of data sets,
   intermediate and final results, which in turn will help multiple
-  users avoidint reprocessing the same data sets.
+  users avoiding reprocessing the same data sets.
 o Now getAverageFile() for AffymetrixCelSet and DChipDcpSet, 
   as well as getBaseline() for ChipEffectSet drop tags from the 
   output root path before creating the file.  Likewise, the target

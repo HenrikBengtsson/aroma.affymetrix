@@ -1436,6 +1436,8 @@
 \alias{getFilteredFragmentLengths.FragmentLengthNormalization}
 \alias{findTargetDistributionFile}
 \alias{findTargetDistributionFile.QuantileNormalization}
+\alias{readGeneAssignments}
+\alias{readGeneAssignments.AffymetrixNetAffxCsvFile}
 
 \description{
   This page contains aliases for all "non-documented" objects that

@@ -729,3 +729,4 @@ writeCdf writeCdf.default
  getFilteredFragmentLengths.FragmentLengthNormalization
 findTargetDistributionFile
 findTargetDistributionFile.QuantileNormalization
+  readGeneAssignments readGeneAssignments.AffymetrixNetAffxCsvFile

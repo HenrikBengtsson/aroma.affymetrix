@@ -143,8 +143,8 @@ setMethodS3("doGCRMA", "character", function(dataSet, ..., verbose=FALSE) {
 # HISTORY:
 # 2010-09-26
 # o Now doGCRMA() automagically makes sure that the default CDF is used
-#   in the QuantileNormalization step, while use a custom CDF everywhere
-#   else if set.
+#   in the GcRmaBackgroundCorrection step, while use a custom CDF
+#   everywhere else if set.
 # o Added argument 'type' to doGCRMA() which is passed to 
 #   QuantileNormalization().
 # 2010-08-14

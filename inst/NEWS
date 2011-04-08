@@ -1,14 +1,15 @@
 Package: aroma.affymetrix
 =========================
 
-Version: 2.0.10 [2011-04-06]
-o Added argument 'drop' to doRMA().  If FALSE, all intermediate data
-  sets and models are returned in a named list, otherwise only the
-  final data set.
-o Added argument 'uniquePlm' to doRMA() for doing probe-level 
-  summarization only on unique probe sets.
+Version: 2.0.10 [2011-04-07]
+o Added argument 'drop' to doRMA(), doGCRMA(), doCRMAv1(), and 
+  doCRMAv2().  If FALSE, all intermediate data sets and models are
+  returned in a named list, otherwise only the final data set(s).
+o Added argument 'uniquePlm' to doRMA() and doGCRMA() for doing
+  probe-level summarization on unique probe sets only.
 o Added readGeneAssignments() for AffymetrixNetAffxCsvFile.
 o CLEANUP: Utilizing hpaste() internally wherever applicable.
+o Package passes all system tests.
 
 
 Version: 2.0.9 [2011-03-26]

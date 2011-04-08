@@ -1,4 +1,4 @@
-setMethodS3("doCRMAv1", "AffymetrixCelSet", function(csR, shift=+300, combineAlleles=TRUE, lengthRange=NULL, arrays=NULL, ..., ram=NULL, verbose=FALSE) {
+setMethodS3("doCRMAv1", "AffymetrixCelSet", function(csR, shift=+300, combineAlleles=TRUE, lengthRange=NULL, arrays=NULL, ..., drop=TRUE, ram=NULL, verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
@@ -20,6 +20,9 @@ setMethodS3("doCRMAv1", "AffymetrixCelSet", function(csR, shift=+300, combineAll
     arrays <- Arguments$getIndices(arrays, max=nbrOfArrays(csR));
   }
 
+  # Argument 'drop':
+  drop <- Arguments$getLogical(drop);
+
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
 
@@ -31,6 +34,13 @@ setMethodS3("doCRMAv1", "AffymetrixCelSet", function(csR, shift=+300, combineAll
   verbose && cat(verbose, "arrays:");
   verbose && str(verbose, arraysTag);
   verbose && cat(verbose, "ram: ", ram);
+
+
+  # List of objects to be returned
+  res <- list();
+  if (!drop) {
+    res <- c(res, list(csR=csR));
+  }
 
 
   verbose && cat(verbose, "Data set");
@@ -50,6 +60,10 @@ setMethodS3("doCRMAv1", "AffymetrixCelSet", function(csR, shift=+300, combineAll
   csC <- process(acc, verbose=verbose);
   verbose && print(verbose, csC);
   verbose && exit(verbose);
+
+  if (!drop) {
+    res <- c(res, list(acc=acc, csC=csC));
+  }
 
   # Clean up
   rm(csR, acc);
@@ -74,6 +88,10 @@ setMethodS3("doCRMAv1", "AffymetrixCelSet", function(csR, shift=+300, combineAll
   verbose && print(verbose, ces);
   verbose && exit(verbose);
 
+  if (!drop) {
+    res <- c(res, list(ces=ces, plm=plm));
+  }
+
   # Clean up
   rm(plm, csC);
   gc <- gc();
@@ -85,6 +103,10 @@ setMethodS3("doCRMAv1", "AffymetrixCelSet", function(csR, shift=+300, combineAll
   verbose && print(verbose, cesN);
   verbose && exit(verbose);
 
+  if (!drop) {
+    res <- c(res, list(fln=fln, cesN=cesN));
+  }
+
   # Clean up
   rm(fln, ces);
   gc <- gc();
@@ -94,13 +116,22 @@ setMethodS3("doCRMAv1", "AffymetrixCelSet", function(csR, shift=+300, combineAll
   verbose && print(verbose, dsNList);
   verbose && exit(verbose);
 
+  if (!drop) {
+    res <- c(res, list(dsNList=dsNList));
+  }
+
   # Clean up
   rm(cesN);
   gc <- gc();
 
   verbose && exit(verbose);
 
-  dsNList;
+  # Return only the final results?
+  if (drop) {
+    res <- dsNList;
+  }
+
+  res;
 }) # doCRMAv1()
 
 
@@ -142,6 +173,8 @@ setMethodS3("doASCRMAv1", "default", function(...) {
 
 ############################################################################
 # HISTORY:
+# 2011-04-07
+# o Added argument 'drop'.
 # 2011-03-14
 # o doCRMAv1() gained argument 'lengthRange', which is passed to 
 #   the constructor of FragmentLengthNormalization.

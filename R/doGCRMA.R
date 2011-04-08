@@ -4,7 +4,7 @@
 #  [1] Z. Wu, R. Irizarry, R. Gentleman, F.M. Murillo & F. Spencer, A Model Based Background Adjustment for Oligonucleotide Expression Arrays, JASA, 2004.
 # }
 
-setMethodS3("doGCRMA", "AffymetrixCelSet", function(csR, arrays=NULL, type=c("fullmodel", "affinities"), ..., ram=NULL, verbose=FALSE) {
+setMethodS3("doGCRMA", "AffymetrixCelSet", function(csR, arrays=NULL, type=c("fullmodel", "affinities"), ..., uniquePlm=FALSE, drop=TRUE, ram=NULL, verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
@@ -20,6 +20,12 @@ setMethodS3("doGCRMA", "AffymetrixCelSet", function(csR, arrays=NULL, type=c("fu
     arrays <- Arguments$getIndices(arrays, max=nbrOfArrays(csR));
   }
 
+  # Argument 'uniquePlm':
+  uniquePlm <- Arguments$getLogical(uniquePlm);
+
+  # Argument 'drop':
+  drop <- Arguments$getLogical(drop);
+
   # Argument 'type':
   type <- match.arg(type);
 
@@ -27,13 +33,22 @@ setMethodS3("doGCRMA", "AffymetrixCelSet", function(csR, arrays=NULL, type=c("fu
   verbose <- Arguments$getVerbose(verbose);
 
 
+
+
   verbose && enter(verbose, "GCRMA");
   verbose && cat(verbose, "Arguments:");
   arraysTag <- seqToHumanReadable(arrays);
   verbose && cat(verbose, "arrays:");
   verbose && str(verbose, arraysTag);
+  verbose && cat(verbose, "Fit PLM on unique probe sets: ", uniquePlm);
   verbose && cat(verbose, "ram: ", ram);
 
+
+  # List of objects to be returned
+  res <- list();
+  if (!drop) {
+    res <- c(res, list(csR=csR));
+  }
 
   verbose && cat(verbose, "Data set");
   verbose && print(verbose, csR);
@@ -67,6 +82,10 @@ setMethodS3("doGCRMA", "AffymetrixCelSet", function(csR, arrays=NULL, type=c("fu
   }
   verbose && exit(verbose);
 
+  if (!drop) {
+    res <- c(res, list(bc=bc, csB=csB));
+  }
+
   # Clean up
   rm(csR, bc);
   gc <- gc();
@@ -79,12 +98,40 @@ setMethodS3("doGCRMA", "AffymetrixCelSet", function(csR, arrays=NULL, type=c("fu
   verbose && print(verbose, csN);
   verbose && exit(verbose);
 
+  if (!drop) {
+    res <- c(res, list(qn=qn, csN=csN));
+  }
+
   # Clean up
   rm(csB, qn);
   gc <- gc();
   verbose && print(verbose, gc);
 
   verbose && enter(verbose, "GCRMA/Probe summarization (log-additive model fitted using median polish)");
+  verbose && cat(verbose, "Fit PLM on unique probe sets: ", uniquePlm);
+
+  if (uniquePlm) {
+    verbose && enter(verbose, "Probe-summarization using a \"unique\" CDF requested");
+
+    verbose && enter(verbose, "Getting \"unique\" CDF (with non-unique probes dropped)")
+    cdf <- getCdf(csN);
+    verbose && cat(verbose, "CDF:");
+    verbose && print(verbose, cdf);
+    cdfU <- getUniqueCdf(cdf, verbose=less(verbose, 5));
+    verbose && cat(verbose, "CDF with non-unique probes dropped:");
+    verbose && print(verbose, cdfU);
+    verbose && exit(verbose)
+
+    if (equals(cdfU, cdf)) {
+      verbose && cat(verbose, "The \"unique\" CDF equals the original CDF: Skipping.");
+    } else {
+      csNU <- convertToUnique(csN, verbose=verbose);
+      verbose && print(verbose, csNU);
+      csN <- csNU;
+    }
+    verbose && exit(verbose);
+  }
+
   plm <- RmaPlm(csN, flavor="oligo");
   verbose && print(verbose, plm);
   if (length(findUnitsTodo(plm)) > 0) {
@@ -97,6 +144,10 @@ setMethodS3("doGCRMA", "AffymetrixCelSet", function(csR, arrays=NULL, type=c("fu
   verbose && print(verbose, ces);
   verbose && exit(verbose);
 
+  if (!drop) {
+    res <- c(res, list(ces=ces, plm=plm));
+  }
+
   # Clean up
   rm(plm, csN);
   gc <- gc();
@@ -104,7 +155,12 @@ setMethodS3("doGCRMA", "AffymetrixCelSet", function(csR, arrays=NULL, type=c("fu
 
   verbose && exit(verbose);
 
-  ces;
+  # Return only the final output data set?
+  if (drop) {
+    res <- ces;
+  }
+
+  res;
 }) # doGCRMA()
 
 
@@ -141,6 +197,9 @@ setMethodS3("doGCRMA", "character", function(dataSet, ..., verbose=FALSE) {
 
 ############################################################################
 # HISTORY:
+# 2011-04-07
+# o Added argument 'drop'.
+# o Added argument 'uniquePlm'.
 # 2010-09-26
 # o Now doGCRMA() automagically makes sure that the default CDF is used
 #   in the GcRmaBackgroundCorrection step, while use a custom CDF

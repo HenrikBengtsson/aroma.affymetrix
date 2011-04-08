@@ -35,6 +35,8 @@ setMethodS3("doRMA", "AffymetrixCelSet", function(csR, arrays=NULL, ..., uniqueP
   verbose && cat(verbose, "Fit PLM on unique probe sets: ", uniquePlm);
   verbose && cat(verbose, "ram: ", ram);
 
+
+  # List of objects to be returned
   res <- list();
   if (!drop) {
     res <- c(res, list(csR=csR));
@@ -131,6 +133,7 @@ setMethodS3("doRMA", "AffymetrixCelSet", function(csR, arrays=NULL, ..., uniqueP
 
   verbose && exit(verbose);
 
+  # Return only the final output data set?
   if (drop) {
     res <- ces;
   }

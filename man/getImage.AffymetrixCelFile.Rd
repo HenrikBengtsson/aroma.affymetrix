@@ -42,7 +42,7 @@
 }
 
 \value{
-  Returns an \code{\link[EBImage]{Image}} object.
+  Returns an Image object as defined by the EBImage package.
   If \code{palette==NULL}, the color code is \code{Grayscale}, otherwise
   \code{TrueColor}.
 }
@@ -50,7 +50,6 @@
 \author{Ken Simpson (ksimpson[at]wehi.edu.au).}
 
 \seealso{
-  \code{\link[EBImage]{Image}}.
   For more information see \code{\link{AffymetrixCelFile}}.
 }
 

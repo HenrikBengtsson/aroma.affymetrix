@@ -14,7 +14,6 @@
 # \arguments{
 #   \item{chipType}{The chip type of the new CDF.}
 #   \item{tags}{Tags added to the chip type of the new CDF.}
-#   \item{sep}{A string separating the chip type and the tags string.}
 #   \item{path}{The path where to store the new CDF file.}
 #   \item{nbrOfCellsPerField}{Number of cells per group field the new CDF
 #      should have.}
@@ -36,7 +35,7 @@
 #
 # @keyword IO
 #*/###########################################################################
-setMethodS3("createMonocellCdf", "AffymetrixCdfFile", function(this, chipType=getChipType(this), tags="monocell", sep=",", path=NULL, nbrOfCellsPerField=1, ..., ram=NULL, verbose=TRUE) {
+setMethodS3("createMonocellCdf", "AffymetrixCdfFile", function(this, chipType=getChipType(this), tags="monocell", path=NULL, nbrOfCellsPerField=1, ..., ram=NULL, verbose=TRUE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local functions
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -147,7 +146,7 @@ setMethodS3("createMonocellCdf", "AffymetrixCdfFile", function(this, chipType=ge
     path <- filePath("annotationData", "chipTypes", mainChipType, expandLinks="any");
   }
 
-  name <- paste(c(chipType, tags), collapse=sep);
+  name <- paste(c(chipType, tags), collapse=",");
   filename <- sprintf("%s.CDF", name);
   pathname <- Arguments$getWritablePathname(filename, path=path);
   pathname <- AffymetrixFile$renameToUpperCaseExt(pathname);
@@ -652,6 +651,9 @@ setMethodS3("getUnitGroupCellMapWithMonocell", "AffymetrixCdfFile", function(thi
 
 ############################################################################
 # HISTORY:
+# 2011-04-15
+# o CLEANUP: Dropped argument 'sep' of createMonocellCdf() and 
+#   createUniqueCdf() for AffymetrixCdfFile.
 # 2011-01-09
 # o BUG FIX: createMonocellCdf(..., verbose=FALSE) for AffymetrixCdfFile
 #   would still create verbose output.

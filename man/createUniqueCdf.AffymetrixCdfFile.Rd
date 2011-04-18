@@ -28,12 +28,11 @@
  (essentially copying the multimapping probes).
 }
 
-\usage{\method{createUniqueCdf}{AffymetrixCdfFile}(this, chipType=getChipType(this), tags="unique", sep=",", path=NULL, units=NULL, ..., ram=NULL, verbose=TRUE)}
+\usage{\method{createUniqueCdf}{AffymetrixCdfFile}(this, chipType=getChipType(this), tags="unique", path=NULL, units=NULL, ..., ram=NULL, verbose=TRUE)}
 
 \arguments{
   \item{chipType}{The chip type of the new CDF.}
   \item{tags}{Tags added to the chip type of the new CDF.}
-  \item{sep}{A string separating the chip type and the tags string.}
   \item{path}{The path where to store the new CDF file.}
   \item{...}{Additional arguments passed to \code{\link[affxparser]{writeCdf}}.}
   \item{ram}{A \code{\link[base]{double}} saying if more or less units should be converted
@@ -45,7 +44,16 @@
  Returns the unique CDF as an \code{\link{AffymetrixCdfFile}} object.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\details{
+  Note that the set of units in the "unique" CDF is identical to that
+  of the input CDF.  So are the unit groups in each unit.
+  Also the number of cells per unit group is preserved.
+  It is only the cell-index composition of each unit group that changes.
+  The cell indices in the unique CDF are guaranteed to occur only
+  once, whereas this may not be true for the input CDF.
+}
+
+\author{Mark Robinson}
 
 \seealso{
   For more information see \code{\link{AffymetrixCdfFile}}.

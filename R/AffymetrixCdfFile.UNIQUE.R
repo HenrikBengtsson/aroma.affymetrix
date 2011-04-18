@@ -18,7 +18,6 @@
 # \arguments{
 #   \item{chipType}{The chip type of the new CDF.}
 #   \item{tags}{Tags added to the chip type of the new CDF.}
-#   \item{sep}{A string separating the chip type and the tags string.}
 #   \item{path}{The path where to store the new CDF file.}
 #   \item{...}{Additional arguments passed to @see "affxparser::writeCdf".}
 #   \item{ram}{A @double saying if more or less units should be converted
@@ -30,7 +29,16 @@
 #  Returns the unique CDF as an @see "AffymetrixCdfFile" object.
 # }
 #
-# @author
+# \details{
+#   Note that the set of units in the "unique" CDF is identical to that
+#   of the input CDF.  So are the unit groups in each unit.
+#   Also the number of cells per unit group is preserved.
+#   It is only the cell-index composition of each unit group that changes.
+#   The cell indices in the unique CDF are guaranteed to occur only
+#   once, whereas this may not be true for the input CDF.
+# }
+#
+# \author{Mark Robinson}
 #
 # \seealso{
 #   @seeclass
@@ -38,7 +46,7 @@
 #
 # @keyword IO
 #*/###########################################################################
-setMethodS3("createUniqueCdf", "AffymetrixCdfFile", function(this, chipType=getChipType(this), tags="unique", sep=",", path=NULL, units=NULL, ..., ram=NULL, verbose=TRUE) {
+setMethodS3("createUniqueCdf", "AffymetrixCdfFile", function(this, chipType=getChipType(this), tags="unique", path=NULL, units=NULL, ..., ram=NULL, verbose=TRUE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local functions
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -120,9 +128,14 @@ setMethodS3("createUniqueCdf", "AffymetrixCdfFile", function(this, chipType=getC
   verbose2 <- as.integer(verbose)-1;  # For 'affxparser' calls.
   verbose2 <- 2;
 
+  # Argument 'units':
   if(is.null(units)) {
     units <- seq_len(nbrOfUnits(this));
+  } else {
+    units <- Arguments$getIndices(units, max=nbrOfUnits(this));
   }
+
+
 
   # Already a unique CDF?
   if (isUniqueCdf(this)) {
@@ -144,7 +157,7 @@ setMethodS3("createUniqueCdf", "AffymetrixCdfFile", function(this, chipType=getC
   }
 
   # Write to a temporary file first, and rename it when we know its complete
-  name <- paste(c(chipType, tags), collapse=sep);
+  name <- paste(c(chipType, tags), collapse=",");
   filename <- sprintf("%s.CDF", name);
   pathname <- Arguments$getWritablePathname(filename, path=path);
   pathname <- AffymetrixFile$renameToUpperCaseExt(pathname);
@@ -179,6 +192,9 @@ setMethodS3("createUniqueCdf", "AffymetrixCdfFile", function(this, chipType=getC
   verbose && print(verbose, gc);
 
   # get a relatively low-memory version of the CDF indices  
+  # Q: Why is readCdf(..., stratifyBy=<vector>) not throwing?
+  #    Error in match.arg(stratifyBy) : 'arg' must be of length 1
+  #    /HB 2011-04-15
   cdfLite <- readCdf(src, units=units,
               readXY=FALSE, readBases=FALSE, 
               readIndexpos=FALSE, readAtoms=FALSE,
@@ -189,16 +205,18 @@ setMethodS3("createUniqueCdf", "AffymetrixCdfFile", function(this, chipType=getC
               stratifyBy=c("nothing", "pmmm", "pm", "mm"), verbose=0);
 
   # Get the number of cells per unit
-  nbrOfCellsPerUnit <- sapply(cdfLite, FUN=function(u) {
-    length(unlist(u,use.names=FALSE));
+  nbrOfCellsPerUnit <- sapply(cdfLite, FUN=function(unit) {
+    length(unlist(unit, use.names=FALSE));
   });
   verbose && cat(verbose, "Number of cells per unit:");
   verbose && summary(verbose, nbrOfCellsPerUnit);
 
-  # Total number of cells
+  rm(cdfLite); # Not needed anymore
+
+  # Total number of cells in CDF
   nbrOfCells <- sum(nbrOfCellsPerUnit);
 
-  # Number of units
+  # Number of units in CDF
   nbrOfUnits <- length(nbrOfCellsPerUnit);
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -249,6 +267,7 @@ setMethodS3("createUniqueCdf", "AffymetrixCdfFile", function(this, chipType=getC
   destHeader <- readCdfHeader(src);
   verbose && exit(verbose);
 
+  # Update CDF header dimension
   destHeader$nrows <- nrows;
   destHeader$ncols <- ncols;
 
@@ -298,6 +317,8 @@ setMethodS3("createUniqueCdf", "AffymetrixCdfFile", function(this, chipType=getC
       close(con);
     con <- NULL;
   });
+
+  # Allocate/write CDF header
   writeCdfHeader(con=con, destHeader, unitNames=unitNames, 
                     qcUnitLengths=qcUnitLengths, unitLengths=unitLengths, 
                                                         verbose=verbose2);
@@ -338,11 +359,8 @@ setMethodS3("createUniqueCdf", "AffymetrixCdfFile", function(this, chipType=getC
   # Units
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Create all new units in chunks
-
   verbose && printf(verbose, "Number of units: %d\n", nbrOfUnits);
-
   verbose && printf(verbose, "Argument 'ram': %f\n", ram);
-
   verbose && printf(verbose, "Average unit length: %f bytes\n", avgUnitLength);
 
   # Scale (not used)
@@ -378,6 +396,8 @@ setMethodS3("createUniqueCdf", "AffymetrixCdfFile", function(this, chipType=getC
     units <- unitsToDo[head];
     verbose && printf(verbose, "Chunk #%d of %d (%d units)\n", 
                                         count, nbrOfChunks, length(units));
+    verbose && cat(verbose, "Units:");
+    verbose && str(verbose, units);
 
     unitsToDo <- unitsToDo[-head];
 
@@ -385,10 +405,13 @@ setMethodS3("createUniqueCdf", "AffymetrixCdfFile", function(this, chipType=getC
     verbose && enter(verbose, "Reading CDF list structure");
     srcUnits <- readCdf(src, units=units, readGroupDirection=TRUE);
     verbose && exit(verbose);
+
+    # Sanity check
     if (is.null(srcUnits)) {
       throw(sprintf("Failed to read %d units from CDF file.  This could be because you are running out of memory.  Try decreasing argument 'ram': %s", length(units), src));
     }
 
+    # Sanity check
     if (length(srcUnits) != length(units)) {
       throw("Number of read CDF units does not equal number of requested units: ", length(srcUnits), " != ", length(units));
     }
@@ -397,6 +420,7 @@ setMethodS3("createUniqueCdf", "AffymetrixCdfFile", function(this, chipType=getC
       cat(sprintf(" => RAM: %.fMB\n", object.size(srcUnits)/1024^2));
     }
 
+    # Sanity check
     if (length(srcUnits) == 0) {
       throw("Internal error: While creating unique CDF, an empty list of CDF units was read.");
     }
@@ -427,6 +451,7 @@ setMethodS3("createUniqueCdf", "AffymetrixCdfFile", function(this, chipType=getC
 	
     #return(srcUnits)
 
+    # Sanity check
     if (length(srcUnits) == 0) {
       throw("Internal error: While creating unique CDF, an empty list of CDF units is requested to be written.");
     }
@@ -467,6 +492,8 @@ setMethodS3("createUniqueCdf", "AffymetrixCdfFile", function(this, chipType=getC
   verbose && enter(verbose, "Verifying the written CDF");
   # Checking header
   header <- readCdfHeader(pathnameT);
+
+  # Validation array dimension
   if ((header$nrows != nrows) || (header$ncols != ncols)) {
     throw(sprintf("Failed to create a valid unique-cell CDF: The dimension of the written CDF does not match the intended one: (%d,%d) != (%d,%d)", header$nrows, header$ncols, nrows, ncols));
   }
@@ -506,8 +533,34 @@ setMethodS3("createUniqueCdf", "AffymetrixCdfFile", function(this, chipType=getC
   verbose && exit(verbose);
 
   # Return an AffymetrixCdfFile object for the new CDF
-  newInstance(this, pathname);
+  cdfU <- newInstance(this, pathname);
+
+
+  verbose && enter(verbose, "Final set of sanity checks");
+
+  verbose && cat(verbose, "Number of units");
+  stopifnot(nbrOfUnits(cdfU) == nbrOfUnits(this));
+
+  verbose && cat(verbose, "Number of groups per unit");
+  stopifnot(identical(nbrOfGroupsPerUnit(cdfU), nbrOfGroupsPerUnit(this)));
+
+  verbose && cat(verbose, "Groups names per unit");
+  stopifnot(identical(readCdfGroupNames(getPathname(cdfU)), readCdfGroupNames(getPathname(this))));
+
+  verbose && cat(verbose, "Number of cells per unit group");
+  stopifnot(identical(nbrOfCellsPerUnitGroup(cdfU), nbrOfCellsPerUnitGroup(this)));
+
+  verbose && cat(verbose, "Consecutive ordering of cell indices");
+  cells <- getCellIndices(cdfU, unlist=TRUE, useNames=FALSE);
+  stopifnot(length(cells) <= nbrOfCells(cdfU));
+  stopifnot(identical(unique(diff(cells)), 1L));
+  
+  verbose && exit(verbose);
+
+  cdfU;
 }, private=TRUE) # createUniqueCdf()
+
+
 
 
 setMethodS3("getUniqueCdf", "AffymetrixCdfFile", function(this, ..., verbose=FALSE) {
@@ -555,15 +608,6 @@ setMethodS3("getUniqueCdf", "AffymetrixCdfFile", function(this, ..., verbose=FAL
 
 setMethodS3("isUniqueCdf", "AffymetrixCdfFile", function(this, ...) {
   hasTag(this, "unique");
-})
-
-
-setMethodS3("getUnique", "AffymetrixCdfFile", function(this, ...) {
-  getUniqueCdf(this, ...);
-})
-
-setMethodS3("createUnique", "AffymetrixCdfFile", function(this, ...) {
-  createUniqueCdf(this, ...);
 })
 
 
@@ -638,8 +682,30 @@ setMethodS3("getUnitGroupCellMapWithUnique", "AffymetrixCdfFile", function(this,
 
 
 
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# BEGIN: DEPRECATED
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+setMethodS3("getUnique", "AffymetrixCdfFile", function(this, ...) {
+  getUniqueCdf(this, ...);
+}, private=TRUE, deprecated=TRUE)
+
+setMethodS3("createUnique", "AffymetrixCdfFile", function(this, ...) {
+  createUniqueCdf(this, ...);
+}, private=TRUE, deprecated=TRUE)
+
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# END: DEPRECATED
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+
+
 ############################################################################
 # HISTORY:
+# 2011-04-15 [HB]
+# o Added more help to createUniqueCdf() for AffymetrixCdfFile.
+# o DEPRECATED: getUnique() and createUnique() are deprecated. 
+#   Use getUniqueCdf() and createUniqueCdf() instead.
 # 2008-11-28 [HB]
 # o BUG FIX: createUniqueCdf() used 'cdf' instead of 'this'.
 # 2008-11-14 [MR]

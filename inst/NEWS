@@ -1,10 +1,11 @@
 Package: aroma.affymetrix
 =========================
 
-Version: 2.1.1 [2011-04-15]
+Version: 2.1.1 [2011-04-18]
 o DOCUMENTATION: Added more help to createUniqueCdf() for AffymetrixCdfFile.
 o DEPRECATED: getUnique() and createUnique() are deprecated. 
   Use getUniqueCdf() and createUniqueCdf() instead.
+o More updates to readGeneAssignments() for AffymetrixNetAffxCsvFile.
 o CLEANUP: Dropped argument 'sep' of createMonocellCdf() and 
   createUniqueCdf() for AffymetrixCdfFile.
 

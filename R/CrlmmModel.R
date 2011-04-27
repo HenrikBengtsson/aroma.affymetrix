@@ -16,7 +16,7 @@ setConstructorS3("CrlmmModel", function(dataSet=NULL, balance=1.5, minLLRforCall
     if (regexpr("^Mapping(10|50|250)K_.*$", chipType) != -1) {
       isMappingChipType <- TRUE;
     } else if (regexpr("^GenomeWideSNP_(5|6)$", chipType) != -1) {
-      throw("Cannot fit CRLMM model: Chip type to be supported: ", chipType);
+      throw("Cannot fit CRLMM model: Model fitting for this chip type is not supported/implemented: ", chipType);
     } else {
       throw("Cannot fit CRLMM model: Unsupported/unsafe chip type: ", chipType);
     }
@@ -963,6 +963,8 @@ setMethodS3("calculateConfidenceScores", "CrlmmModel", function(this, ..., force
 
 ############################################################################
 # HISTORY:
+# 2011-04-25
+# o Clarified the error message that CRLMM is not supported for GWS6.
 # 2010-05-06
 # o Now CrlmmModel(..., recalibrate=TRUE) is the default.
 # o BUG FIX: fit() of CrlmmModel would not work with oligo v1.12.0 

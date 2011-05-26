@@ -12,7 +12,7 @@ footer <- list(
   createdOn = format(Sys.time(), "%Y%m%d %H:%M:%S", usetz=TRUE),
   createdBy = list(
     fullname = "Henrik Bengtsson", 
-    email = "hb@aroma-project.org"
+    email = sprintf("%s@%s", "henrik.bengtsson", "aroma-project.org")
   ),
   srcFiles = list()
 );

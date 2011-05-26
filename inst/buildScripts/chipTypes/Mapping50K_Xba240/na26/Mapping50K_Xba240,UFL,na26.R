@@ -77,7 +77,7 @@ footer <- readFooter(ufl);
 footer$createdOn <- format(Sys.time(), "%Y%m%d %H:%M:%S", usetz=TRUE);
 footer$createdBy = list(
   fullname = "Henrik Bengtsson", 
-  email = "hb@stat.berkeley.edu"
+  email = sprintf("%s@%s", "henrik.bengtsson", "aroma-project.org")
 );
 names(srcFileTags) <- sprintf("srcFile%d", seq(along=srcFileTags));
 footer$srcFiles <- srcFileTags;
@@ -102,7 +102,7 @@ print(x);
 ##  Dimensions: 59015x1
 ##  Column classes: integer
 ##  Number of bytes per column: 2
-##  Footer: <platform>Affymetrix</platform><chipType>Mapping50K_Xba240</chipType><createdOn>20080916 18:35:23 PDT</createdOn><createdBy><fullname>Henrik Bengtsson</fullname><email>hb@stat.berkeley.edu</email></createdBy><srcFiles><srcFile1><filename>Mapping50K_Xba240.CDF</filename><filesize>57703961</filesize><checksum>7f026f6472f7721255717fb3f453be61</checksum></srcFile1><srcFile2><filename>Mapping50K_Xba240.na26.annot.csv</filename><filesize>94903244</filesize><checksum>eab081f8e918293016a760c5714d1198</checksum></srcFile2></srcFiles>
+##  Footer: <platform>Affymetrix</platform><chipType>Mapping50K_Xba240</chipType><createdOn>20080916 18:35:23 PDT</createdOn><createdBy><fullname>Henrik Bengtsson</fullname><email>[...]</email></createdBy><srcFiles><srcFile1><filename>Mapping50K_Xba240.CDF</filename><filesize>57703961</filesize><checksum>7f026f6472f7721255717fb3f453be61</checksum></srcFile1><srcFile2><filename>Mapping50K_Xba240.na26.annot.csv</filename><filesize>94903244</filesize><checksum>eab081f8e918293016a760c5714d1198</checksum></srcFile2></srcFiles>
 ##  Chip type: Mapping50K_Xba240
 ##  Platform: Affymetrix
 

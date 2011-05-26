@@ -16,7 +16,7 @@ footer <- list(
   createdOn = format(Sys.time(), "%Y%m%d %H:%M:%S", usetz=TRUE),
   createdBy = list(
     fullname = "Henrik Bengtsson", 
-    email = "hb@stat.berkeley.edu"
+    email = sprintf("%s@%s", "henrik.bengtsson", "aroma-project.org")
   ),
   srcFiles = list()
 );
@@ -82,7 +82,7 @@ footer <- readFooter(ugp);
 footer$createdOn <- format(Sys.time(), "%Y%m%d %H:%M:%S", usetz=TRUE);
 footer$createdBy = list(
   fullname = "Henrik Bengtsson", 
-  email = "hb@stat.berkeley.edu"
+  email = sprintf("%s@%s", "henrik.bengtsson", "aroma-project.org")
 );
 names(srcFileTags) <- sprintf("srcFile%d", seq(along=srcFileTags));
 footer$srcFiles <- srcFileTags;
@@ -107,7 +107,7 @@ print(table(ugp[,1]));
 ##  Dimensions: 11564x2
 ##  Column classes: integer, integer
 ##  Number of bytes per column: 1, 4
-##  Footer: <createdOn>20080916 18:51:07 PDT</createdOn><platform>Affymetrix</platform><chipType>Mapping10K_Xba131</chipType><createdBy><fullname>Henrik Bengtsson</fullname><email>hb@stat.berkeley.edu</email></createdBy><srcFiles><srcFile1><filename>Mapping10K_Xba131.cdf</filename><filesize>11311508</filesize><checksum>a18490aadbdc6407332ac3bb12d55a75</checksum></srcFile1><srcFile2><filename>Mapping10K_Xba131.na26.annot.csv</filename><filesize>18345600</filesize><checksum>4d21244a2f48e0484c01cbf50659a9ef</checksum></srcFile2></srcFiles>
+##  Footer: <createdOn>20080916 18:51:07 PDT</createdOn><platform>Affymetrix</platform><chipType>Mapping10K_Xba131</chipType><createdBy><fullname>Henrik Bengtsson</fullname><email>[...]</email></createdBy><srcFiles><srcFile1><filename>Mapping10K_Xba131.cdf</filename><filesize>11311508</filesize><checksum>a18490aadbdc6407332ac3bb12d55a75</checksum></srcFile1><srcFile2><filename>Mapping10K_Xba131.na26.annot.csv</filename><filesize>18345600</filesize><checksum>4d21244a2f48e0484c01cbf50659a9ef</checksum></srcFile2></srcFiles>
 ##  Chip type: Mapping10K_Xba131
 ##  Platform: Affymetrix
 ##   chromosome        position

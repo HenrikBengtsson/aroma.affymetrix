@@ -13,7 +13,8 @@ cdfTags <- "Full";
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 ## setOption(aromaSettings, "user/initials", "HB");
 ## setOption(aromaSettings, "user/fullname", "Henrik Bengtsson");
-## setOption(aromaSettings, "user/email", "henrik.bengtsson@aroma-project.org");
+## obf <- sprintf("%s@%s", "henrik.bengtsson", "aroma-project.org");
+## setOption(aromaSettings, "user/email", obf);
 ## saveAnywhere(aromaSettings);
 
 fullname <- getOption(aromaSettings, "user/fullname");

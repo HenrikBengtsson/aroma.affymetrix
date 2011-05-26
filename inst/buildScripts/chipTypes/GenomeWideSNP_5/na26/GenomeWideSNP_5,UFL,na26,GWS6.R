@@ -20,7 +20,7 @@ footer <- list(
   createdOn = format(Sys.time(), "%Y%m%d %H:%M:%S", usetz=TRUE),
   createdBy = list(
     fullname = "Henrik Bengtsson", 
-    email = "hb@stat.berkeley.edu"
+    email = sprintf("%s@%s", "henrik.bengtsson", "aroma-project.org")
   ),
   srcFiles = list()
 );
@@ -113,7 +113,7 @@ print(ufl);
 ## Dimensions: 920928x2
 ## Column classes: integer, integer
 ## Number of bytes per column: 2, 2
-## Footer: <platform>Affymetrix</platform><chipType>GenomeWideSNP_5,Full,r2</chipType><createdOn>20080723 16:09:57 PDT</createdOn><createdBy><fullname>Henrik Bengtsson</fullname><email>hb@stat.berkeley.edu</email></createdBy><srcFiles><srcFile><filename>GenomeWideSNP_5.na26.annot.csv</filename><filesize>755337946</filesize><checksum>af59235b6fccada7f871257149a89215</checksum></srcFile><srcFile><filename>GenomeWideSNP_5.na26.annot.csv</filename><filesize>755337946</filesize><checksum>af59235b6fccada7f871257149a89215</checksum></srcFile><srcFile><filename>GenomeWideSNP_5.na26.annot.csv</filename><filesize>755337946</filesize><checksum>af59235b6fccada7f871257149a89215</checksum></srcFile></srcFiles>
+## Footer: <platform>Affymetrix</platform><chipType>GenomeWideSNP_5,Full,r2</chipType><createdOn>20080723 16:09:57 PDT</createdOn><createdBy><fullname>Henrik Bengtsson</fullname><email>[...]</email></createdBy><srcFiles><srcFile><filename>GenomeWideSNP_5.na26.annot.csv</filename><filesize>755337946</filesize><checksum>af59235b6fccada7f871257149a89215</checksum></srcFile><srcFile><filename>GenomeWideSNP_5.na26.annot.csv</filename><filesize>755337946</filesize><checksum>af59235b6fccada7f871257149a89215</checksum></srcFile><srcFile><filename>GenomeWideSNP_5.na26.annot.csv</filename><filesize>755337946</filesize><checksum>af59235b6fccada7f871257149a89215</checksum></srcFile></srcFiles>
 ## Chip type: GenomeWideSNP_5,Full,r2
 ## Platform: Affymetrix
 print(getChecksum(ufl));

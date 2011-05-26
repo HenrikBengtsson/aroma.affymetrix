@@ -13,7 +13,8 @@ chipType <- "Mapping50K_Xba240";
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 ## setOption(aromaSettings, "user/initials", "HB");
 ## setOption(aromaSettings, "user/fullname", "Henrik Bengtsson");
-## setOption(aromaSettings, "user/email", "hb@aroma-project.org");
+## email <- sprintf("%s@%s", "henrik.bengtsson", "aroma-project.org")
+## setOption(aromaSettings, "user/email", email);
 ## saveAnywhere(aromaSettings);
 
 fullname <- getOption(aromaSettings, "user/fullname");
@@ -119,7 +120,7 @@ print(table(ugp[,1]));
 ## Number of bytes per column: 1, 4
 ## Footer: <createdOn>20110328 18:46:23 PDT</createdOn><platform>Affymetrix</platfo
 ## rm><chipType>Mapping50K_Xba240</chipType><createdBy><fullname>Henrik Bengtsson</
-## fullname><email>hb@aroma-project.org</email></createdBy><srcFiles><srcFile1><fil
+## fullname><email>[...]</email></createdBy><srcFiles><srcFile1><fil
 ## ename>Mapping50K_Xba240.CDF</filename><filesize>57703961</filesize><checksum>7f0
 ## 26f6472f7721255717fb3f453be61</checksum></srcFile1><srcFile2><filename>Mapping50
 ## K_Xba240.na31.annot.csv</filename><filesize>84705402</filesize><checksum>4cc4997

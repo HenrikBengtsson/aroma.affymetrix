@@ -16,7 +16,7 @@ footer <- list(
   createdOn = format(Sys.time(), "%Y%m%d %H:%M:%S", usetz=TRUE),
   createdBy = list(
     fullname = "Henrik Bengtsson", 
-    email = "hb@stat.berkeley.edu"
+    email = sprintf("%s@%s", "henrik.bengtsson", "aroma-project.org")
   ),
   srcFiles = list()
 );
@@ -97,7 +97,7 @@ footer <- readFooter(ugp);
 footer$createdOn <- format(Sys.time(), "%Y%m%d %H:%M:%S", usetz=TRUE);
 footer$createdBy = list(
   fullname = "Henrik Bengtsson", 
-  email = "hb@stat.berkeley.edu"
+  email = sprintf("%s@%s", "henrik.bengtsson", "aroma-project.org")
 );
 names(srcFileTags) <- sprintf("srcFile%d", seq(along=srcFileTags));
 footer$srcFiles <- srcFileTags;
@@ -120,7 +120,7 @@ File format: v1
 Dimensions: 2795708x2
 Column classes: integer, integer
 Number of bytes per column: 1, 4
-Footer: <createdOn>20090519 23:15:52 PDT</createdOn><platform>Affymetrix</platform><chipType>Cytogenetics_Array</chipType><createdBy><fullname>Henrik Bengtsson</fullname><email>hb@stat.berkeley.edu</email></createdBy><srcFiles><srcFile1><filename>Cytogenetics_Array.CDF</filename><filesize>564465214</filesize><checksum>17ea0ac70c196f20a1825dff8b5e773c</checksum></srcFile1><srcFile2><filename>Cytogenetics_Array.na28.annot.csv</filename><filesize>141110783</filesize><checksum>eeca051fc6c7822173e276cac14e0ad4</checksum></srcFile2><srcFile3><filename>Cytogenetics_Array.cn.na28.annot.csv</filename><filesize>852047697</filesize><checksum>63490620be89e306767de896e883b5fa</checksum></srcFile3></srcFiles>
+Footer: <createdOn>20090519 23:15:52 PDT</createdOn><platform>Affymetrix</platform><chipType>Cytogenetics_Array</chipType><createdBy><fullname>Henrik Bengtsson</fullname><email>[...]</email></createdBy><srcFiles><srcFile1><filename>Cytogenetics_Array.CDF</filename><filesize>564465214</filesize><checksum>17ea0ac70c196f20a1825dff8b5e773c</checksum></srcFile1><srcFile2><filename>Cytogenetics_Array.na28.annot.csv</filename><filesize>141110783</filesize><checksum>eeca051fc6c7822173e276cac14e0ad4</checksum></srcFile2><srcFile3><filename>Cytogenetics_Array.cn.na28.annot.csv</filename><filesize>852047697</filesize><checksum>63490620be89e306767de896e883b5fa</checksum></srcFile3></srcFiles>
 Chip type: Cytogenetics_Array
 Platform: Affymetrix
 

@@ -91,7 +91,7 @@ if (!exists("srcFileTags", mode="list")) {
 footer <- readFooter(ugp);
 footer$createdBy <- list(
   fullname = "Henrik Bengtsson", 
-  email = "hb@aroma-project.org"
+  email = sprintf("%s@%s", "henrik.bengtsson", "aroma-project.org")
 );
 names(srcFileTags) <- sprintf("srcFile%d", seq(along=srcFileTags));
 footer$srcFiles <- srcFileTags;
@@ -114,7 +114,7 @@ print(ugp);
 ## Dimensions: 2458697x2
 ## Column classes: integer, integer
 ## Number of bytes per column: 1, 4
-## Footer: <createdOn>20100603 05:49:21 PDT</createdOn><platform>Affymetrix</platform><chipType>MOUSEDIVm520650</chipType><createdBy><fullname>Henrik Bengtsson</fullname><email>hb@aroma-project.org</email></createdBy><srcFiles><srcFile1><filename>MOUSEDIVm520650.CDF</filename><filesize>668362285</filesize><checksum>1d83d7dde5e4816f4be315f6863f6a7c</checksum></srcFile1><srcFile2><filename>MOUSEDIVm520650.na30.annot.csv</filename><filesize>358437027</filesize><checksum>e3ef35245954d5a08ae299b95666fc3a</checksum></srcFile2><srcFile3><filename>MOUSEDIVm520650.cn.na30.annot.csv</filename><filesize>795251151</filesize><checksum>5b5bbdb60ed443b2616358beea06ddaf</checksum></srcFile3></srcFiles>
+## Footer: <createdOn>20100603 05:49:21 PDT</createdOn><platform>Affymetrix</platform><chipType>MOUSEDIVm520650</chipType><createdBy><fullname>Henrik Bengtsson</fullname><email>[...]</email></createdBy><srcFiles><srcFile1><filename>MOUSEDIVm520650.CDF</filename><filesize>668362285</filesize><checksum>1d83d7dde5e4816f4be315f6863f6a7c</checksum></srcFile1><srcFile2><filename>MOUSEDIVm520650.na30.annot.csv</filename><filesize>358437027</filesize><checksum>e3ef35245954d5a08ae299b95666fc3a</checksum></srcFile2><srcFile3><filename>MOUSEDIVm520650.cn.na30.annot.csv</filename><filesize>795251151</filesize><checksum>5b5bbdb60ed443b2616358beea06ddaf</checksum></srcFile3></srcFiles>
 ## Chip type: MOUSEDIVm520650
 ## Platform: Affymetrix
 

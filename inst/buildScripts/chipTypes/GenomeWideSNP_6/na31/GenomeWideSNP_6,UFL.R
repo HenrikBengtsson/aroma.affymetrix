@@ -14,7 +14,8 @@ nbrOfEnzymes <- 2;
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 ## setOption(aromaSettings, "user/initials", "HB");
 ## setOption(aromaSettings, "user/fullname", "Henrik Bengtsson");
-## setOption(aromaSettings, "user/email", "henrik.bengtsson@aroma-project.org");
+## obf <- sprintf("%s@%s", "henrik.bengtsson", "aroma-project.org");
+## setOption(aromaSettings, "user/email", obf);
 ## saveAnywhere(aromaSettings);
 
 fullname <- getOption(aromaSettings, "user/fullname");
@@ -104,8 +105,8 @@ print(srcFileTags);
 
 footer <- readFooter(ufl);
 footer$createdBy <- list(
-  fullname = "Henrik Bengtsson", 
-  email = "hb@aroma-project.org"
+  fullname = fullname, 
+  email = email
 );
 names(srcFileTags) <- sprintf("srcFile%d", seq(along=srcFileTags));
 footer$srcFiles <- srcFileTags;

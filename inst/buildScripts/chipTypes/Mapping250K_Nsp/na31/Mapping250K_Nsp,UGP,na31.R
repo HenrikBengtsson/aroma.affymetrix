@@ -16,7 +16,7 @@ footer <- list(
   createdOn = format(Sys.time(), "%Y%m%d %H:%M:%S", usetz=TRUE),
   createdBy = list(
     fullname = "Henrik Bengtsson", 
-    email = "hb@aroma-project.org"
+    email = sprintf("%s@%s", "henrik.bengtsson", "aroma-project.org")
   ),
   srcFiles = list()
 );
@@ -82,7 +82,7 @@ footer <- readFooter(ugp);
 footer$createdOn <- format(Sys.time(), "%Y%m%d %H:%M:%S", usetz=TRUE);
 footer$createdBy = list(
   fullname = "Henrik Bengtsson", 
-  email = "hb@aroma-project.org"
+  email = sprintf("%s@%s", "henrik.bengtsson", "aroma-project.org")
 );
 names(srcFileTags) <- sprintf("srcFile%d", seq(along=srcFileTags));
 footer$srcFiles <- srcFileTags;
@@ -105,7 +105,7 @@ print(ugp);
 ## Dimensions: 262338x2
 ## Column classes: integer, integer
 ## Number of bytes per column: 1, 4
-## Footer: <createdOn>20101007 14:59:46 PDT</createdOn><platform>Affymetrix</platform><chipType>Mapping250K_Nsp</chipType><createdBy><fullname>Henrik Bengtsson</fullname><email>hb@aroma-project.org</email></createdBy><srcFiles><srcFile1><filename>Mapping250K_Nsp.cdf</filename><filesize>194455495</filesize><checksum>59ae263311a2cf63b8d1b9b4cc7d663b</checksum></srcFile1><srcFile2><filename>Mapping250K_Nsp.na31.annot.csv</filename><filesize>400278099</filesize><checksum>dbd9299c348e1b688f752343dc9e8e57</checksum></srcFile2></srcFiles>
+## Footer: <createdOn>20101007 14:59:46 PDT</createdOn><platform>Affymetrix</platform><chipType>Mapping250K_Nsp</chipType><createdBy><fullname>Henrik Bengtsson</fullname><email>[...]</email></createdBy><srcFiles><srcFile1><filename>Mapping250K_Nsp.cdf</filename><filesize>194455495</filesize><checksum>59ae263311a2cf63b8d1b9b4cc7d663b</checksum></srcFile1><srcFile2><filename>Mapping250K_Nsp.na31.annot.csv</filename><filesize>400278099</filesize><checksum>dbd9299c348e1b688f752343dc9e8e57</checksum></srcFile2></srcFiles>
 ## Chip type: Mapping250K_Nsp
 ## Platform: Affymetrix
 

@@ -2,6 +2,7 @@ if (interactive()) savehistory();
 library("aroma.affymetrix");
 log <- Verbose(threshold=-10, timestamp=TRUE);
 
+email <- sprintf("%s@%s", "henrik.bengtsson", "aroma-project.org")
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 # Settings
@@ -12,7 +13,7 @@ footer <- list(
   createdOn = format(Sys.time(), "%Y%m%d %H:%M:%S", usetz=TRUE),
   createdBy = list(
     fullname = "Henrik Bengtsson", 
-    email = "hb@stat.berkeley.edu"
+    email = email
   ),
   srcFiles = list()
 );
@@ -44,6 +45,6 @@ importFrom(acs, ptb, keepSequenceLengths=25, verbose=log);
 footer <- readFooter(acs);
 footer$createdBy = list(
   fullname = "Henrik Bengtsson", 
-  email = "hb@aroma-project.org"
+  email = sprintf("%s@%s", "henrik.bengtsson", "aroma-project.org")
 );
 writeFooter(acs, footer);

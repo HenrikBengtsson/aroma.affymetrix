@@ -89,7 +89,7 @@ if (!exists("srcFileTags", mode="list")) {
 footer <- readFooter(ugp);
 footer$createdBy <- list(
   fullname = "Henrik Bengtsson", 
-  email = "hb@aroma-project.org"
+  email = sprintf("%s@%s", "henrik.bengtsson", "aroma-project.org")
 );
 names(srcFileTags) <- sprintf("srcFile%d", seq(along=srcFileTags));
 footer$srcFiles <- srcFileTags;
@@ -112,7 +112,7 @@ print(ugp);
 ## Dimensions: 1881415x2
 ## Column classes: integer, integer
 ## Number of bytes per column: 1, 4
-## Footer: <createdOn>20100215 19:24:13 CET</createdOn><platform>Affymetrix</platform><chipType>GenomeWideSNP_6,Full</chipType><createdBy><fullname>Henrik Bengtsson</fullname><email>hb@aroma-project.org</email></createdBy><srcFiles><srcFile1><filename>GenomeWideSNP_6,Full.cdf</filename><filesize>493291745</filesize><checksum>3fbe0f6e7c8a346105238a3f3d10d4ec</checksum></srcFile1><srcFile2><filename>GenomeWideSNP_6.na30.annot.csv</filename><filesize>1418300755</filesize><checksum>892892065e8b27f83874bafa58f64403</checksum></srcFile2><srcFile3><filename>GenomeWideSNP_6.cn.na30.annot.csv</filename><filesize>814504485</filesize><checksum>176369a81250f46aed90a3e9a5c968d5</checksum></srcFile3></srcFiles>
+## Footer: <createdOn>20100215 19:24:13 CET</createdOn><platform>Affymetrix</platform><chipType>GenomeWideSNP_6,Full</chipType><createdBy><fullname>Henrik Bengtsson</fullname><email>[...]</email></createdBy><srcFiles><srcFile1><filename>GenomeWideSNP_6,Full.cdf</filename><filesize>493291745</filesize><checksum>3fbe0f6e7c8a346105238a3f3d10d4ec</checksum></srcFile1><srcFile2><filename>GenomeWideSNP_6.na30.annot.csv</filename><filesize>1418300755</filesize><checksum>892892065e8b27f83874bafa58f64403</checksum></srcFile2><srcFile3><filename>GenomeWideSNP_6.cn.na30.annot.csv</filename><filesize>814504485</filesize><checksum>176369a81250f46aed90a3e9a5c968d5</checksum></srcFile3></srcFiles>
 ## Chip type: GenomeWideSNP_6,Full
 ## Platform: Affymetrix
 

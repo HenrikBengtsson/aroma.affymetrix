@@ -17,7 +17,7 @@ footer <- list(
   createdOn = format(Sys.time(), "%Y%m%d %H:%M:%S", usetz=TRUE),
   createdBy = list(
     fullname = "Henrik Bengtsson", 
-    email = "hb@stat.berkeley.edu"
+    email = sprintf("%s@%s", "henrik.bengtsson", "aroma-project.org")
   ),
   srcFiles = list()
 );
@@ -99,7 +99,7 @@ footer <- readFooter(ugp);
 footer$createdOn <- format(Sys.time(), "%Y%m%d %H:%M:%S", usetz=TRUE);
 footer$createdBy = list(
   fullname = "Henrik Bengtsson", 
-  email = "hb@stat.berkeley.edu"
+  email = sprintf("%s@%s", "henrik.bengtsson", "aroma-project.org")
 );
 names(srcFileTags) <- sprintf("srcFile%d", seq(along=srcFileTags));
 footer$srcFiles <- srcFileTags;
@@ -122,7 +122,7 @@ print(ugp);
 ## Dimensions: 1881415x2
 ## Column classes: integer, integer
 ## Number of bytes per column: 1, 4
-## Footer: <createdOn>20090519 18:56:13 PDT</createdOn><platform>Affymetrix</platform><chipType>GenomeWideSNP_6,Full</chipType><createdBy><fullname>Henrik Bengtsson</fullname><email>hb@stat.berkeley.edu</email></createdBy><srcFiles><srcFile1><filename>GenomeWideSNP_6,Full.CDF</filename><filesize>493291745</filesize><checksum>3fbe0f6e7c8a346105238a3f3d10d4ec</checksum></srcFile1><srcFile2><filename>GenomeWideSNP_6.na27.1.annot.csv</filename><filesize>1473437359</filesize><checksum>2b1cc87850a4c5e762b52c157689f570</checksum></srcFile2><srcFile3><filename>GenomeWideSNP_6.cn.na27.annot.csv</filename><filesize>490970502</filesize><checksum>2ad99a80d26b0af8f14b1a5e6d92d81c</checksum></srcFile3></srcFiles>
+## Footer: <createdOn>20090519 18:56:13 PDT</createdOn><platform>Affymetrix</platform><chipType>GenomeWideSNP_6,Full</chipType><createdBy><fullname>Henrik Bengtsson</fullname><email>[...]</email></createdBy><srcFiles><srcFile1><filename>GenomeWideSNP_6,Full.CDF</filename><filesize>493291745</filesize><checksum>3fbe0f6e7c8a346105238a3f3d10d4ec</checksum></srcFile1><srcFile2><filename>GenomeWideSNP_6.na27.1.annot.csv</filename><filesize>1473437359</filesize><checksum>2b1cc87850a4c5e762b52c157689f570</checksum></srcFile2><srcFile3><filename>GenomeWideSNP_6.cn.na27.annot.csv</filename><filesize>490970502</filesize><checksum>2ad99a80d26b0af8f14b1a5e6d92d81c</checksum></srcFile3></srcFiles>
 ## Chip type: GenomeWideSNP_6,Full
 ## Platform: Affymetrix
 getChromosomeStats(ugp);

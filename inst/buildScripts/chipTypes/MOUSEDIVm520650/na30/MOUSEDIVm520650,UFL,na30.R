@@ -93,7 +93,7 @@ if (!exists("srcFileTags", mode="list")) {
 footer <- readFooter(ufl);
 footer$createdBy <- list(
   fullname = "Henrik Bengtsson", 
-  email = "hb@aroma-project.org"
+  email = sprintf("%s@%s", "henrik.bengtsson", "aroma-project.org")
 );
 names(srcFileTags) <- sprintf("srcFile%d", seq(along=srcFileTags));
 footer$srcFiles <- srcFileTags;

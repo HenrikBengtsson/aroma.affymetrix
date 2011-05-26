@@ -13,7 +13,8 @@ chipType <- "Mapping50K_Hind240";
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 ## setOption(aromaSettings, "user/initials", "HB");
 ## setOption(aromaSettings, "user/fullname", "Henrik Bengtsson");
-## setOption(aromaSettings, "user/email", "hb@aroma-project.org");
+## email <- sprintf("%s@%s", "henrik.bengtsson", "aroma-project.org")
+## setOption(aromaSettings, "user/email", email);
 ## saveAnywhere(aromaSettings);
 
 fullname <- getOption(aromaSettings, "user/fullname");

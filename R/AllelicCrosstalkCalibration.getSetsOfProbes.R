@@ -111,7 +111,7 @@ setMethodS3("getSetsOfProbes", "AllelicCrosstalkCalibration", function(this, ...
       cells <- getAlleleCellPairs(cdf, verbose=verbose);
       S <- as.integer(B %/% 2 + 1);
       shifts <- -(S-1):(S-1);
-      verbose && cat(verbose, "Shifts:");
+      verbose && cat(verbose, "Probe shifts:");
       verbose && print(verbose, shifts);
       snps <- groupBySnpNucleotides(acs, cells=cells, shifts=shifts, 
                                                      verbose=verbose);

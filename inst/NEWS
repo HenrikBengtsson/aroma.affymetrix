@@ -1,6 +1,12 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 2.1.2 [2011-05-26]
+o Added an archive of scripts used to build ACS, UGP and UFL annotation
+  files.  The archive is located under buildScripts/ of the package
+  installation directory and sorted by chip types.
+
+
 Version: 2.1.1 [2011-04-18]
 o DOCUMENTATION: Added more help to createUniqueCdf() for AffymetrixCdfFile.
 o DEPRECATED: getUnique() and createUnique() are deprecated. 

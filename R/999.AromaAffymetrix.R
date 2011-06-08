@@ -16,16 +16,28 @@ setMethodS3("fixSearchPath", "AromaAffymetrix", function(this, ...) {
   # 2009-01-10:
   # o oligo must be after aroma.affymetrix, otherwise the former
   #   overrides generic justSNPRMA().
+  # 2011-06-07:
+  # o ggplot2 must be after aroma.affymetrix, otherwise the former
+  #   overrides generic rescale().
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Figure out which of our packages (aroma.core, aroma.light etc.) is
   # last on the search path.
   aheadPkgs <- c("aroma.affymetrix", "aroma.light", "R.huge", "R.oo");
 
   # Problematic package that must be after the packages on the search path
-  behindPkgs <- c("affy", "affyPLM", "EBImage", "oligo");
+  behindPkgs <- c("affy", "affyPLM", "EBImage", "oligo", "ggplot2");
 
   res <- fixSearchPathInternal(this, aheadPkgs=aheadPkgs, 
                                            behindPkgs=behindPkgs, ...);
+
+  # Make rescale() for numeric:s compatible for ggplot2 users.
+  if (isPackageLoaded("ggplot2") && !exists("rescale.numeric", mode="function")) {
+    # Get ggplot2::rescale() without triggering a R CMD check warning.
+    ggplot2 <- Package("ggplot2");
+    fcn <- get("rescale", mode="function", envir=getEnvironment(ggplot2));
+    # Add the rescale() for numeric
+    assign("rescale.numeric", fcn, envir=getEnvironment(this));
+  }
 
   # Return the package actually moved
   invisible(res); 
@@ -169,6 +181,10 @@ setMethodS3("getDefaultSettings", "AromaAffymetrix", function(this, ...) {
 
 ############################################################################
 # HISTORY:
+# 2011-06-07
+# o Now the search path is adjusted such that 'ggplot2' comes after
+#   'aroma.affymetrix', because the former overrides the generic
+#   rescale() function of the latter with a non-generic function.
 # 2010-06-07
 # o Added setting 'rules/allowDChipAnnotationFiles'. Still to be asserted
 #   by the code.

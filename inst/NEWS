@@ -1,6 +1,12 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 2.1.3 [2011-06-07]
+o ROBUSTNESS: Now the search path is adjusted such that 'ggplot2' comes 
+  after 'aroma.affymetrix', because the former overrides the generic
+  rescale() function of the latter with a non-generic function.
+
+
 Version: 2.1.2 [2011-05-26]
 o Added an archive of scripts used to build ACS, UGP and UFL annotation
   files.  The archive is located under buildScripts/ of the package

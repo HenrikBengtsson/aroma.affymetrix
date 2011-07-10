@@ -1,6 +1,12 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 2.1.4 [2011-07-09]
+o Added extractExpressionSet() for ChipEffectSet.
+o ROBUSTNESS: Added redundancy tests for doRMA() and
+  extractExpressionSet() for the HG-U133_Plus_2 chip type.
+
+
 Version: 2.1.3 [2011-06-07]
 o ROBUSTNESS: Now the search path is adjusted such that 'ggplot2' comes 
   after 'aroma.affymetrix', because the former overrides the generic

@@ -1438,6 +1438,7 @@
 \alias{findTargetDistributionFile.QuantileNormalization}
 \alias{readGeneAssignments}
 \alias{readGeneAssignments.AffymetrixNetAffxCsvFile}
+\alias{extractExpressionSet}
 
 \description{
   This page contains aliases for all "non-documented" objects that

@@ -1,7 +1,7 @@
 Package: aroma.affymetrix
 =========================
 
-Version: 2.1.4 [2011-07-09]
+Version: 2.1.4 [2011-07-14]
 o Added extractExpressionSet() for ChipEffectSet.
 o ROBUSTNESS: Added redundancy tests for doRMA() and
   extractExpressionSet() for the HG-U133_Plus_2 chip type.

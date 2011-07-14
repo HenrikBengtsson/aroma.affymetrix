@@ -14,6 +14,9 @@
 #
 # \arguments{
 #   \item{...}{Optional argument passed to @seemethod "extractMatrix".}
+#   \item{logBase}{An @integer specifying the base to use when
+#    log-transforming the signals.  If @NULL, the signals are not
+#    transformed, but kept as is.}
 #   \item{verbose}{See @see "R.utils::Verbose".}
 # }
 #
@@ -30,12 +33,17 @@
 # @keyword IO
 # @keyword programming
 #*/###########################################################################
-setMethodS3("extractExpressionSet", "ChipEffectSet", function(this, ..., verbose=FALSE) {
+setMethodS3("extractExpressionSet", "ChipEffectSet", function(this, ..., logBase=2, verbose=FALSE) {
   require("Biobase") || throw("Package not loaded: Biobase");
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Argument 'logBase':
+  if (!is.null(logBase)) {
+    logBase <- Arguments$getInteger(logBase, range=c(1,Inf));
+  }
+
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
   if (verbose) {
@@ -57,6 +65,13 @@ setMethodS3("extractExpressionSet", "ChipEffectSet", function(this, ..., verbose
   verbose && str(verbose, ugcMap);
   verbose && exit(verbose);
 
+  if (!is.null(logBase)) {
+    verbose && enter(verbose, "Log-transforming signals");
+    verbose && cat(verbose, "Log base: ", logBase);
+    Y <- log(Y, base=logBase);
+    verbose && str(verbose, Y);
+    verbose && exit(verbose);
+  }
 
   verbose && enter(verbose, "Creating feature names");
 
@@ -95,6 +110,8 @@ setMethodS3("extractExpressionSet", "ChipEffectSet", function(this, ..., verbose
 
 ###########################################################################
 # HISTORY:
+# 2011-07-14 [HB]
+# o Added argument 'logBase' to extractExpressionSet().
 # 2011-07-09 [HB]
 # o Added extractExpressionSet() for ChipEffectSet.
 # o Created.

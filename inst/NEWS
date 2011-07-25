@@ -1,6 +1,11 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 2.1.5 [2011-07-24]
+o Bumped up the package dependencies, especially since R will
+  soon (in practice) require namespaces for all packages.
+
+
 Version: 2.1.4 [2011-07-14]
 o Added extractExpressionSet() for ChipEffectSet.
 o ROBUSTNESS: Added redundancy tests for doRMA() and

@@ -2,8 +2,20 @@
 # conflicts() in [R] base.
 .conflicts.OK <- TRUE
 
+# WORKAROUND: In order for the package to work with the most recent
+# version of R devel, which automatically add namespaces to packages
+# who do not have one, we explicitly have specify the following.
+# /HB 2011-07-27
+cat <- R.utils::cat; 
+getOption <- R.utils::getOption;
+
+append <- R.filesets::append;
+lapply <- R.utils::lapply;
+sapply <- R.filesets::sapply;
+
 
 .First.lib <- function(libname, pkgname) {
+## .onAttach <- function(libname, pkgname) {
 ##   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 ##   # Loading/installing affxparser
 ##   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 

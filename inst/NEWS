@@ -5,7 +5,8 @@ Version: 2.1.6 [2011-07-27]
 o WORKAROUND: In order for the package to work with the most recent
   version of R devel, which automatically add namespaces to packages
   who do not have one, we explicitly have specify that this package
-  should use cat() and getOption() of R.utils (instead of 'base').
+  should get function such as cat() and getOption() from R.utils
+  (instead of 'base').
 
 
 Version: 2.1.5 [2011-07-24]

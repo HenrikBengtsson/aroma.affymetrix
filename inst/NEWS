@@ -1,6 +1,11 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 2.1.7 [2011-08-01]
+o WORKAROUND: Added similar workarounds as in v2.1.6 for more methods
+  defined in aroma.core, apply(), rowSums() etc.
+
+
 Version: 2.1.6 [2011-07-27]
 o WORKAROUND: In order for the package to work with the most recent
   version of R devel, which automatically add namespaces to packages

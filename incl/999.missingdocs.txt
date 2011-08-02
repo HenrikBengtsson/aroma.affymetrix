@@ -732,3 +732,4 @@ findTargetDistributionFile.QuantileNormalization
   readGeneAssignments readGeneAssignments.AffymetrixNetAffxCsvFile
 extractExpressionSet
 cat getOption append lapply sapply
+apply colMeans colSums library require

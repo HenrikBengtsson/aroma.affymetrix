@@ -1444,6 +1444,11 @@
 \alias{append}
 \alias{lapply}
 \alias{sapply}
+\alias{apply}
+\alias{colMeans}
+\alias{colSums}
+\alias{library}
+\alias{require}
 
 \description{
   This page contains aliases for all "non-documented" objects that

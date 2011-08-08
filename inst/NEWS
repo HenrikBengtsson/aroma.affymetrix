@@ -1,7 +1,7 @@
 Package: aroma.affymetrix
 =========================
 
-Version: 2.1.7 [2011-08-01]
+Version: 2.1.7 [2011-08-08]
 o WORKAROUND: Added similar workarounds as in v2.1.6 for more methods
   defined in aroma.core, apply(), rowSums() etc.
 

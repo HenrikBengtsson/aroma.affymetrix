@@ -495,7 +495,6 @@ setMethodS3("byName", "AffymetrixCelSet", function(static, name, tags=NULL, chip
   }
 
 
-
   verbose && enter(verbose, "Setting up ", class(static)[1], " by name");
 
   verbose && cat(verbose, "Name: ", name);
@@ -531,6 +530,9 @@ setMethodS3("byName", "AffymetrixCelSet", function(static, name, tags=NULL, chip
   verbose && cat(verbose, "Paths to possible data sets:");
   verbose && print(verbose, paths);
 
+  # Record all exception
+  exList <- list();
+
   res <- NULL;
   for (kk in seq(along=paths)) {
     path <- paths[kk];
@@ -542,6 +544,8 @@ setMethodS3("byName", "AffymetrixCelSet", function(static, name, tags=NULL, chip
         res <- byPath(static, path=path, cdf=cdf, ..., verbose=verbose);
       });
     }, error = function(ex) {
+      exList <<- append(exList, list(list(exception=ex, path=path)));
+
       verbose && cat(verbose, "Data set could not be setup for this path, because:");
       verbose && cat(verbose, ex$message);
     });
@@ -558,7 +562,15 @@ setMethodS3("byName", "AffymetrixCelSet", function(static, name, tags=NULL, chip
   } # for (kk ...)
 
   if (is.null(res)) {
-    throw(sprintf("Failed to setup a data set for any of %d data directories located.", length(paths)));
+    exMsgs <- sapply(exList, FUN=function(ex) {
+      sprintf("%s (while trying '%s').", 
+                   ex$exception$message, ex$path);
+    });
+    exMsgs <- sprintf("(%d) %s", seq(along=exMsgs), exMsgs);
+    exMsgs <- paste(exMsgs, collapse="  ");
+    msg <- sprintf("Failed to setup a data set for any of %d data directories located. The following reasons were reported: %s", length(paths), exMsgs);
+    verbose && cat(verbose, msg);
+    throw(msg);
   }
 
   verbose && exit(verbose);
@@ -1233,6 +1245,10 @@ setMethodS3("getUnitGroupCellMap", "AffymetrixCelSet", function(this, ...) {
 
 ############################################################################
 # HISTORY:
+# 2011-08-16
+# o ROBUSTNESS: If static byName() for AffymetrixCelSet fails to setup
+#   a data set, it now reports the error message for each data set 
+#   directory it tried.
 # 2011-03-03
 # o GENERALIZATION: Now AffymetrixCelSet locates sample annotation files 
 #   and sets the attributes following the new aroma search convention.

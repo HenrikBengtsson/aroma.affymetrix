@@ -1,6 +1,15 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 2.1.9 [2011-08-29]
+o Added bpmapCluster2Cdf(), which is a pruned and robustified version
+  of ditto previously provided by Mark Robinson online.  This new 
+  version includes more sanity checks and avoids overwriting existing
+  CDF files.
+o ROBUSTNESS: Now env2Cdf() writes the CDF file atomically by first
+  writing to a temporary file which is then renamed.
+
+
 Version: 2.1.8 [2011-08-16]
 o ROBUSTNESS: If static byName() for AffymetrixCelSet fails to setup
   a data set, it now reports the error message for each data set 

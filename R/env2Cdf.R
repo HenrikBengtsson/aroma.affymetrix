@@ -84,14 +84,22 @@ env2Cdf <- function(env, celfile, overwrite=FALSE, verbose=TRUE, ...) {
   pdName <- gsub("cdf", "", env, fixed=TRUE);
 
   ## creating the cdf-header;
-  filename <- sprintf("%s.cdf", pdName);
+  pathname <- sprintf("%s.cdf", pdName);
   newCdfHeader <- list(ncols=ncols, nrows=nrows, nunits=nunits, nqcunits=0,
-    refseq="", chiptype=pdName, filename=filename, rows=nrows, cols=ncols,
+    refseq="", chiptype=pdName, filename=pathname, rows=nrows, cols=ncols,
     probesets= nunits, qcprobesets=0, reference="");
 
   ### writing the cdf-file (binary-file)
-  writeCdf(newCdfHeader$filename, cdfheader=newCdfHeader, cdf=newCdfList,
+  # Write to a temporary file
+  pathnameT <- pushTemporaryFile(pathname, verbose=verbose); 
+
+  res <- writeCdf(pathnameT, cdfheader=newCdfHeader, cdf=newCdfList,
            cdfqc=NULL, overwrite=overwrite, verbose=verbose);
+
+  # Rename temporary file
+  pathname <- popTemporaryFile(pathnameT, verbose=verbose);
+
+  res;
 } # env2Cdf()
 
 # For backward compatibility
@@ -100,6 +108,9 @@ Env2Cdf <- env2Cdf
 
 ############################################################################
 # HISTORY:
+# 2010-09-29 [HB] 
+# o ROBUSTNESS: Now the writing of the CDF file is atomic by first writing
+#   to a temporary file which is then renamed.
 # 2010-05-20 [HB] 
 # o Renamed Env2Cdf() to env2Cdf().  Keeping old one for backward 
 #   compatibility.

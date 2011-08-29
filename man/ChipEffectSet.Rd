@@ -62,7 +62,7 @@ extends \link[aroma.affymetrix]{ParameterCelSet}\cr
  \tab \code{calculateNuseBoxplotStats} \tab  -\cr
  \tab \code{calculateRleBoxplotStats} \tab  -\cr
  \tab \code{extractChromosomalDataFrame} \tab  -\cr
- \tab \code{extractExpressionSet} \tab  -\cr
+ \tab \code{\link[aroma.affymetrix:extractExpressionSet.ChipEffectSet]{extractExpressionSet}} \tab Extracts an in-memory ExpressionSet object.\cr
  \tab \code{extractMatrix} \tab  -\cr
  \tab \code{extractTheta} \tab  -\cr
  \tab \code{findByName} \tab  -\cr

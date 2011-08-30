@@ -14,7 +14,7 @@
 #  \item{chipType, tags}{The chip type and optional tags of the CDF to be written.}
 #  \item{nProbes}{A positive @integer.}
 #  \item{gapDist}{A positive @integer.}
-#  \item{rows, cols}{Two (optional) positive @integers.#
+#  \item{rows, cols}{Two (optional) positive @integers.
 #     If @NULL, optimal values are inferred auotmatically.}
 #  \item{groupName}{A @character string.}
 #  \item{field}{A @character string.}
@@ -24,7 +24,7 @@
 # }
 #
 # \value{
-#  Returns (invisibly) a @list containing the written CDF header and CDF tree structures.
+#  Returns (invisibly) a the pathname of the created CDF file.
 # }
 #
 # \details{
@@ -246,8 +246,6 @@ setMethodS3("bpmapCluster2Cdf", "default", function(pathname, chipType, tags=NUL
         # Next CDF unit
         uu <- uu + 1L;
       } # for (jj ...)
-
-      #if (verbose) cat("\n");
     } else {
       # keep all probes
       verbose && cat(verbose, "Skipping.");
@@ -266,7 +264,7 @@ setMethodS3("bpmapCluster2Cdf", "default", function(pathname, chipType, tags=NUL
   verbose && enter(verbose, "Writing PPS file");
   verbose && cat(verbose, "Output pathname: ", ppsPathname);
   saveObject(startps, file=ppsPathname);
-#  rm(startps); # Not needed anymore
+  rm(startps); # Not needed anymore
   verbose && exit(verbose);
 
   verbose && enter(verbose, "Writing CDF file");
@@ -285,17 +283,16 @@ setMethodS3("bpmapCluster2Cdf", "default", function(pathname, chipType, tags=NUL
   pathname <- popTemporaryFile(pathnameT, verbose=verbose);
   verbose && exit(verbose);
 
-
-  res <- list(cdfHeader=cdfHeader, cdfList=cdfList);
-
   verbose && exit(verbose);
 
-  invisible(res);
+  invisible(pathname);
 }) # bpmapCluster2Cdf()
 
 
 ############################################################################
 # HISTORY:
+# 2011-08-30 [HB]
+# o Now bpmapCluster2Cdf() returns the pathname to the created CDF.
 # 2011-08-29 [HB]
 # o Replaced argument 'cdfName' with 'chipType' and 'tags'.  This 
 #   simplifies adding custom tags to the CDF.

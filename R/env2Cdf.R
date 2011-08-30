@@ -99,7 +99,7 @@ env2Cdf <- function(env, celfile, overwrite=FALSE, verbose=TRUE, ...) {
   # Rename temporary file
   pathname <- popTemporaryFile(pathnameT, verbose=verbose);
 
-  res;
+  invisible(pathname);
 } # env2Cdf()
 
 # For backward compatibility
@@ -108,6 +108,8 @@ Env2Cdf <- env2Cdf
 
 ############################################################################
 # HISTORY:
+# 2011-08-30 [HB] 
+# o Now env2Cdf() returns the pathname to the written CDF.
 # 2010-09-29 [HB] 
 # o ROBUSTNESS: Now the writing of the CDF file is atomic by first writing
 #   to a temporary file which is then renamed.

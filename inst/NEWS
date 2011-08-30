@@ -1,13 +1,14 @@
 Package: aroma.affymetrix
 =========================
 
-Version: 2.1.9 [2011-08-29]
+Version: 2.1.9 [2011-08-30]
 o Added bpmapCluster2Cdf(), which is a pruned and robustified version
   of ditto previously provided by Mark Robinson online.  This new 
   version includes more sanity checks and avoids overwriting existing
   CDF files.
 o ROBUSTNESS: Now env2Cdf() writes the CDF file atomically by first
-  writing to a temporary file which is then renamed.
+  writing to a temporary file which is then renamed.  It now also 
+  returns the pathname to the CDF written.
 
 
 Version: 2.1.8 [2011-08-16]

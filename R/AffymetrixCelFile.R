@@ -434,7 +434,14 @@ setMethodS3("getTimestamp", "AffymetrixCelFile", function(this, format="%m/%d/%y
     # one containing the chip type.  Get the chip type from the header.
     pattern <- sprintf(" %s.1sq ", chipType);
     header <- grep(pattern, headerDAT, value=TRUE);
-  
+
+    # Fallback, in case a early-access chiptype string (or none) is used
+    # in the DAT header.
+    if (length(header) == 0) {
+      pattern <- " (.*).1sq ";
+      header <- grep(pattern, headerDAT, value=TRUE);
+    }
+
     # Extract the date timestamp
     pattern <- ".*([01][0-9]/[0-3][0-9]/[0-9][0-9] [0-2][0-9]:[0-5][0-9]:[0-5][0-9]).*";
 
@@ -928,6 +935,13 @@ setMethodS3("getRectangle", "AffymetrixCelFile", function(this, ...) {
 
 ############################################################################
 # HISTORY:
+# 2011-08-31
+# o ROBUSTNESS: getTimestamp() for AffymetrixCelFile would throw "Error
+#   in if (hasTimestamp) { : argument is of length zero" if the CEL file
+#   had a DAT header with a non-standard chip type string, e.g. an
+#   early-access label or no label at all.  Updated the local/inner
+#   getTimestampFromDatHeader() of getTimestamp() to also handle such
+#   CEL files.  Thanks Irina Ostrovnaya at MSKCC for reporting on this.
 # 2011-02-24
 # o BACKWARD COMPATILITY: getIdentifier() for AffymetrixCelFile generates
 #   a checksum id based on the CEL file header among other things.  Part

@@ -1,43 +1,58 @@
 ###########################################################################/**
 # @RdocDefault bpmapCluster2Cdf
 #
-# @title "Creates a CDF from BPMAP file"
+# @title "Creates a CDF from tiling-array BPMAP file"
 #
 # \description{
-#   @get "title".
+#   @get "title".\cr
+#
+#   \emph{
+#    NOTE: This method applies only to Affymetrix tiling arrays!
+#    Furthermore, it is likely to be more useful for promoter tiling arrays
+#    and less so for whole-genome tiling arrays.
+#   }
 # }
 #
 # @synopsis
 #
 # \arguments{
 #  \item{pathname}{The pathname to the BPMAP file.}
-#  \item{chipType, tags}{The chip type and optional tags of the CDF to be written.}
-#  \item{nProbes}{A positive @integer.}
-#  \item{gapDist}{A positive @integer.}
+#  \item{chipType, tags}{The chip type and optional tags of the CDF to
+#    be written.}
+#  \item{maxProbeDistance}{A positive @integer specifying the maximum
+#    genomic distance (in basepairs) allowed between two probes in order
+#    to "cluster" those two probes into the same CDF units.  Whenever the
+#    distance is greater, the two probes end up in two different CDF units.}
+#  \item{minNbrOfProbes}{A positive @integer specifying the minimum number
+#    of probes required in a CDF unit.  If fewer, those probes are dropped.}
+#  \item{...}{Not used.}
 #  \item{rows, cols}{Two (optional) positive @integers.
 #     If @NULL, optimal values are inferred auotmatically.}
 #  \item{groupName}{A @character string.}
 #  \item{field}{A @character string.}
 #  \item{stringRemove}{An (optional) regular expression.}
-#  \item{...}{Not used.}
 #  \item{verbose}{See @see "R.utils::Verbose".}
 # }
 #
 # \value{
 #  Returns (invisibly) a the pathname of the created CDF file.
-# }
-#
-# \details{
 #  The created CDF is written to the current directory.
 # }
 #
+# \details{
+#   This method applies only to Affymetrix tiling arrays.  It is likely
+#   to be useful for promoter tiling arrays and less so for whole-genome
+#   tiling arrays.
+# }
+#
 # \author{
-#   Mark Robinson (pruned and robustified by Henrik Bengtsson).
+#   Henrik Bengtsson adopted from Mark Robinson standalone/online version
+#   as of July 11, 2011.
 # }
 # 
 # @keyword "internal"
 #*/###########################################################################
-setMethodS3("bpmapCluster2Cdf", "default", function(pathname, chipType, tags=NULL, nProbes=30, gapDist=3000, rows=NULL,  cols=NULL, groupName=gsub("_.*", "", chipType), field="fullname", stringRemove=sprintf("%s:.*;", groupName), ..., verbose=-10) {
+setMethodS3("bpmapCluster2Cdf", "default", function(pathname, chipType, tags=NULL, maxProbeDistance=3000, minNbrOfProbes=30, ..., rows=NULL, cols=NULL, groupName=gsub("_.*", "", chipType), field="fullname", stringRemove=sprintf("%s:.*;", groupName), verbose=-10) {
   require("affxparser") || throw("Package not loaded: affxparser");
   require("R.utils") || throw("Package not loaded: R.utils");
 
@@ -72,11 +87,11 @@ setMethodS3("bpmapCluster2Cdf", "default", function(pathname, chipType, tags=NUL
     tags <- Arguments$getCharacters(tags);
   }
 
-  # Argument 'nProbes':
-  nProbes <- Arguments$getInteger(nProbes, range=c(1,Inf));
+  # Argument 'minNbrOfProbes':
+  minNbrOfProbes <- Arguments$getInteger(minNbrOfProbes, range=c(1,Inf));
 
-  # Argument 'gapDist':
-  gapDist <- Arguments$getInteger(gapDist, range=c(1,Inf));
+  # Argument 'maxProbeDistance':
+  maxProbeDistance <- Arguments$getInteger(maxProbeDistance, range=c(1,Inf));
 
   # Argument 'rows':
   if (!is.null(rows)) {
@@ -161,10 +176,10 @@ setMethodS3("bpmapCluster2Cdf", "default", function(pathname, chipType, tags=NUL
     sp <- bpmapdf$startpos;
     if (all(sp > 0L) & bpmapdf$groupname[1] == groupName) {
       d <- diff(sp);
-      w <- whichVector(d > gapDist);
+      w <- whichVector(d > maxProbeDistance);
       ends <- c(w, np);
       starts <- c(1L, w+1L);
-      k <- whichVector((ends-starts) > nProbes);
+      k <- whichVector((ends-starts) > minNbrOfProbes);
       verbose && cat(verbose, length(k), " ROIs for ", name, ".");
 
       nbrOfUnits <- nbrOfUnits + length(k);
@@ -208,10 +223,10 @@ setMethodS3("bpmapCluster2Cdf", "default", function(pathname, chipType, tags=NUL
     sp <- bpmapdf$startpos;
     if (all(sp > 0L) & bpmapdf$groupname[1] == groupName) {
       d <- diff(sp);
-      w <- whichVector(d > gapDist);
+      w <- whichVector(d > maxProbeDistance);
       ends <- c(w, np);
       starts <- c(1L, w+1L);
-      k <- whichVector((ends-starts) > nProbes);
+      k <- whichVector((ends-starts) > minNbrOfProbes);
       verbose && cat(verbose, length(k), " ROIs for ", name, ".");
 
       # Access ones
@@ -291,6 +306,10 @@ setMethodS3("bpmapCluster2Cdf", "default", function(pathname, chipType, tags=NUL
 
 ############################################################################
 # HISTORY:
+# 2011-08-31 [HB]
+# o All arguments after '...' except 'verbose' may be dropped in a future
+#   release, especially 'rows' and 'cols'.
+# o CLARIFICATION: Renamed argument 'nProbes' to 'minNbrOfProbes'.
 # 2011-08-30 [HB]
 # o Now bpmapCluster2Cdf() returns the pathname to the created CDF.
 # 2011-08-29 [HB]

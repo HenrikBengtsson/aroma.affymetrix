@@ -22,7 +22,7 @@
    }
  }
 
- \usage{\method{bpmapCluster2Cdf}{default}(pathname, chipType, tags=NULL, nProbes=30, gapDist=3000, rows=NULL, cols=NULL, groupName=gsub("_.*", "", chipType), field="fullname", stringRemove=sprintf("\%s:.*;", groupName), ..., verbose=-10)}
+ \usage{\method{bpmapCluster2Cdf}{default}(pathname, chipType, tags=NULL, maxProbeDistance=3000, minNbrOfProbes=30, ..., rows=NULL, cols=NULL, groupName=gsub("_.*", "", chipType), field="fullname", stringRemove=sprintf("\%s:.*;", groupName), verbose=-10)}
 
  \arguments{
   \item{pathname}{The pathname to the BPMAP file.}

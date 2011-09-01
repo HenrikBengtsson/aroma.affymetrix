@@ -1,6 +1,11 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 2.2.0 [2011-09-01]
+o Submitted to CRAN.
+o The package passes all redundancy tests.
+
+
 Version: 2.1.9 [2011-08-31]
 o Added bpmapCluster2Cdf(), which is a pruned and robustified version
   of ditto previously provided by Mark Robinson online.  This new 

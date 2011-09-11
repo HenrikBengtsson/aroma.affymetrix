@@ -733,3 +733,8 @@ findTargetDistributionFile.QuantileNormalization
 extractExpressionSet
 cat getOption append lapply sapply
 apply colMeans colSums library require
+  createExonByTranscriptCdf getGenomeBuild
+  getGenomeBuild.AffymetrixNetAffxCsvFile getHeaderAttributes
+  getHeaderAttributes.AffymetrixNetAffxCsvFile getNetAffxBuild
+  getNetAffxBuild.AffymetrixNetAffxCsvFile getNetAffxDate
+  getNetAffxDate.AffymetrixNetAffxCsvFile

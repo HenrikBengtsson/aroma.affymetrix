@@ -282,9 +282,59 @@ setMethodS3("readGeneAssignments", "AffymetrixNetAffxCsvFile", function(this, ..
 })  # readGeneAssignments()
 
 
+setMethodS3("getHeaderAttributes", "AffymetrixNetAffxCsvFile", function(this, ...) {
+  hdr <- getHeader(this, ...);
+  comments <- hdr$comments;
+  attrs <- grep("^#%", comments, value=TRUE);
+  attrs <- gsub("^#%", "", attrs);
+  pattern <- "([^=]*)=(.*)";
+  keys <- gsub(pattern, "\\1", attrs);
+  values <- gsub(pattern, "\\2", attrs);
+  values <- trim(values);
+  names(values) <- keys;
+  attrs <- as.list(values);
+  attrs;
+}) # getHeaderAttributes()
+
+
+setMethodS3("getGenomeBuild", "AffymetrixNetAffxCsvFile", function(this, ...) {
+  attrs <- getHeaderAttributes(this, ...);
+  attrs <- attrs[grep("^genome-version", names(attrs))];
+  if (length(attrs) == 0) {
+    return(NULL);
+  }
+
+  keys <- names(attrs);
+  if (is.element("genome-version", keys)) {
+    res <- attrs[["genome-version"]];
+  } else if (is.element("genome-version-ucsc", keys)) {
+    res <- attrs[["genome-version-ucsc"]];
+  } else {
+    res <- attrs[[1]];
+  }
+  res; 
+})
+
+setMethodS3("getNetAffxBuild", "AffymetrixNetAffxCsvFile", function(this, ...) {
+  attrs <- getHeaderAttributes(this, ...);
+  res <- attrs[["netaffx-annotation-netaffx-build"]];
+  res;
+})
+
+
+setMethodS3("getNetAffxDate", "AffymetrixNetAffxCsvFile", function(this, ...) {
+  attrs <- getHeaderAttributes(this, ...);
+  res <- attrs[["netaffx-annotation-date"]];
+  res <- as.Date(res);
+  res;
+})
+
 
 ##############################################################################
 # HISTORY:
+# 2011-09-11
+# o Added getGenomeBuild(), getNetAffxBuild() and getNetAffxDate().
+# o Added getHeaderAttributes() for AffymetrixNetAffxCsvFile.
 # 2011-04-18
 # o Updated readGeneAssignments().
 # 2011-04-07

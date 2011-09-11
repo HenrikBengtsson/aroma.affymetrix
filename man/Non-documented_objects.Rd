@@ -1449,6 +1449,15 @@
 \alias{colSums}
 \alias{library}
 \alias{require}
+\alias{createExonByTranscriptCdf}
+\alias{getGenomeBuild}
+\alias{getGenomeBuild.AffymetrixNetAffxCsvFile}
+\alias{getHeaderAttributes}
+\alias{getHeaderAttributes.AffymetrixNetAffxCsvFile}
+\alias{getNetAffxBuild}
+\alias{getNetAffxBuild.AffymetrixNetAffxCsvFile}
+\alias{getNetAffxDate}
+\alias{getNetAffxDate.AffymetrixNetAffxCsvFile}
 
 \description{
   This page contains aliases for all "non-documented" objects that

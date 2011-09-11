@@ -1,6 +1,15 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 2.2.1 [2011-09-11]
+o Added createExonByTranscriptCdf() for creating exon-by-transcript CDFs.
+  This methods was adapted from the createTranscriptCDF(), which was
+  previously provided online.
+o Added a build script for createExonByTranscriptCdf() on HuEx-1_0-st-v2.
+o Added getHeaderAttributes() for AffymetrixNetAffxCsvFile which is
+  used by new getGenomeBuild(), getNetAffxBuild() and getNetAffxDate().
+
+
 Version: 2.2.0 [2011-09-01]
 o Submitted to CRAN.
 o The package passes all redundancy tests.

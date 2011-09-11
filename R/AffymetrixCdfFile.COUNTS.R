@@ -74,7 +74,7 @@ setMethodS3("nbrOfGroupsPerUnit", "AffymetrixCdfFile", function(this, units=NULL
     }
 
     if (is.null(sizes)) {    
-      verbose && enter(verbose, "Reading types for *all* units");
+      verbose && enter(verbose, "Reading number of groups for *all* units");
       sizes <- readCdfGroupNames(getPathname(this));
       sizes <- restruct(this, sizes, verbose=less(verbose, 5));
       sizes <- base::lapply(sizes, FUN=length);

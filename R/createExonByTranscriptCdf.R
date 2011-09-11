@@ -2,7 +2,7 @@
 # @set "class=AffymetrixCdfFile"
 # @RdocMethod createExonByTranscriptCdf
 #
-# @title "Creates a exon-by-transcript CDF"
+# @title "Creates an exon-by-transcript CDF"
 #
 # \description{
 #  @get "title" based on the probesets defined in an "exon-only" CDF
@@ -51,23 +51,21 @@
 # \section{Ordering of transcripts and exons within transcripts}{
 #   The transcripts (=units) will be ordered as they appear in the
 #   NetAffx annotation file.
-#
 #   Within each transcript (=unit), the exons (=groups) are ordered
 #   lexicographically by their names.
-#   (Before Jan 28, 2008 (rev 3911) sorting was not done).
+#   %% (Before Jan 28, 2008 (rev 3911) sorting was not done).
 # }
 #
 # \section{Naming of transcripts and exons}{
 #   In the created CDF, each unit corresponds to one transcript cluster,
 #   and each group within a unit corresponds to the exons within
-#   that transcript cluster.  Thus, the unit names corresponds to the
-#   transcript cluster names and the group names corresponds to the
+#   that transcript cluster.  Thus, the unit names correspond to the
+#   transcript cluster names and the group names correspond to the
 #   exon names.
 #
 #   The exon names are defined by unit names of the exon-only CDF,
 #   whereas the transcript names are defined by the
 #   \code{transcriptClusterId} column in the NetAffx annotation data file.
-#
 #   These transcript and exon names are often "non-sense" integers.
 #   In order to map these to more genome-friendly names, use the various
 #   annotations available in the NetAffx annotation data file.
@@ -76,6 +74,7 @@
 # \examples{\dontrun{
 # # The exon-only CDF
 # cdf <- AffymetrixCdfFile$byChipType("HuEx-1_0-st-v2");
+#
 # # The NetAffx probeset annotation data file
 # csv <- AffymetrixNetAffxCsvFile("HuEx-1_0-st-v2.na24.hg18.probeset.csv", path=getPath(cdf));
 #

@@ -22,3 +22,13 @@ print(csv);
 cdfT <- createExonByTranscriptCdf(cdf, csv=csv, type="core", 
                                   tags="*,HB20110910", verbose=verbose);
 print(cdfT);
+
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+# Validation
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+cells <- getCellIndices(cdfT, unlist=TRUE, useNames=FALSE);
+if (anyDuplicated(cells)) {
+  throw("Detected cell indices that occurs more than once in the CDF: ", 
+                                                      getPathname(cdfT));
+}

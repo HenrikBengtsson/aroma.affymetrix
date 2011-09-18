@@ -1458,6 +1458,9 @@
 \alias{getNetAffxBuild.AffymetrixNetAffxCsvFile}
 \alias{getNetAffxDate}
 \alias{getNetAffxDate.AffymetrixNetAffxCsvFile}
+\alias{dropCellsFromCdfList}
+\alias{writeCdfByExcludingCells.AffymetrixCdfFile}
+\alias{writeCdfByExcludingCells}
 
 \description{
   This page contains aliases for all "non-documented" objects that

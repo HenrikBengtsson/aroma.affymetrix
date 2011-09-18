@@ -60,7 +60,7 @@ extends \emph{\link[aroma.core]{UnitNamesFile}}\cr
   \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{\link[aroma.affymetrix:convert.AffymetrixCdfFile]{convert}} \tab Converts a CDF into the same CDF but with another format.\cr
- \tab \code{\link[aroma.affymetrix:createExonByTranscriptCdf.AffymetrixCdfFile]{createExonByTranscriptCdf}} \tab Creates a exon-by-transcript CDF.\cr
+ \tab \code{\link[aroma.affymetrix:createExonByTranscriptCdf.AffymetrixCdfFile]{createExonByTranscriptCdf}} \tab Creates an exon-by-transcript CDF.\cr
  \tab \code{createMonoCell} \tab  -\cr
  \tab \code{getACSFile} \tab  -\cr
  \tab \code{getAromaCellSequenceFile} \tab  -\cr

@@ -1,6 +1,10 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 2.2.2 [2011-09-17]
+o Added writeCdfByExcludingCells() for AffymetrixCdfFile.
+
+
 Version: 2.2.1 [2011-09-11]
 o Added createExonByTranscriptCdf() for creating exon-by-transcript CDFs.
   This methods was adapted from the createTranscriptCDF(), which was

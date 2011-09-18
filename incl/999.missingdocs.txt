@@ -738,3 +738,6 @@ apply colMeans colSums library require
   getHeaderAttributes.AffymetrixNetAffxCsvFile getNetAffxBuild
   getNetAffxBuild.AffymetrixNetAffxCsvFile getNetAffxDate
   getNetAffxDate.AffymetrixNetAffxCsvFile
+dropCellsFromCdfList
+writeCdfByExcludingCells.AffymetrixCdfFile writeCdfByExcludingCells
+

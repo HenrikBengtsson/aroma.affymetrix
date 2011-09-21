@@ -7,6 +7,9 @@ verbose <- Verbose(threshold=-10, timestamp=TRUE);
 # Settings
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 chipType <- "HuEx-1_0-st-v2";
+types <- c("core", "extended", "full");
+type <- textMenu(types, value=TRUE);
+tags <- "HB20110917";
 
 cdf <- AffymetrixCdfFile$byChipType(chipType);
 print(cdf);
@@ -19,8 +22,8 @@ print(csv);
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 # Build exon-by-transcript CDF
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-cdfT <- createExonByTranscriptCdf(cdf, csv=csv, type="core", 
-                                  tags="*,HB20110910", verbose=verbose);
+cdfT <- createExonByTranscriptCdf(cdf, csv=csv, type=type, 
+                                  tags=c("*", tags), verbose=verbose);
 print(cdfT);
 
 

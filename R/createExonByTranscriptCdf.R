@@ -361,7 +361,7 @@ setMethodS3("createExonByTranscriptCdf", "AffymetrixCdfFile", function(cdf, csv,
   verbose && printf(verbose, "Average number of exons/transcript: %.2f\n", nbrOfExons/nbrOfTranscripts);
 
   if (nbrOfTranscripts > 100) {
-    verbose && printf(verbose, "Done so far:\n");
+    verbose && printf(verbose, "Number of transcripts done so far:\n");
   }
 
   # Allocate the CDF list structure

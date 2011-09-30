@@ -1,6 +1,10 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 2.2.3 [2011-09-29]
+o Added more system tests.
+
+
 Version: 2.2.2 [2011-09-17]
 o Added writeCdfByExcludingCells() for AffymetrixCdfFile.
 

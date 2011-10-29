@@ -7,9 +7,9 @@
 # who do not have one, we explicitly have specify the following.
 # /HB 2011-07-27
 # R.utils:
-cat <- R.utils::cat; 
-getOption <- R.utils::getOption;
-lapply <- R.utils::lapply;
+##cat <- R.utils::cat; 
+##getOption <- R.utils::getOption;
+##lapply <- R.utils::lapply;
 
 # R.filesets:
 append <- R.filesets::append;
@@ -24,8 +24,8 @@ require <- aroma.core::require;
 .Machine <- aroma.core::.Machine;
 
 
-.First.lib <- function(libname, pkgname) {
-## .onAttach <- function(libname, pkgname) {
+##.First.lib <- function(libname, pkgname) {
+.onAttach <- function(libname, pkgname) {
 ##   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 ##   # Loading/installing affxparser
 ##   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 

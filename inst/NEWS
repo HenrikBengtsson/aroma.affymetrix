@@ -1,6 +1,13 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 2.3.0 [2011-10-28]
+o Added a namespace to the package, which will be more or less
+  a requirement starting with R v2.14.0. 
+o Added BioConductor package 'AffymetrixDataTestFiles' to the list
+  of suggested package, just to remove one R CMD check "NOTE".
+
+
 Version: 2.2.3 [2011-09-29]
 o Added more system tests.
 

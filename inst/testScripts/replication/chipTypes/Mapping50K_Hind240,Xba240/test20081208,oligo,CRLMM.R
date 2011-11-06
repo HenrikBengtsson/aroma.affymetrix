@@ -89,7 +89,7 @@ for (cc in 1:ncol(calls)) {
 cat(sprintf("Averages number of discrepances per array: %.1f\n", count/ncol(calls)));
 errorRate <- count/length(calls);
 cat(sprintf("Concordance rate: %.5f%%\n", 100*(1-errorRate)));
-stopifnot(errorRate < 1e-4);
+stopifnot(errorRate < 5e-4);
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

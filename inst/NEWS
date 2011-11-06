@@ -1,6 +1,11 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 2.3.1 [2011-11-05]
+o FIX: The verbose enter/exit statements of fit() of CrlmmModel()
+  did not match up, resulting deeper and deeper indentations.
+
+
 Version: 2.3.0 [2011-10-28]
 o Added a namespace to the package, which will be more or less
   a requirement starting with R v2.14.0. 

@@ -483,7 +483,7 @@ setMethodS3("writeImages", "TransformReport", function(this, path=NULL, width=80
       tryCatch({
         plotXYCurveLog2(this, array=kk, dcol="#cccccc", ...);
       }, finally = {
-        dev.off();
+        devDone();
       })
     }
 
@@ -535,7 +535,7 @@ setMethodS3("writeImageCombined", "TransformReport", function(this, path=NULL, w
     tryCatch({
       plotXYCurveLog2(this, ..., verbose=less(verbose));
     }, finally = {
-      dev.off();
+      devDone();
     })
   }
 
@@ -550,6 +550,8 @@ setMethodS3("writeImageCombined", "TransformReport", function(this, path=NULL, w
 
 ############################################################################
 # HISTORY:
+# 2011-11-07
+# o Replaced dev.off() with devDone().
 # 2009-07-08
 # o Added getUnitTypesFile() for TransformReport.
 # 2008-05-18

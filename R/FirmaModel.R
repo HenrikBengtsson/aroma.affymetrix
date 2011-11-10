@@ -34,6 +34,13 @@ setConstructorS3("FirmaModel", function(rmaPlm=NULL, summaryMethod=c("median", "
   # Argument 'rmaPlm':
   if (!is.null(rmaPlm)) {
     rmaPlm <- Arguments$getInstanceOf(rmaPlm, "ProbeLevelModel");
+    rmaPlm <- Arguments$getInstanceOf(rmaPlm, "ExonRmaPlm");
+
+    # Assert that the RmaPlm has 'mergeGroups=TRUE'.
+    params <- getParameterSet(rmaPlm);
+    if (!params$mergeGroups) {
+      throw("Cannot setup FirmaModel. The probe-level model must be for transcripts (mergeGroups=TRUE), not exons.");
+    }
   }
 
   # Argument 'summaryMethod':
@@ -317,52 +324,65 @@ setMethodS3("calculateResiduals", "FirmaModel", function(this, ...) {
 # }
 #*/###########################################################################
 setMethodS3("getFitUnitGroupFunction", "FirmaModel", function(this, ...) {
-  if(this$operateOn=="weights") {
+  colMedians <- matrixStats::colMedians;
+  colMaxs <- matrixStats::colMaxs;
+  colQuantiles <- function(y, ...) {
+    apply(y, MARGIN=2, FUN=quantile, ...)
+  }
+
+  if(this$operateOn == "weights") {
     if (this$summaryMethod == "upperQuartile") {
-        fitfcn <- function(y, ...) {
-            J <- length(y)
-            list(intensities = 2^(1 - apply(y,2,quantile,probs=0.75)),
-                stdvs = 1, pixels = 1)
-        }
+      fitfcn <- function(y, ...) {
+        ## J <- length(y)
+        list(
+          intensities=2^(1 - colQuantiles(y, probs=0.75)),
+          stdvs=1, pixels=1
+        )
+      }
     }
     else if (this$summaryMethod == "median") {
-        fitfcn <- function(y, ...) {
-            J <- length(y)
-            1 - median(y)
-            list(intensities = 2^(1 - apply(y,2,median)), stdvs = 1,
-                pixels = 1)
-        }
+      fitfcn <- function(y, ...) {
+        ## J <- length(y)
+        ## 1 - median(y)
+        list(
+          intensities=2^(1-colMedians(y)),
+          stdvs=1, pixels=1
+        )
+      }
     }
     else if (this$summaryMethod == "max") {
-        fitfcn <- function(y, ...) {
-            J <- length(y)
-            list(intensities = 2^(1 - apply(y,2,max)), stdvs = 1, pixels = 1)
-        }
+      fitfcn <- function(y, ...) {
+        ## J <- length(y)
+        list(
+          intensities=2^(1-colMaxs(y)),
+          stdvs=1, pixels=1
+        )
+      }
     }
     else {
-        fitfcn <- function(y, ...) {
-            J <- length(y)
-            list(intensities = 1, stdvs = 1, pixels = 1)
-        }
+      fitfcn <- function(y, ...) {
+        ## J <- length(y)
+        list(intensities=1, stdvs=1, pixels=1)
+      }
     }
   } else {
     if (this$summaryMethod == "median") {
-        fitfcn <- function(y, ...) {
-            #J <- length(y)
-            list(intensities = 2^apply(y,2,median), stdvs = 1, pixels = 1)
-        }
+      fitfcn <- function(y, ...) {
+        ## J <- length(y)
+        list(intensities=2^colMedians(y), stdvs=1, pixels=1)
+      }
     }
     else if (this$summaryMethod == "mean") {
-        fitfcn <- function(y, ...) {
-            #J <- length(y)
-            list(intensities = 2^colMeans(y), stdvs = 1, pixels = 1)
-        }
+      fitfcn <- function(y, ...) {
+        ## J <- length(y)
+        list(intensities=2^colMeans(y), stdvs=1, pixels=1)
+      }
     }
     else {
-        fitfcn <- function(y, ...) {
-            J <- length(y)
-            list(intensities = 1, stdvs = 1, pixels = 1)
-        }
+      fitfcn <- function(y, ...) {
+        ## J <- length(y)
+        list(intensities=1, stdvs=1, pixels=1)
+      }
     }
   }
   fitfcn;
@@ -741,6 +761,12 @@ setMethodS3("fit", "FirmaModel", function(this, units="remaining", ..., ram=NULL
 
 ############################################################################
 # HISTORY:
+# 2011-11-09
+# o ROBUSTIFICATION: Now FirmaModel(plm) asserts that 'plm' is an
+#   ExonRmaPlm object (before any ProbeLevelModel would work), and
+#   that the PLM is setup for transcripts (mergeGroups=TRUE), not exons.
+# o Now the fit functions utilizes the 'matrixStats' package.
+# o CLEANUP: Dropped unused expressions from the fit functions.
 # 2008-05-31
 # o Removed an obsolete debug print() statement. 
 # 2008-04-09 [HB]

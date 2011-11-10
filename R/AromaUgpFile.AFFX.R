@@ -95,7 +95,7 @@ setMethodS3("importFromAffymetrixNetAffxCsvFile", "AromaUgpFile", function(this,
       shift <- 13;
   }
   if (shift != 0) {
-    verbose && printf(verbose, "Shifting positions %d steps.", shift);
+    verbose && printf(verbose, "Shifting positions %d steps.\n", shift);
     data[,2] <- data[,2] + as.integer(shift);
   }
  

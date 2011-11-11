@@ -1,12 +1,15 @@
 Package: aroma.affymetrix
 =========================
 
-Version: 2.3.2 [2011-11-09]
+Version: 2.3.2 [2011-11-10]
+o Added doFIRMA().
 o ROBUSTIFICATION: Now FirmaModel(plm) asserts that 'plm' is an
   ExonRmaPlm object (before any ProbeLevelModel would work), and
   that the PLM is setup for transcripts (mergeGroups=TRUE), not exons.
 o SPEEDUP: Now the internal fit functions of FirmaModel utilizes 
   the 'matrixStats' package.  Also cleaned out some unnessesary calls.
+o ROBUSTNESS: doGCRMA() is now guaranteed to undo any changes of 
+  the CDF of the data set, e.g. if there is a user interrupt.
 
 
 Version: 2.3.1 [2011-11-05]

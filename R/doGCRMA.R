@@ -69,6 +69,10 @@ setMethodS3("doGCRMA", "AffymetrixCelSet", function(csR, arrays=NULL, type=c("fu
   cdfS <- AffymetrixCdfFile$byChipType(chipTypeS);
   if (!equals(cdfS, cdf)) {
     setCdf(csR, cdfS);
+    on.exit({
+      # Make sure to undo, e.g. if interrupted.
+      setCdf(csR, cdf);
+    });
   }
 
   bc <- GcRmaBackgroundCorrection(csR, type=type);
@@ -197,6 +201,9 @@ setMethodS3("doGCRMA", "character", function(dataSet, ..., verbose=FALSE) {
 
 ############################################################################
 # HISTORY:
+# 2011-11-10
+# o ROBUSTNESS: doGCRMA() is now guaranteed to undo any changes of 
+#   the CDF of the data set, e.g. if there is a user interrupt.
 # 2011-04-07
 # o Added argument 'drop'.
 # o Added argument 'uniquePlm'.

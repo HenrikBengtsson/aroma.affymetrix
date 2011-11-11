@@ -208,8 +208,27 @@ setMethodS3("fit", "ProbeLevelModel", function(this, units="remaining", ..., for
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Fit the model in chunks
+  # Identify unit types
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  verbose && enter(verbose, "Identifying unit types:");
+  verbose && cat(verbose, "Units:");
+  verbose && str(verbose, units);
+  unitTypes <- getUnitTypes(cdf, units=units);
+  verbose && cat(verbose, "Unit types:");
+  verbose && str(verbose, unitTypes);
+  verbose && print(verbose, table(unitTypes));
+  uUnitTypes <- sort(unique(unitTypes));
+  verbose && cat(verbose, "Unique unit types:");
+  types <- attr(unitTypes, "types");
+  names(uUnitTypes) <- names(types)[match(uUnitTypes, types)];
+  verbose && print(verbose, uUnitTypes);
+  verbose && exit(verbose);
+
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Setting parameter sets
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  verbose && enter(verbose, "Setting up parameter sets");
   # Get the model-fit function
   fitUnit <- getFitUnitFunction(this);
 
@@ -219,181 +238,208 @@ setMethodS3("fit", "ProbeLevelModel", function(this, units="remaining", ..., for
   # Get (and create if missing) the chip-effect files (one per array)
   ces <- getChipEffectSet(this, ram=ram, verbose=less(verbose));
 
-  verbose && enter(verbose, "Calculating number of units to fit per chunk");
-  verbose && cat(verbose, "RAM scale factor: ", ram);
-
-  bytesPerChunk <- 100e6;       # 100Mb
-  verbose && cat(verbose, "Bytes per chunk: ", bytesPerChunk);
-
-  bytesPerUnitAndArray <- 500;  # Just a rough number; good enough?
-  verbose && cat(verbose, "Bytes per unit and array: ", bytesPerUnitAndArray);
-
-  bytesPerUnit <- nbrOfArrays * bytesPerUnitAndArray;
-  verbose && cat(verbose, "Bytes per unit: ", bytesPerUnit);
-
-  unitsPerChunk <- ram * bytesPerChunk / bytesPerUnit;
-  unitsPerChunk <- as.integer(max(unitsPerChunk,1));
-  verbose && cat(verbose, "Number of units per chunk: ", unitsPerChunk);
-
-  nbrOfChunks <- ceiling(nbrOfUnits / unitsPerChunk);
-  verbose && cat(verbose, "Number of chunks: ", nbrOfChunks);
-  verbose && exit(verbose);
-
-  idxs <- 1:nbrOfUnits;
-  head <- 1:unitsPerChunk;
-
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Garbage collect
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   clearCache(cs);
   clearCache(paf);
   clearCache(ces);
   gc <- gc();
   verbose && print(verbose, gc);
+  verbose && exit(verbose);
 
 
-  # Time the fitting.
-  startTime <- processTime();
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Fit each type of units independently
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  verbose && enter(verbose, "Fitting ", class(this)[1], " for each unit type separately");
+  verbose && cat(verbose, "Unit types:");
+  verbose && print(verbose, uUnitTypes);
 
-  timers <- list(total=0, read=0, fit=0, writePaf=0, writeCes=0, gc=0);
+  for (tt in seq(along=uUnitTypes)) {
+    unitType <- uUnitTypes[tt];
+    unitTypeLabel <- names(uUnitTypes)[tt];
+    verbose && enter(verbose, sprintf("Unit type #%d ('%s') of %d", tt, unitTypeLabel, length(uUnitTypes)));
 
-  count <- 1;
-  while (length(idxs) > 0) {
-    tTotal <- processTime();
-
-    verbose && enter(verbose, "Fitting chunk #", count, " of ", nbrOfChunks);
-    if (length(idxs) < unitsPerChunk) {
-      head <- 1:length(idxs);
-    }
-    uu <- idxs[head];
-
-    verbose && cat(verbose, "Units: ");
-    verbose && str(verbose, units[uu]);
+    unitsTT <- units[unitTypes == unitType];
+    nbrOfUnitsTT <- length(unitsTT);
+    verbose && printf(verbose, "Unit type: %s (code=%d)\n", unitTypeLabel, unitType);
+    verbose && cat(verbose, "Number of units of this type: ", nbrOfUnitsTT);
+    verbose && str(verbose, unitsTT);
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    # Get the CEL intensities by units
+    # Fit the model in chunks
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    tRead <- processTime();
-    y <- readUnits(this, units=units[uu], ..., force=force, cache=FALSE, 
-                                                    verbose=less(verbose));
-    timers$read <- timers$read + (processTime() - tRead);
+    verbose && enter(verbose, "Calculating number of units to fit per chunk");
+  
+    verbose && cat(verbose, "RAM scale factor: ", ram);
+  
+    bytesPerChunk <- 100e6;       # 100Mb
+    verbose && cat(verbose, "Bytes per chunk: ", bytesPerChunk);
+  
+    bytesPerUnitAndArray <- 500;  # Just a rough number; good enough?
+    verbose && cat(verbose, "Bytes per unit and array: ", bytesPerUnitAndArray);
+  
+    bytesPerUnit <- nbrOfArrays * bytesPerUnitAndArray;
+    verbose && cat(verbose, "Bytes per unit: ", bytesPerUnit);
+  
+    unitsPerChunk <- ram * bytesPerChunk / bytesPerUnit;
+    unitsPerChunk <- as.integer(max(unitsPerChunk,1));
+    verbose && cat(verbose, "Number of units per chunk: ", unitsPerChunk);
 
-   
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    # Read prior parameter estimates
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    if (hasPriors) {
-      priors <- readPriorsByUnits(this, units=units[uu], ..., force=force, 
-                                       cache=FALSE, verbose=less(verbose));
+    nbrOfChunks <- ceiling(nbrOfUnitsTT / unitsPerChunk);
+    verbose && cat(verbose, "Number of chunks: ", nbrOfChunks);
+
+    idxs <- 1:nbrOfUnitsTT;
+    head <- 1:unitsPerChunk;
+  
+    verbose && exit(verbose);
+
+
+    # Time the fitting.
+    startTime <- processTime();
+
+    timers <- list(total=0, read=0, fit=0, writePaf=0, writeCes=0, gc=0);
+
+    count <- 1;
+    while (length(idxs) > 0) {
+      tTotal <- processTime();
+  
+      verbose && enter(verbose, "Fitting chunk #", count, " of ", nbrOfChunks);
+      if (length(idxs) < unitsPerChunk) {
+        head <- 1:length(idxs);
+      }
+      uu <- idxs[head];
+  
+      unitsChunk <- unitsTT[uu];
+      verbose && cat(verbose, "Units: ");
+      verbose && str(verbose, unitsChunk);
+  
+      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      # Get the CEL intensities by units
+      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      tRead <- processTime();
+      y <- readUnits(this, units=unitsChunk, ..., force=force, cache=FALSE, 
+                                                      verbose=less(verbose));
       timers$read <- timers$read + (processTime() - tRead);
-    }
+  
+     
+      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      # Read prior parameter estimates
+      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      if (hasPriors) {
+        priors <- readPriorsByUnits(this, units=unitsChunk, ..., force=force, 
+                                         cache=FALSE, verbose=less(verbose));
+        timers$read <- timers$read + (processTime() - tRead);
+      }
+  
+      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      # Fit the model
+      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      verbose && enter(verbose, "Fitting probe-level model");
+      tFit <- processTime();
+  
+      if (hasPriors) {
+        verbose && cat(verbose, "Calling fitUnit() via mapply");
+        fit <- base::mapply(y, priors=priors, FUN=fitUnit, SIMPLIFY=FALSE);
+      } else {
+        verbose && cat(verbose, "Calling fitUnit() via lapply");
+        fit <- base::lapply(y, FUN=fitUnit);
+      }
+  
+      timers$fit <- timers$fit + (processTime() - tFit);
+      y <- NULL; # Not needed anymore (to minimize memory usage)
+      verbose && str(verbose, fit[1]);
+      verbose && exit(verbose);
+  
+      # Garbage collection
+      tGc <- processTime();
+      gc <- gc();
+      timers$gc <- timers$gc + (processTime() - tGc);
+      verbose && print(verbose, gc);
+  
+      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      # Store probe affinities
+      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      verbose && enter(verbose, "Storing probe-affinity estimates");
+      tWritePaf <- processTime();
+      updateUnits(paf, units=unitsChunk, data=fit, verbose=less(verbose));
+      timers$writePaf <- timers$writePaf + (processTime() - tWritePaf);
+      verbose && exit(verbose);
+  
+  
+      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      # Store chip effects
+      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      verbose && enter(verbose, "Storing chip-effect estimates");
+      tWriteCes <- processTime();
+      updateUnits(ces, units=unitsChunk, data=fit, verbose=less(verbose));
+      timers$writeCes <- timers$writeCes + (processTime() - tWriteCes);
+      verbose && exit(verbose);
+  
+      fit <- NULL; # Not needed anymore
+  
+      # Next chunk
+      idxs <- idxs[-head];
+      count <- count + 1;
+  
+      # Garbage collection
+      tGc <- processTime();
+      gc <- gc();
+      verbose && print(verbose, gc);
+      timers$gc <- timers$gc + (processTime() - tGc);
+  
+      timers$total <- timers$total + (processTime() - tTotal);
+  
+      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      # ETA
+      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      if (verbose) {
+        # Clarifies itself once in a while (in case running two in parallel).
+        verbose && print(verbose, this);
+  
+        # Fraction left
+        fLeft <- length(idxs) / nbrOfUnits;
+        # Time this far
+        lapTime <- processTime() - startTime;
+        t <- Sys.time() - lapTime[3];
+        printf(verbose, "Started: %s\n", format(t, "%Y%m%d %H:%M:%S"));
+        # Estimated time left
+        fDone <- 1-fLeft;
+        timeLeft <- fLeft/fDone * lapTime;
+        t <- timeLeft[3];
+        printf(verbose, "Estimated time left for unit type '%s': %.1fmin\n", unitTypeLabel, t/60);
+        # Estimate time to arrivale
+        eta <- Sys.time() + t;
+        printf(verbose, "ETA for unit type '%s': %s\n", unitTypeLabel, format(eta, "%Y%m%d %H:%M:%S"));
+      }
+  
+      verbose && exit(verbose);
+    } # while(length(idxs) > 0)  # For each chunk of units...
 
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    # Fit the model
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    verbose && enter(verbose, "Fitting probe-level model");
-    tFit <- processTime();
-
-    if (hasPriors) {
-      verbose && cat(verbose, "Calling fitUnit() via mapply");
-      fit <- base::mapply(y, priors=priors, FUN=fitUnit, SIMPLIFY=FALSE);
-    } else {
-      verbose && cat(verbose, "Calling fitUnit() via lapply");
-      fit <- base::lapply(y, FUN=fitUnit);
-    }
-
-    timers$fit <- timers$fit + (processTime() - tFit);
-    y <- NULL; # Not needed anymore (to minimize memory usage)
-    verbose && str(verbose, fit[1]);
-    verbose && exit(verbose);
-
-    # Garbage collection
-    tGc <- processTime();
-    gc <- gc();
-    timers$gc <- timers$gc + (processTime() - tGc);
-    verbose && print(verbose, gc);
-
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    # Store probe affinities
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    verbose && enter(verbose, "Storing probe-affinity estimates");
-    tWritePaf <- processTime();
-    updateUnits(paf, units=units[uu], data=fit, verbose=less(verbose));
-    timers$writePaf <- timers$writePaf + (processTime() - tWritePaf);
-    verbose && exit(verbose);
-
-
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    # Store chip effects
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    verbose && enter(verbose, "Storing chip-effect estimates");
-    tWriteCes <- processTime();
-    updateUnits(ces, units=units[uu], data=fit, verbose=less(verbose));
-    timers$writeCes <- timers$writeCes + (processTime() - tWriteCes);
-    verbose && exit(verbose);
-
-    fit <- NULL; # Not needed anymore
-
-    # Next chunk
-    idxs <- idxs[-head];
-    count <- count + 1;
-
-    # Garbage collection
-    tGc <- processTime();
-    gc <- gc();
-    verbose && print(verbose, gc);
-    timers$gc <- timers$gc + (processTime() - tGc);
-
-    timers$total <- timers$total + (processTime() - tTotal);
-
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    # ETA
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    totalTime <- processTime() - startTime;
     if (verbose) {
-      # Clarifies itself once in a while (in case running two in parallel).
-      verbose && print(verbose, this);
-
-      # Fraction left
-      fLeft <- length(idxs) / nbrOfUnits;
-      # Time this far
-      lapTime <- processTime() - startTime;
-      t <- Sys.time() - lapTime[3];
-      printf(verbose, "Started: %s\n", format(t, "%Y%m%d %H:%M:%S"));
-      # Estimated time left
-      fDone <- 1-fLeft;
-      timeLeft <- fLeft/fDone * lapTime;
-      t <- timeLeft[3];
-      printf(verbose, "Estimated time left: %.1fmin\n", t/60);
-      # Estimate time to arrivale
-      eta <- Sys.time() + t;
-      printf(verbose, "ETA: %s\n", format(eta, "%Y%m%d %H:%M:%S"));
+      nunits <- length(unitsTT);
+      t <- totalTime[3];
+      printf(verbose, "Total time for all '%s' units across all %d arrays: %.2fs == %.2fmin\n", unitTypeLabel, nbrOfArrays, t, t/60);
+      t <- totalTime[3]/nunits;
+      printf(verbose, "Total time per '%s' unit across all %d arrays: %.2fs/unit\n", unitTypeLabel, nbrOfArrays, t);
+      t <- totalTime[3]/nunits/nbrOfArrays;
+      printf(verbose, "Total time per '%s' unit and array: %.3gms/unit & array\n", unitTypeLabel, 1000*t);
+      t <- nbrOfUnits(cdf)*totalTime[3]/nunits/nbrOfArrays;
+      printf(verbose, "Total time for one array (%d units): %.2fmin = %.2fh\n", nbrOfUnits(cdf), t/60, t/3600);
+      t <- nbrOfUnits(cdf)*totalTime[3]/nunits;
+      printf(verbose, "Total time for complete data set: %.2fmin = %.2fh\n", t/60, t/3600);
+      # Get distribution of what is spend where
+      timers$write <- timers$writePaf + timers$writeCes;
+      t <- base::lapply(timers, FUN=function(timer) unname(timer[3]));
+      t <- unlist(t);
+      t <- 100 * t / t["total"];
+      printf(verbose, "Fraction of time spent on different tasks: Fitting: %.1f%%, Reading: %.1f%%, Writing: %.1f%% (of which %.2f%% is for encoding/writing chip-effects), Explicit garbage collection: %.1f%%\n", t["fit"], t["read"], t["write"], 100*t["writeCes"]/t["write"], t["gc"]);
     }
 
     verbose && exit(verbose);
-  } # while(length(idxs) > 0)
+  } # for (tt ...)  # For each unit types...
 
-
-  totalTime <- processTime() - startTime;
-  if (verbose) {
-    nunits <- length(units);
-    t <- totalTime[3];
-    printf(verbose, "Total time for all units across all %d arrays: %.2fs == %.2fmin\n", nbrOfArrays, t, t/60);
-    t <- totalTime[3]/nunits;
-    printf(verbose, "Total time per unit across all %d arrays: %.2fs/unit\n", nbrOfArrays, t);
-    t <- totalTime[3]/nunits/nbrOfArrays;
-    printf(verbose, "Total time per unit and array: %.3gms/unit & array\n", 1000*t);
-    t <- nbrOfUnits(cdf)*totalTime[3]/nunits/nbrOfArrays;
-    printf(verbose, "Total time for one array (%d units): %.2fmin = %.2fh\n", nbrOfUnits(cdf), t/60, t/3600);
-    t <- nbrOfUnits(cdf)*totalTime[3]/nunits;
-    printf(verbose, "Total time for complete data set: %.2fmin = %.2fh\n", t/60, t/3600);
-    # Get distribution of what is spend where
-    timers$write <- timers$writePaf + timers$writeCes;
-    t <- base::lapply(timers, FUN=function(timer) unname(timer[3]));
-    t <- unlist(t);
-    t <- 100 * t / t["total"];
-    printf(verbose, "Fraction of time spent on different tasks: Fitting: %.1f%%, Reading: %.1f%%, Writing: %.1f%% (of which %.2f%% is for encoding/writing chip-effects), Explicit garbage collection: %.1f%%\n", t["fit"], t["read"], t["write"], 100*t["writeCes"]/t["write"], t["gc"]);
-  }
+  verbose && exit(verbose);
 
   invisible(units);
 })
@@ -403,6 +449,10 @@ setMethodS3("fit", "ProbeLevelModel", function(this, units="remaining", ..., for
 
 ############################################################################
 # HISTORY:
+# 2011-11-10
+# o Now fit() for ProbeLevelModel fits one type of units at the time.
+#   For each unit type, the fitting is done in chunks.  The timing
+#   statistics presented in the verbose output is now per unit type.
 # 2010-02-16
 # o Added additional startup verbose output in fit() for ProbeLevelModel.R.
 # 2009-02-21

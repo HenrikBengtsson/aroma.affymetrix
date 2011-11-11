@@ -20,7 +20,7 @@
 # }
 #
 # \value{
-#  Returns a nested @list.
+#  Returns a named @list.
 # }
 #
 # @author
@@ -79,7 +79,7 @@ setMethodS3("groupUnitsByDimension", "AffymetrixCdfFile", function(this, units=N
 
   for (uu in seq(along=uSizes)) {
     sizeUU <- uSizes[uu];
-    verbose && enter(verbose, sprintf("Unit size %d of %d", uu, length(uSizes)));
+    verbose && enter(verbose, sprintf("Unit size #%d (nbrOfGroups=%d) of %d", uu, sizeUU, length(uSizes)));
     verbose && cat(verbose, "Number of groups per unit: ", sizeUU);
 
     # Pull out all units 'size' number of groups
@@ -111,7 +111,7 @@ setMethodS3("groupUnitsByDimension", "AffymetrixCdfFile", function(this, units=N
     # For each group of equal dimension
     for (kk in seq(length=nrow(uDimsUU))) {
       dimKK <- uDimsUU[kk, ,drop=TRUE];
-      verbose && enter(verbose, sprintf("Dimension %d of %d", kk, nrow(uDimsUU)));
+      verbose && enter(verbose, sprintf("Dimension #%d of %d", kk, nrow(uDimsUU)));
       verbose && cat(verbose, "Number of cells per group: ", paste(dimKK, collapse=", "));
 
       keep <- rep(TRUE, times=length(unitsUU));
@@ -124,6 +124,8 @@ setMethodS3("groupUnitsByDimension", "AffymetrixCdfFile", function(this, units=N
 #      verbose && str(verbose, unitsKK);
 
       resKK <- list();
+      resKK$nbrOfGroups <- length(dimKK);
+      resKK$nbrOfUnits <- length(unitsKK);
       resKK$nbrOfCellsPerGroup <- dimKK;
       resKK$units <- unitsKK;
       verbose && str(verbose, resKK);
@@ -140,6 +142,42 @@ setMethodS3("groupUnitsByDimension", "AffymetrixCdfFile", function(this, units=N
     verbose && exit(verbose);
   } # for (uu ...) 
 
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Sanity check
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  verbose && enter(verbose, "Asserting correctness");
+  # (a) Check units
+  unitsT <- lapply(res, FUN=function(x) x$units);
+  unitsT <- unlist(unitsT, use.names=FALSE);
+  unitsT <- sort(unitsT);
+  stopifnot(identical(unitsT, allUnits));
+
+  # (b) Check units in subelements
+  setsT <- lapply(res, FUN=function(x) x$sets);
+  unitsT <- lapply(setsT, FUN=function(x) { 
+    lapply(x, FUN=function(y) y$units)
+  });
+  unitsT <- unlist(unitsT, use.names=FALSE);
+  unitsT2 <- sort(unitsT);
+  stopifnot(identical(unitsT2, allUnits));
+
+  # Flatten sets
+  sets <- lapply(res, FUN=function(x) { x$sets });
+  # Merge sets
+  sets <- Reduce(append, sets);
+
+  # Tabulate dimensions per set
+  dims <- sapply(sets, FUN=function(set) c(set$nbrOfGroups, set$nbrOfUnits));
+  dims <- t(dims);
+  colnames(dims) <- c("nbrOfGroups", "nbrOfUnits");
+  
+  # Sanity check
+  stopifnot(sum(dims[,"nbrOfUnits"]) == length(allUnits));
+  verbose && exit(verbose);
+
+  res <- list(nestedSets=res, sets=sets, setDimensions=dims);
+
   verbose && exit(verbose);
 
   res;
@@ -148,6 +186,9 @@ setMethodS3("groupUnitsByDimension", "AffymetrixCdfFile", function(this, units=N
 
 ############################################################################
 # HISTORY:
+# 2010-11-10
+# o ROBUSTNESS: Added a sanity check to groupUnitsByDimension() for
+#   AffymetrixCdfFile.
 # 2010-04-21
 # o Created.
 ############################################################################

@@ -32,7 +32,7 @@
 }
 
 \value{
- Returns a nested \code{\link[base]{list}}.
+ Returns a named \code{\link[base]{list}}.
 }
 
 \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}

@@ -62,6 +62,7 @@ extends \emph{\link[aroma.affymetrix]{AffymetrixFileSet}}\cr
  \tab \code{convertToUnique} \tab  -\cr
  \tab \code{doCRMAv1} \tab  -\cr
  \tab \code{doCRMAv2} \tab  -\cr
+ \tab \code{\link[aroma.affymetrix:doFIRMA.AffymetrixCelSet]{doFIRMA}} \tab Finding Isoforms using Robust Multichip Analysis (FIRMA).\cr
  \tab \code{doGCRMA} \tab  -\cr
  \tab \code{doRMA} \tab  -\cr
  \tab \code{\link[aroma.affymetrix:extractAffyBatch.AffymetrixCelSet]{extractAffyBatch}} \tab Extracts an in-memory AffyBatch object from the CEL set.\cr

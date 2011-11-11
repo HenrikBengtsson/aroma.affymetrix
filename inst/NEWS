@@ -1,6 +1,17 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 2.3.3 [2011-11-10]
+o Now fit() for ProbeLevelModel fits one type of units at the time.
+  For each unit type, the fitting is done in chunks.  The timing
+  statistics presented in the verbose output is now per unit type.
+  The purpose of this is to move toward fitting in chunks of units
+  where the units are all of the same type and dimension (number
+  of groups and number of cells per group).  Doing so will allow
+  us speed up the restructuring of the data when reading signals
+  and writing parameter estimates.
+
+
 Version: 2.3.2 [2011-11-10]
 o Added doFIRMA().
 o ROBUSTIFICATION: Now FirmaModel(plm) asserts that 'plm' is an

@@ -33,11 +33,11 @@ csR <- AffymetrixCelSet$byName(dataSet, chipType=chipType);
 
 # Extract tumor-normal pair
 pair <- c(T="GSM318736", N="GSM318737");
-csP <- extract(csR, indexOf(csR, pair));
-print(csP);
+csR <- extract(csR, indexOf(csR, pair));
+print(csR);
 
 # Allele-specific CRMAv2 on pair
-res <- doASCRMAv2(csP, verbose=log);
+res <- doASCRMAv2(csR, verbose=log);
 print(res);
 
 
@@ -59,7 +59,7 @@ betaT <- data[,"fracB","T"];
 betaN <- data[,"fracB","N"];
 
 # Setup data structure for Paired PSCBS
-df <- data.frame(CT=CT, betaT=betaT, betaN=betaN, chromosome=chromosome, x=x);
+df <- data.frame(chromosome=chromosome, x=x, CT=CT, betaT=betaT, betaN=betaN);
 
 # Segment Chr 8.
 dfT <- subset(df, chromosome == 8);

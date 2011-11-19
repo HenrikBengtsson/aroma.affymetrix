@@ -539,10 +539,11 @@ setMethodS3("fit", "FirmaModel", function(this, units="remaining", ..., ram=NULL
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   ds <- getDataSet(this$.plm);
   cdf <- getCdf(ds);
-  if (this$operateOn == "weights")
+  if (this$operateOn == "weights") {
     ws <- calculateWeights(this, verbose = verbose)
-  else
+  } else {
     ws <- calculateResiduals(this, verbose = verbose)
+  }
   nbrOfArrays <- length(ds);
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

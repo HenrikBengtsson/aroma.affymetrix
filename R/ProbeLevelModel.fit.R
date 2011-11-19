@@ -265,6 +265,76 @@ setMethodS3("fit", "ProbeLevelModel", function(this, units="remaining", ..., for
     verbose && cat(verbose, "Number of units of this type: ", nbrOfUnitsTT);
     verbose && str(verbose, unitsTT);
 
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    # Fit the model by unit dimensions (at least for the large classes)
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    verbose && enter(verbose, "Fitting the model by unit dimensions (at least for the large classes)");
+
+    verbose && enter(verbose, "Grouping units into equivalent (unit,group,cell) dimensions");
+    unitDimensions <- groupUnitsByDimension(cdf, units=unitsTT, verbose=less(verbose, 50));
+    # Not needed anymore
+    rm(unitsTT);
+
+    sets <- unitDimensions$sets;
+    dims <- unitDimensions$setDimensions;
+    o <- order(dims$nbrOfUnits, decreasing=TRUE);
+    dims <- dims[o,];
+    sets <- sets[o];
+
+    if (verbose) {
+      verbose && printf(verbose, "%d classes of unit dimensions:\n", nrow(dims));
+      dimsT <- dims;
+      dimsT$nbrOfCellsPerGroup <- sapply(dims$nbrOfCellsPerGroup, FUN=hpaste, collapse="x");
+      if (nrow(dimsT) < 100) {
+        verbose && print(verbose, dimsT);
+      } else {
+        verbose && print(verbose, head(dimsT));
+        verbose && print(verbose, tail(dimsT));
+      }
+      rm(dimsT);
+    }
+    verbose && exit(verbose);
+
+
+    # Identify large classes
+    minNbrOfUnits <- getOption(aromaSettings, "models/Plm/chunks/minNbrOfUnits", 500L);
+    isLarge <- (dims$nbrOfUnits >= minNbrOfUnits);
+    nLarge <- sum(isLarge);
+    nTotal <- nrow(dims);
+    nuLarge <- sum(dims$nbrOfUnits[isLarge]);
+    nuTotal <- sum(dims$nbrOfUnits);
+    verbose && printf(verbose, "There are %d large classes of units, each with a unique dimension and that each contains at least %d units.  In total these large classes constitute %d (%.2f%%) units.\n", nLarge, minNbrOfUnits, nuLarge, 100*nuLarge/nuTotal);
+
+    large <- mapply(sets[isLarge], dims$nbrOfCellsPerGroup[isLarge], FUN=function(set, dim) {
+      list(units=set$units, dim=dim);
+    }, SIMPLIFY=FALSE);
+    names(large) <- sapply(dims$nbrOfCellsPerGroup[isLarge], FUN=paste, collapse="x");
+    
+    small <- lapply(sets[!isLarge], FUN=function(x) x$units);
+    small <- unlist(small, use.names=FALSE);
+    small <- list(mix=list(units=small));
+
+    dimChunks <- c(large, small);
+    for (kk in seq(along=dimChunks)) {
+      dimChunk <- dimChunks[[kk]];
+      dim <- dimChunk$dim;
+      if (is.null(dim)) {
+        dimDescription <- "various dimensions";
+      } else {
+        nbrOfGroups <- length(dim);
+        dimStr <- paste(dimChunk$dim, collapse="x");
+        dimDescription <- sprintf("%d groups/%s cells", nbrOfGroups, dimStr);
+      }
+
+      verbose && enter(verbose, sprintf("Unit dimension #%d (%s) of %d", kk, dimDescription, length(dimChunks)));
+
+      unitsKK <- dimChunk$units;
+      nbrOfUnitsKK <- length(unitsKK);
+      verbose && printf(verbose, "Number of units: %d (%.2f%%) out of %d '%s' units (code=%d)\n", nbrOfUnitsKK, 100*nbrOfUnitsKK/nbrOfUnitsTT, nbrOfUnitsTT, unitTypeLabel, unitType);
+      verbose && str(verbose, unitsKK);
+
+
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Fit the model in chunks
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -285,10 +355,10 @@ setMethodS3("fit", "ProbeLevelModel", function(this, units="remaining", ..., for
     unitsPerChunk <- as.integer(max(unitsPerChunk,1));
     verbose && cat(verbose, "Number of units per chunk: ", unitsPerChunk);
 
-    nbrOfChunks <- ceiling(nbrOfUnitsTT / unitsPerChunk);
+    nbrOfChunks <- ceiling(nbrOfUnitsKK / unitsPerChunk);
     verbose && cat(verbose, "Number of chunks: ", nbrOfChunks);
 
-    idxs <- 1:nbrOfUnitsTT;
+    idxs <- 1:nbrOfUnitsKK;
     head <- 1:unitsPerChunk;
   
     verbose && exit(verbose);
@@ -303,13 +373,16 @@ setMethodS3("fit", "ProbeLevelModel", function(this, units="remaining", ..., for
     while (length(idxs) > 0) {
       tTotal <- processTime();
   
-      verbose && enter(verbose, "Fitting chunk #", count, " of ", nbrOfChunks);
+      verbose && enter(verbose, sprintf("Fitting chunk #%d of %d of '%s' units (code=%d) with %s", count, nbrOfChunks, unitTypeLabel, unitType, dimDescription));
       if (length(idxs) < unitsPerChunk) {
         head <- 1:length(idxs);
       }
       uu <- idxs[head];
   
-      unitsChunk <- unitsTT[uu];
+      unitsChunk <- unitsKK[uu];
+      verbose && printf(verbose, "Unit type: '%s' (code=%d)\n", unitTypeLabel, unitType);
+      verbose && cat(verbose, "Unit dimension: ", dimDescription);
+      verbose && cat(verbose, "Number of units in chunk: ", length(unitsChunk));
       verbose && cat(verbose, "Units: ");
       verbose && str(verbose, unitsChunk);
   
@@ -321,6 +394,13 @@ setMethodS3("fit", "ProbeLevelModel", function(this, units="remaining", ..., for
                                                       verbose=less(verbose));
       timers$read <- timers$read + (processTime() - tRead);
   
+      # Sanity checks
+      if (!is.null(dim)) {
+        nbrOfGroups <- length(dim);
+        if (length(y[[1]]) != nbrOfGroups) {
+          throw("Internal error: The read units does not have ", nbrOfGroups, " groups: ", length(y[[1]]));
+        }
+      }
      
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       # Read prior parameter estimates
@@ -417,7 +497,7 @@ setMethodS3("fit", "ProbeLevelModel", function(this, units="remaining", ..., for
 
     totalTime <- processTime() - startTime;
     if (verbose) {
-      nunits <- length(unitsTT);
+      nunits <- length(unitsKK);
       t <- totalTime[3];
       printf(verbose, "Total time for all '%s' units across all %d arrays: %.2fs == %.2fmin\n", unitTypeLabel, nbrOfArrays, t, t/60);
       t <- totalTime[3]/nunits;
@@ -436,6 +516,10 @@ setMethodS3("fit", "ProbeLevelModel", function(this, units="remaining", ..., for
       printf(verbose, "Fraction of time spent on different tasks: Fitting: %.1f%%, Reading: %.1f%%, Writing: %.1f%% (of which %.2f%% is for encoding/writing chip-effects), Explicit garbage collection: %.1f%%\n", t["fit"], t["read"], t["write"], 100*t["writeCes"]/t["write"], t["gc"]);
     }
 
+      verbose && exit(verbose);
+    } # for (kk ...) # For each unit dimension class...
+    verbose && exit(verbose);
+
     verbose && exit(verbose);
   } # for (tt ...)  # For each unit types...
 
@@ -449,6 +533,10 @@ setMethodS3("fit", "ProbeLevelModel", function(this, units="remaining", ..., for
 
 ############################################################################
 # HISTORY:
+# 2011-11-18
+# o Now fit() for ProbeLevelModel fits one type of units at the time,
+#   which in turn is fitted in chunks of units with equal number of
+#   groups and cells per groups (very small chunks are merged together).
 # 2011-11-10
 # o Now fit() for ProbeLevelModel fits one type of units at the time.
 #   For each unit type, the fitting is done in chunks.  The timing

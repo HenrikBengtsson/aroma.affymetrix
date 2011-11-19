@@ -49,8 +49,10 @@ setMethodS3("getUnitGroupNamesFromUgcMap", "AffymetrixCdfFile", function(this, u
 
   verbose && enter(verbose, "Building (unit name, group name) map");
 
-  for (unitSize in uniqueUnitSizes) {
-    verbose && enter(verbose, "Processing units with maximum ", unitSize, " group(s)");
+  for (uu in seq(along=uniqueUnitSizes)) {
+    unitSize <- uniqueUnitSizes[uu];
+    verbose && enter(verbose, "Processing set #%d of %d containing units with a maximum of %d group(s)", uu, length(uniqueUnitSizes), unitSize);
+
     # Extract the group names for unit with 'unitSize' groups as a matrix
     idxs <- which(unitSizes == unitSize);
     units <- uniqueUnits[idxs];
@@ -86,7 +88,7 @@ setMethodS3("getUnitGroupNamesFromUgcMap", "AffymetrixCdfFile", function(this, u
     }
 
     verbose && exit(verbose);
-  } # for (unitSize ...)
+  } # for (uu ...)
 
   verbose && exit(verbose);
 
@@ -107,6 +109,9 @@ setMethodS3("getUnitGroupNamesFromUgcMap", "AffymetrixCdfFile", function(this, u
 
 ############################################################################
 # HISTORY:
+# 2011-11-18:
+# o Now the verbose progress output of getUnitGroupNamesFromUgcMap()
+#   is more informative on what subset in order is currently processed.
 # 2008-04-28
 # o SPEEDUP: Changed the algorithm for getUnitGroupNamesFromUgcMap(). It
 #   was painfully slow for large UGC maps.  Took ~10-14 days(!) for the

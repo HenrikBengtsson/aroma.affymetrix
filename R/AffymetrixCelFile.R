@@ -816,7 +816,10 @@ setMethodS3("readRawData", "AffymetrixCelFile", function(this, indices=NULL, fie
   }
 
   # Argument 'fields':
-  fields <- intersect(fields, c("xy", "intensities", "stdvs", "pixels"));
+  fields <- match.arg(fields, several.ok=TRUE);
+  if (length(fields) == 0) {
+    throw("Argument 'fields' is empty.");
+  }
 
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
@@ -848,10 +851,10 @@ setMethodS3("readRawData", "AffymetrixCelFile", function(this, indices=NULL, fie
     filename=pathname, 
     indices=indices, 
     readHeader=FALSE, 
-    readIntensities=("intensities" %in% fields), 
-    readStdvs=("stdvs" %in% fields), 
-    readPixels=("pixels" %in% fields), 
-    readXY=("xy" %in% fields), 
+    readIntensities=is.element("intensities", fields), 
+    readStdvs=is.element("stdvs", fields), 
+    readPixels=is.element("pixels", fields), 
+    readXY=is.element("xy", fields), 
     readOutliers=FALSE, 
     readMasked=FALSE,
     ...,
@@ -861,6 +864,10 @@ setMethodS3("readRawData", "AffymetrixCelFile", function(this, indices=NULL, fie
   keep <- intersect(names(args), names(formals(fcn)));
   args <- args[keep];
   cel <- do.call("readCel", args=args);
+
+  # Sanity check
+  stopifnot(is.list(cel));
+  stopifnot(length(cel) > 0);
 
   if (hasNAs) {
     for (kk in seq(along=cel)) {
@@ -884,6 +891,10 @@ setMethodS3("readRawData", "AffymetrixCelFile", function(this, indices=NULL, fie
   # Keep only requested fields
   if (!identical(names(cel), fields)) {
     cel <- cel[fields];
+
+    # Sanity check
+    stopifnot(is.list(cel));
+    stopifnot(length(cel) > 0);
   }
 
   if (readZeroElements) {
@@ -935,6 +946,9 @@ setMethodS3("getRectangle", "AffymetrixCelFile", function(this, ...) {
 
 ############################################################################
 # HISTORY:
+# 2011-11-18
+# o ROBUSTNESS: Added validiation of argument 'fields' to readRawData()
+#   of AffymetrixCelFile and more internal sanity checks in that method.
 # 2011-08-31
 # o ROBUSTNESS: getTimestamp() for AffymetrixCelFile would throw "Error
 #   in if (hasTimestamp) { : argument is of length zero" if the CEL file

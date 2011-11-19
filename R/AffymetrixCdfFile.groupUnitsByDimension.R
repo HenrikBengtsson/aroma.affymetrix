@@ -171,7 +171,11 @@ setMethodS3("groupUnitsByDimension", "AffymetrixCdfFile", function(this, units=N
   dims <- sapply(sets, FUN=function(set) c(set$nbrOfGroups, set$nbrOfUnits));
   dims <- t(dims);
   colnames(dims) <- c("nbrOfGroups", "nbrOfUnits");
-  
+  dims <- as.data.frame(dims);
+  nbrOfCellsPerGroup <- lapply(sets, FUN=function(x) { x$nbrOfCellsPerGroup });
+  dims$nbrOfCellsPerGroup <- nbrOfCellsPerGroup;
+  dims <- dims[,c(1L,3L,2L)];
+
   # Sanity check
   stopifnot(sum(dims[,"nbrOfUnits"]) == length(allUnits));
   verbose && exit(verbose);
@@ -181,12 +185,15 @@ setMethodS3("groupUnitsByDimension", "AffymetrixCdfFile", function(this, units=N
   verbose && exit(verbose);
 
   res;
-}, protected=TRUE)
+}, protected=TRUE) # groupUnitsByDimension()
 
 
 ############################################################################
 # HISTORY:
-# 2010-11-10
+# 2011-11-18
+# o Added column 'nbrOfCellsPerGroup' containing a list of ragged vectors
+#   to element 'setDimensions' returned by groupUnitsByDimension().
+# 2011-11-10
 # o ROBUSTNESS: Added a sanity check to groupUnitsByDimension() for
 #   AffymetrixCdfFile.
 # 2010-04-21

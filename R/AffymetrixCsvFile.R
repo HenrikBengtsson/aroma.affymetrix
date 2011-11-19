@@ -7,12 +7,18 @@ setConstructorS3("AffymetrixCsvFile", function(..., sep=",", .verify=TRUE) {
 })
 
 
+setMethodS3("getDefaultExtension", "AffymetrixCsvFile", function(static, ...) {
+  "csv";
+}, static=TRUE, protected=TRUE)
+
 setMethodS3("getExtensionPattern", "AffymetrixCsvFile", function(static, ...) {
-  "[.](csv|CSV)$";
+  ext <- getDefaultExtension(static, ...);
+  pattern <- sprintf("[.](%s|%s)$", tolower(ext), toupper(ext));
+  pattern;
 }, static=TRUE, protected=TRUE)
 
 
-setMethodS3("findByChipType", "AffymetrixCsvFile", function(static, chipType, pattern=sprintf("^%s.*[.](csv|CSV)$", chipType), ...) {
+setMethodS3("findByChipType", "AffymetrixCsvFile", function(static, chipType, pattern=sprintf("^%s.*%s", chipType, getExtensionPattern(static)), ...) {
   findByChipType.AffymetrixTabularFile(static, chipType=chipType, pattern=pattern, ...);
 }, static=TRUE, protected=TRUE)
 
@@ -20,6 +26,8 @@ setMethodS3("findByChipType", "AffymetrixCsvFile", function(static, chipType, pa
 
 ############################################################################
 # HISTORY:
+# 2011-11-19
+# o Added getDefaultExtension() to AffymetrixCsvFile.
 # 2007-09-10
 # o Created from AffymetrixCsvGenomeInformation.R.
 ############################################################################

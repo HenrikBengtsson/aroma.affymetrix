@@ -1461,6 +1461,13 @@
 \alias{dropCellsFromCdfList}
 \alias{writeCdfByExcludingCells.AffymetrixCdfFile}
 \alias{writeCdfByExcludingCells}
+\alias{getDefaultExtension.AffymetrixCdfFile}
+\alias{getDefaultExtension.AffymetrixCsvFile}
+\alias{getDefaultExtension.AffymetrixCsvGenomeInformation}
+\alias{getDefaultExtension.AffymetrixNetAffxCsvFile}
+\alias{getDefaultExtension.AffymetrixTsvFile}
+\alias{getDefaultExtension.AromaCellMatchScoreFile}
+\alias{getDefaultExtension.AromaChipTypeAnnotationFile}
 
 \description{
   This page contains aliases for all "non-documented" objects that

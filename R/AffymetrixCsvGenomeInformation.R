@@ -5,6 +5,12 @@ setConstructorS3("AffymetrixCsvGenomeInformation", function(...) {
   this;
 })
 
+
+setMethodS3("getDefaultExtension", "AffymetrixCsvGenomeInformation", function(static, ...) {
+  "annot.csv";
+}, static=TRUE, protected=TRUE)
+
+
 setMethodS3("findByChipType", "AffymetrixCsvGenomeInformation", function(static, chipType, version=NULL, ...) {
   # Argument 'version':
   if (is.null(version))
@@ -13,11 +19,13 @@ setMethodS3("findByChipType", "AffymetrixCsvGenomeInformation", function(static,
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Search in annotationData/chipTypes/<chipType>/
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  pattern <- sprintf("^%s[.].*[.]annot[.]csv$", chipType);
+  ext <- getDefaultExtension(static);
+  pattern <- sprintf("^%s[.].*[.]%s$", chipType, ext);
   pathname <- findAnnotationDataByChipType(chipType, pattern);
 
   pathname;
 }, static=TRUE, protected=TRUE)
+
 
 setMethodS3("fromChipType", "AffymetrixCsvGenomeInformation", function(static, ...) {
   className <- class(static)[1];
@@ -57,7 +65,8 @@ setMethodS3("readDataFrame", "AffymetrixCsvGenomeInformation", function(this, ..
   }
 
 
-  verbose && enter(verbose, "Reading Affymetrix *annot.csv file");
+  ext <- getDefaultExtension(this);
+  verbose && enter(verbose, sprintf("Reading Affymetrix *.%s file", ext));
 
   pathname <- getPathname(this);
 
@@ -133,6 +142,8 @@ setMethodS3("readDataFrame", "AffymetrixCsvGenomeInformation", function(this, ..
 
 ############################################################################
 # HISTORY:
+# 2011-11-19
+# o Added getDefaultExtension() for AffymetrixCsvGenomeInformation.
 # 2008-04-14
 # o Renamed readData() to readDataFrame() for AffymetrixCsvGenomeInformation.
 # 2007-08-03

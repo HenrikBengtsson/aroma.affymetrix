@@ -18,16 +18,22 @@ setMethodS3("getChipType", "AffymetrixTsvFile", function(this, ...) {
   getName(this);
 })
 
-setMethodS3("getExtensionPattern", "AffymetrixTsvFile", function(static, ...) {
-  "[.](tsv|TSV)$";
+setMethodS3("getDefaultExtension", "AffymetrixTsvFile", function(static, ...) {
+  "tsv";
 }, static=TRUE, protected=TRUE)
+
+setMethodS3("getExtensionPattern", "AffymetrixTsvFile", function(static, ...) {
+  ext <- getDefaultExtension(static, ...);
+  pattern <- sprintf("[.](%s|%s)$", tolower(ext), toupper(ext));
+  pattern;
+}, static=TRUE, protected=TRUE) 
 
 
 setMethodS3("findByChipType", "AffymetrixTsvFile", function(static, chipType, ...) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Search in annotationData/chipTypes/<chipType>/
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  pattern <- sprintf("^%s[.]tsv$", chipType);
+  pattern <- sprintf("^%s%s", chipType, getExtensionPattern(static));
   pathname <- findAnnotationDataByChipType(chipType, pattern);
 
   pathname;
@@ -181,6 +187,8 @@ setMethodS3("getCdf", "AffymetrixTsvFile", function(this, ...) {
 
 ############################################################################
 # HISTORY:
+# 2011-11-19
+# o Added getDefaultExtension() to AffymetrixCsvFile.
 # 2008-05-18
 # o Now readDataFrame() and getField() of AffymetrixTsvFile utilize the
 #   UnitNamesFile interface rather than the platform-specific 

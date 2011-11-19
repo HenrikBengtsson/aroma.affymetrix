@@ -157,6 +157,10 @@ setMethodS3("fromFile", "AffymetrixCdfFile", function(static, filename, path=NUL
 
 
 
+setMethodS3("getDefaultExtension", "AffymetrixCdfFile", function(static, ...) {
+  "cdf";
+}, static=TRUE, protected=TRUE);
+
 
 ###########################################################################/**
 # @RdocMethod findByChipType
@@ -207,6 +211,13 @@ setMethodS3("findByChipType", "AffymetrixCdfFile", function(static, chipType, ta
   args <- list(pattern=pattern);
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Filename extension pattern to be searched for
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  ext <- getDefaultExtension(static);
+  extPattern <- sprintf("[.](%s|%s)", tolower(ext), toupper(ext));
+
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Search in annotationData/chipTypes/<chipType>/
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -220,12 +231,12 @@ setMethodS3("findByChipType", "AffymetrixCdfFile", function(static, chipType, ta
     parentChipType <- gsub("-monocell$", "", chipType);  # Remove tags
 
     # First, see if there is a new monocell, then use that
-    pattern <- paste("^", newChipType, "[.](c|C)(d|D)(f|F)$", sep="");
+    pattern <- sprintf("^%s%s$", newChipType, extPattern);
     pathname <- findAnnotationDataByChipType(parentChipType, pattern);
 
     # Second, see if the old-named monocell is there
     if (is.null(pathname)) {
-      pattern <- sprintf("^%s[.](c|C)(d|D)(f|F)$", chipType);
+      pattern <- sprintf("^%s%s$", chipType, extPattern);
       pathname <- findAnnotationDataByChipType(parentChipType, pattern=pattern);
       if (!is.null(pathname)) {
         msg <- paste("Deprecated filename of monocell CDF detected. Rename CDF file by replacing dash ('-') with a comma (','): ", pathname, sep="");
@@ -244,9 +255,10 @@ setMethodS3("findByChipType", "AffymetrixCdfFile", function(static, chipType, ta
   chipType <- parts[1];
   tags <- parts[-1];
 
+  # Fullname pattern
   args <- list(
     chipType=chipType,
-    pattern=sprintf("^%s[.](c|C)(d|D)(f|F)$", fullname),
+    pattern=sprintf("^%s%s$", fullname, extPattern),
     ...
   );
   pathname <- do.call("findAnnotationDataByChipType", args=args);
@@ -256,7 +268,7 @@ setMethodS3("findByChipType", "AffymetrixCdfFile", function(static, chipType, ta
     # Search for a Windows shortcut
     args <- list(
       chipType=chipType, 
-      pattern=sprintf("^%s[.](c|C)(d|D)(f|F)[.]lnk$", fullname),
+      pattern=sprintf("^%s%s[.]lnk$", fullname, extPattern),
       ...
     );
     pathname <- do.call("findAnnotationDataByChipType", args=args);
@@ -1595,6 +1607,10 @@ setMethodS3("convertUnits", "AffymetrixCdfFile", function(this, units=NULL, keep
 
 ############################################################################
 # HISTORY:
+# 2011-11-18
+# o CLEANUP: Now the filename extension pattern for findByChipType() 
+#   of AffymetrixCdfFile is inferred from getDefaultExtension().
+# o Added static getDefaultExtension() for AffymetrixCdfFile.
 # 2011-03-04
 # o ROBUSTNESS: Now getCellIndices() for AffymetrixCdfFile asserts that
 #   argument 'units' can be coerced to integer indices.

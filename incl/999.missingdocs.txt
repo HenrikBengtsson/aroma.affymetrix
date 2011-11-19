@@ -740,4 +740,10 @@ apply colMeans colSums library require
   getNetAffxDate.AffymetrixNetAffxCsvFile
 dropCellsFromCdfList
 writeCdfByExcludingCells.AffymetrixCdfFile writeCdfByExcludingCells
-
+  getDefaultExtension.AffymetrixCdfFile
+  getDefaultExtension.AffymetrixCsvFile
+  getDefaultExtension.AffymetrixCsvGenomeInformation
+  getDefaultExtension.AffymetrixNetAffxCsvFile
+  getDefaultExtension.AffymetrixTsvFile
+  getDefaultExtension.AromaCellMatchScoreFile
+  getDefaultExtension.AromaChipTypeAnnotationFile

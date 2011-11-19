@@ -356,6 +356,7 @@ setMethodS3("getCdf", "AffymetrixProbeTabFile", function(this, ...) {
 })
 
 
+
 setMethodS3("findByChipType", "AffymetrixProbeTabFile", function(static, chipType, what=c("", "CN"), paths=NULL, ..., verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  # Validate arguments
@@ -378,7 +379,7 @@ setMethodS3("findByChipType", "AffymetrixProbeTabFile", function(static, chipTyp
   verbose && enter(verbose, "Searching for probe sequence file");
   verbose && cat(verbose, "Chip type: ", chipType);
 
-  pattern <- paste("[._]probe[._]tab$", sep="");
+  pattern <- "[._]probe[._]tab$";
   if (what == "CN") {
     pattern <- paste("[.]CN", pattern, sep="");
   }

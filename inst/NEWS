@@ -1,6 +1,13 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 2.3.5 [2011-11-19]
+o Now byChipType() for AromaChipTypeAnnotationFile gives an error
+  message with more information on which file it failed to locate,
+  e.g. by specifying filename extension it looked for.
+o Added abstract getDefaultExtension() for AromaChipTypeAnnotationFile.
+
+
 Version: 2.3.4 [2011-11-18]
 o Now fit() for ProbeLevelModel fits one type of units at the time,
   which in turn is fitted in chunks of units with equal number of

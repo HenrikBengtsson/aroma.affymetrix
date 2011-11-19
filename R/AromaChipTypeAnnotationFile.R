@@ -146,8 +146,22 @@ setMethodS3("byChipType", "AromaChipTypeAnnotationFile", function(static, chipTy
   # Search for a matching annotation file
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   pathname <- findByChipType(static, chipType, tags=tags);
+
   if (is.null(pathname)) {
-    throw("Could not create ", class(static)[1], " object. No annotation chip type file with that chip type found: ", chipType);
+    ext <- getDefaultExtension(static);
+    note <- attr(ext, "note");
+    msg <- sprintf("Failed to create %s object. Could to locate an annotation data file for chip type '%s'", class(static)[1], chipType);
+    if (is.null(tags)) {
+      msg <- sprintf("%s (without requiring any tags)", msg);
+    } else {
+      msg <- sprintf("%s with tags '%s'", msg, paste(tags, collapse=","));
+    }
+    msg <- sprintf("%s and with filename extension '%s'", msg, ext);
+    if (!is.null(note)) {
+      msg <- sprintf("%s (%s)", msg, note);
+    }
+    msg <- sprintf("%s.", msg);
+    throw(msg);
   }
 
   res <- fromFile(static, filename=pathname, path=NULL, ...);
@@ -171,6 +185,24 @@ setMethodS3("fromChipType", "AromaChipTypeAnnotationFile", function(static, ...)
 
 
 
+
+setMethodS3("getDefaultExtension", "AromaChipTypeAnnotationFile", function(static, ...) {
+  # Guess the filename extension from the class name, which might be wrong
+  className <- class(static)[1];
+
+  ext <- gsub("File$", "", className);
+  ext <- strsplit(ext, split="", fixed=TRUE)[[1]];
+  n <- length(ext);
+  pos <- which(ext == toupper(ext));
+  pos <- pos[length(pos)];
+  ext <- ext[seq(from=pos, to=n)];
+  ext <- paste(ext, collapse="");
+  ext <- tolower(ext);
+
+  attr(ext, "note") <- sprintf("this may not be the correct extension as it was guessed from the class name '%s'", className);
+
+  ext;
+}, static=TRUE, protected=TRUE);
 
 
 ###########################################################################/**
@@ -250,6 +282,12 @@ setMethodS3("getChipType", "AromaChipTypeAnnotationFile", abstract=TRUE);
 
 ############################################################################
 # HISTORY:
+# 2011-11-19
+# o Now byChipType() for AromaChipTypeAnnotationFile gives an error
+#   message with more information on which file it failed to locate,
+#   e.g. by specifying filename extension it looked for.
+# o Added default getDefaultExtension() for AromaChipTypeAnnotationFile,
+#   which guesses the filename extension from the class name.
 # 2008-05-09
 # o Created from AffymetrixCdfFile.R.
 ############################################################################

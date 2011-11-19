@@ -38,6 +38,11 @@ setMethodS3("getColumnNames", "AromaCellMatchScoreFile", function(this, ...) {
 
 
 
+setMethodS3("getDefaultExtension", "AromaCellMatchScoreFile", function(static, ...) {
+  "cdf";
+}, static=TRUE, protected=TRUE);
+
+
 setMethodS3("byChipType", "AromaCellMatchScoreFile", function(static, chipType, tags=NULL, nbrOfCells=NULL, ..., verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments

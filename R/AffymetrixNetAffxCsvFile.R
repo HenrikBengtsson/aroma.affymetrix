@@ -19,7 +19,12 @@ setMethodS3("clearCache", "AffymetrixNetAffxCsvFile", function(this, ...) {
 
 
 
-setMethodS3("findByChipType", "AffymetrixNetAffxCsvFile", function(static, chipType, tags=".*", pattern=sprintf("^%s%s([.]|_)annot[.](csv|CSV)$", chipType, tags), ...) {
+setMethodS3("getDefaultExtension", "AffymetrixNetAffxCsvFile", function(static, ...) {
+  "annot.csv";
+}, static=TRUE, protected=TRUE)
+
+
+setMethodS3("findByChipType", "AffymetrixNetAffxCsvFile", function(static, chipType, tags=".*", pattern=sprintf("^%s%s([.]|_)%s$", chipType, tags, getDefaultExtension(static)), ...) {
   findByChipType.AffymetrixCsvFile(static, chipType=chipType, pattern=pattern, ...);
 }, static=TRUE, protected=TRUE)
 
@@ -362,6 +367,8 @@ setMethodS3("readDataUnitFragmentLength", "AffymetrixNetAffxCsvFile", function(t
 
 ############################################################################
 # HISTORY:
+# 2011-11-19
+# o Added getDefaultExtension() for AffymetrixNetAffxCsvFile.
 # 2010-02-15
 # o BUG FIX: readDataUnitChromosomePosition() of AffymetrixNetAffxCsvFile
 #   failed to map chromosome 'MT' to 25.  This bug was introduced

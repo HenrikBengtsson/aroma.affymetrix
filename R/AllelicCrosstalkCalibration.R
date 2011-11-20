@@ -135,7 +135,7 @@ setConstructorS3("AllelicCrosstalkCalibration", function(dataSet=NULL, ..., mode
         rescaleBy <- "groups";
       } else if (regexpr("^GenomeWideSNP_", chipType) != -1) {
         rescaleBy <- "all";
-      } else if (regexpr("^Cytogenetics_Array$", chipType) != -1) {
+      } else if (regexpr("^Cyto(genetics|ScanHD)_Array$", chipType) != -1) {
         rescaleBy <- "all";
       } else if (regexpr("^MOUSEDIVm520650$", chipType) != -1) {
         rescaleBy <- "all";
@@ -143,7 +143,7 @@ setConstructorS3("AllelicCrosstalkCalibration", function(dataSet=NULL, ..., mode
         # Heuristics so that we can work with "future/unknown" chip types.
         types <- getUnitTypes(cdf);
         # 5 == Copy Number
-        hasCns <- hasUnitTypes(cdf, types=5);
+        hasCns <- is.element(5, types);
         rm(types);
 
         if (hasCns) {
@@ -1220,6 +1220,10 @@ setMethodS3("getDataPairs", "AllelicCrosstalkCalibration", function(this, array,
 
 ############################################################################
 # HISTORY:
+# 2011-11-19
+# o SPEEDUP: Constructor for AllelicCrosstalkCalibration no longer calls
+#   the very slow hasUnitTypes() for AffymetrixCdfFile, but instead only
+#   the much faster getUnitTypes().
 # 2011-03-14
 # o SPEEDUP: Added MOUSEDIVm520650 to the set of predefined chip types
 #   in AllelicCrosstalkCalibration.

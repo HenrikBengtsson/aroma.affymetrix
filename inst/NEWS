@@ -2,6 +2,9 @@ Package: aroma.affymetrix
 =========================
 
 Version: 2.3.5 [2011-11-19]
+o SPEEDUP: Constructor for AllelicCrosstalkCalibration no longer calls
+  the very slow hasUnitTypes() for AffymetrixCdfFile, but instead only
+  the much faster getUnitTypes().
 o Now byChipType() for AromaChipTypeAnnotationFile gives an error
   message with more information on which file it failed to locate,
   e.g. by specifying filename extension it looked for.

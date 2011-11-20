@@ -47,29 +47,42 @@ stopifnot(identical(getNames(cesN), getNames(ces)));
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# GLAD model test
+# Try to setup different segmentation models
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-glad <- GladModel(cesN);
-print(glad);
+constList <- list(
+  glad = GladModel,
+  cbs  = CbsModel,
+  haar = HaarSegModel
+);
+print(names(constList));
 
-fit(glad, arrays=1, chromosomes=19, verbose=log);
+csmList <- lapply(constList, FUN=function(csm) {
+  res <- NULL;
+  tryCatch({
+    res <- csm(cesN);
+  }, error = function(ex) {
+    print(ex);
+  })
+  res;
+});
+
+csmList <- csmList[!sapply(csmList, is.null)];
+print(names(constList));
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# CBS model test
+# Try to segment
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-cbs <- CbsModel(cesN);
-print(cbs);
+fitList <- lapply(csmList, FUN=function(csm) {
+  fit(csm, arrays=1, chromosomes=19, verbose=log);
+});
 
-fit(cbs, arrays=1, chromosomes=19, verbose=log);
 
-
-csmList <- list(
-  cbs  = CbsModel(cesN),
-  glad = GladModel(cesN)
-)
-
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Try generate ChromosomeExplorer
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 lapply(csmList, FUN=function(csm) {
   ce <- ChromosomeExplorer(csm);
   process(ce, arrays=1:2, chromosomes=c(1:2,23), verbose=log);
-})
+});
+

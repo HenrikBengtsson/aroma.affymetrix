@@ -268,11 +268,13 @@ setMethodS3("doCRMA", "default", function(dataSet, chipTypes=NULL, ..., logName=
   log && header(log, "Returning results");
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   fit;
-})
+}, deprecated=TRUE)
 
 
 ############################################################################
 # HISTORY:
+# 2011-11-19
+# o Deprecated doCRMA().  Use doCRMAv1() or doCRMAv2() instead.
 # 2007-11-25
 # o Created.
 ############################################################################

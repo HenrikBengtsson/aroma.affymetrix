@@ -310,12 +310,16 @@ setMethodS3("fit", "ProbeLevelModel", function(this, units="remaining", ..., for
       list(units=set$units, dim=dim);
     }, SIMPLIFY=FALSE);
     names(large) <- sapply(dims$nbrOfCellsPerGroup[isLarge], FUN=paste, collapse="x");
-    
+    dimChunks <- large;
+
+    # Additional small sets, if any    
     small <- lapply(sets[!isLarge], FUN=function(x) x$units);
     small <- unlist(small, use.names=FALSE);
-    small <- list(mix=list(units=small));
+    if (length(small) > 0) {
+      small <- list(mix=list(units=small));
+      dimChunks <- c(dimChunks, small);
+    }
 
-    dimChunks <- c(large, small);
     for (kk in seq(along=dimChunks)) {
       dimChunk <- dimChunks[[kk]];
       dim <- dimChunk$dim;
@@ -385,6 +389,9 @@ setMethodS3("fit", "ProbeLevelModel", function(this, units="remaining", ..., for
       verbose && cat(verbose, "Number of units in chunk: ", length(unitsChunk));
       verbose && cat(verbose, "Units: ");
       verbose && str(verbose, unitsChunk);
+
+      # Sanitcy check
+      stopifnot(length(idxs) > 0);
   
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       # Get the CEL intensities by units
@@ -533,6 +540,10 @@ setMethodS3("fit", "ProbeLevelModel", function(this, units="remaining", ..., for
 
 ############################################################################
 # HISTORY:
+# 2011-11-20
+# o BUG FIX: In the most recent update to fit() when fitting "remaining"
+#   sets of units ("various dimensions") would refit everything iff there
+#   where no such units (leading to units == NULL).
 # 2011-11-18
 # o Now fit() for ProbeLevelModel fits one type of units at the time,
 #   which in turn is fitted in chunks of units with equal number of

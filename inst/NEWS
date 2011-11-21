@@ -1,7 +1,7 @@
 Package: aroma.affymetrix
 =========================
 
-Version: 2.3.5 [2011-11-19]
+Version: 2.3.5 [2011-11-20]
 o SPEEDUP: Constructor for AllelicCrosstalkCalibration no longer calls
   the very slow hasUnitTypes() for AffymetrixCdfFile, but instead only
   the much faster getUnitTypes().

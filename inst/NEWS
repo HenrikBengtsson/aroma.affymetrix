@@ -10,6 +10,10 @@ o Now byChipType() for AromaChipTypeAnnotationFile gives an error
   e.g. by specifying filename extension it looked for.
 o Added abstract getDefaultExtension() for AromaChipTypeAnnotationFile.
 o CLEANUP: Deprecated doCRMA(). Use doCRMAv1() or doCRMAv2() instead.
+o BUG FIX: Internally justSNPRMA() for AffymetrixCelSet would pass
+  argument 'verbose=log' instead of 'verbose=verbose', which would 
+  throw an error unless 'log' was assigned to be a logical value or
+  a Verbose object.
 
 
 Version: 2.3.4 [2011-11-18]

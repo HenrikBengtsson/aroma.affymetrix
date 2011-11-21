@@ -176,13 +176,13 @@ setMethodS3("justSNPRMA", "AffymetrixCelSet", function(this, ..., normalizeToHap
     pkg <- Package("oligo");
     if (!isOlderThan(Package("oligo"), "1.12.0")) {
       # For oligo v1.12.0 and newer
-      eSet <- extractAlleleSet(ces, verbose=log);
+      eSet <- extractAlleleSet(ces, verbose=verbose);
     } else {
       # For oligo v1.11.x and older
       if (hasCNs) {
-        eSet <- extractSnpCnvQSet(ces, verbose=log);
+        eSet <- extractSnpCnvQSet(ces, verbose=verbose);
       } else {
-        eSet <- extractSnpQSet(ces, verbose=log);
+        eSet <- extractSnpQSet(ces, verbose=verbose);
       }
     }
     verbose && print(verbose, eSet);
@@ -200,6 +200,10 @@ setMethodS3("justSNPRMA", "AffymetrixCelSet", function(this, ..., normalizeToHap
 
 ############################################################################
 # HISTORY:
+# 2011-11-20
+# o BUG FIX: Internally, justSNPRMA() would pass argument 'verbose=log'
+#   instead of 'verbose=verbose', which would throw an error unless
+#   'log' was assigned to be a logical value or a Verbose object.
 # 2010-05-09
 # o Made justSNPRMA(..., normalizeSNPsOnly="auto") for AffymetrixCelSet
 #   the default.

@@ -285,7 +285,7 @@ setMethodS3("fit", "ProbeLevelModel", function(this, units="remaining", ..., for
     if (verbose) {
       verbose && printf(verbose, "%d classes of unit dimensions:\n", nrow(dims));
       dimsT <- dims;
-      dimsT$nbrOfCellsPerGroup <- sapply(dims$nbrOfCellsPerGroup, FUN=hpaste, collapse="x");
+      dimsT$nbrOfCellsPerGroup <- sapply(dims$nbrOfCellsPerGroup, FUN=hpaste, collapse="+");
       if (nrow(dimsT) < 100) {
         verbose && print(verbose, dimsT);
       } else {
@@ -309,7 +309,7 @@ setMethodS3("fit", "ProbeLevelModel", function(this, units="remaining", ..., for
     large <- mapply(sets[isLarge], dims$nbrOfCellsPerGroup[isLarge], FUN=function(set, dim) {
       list(units=set$units, dim=dim);
     }, SIMPLIFY=FALSE);
-    names(large) <- sapply(dims$nbrOfCellsPerGroup[isLarge], FUN=paste, collapse="x");
+    names(large) <- sapply(dims$nbrOfCellsPerGroup[isLarge], FUN=paste, collapse="+");
     dimChunks <- large;
 
     # Additional small sets, if any    
@@ -327,7 +327,7 @@ setMethodS3("fit", "ProbeLevelModel", function(this, units="remaining", ..., for
         dimDescription <- "various dimensions";
       } else {
         nbrOfGroups <- length(dim);
-        dimStr <- paste(dimChunk$dim, collapse="x");
+        dimStr <- paste(dimChunk$dim, collapse="+");
         dimDescription <- sprintf("%d groups/%s cells", nbrOfGroups, dimStr);
       }
 

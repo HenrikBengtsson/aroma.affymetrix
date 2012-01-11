@@ -401,13 +401,16 @@ setMethodS3("fit", "ProbeLevelModel", function(this, units="remaining", ..., for
                                                       verbose=less(verbose));
       timers$read <- timers$read + (processTime() - tRead);
   
-      # Sanity checks
-      if (!is.null(dim)) {
-        nbrOfGroups <- length(dim);
-        if (length(y[[1]]) != nbrOfGroups) {
-          throw("Internal error: The read units does not have ", nbrOfGroups, " groups: ", length(y[[1]]));
-        }
-      }
+##    # It is not possible to do the below sanity check, because
+##    # readUnits() may have merged groups etc in a way we cannot
+##    # know.  /HB 2012-01-11
+##      # Sanity checks
+##      if (!is.null(dim)) {
+##        nbrOfGroups <- length(dim);
+##        if (length(y[[1]]) != nbrOfGroups) {
+##          throw("Internal error: The read units does not have ", nbrOfGroups, " groups: ", length(y[[1]]));
+##        }
+##      }
      
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       # Read prior parameter estimates
@@ -533,13 +536,16 @@ setMethodS3("fit", "ProbeLevelModel", function(this, units="remaining", ..., for
   verbose && exit(verbose);
 
   invisible(units);
-})
+}) # fit()
 
 
 
 
 ############################################################################
 # HISTORY:
+# 2012-01-11
+# o BUG FIX: fit() for ProbeLevelModel would throw an error due to a
+#   sanity check on unit dimensions that was only valid in certain cases.
 # 2011-11-20
 # o BUG FIX: In the most recent update to fit() when fitting "remaining"
 #   sets of units ("various dimensions") would refit everything iff there

@@ -3,6 +3,9 @@ Package: aroma.affymetrix
 
 Version: 2.4.0 [2012-01-11]
 o ROBUSTNESS: Updated package dependencies.
+o Adopted a few redundancy tests for the most recent updates.
+o BUG FIX: fit() for ProbeLevelModel would throw an error due to a
+  sanity check on unit dimensions that was only valid in certain cases.
 
 
 Version: 2.3.5 [2011-11-20]

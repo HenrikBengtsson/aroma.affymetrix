@@ -47,23 +47,22 @@ rm(dummy);
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# FIRMA
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-firmaList <- lapply(plmList, FUN=FirmaModel);
-print(firmaList);
-
-# FIRMA for one of the PLMs
-firma <- firmaList$merge;
-fit(firma, verbose=log);
-fScores <- getFirmaScores(firma);
-print(fScores);
-
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# Residuals and weights (actually already calculated by FIRMA)
+# Residuals and weights (will otherwise be calculated by FIRMA)
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 resList <- lapply(plmList, FUN=calculateResiduals, verbose=log);
 print(resList);
 
 weightList <- lapply(plmList, FUN=calculateWeights, verbose=log);
 print(weightList);
+
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# FIRMA
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# FIRMA can only be applied for PLMs with mergeGroups=TRUE
+plm <- plmList$merge;
+firma <- FirmaModel(plm);
+print(firma);
+fit(firma, verbose=log);
+fScores <- getFirmaScores(firma);
+print(fScores);

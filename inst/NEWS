@@ -1,6 +1,10 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 2.4.0 [2012-01-11]
+o ROBUSTNESS: Updated package dependencies.
+
+
 Version: 2.3.5 [2011-11-20]
 o SPEEDUP: Constructor for AllelicCrosstalkCalibration no longer calls
   the very slow hasUnitTypes() for AffymetrixCdfFile, but instead only
@@ -22,7 +26,7 @@ o Now fit() for ProbeLevelModel fits one type of units at the time,
   groups and cells per groups (very small chunks are merged together).
   Doing so will eventually allow us to speed up the restructuring of
   the data when reading signals and writing parameter estimates.
-o ROBUSTNESS: Added validiation of argument 'fields' to readRawData()
+o ROBUSTNESS: Added validation of argument 'fields' to readRawData()
   of AffymetrixCelFile and more internal sanity checks in that method.
 
 

@@ -20,7 +20,7 @@ sets <- groupUnitsByDimension(cdf, units=units, verbose=verbose);
 str(sets);
 
 # Apply cell indices to sets containing "rectangular" unit
-cellSets <- lapply(sets, FUN=function(set) {
+cellSets <- lapply(sets$nestedSets, FUN=function(set) {
   nbrOfGroups <- set$nbrOfGroups;
   set$sets <- lapply(set$sets, FUN=function(subset) {
     nbrOfCellsPerGroup <- subset$nbrOfCellsPerGroup;
@@ -37,5 +37,6 @@ cellSets <- lapply(sets, FUN=function(set) {
   });
   set;
 });
+
 str(cellSets);
 

@@ -98,13 +98,13 @@ getUnitNames, indexOf, nbrOfUnits
 getUnitTypes, nbrOfUnits
 
  \bold{Methods inherited from UnitAnnotationDataFile}:\cr
-byChipType, getAromaUflFile, getAromaUgpFile, getChipType, getPlatform, nbrOfUnits
+byChipType, getAromaUflFile, getAromaUgpFile, getChipType, getDefaultExtension, getPlatform, nbrOfUnits
 
  \bold{Methods inherited from AromaPlatformInterface}:\cr
 getAromaPlatform, getAromaUgpFile, getPlatform, getUnitAnnotationDataFile, getUnitNamesFile, getUnitTypesFile, isCompatibleWith
 
  \bold{Methods inherited from AromaChipTypeAnnotationFile}:\cr
-byChipType, byName, findByChipType, fromFile, getChipType, getHeader, getPlatform
+byChipType, byName, findByChipType, fromFile, getChipType, getDefaultExtension, getHeader, getPlatform
 
  \bold{Methods inherited from AromaMicroarrayDataFile}:\cr
 getAttributeXY, getChipType, getPlatform, getPloidy, getXAM, hasAttributeXY, isAverageFile, setAttributesByTags, setAttributeXY

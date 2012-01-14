@@ -41,10 +41,12 @@ extends \emph{\link[aroma.affymetrix]{UnitModel}}\cr
   Thus, if the signals in one array changes the model has to be refitted.
  }
 
- \usage{MultiArrayUnitModel(...)}
+ \usage{MultiArrayUnitModel(..., listOfPriors=NULL)}
 
  \arguments{
    \item{...}{Arguments passed to \code{\link{UnitModel}}.}
+   \item{listOfPriors}{A \code{\link[base]{list}} of priors to be used when fitting
+    the model.}
  }
 
  \section{Fields and Methods}{

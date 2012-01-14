@@ -18,6 +18,8 @@
 #
 # \arguments{
 #   \item{...}{Arguments passed to @see "UnitModel".}
+#   \item{listOfPriors}{A @list of priors to be used when fitting 
+#    the model.}
 # }
 #
 # \section{Fields and Methods}{
@@ -26,8 +28,12 @@
 #
 # @author
 #*/###########################################################################
-setConstructorS3("MultiArrayUnitModel", function(...) {
-  extend(UnitModel(...), "MultiArrayUnitModel");
+setConstructorS3("MultiArrayUnitModel", function(..., listOfPriors=NULL) {
+  this <- extend(UnitModel(...), "MultiArrayUnitModel");
+  if (!is.null(listOfPriors)) {
+    this <- setListOfPriors(this, listOfPriors);
+  }
+  this;
 }, abstract=TRUE)
 
 
@@ -37,8 +43,12 @@ setMethodS3("validate", "MultiArrayUnitModel", function(this, ...) {
     return(invisible(TRUE));
 
   if (nbrOfArrays(ds) < 2) {
-    throw("This ", class(this)[1], " requires at least 2 arrays: ",
+    priors <- getListOfPriors(this);
+    hasPriors <- (!is.null(priors));
+    if (!hasPriors) {
+      throw("This ", class(this)[1], " requires at least 2 arrays: ",
                                                             nbrOfArrays(ds));
+    }
   }
 
   invisible(TRUE);
@@ -288,6 +298,10 @@ setMethodS3("readPriorsByUnits", "MultiArrayUnitModel", function(this, units=NUL
 
 ############################################################################
 # HISTORY:
+# 2012-01-14
+# o Now validate() of MultiArrayUnitModel accepts single-array data sets,
+#   iff priors are set.
+# o Added argument 'listOfPriors' to MultiArrayUnitModel().
 # 2008-12-08
 # o Added readPriorsByUnits().
 # 2008-09-03

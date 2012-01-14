@@ -22,13 +22,19 @@ ces <- getChipEffectSet(plm);
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-# With priors
+# Fit "another" sample based on above PLM priors
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+# Get PLM priors
 pf <- getProbeAffinityFile(plm);
 
+# One "new" sample
+csT <- extract(csN, 1);
+print(csT);
+
 # RMA probe summarization (there are no NAs in this data set)
-plmP <- RmaPlm(csN);
-setListOfPriors(plmP, list(probeAffinities=pf));
+listOfPriors <- list(probeAffinities=pf);
+plmP <- RmaPlm(csT, tags="*,priors", listOfPriors=listOfPriors);
+print(plmP);
 
 # Assert that list of prior (data files) exists
 priorList <- getListOfPriors(plmP);
@@ -41,6 +47,8 @@ str(priors);
 
 ###########################################################################
 # HISTORY:
+# 2012-01-14 [HB]
+# o Now the script is only one sample for the PLM prior part.
 # 2009-04-28 [HB]
 # o Added to test priors.
 ###########################################################################

@@ -1,6 +1,15 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 2.4.1 [2012-01-14]
+o Now validate() of MultiArrayUnitModel accepts single-array data 
+  sets, iff priors are set.
+o Added argument 'listOfPriors' to MultiArrayUnitModel(). Such
+  priors are passed to the internal fitUnit() method.  However, 
+  currently most PLMs (e.g. RmaPlm) are not aware of them and
+  therefore basically ignore any priors.
+
+
 Version: 2.4.0 [2012-01-11]
 o ROBUSTNESS: Updated package dependencies.
 o Adopted a few redundancy tests for the most recent updates.

@@ -44,10 +44,21 @@ print(priorList);
 priors <- readPriorsByUnits(plmP, units=101:105);
 str(priors);
 
+fit(plmP, verbose=verbose);
+cesP <- getChipEffectSet(plmP);
+
+
+theta <- extractTheta(extract(ces,1), drop=TRUE);
+thetaP <- extractTheta(cesP, drop=TRUE);
+
+plot(theta, thetaP);
+abline(a=0, b=1);
+
 
 ###########################################################################
 # HISTORY:
 # 2012-01-14 [HB]
+# o Now sctipt also fits PLM with prior parameters.
 # o Now the script is only one sample for the PLM prior part.
 # 2009-04-28 [HB]
 # o Added to test priors.

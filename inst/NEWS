@@ -2,17 +2,15 @@ Package: aroma.affymetrix
 =========================
 
 Version: 2.4.1 [2012-01-14]
-o ROBUSTNESS: Now the fit functions of RmaPlm and MbeiPlm give an
-  error whenever trying to use prior parameters, which are yet
+o ROBUSTNESS: Now the fit function of MbeiPlm gives an error
+  whenever one tries to use prior parameters, which are yet
   not supported.
+o Updated getFitUnitGroupFunction() for RmaPlm to support prior
+  probe-affinity parameters.
+o Added argument 'listOfPriors' to MultiArrayUnitModel(). Such
+  priors are passed to the internal fitUnit() method.
 o Now validate() of MultiArrayUnitModel accepts single-array data 
   sets, iff priors are set.
-o Now the fit function returned by getFitUnitFunction() for
-  MultiArrayUnitModel passes '...'.
-o Added argument 'listOfPriors' to MultiArrayUnitModel(). Such
-  priors are passed to the internal fitUnit() method.  However, 
-  currently most PLMs (e.g. RmaPlm) are not aware of them and
-  therefore basically ignore any priors.
 
 
 Version: 2.4.0 [2012-01-11]

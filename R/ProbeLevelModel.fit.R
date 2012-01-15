@@ -434,7 +434,7 @@ setMethodS3("fit", "ProbeLevelModel", function(this, units="remaining", ..., for
         verbose && cat(verbose, "Calling fitUnit() via lapply");
         fit <- base::lapply(y, FUN=fitUnit);
       }
-  
+
       timers$fit <- timers$fit + (processTime() - tFit);
       y <- NULL; # Not needed anymore (to minimize memory usage)
       verbose && str(verbose, fit[1]);

@@ -163,10 +163,13 @@ setMethodS3("getProbeAffinityFile", "RmaPlm", function(this, ...) {
   
 
 
-setMethodS3("getRlmFitFunctions", "RmaPlm", function(static, ..., verbose=FALSE) {
+setMethodS3("getRlmFitFunctions", "RmaPlm", function(static, withPriors=FALSE, ..., verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Argument 'withPriors':
+  withPriors <- Arguments$getLogical(withPriors);
+
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
   if (verbose) {
@@ -185,7 +188,24 @@ setMethodS3("getRlmFitFunctions", "RmaPlm", function(static, ..., verbose=FALSE)
   if (is.list(pkgDesc)) {
     ver <- pkgDesc$Version;
     verbose && cat(verbose, pkg, " version: ", ver);
-    if (compareVersion(ver, "1.7.1") >= 0) {
+
+    # Internal sanity check
+    if (compareVersion(ver, "1.8.0") < 0) {
+      throw("Requires preprocessCore >= 1.8.0");
+    }
+
+    if (withPriors) {
+      fcnList <- list(
+        wrlm = function(y, phi, psiCode, psiK, w, scale=NULL) {
+          .Call("R_rlm_rma_given_probe_effects", 
+                y, phi, psiCode, psiK, w, scale, PACKAGE="preprocessCore");
+        },
+        rlm = function(y, phi, psiCode, psiK, w, scale=NULL) {
+          .Call("R_rlm_rma_given_probe_effects", 
+                y, phi, psiCode, psiK, scale, PACKAGE="preprocessCore");
+        }
+      );
+    } else {
       fcnList <- list(
         wrlm = function(y, psiCode, psiK, w, scale=NULL) {
           .Call("R_wrlm_rma_default_model", 
@@ -194,17 +214,6 @@ setMethodS3("getRlmFitFunctions", "RmaPlm", function(static, ..., verbose=FALSE)
         rlm = function(y, psiCode, psiK, w, scale=NULL) {
           .Call("R_rlm_rma_default_model", 
                 y, psiCode, psiK, scale, PACKAGE="preprocessCore");
-        }
-      );
-    } else if (compareVersion(ver, "0.99.14") >= 0) {
-      fcnList <- list(
-        wrlm = function(y, psiCode, psiK, w) {
-          .Call("R_wrlm_rma_default_model", 
-                y, psiCode, psiK, w, PACKAGE="preprocessCore");
-        },
-        rlm = function(y, psiCode, psiK, w) {
-          .Call("R_rlm_rma_default_model", 
-                y, psiCode, psiK, PACKAGE="preprocessCore");
         }
       );
     }
@@ -224,6 +233,11 @@ setMethodS3("getRlmFitFunctions", "RmaPlm", function(static, ..., verbose=FALSE)
   if (is.list(pkgDesc)) {
     ver <- pkgDesc$Version;
     verbose && cat(verbose, pkg, " version: ", ver);
+
+    if (withPriors) {
+      throw("NOT SUPPORTED: Cannot fit RmaPlm with prior probe affinities when using affyPLM.");
+    }
+
     if (compareVersion(ver, "1.13.8") <= 0) {
       fcnList <- list(
         wrlm = function(y, psiCode, psiK, w) {
@@ -247,7 +261,7 @@ setMethodS3("getRlmFitFunctions", "RmaPlm", function(static, ..., verbose=FALSE)
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Failure
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  throw("Neither preprocessCore v0.99.14+ nor affyPLM v1.13.8- is available.");
+  throw("Neither preprocessCore v1.8.0+ nor affyPLM v1.13.8- is available.");
 }, static=TRUE, protected=TRUE) # getRlmFitFunctions()
 
 
@@ -311,10 +325,6 @@ setMethodS3("getFitUnitGroupFunction", "RmaPlm", function(this, ..., verbose=FAL
   # Requires: affyPLM() by Ben Bolstad.
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   rmaModelAffyPlm <- function(y, priors=NULL, ..., psiCode=0, psiK=1.345){
-    if (!is.null(priors)) {
-      throw("NOT IMPLEMENTED: Internal rmaModelAffyPlm() does not support prior parameters.");
-    }
-
     # Assert right dimensions of 'y'.
 
     # If input data are dimensionless, return NAs. /KS 2006-01-30
@@ -418,19 +428,42 @@ setMethodS3("getFitUnitGroupFunction", "RmaPlm", function(this, ..., verbose=FAL
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Fit model
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    # Use median polish for large probesets (that doesn't have NAs)?
-    if (K > medianPolishThreshold[1] && I > medianPolishThreshold[2] && !hasNAs) {
-      mp <- medpolish(y, trace.iter=FALSE);
-      fit <- list(
-        Estimates = c(mp$overall+mp$col, mp$row), 
-        StdErrors = rep(0, length(c(mp$row, mp$col)))
-      );
-    } else {
-      # Fit model using preprocessCore/affyPLM code
+    hasPriors <- !is.null(priors);
+    if (hasPriors) {
+      paf <- priors$probeAffinities[[1]];
+      # Sanity check
+      stopifnot(!is.null(paf));
+      phi <- paf$phi;
+      # Sanity check
+      stopifnot(!is.null(phi));
+      # Sanity check
+      stopifnot(length(phi) == K);
+
+      sdPhi <- paf$sdPhi;
+
+      # Log-additive model
+      alpha <- log(phi, base=2);
+
       if (!is.null(w)) {
-        fit <- wrlm(y, psiCode, psiK, w);
+        fit <- wrlm(y, alpha, psiCode, psiK, w);
       } else {
-        fit <- rlm(y, psiCode, psiK);
+        fit <- rlm(y, alpha, psiCode, psiK);
+      }
+    } else {
+      # Use median polish for large probesets (that doesn't have NAs)?
+      if (K > medianPolishThreshold[1] && I > medianPolishThreshold[2] && !hasNAs) {
+        mp <- medpolish(y, trace.iter=FALSE);
+        fit <- list(
+          Estimates = c(mp$overall+mp$col, mp$row), 
+          StdErrors = rep(0, length(c(mp$row, mp$col)))
+        );
+      } else {
+        # Fit model using preprocessCore/affyPLM code
+        if (!is.null(w)) {
+          fit <- wrlm(y, psiCode, psiK, w);
+        } else {
+          fit <- rlm(y, psiCode, psiK);
+        }
       }
     }
 
@@ -442,14 +475,16 @@ setMethodS3("getFitUnitGroupFunction", "RmaPlm", function(this, ..., verbose=FAL
 
     # Chip effects
     beta <- est[1:I];
+    # On the intensity scale
+    theta <- 2^beta;
 
     # Probe affinities
-    alpha <- est[(I+1):length(est)];
-    alpha[length(alpha)] <- -sum(alpha[1:(length(alpha)-1)]);
-
-    # Estimates on the intensity scale
-    theta <- 2^beta;
-    phi <- 2^alpha;
+    if (!hasPriors) {
+      alpha <- est[(I+1):length(est)];
+      alpha[length(alpha)] <- -sum(alpha[1:(length(alpha)-1)]);
+      # On the intensity scale
+      phi <- 2^alpha;
+    }
 
     # The RMA model is fitted with constraint sum(alpha) = 0, that is,
     # such that prod(phi) = 1.
@@ -460,22 +495,27 @@ setMethodS3("getFitUnitGroupFunction", "RmaPlm", function(this, ..., verbose=FAL
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     if (is.null(se)) {
       # For affyPLM v1.10.0 (2006-09-26) or older.
-      sdTheta <- rep(1, I);
-      sdPhi <- rep(1, K);
+      sdTheta <- rep(1, times=I);
+      if (!hasPriors) {
+        sdPhi <- rep(1, times=K);
+      }
     } else {
       # For affyPLM v1.11.6 (2006-11-01) or newer.
       sdTheta <- 2^(se[1:I]);
-      sdPhi <- 2^(se[(I+1):length(se)]);
+      if (!hasPriors) {
+        sdPhi <- 2^(se[(I+1):length(se)]);
+      }
     }
 
     # Handle NAs?
     if (nasRemoved) {
       if (treatNAsAs == "NA") {
-        phi0 <- rep(NA, K0);
+        naValue <- as.double(NA);
+        phi0 <- rep(naValue, times=K0);
         phi0[okCells] <- phi;
         phi <- phi0;
   
-        sdPhi0 <- rep(NA, K0);
+        sdPhi0 <- rep(naValue, times=K0);
         sdPhi0[okCells] <- sdPhi;
         sdPhi <- sdPhi0;
   
@@ -483,8 +523,8 @@ setMethodS3("getFitUnitGroupFunction", "RmaPlm", function(this, ..., verbose=FAL
       }
     }
 
-    thetaOutliers <- rep(FALSE, I);
-    phiOutliers <- rep(FALSE, K);
+    thetaOutliers <- rep(FALSE, times=I);
+    phiOutliers <- rep(FALSE, times=K);
 
     # Return data on the intensity scale
     list(theta=theta, sdTheta=sdTheta, thetaOutliers=thetaOutliers, 
@@ -717,6 +757,14 @@ setMethodS3("getFitUnitGroupFunction", "RmaPlm", function(this, ..., verbose=FAL
   verbose && enter(verbose, "Selecting fit function depending on 'flavor'");
   verbose && cat(verbose, "Flavor: ", flavor);
 
+  priors <- getListOfPriors(this);
+  hasPriors <- !is.null(priors);
+  verbose && cat(verbose, "Has priors: ", hasPriors);
+  if (hasPriors) {
+    # Sanity check
+    stopifnot(is.element("probeAffinities", names(priors)));
+  }
+
   # Shift signals?
   shift <- this$shift;
   if (is.null(shift))
@@ -730,7 +778,7 @@ setMethodS3("getFitUnitGroupFunction", "RmaPlm", function(this, ..., verbose=FAL
   verbose && cat(verbose, "treatNAsAs: ", treatNAsAs);
 
   if (flavor == "affyPLM") {
-    fcnList <- RmaPlm$getRlmFitFunctions(verbose=less(verbose));
+    fcnList <- RmaPlm$getRlmFitFunctions(withPriors=hasPriors, verbose=less(verbose));
     verbose && str(verbose, fcnList);
     # To please R CMD check
     rlm <- wrlm <- NULL; rm(rlm, wrlm);
@@ -752,8 +800,16 @@ setMethodS3("getFitUnitGroupFunction", "RmaPlm", function(this, ..., verbose=FAL
   verbose && enter(verbose, "Validating the fit function on some dummy data");
   ok <- FALSE;
   tryCatch({
-    y <- matrix(1:6+0.1, ncol=3);
-    rmaModel(y);
+    y <- matrix(1:12+0.1, ncol=3);
+    if (hasPriors) {
+      verbose && cat(verbose, "With prior probe affinities");
+      phi <- c(0.7630639, 0.9068485, 1.1208795, 1.2892744);
+      sdPhi <- c(1.101706, 1.091220, 1.091220, 1.094554);
+      priors <- list(probeAffinities=list("foo"=list(phi=phi, sdPhi=sdPhi)));
+      res <- rmaModel(y, priors=priors);
+    } else {
+      res <- rmaModel(y);
+    }
     ok <- TRUE;
   }, error = function(ex) {
     print(ex);
@@ -767,7 +823,7 @@ setMethodS3("getFitUnitGroupFunction", "RmaPlm", function(this, ..., verbose=FAL
   verbose && exit(verbose);
 
   rmaModel;
-}, private=TRUE)
+}, private=TRUE) # getFitUnitGroupFunction()
 
 
 setMethodS3("getCalculateResidualsFunction", "RmaPlm", function(static, ...) {
@@ -781,6 +837,9 @@ setMethodS3("getCalculateResidualsFunction", "RmaPlm", function(static, ...) {
 ############################################################################
 # HISTORY:
 # 2012-01-14
+# o Updated getFitUnitGroupFunction() for RmaPlm to support prior
+#   probe-affinity parameters.
+# o Added argument withPriors=FALSE to getRlmFitFunctions() for RmaPlm.
 # o ROBUSTNESS: Now the fit functions of RmaPlm and MbeiPlm give an
 #   error whenever trying to use prior parameters, which are yet
 #   not supported.

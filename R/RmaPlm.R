@@ -310,7 +310,11 @@ setMethodS3("getFitUnitGroupFunction", "RmaPlm", function(this, ..., verbose=FAL
   # Author: Henrik Bengtsson, UC Berkeley. 
   # Requires: affyPLM() by Ben Bolstad.
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  rmaModelAffyPlm <- function(y, ..., psiCode=0, psiK=1.345){
+  rmaModelAffyPlm <- function(y, priors=NULL, ..., psiCode=0, psiK=1.345){
+    if (!is.null(priors)) {
+      throw("NOT IMPLEMENTED: Internal rmaModelAffyPlm() does not support prior parameters.");
+    }
+
     # Assert right dimensions of 'y'.
 
     # If input data are dimensionless, return NAs. /KS 2006-01-30
@@ -497,7 +501,11 @@ setMethodS3("getFitUnitGroupFunction", "RmaPlm", function(this, ..., verbose=FAL
   # Why: The above "R_rlm_rma_default_model" call is not available on all
   # platforms (yet).  
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  rmaModelAffyPlmOld <- function(y, ..., constraint.type=list(default="contr.treatment", chip="contr.treatment", probe="contr.sum")) {
+  rmaModelAffyPlmOld <- function(y, priors=NULL, ..., constraint.type=list(default="contr.treatment", chip="contr.treatment", probe="contr.sum")) {
+    if (!is.null(priors)) {
+      throw("NOT IMPLEMENTED: Internal rmaModelAffyPlmOld() does not support prior parameters.");
+    }
+
     # Add shift
     y <- y + shift;
 
@@ -624,7 +632,11 @@ setMethodS3("getFitUnitGroupFunction", "RmaPlm", function(this, ..., verbose=FAL
     }
   }
 
-  rmaModelOligo <- function(y, ...) {
+  rmaModelOligo <- function(y, priors=NULL, ...) {
+    if (!is.null(priors)) {
+      throw("NOT IMPLEMENTED: Internal rmaModelOligo() does not support prior parameters.");
+    }
+
     # Add shift
     y <- y + shift;
 
@@ -768,6 +780,10 @@ setMethodS3("getCalculateResidualsFunction", "RmaPlm", function(static, ...) {
 
 ############################################################################
 # HISTORY:
+# 2012-01-14
+# o ROBUSTNESS: Now the fit functions of RmaPlm and MbeiPlm give an
+#   error whenever trying to use prior parameters, which are yet
+#   not supported.
 # 2009-05-09
 # o Updated getFitUnitGroupFunction() of RmaPlm to work with the new
 #   oligo v1.7.19 as well, which luckily gut oligo::basicRMA().

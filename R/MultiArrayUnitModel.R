@@ -87,8 +87,7 @@ setMethodS3("getFitUnitGroupFunction", "MultiArrayUnitModel", abstract=TRUE, sta
 
 
 setMethodS3("getFitFunction", "MultiArrayUnitModel", function(...) {
-  warning("getFitFunction() is deprecated. Please use getFitUnitGroupFunction() instead.");
-  getFitUnitGroupFunction(...);
+  throw("getFitFunction() is deprecated. Please use getFitUnitGroupFunction() instead.");
 }, private=TRUE, deprecated=TRUE)
 
 
@@ -105,7 +104,7 @@ setMethodS3("getFitUnitFunction", "MultiArrayUnitModel", function(this, ...) {
       base::lapply(unit, FUN=function(group) {
         y <- .subset2(group, 1); # Get intensities
         y <- y[1,,] - y[2,,];  # PM-MM
-        fitfcn(y);
+        fitfcn(y, ...);
       })
     }
   } else if (this$probeModel == "min1(pm-mm)") {
@@ -114,7 +113,7 @@ setMethodS3("getFitUnitFunction", "MultiArrayUnitModel", function(this, ...) {
         y <- .subset2(group, 1); # Get intensities
         y <- y[1,,] - y[2,,];  # PM-MM
         y[y < 1] <- 1;       # min1(PM-MM)=min(PM-MM,1)
-        fitfcn(y);
+        fitfcn(y, ...);
       })
     }
   } else if (this$probeModel == "pm+mm") {
@@ -122,7 +121,7 @@ setMethodS3("getFitUnitFunction", "MultiArrayUnitModel", function(this, ...) {
       base::lapply(unit, FUN=function(group) {
         y <- .subset2(group, 1); # Get intensities
         y <- y[1,,] + y[2,,];  # PM+MM
-        fitfcn(y);
+        fitfcn(y, ...);
       })
     }
   } else {
@@ -133,13 +132,13 @@ setMethodS3("getFitUnitFunction", "MultiArrayUnitModel", function(this, ...) {
         } else {
           y <- NULL;
         }
-        fitfcn(y);
+        fitfcn(y, ...);
       })
     }
   }
 
   fitUnit;
-}, private=TRUE)
+}, private=TRUE) # getFitUnitFunction()
 
 
 
@@ -299,7 +298,9 @@ setMethodS3("readPriorsByUnits", "MultiArrayUnitModel", function(this, units=NUL
 ############################################################################
 # HISTORY:
 # 2012-01-14
-# o Now validate() of MultiArrayUnitModel accepts single-array data sets,
+# o Now the fit function returned by getFitUnitFunction() for
+#   MultiArrayUnitModel passes '...'.
+# o Now validate() for MultiArrayUnitModel accepts single-array data sets,
 #   iff priors are set.
 # o Added argument 'listOfPriors' to MultiArrayUnitModel().
 # 2008-12-08

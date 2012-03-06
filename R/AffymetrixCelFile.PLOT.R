@@ -753,8 +753,12 @@ setMethodS3("writeImage", "AffymetrixCelFile", function(this, filename=NULL, ful
   verbose && cat(verbose, "Pathname: ", pathname);  
 
   if (!skip || !isFile(pathname)) {
-    # Get the image
+    verbose && enter(verbose, "Getting image");
     img <- getImage(this, ..., verbose=less(verbose));
+
+    verbose && cat(verbose, "Image object:");
+    verbose && print(verbose, img);
+    verbose && exit(verbose);
   
     verbose && enter(verbose, "Writing image");
     writeImage(img, file=pathname);

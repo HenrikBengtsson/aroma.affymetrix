@@ -1,5 +1,13 @@
 setMethodS3("calculateResidualSet", "ProbeLevelModel", function(this, units=NULL, force=FALSE, ..., verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Local functions
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  fastQSort <- function(x) {
+    .Internal(qsort(x, TRUE));
+  } # fastQSort()
+
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'verbose':
@@ -159,10 +167,12 @@ setMethodS3("calculateResidualSet", "ProbeLevelModel", function(this, units=NULL
   }
 
   # Optimized reading order
-  o <- .Internal(qsort(cells, TRUE));
+  # WAS: o <- .Internal(qsort(cells, TRUE));
+  o <- fastQSort(cells);
   cells <- o$x;
   o <- o$ix;
-  oinv <- .Internal(qsort(o, TRUE))$ix;
+  # WAS: oinv <- .Internal(qsort(o, TRUE))$ix;
+  oinv <- fastQSort(o)$ix;
   
   # Garbage collect
   gc <- gc();
@@ -316,6 +326,8 @@ setMethodS3("calculateResiduals", "ProbeLevelModel", function(this, ...) {
 
 ############################################################################
 # HISTORY:
+# 2012-03-01
+# o Added local function fastQSort() to calculateResidualSet().
 # 2007-12-08
 # o Now calculateResidualSet() of ProbeLevelModel utilizes the new 'cdf'
 #   argument of fromFiles() in AffymetrixCelSet.

@@ -2,6 +2,9 @@ Package: aroma.affymetrix
 =========================
 
 Version: 2.4.2 [2012-03-06]
+o GENERALIZATION: The new ArrayExplorer v3.4 will work with most
+  commonly used web browsers including Mozilla Firefox, Google Chrome,
+  Microsoft Internet Explorer, Apple Safari, and Opera.
 o CLEANUP: Started to remove .Internal() calls.
 
 

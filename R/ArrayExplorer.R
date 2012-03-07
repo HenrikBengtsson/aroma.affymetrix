@@ -11,6 +11,7 @@
 #
 # \arguments{
 #   \item{csTuple}{An @see "AffymetrixCelSet" object.}
+#   \item{version}{The version of the Explorer HTML/Javascript generated/used.}
 #   \item{...}{Not used.}
 # }
 #
@@ -21,7 +22,7 @@
 # @author
 # 
 #*/###########################################################################
-setConstructorS3("ArrayExplorer", function(csTuple=NULL, ...) {
+setConstructorS3("ArrayExplorer", function(csTuple=NULL, version=c("3.4", "3.0"), ...) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -32,6 +33,9 @@ setConstructorS3("ArrayExplorer", function(csTuple=NULL, ...) {
     }
   }
 
+  # Argument 'version':
+  version <- match.arg(version);
+
   extend(Explorer(...), "ArrayExplorer",
     .csTuple = csTuple,
     .reporters = NULL
@@ -39,14 +43,14 @@ setConstructorS3("ArrayExplorer", function(csTuple=NULL, ...) {
 })
 
 
-
 setMethodS3("as.character", "ArrayExplorer", function(x, ...) {
   # To please R CMD check
   this <- x;
 
   s <- sprintf("%s:", class(this)[1]);
-  s <- c(s, paste("Name:", getName(this)));
-  s <- c(s, paste("Tags:", paste(getTags(this), collapse=",")));
+  s <- c(s, sprintf("Version: %s", getVersion(this)));
+  s <- c(s, sprintf("Name: %s", getName(this)));
+  s <- c(s, sprintf("Tags: %s", paste(getTags(this), collapse=",")));
   s <- c(s, sprintf("Number of chip types: %d", nbrOfChipTypes(this)));
   s <- c(s, paste("Number of arrays:", nbrOfArrays(this)));
   colorMaps <- getColorMaps(this);
@@ -61,6 +65,7 @@ setMethodS3("as.character", "ArrayExplorer", function(x, ...) {
   class(s) <- "GenericSummary";
   s;
 }, private=TRUE)
+
 
 
 setMethodS3("getListOfReporters", "ArrayExplorer", function(this, ...) {
@@ -212,127 +217,6 @@ setMethodS3("setArrays", "ArrayExplorer", function(this, ...) {
 
 
 
-setMethodS3("updateOnChipTypeJS", "ArrayExplorer", function(this, ..., verbose=FALSE) {
-  require("R.rsp") || throw("Package not loaded: R.rsp");
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Validate arguments
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
-  if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
-  }
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Setup
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  mainPath <- getMainPath(this);
-  setTuple <- getSetTuple(this);
-
-  outFile <- sprintf("%s.onChipType.js", class(this)[1]);
-  filename <- sprintf("%s.rsp", outFile);
-  verbose && enter(verbose, "Updating ", outFile);
-  srcPath <- getTemplatePath(this);
-  pathname <- filePath(srcPath, "rsp", class(this)[1], filename);
-  verbose && cat(verbose, "Source: ", pathname);
-
-  outPath <- mainPath;
-  verbose && cat(verbose, "Output path: ", outPath);
-  outPath <- Arguments$getWritablePath(outPath);
-
-  # For each SpatialReporters
-  reporters <- getListOfReporters(this);
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Compile RSP file
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  verbose && enter(verbose, "Compiling RSP");
-  env <- new.env();
-  env$reporters <- reporters;
-  pathname <- rspToHtml(pathname, path=NULL, 
-                        outFile=outFile, outPath=outPath, 
-                        overwrite=TRUE, envir=env);
-  verbose && exit(verbose);
-
-
-  verbose && exit(verbose);
-  
-  invisible(pathname);
-}, private=TRUE)
-
-
-
-
-
-setMethodS3("updateOnLoadJS", "ArrayExplorer", function(this, ..., verbose=FALSE) {
-  require("R.rsp") || throw("Package not loaded: R.rsp");
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Validate arguments
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
-  if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
-  }
-
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Setup
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  mainPath <- getMainPath(this);
-  setTuple <- getSetTuple(this);
-
-  outFile <- sprintf("%s.onLoad.js", class(this)[1]);
-  filename <- sprintf("%s.rsp", outFile);
-
-  verbose && enter(verbose, "Updating ", outFile);
-  srcPath <- getTemplatePath(this);
-  pathname <- filePath(srcPath, "rsp", class(this)[1], filename);
-  verbose && cat(verbose, "Source: ", pathname);
-
-  outPath <- mainPath;
-  verbose && cat(verbose, "Output path: ", outPath);
-  outPath <- Arguments$getWritablePath(outPath);
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Compile RSP file
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  chipTypes <- getChipTypes(setTuple, fullname=TRUE);
-  verbose && cat(verbose, "Detected chip types: ", 
-                                           paste(chipTypes, collapse=", "));
-  verbose && enter(verbose, "Compiling RSP");
-  env <- new.env();
-  env$chipTypes <- chipTypes;
-  arrays <- getFullNames(setTuple);
-  pathname <- rspToHtml(pathname, path=NULL, 
-                        outFile=outFile, outPath=outPath, 
-                        overwrite=TRUE, envir=env);
-  verbose && exit(verbose);
-
-  verbose && exit(verbose);
-  
-  invisible(pathname);
-}, private=TRUE)
-
-
-
-setMethodS3("setup", "ArrayExplorer", function(this, ..., force=FALSE) {
-  # Setup includes/
-  addIncludes(this, ..., force=force);
-
-  # Setup HTML explorer page
-  addIndexFile(this, ..., force=force);
-
-  # Update Javascript files
-  updateOnChipTypeJS(this, ...);
-  updateOnLoadJS(this, ...);
-}, private=TRUE)
-
-
 setMethodS3("addColorMap", "ArrayExplorer", function(this, ...) {
   reporters <- getListOfReporters(this);
   res <- lapply(reporters, FUN=addColorMap, ...);
@@ -351,6 +235,18 @@ setMethodS3("getColorMaps", "ArrayExplorer", function(this, parsed=FALSE, ...) {
   reporter <- getListOfReporters(this)[[1]];
   getColorMaps(reporter, ...);
 })
+
+
+setMethodS3("updateSetupExplorerFile", "ArrayExplorer", function(this, ...) {
+  setTuple <- getSetTuple(this);
+  env <- new.env();
+  env$reporters <- getListOfReporters(this);
+  env$chipTypes <- getChipTypes(setTuple, fullname=TRUE);
+  env$arrays <- getFullNames(setTuple);
+
+  NextMethod("updateSetupExplorerFile", this, data=env, ...);
+}, private=TRUE)
+
 
 
 ###########################################################################/**
@@ -417,8 +313,7 @@ setMethodS3("process", "ArrayExplorer", function(this, arrays=NULL, ..., verbose
   });
 
   # Update Javascript files
-  updateOnChipTypeJS(this, ..., verbose=less(verbose));
-  updateOnLoadJS(this, ..., verbose=less(verbose));
+  updateSetupExplorerFile(this, ..., verbose=less(verbose));
 
   gc <- gc();
   verbose && print(verbose, gc);
@@ -429,6 +324,10 @@ setMethodS3("process", "ArrayExplorer", function(this, arrays=NULL, ..., verbose
 
 ##############################################################################
 # HISTORY:
+# 2012-03-06
+# o Dropped setup() for ArrayExplorer, because now Explorer has one.
+# o Replaced updateOnChipTypeJS() and updateOnLoadJS() with
+#   updateSetupExplorerFile().
 # 2009-07-08
 # o Added getListOfUnitTypesFiles() for ArrayExplorer.
 # 2009-05-19

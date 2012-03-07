@@ -1351,10 +1351,6 @@
 \alias{updateDataFlat.WeightsFile}
 \alias{updateMatchScores}
 \alias{updateMatchScores.AromaCellMatchScoreFile}
-\alias{updateOnChipTypeJS}
-\alias{updateOnChipTypeJS.ArrayExplorer}
-\alias{updateOnLoadJS}
-\alias{updateOnLoadJS.ArrayExplorer}
 \alias{updateParameter}
 \alias{updateParameter.CrlmmParametersFile}
 \alias{updateSampleAnnotationSet}
@@ -1468,6 +1464,7 @@
 \alias{getDefaultExtension.AffymetrixTsvFile}
 \alias{getDefaultExtension.AromaCellMatchScoreFile}
 \alias{getDefaultExtension.AromaChipTypeAnnotationFile}
+\alias{updateSetupExplorerFile.ArrayExplorer}
 
 \description{
   This page contains aliases for all "non-documented" objects that

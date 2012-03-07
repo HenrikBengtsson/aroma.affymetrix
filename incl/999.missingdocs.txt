@@ -690,8 +690,7 @@
   updateDataFlat.ChipEffectFile updateDataFlat.FirmaFile
   updateDataFlat.ResidualFile updateDataFlat.WeightsFile
   updateMatchScores updateMatchScores.AromaCellMatchScoreFile
-  updateOnChipTypeJS updateOnChipTypeJS.ArrayExplorer updateOnLoadJS
-  updateOnLoadJS.ArrayExplorer updateParameter
+  updateParameter
   updateParameter.CrlmmParametersFile updateSampleAnnotationSet
   updateSampleAnnotationSet.AffymetrixCelSet updateSettings
   updateSettings.Package updateUnits updateUnits.ChipEffectFile
@@ -747,3 +746,4 @@ writeCdfByExcludingCells.AffymetrixCdfFile writeCdfByExcludingCells
   getDefaultExtension.AffymetrixTsvFile
   getDefaultExtension.AromaCellMatchScoreFile
   getDefaultExtension.AromaChipTypeAnnotationFile
+updateSetupExplorerFile.ArrayExplorer

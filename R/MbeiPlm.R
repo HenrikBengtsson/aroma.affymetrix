@@ -49,7 +49,7 @@ setConstructorS3("MbeiPlm", function(...) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   args <- list(...);
   if (length(args) > 0 && !is.null(args[[1]])) {
-    require("affy") || throw("Package 'affy' not loaded.");
+    require("affy") || throw("Package not loaded: affy");
   }
 
   this <- extend(ProbeLevelModel(...), "MbeiPlm");
@@ -182,6 +182,9 @@ setMethodS3("getProbeAffinityFile", "MbeiPlm", function(this, ...) {
 # }
 #*/###########################################################################
 setMethodS3("getFitUnitGroupFunction", "MbeiPlm", function(this, ...) {
+  # To help 'R CMD check' to locate fit.li.wong().
+  require("affy") || throw("Package not loaded: affy");
+
   standardize <- this$standardize;
   shift <- this$shift;
   if (is.null(shift))
@@ -240,6 +243,9 @@ setMethodS3("getFitUnitGroupFunction", "MbeiPlm", function(this, ...) {
 
 ############################################################################
 # HISTORY:
+# 2012-03-23
+# o Now getFitUnitGroupFunction() for MbeiPlm helps 'R CMD check' to
+#   locate fit.li.wong() by explicitly requiring 'affy'.
 # 2012-01-14
 # o ROBUSTNESS: Now the fit functions of RmaPlm and MbeiPlm give an
 #   error whenever trying to use prior parameters, which are yet

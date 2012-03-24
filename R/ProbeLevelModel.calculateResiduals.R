@@ -2,9 +2,12 @@ setMethodS3("calculateResidualSet", "ProbeLevelModel", function(this, units=NULL
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local functions
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  fastQSort <- function(x) {
-    .Internal(qsort(x, TRUE));
-  } # fastQSort()
+  qsort <- function(x) {
+##    o0 <- .Internal(qsort(x, TRUE));
+##    o <- sort.int(x, index.return=TRUE, method="quick");
+##    stopifnot(identical(o, o0));
+    sort.int(x, index.return=TRUE, method="quick");
+  } # qsort()
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -168,11 +171,11 @@ setMethodS3("calculateResidualSet", "ProbeLevelModel", function(this, units=NULL
 
   # Optimized reading order
   # WAS: o <- .Internal(qsort(cells, TRUE));
-  o <- fastQSort(cells);
+  o <- qsort(cells);
   cells <- o$x;
   o <- o$ix;
   # WAS: oinv <- .Internal(qsort(o, TRUE))$ix;
-  oinv <- fastQSort(o)$ix;
+  oinv <- qsort(o)$ix;
   
   # Garbage collect
   gc <- gc();
@@ -326,8 +329,10 @@ setMethodS3("calculateResiduals", "ProbeLevelModel", function(this, ...) {
 
 ############################################################################
 # HISTORY:
+# 2012-03-23
+# o Now local qsort() utilizes sort.int() instead of .Internal(qsort()).
 # 2012-03-01
-# o Added local function fastQSort() to calculateResidualSet().
+# o Added local function qsort() to calculateResidualSet().
 # 2007-12-08
 # o Now calculateResidualSet() of ProbeLevelModel utilizes the new 'cdf'
 #   argument of fromFiles() in AffymetrixCelSet.

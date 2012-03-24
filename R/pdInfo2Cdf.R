@@ -57,6 +57,7 @@
 #*/########################################################################### 
 pdInfo2Cdf <- function(pdpkg, celfile, overwrite=FALSE, verbose=TRUE, ...) {
   require("affxparser") || throw("Package not loaded: affxparser");
+  require("oligo") || throw("Package not loaded: oligo");
   require("pdInfoBuilder") || throw("Package not loaded: pdInfoBuilder");
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -116,7 +117,7 @@ pdInfo2Cdf <- function(pdpkg, celfile, overwrite=FALSE, verbose=TRUE, ...) {
   hdr <- readCelHeader(celfile);
   nrows <- as.integer(hdr$rows);
   ncols <- as.integer(hdr$cols);
-  chipType <- hdr$chiptype
+  chipType <- hdr$chiptype;
   rm(hdr);  # Not needed anymore
   nbrOfCells <- nrows*ncols;
   verbose && cat(verbose, "Chip type: ", chipType);
@@ -150,10 +151,10 @@ pdInfo2Cdf <- function(pdpkg, celfile, overwrite=FALSE, verbose=TRUE, ...) {
 
   verbose && enter(verbose, "Creating list from query table");
   # three 3 lines speed up the splitting ...
-  ffs <- split(ff, substr(ff$fsetid, 1,4));
+  ffs <- split(ff, substr(ff$fsetid, start=1, stop=4));
   ffs <- lapply(ffs, FUN=function(u) split(u, u$fsetid));
   ffs <- unlist(ffs, recursive=FALSE);
-  names(ffs) <- substr(names(ffs), 6, nchar(names(ffs)));
+  names(ffs) <- substr(names(ffs), start=6, stop=nchar(names(ffs)));
   nbrOfUnits <- length(ffs);
   verbose && cat(verbose, "Number of units: ", nbrOfUnits);
   verbose && printf(verbose, "Average number of cells per units: %.2f\n", nbrOfPdCells/nbrOfUnits);
@@ -198,12 +199,19 @@ pdInfo2Cdf <- function(pdpkg, celfile, overwrite=FALSE, verbose=TRUE, ...) {
 } # pdInfo2Cdf()
 
 
-# For backward compatibility
-PdInfo2Cdf <- pdInfo2Cdf;
+PdInfo2Cdf <- function(...) {
+  throw("PdInfo2Cdf() is deprecated. Use pdInfo2Cdf() instead, which works identically.");
+  pdInfo2Cdf(...);
+} # PdInfo2Cdf()
 
 
 ############################################################################
 # HISTORY:
+# 2012-03-23
+# o Now pdInfo2Cdf() helps 'R CMD check' to locate read.celfiles()
+#   by explicitly requiring 'oligo'.
+# o CLEANUP: Deprecated PdInfo2Cdf() in favor (identical) pdInfo2Cdf(), 
+#   because the former does not follow the Aroma naming conventions.
 # 2010-12-04 [HB]
 # o Added more verbose output.
 # o DOCUMENTATION: Added more Rd documentation.

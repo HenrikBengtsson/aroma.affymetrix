@@ -1,6 +1,11 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 2.5.0 [2012-03-25]
+o Submitted to CRAN.
+o The package passes all redundancy tests.
+
+
 Version: 2.4.3 [2012-03-23]
 o CRAN POLICY: Package no longer utilizes .Internal() calls.
 o CLEANUP: Deprecated PdInfo2Cdf() in favor (identical) pdInfo2Cdf(), 

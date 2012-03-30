@@ -2,6 +2,9 @@ setMethodS3("convertToUnique", "AffymetrixCelSet", function(this, ..., tags="UNQ
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Argument 'force':
+  force <- Arguments$getLogical(force);
+
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
   if (verbose) {
@@ -14,7 +17,7 @@ setMethodS3("convertToUnique", "AffymetrixCelSet", function(this, ..., tags="UNQ
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Already unique?
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  cdf <- getCdf(this)
+  cdf <- getCdf(this);
   if (isUniqueCdf(cdf)) {
     verbose && cat(verbose, "Already based on a unique CDF");
     verbose && exit(verbose);
@@ -53,41 +56,54 @@ setMethodS3("convertToUnique", "AffymetrixCelSet", function(this, ..., tags="UNQ
 
   
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Check if already done
+  # Already done?
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  verbose && cat(verbose, "Test whether dataset exists");
-  # HB: Don't think argument 'chipType' makes a difference if 'cdf' is given.
-  outputDataSet <- NULL
+  verbose && enter(verbose, "Checking if dataset already exists");
+
   tryCatch({
+    # HB: Don't think argument 'checkChipType' makes a difference if
+    #     argument 'cdf' is given.
     res <- AffymetrixCelSet$byName(fullname, cdf=cdfUnique, 
                                    checkChipType=FALSE, verbose=verbose);
   }, error = function(ex) {});
-  
+ 
   if (inherits(res, "AffymetrixCelSet")) {
     srcFullnames <- getFullNames(this);
     fullnames <- getFullNames(res);
     missing <- setdiff(srcFullnames, fullnames);
     if (length(missing) == 0) {
-      verbose && cat(verbose, "Dataset already created.");
-      verbose && exit(verbose);
-      return(invisible(res));
+      if (!force) {
+        verbose && cat(verbose, "Detected existing output dataset. Skipping.");
+        verbose && exit(verbose);
+        verbose && exit(verbose);
+        return(invisible(res));
+      }
+      verbose && cat(verbose, "Detected existing output dataset, but will force reprocessing.");
+    } else if (length(missing) > 0) {
+      verbose && cat(verbose, "Detected partial output dataset.");
     }
   }
+
+  rm(res);   # Not needed anymore
+  verbose && exit(verbose);
   
   
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Read indices for old and new
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   verbose && enter(verbose, "Reading cell indices from standard CDF");
+
   cdfStandard <- readCdf(getPathname(cdf), units=NULL, readXY=FALSE, readBases=FALSE, readIndexpos=FALSE, readAtoms=FALSE,readUnitType=FALSE, readUnitDirection=FALSE, readUnitNumber=FALSE, readUnitAtomNumbers=FALSE, readGroupAtomNumbers=FALSE, readGroupDirection=FALSE, readIndices=TRUE, readIsPm=FALSE);
   verbose && exit(verbose);
   
   verbose && enter(verbose, "Reading cell indices list from unique CDF");
   cdfUniqueIndices <- readCdf(getPathname(cdfUnique), units=NULL, readXY=FALSE, readBases=FALSE, readIndexpos=FALSE, readAtoms=FALSE,readUnitType=FALSE, readUnitDirection=FALSE, readUnitNumber=FALSE, readUnitAtomNumbers=FALSE, readGroupAtomNumbers=FALSE, readGroupDirection=FALSE, readIndices=TRUE, readIsPm=FALSE);
+
   verbose && exit(verbose);
 
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Normalize all arrays simultaneously
+  # Process all arrays simultaneously
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   nbrOfArrays <- nbrOfArrays(this);
   
@@ -103,11 +119,19 @@ setMethodS3("convertToUnique", "AffymetrixCelSet", function(this, ..., tags="UNQ
   
       dfFullname <- getFullName(df);
       filename <- sprintf("%s.CEL", dfFullname);
-      pathname <- Arguments$getWritablePathname(filename, path=outputPath, ...);
+      pathname <- Arguments$getWritablePathname(filename, path=outputPath, mustNotExist=FALSE, ...);
 
-      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      # Skip?
+      isFile <- isFile(pathname);
+      if (!force && isFile) {
+        verbose && cat(verbose, "Already processed. Skipping.");
+        verbose && exit(verbose);
+        next;
+      }
+
+      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       # Read data
-      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       verbose && enter(verbose, "Reading intensity values according to standard CDF");
       data <- readCelUnits(getPathname(df), cdf=cdfStandard, dropArrayDim=TRUE);
       verbose && exit(verbose);
@@ -132,6 +156,11 @@ setMethodS3("convertToUnique", "AffymetrixCelSet", function(this, ..., tags="UNQ
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       # Create CEL file to store results, if missing
       verbose && enter(verbose, "Creating CEL file for results");
+
+      # Remove existing file
+      if (isFile) {
+        file.remove(pathname);
+      }
 
       # Write to a temporary file
       pathnameT <- pushTemporaryFile(pathname, verbose=verbose);
@@ -161,6 +190,10 @@ setMethodS3("convertToUnique", "AffymetrixCelSet", function(this, ..., tags="UNQ
 
 ############################################################################
 # HISTORY:
+# 2011-03-28 [HB]
+# o Now convertToUnique() for AffymetrixCelSet skips already processed
+#   files in partially processed data sets.  Previously it would give 
+#   an error if only some output files existed.
 # 2011-02-24 [HB]
 # o Now convertToUnique() for AffymetrixCelSet searches for already 
 #   available data sets using the aroma-wide search rules.  Before it

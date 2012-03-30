@@ -1,6 +1,12 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 2.5.1 [2012-03-28]
+o Now convertToUnique() for AffymetrixCelSet skips already processed
+  files in partially processed data sets.  Previously it would give 
+  an error if only some output files existed.
+
+
 Version: 2.5.0 [2012-03-25]
 o Submitted to CRAN.
 o The package passes all redundancy tests.

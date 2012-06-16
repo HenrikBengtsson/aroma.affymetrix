@@ -19,8 +19,8 @@
  Locates a PGF file from its chip type.
 }
 
-\synopsis{findByChipType.AffymetrixPgfFile(static, chipType, tags=NULL, pattern=NULL, ..., .useAffxparser=TRUE)}
-\usage{AffymetrixPgfFile$findByChipType(chipType, tags=NULL, pattern=NULL, ..., .useAffxparser=TRUE)}
+\synopsis{findByChipType.AffymetrixPgfFile(static, chipType, tags=NULL, pattern=NULL, ...)}
+\usage{AffymetrixPgfFile$findByChipType(chipType, tags=NULL, pattern=NULL, ...)}
 
 \arguments{
  \item{chipType}{A \code{\link[base]{character}} string.}

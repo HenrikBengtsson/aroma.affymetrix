@@ -201,7 +201,7 @@ setMethodS3("writeCdf", "AffyGenePDInfo", function(this, tags=NULL, path=NULL, o
   # Write to a temporary file
   pathnameT <- pushTemporaryFile(pathname, verbose=verbose);
 
-  res <- affxparser::writeCdf(pathnameT, cdfheader=newCdfHeader, cdf=newCdfList,
+  affxparser::writeCdf(pathnameT, cdfheader=newCdfHeader, cdf=newCdfList,
                   cdfqc=NULL, verbose=verbose, overwrite=overwrite);
 
   # Rename temporary file
@@ -211,13 +211,15 @@ setMethodS3("writeCdf", "AffyGenePDInfo", function(this, tags=NULL, path=NULL, o
 
   verbose && exit(verbose);
 
-  invisible(res);
+  invisible(pathname);
 }) # writeCdf()
 
 
 
 ############################################################################
 # HISTORY:
+# 2012-06-15 [HB]
+# o Now writeCdf() for AffyGenePDInfo returns the pathname of the CDF.
 # 2011-01-09 [HB]
 # o Added writeCdf() for AffyGenePDInfo, which replaces pdInfo2Cdf().
 #   An auxillary CEL file is no longer needed to create a CDF from

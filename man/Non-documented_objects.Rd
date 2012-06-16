@@ -1465,6 +1465,19 @@
 \alias{getDefaultExtension.AromaCellMatchScoreFile}
 \alias{getDefaultExtension.AromaChipTypeAnnotationFile}
 \alias{updateSetupExplorerFile.ArrayExplorer}
+\alias{as.character.AffymetrixPgfFile}
+\alias{clearCache.AffymetrixPgfFile}
+\alias{getChipType.AffymetrixPgfFile}
+\alias{getDefaultExtension.AffymetrixPgfFile}
+\alias{getDimension.AffymetrixPgfFile}
+\alias{getExtensionPattern.AffymetrixPgfFile}
+\alias{getPlatform.AffymetrixPgfFile}
+\alias{getUnitNamesFile.AffymetrixPgfFile}
+\alias{nbrOfCells.AffymetrixPgfFile}
+\alias{nbrOfColumns.AffymetrixPgfFile}
+\alias{nbrOfRows.AffymetrixPgfFile}
+\alias{nbrOfUnits.AffymetrixPgfFile}
+\alias{readRawData.AffymetrixPgfFile}
 
 \description{
   This page contains aliases for all "non-documented" objects that

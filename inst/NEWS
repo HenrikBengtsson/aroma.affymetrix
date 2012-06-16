@@ -1,6 +1,12 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 2.5.2 [2012-06-15]
+o Now writeCdf() for AffyGenePDInfo returns the pathname of the CDF.
+o Added trial version of class AffymetrixPgfFile.
+o ROBUSTNESS: Added a full system test for CalMate.
+
+
 Version: 2.5.1 [2012-03-28]
 o Now convertToUnique() for AffymetrixCelSet skips already processed
   files in partially processed data sets.  Previously it would give 

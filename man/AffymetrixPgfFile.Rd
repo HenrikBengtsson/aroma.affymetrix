@@ -1,21 +1,21 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Do not modify this file since it was automatically generated from:
 % 
-%  AffymetrixFile.R
+%  AffymetrixPgfFile.R
 % 
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
- \name{AffymetrixFile}
+ \name{AffymetrixPgfFile}
 \docType{class}
-\alias{AffymetrixFile}
+\alias{AffymetrixPgfFile}
 
 
- \title{The abstract AffymetrixFile class}
+ \title{The AffymetrixPgfFile class}
 
  \description{
   Package:  aroma.affymetrix \cr
-\bold{Class AffymetrixFile}\cr
+\bold{Class AffymetrixPgfFile}\cr
 
 \code{\link[R.oo]{Object}}\cr
 \code{~~|}\cr
@@ -25,38 +25,74 @@
 \code{~~~~~~~~~~~~|}\cr
 \code{~~~~~~~~~~~~+--}\code{\link[aroma.core]{AromaMicroarrayDataFile}}\cr
 \code{~~~~~~~~~~~~~~~~~|}\cr
-\code{~~~~~~~~~~~~~~~~~+--}\code{\link[aroma.core]{AromaPlatformInterface}}\cr
+\code{~~~~~~~~~~~~~~~~~+--}\code{\link[aroma.affymetrix]{AffymetrixFile}}\cr
 \code{~~~~~~~~~~~~~~~~~~~~~~|}\cr
-\code{~~~~~~~~~~~~~~~~~~~~~~+--}\emph{\code{AffymetrixFile}}\cr
+\code{~~~~~~~~~~~~~~~~~~~~~~+--}\code{\link[aroma.affymetrix]{AromaChipTypeAnnotationFile}}\cr
+\code{~~~~~~~~~~~~~~~~~~~~~~~~~~~|}\cr
+\code{~~~~~~~~~~~~~~~~~~~~~~~~~~~+--}\code{\link[aroma.core]{AromaPlatformInterface}}\cr
+\code{~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|}\cr
+\code{~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~+--}\code{\link[aroma.core]{UnitAnnotationDataFile}}\cr
+\code{~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|}\cr
+\code{~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~+--}\code{\link[aroma.core]{UnitTypesFile}}\cr
+\code{~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|}\cr
+\code{~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~+--}\code{\link[aroma.core]{UnitNamesFile}}\cr
+\code{~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|}\cr
+\code{~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~+--}\emph{\code{AffymetrixPgfFile}}\cr
 
 \bold{Directly known subclasses:}\cr
-\emph{\link[aroma.affymetrix]{AffymetrixCdfFile}}, \emph{\link[aroma.affymetrix]{AffymetrixCelFile}}, \emph{\link[aroma.affymetrix]{AffymetrixCnChpFile}}, \emph{\link[aroma.affymetrix]{AffymetrixPgfFile}}, \emph{\link[aroma.affymetrix]{AffymetrixTsvFile}}, \emph{\link[aroma.affymetrix]{AromaChipTypeAnnotationFile}}, \emph{\link[aroma.affymetrix]{ChipEffectFile}}, \emph{\link[aroma.affymetrix]{CnagCfhFile}}, \emph{\link[aroma.affymetrix]{CnChipEffectFile}}, \emph{\link[aroma.affymetrix]{CnProbeAffinityFile}}, \emph{\link[aroma.affymetrix]{DChipCdfBinFile}}, \emph{\link[aroma.affymetrix]{DChipDcpFile}}, \emph{\link[aroma.affymetrix]{ExonChipEffectFile}}, \emph{\link[aroma.affymetrix]{ExonProbeAffinityFile}}, \emph{\link[aroma.affymetrix]{FirmaFile}}, \emph{\link[aroma.affymetrix]{ParameterCelFile}}, \emph{\link[aroma.affymetrix]{ProbeAffinityFile}}, \emph{\link[aroma.affymetrix]{QualityAssessmentFile}}, \emph{\link[aroma.affymetrix]{ResidualFile}}, \emph{\link[aroma.affymetrix]{SnpChipEffectFile}}, \emph{\link[aroma.affymetrix]{SnpProbeAffinityFile}}, \emph{\link[aroma.affymetrix]{WeightsFile}}\cr
+\cr
 
-public abstract static class \bold{AffymetrixFile}\cr
-extends \emph{\link[aroma.core]{AromaPlatformInterface}}\cr
+public abstract static class \bold{AffymetrixPgfFile}\cr
+extends \emph{\link[aroma.core]{UnitNamesFile}}\cr
 
 
 
-  An AffymetrixFile object represents a single Affymetrix file,
-  e.g. an Affymetrix CEL file or an Affymetrix CDF file.
-  Note that this class is abstract and can not be instanciated, but
-  instead you have to use one of the subclasses or the generic
-  \code{fromFile()} method.
+  An AffymetrixPgfFile object represents a generic Affymetrix Probe Group
+  File (PGF).
+  A PGF file "provides information about what probes are contained
+  within a probeset and information about the nature of the probes
+  necessary for analysis. The current PGF file format (version 1)
+  is only specified for expression style probesets." [1]
  }
 
- \usage{AffymetrixFile(...)}
+ \usage{AffymetrixPgfFile(...)}
 
  \arguments{
-   \item{...}{Arguments passed to \code{\link[R.filesets]{GenericDataFile}}.}
+   \item{...}{Arguments passed to \code{\link{AromaChipTypeAnnotationFile}}.}
+ }
+
+ \references{
+  [1] ... \cr
  }
 
  \section{Fields and Methods}{
   \bold{Methods:}\cr
-\emph{No methods defined}.
+\tabular{rll}{
+ \tab \code{getChipType} \tab  -\cr
+ \tab \code{getDimension} \tab  -\cr
+ \tab \code{getPlatform} \tab  -\cr
+ \tab \code{\link[aroma.affymetrix:getUnitNames.AffymetrixPgfFile]{getUnitNames}} \tab Gets the names of each unit.\cr
+ \tab \code{nbrOfCells} \tab  -\cr
+ \tab \code{nbrOfColumns} \tab  -\cr
+ \tab \code{nbrOfRows} \tab  -\cr
+ \tab \code{nbrOfUnits} \tab  -\cr
+}
 
+
+ \bold{Methods inherited from UnitNamesFile}:\cr
+getUnitNames, indexOf, nbrOfUnits
+
+ \bold{Methods inherited from UnitTypesFile}:\cr
+getUnitTypes, nbrOfUnits
+
+ \bold{Methods inherited from UnitAnnotationDataFile}:\cr
+byChipType, getAromaUflFile, getAromaUgpFile, getChipType, getDefaultExtension, getPlatform, nbrOfUnits
 
  \bold{Methods inherited from AromaPlatformInterface}:\cr
 getAromaPlatform, getAromaUgpFile, getPlatform, getUnitAnnotationDataFile, getUnitNamesFile, getUnitTypesFile, isCompatibleWith
+
+ \bold{Methods inherited from AromaChipTypeAnnotationFile}:\cr
+byChipType, byName, findByChipType, fromFile, getChipType, getDefaultExtension, getHeader, getPlatform
 
  \bold{Methods inherited from AromaMicroarrayDataFile}:\cr
 getAttributeXY, getChipType, getPlatform, getPloidy, getXAM, hasAttributeXY, isAverageFile, setAttributesByTags, setAttributeXY
@@ -74,8 +110,4 @@ asThis, getChecksum, $, $<-, [[, [[<-, as.character, attach, attachLocally, clea
  }
 
  \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
-
- \seealso{
-   An object of this class is typically part of an \code{\link{AffymetrixFileSet}}.
- }
 \keyword{classes}

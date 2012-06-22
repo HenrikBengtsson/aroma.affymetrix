@@ -6,6 +6,11 @@ o CLARIFICATION: Restructured the bpmapCluster2Cdf() method such that
   is more clear how BPMAP sequences are filtered out, i.e. keeping
   sequencing with a matching group name and excluding those that
   appears to be non-genomic control sequences.
+o ROBUSTNESS: Arguments 'rows' and 'cols' for bpmapCluster2Cdf() are
+  mandatory (again).  The reason for this is that the BPMAP file is only
+  useful to infer a lower bound for them, but not their exact values.
+o Added argument 'path' to bpmapCluster2Cdf(), which now defaults to
+  annotationData/chipTypes/<chipType>/.
 o BUG FIX: bpmapCluster2Cdf() would exclude all units that had a
   probe starting at the very first position of a BPMAP sequence,
   because it interpreted that (incorrectly) as being a non-genomic

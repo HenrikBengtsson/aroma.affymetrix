@@ -22,20 +22,22 @@
    }
  }
 
- \usage{\method{bpmapCluster2Cdf}{default}(pathname, chipType, tags=NULL, maxProbeDistance=3000, minNbrOfProbes=30, rows=NULL, cols=NULL, groupName=gsub("_.*", "", chipType), field="fullname", stringRemove=sprintf("\%s:.*;", groupName), ..., flavor=c("v2", "v1"), verbose=-10)}
+ \usage{\method{bpmapCluster2Cdf}{default}(pathname, chipType, tags=NULL, rows, cols, maxProbeDistance=3000, minNbrOfProbes=30, groupName=gsub("_.*", "", chipType), field="fullname", stringRemove=sprintf("\%s:.*;", groupName), ..., flavor=c("v2", "v1"), path="*", verbose=-10)}
 
  \arguments{
   \item{pathname}{The pathname to the BPMAP file.}
   \item{chipType, tags}{The chip type and optional tags of the CDF to
     be written.}
+  \item{rows, cols}{Two positive \code{\link[base]{integer}}s specifying the probe dimension
+    of the chip.  It is important to get this correct.  They can be
+    inferred from the CEL header of a CEL file for this chip,
+    cf. \code{\link[affxparser]{readCelHeader}}.}
   \item{maxProbeDistance}{A positive \code{\link[base]{integer}} specifying the maximum
     genomic distance (in basepairs) allowed between two probes in order
     to "cluster" those two probes into the same CDF units.  Whenever the
     distance is greater, the two probes end up in two different CDF units.}
   \item{minNbrOfProbes}{A positive \code{\link[base]{integer}} specifying the minimum number
     of probes required in a CDF unit.  If fewer, those probes are dropped.}
-  \item{rows, cols}{Two (optional) positive \code{\link[base]{integer}}s.
-     If \code{\link[base]{NULL}}, optimal values are inferred auotmatically.}
   \item{groupName}{A \code{\link[base]{character}} string specifying which BPMAP sequences
      to keep.  Sequence with this group name is kept, all others are
      excluded.}
@@ -46,6 +48,9 @@
      to use. The default is always to use the most recent one, which
      is also the recommended one.  Previous versions are kept only for
      backward compatibility (and may be dropped at anytime).}
+  \item{path}{The directory where the CDF file will be written.
+     If \code{"*"} (default), it will be written to
+     \code{annotationData/chipTypes/<chipType>/}.}
   \item{verbose}{See \code{\link[R.utils]{Verbose}}.}
  }
 

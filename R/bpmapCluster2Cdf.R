@@ -19,14 +19,16 @@
 #  \item{pathname}{The pathname to the BPMAP file.}
 #  \item{chipType, tags}{The chip type and optional tags of the CDF to
 #    be written.}
+#  \item{rows, cols}{Two positive @integers specifying the probe dimension
+#    of the chip.  It is important to get this correct.  They can be
+#    inferred from the CEL header of a CEL file for this chip,
+#    cf. @see "affxparser::readCelHeader".}
 #  \item{maxProbeDistance}{A positive @integer specifying the maximum
 #    genomic distance (in basepairs) allowed between two probes in order
 #    to "cluster" those two probes into the same CDF units.  Whenever the
 #    distance is greater, the two probes end up in two different CDF units.}
 #  \item{minNbrOfProbes}{A positive @integer specifying the minimum number
 #    of probes required in a CDF unit.  If fewer, those probes are dropped.}
-#  \item{rows, cols}{Two (optional) positive @integers.
-#     If @NULL, optimal values are inferred auotmatically.}
 #  \item{groupName}{A @character string specifying which BPMAP sequences
 #     to keep.  Sequence with this group name is kept, all others are 
 #     excluded.}
@@ -37,6 +39,9 @@
 #     to use. The default is always to use the most recent one, which
 #     is also the recommended one.  Previous versions are kept only for
 #     backward compatibility (and may be dropped at anytime).}
+#  \item{path}{The directory where the CDF file will be written.
+#     If \code{"*"} (default), it will be written to
+#     \code{annotationData/chipTypes/<chipType>/}.}
 #  \item{verbose}{See @see "R.utils::Verbose".}
 # }
 #
@@ -60,24 +65,24 @@
 # 
 # @keyword "internal"
 #*/###########################################################################
-setMethodS3("bpmapCluster2Cdf", "default", function(pathname, chipType, tags=NULL, maxProbeDistance=3000L, minNbrOfProbes=30L, rows=NULL, cols=NULL, groupName=gsub("_.*", "", chipType), field="fullname", stringRemove=sprintf("%s:.*;", groupName), ..., flavor=c("v2", "v1"), verbose=-10) {
+setMethodS3("bpmapCluster2Cdf", "default", function(pathname, chipType, tags=NULL, rows, cols, maxProbeDistance=3000L, minNbrOfProbes=30L, groupName=gsub("_.*", "", chipType), field="fullname", stringRemove=sprintf("%s:.*;", groupName), ..., flavor=c("v2", "v1"), path="*", verbose=-10) {
   require("affxparser") || throw("Package not loaded: affxparser");
   require("R.utils") || throw("Package not loaded: R.utils");
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
   # Local functions
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-  getMaxX <- function(bpmapList) {
+  getRangeX <- function(bpmapList) {
     pos <- lapply(bpmapList, FUN=.subset, c("mmx", "pmx"));
     pos <- unlist(pos, use.names=FALSE);
-    max(pos);
-  } # getMaxX()
+    range(pos, na.rm=TRUE);
+  } # getRangeX()
 
-  getMaxY <- function(bpmapList) {
+  getRangeY <- function(bpmapList) {
     pos <- lapply(bpmapList, FUN=.subset, c("mmy", "pmy"));
     pos <- unlist(pos, use.names=FALSE);
-    max(pos);
-  } # getMaxY()
+    range(pos, na.rm=TRUE);
+  } # getRangeY()
 
   getGroupNames <- function(bpmapList) {
     names <- sapply(bpmapList, FUN=function(seq) {
@@ -135,14 +140,10 @@ setMethodS3("bpmapCluster2Cdf", "default", function(pathname, chipType, tags=NUL
   maxProbeDistance <- Arguments$getInteger(maxProbeDistance, range=c(1,Inf));
 
   # Argument 'rows':
-  if (!is.null(rows)) {
-    rows <- Arguments$getInteger(rows, range=c(1,Inf));
-  }
+  rows <- Arguments$getInteger(rows, range=c(1,Inf));
 
   # Argument 'cols':
-  if (!is.null(cols)) {
-    cols <- Arguments$getInteger(cols, range=c(1,Inf));
-  }
+  cols <- Arguments$getInteger(cols, range=c(1,Inf));
 
   # Argument 'groupName':
   groupName <- Arguments$getCharacter(groupName);
@@ -158,29 +159,39 @@ setMethodS3("bpmapCluster2Cdf", "default", function(pathname, chipType, tags=NUL
   # Argument 'flavor':
   flavor <- match.arg(flavor);
 
+  # Argument 'path':
+  if (is.null(path)) {
+    path <- ".";
+  } else {
+    path <- Arguments$getCharacter(path);
+  }
+
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
 
 
 
   verbose && enter(verbose, "Generating CDF from BPMAP");
+  chipTypeF <- paste(c(chipType, tags), collapse=",");
+  verbose && cat(verbose, "Full chip type: ", chipTypeF);
+  chipType <- gsub(",.*", "", chipTypeF);
 
-  path <- ".";  
+  if (path == "*") {
+    path <- file.path("annotationData", "chipTypes", chipType);
+  }
   path <- Arguments$getWritablePath(path);
-  verbose && cat(verbose, "Directory where CDF will be written: ", path);
+  verbose && cat(verbose, "Output path: ", path);
 
-  fullname <- paste(c(chipType, tags), collapse=",");
-  verbose && cat(verbose, "Full name: ", fullname);
 
-  cdfFilename <- sprintf("%s.cdf", fullname);
+  cdfFilename <- sprintf("%s.cdf", chipTypeF);
   cdfFilename <- Arguments$getFilename(cdfFilename);
   verbose && cat(verbose, "CDF pathname: ", cdfFilename);
-  cdfPathname <- Arguments$getWritablePathname(cdfFilename, mustNotExist=TRUE);
+  cdfPathname <- Arguments$getWritablePathname(cdfFilename, path=path, mustNotExist=TRUE);
 
-  ppsPathname <- sprintf("%s.pps", fullname);
+  ppsPathname <- sprintf("%s.pps", chipTypeF);
   ppsPathname <- Arguments$getFilename(ppsPathname);
   verbose && cat(verbose, "PPS pathname: ", ppsPathname);
-  ppsPathname <- Arguments$getWritablePathname(ppsPathname, mustNotExist=TRUE);
+  ppsPathname <- Arguments$getWritablePathname(ppsPathname, path=path, mustNotExist=TRUE);
 
   verbose && enter(verbose, "Reading BPMAP file");
   verbose && cat(verbose, "Pathname: ", pathname);
@@ -196,16 +207,16 @@ setMethodS3("bpmapCluster2Cdf", "default", function(pathname, chipType, tags=NUL
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Infer number of CDF rows and columns, if missing.
+  # Validate the chip dimensions further.
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  if (is.null(rows)) {
-    rows <- getMaxX(bpmapList);
-    verbose && printf(verbose, "NB: 'rows' of CDF are being set as %d. If this is not correct, stop now and specify 'rows' argument.\n", rows);
+  maxY <- getRangeY(bpmapList)[2] + 1L;
+  if (maxY > rows) {
+    throw("Argument 'rows' is too small. There exist probes with a Y position that is greater: ", maxY, " > ", rows);
   }
 
-  if (is.null(cols)) {
-    cols <- getMaxY(bpmapList);
-    verbose && printf(verbose, "NB: 'cols' of CDF are being set as %d. If this is not correct, stop now and specify 'col' argument.\n", cols);
+  maxX <- getRangeX(bpmapList)[2] + 1L;
+  if (maxX > cols) {
+    throw("Argument 'cols' is too small. There exist probes with an X position that is greater: ", maxX, " > ", cols);
   }
 
 
@@ -305,8 +316,10 @@ setMethodS3("bpmapCluster2Cdf", "default", function(pathname, chipType, tags=NUL
 
   # Allocate
   cdfList <- list();
-  startps <- list();
   unitNames <- character(0L);
+
+  startPositionList <- list();
+  unitPrefixes <- character(0L);
 
   # All CDF unit will have a single group
   unitGroups <- vector("list", length=1L);
@@ -376,7 +389,9 @@ setMethodS3("bpmapCluster2Cdf", "default", function(pathname, chipType, tags=NUL
     mmy <- bpmapdf$mmy;
     isPmOnly <- all(mmx == 0L);
 
+    # Only for verbose output
     unitNamesII <- character(length=nbrOfUnitsII);
+
     for (jj in seq(length=nbrOfUnitsII)) {
       rowsJJ <- rowsII[jj];
       startJJ <- starts[rowsJJ];
@@ -401,9 +416,6 @@ setMethodS3("bpmapCluster2Cdf", "default", function(pathname, chipType, tags=NUL
       }
 
       groupNames <- sprintf("%sFROM%sTO%s", chrII, spJJ[1L], spJJ[nbrOfProbesJJ]);
-      # Sanity check
-      if (spJJ[nbrOfProbesJJ] - spJJ[1L] + 1L < minNbrOfProbes) {
-      }
       names(unitGroups) <- groupNames;
 
       nbrOfAtomsJJ <- sum(sapply(unitGroups, FUN=function(u) u$natoms));
@@ -416,10 +428,11 @@ setMethodS3("bpmapCluster2Cdf", "default", function(pathname, chipType, tags=NUL
       }
 
       cdfList[[uu]] <- list(unittype=1L, unitdirection=1L, groups=unitGroups, natoms=nbrOfAtomsJJ, ncells=nbrOfCellsJJ, ncellsperatom=nbrOfCellsJJ/nbrOfAtomsJJ, unitnumber=unitIdx);
-      startps[[uu]] <- spJJ;
+      startPositionList[[uu]] <- spJJ;
 
       unitName <- groupNames;
       unitNames[uu] <- unitName;
+      unitPrefixes[uu] <- chrII;
 
       unitNamesII[jj] <- unitName;
 
@@ -435,9 +448,10 @@ setMethodS3("bpmapCluster2Cdf", "default", function(pathname, chipType, tags=NUL
 
   # Sanity check
   stopifnot(nbrOfUnits == length(unitNames));
-  stopifnot(nbrOfUnits == length(startps));
+  stopifnot(nbrOfUnits == length(startPositionList));
 
   names(cdfList) <- unitNames;
+  names(startPositionList) <- unitPrefixes;
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -445,8 +459,8 @@ setMethodS3("bpmapCluster2Cdf", "default", function(pathname, chipType, tags=NUL
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   verbose && enter(verbose, "Writing PPS file");
   verbose && cat(verbose, "Output pathname: ", ppsPathname);
-  saveObject(startps, file=ppsPathname);
-  rm(startps); # Not needed anymore
+  saveObject(startPositionList, file=ppsPathname);
+  rm(startPositionList); # Not needed anymore
   verbose && exit(verbose);
 
   verbose && enter(verbose, "Writing CDF file");
@@ -473,16 +487,24 @@ setMethodS3("bpmapCluster2Cdf", "default", function(pathname, chipType, tags=NUL
 ############################################################################
 # HISTORY:
 # 2012-06-21 [HB]
+# o GENERALIZATION: Now the elements of the written start position list
+#   (PPS) have names corresponding to the unit prefix (e.g. "chrX").
+# o Added argument 'path' to bpmapCluster2Cdf(), which now defaults to
+#   annotationData/chipTypes/<chipType>/.
 # o Added more internal sanity checks.
 # o CLARIFICATION: Restructured the bpmapCluster2Cdf() method such that
 #   is more clear how BPMAP sequences are filtered out, i.e. keeping
 #   sequencing with a matching group name and excluding those that
 #   appears to be non-genomic control sequences.
+# o ROBUSTNESS: Arguments 'rows' and 'cols' for bpmapCluster2Cdf() are
+#   mandatory (again).  The reason for this is that the BPMAP file is only
+#   useful to infer a lower bound for them, but not their exact values.
 # o BUG FIX: bpmapCluster2Cdf(..., minNbrOfProbes=n) filtered out units
 #   with less than (n+2L) probes, not n probes.
 # o BUG FIX: Previously non-genomic control sequences, which were filtered
 #   out, were identified as having at least one probe start position to
 #   be zero.  Now they are indentified by all start positions being zero.
+#   This change was discussed today with MR via email.
 # o BUG FIX: The generated CDF structure had 'unitnumber':s set to be
 #   equal to BPMAP sequence index rather than the CDF unit number.  This
 #   probably didn't matter for the written CDF, because writeCdf() sets

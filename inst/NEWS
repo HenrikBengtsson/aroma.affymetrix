@@ -1,6 +1,10 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 2.5.5 [2012-08-18]
+o Added argument 'useTranscriptCluster' to writeCdf() for AffyGenePDInfo.
+
+
 Version: 2.5.4 [2012-06-21]
 o CLARIFICATION: Restructured the bpmapCluster2Cdf() method such that
   is more clear how BPMAP sequences are filtered out, i.e. keeping

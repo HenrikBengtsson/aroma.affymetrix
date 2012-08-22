@@ -99,16 +99,18 @@ setMethodS3("getFitUnitGroupFunction", "HetLogAddPlm", function(this, ..., verbo
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Shift signals?
   shift <- this$shift;
-  if (is.null(shift))
+  if (is.null(shift)) {
     shift <- 0;
+  }
   verbose && cat(verbose, "Amount of shift: ", shift);
 
+  naValue <- as.double(NA);
   fitPlm <- function(y, ...) {
     fit <- fitWHLAPLM.matrix(y+shift, ...);
     fit$sdTheta <- fit$seTheta;
     fit$sdPhi <- fit$sePhi;
-    fit$thetaOutliers <- rep(NA, ncol(y));
-    fit$phiOutliers <- rep(NA, nrow(y));
+    fit$thetaOutliers <- rep(naValue, times=ncol(y));
+    fit$phiOutliers <- rep(naValue, times=nrow(y));
     if (length(fit$sdTheta) != ncol(y)) {
       print(list(y=y, fit=fit));
       throw("Internal error");
@@ -131,8 +133,9 @@ setMethodS3("getFitUnitGroupFunction", "HetLogAddPlm", function(this, ..., verbo
   }, error = function(ex) {
     print(ex);
   })
-  if (!ok)
+  if (!ok) {
     throw("The fit function failed");
+  }
   verbose && exit(verbose);
 
 
@@ -146,6 +149,9 @@ setMethodS3("getFitUnitGroupFunction", "HetLogAddPlm", function(this, ..., verbo
 
 ############################################################################
 # HISTORY:
+# 2012-08-21
+# o Now getFitUnitGroupFunction() for HetLogAddPlm allocates using
+#   as.double(NA) instead of NA.
 # 2007-10-05
 # o Created from RmaPlm.R.
 ############################################################################

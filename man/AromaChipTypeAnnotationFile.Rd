@@ -32,7 +32,7 @@
 \code{~~~~~~~~~~~~~~~~~~~~~~~~~~~+--}\emph{\code{AromaChipTypeAnnotationFile}}\cr
 
 \bold{Directly known subclasses:}\cr
-\emph{\link[aroma.affymetrix]{AffymetrixCdfFile}}\cr
+\emph{\link[aroma.affymetrix]{AffymetrixCdfFile}}, \emph{\link[aroma.affymetrix]{AffymetrixPgfFile}}\cr
 
 public abstract static class \bold{AromaChipTypeAnnotationFile}\cr
 extends \emph{\link[aroma.affymetrix]{AffymetrixFile}}\cr

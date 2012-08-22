@@ -21,7 +21,7 @@
    Platform Design (PD) packages are also known as "pdInfo" packages.
  }
 
- \usage{\method{writeCdf}{AffyGenePDInfo}(this, tags=NULL, path=NULL, overwrite=FALSE, verbose=TRUE, ...)}
+ \usage{\method{writeCdf}{AffyGenePDInfo}(this, tags=NULL, path=NULL, useTranscriptCluster=FALSE, overwrite=FALSE, verbose=TRUE, ...)}
 
  \arguments{
   \item{tags}{An optional \code{\link[base]{character}} \code{\link[base]{vector}} of tags to be added to the CDF
@@ -29,6 +29,8 @@
   \item{path}{The output path where the CDF file is written.
     If \code{\link[base]{NULL}} (default), then it is written to the corresponding
     \code{annotationData/chipTypes/<chipType>/} directory.}
+  \item{useTranscriptCluster}{If \code{\link[base:logical]{TRUE}}, units are defined by the transcript
+     cluster IDs rather than the probeset IDs.}
   \item{overwrite}{If \code{\link[base:logical]{TRUE}}, an existing CDF is overwritten, otherwise
     an exception is thrown.}
   \item{verbose}{A \code{\link[base]{logical}} or \code{\link[R.utils]{Verbose}}.}

@@ -61,7 +61,7 @@
 #  NAR, 2003, 31, e15.\cr
 # }
 #*/###########################################################################
-setConstructorS3("RmaPlm", function(..., flavor=c("affyPLM", "affyPLMold", "oligo")) {
+setConstructorS3("RmaPlm", function(..., flavor=c("affyPLM", "oligo")) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -197,10 +197,12 @@ setMethodS3("getRlmFitFunctions", "RmaPlm", function(static, withPriors=FALSE, .
     if (withPriors) {
       fcnList <- list(
         wrlm = function(y, phi, psiCode, psiK, w, scale=NULL) {
+          # From preprocessCore::rcModelPLM()
           .Call("R_rlm_rma_given_probe_effects", 
                 y, phi, psiCode, psiK, w, scale, PACKAGE="preprocessCore");
         },
         rlm = function(y, phi, psiCode, psiK, w, scale=NULL) {
+          # From preprocessCore::rcModelPLM()
           .Call("R_rlm_rma_given_probe_effects", 
                 y, phi, psiCode, psiK, scale, PACKAGE="preprocessCore");
         }
@@ -208,10 +210,12 @@ setMethodS3("getRlmFitFunctions", "RmaPlm", function(static, withPriors=FALSE, .
     } else {
       fcnList <- list(
         wrlm = function(y, psiCode, psiK, w, scale=NULL) {
+          # From preprocessCore::rcModelPLM()
           .Call("R_wrlm_rma_default_model", 
                 y, psiCode, psiK, w, scale, PACKAGE="preprocessCore");
         },
         rlm = function(y, psiCode, psiK, w, scale=NULL) {
+          # From preprocessCore::rcModelPLM()
           .Call("R_rlm_rma_default_model", 
                 y, psiCode, psiK, scale, PACKAGE="preprocessCore");
         }
@@ -226,42 +230,9 @@ setMethodS3("getRlmFitFunctions", "RmaPlm", function(static, withPriors=FALSE, .
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Second, try the affyPLM package
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  pkg <- "affyPLM";
-  pkgDesc <- packageDescription(pkg);
-  if (is.list(pkgDesc)) {
-    ver <- pkgDesc$Version;
-    verbose && cat(verbose, pkg, " version: ", ver);
-
-    if (withPriors) {
-      throw("NOT SUPPORTED: Cannot fit RmaPlm with prior probe affinities when using affyPLM.");
-    }
-
-    if (compareVersion(ver, "1.13.8") <= 0) {
-      fcnList <- list(
-        wrlm = function(y, psiCode, psiK, w) {
-          .Call("R_wrlm_rma_default_model", 
-                y, psiCode, psiK, w, PACKAGE="affyPLM");
-        },
-        rlm = function(y, psiCode, psiK) {
-          .Call("R_rlm_rma_default_model", 
-                y, psiCode, psiK, PACKAGE="affyPLM");
-        }
-      );
-    }
-  }
-
-  if (!is.null(fcnList)) {
-    require(pkg, character.only=TRUE) || throw("Package not loaded: ", pkg);
-    return(fcnList);
-  }
-
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Failure
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  throw("Neither preprocessCore v1.8.0+ nor affyPLM v1.13.8- is available.");
+  throw("Failed to retrieve RLM fit functions. Please install the 'preprocessCore' package.");
 }, static=TRUE, protected=TRUE) # getRlmFitFunctions()
 
 
@@ -533,102 +504,11 @@ setMethodS3("getFitUnitGroupFunction", "RmaPlm", function(this, ..., verbose=FAL
   attr(rmaModelAffyPlm, "name") <- "rmaModelAffyPlm";
 
 
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # rmaModelAffyPlmOld().
-  # Author: Ken Simpson, WEHI, 2006-09-26.
-  # Requires: affyPLM() by Ben Bolstad.
-  # Why: The above "R_rlm_rma_default_model" call is not available on all
-  # platforms (yet).  
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  rmaModelAffyPlmOld <- function(y, priors=NULL, ..., constraint.type=list(default="contr.treatment", chip="contr.treatment", probe="contr.sum")) {
-    if (!is.null(priors)) {
-      throw("NOT IMPLEMENTED: Internal rmaModelAffyPlmOld() does not support prior parameters.");
-    }
-
-    # Add shift
-    y <- y + shift;
-
-    # Assert right dimensions of 'y'.
-    dim <- dim(y);
-    if (length(dim) != 2) {
-      str(y);
-      stop("Argument 'y' must have two dimensions: ", 
-                                                paste(dim, collapse="x"));
-    }
-
-    K <- dim[1];  # Number of probes
-    I <- dim[2];  # Number of arrays
-
-    # Too many probes?
-    if (K > skipThreshold[1] && I > skipThreshold[2]) {
-      warning("Ignoring a unit group when fitting probe-level model, because it has a ridiculously large number of data points: ", paste(dim, collapse="x"), " > ", paste(skipThreshold, collapse="x"));
-
-      return(list(theta=rep(NA, I),
-                  sdTheta=rep(NA, I),
-                  thetaOutliers=rep(NA, I), 
-                  phi=rep(NA, K),
-                  sdPhi=rep(NA, K),
-                  phiOutliers=rep(NA, K)
-                 )
-            );
-    }
-
-    # Log-additive model
-    y <- log(y, base=2)
-
-    # make factor variables for chip and probe
-    nchip <- ncol(y)
-    nprobe <- nrow(y)
-
-    chip <- factor(rep(1:nchip, each=nprobe))
-    probe <- factor(rep(1:nprobe, nchip))
-    X <- model.matrix(~ -1 + chip + probe, contrasts.arg=list(chip=constraint.type$chip, probe=constraint.type$probe))
-
-    # Fit model using affyPLM code
-    rlmPkg <- "affyPLM";
-    fit <- .C("rlm_fit_R", as.double(X), as.double(y), rows=as.integer(nchip*nprobe), cols=as.integer(nchip+nprobe-1), beta=double(nchip+nprobe-1), resids=double(nchip*nprobe), weights=double(nchip*nprobe), PACKAGE=rlmPkg);
-
-    # Extract probe affinities and chip estimates
-    est <- fit$beta;
-
-    # Chip effects
-    beta <- est[1:I];
-
-    # Probe affinities
-    alpha <- c(0, est[(I+1):length(est)]);
-    if (constraint.type$probe=="contr.sum") {
-      alpha[1] <- -sum(alpha[2:length(alpha)]);
-    } 
-      
-    # Estimates on the intensity scale
-    theta <- 2^beta;
-    phi <- 2^alpha;
-
-    # The RMA model is fitted with constraint sum(alpha) = 0, that is,
-    # such that prod(phi) = 1.
-
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    # A fit function must return: theta, sdTheta, thetaOutliers, 
-    # phi, sdPhi, phiOutliers.
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    sdTheta <- rep(1, I);
-    thetaOutliers <- rep(FALSE, I);
-    sdPhi <- rep(1, K);
-    phiOutliers <- rep(FALSE, K);
-
-    # Return data on the intensity scale
-    list(theta=theta, sdTheta=sdTheta, thetaOutliers=thetaOutliers, 
-         phi=phi, sdPhi=sdPhi, phiOutliers=phiOutliers);   
-  } # rmaModelAffyPlmOld()
-  attr(rmaModelAffyPlmOld, "name") <- "rmaModelAffyPlmOld";
-
-
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # rmaModelOligo().
   # Author: Henrik Bengtsson, WEHI, 2006-12-11.
   # Requires: oligo() by Benilto Carvalho et al.
-  # Why: To fully immitate CRLMM in oligo.
+  # Why: To fully imitate CRLMM in oligo.
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (flavor == "oligo") {
     # First, try to see if preprocessCore > v0.99.14 is available
@@ -645,30 +525,8 @@ setMethodS3("getFitUnitGroupFunction", "RmaPlm", function(this, ..., verbose=FAL
         oligo::basicRMA(y, pnVec=unitNames, background=FALSE, 
                                             normalize=FALSE, verbose=FALSE);
       } # fitRma()
-    } else if (compareVersion(ver, "0.99.51") >= 0) {
-      # MR 2008-12-04: fitRma() was removed from the 'oligo' package.  
-      #                The call below is basically equivalent
-      fitRma <- function(y, unitNames, nbrOfUnits, ...) {
-        ## SEXP rma_c_complete_copy(
-        ##           SEXP PMmat, SEXP MMmat, 
-        ##           SEXP ProbeNamesVec, SEXP N_probes, 
-        ##           SEXP densfunc, SEXP rho,
-        ##           SEXP norm_flag, SEXP bg_flag, 
-        ##           SEXP bg_type);
-	.Call("rma_c_complete_copy", 
-              y, y, 
-              unitNames, nbrOfUnits, 
-              NULL, NULL,
-              FALSE, FALSE, 
-              as.integer(2), PACKAGE="oligo");
-      } # fitRma()
     } else {
-      fitRma <- function(y, unitNames, nbrOfUnits, ...) {
-        capture.output({
-          fit <- oligo::fitRma(pmMat=y, mmMat=y, pnVec=unitNames, nProbes=nbrOfUnits, densFunction=NULL, rEnv=NULL, normalize=FALSE, background=FALSE, bgversion=2, destructive=FALSE);
-        });
-        fit;
-      } # fitRma()
+      throw("Non-supported version (< 1.7.19) of 'oligo' detected. Please update the 'oligo' package: ", ver);
     }
   }
 
@@ -784,9 +642,6 @@ setMethodS3("getFitUnitGroupFunction", "RmaPlm", function(this, ..., verbose=FAL
     rlm <- wrlm <- NULL; rm(rlm, wrlm);
     attachLocally(fcnList);
     rmaModel <- rmaModelAffyPlm;
-  } else if (flavor == "affyPLMold") {
-    require("affyPLM") || throw("Package not loaded: affyPLM");
-    rmaModel <- rmaModelAffyPlmOld;
   } else if (flavor == "oligo") {
     require("oligo") || throw("Package not loaded: oligo");
     rmaModel <- rmaModelOligo;
@@ -836,6 +691,12 @@ setMethodS3("getCalculateResidualsFunction", "RmaPlm", function(static, ...) {
 
 ############################################################################
 # HISTORY:
+# 2012-08-21
+# o CLEANUP: Dropped support for obsolete RmaPlm(..., flavor="affyPLMold").
+# o CLEANUP: Now RmaPlm(..., flavor="oligo") no longer supports 
+#   oligo (< 1.7.19), which can be considered obsolete version by now.
+# o CLEANUP: getRlmFitFunctions() no longer falls back to affyPLM, which
+#   was really only needed back in 2007.
 # 2012-01-14
 # o Updated getFitUnitGroupFunction() for RmaPlm to support prior
 #   probe-affinity parameters.

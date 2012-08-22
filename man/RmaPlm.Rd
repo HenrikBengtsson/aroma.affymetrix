@@ -41,7 +41,7 @@ extends \link[aroma.affymetrix]{ProbeLevelModel}\cr
   Analysis (RMA) method described in Irizarry et al (2003).
  }
 
- \usage{RmaPlm(..., flavor=c("affyPLM", "affyPLMold", "oligo"))}
+ \usage{RmaPlm(..., flavor=c("affyPLM", "oligo"))}
 
  \arguments{
    \item{...}{Arguments passed to \code{\link{ProbeLevelModel}}.}

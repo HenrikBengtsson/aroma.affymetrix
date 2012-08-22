@@ -1,6 +1,14 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 2.5.6 [2012-08-21]
+o CLEANUP: getRlmFitFunctions() no longer falls back to affyPLM, which
+  was really only needed back in 2007.
+o CLEANUP: Dropped support for obsolete RmaPlm(..., flavor="affyPLMold").
+o CLEANUP: Now RmaPlm(..., flavor="oligo") no longer supports 
+  oligo (< 1.7.19), which can be considered obsolete version by now.
+
+
 Version: 2.5.5 [2012-08-18]
 o Added argument 'useTranscriptCluster' to writeCdf() for AffyGenePDInfo.
 

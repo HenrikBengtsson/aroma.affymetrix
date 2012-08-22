@@ -101,6 +101,6 @@ asThis, getChecksum, $, $<-, [[, [[<-, as.character, attach, attachLocally, clea
 
  \seealso{
    For more details on probe-level models, please see
-   the \pkg{affyPLM} package.
+   the \pkg{preprocessCore} package.
  }
 \keyword{classes}

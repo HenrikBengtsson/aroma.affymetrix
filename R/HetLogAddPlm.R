@@ -67,7 +67,7 @@ setMethodS3("getAsteriskTags", "HetLogAddPlm", function(this, collapse=NULL, ...
 #
 # \author{
 #   Henrik Bengtsson and Ken Simpson (WEHI) utilizing Ben Bolstad's 
-#   \pkg{affyPLM} package.
+#   \pkg{preprocessCore} package.
 # }
 #
 # \seealso{

@@ -48,7 +48,7 @@
 #
 # \seealso{
 #   For more details on probe-level models, please see 
-#   the \pkg{affyPLM} package.
+#   the \pkg{preprocessCore} package.
 # }
 #*/###########################################################################
 setConstructorS3("ProbeLevelModel", function(..., standardize=TRUE) {

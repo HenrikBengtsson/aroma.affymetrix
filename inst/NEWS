@@ -1,6 +1,11 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 2.5.7 [2012-08-24]
+o SPEED UP: Now doCRMAv2() will check upfront if the final results are
+  already available.  If they are, they will be returned instantaneously.
+
+
 Version: 2.5.6 [2012-08-21]
 o CLEANUP: getRlmFitFunctions() no longer falls back to affyPLM, which
   was really only needed back in 2007.

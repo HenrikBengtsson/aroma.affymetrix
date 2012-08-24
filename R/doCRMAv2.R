@@ -37,6 +37,7 @@ setMethodS3("doCRMAv2", "AffymetrixCelSet", function(csR, combineAlleles=TRUE, l
   verbose && str(verbose, arraysTag);
   verbose && cat(verbose, "ram: ", ram);
 
+
   # List of objects to be returned
   res <- list();
   if (!drop) {
@@ -54,6 +55,56 @@ setMethodS3("doCRMAv2", "AffymetrixCelSet", function(csR, combineAlleles=TRUE, l
     verbose && print(verbose, csR);
     verbose && exit(verbose);
   }
+
+  # Check if the final results are already available?
+  if (drop) {
+    verbose && enter(verbose, "CRMAv2/Checking whether final results are available or not");
+
+    # The fullnames of all arrays that should exist
+    fullnames <- getFullNames(csR);
+
+    plmTags <- switch(plm, "AvgCnPlm"="AVG", "RmaCnPlm"="RMA");
+    if (combineAlleles) {
+      plmTags <- c(plmTags, "A+B");
+    }
+    tags <- c("ACC,-XY", "BPN,-XY", plmTags, "FLN,-XY");
+
+    # Try to load the final TCN data set
+    dsT <- tryCatch({
+      ds <- AromaUnitTotalCnBinarySet$byName(dataSet, tags=tags, chipType=chipType);
+      extract(ds, fullnames, onMissing="error");
+    }, error=function(ex) { NULL });
+
+    # Continue?
+    if (!is.null(dsT)) {
+      # Done?
+      if (combineAlleles) {
+        verbose && cat(verbose, "Already done.");
+        verbose && print(verbose, dsT);
+        verbose && exit(verbose);
+        verbose && exit(verbose);
+        return(dsT);
+      }
+
+      # Try to load the final BAF data set
+      dsB <- tryCatch({
+        ds <- AromaUnitFracBCnBinarySet$byName(dataSet, tags=tags, chipType=chipType);
+        extract(ds, fullnames, onMissing="error");
+      }, error=function(ex) { NULL });
+
+      # Done?
+      if (!is.null(dsB)) {
+        verbose && cat(verbose, "Already done.");
+        dsList <- list(total=dsT, fracB=dsB);
+        verbose && print(verbose, dsList);
+        verbose && exit(verbose);
+        verbose && exit(verbose);
+        return(dsList);
+      }
+    } # if (!is.null(dsT))
+    verbose && exit(verbose);
+  } # if (drop)
+
 
   verbose && enter(verbose, "CRMAv2/Allelic crosstalk calibration");
   acc <- AllelicCrosstalkCalibration(csR, model="CRMAv2");
@@ -189,6 +240,9 @@ setMethodS3("doASCRMAv2", "default", function(...) {
 
 ############################################################################
 # HISTORY:
+# 2012-08-24
+# o SPEED UP: Now doCRMAv2() will check upfront if the final results are
+#   already available.  If they are, they will be returned instantaneously.
 # 2011-04-07
 # o Added argument 'drop'.
 # 2011-03-14

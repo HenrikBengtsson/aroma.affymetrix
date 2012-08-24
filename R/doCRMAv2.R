@@ -45,6 +45,9 @@ setMethodS3("doCRMAv2", "AffymetrixCelSet", function(csR, combineAlleles=TRUE, l
   }
 
 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # Setup data set to be processed
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
   verbose && cat(verbose, "Data set");
   verbose && print(verbose, csR);
 
@@ -56,18 +59,53 @@ setMethodS3("doCRMAv2", "AffymetrixCelSet", function(csR, combineAlleles=TRUE, l
     verbose && exit(verbose);
   }
 
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
   # Check if the final results are already available?
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
   if (drop) {
-    verbose && enter(verbose, "CRMAv2/Checking whether final results are available or not");
+    verbose && enter(verbose, "Checking whether final results are available or not");
+
+    # The name, tags and chip type and array names of the results to look for
+    dataSet <- getFullName(csR);
+    cdf <- getCdf(csR);
+    chipType <- getChipType(cdf);
 
     # The fullnames of all arrays that should exist
     fullnames <- getFullNames(csR);
 
+    # ACC tags
+    # From the constructor of AllelicCrosstalkCalibration
+    if (regexpr("^Mapping[0-9]+K_", chipType) != -1) {
+      rescaleBy <- "groups";
+    } else if (regexpr("^GenomeWideSNP_", chipType) != -1) {
+      rescaleBy <- "all";
+    } else if (regexpr("^Cyto(genetics|ScanHD)_Array$", chipType) != -1) {
+      rescaleBy <- "all";
+    } else if (regexpr("^MOUSEDIVm520650$", chipType) != -1) {
+      rescaleBy <- "all";
+    } else {
+      # Heuristics so that we can work with "future/unknown" chip types.
+      types <- getUnitTypes(cdf);
+      # 5 == Copy Number
+      hasCns <- is.element(5, types);
+      rm(types);
+      if (hasCns) {
+        rescaleBy <- "all";
+      } else {
+        rescaleBy <- "groups";
+      }
+    }
+    accTags <- c("ACC", switch(rescaleBy, all="ra", none="rn"), "-XY");
+    accTags <- paste(accTags, collapse=",");
+
+    # PLM tags
     plmTags <- switch(plm, "AvgCnPlm"="AVG", "RmaCnPlm"="RMA");
     if (combineAlleles) {
       plmTags <- c(plmTags, "A+B");
     }
-    tags <- c("ACC,-XY", "BPN,-XY", plmTags, "FLN,-XY");
+
+    tags <- c(accTags, "BPN,-XY", plmTags, "FLN,-XY");
 
     # Try to load the final TCN data set
     dsT <- tryCatch({
@@ -106,6 +144,9 @@ setMethodS3("doCRMAv2", "AffymetrixCelSet", function(csR, combineAlleles=TRUE, l
   } # if (drop)
 
 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # CRMAv2
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
   verbose && enter(verbose, "CRMAv2/Allelic crosstalk calibration");
   acc <- AllelicCrosstalkCalibration(csR, model="CRMAv2");
   verbose && print(verbose, acc);

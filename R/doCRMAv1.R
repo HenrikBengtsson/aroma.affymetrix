@@ -43,6 +43,9 @@ setMethodS3("doCRMAv1", "AffymetrixCelSet", function(csR, shift=+300, combineAll
   }
 
 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # Setup data set to be processed
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
   verbose && cat(verbose, "Data set");
   verbose && print(verbose, csR);
 
@@ -54,6 +57,10 @@ setMethodS3("doCRMAv1", "AffymetrixCelSet", function(csR, shift=+300, combineAll
     verbose && exit(verbose);
   }
 
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # CRMAv1
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
   verbose && enter(verbose, "CRMAv1/Allelic crosstalk calibration");
   acc <- AllelicCrosstalkCalibration(csR, model="CRMA");
   verbose && print(verbose, acc);

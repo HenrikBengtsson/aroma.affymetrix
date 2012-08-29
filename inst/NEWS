@@ -1,8 +1,10 @@
 Package: aroma.affymetrix
 =========================
 
-Version: 2.5.7 [2012-08-24]
+Version: 2.5.7 [2012-08-28]
 o SPEED UP: Now doCRMAv2() returns even faster if already processed.
+o ROBUSTNESS: Added a systems test for running doASCRMAv2() in 
+  parallel using parLapply().
 
 
 Version: 2.5.6 [2012-08-21]

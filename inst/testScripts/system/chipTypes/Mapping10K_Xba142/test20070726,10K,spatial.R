@@ -1,4 +1,4 @@
-library("aroma.affymetrix")
+library("aroma.affymetrix");
 log <- Arguments$getVerbose(-4, timestamp=TRUE);
 
 
@@ -29,25 +29,19 @@ process(ae, verbose=log);
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Spatial probe log-ratio plots
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-pngDev <- findPngDevice();
 cfR <- getAverageFile(csR, verbose=log);
 reporter <- SpatialReporter(csR, reference=cfR);
 ylab <- expression(log[2](y/y[R]));
-figPath <- Arguments$getWritablePath("figures");
 for (array in 1:nbrOfArrays(csR)) {
   df <- getFile(csR, array);
 
-  filename <- sprintf("%s,spatial,rowMedians.png", getFullName(df));
-  pathname <- filePath(figPath, filename);
-  devNew("pngDev", pathname, width=300, height=800);
-  plotMargins(reporter, array=array, ylim=c(-1,1)*0.2, ylab=ylab, margins="rows", rotate=90);
-  devDone();
+  toPNG(getFullName(df), tags="spatial,rowMedians", width=300, aspectRatio=8/3, {
+    plotMargins(reporter, array=array, ylim=c(-1,1)*0.2, ylab=ylab, margins="rows", rotate=90);
+  });
 
-  filename <- sprintf("%s,spatial,colMedians.png", getFullName(df));
-  pathname <- filePath(figPath, filename);
-  devNew("pngDev", pathname, width=800, height=300);
-  plotMargins(reporter, array=array, ylim=c(-1,1)*0.2, ylab=ylab, margins="columns", rotate=0);
-  devDone();
+  toPNG(getFullName(df), tags="spatial,colMedians", width=800, aspectRatio=3/8, {
+    plotMargins(reporter, array=array, ylim=c(-1,1)*0.2, ylab=ylab, margins="columns", rotate=0);
+  });
 }
 
 addColorMap(reporter, "log2center,rainbow");

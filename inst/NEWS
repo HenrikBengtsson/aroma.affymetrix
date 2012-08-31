@@ -1,6 +1,12 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 2.5.9 [2012-08-31]
+o Added system test scripts that automatically download the needed
+  annotation data files iff missing.  This simplifies running the
+  package's system tests on a new system.
+
+
 Version: 2.5.8 [2012-08-30]
 o CLEANUP: Dropped readCdfDataFrame(), which is identical to
   the one in affxparser, which has remained the same since

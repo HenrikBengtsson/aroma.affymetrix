@@ -1,16 +1,15 @@
 # Added '...' to some base functions. These will later be
 # turned into default functions by setMethodS3().
 
-write <- appendVarArgs(write);
-getPackageName <- appendVarArgs(getPackageName);
-
-# So that one can call plotRle(qa, show.names=FALSE)
-boxplot.stats <- appendVarArgs(boxplot.stats);
-
 writeCdf <- appendVarArgs(writeCdf);
+
 
 ############################################################################
 # HISTORY:
+# 2012-08-30 [HB]
+# o CLEANUP: No longer a need for appendVarArgs(write).
+# o CLEANUP: No longer a need for appendVarArgs(boxplot.stats).
+# o CLEANUP: No longer a need for appendVarArgs(getPackageName).
 # 2011-01-09 [HB]
 # o Added appendVarArgs(writeCdf).
 # 2010-02-08 [HB]

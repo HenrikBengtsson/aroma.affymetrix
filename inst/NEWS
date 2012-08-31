@@ -5,6 +5,8 @@ Version: 2.5.8 [2012-08-30]
 o CLEANUP: Dropped readCdfDataFrame(), which is identical to
   the one in affxparser, which has remained the same since
   affxparser v1.21.1 (Oct 2010).
+o CLEANUP: Package no longer masks boxplot.stats(), getPackageName()
+  and write() from other packages.
 
 
 Version: 2.5.7 [2012-08-28]

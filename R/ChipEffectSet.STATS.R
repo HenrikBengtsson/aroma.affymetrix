@@ -13,6 +13,14 @@ setMethodS3("boxplotStats", "ChipEffectSet", function(this, type=c("NUSE", "RLE"
 
 setMethodS3("calculateFieldBoxplotStats", "ChipEffectSet", function(this, field=c("theta", "sdTheta"), transform=NULL, arrays=NULL, subset=NULL, ..., merge=FALSE, verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Local functions
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # So that one can call plotRle(qa, show.names=FALSE), i.e. not
+  # worry about what arguments are in '...'.
+  boxplotStats <- appendVarArgs(boxplot.stats);
+
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
   nbrOfArrays <- nbrOfArrays(this);
@@ -78,7 +86,7 @@ setMethodS3("calculateFieldBoxplotStats", "ChipEffectSet", function(this, field=
     if (is.function(transform)) {
       data <- transform(data);
     }
-    stats[[kk]] <- boxplot.stats(data, ...);
+    stats[[kk]] <- boxplotStats(data, ...);
     rm(data);
     verbose && exit(verbose);
   }
@@ -102,6 +110,14 @@ setMethodS3("calculateFieldBoxplotStats", "ChipEffectSet", function(this, field=
 
 # ... : additional arguments to bxp().
 setMethodS3("calculateRleBoxplotStats", "ChipEffectSet", function(this, arrays=NULL, subset=NULL, ..., merge=FALSE, verbose=FALSE) {
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Local functions
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # So that one can call plotRle(qa, show.names=FALSE), i.e. not
+  # worry about what arguments are in '...'.
+  boxplotStats <- appendVarArgs(boxplot.stats);
+
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
@@ -173,7 +189,7 @@ setMethodS3("calculateRleBoxplotStats", "ChipEffectSet", function(this, arrays=N
       throw("Internal error: The number of 'theta' does not match the number of 'medianLE': ", length(theta), " != ", length(medianLE));
     }
 
-    stats[[kk]] <- boxplot.stats(theta-medianLE, ...);
+    stats[[kk]] <- boxplotStats(theta-medianLE, ...);
     rm(theta);
     verbose && exit(verbose);
   }
@@ -284,6 +300,10 @@ setMethodS3("calculateNuseBoxplotStats", "ChipEffectSet", function(this, arrays=
 
 ##########################################################################
 # HISTORY:
+# 2012-08-30 [HB]
+# o Now calculateFieldBoxplotStats() and calculateRleBoxplotStats()
+#   calls boxplot.stats() via a local boxplotStats() functions that
+#   automatically drops unused arguments.
 # 2008-02-28 [EP]
 # o Now '...' are passed to boxplot.stats().
 # o BUG FIX: Now extractMatrix() is used internally to calculate the

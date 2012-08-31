@@ -387,7 +387,7 @@
   getOutputDataSet00.GcContentNormalization getOutputDataSetOLD20090509
   getOutputDataSetOLD20090509.Transform getOutputFiles.Transform
   getOutputIdentifier getOutputIdentifier.QuantileNormalization
-  getOutputTuple getOutputTuple.SmoothMultiarrayModel getPackageName
+  getOutputTuple getOutputTuple.SmoothMultiarrayModel 
   getParameter.AffymetrixAptSummaryFile
   getParameters.AbstractProbeSequenceNormalization
   getParameters.AdditiveCovariatesNormalization
@@ -701,7 +701,7 @@
   validate.MultiArrayUnitModel verify.AffymetrixCsvGenomeInformation
   verify.AffymetrixTsvFile verify.DChipGenomeInformation
   verify.DChipSnpInformation verify.UflSnpInformation
-  verify.UgpGenomeInformation write writeAsFullCelFile
+  verify.UgpGenomeInformation writeAsFullCelFile
   writeAsFullCelFile.ChipEffectFile writeCNT writeCNT.SnpChipEffectFile
   writeCNT.SnpChipEffectSet writeImage writeImage.ResidualFile
   writeImage.WeightsFile writeImageCombined
@@ -710,7 +710,7 @@
   writeRegions.profileCGH writeSgr writeSgr.AffymetrixCelSet
   writeSignals writeSignals.ProbeLevelTransform3 writeWig
   writeWig.CnChipEffectSet
-boxplot.stats doCRMAv2 doCRMAv2.AffymetrixCelSet doCRMAv2.character
+ doCRMAv2 doCRMAv2.AffymetrixCelSet doCRMAv2.character
 allocateFromCdf.AromaCellCpgFile
 doCRMAv1 doCRMAv1.AffymetrixCelSet doCRMAv1.character
 groupUnitsByDimension

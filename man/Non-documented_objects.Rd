@@ -782,7 +782,6 @@
 \alias{getOutputIdentifier.QuantileNormalization}
 \alias{getOutputTuple}
 \alias{getOutputTuple.SmoothMultiarrayModel}
-\alias{getPackageName}
 \alias{getParameter.AffymetrixAptSummaryFile}
 \alias{getParameters.AbstractProbeSequenceNormalization}
 \alias{getParameters.AdditiveCovariatesNormalization}
@@ -1376,7 +1375,6 @@
 \alias{verify.DChipSnpInformation}
 \alias{verify.UflSnpInformation}
 \alias{verify.UgpGenomeInformation}
-\alias{write}
 \alias{writeAsFullCelFile}
 \alias{writeAsFullCelFile.ChipEffectFile}
 \alias{writeCNT}
@@ -1397,7 +1395,6 @@
 \alias{writeSignals.ProbeLevelTransform3}
 \alias{writeWig}
 \alias{writeWig.CnChipEffectSet}
-\alias{boxplot.stats}
 \alias{doCRMAv2}
 \alias{doCRMAv2.AffymetrixCelSet}
 \alias{doCRMAv2.character}

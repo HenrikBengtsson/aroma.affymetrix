@@ -6,6 +6,9 @@ chipType <- "HG-U133_Plus_2";
 csR <- AffymetrixCelSet$byName(dataSet, chipType=chipType);
 print(csR);
 
+ab <- extractAffyBatch(csR, verbose=verbose);
+print(ab);
+
 ces <- doRMA(csR, verbose=verbose);
 print(ces);
 

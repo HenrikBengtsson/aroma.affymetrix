@@ -7,26 +7,22 @@
 #
 # Author: Mark Robinson and Henrik Bengtsson
 # Created: 2009-05-17
-# Last modified: 2012-08-30
-#
-# Data set:
-#  rawData/
-#   Affymetrix-HeartBrain/
-#    HG-U133_Plus_2/
-#     u1332plus_ivt_cerebellum_A.CEL [13555904 bytes]
-#     u1332plus_ivt_cerebellum_B.CEL [13550687 bytes]
-#     u1332plus_ivt_cerebellum_C.CEL [13551860 bytes]
-#     u1332plus_ivt_heart_A.CEL      [13554731 bytes]
-#     u1332plus_ivt_heart_B.CEL      [13553255 bytes]
-#     u1332plus_ivt_heart_C.CEL      [13551203 bytes]
-#  Source: Affymetrix Tissue samples, 2007.  http://www.affymetrix.com/
-#  support/technical/sample_data/hugene_1_0_array_data.affx
+# Last modified: 2012-09-01
 ###########################################################################
-
 library("aroma.affymetrix");
 library("gcrma");  # gcrma()
-
 verbose <- Arguments$getVerbose(-8, timestamp=TRUE);
+
+
+# ----------------------------------
+# Dataset
+# ----------------------------------
+dataSet <- "GSE9890";
+chipType <- "HG-U133_Plus_2";
+
+cdf <- AffymetrixCdfFile$byChipType(chipType);
+csR <- AffymetrixCelSet$byName(dataSet, cdf=cdf);
+print(csR);
 
 
 # ----------------------------------
@@ -34,27 +30,14 @@ verbose <- Arguments$getVerbose(-8, timestamp=TRUE);
 # ----------------------------------
 verbose && enter(verbose, "gcRMA by aroma.affymetrix");
 
-cdf <- AffymetrixCdfFile$byChipType("HG-U133_Plus_2");
-csR <- AffymetrixCelSet$byName("Affymetrix-HeartBrain", cdf=cdf);
-
-# RMA background correction
-bc <- GcRmaBackgroundCorrection(csR);
-csB <- process(bc, verbose=verbose);
-
-# RMA quantile normalization
-qn <- QuantileNormalization(csB, typesToUpdate="pm");
-csN <- process(qn, verbose=verbose);
-
-# RMA probe summarization (there are no NAs in this data set)
-plm <- RmaPlm(csN, flavor="oligo");
-fit(plm, verbose=verbose);
+res <- doGCRMA(csR, drop=FALSE, verbose=verbose);
+print(res); 
 
 # Extract chip effects on the log2 scale
-ces <- getChipEffectSet(plm);
+ces <- res$ces;
 theta <- extractMatrix(ces);
 rownames(theta) <- getUnitNames(cdf);
 theta <- log2(theta);
-verbose && str(verbose, theta);
 
 verbose && exit(verbose);
 
@@ -72,34 +55,31 @@ es <- gcrma(raw, verbose=TRUE);
 verbose && print(verbose, es);
 
 theta0 <- exprs(es);
-verbose && str(verbose, theta0);
 verbose && exit(verbose);
 
 
-# ---------------------------------
-# Comparing the two implementations
-# ---------------------------------
-verbose && enter(verbose, "Comparing the two implementations");
+# --------------------------------
+# Compare the two implementations
+# --------------------------------
 # Reorder the aroma.affymetrix estimates
 o <- match(rownames(theta0), rownames(theta));
 theta <- theta[o,];
 
 # (a) Assert correlations
-cors <- sapply(1:ncol(theta), FUN=function(cc) cor(theta[,cc], theta0[,cc]));
-print(cors);
-print(range(cors));
-stopifnot(all(cors > 0.999));
+rho <- diag(cor(theta, theta0));
+print(rho);
+print(range(rho));
+stopifnot(all(rho > 0.99995));
 
 # (b) Assert differences
 e <- (theta - theta0);
-stopifnot(mean(as.vector(e^2)) < 0.003);
-stopifnot(sd(as.vector(e^2)) < 0.02);
-stopifnot(quantile(abs(e), 0.99) < 0.20);
-stopifnot(max(abs(e)) < 1.5);
-verbose && exit(verbose);
+stopifnot(mean(as.vector(e^2)) < 0.001);
+stopifnot(sd(as.vector(e^2)) < 0.001);
+stopifnot(quantile(abs(e), 0.99) < 0.05);
+stopifnot(max(abs(e)) < 0.17);
 
 # (c) Visual comparison
-toPNG("replication-gcrma,gcrma", width=800, {
+toPNG(getFullName(csR), tags=c("doGCRMA_vs_gcrma"), width=800, {
   par(mar=c(5,5,4,2)+0.1, cex.main=2, cex.lab=2, cex.axis=1.5);
   
   layout(matrix(1:9, ncol=3, byrow=TRUE));
@@ -114,12 +94,15 @@ toPNG("replication-gcrma,gcrma", width=800, {
   
   xlab <- expression(log[2](theta[aroma.affymetrix]/theta[gcrma]));
   plotDensity(e, xlab=xlab);
-})
+});
+
 
 verbose && print(verbose, sessionInfo());
 
 ###########################################################################
 # HISTORY:
+# 2012-09-01 [HB]
+# o Updated to use a GEO data set.
 # 2012-08-30 [HB]
 # o Updated to utilize toPNG().
 # 2010-02-05 [HB]

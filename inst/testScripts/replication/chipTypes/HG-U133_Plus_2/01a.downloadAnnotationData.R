@@ -10,4 +10,7 @@ verbose && cat(verbose, "Chip type: ", chipType);
 pathname <- downloadCDF(ar, chipType);
 verbose && cat(verbose, "CDF: ", pathname);
 
+pathname <- downloadACS(ar, chipType, tags=".*");
+verbose && cat(verbose, "ACS: ", pathname);
+
 verbose && exit(verbose);

@@ -1,37 +1,35 @@
 library("aroma.affymetrix");
 verbose <- Arguments$getVerbose(-8, timestamp=TRUE);
 
-csR <- AffymetrixCelSet$byName("Affymetrix-HeartBrain", 
-                              chipType="HG-U133_Plus_2");
+dataSet <- "GSE9890";
+chipType <- "HG-U133_Plus_2";
+csR <- AffymetrixCelSet$byName(dataSet, chipType=chipType);
 
-# RMA background correction
-bc <- RmaBackgroundCorrection(csR);
-csB <- process(bc, verbose=verbose);
 
-# RMA quantile normalization
-qn <- QuantileNormalization(csB, typesToUpdate="pm");
-csN <- process(qn, verbose=verbose);
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+# RMA
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+res <- doRMA(csR, drop=FALSE, verbose=verbose);
+print(res);
 
-# RMA probe summarization (there are no NAs in this data set)
-plm <- RmaPlm(csN);
-fit(plm, verbose=verbose);
-
-# Extract chip effects on the log2 scale
-ces <- getChipEffectSet(plm);
-
+# The estimated chip effects
+ces <- res$ces;
+print(ces);
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 # Fit "another" sample based on above PLM priors
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 # Get PLM priors
+plm <- res$plm;
 pf <- getProbeAffinityFile(plm);
+print(pf);
 
-# One "new" sample
+# RMA probe summarization (there are no NAs in this data set) on 
+# a "new" sample based on its background corrected signals
+csN <- res$csN;
 csT <- extract(csN, 1);
 print(csT);
-
-# RMA probe summarization (there are no NAs in this data set)
 listOfPriors <- list(probeAffinities=pf);
 plmP <- RmaPlm(csT, tags="*,priors", listOfPriors=listOfPriors);
 print(plmP);
@@ -44,15 +42,29 @@ print(priorList);
 priors <- readPriorsByUnits(plmP, units=101:105);
 str(priors);
 
+# Fit the model (for this single-sample data set)
 fit(plmP, verbose=verbose);
+
+# The "new" estimated chip effects
 cesP <- getChipEffectSet(plmP);
+print(cesP);
 
-
+# Compare
 theta <- extractTheta(extract(ces,1), drop=TRUE);
 thetaP <- extractTheta(cesP, drop=TRUE);
 
-plot(theta, thetaP);
-abline(a=0, b=1);
+The estimates are not identical, ...
+print(all.equal(thetaP, theta));
+# ...but correlation is high.
+rho <- cor(thetaP, theta);
+print(rho);
+# Sanity check
+stopifnot(rho > 0.995);
+
+toPNG(getFullName(cesP), tags=c(getNames(cesP), class(plmP)[1], "withAndWithoutPriors"), {
+  plot(theta, thetaP, xlab="original", ylab="priors", main="RMA chip effect estimates");
+  abline(a=0, b=1);
+});
 
 
 ###########################################################################

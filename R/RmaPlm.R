@@ -325,12 +325,13 @@ setMethodS3("getFitUnitGroupFunction", "RmaPlm", function(this, ..., verbose=FAL
     if (K > skipThreshold[1] && I > skipThreshold[2]) {
       warning("Ignoring a unit group when fitting probe-level model, because it has a ridiculously large number of data points: ", paste(dim, collapse="x"), " > ", paste(skipThreshold, collapse="x"));
 
-      return(list(theta=rep(NA, I),
-                  sdTheta=rep(NA, I),
-                  thetaOutliers=rep(NA, I), 
-                  phi=rep(NA, K),
-                  sdPhi=rep(NA, K),
-                  phiOutliers=rep(NA, K)
+      naValue <- as.double(NA);
+      return(list(theta=rep(naValue, times=I),
+                  sdTheta=rep(naValue, times=I),
+                  thetaOutliers=rep(naValue, times=I), 
+                  phi=rep(naValue, times=K),
+                  sdPhi=rep(naValue, times=K),
+                  phiOutliers=rep(naValue, times=K)
                  )
             );
     }
@@ -511,8 +512,9 @@ setMethodS3("getFitUnitGroupFunction", "RmaPlm", function(this, ..., verbose=FAL
   # Why: To fully imitate CRLMM in oligo.
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (flavor == "oligo") {
-    # First, try to see if preprocessCore > v0.99.14 is available
+    # First, try to see if package is available;
     pkg <- "oligo";
+    require(pkg, characters.only=TRUE) || throw("Package not loaded: ", pkg);
     pkgDesc <- packageDescription(pkg);
     ver <- pkgDesc$Version;
     verbose && cat(verbose, pkg, " version: ", ver);
@@ -691,6 +693,11 @@ setMethodS3("getCalculateResidualsFunction", "RmaPlm", function(static, ...) {
 
 ############################################################################
 # HISTORY:
+# 2012-09-01
+# o BUG FIX: getFitUnitGroupFunction() for RmaPlm would throw exception
+#   'Error in pkgDesc$Version : $ operator is invalid for atomic vectors'
+#   if RmaPlm(..., flavor="oligo") and 'oligo' is not installed.  Now it
+#   gives a more informative error.
 # 2012-08-21
 # o CLEANUP: Dropped support for obsolete RmaPlm(..., flavor="affyPLMold").
 # o CLEANUP: Now RmaPlm(..., flavor="oligo") no longer supports 

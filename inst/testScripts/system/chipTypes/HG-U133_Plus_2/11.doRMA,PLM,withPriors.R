@@ -53,7 +53,7 @@ print(cesP);
 theta <- extractTheta(extract(ces,1), drop=TRUE);
 thetaP <- extractTheta(cesP, drop=TRUE);
 
-The estimates are not identical, ...
+# The estimates are not identical, ...
 print(all.equal(thetaP, theta));
 # ...but correlation is high.
 rho <- cor(thetaP, theta);

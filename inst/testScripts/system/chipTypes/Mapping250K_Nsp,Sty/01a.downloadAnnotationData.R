@@ -10,13 +10,13 @@ verbose && cat(verbose, "Chip type: ", chipType);
 pathname <- downloadCDF(ar, chipType);
 verbose && cat(verbose, "CDF: ", pathname);
 
-pathname <- downloadACS(ar, chipType);
+pathname <- downloadACS(ar, chipType, tags=".*");
 verbose && cat(verbose, "ACS: ", pathname);
 
-pathname <- downloadUGP(ar, chipType);
+pathname <- downloadUGP(ar, chipType, tags=".*");
 verbose && cat(verbose, "UGP: ", pathname);
 
-pathname <- downloadUFL(ar, chipType);
+pathname <- downloadUFL(ar, chipType, tags=".*");
 verbose && cat(verbose, "UFL: ", pathname);
 
 
@@ -26,13 +26,13 @@ verbose && cat(verbose, "Chip type: ", chipType);
 pathname <- downloadCDF(ar, chipType);
 verbose && cat(verbose, "CDF: ", pathname);
 
-pathname <- downloadACS(ar, chipType);
+pathname <- downloadACS(ar, chipType, tags=".*");
 verbose && cat(verbose, "ACS: ", pathname);
 
-pathname <- downloadUGP(ar, chipType);
+pathname <- downloadUGP(ar, chipType, tags=".*");
 verbose && cat(verbose, "UGP: ", pathname);
 
-pathname <- downloadUFL(ar, chipType);
+pathname <- downloadUFL(ar, chipType, tags=".*");
 verbose && cat(verbose, "UFL: ", pathname);
 
 

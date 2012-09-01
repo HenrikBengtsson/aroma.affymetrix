@@ -11,7 +11,7 @@ verbose && cat(verbose, "Chip type: ", chipType);
 pathname <- downloadCDF(ar, chipType, tags=tags);
 verbose && cat(verbose, "CDF: ", pathname);
 
-pathname <- downloadACS(ar, chipType);
+pathname <- downloadACS(ar, chipType, tags=".*");
 verbose && cat(verbose, "ACS: ", pathname);
 
 pathname <- downloadUFL(ar, chipType, tags=c(tags, ".*"));

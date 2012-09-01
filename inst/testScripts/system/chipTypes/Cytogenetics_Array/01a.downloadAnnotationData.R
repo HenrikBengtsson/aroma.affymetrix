@@ -10,7 +10,7 @@ verbose && cat(verbose, "Chip type: ", chipType);
 pathname <- downloadCDF(ar, chipType);
 verbose && cat(verbose, "CDF: ", pathname);
 
-pathname <- downloadUGP(ar, chipType);
+pathname <- downloadUGP(ar, chipType, tags=".*");
 verbose && cat(verbose, "UGP: ", pathname);
 
 verbose && exit(verbose);

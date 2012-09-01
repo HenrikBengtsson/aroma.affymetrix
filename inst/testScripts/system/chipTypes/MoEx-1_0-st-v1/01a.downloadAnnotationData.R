@@ -13,7 +13,7 @@ verbose && cat(verbose, "CDF: ", pathname);
 pathname <- downloadCDF(ar, chipType, tags="coreR1,A20080718,MR");
 verbose && cat(verbose, "CDF: ", pathname);
 
-pathname <- downloadACS(ar, chipType);
+pathname <- downloadACS(ar, chipType, tags=".*");
 verbose && cat(verbose, "ACS: ", pathname);
 
 verbose && exit(verbose);

@@ -67,20 +67,25 @@ B <- thetaB/theta;
 # Position (in Mb)
 x <- data[isA,"x"] / 1e6;
 
-layout(matrix(1:2, nrow=2));
-par(mar=c(5,4,2,2)+0.1);
-xlim <- range(x, na.rm=TRUE);
-xlab <- "Physical position (in Mb)";
-Blab <- expression(theta[B]/theta);
-Mlab <- expression(log[2](theta/theta[R]));
+ii <- 1;
 
-cc <- 1;
-plot(NA, xlim=xlim, ylim=c(0,1), xlab=xlab, ylab=Blab);
-abline(h=1/2, col="#cccccc");
-points(x,B[,cc], pch=".", cex=2);
-plot(NA, xlim=xlim, ylim=c(-1,1)*3, xlab=xlab, ylab=Mlab);
-abline(h=0, col="#cccccc");
-points(x,M[,cc], pch=".", cex=2);
+sampleName <- colnames(M)[ii];
+toPNG(getFullName(ces), tags=c(sampleName, "BAF,LogTCN"), aspectRatio=1, {
+  layout(matrix(1:2, nrow=2));
+  par(mar=c(5,4,2,2)+0.1);
 
-devDone();
+  xlim <- range(x, na.rm=TRUE);
+  xlab <- "Physical position (in Mb)";
+  Blab <- expression(theta[B]/theta);
+  Mlab <- expression(log[2](theta/theta[R]));
+
+  plot(NA, xlim=xlim, ylim=c(0,1), xlab=xlab, ylab=Blab);
+  abline(h=1/2, col="#cccccc");
+  points(x,B[,ii], pch=".", cex=2);
+  stext(side=3, pos=0, sampleName);
+
+  plot(NA, xlim=xlim, ylim=c(-1,1)*3, xlab=xlab, ylab=Mlab);
+  abline(h=0, col="#cccccc");
+  points(x,M[,ii], pch=".", cex=2);
+});
 

@@ -1,4 +1,10 @@
 ##########################################################################
+# Test script for running doCRMAv2() in parallel.  Note that this
+# is still dangerous to do, because there may be rase conditions for:
+#
+#  - for creating/writing/updating the monocell CDF
+#  - for writing cache files
+#
 # Data set:
 # GSE8605/
 #   Mapping10K_Xba142/
@@ -13,6 +19,10 @@ chipType <- "Mapping10K_Xba142";
 
 dsR <- AffymetrixCelSet$byName(dataSet, chipType=chipType);
 print(dsR);
+
+# Before running in parallel, assert that the monocell CDF has been created
+cdf <- getCdf(dsR);
+cdfM <- getMonoCell(cdf, verbose=verbose);
 
 library("parallel");
 cl <- makeCluster(2L);

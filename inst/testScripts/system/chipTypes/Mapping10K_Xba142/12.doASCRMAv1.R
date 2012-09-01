@@ -1,31 +1,33 @@
 library("aroma.affymetrix")
 verbose <- Arguments$getVerbose(-4, timestamp=TRUE);
 
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Setup
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 dataSet <- "GSE8605";
 chipType <- "Mapping10K_Xba142";
+csR <- AffymetrixCelSet$byName(dataSet, chipType=chipType, verbose=verbose);
 
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# Tests for setting up CEL sets and locating the CDF file
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-csR <- AffymetrixCelSet$byName(dataSet, chipType=chipType, verbose=log);
-keep <- 1:6;
-csR <- extract(csR, keep);
+# Process only the first six arrays (and in reverse order)
+subset <- 6:1;
+csR <- extract(csR, subset);
 print(csR);
+sampleNames <- getNames(csR);
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # CRMAv1
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-res <- doCRMAv1(csR, drop=FALSE, verbose=verbose);
+res <- doASCRMAv1(csR, drop=FALSE, verbose=verbose);
 print(res);
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# Scale normalization test
+# Sanity checks
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-ces <- res$ces;
-sn <- ScaleNormalization3(ces);
-print(sn);
-
-cesN <- process(sn, verbose=verbose);
-print(cesN);
+# Assert same output as input arrays (in the same order)
+for (key in names(res)[-1]) {
+  ds <- res[[key]];
+  if (!inherits(ds, "GenericDataFileSet")) next;
+  stopifnot(getNames(ds) == sampleNames);
+}

@@ -4,10 +4,20 @@ source(pathname);
 
 verbose && enter(verbose, "Downloading raw data");
 
+
+##########################################################################
+# Data set:
+# GSE8605/
+#   Mapping10K_Xba142/
+#    GSM226867.CEL, ..., GSM226876.CEL [10 files]
+#
 # Overall design:
 #  [Ten] cervival cancer cell lines were hybridized to Affymetrix 
 #  Focus arrays in duplicate. Correlations were made with copynumber 
 #  profiles from arrayCGH and SNP arrays.
+#
+# URL: http://www.ncbi.nlm.nih.gov/projects/geo/query/acc.cgi?acc=GSE8605
+##########################################################################
 dataSet <- "GSE8605";
 chipType <- "Mapping10K_Xba142";
 

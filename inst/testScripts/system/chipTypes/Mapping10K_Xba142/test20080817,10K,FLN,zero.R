@@ -15,55 +15,47 @@ print(csR);
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# Allelic cross-talk calibration 
+# CRMAv2
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-acc <- AllelicCrosstalkCalibration(csR);
-print(acc);
-csC <- process(acc, verbose=log);
-print(csC);
-stopifnot(identical(getNames(csC), getNames(csR)));
-
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# Probe-level modelling (for CN analysis)
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-plm <- RmaCnPlm(csC, mergeStrands=TRUE, combineAlleles=TRUE, shift=300);
-print(plm);
-
-fit(plm, verbose=log);
-ces <- getChipEffectSet(plm);
-print(ces);
-stopifnot(identical(getNames(ces), getNames(csR)));
-
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# Fragment-length normalization (toward an average effect)
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-fln <- FragmentLengthNormalization(ces);
-print(fln);
-cesN <- process(fln, verbose=log);
-print(cesN);
-stopifnot(identical(getNames(cesN), getNames(ces)));
-
-theta <- extractTheta(cesN, drop=TRUE);
-thetaR <- rowMedians(theta, na.rm=TRUE);
-M <- log2(theta/thetaR);
+res <- doCRMAv2(csR, drop=FALSE, verbose=verbose);
+print(res);
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Fragment-length normalization (toward a constant effect)
 # Note, this a pure single-array approach.
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-fln <- FragmentLengthNormalization(ces, target="zero", tags="*,z");
+fln <- res$fln;
 print(fln);
-cesN <- process(fln, verbose=log);
+cesN <- res$cesN;
 print(cesN);
-stopifnot(identical(getNames(cesN), getNames(ces)));
 
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Fragment-length normalization (toward an average effect)
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ces <- res$ces;
+fln2 <- FragmentLengthNormalization(ces, tags="*,avg");
+print(fln2);
+cesN2 <- process(fln2, verbose=verbose);
+print(cesN2);
+
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Compare
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 theta <- extractTheta(cesN, drop=TRUE);
+thetaR <- rowMedians(theta, na.rm=TRUE);
+M <- log2(theta/thetaR);
+
+theta <- extractTheta(cesN2, drop=TRUE);
 thetaR <- rowMedians(theta, na.rm=TRUE);
 M2 <- log2(theta/thetaR);
 
 # When calculating the log-ratios, the above two approaches should
 # give equals results, because the effects should cancel out regardless.
-stopifnot(mean(abs(M2-M), na.rm=TRUE) < 1e-3);
+dM <- M2-M;
+avgDM <- mean(abs(dM), na.rm=TRUE);
+print(avgDM);
+# Sanity check
+stopifnot(avgDM < 1e-3);

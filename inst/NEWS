@@ -1,6 +1,12 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 2.5.10 [2012-09-01]
+o CLEANUP/ROBUSTNESS: Started to update test scripts by rewriting
+  some tests to be more clear/consistent on what they are testing
+  and by cleaning out tests that duplicates each other etc.
+
+
 Version: 2.5.9 [2012-08-31]
 o Added system test scripts that automatically download the needed
   annotation data files iff missing.  This simplifies running the

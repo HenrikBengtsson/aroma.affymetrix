@@ -39,8 +39,8 @@ dsAvg <- newInstance(dsT, list(dfAvg));
 
 
 # Segmentation model
-cbs <- CbsModel(dsAvg, tags="*,TCN,avg");
-cbs$.calculateRatios <- FALSE;
+cbs <- CbsModel(dsAvg, tags="*,TCN,avg", calculateRatios=FALSE);
+print(cbs);
 
 ce <- ChromosomeExplorer(cbs);
 process(ce, chromosomes=c(1:5,19,22), verbose=verbose);

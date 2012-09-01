@@ -5,6 +5,8 @@ Version: 2.5.10 [2012-09-01]
 o CLEANUP/ROBUSTNESS: Started to update test scripts by rewriting
   some tests to be more clear/consistent on what they are testing
   and by cleaning out tests that duplicates each other etc.
+o Added system test scripts that automatically install some extra
+  packages needed for some of the tests.
 
 
 Version: 2.5.9 [2012-08-31]

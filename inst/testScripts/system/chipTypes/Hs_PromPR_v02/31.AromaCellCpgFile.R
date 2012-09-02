@@ -7,12 +7,10 @@
 #
 # Author: Mark Robinson
 # Created: 2010-02-22
-# Last modified: 2010-03-14
-#
+# Last modified: 2012-09-02
 #*/###########################################################################
-
 library("aroma.affymetrix");
-verbose <- Arguments$getVerbose(-20, timestamp=TRUE);
+verbose <- Arguments$getVerbose(-8, timestamp=TRUE);
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -24,43 +22,56 @@ print(cdf);
 cdfU <- getUniqueCdf(cdf);
 print(cdfU);
 
+
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Test allocation, writing and reading of 'acp' object
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Allocate
 acp <- AromaCellPositionFile$allocateFromCdf(cdfU, tags=c("*", "test"), 
                                             overwrite=TRUE, verbose=verbose);
 print(acp);
 
-nRandCells <- 20;
+nbrOfRandomCells <- 20;
+cells <- sample(nbrOfCells(cdfU), size=nbrOfRandomCells);
+chr <- sample(1:22, size=nbrOfRandomCells);
+pos <- sample(1:1e6, size=nbrOfRandomCells);
 
-cells <- sample(seq_len(nbrOfCells(cdfU)), nRandCells);
+# Write
+acp[cells,1] <- chr;
+acp[cells,2] <- pos;
 
-chRand <- sample(seq_len(22), nRandCells);
-posRand <- sample(seq_len(1e6), nRandCells);
+# Read
+cp <- acp[cells,];
 
-acp[cells,1] <- chRand;
-acp[cells,2] <- posRand;
+# Sanity check
+stopifnot((cp[,1] == chr) & (cp[,2] == pos));
 
-tmpMatrix <- acp[cells,];
-
-stopifnot((tmpMatrix[,1] == chRand) & (tmpMatrix[,2] == posRand));
-
-rm(chRand, posRand, tmpMatrix);
+# Clean up
+rm(chr, pos, cp);
+file.remove(getPathname(acp));
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Test allocation, writing and reading of 'acc' object
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Allocate
 acc <- AromaCellCpgFile$allocateFromCdf(cdfU, tags=c("*", "test"), 
                                             overwrite=TRUE, verbose=verbose);
 print(acc);
 
-cells <- sample(seq_len(nbrOfCells(cdfU)), nRandCells);
-cpgRand <- rnorm(nRandCells);
+cells <- sample(nbrOfCells(cdfU), size=nbrOfRandomCells);
+cpg <- rnorm(nbrOfRandomCells);
 
-acc[cells,1] <- 2^cpgRand;
+# Write
+acc[cells,1] <- 2^cpg;
 
-tmpMatrix <- acc[cells,];
+# Read
+cpg2 <- acc[cells,1,drop=TRUE];
 
-ss <- sum( (log2(tmpMatrix[,1])-cpgRand)^2 );
+d <- (log2(cpg2) - cpg)^2;
+print(summary(d));
 
-stopifnot(ss < 1e-8);
+# Sanity check
+stopifnot(sum(d) < 1e-8);
+
+# Clean up
+file.remove(getPathname(acc));

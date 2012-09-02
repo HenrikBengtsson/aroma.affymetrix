@@ -64,6 +64,15 @@ for (normalizeToHapmap in c(FALSE, TRUE)) {
   eSet0 <- justSNPRMA(getPathnames(csR), normalizeToHapmap=normalizeToHapmap, verbose=as.logical(verbose));
   print(eSet0);
   
+  if (!normalizeToHapmap) {
+    # CLEAN UP: justSNPRMA() stores a target distribution file
+    # in the working directory that we don't need
+    filename <- sprintf("%s.quantileReference.rda", pdPkgName);
+    if (isFile(filename)) {
+      file.remove(filename);
+    }
+  }
+
  
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Compare

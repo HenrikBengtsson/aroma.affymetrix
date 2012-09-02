@@ -42,16 +42,20 @@ chipType <- "GenomeWideSNP_6";
 
 cdf <- AffymetrixCdfFile$byChipType(chipType);
 csR <- AffymetrixCelSet$byName(dataSet, cdf=cdf);
-print(csR);
 
 # Process only a subset of the arrays.  Since this data set
 # contains many replicates (cf. GEO), they need to be for
 # different samples.  
 sampleNames <- c("GSM337641"="HCC1143_GLEYS_A02", "GSM337646"="HCC1143_TRIBE_H11", "GSM337662"="HCC1143BL_GLEYS_A01", "GSM337666"="HCC1143BL_TRIBE_D02", "GSM337683"="HCC1954_GLEYS_B02", "GSM337688"="HCC1954_TRIBE_G12", "GSM337696"="HCC1954BL_GLEYS_B01", "GSM337700"="HCC1954BL_TRIBE_B01", "GSM337707"="NCI-H2347", "GSM337708"="NCI-H2347BL");
+sampleNames <- rev(sampleNames);
 csR <- extract(csR, names(sampleNames));
 setFullName(csR, sprintf("%s,crlmmSubset", dataSet));
 print(csR);
 
+# Assert that the file header of the first CEL file in
+# truly a GenomeWideSNP_6 (and not GenomeWideEx_6 because
+# oligo::justSNPRMA() cannot handle chip type aliases)
+stopifnot(getHeader(getFile(csR,1))$chiptype == chipType);
 
 # Assert that the correct Platform Design package is installed
 pdPkgName <- cleanPlatformName(chipType);
@@ -72,16 +76,25 @@ for (normalizeToHapmap in c(FALSE, TRUE)) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   eSet0 <- justSNPRMA(getPathnames(csR), normalizeToHapmap=normalizeToHapmap, verbose=as.logical(verbose));
   print(eSet0);
+
+  if (!normalizeToHapmap) {
+    # CLEAN UP: justSNPRMA() stores a target distribution file
+    # in the working directory that we don't need
+    filename <- sprintf("%s.quantileReference.rda", pdPkgName);
+    if (isFile(filename)) {
+      file.remove(filename);
+    }
+  }
   
  
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Compare
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  res <- compareESets(eSet, eSet0);
+  res <- compareESets(eSet, eSet0, tolerance=0.02);
   verbose && print(verbose, res);
 
   # Sanity check
-  # stopifnot(compareESets(eSet, eSet0));
+  stopifnot(res);
 
   verbose && exit(verbose);
 } # for (normalizeToHapmap ...)

@@ -4,6 +4,15 @@ ar <- AromaRepository(verbose=TRUE);
 
 verbose && enter(verbose, "Downloading annotation data");
 
+
+##########################################################################
+# Annotation data:
+# Hs_PromPR_v02/
+#   Hs_PromPR_v02.cdf
+#   Hs_PromPR_v02.acs
+#   Hs_PromPR_v02.acm
+#   Hs_PromPR_v02,unique.acp
+##########################################################################
 chipType <- "Hs_PromPR_v02";
 verbose && cat(verbose, "Chip type: ", chipType);
 

@@ -1,5 +1,5 @@
 library("aroma.affymetrix");
-log <- Arguments$getVerbose(-4, timestamp=TRUE);
+verbose <- Arguments$getVerbose(-4, timestamp=TRUE);
 
 
 
@@ -9,7 +9,7 @@ chipType <- "Mapping10K_Xba142";
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Tests for setting up CEL sets and locating the CDF file
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-csR <- AffymetrixCelSet$byName(dataSet, chipType=chipType, verbose=log);
+csR <- AffymetrixCelSet$byName(dataSet, chipType=chipType, verbose=verbose);
 keep <- 1:6;
 csR <- extract(csR, keep);
 print(csR);
@@ -22,15 +22,18 @@ ae <- ArrayExplorer(csR);
 setColorMaps(ae, "sqrt,yellow");
 print(ae);
 stopifnot(identical(unname(getArrays(ae)), getNames(csR)));
-process(ae, verbose=log);
+process(ae, verbose=verbose);
 
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Spatial probe log-ratio plots
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-cfR <- getAverageFile(csR, verbose=log);
+cfR <- getAverageFile(csR, verbose=verbose);
 reporter <- SpatialReporter(csR, reference=cfR);
+addColorMap(reporter, "log2center,rainbow");
+process(reporter, zrange=c(-2,2), verbose=verbose);
+
 ylab <- expression(log[2](y/y[R]));
 for (array in 1:nbrOfArrays(csR)) {
   df <- getFile(csR, array);
@@ -44,20 +47,17 @@ for (array in 1:nbrOfArrays(csR)) {
   });
 }
 
-addColorMap(reporter, "log2center,rainbow");
-process(reporter, zrange=c(-2,2), verbose=log);
-
-
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Spatial residual plots test
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-plm <- RmaPlm(csR);
+res <- doCRMAv1(csR, drop=FALSE, verbose=verbose);
+plm <- res$plm;
 print(plm);
-fit(plm, verbose=log);
-rs <- calculateResidualSet(plm, verbose=log);
+fit(plm, verbose=verbose);
+rs <- calculateResidualSet(plm, verbose=verbose);
 ae <- ArrayExplorer(rs);
 setColorMaps(ae, c("log2,log2neg,rainbow", "log2,log2pos,rainbow"));
 print(ae);
 stopifnot(identical(unname(getArrays(ae)), getNames(csR)));
-process(ae, interleaved="auto", verbose=log);
+process(ae, interleaved="auto", verbose=verbose);

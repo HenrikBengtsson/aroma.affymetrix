@@ -13,6 +13,9 @@ library("aroma.affymetrix");
 library("affyPLM");          # fitPLM()
 verbose <- Arguments$getVerbose(-8, timestamp=TRUE);
 
+# Just in case oligo::fitPLM() is masking this...
+fitPLM <- affyPLM::fitPLM;
+
 # Detach 'oligoClasses' in case it is loaded.  If not, there an error
 # related to probeNames() will be thrown.
 tryCatch(detach("package:oligoClasses"), error=function(ex) {});
@@ -100,6 +103,7 @@ toPNG(getFullName(csR), tags=c("doRMA_vs_affyPLM"), width=800, {
 });
 
 verbose && print(verbose, sessionInfo());
+
 
 ###########################################################################
 # HISTORY:

@@ -9,7 +9,7 @@ library("R.utils");
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 verbose && enter(verbose, "Installing test-specific packages");
 
-pkgs <- c("BioC:oligo", "BioC:pd.mapping250k.nsp");
+pkgs <- c("BioC:oligo", "BioC:pd.genomewidesnp.6");
 for (pkg in pkgs) {
   verbose && cat(verbose, "Package: ", pkg);
   installPkg(pkg);

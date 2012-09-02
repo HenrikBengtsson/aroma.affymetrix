@@ -119,3 +119,35 @@ toPNG(getFullName(ces), tags="CRLMM_vs_oligo", aspectRatio=0.8, {
     cat(sprintf("Array #%d: Correlation: %.4f\n", cc, rho));
   }
 });
+
+
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Plot BAFs along genome
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ugp <- getAromaUgpFile(cdf);
+chr <- 2;
+units <- getUnitsOnChromosome(ugp, chromosome=chr);
+pos <- getPositions(ugp, units=units)/1e6;
+
+chrTag <- sprintf("Chr%02d", chr);
+
+toPNG(getFullName(ces), tags=c(chrTag, "TCN,BAF"), aspectRatio=0.5*nbrOfArrays(ces), {
+  layout(matrix(seq(ces), ncol=1));
+  par(mar=c(3.5,4,1.5,1), mgp=c(1.8,0.5,0), pch=".");
+
+  for (ii in seq(ces)) {
+    ce <- getFile(ces, ii);
+    gc <- getFile(callSet, ii);
+    sampleName <- getName(ce);
+  
+    data <- extractTotalAndFracB(ce, units=units, drop=TRUE);
+    colnames(data) <- c("total", "fracB");
+    calls <- extractGenotypes(gc, units=units, drop=TRUE);
+
+    col <- c(AA=1, AB=2, BB=3)[calls];
+    plot(pos, data[,"fracB"], col=col, pch=".", cex=4, ylim=c(0,1));
+    stext(side=3, pos=0, sampleName);
+    stext(side=3, pos=1, chrTag);
+  } # for (ii ...)
+});

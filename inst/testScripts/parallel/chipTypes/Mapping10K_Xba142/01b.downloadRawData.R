@@ -23,7 +23,8 @@ chipType <- "Mapping10K_Xba142";
 
 verbose && cat(verbose, "Data set: ", dataSet);
 
-ds <- downloadGeoRawDataSet(dataSet, chipType=chipType);
+ds <- downloadGeoRawDataSet(dataSet, chipType=chipType,
+                            chipTypeAliases=c("Focus"="HG-Focus"));
 verbose && print(verbose, ds);
 ## AffymetrixCelSet:
 ## Name: GSE8605

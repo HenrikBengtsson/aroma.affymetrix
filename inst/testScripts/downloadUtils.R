@@ -56,7 +56,7 @@ getHapMapUrl <- function(sampleName, chipType=c("Mapping50K_Hind240", "Mapping50
 
 
 # downloadHapMapSample(dataSet, chipType=chipType, sampleName=sampleName);
-downloadHapMapSample <- function(dataSet, tags=NULL, chipType, sampleName, ..., gunzip=TRUE, skip=TRUE) {
+downloadHapMapSample <- function(dataSet, tags=NULL, chipType, sampleName, ..., chipTypeAliases=NULL, gunzip=TRUE, skip=TRUE) {
   path <- getRawDataSetPath(dataSet=dataSet, tags=tags, chipType=chipType, ...);
   url <- getHapMapUrl(sampleName, chipType=chipType);
   filenameGZ <- basename(url);
@@ -75,7 +75,7 @@ downloadHapMapSample <- function(dataSet, tags=NULL, chipType, sampleName, ..., 
   opwd <- getwd();
   on.exit(if (!is.null(opwd)) setwd(opwd));
   setwd(pathD);
-  pathname <- arrangeCelFilesByChipType(filename, path=".");
+  pathname <- arrangeCelFilesByChipType(filename, path=".", aliases=chipTypeAliases);
   setwd(opwd); opwd <- NULL;
   pathname <- file.path(path, filename);
   pathname;
@@ -92,7 +92,7 @@ downloadHapMapSamples <- function(..., sampleNames) {
 } # downloadHapMapSamples()
 
 
-downloadHapMapDataSet <- function(dataSet, tags=NULL, chipType=c("GenomeWideSNP_6"), ..., skip=TRUE) {
+downloadHapMapDataSet <- function(dataSet, tags=NULL, chipType=c("GenomeWideSNP_6"), ..., chipTypeAliases=NULL, skip=TRUE) {
   # Argument 'chipType':
   chipType <- match.arg(chipType);
 
@@ -117,14 +117,14 @@ downloadHapMapDataSet <- function(dataSet, tags=NULL, chipType=c("GenomeWideSNP_
   on.exit(if (!is.null(opwd)) setwd(opwd));
   setwd(pathD);
   pathnames <- list.files(pattern="[.](cel|CEL)$");
-  pathnamesD <- arrangeCelFilesByChipType(pathnames, path=".");
+  pathnamesD <- arrangeCelFilesByChipType(pathnames, path=".", aliases=chipTypeAliases);
   setwd(opwd); opwd <- NULL;
 
   getDataSet(path);
 } # downloadHapMapDataSet()
 
 
-downloadGeoRawDataSet <- function(dataSet, tags=NULL, chipType, ..., url=getGeoUrl(dataSet), gunzip=TRUE, skip=TRUE) {
+downloadGeoRawDataSet <- function(dataSet, tags=NULL, chipType, ..., chipTypeAliases=NULL, url=getGeoUrl(dataSet), gunzip=TRUE, skip=TRUE) {
   path <- getRawDataSetPath(dataSet=dataSet, tags=tags, chipType=chipType, ...);
 
   # Already downloaded?
@@ -146,7 +146,7 @@ downloadGeoRawDataSet <- function(dataSet, tags=NULL, chipType, ..., url=getGeoU
   on.exit(if (!is.null(opwd)) setwd(opwd));
   setwd(pathD);
   pathnames <- list.files(pattern="[.](cel|CEL)$");
-  pathnamesD <- arrangeCelFilesByChipType(pathnames, path=".");
+  pathnamesD <- arrangeCelFilesByChipType(pathnames, path=".", aliases=chipTypeAliases);
   setwd(opwd); opwd <- NULL;
 
   getDataSet(path);
@@ -155,6 +155,8 @@ downloadGeoRawDataSet <- function(dataSet, tags=NULL, chipType, ..., url=getGeoU
 
 ############################################################################
 # HISTORY:
+# 2012-09-01
+# o Added argument 'chipTypeAliases' to several download functions.
 # 2012-08-31
 # o Added as a utility test script of the aroma.affymetrix package.
 # 2012-08-23

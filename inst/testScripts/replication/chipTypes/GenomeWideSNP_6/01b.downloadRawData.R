@@ -8,10 +8,9 @@ verbose && enter(verbose, "Downloading raw data");
 
 ##########################################################################
 # Data set:
-# GSE34754/
-#   Mapping250K_Nsp/
-#    GSM854615.CEL, ..., GSM854626.CEL [12]
-#   Mapping250K_Sty/
+# GSE13372
+#   GenomeWideSNP_6/
+#    GSM337641.CEL, ..., GSM337708.CEL [68]
 #
 # Overall design:
 #  Breast cancer cell lines HCC38 and HCC1143 and paired B 
@@ -21,26 +20,27 @@ verbose && enter(verbose, "Downloading raw data");
 #  B lymphoblastoid cells HCC38-BL and HCC1143-BL, respectively,
 #  in ratios (w/w) 100:0, 80:20, 60:40, 40:60, and 20:80.
 #
-# URL: http://www.ncbi.nlm.nih.gov/projects/geo/query/acc.cgi?acc=GSE34754
+# URL: http://www.ncbi.nlm.nih.gov/projects/geo/query/acc.cgi?acc=GSE13372
 ##########################################################################
-dataSet <- "GSE34754";
-chipType <- "Mapping250K_Nsp";
+dataSet <- "GSE13372";
+chipType <- "GenomeWideSNP_6";
 
 verbose && cat(verbose, "Data set: ", dataSet);
 
-ds <- downloadGeoRawDataSet(dataSet, chipType=chipType);
+ds <- downloadGeoRawDataSet(dataSet, chipType=chipType, 
+                   chipTypeAliases=c("GenomeWideEx_6"="GenomeWideSNP_6"));
 print(ds);
 ## AffymetrixCelSet:
-## Name: GSE34754
+## Name: GSE13372
 ## Tags:
-## Path: rawData/GSE34754/Mapping250K_Nsp
+## Path: rawData/GSE13372/GenomeWideSNP_6
 ## Platform: Affymetrix
-## Chip type: Mapping250K_Nsp
-## Number of arrays: 12
-## Names: GSM854615, GSM854616, GSM854617, ..., GSM854626 [12]
-## Time period: 2011-03-29 20:30:55 -- 2011-04-05 16:54:26
-## Total file size: 751.17MB
-## RAM: 0.02MB
+## Chip type: GenomeWideSNP_6
+## Number of arrays: 68
+## Names: GSM337641, GSM337642, GSM337643, ..., GSM337708 [68]
+## Time period: 2007-05-17 16:13:28 -- 2008-09-11 21:06:39
+## Total file size: 4480.08MB
+## RAM: 0.07MB
 
 
 verbose && exit(verbose);

@@ -22,7 +22,8 @@ dataSet <- "GSE9890";
 chipType <- "HG-U133_Plus_2";
 verbose && cat(verbose, "Data set: ", dataSet);
 
-ds <- downloadGeoRawDataSet(dataSet, chipType=chipType);
+ds <- downloadGeoRawDataSet(dataSet, chipType=chipType,
+                                   chipTypeAliases=c("Focus"="HG-Focus"));
 print(ds);
 ## AffymetrixCelSet:
 ## Name: GSE9890

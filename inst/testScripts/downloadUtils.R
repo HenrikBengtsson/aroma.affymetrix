@@ -21,11 +21,10 @@ getRawDataSetPath <- function(dataSet=NULL, tags=NULL, chipType=NULL, ...) {
 } # getRawDataSetPath()
 
 
-getGeoUrl <- function(dataSet, ...) {
-  sprintf("ftp://ftp.ncbi.nlm.nih.gov/pub/geo/DATA/supplementary/series/%s/%s_RAW.tar", dataSet, dataSet);
-} # getGeoUrl()
 
-
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# HapMap
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 getHapMapUrlPath <- function(chipType=c("Mapping50K_Hind240", "Mapping50K_Xba240", "GenomeWideSNP_6"), ...) {
   # Argument 'chipType':
   chipType <- match.arg(chipType);
@@ -124,7 +123,37 @@ downloadHapMapDataSet <- function(dataSet, tags=NULL, chipType=c("GenomeWideSNP_
 } # downloadHapMapDataSet()
 
 
-downloadGeoRawDataSet <- function(dataSet, tags=NULL, chipType, ..., chipTypeAliases=NULL, url=getGeoUrl(dataSet), gunzip=TRUE, skip=TRUE) {
+
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# GEO
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+getGeoDataSetURL <- function(dataSet, ...) {
+  sprintf("ftp://ftp.ncbi.nlm.nih.gov/pub/geo/DATA/supplementary/series/%s/%s_RAW.tar", dataSet, dataSet);
+} # getGeoDataSetURL()
+
+getGeoDataFileURL <- function(sampleName, ext, ...) {
+  # Argument 'sampleName':
+  sampleName <- Arguments$getCharacter(sampleName);
+  pattern <- "^GSM[0-9]+$";
+  if (regexpr(pattern, sampleName) == -1) {
+    throw("Invalid GEO sample name: ", sampleName);
+  }
+
+  # Argument 'ext':
+  ext <- Arguments$getCharacter(ext);
+
+  # Create GEO download URL
+  urlRoot <- "ftp://ftp.ncbi.nlm.nih.gov/pub/geo/DATA/supplementary/samples";
+  filename <- sprintf("%s.%s.gz", sampleName, ext);
+  sampleSet <- gsub("[0-9]{3}$", "nnn", sampleName);
+  url <- file.path(urlRoot, sampleSet, sampleName, filename);
+
+  url;
+} # getGeoDataSetURL()
+
+
+downloadGeoRawDataSet <- function(dataSet, tags=NULL, chipType, ..., chipTypeAliases=NULL, url=getGeoDataSetURL(dataSet), gunzip=TRUE, skip=TRUE) {
   path <- getRawDataSetPath(dataSet=dataSet, tags=tags, chipType=chipType, ...);
 
   # Already downloaded?
@@ -153,8 +182,59 @@ downloadGeoRawDataSet <- function(dataSet, tags=NULL, chipType, ..., chipTypeAli
 } # downloadGeoRawDataSet()
 
 
+downloadGeoRawDataFile <- function(dataSet, tags=NULL, chipType, sampleName, ext="CEL", url=getGeoDataFileURL(sampleName, ext), ..., gunzip=TRUE, skip=TRUE) {
+  # Argument 'url':
+  url <- Arguments$getCharacter(url);
+
+  path <- getRawDataSetPath(dataSet=dataSet, tags=tags, chipType=chipType, ...);
+
+  filenameGZ <- basename(url);
+  pathnameGZ <- file.path(path, filenameGZ);
+  pathname <- gsub("[.]gz$", "", pathnameGZ);
+
+  # Already downloaded?
+  if (skip && isFile(pathname)) {
+    return(pathname);
+  }
+
+  pathnameGZ <- downloadFile(url, path=path, ...);
+  if (gunzip) {
+    gunzip(pathnameGZ);
+    pathname <- gsub("[.]gz$", "", pathnameGZ);
+  }
+
+  pathname;
+} # downloadGeoRawDataFile()
+
+
+downloadGeoRawDataFiles <- function(..., sampleNames, skip=TRUE) {
+  # Argument 'sampleNames':
+  sampleNames <- Arguments$getCharacters(sampleNames);
+
+  # Already downloaded?
+  path <- getRawDataSetPath(...);
+  if (skip) {
+    ds <- getDataSet(path);
+    hasAll <- all(is.element(sampleNames, getNames(ds)));
+    if (hasAll) {
+      return(ds);
+    }
+  }
+
+  pathnames <- sapply(sampleNames, FUN=function(sampleName) {
+    downloadGeoRawDataFile(..., sampleName=sampleName);
+  });
+
+  ds <- getDataSet(path);
+
+  ds;
+} # downloadGeoRawDataFiles()
+
+
 ############################################################################
 # HISTORY:
+# 2012-09-02
+# o Added downloadGeoRawDataFile().
 # 2012-09-01
 # o Added argument 'chipTypeAliases' to several download functions.
 # 2012-08-31

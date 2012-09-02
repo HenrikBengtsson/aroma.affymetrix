@@ -16,7 +16,7 @@ print(csR);
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # ACNE
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-dsNList <- doACNE(csR, verbose=verbose);
+dsNList <- doACNE(csR, fln=TRUE, verbose=verbose);
 print(dsNList);
 
 

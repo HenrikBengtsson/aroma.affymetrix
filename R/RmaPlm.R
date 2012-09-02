@@ -514,7 +514,7 @@ setMethodS3("getFitUnitGroupFunction", "RmaPlm", function(this, ..., verbose=FAL
   if (flavor == "oligo") {
     # First, try to see if package is available;
     pkg <- "oligo";
-    require(pkg, characters.only=TRUE) || throw("Package not loaded: ", pkg);
+    require(pkg, character.only=TRUE) || throw("Package not loaded: ", pkg);
     pkgDesc <- packageDescription(pkg);
     ver <- pkgDesc$Version;
     verbose && cat(verbose, pkg, " version: ", ver);

@@ -1,4 +1,5 @@
 setMethodS3("extractSnpCnvQSet", "SnpChipEffectSet", function(this, units=NULL, sortUnits=TRUE, transform=log2, ..., verbose=FALSE) {
+  require("Biobase") || throw("Package not loaded: Biobase");
   require("oligo") || throw("Package not loaded: oligo");
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -91,11 +92,14 @@ setMethodS3("extractSnpCnvQSet", "SnpChipEffectSet", function(this, units=NULL, 
   verbose && exit(verbose);
 
   res;
-})
+}) # extractSnpCnvQSet()
 
 
 ############################################################################
 # HISTORY:
+# 2012-09-01
+# o ROBUSTNESS: extractSnpCnvQSet() for SnpChipEffectSet would throw an
+#   exception if the 'Biobase' package was not loaded.
 # 2008-12-05
 # o Created.
 ############################################################################

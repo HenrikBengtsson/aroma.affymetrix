@@ -7,6 +7,9 @@ o CLEANUP/ROBUSTNESS: Started to update test scripts by rewriting
   and by cleaning out tests that duplicates each other etc.
 o Added system test scripts that automatically install some extra
   packages needed for some of the tests.
+o BUG FIX/ROBUSTNESS: extractAlleleSet(), extractSnpCnvQSet() and
+  extractSnpQSet() for SnpChipEffectSet would throw an exception
+  iff the 'Biobase' package was not loaded.
 
 
 Version: 2.5.9 [2012-08-31]

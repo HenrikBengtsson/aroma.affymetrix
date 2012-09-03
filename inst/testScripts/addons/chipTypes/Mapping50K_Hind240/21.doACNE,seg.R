@@ -6,7 +6,7 @@ verbose <- Arguments$getVerbose(-4, timestamp=TRUE);
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Setup
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-dataSet <- "HapMap,CEU";
+dataSet <- "HapMap,CEU,testset";
 chipType <- "Mapping50K_Hind240";
 
 csR <- AffymetrixCelSet$byName(dataSet, chipType=chipType);

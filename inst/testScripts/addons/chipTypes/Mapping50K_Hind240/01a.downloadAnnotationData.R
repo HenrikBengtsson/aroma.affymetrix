@@ -10,10 +10,13 @@ verbose && cat(verbose, "Chip type: ", chipType);
 pathname <- downloadCDF(ar, chipType);
 verbose && cat(verbose, "CDF: ", pathname);
 
-chipType <- "Mapping50K_Xba240";
-verbose && cat(verbose, "Chip type: ", chipType);
+pathname <- downloadACS(ar, chipType, tags=".*");
+verbose && cat(verbose, "ACS: ", pathname);
 
-pathname <- downloadCDF(ar, chipType);
-verbose && cat(verbose, "CDF: ", pathname);
+pathname <- downloadUGP(ar, chipType, tags=".*");
+verbose && cat(verbose, "UGP: ", pathname);
+
+pathname <- downloadUFL(ar, chipType, tags=".*");
+verbose && cat(verbose, "UFL: ", pathname);
 
 verbose && exit(verbose);

@@ -35,20 +35,21 @@ print(csR);
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # AS-CRMAv2
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-dsList <- doASCRMAv2(csR, verbose=verbose);
-print(dsList);
+dsNList <- doASCRMAv2(csR, verbose=verbose);
+print(dsNList);
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Paired PSCBS
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Get (chromosome, position) annotation data
-ugp <- getAromaUgpFile(res$total);
+dsT <- dsNList$total;
+ugp <- getAromaUgpFile(dsT);
 chromosome <- ugp[,1,drop=TRUE];
 x <- ugp[,2,drop=TRUE];
 
 # Extract (total,beta) estimates for the tumor-normal pair
-data <- extractPSCNArray(res$total);
+data <- extractPSCNArray(dsT);
 dimnames(data)[[3]] <- names(pair);
 str(data);
 
@@ -61,14 +62,19 @@ df <- data.frame(chromosome=chromosome, x=x, CT=CT, betaT=betaT, betaN=betaN);
 
 # Segment Chr 8.
 dfT <- subset(df, chromosome == 8);
+str(dfT);
 
 # Paired PSCBS
 fit <- segmentByPairedPSCBS(dfT, verbose=verbose);
 print(fit);
 
-# Plot segmentation results (saved to figures/)
+# Plot segmentation results
 pairName <- paste(pair, collapse="vs");
 chrTag <- sprintf("Chr%s", seqToHumanReadable(getChromosomes(fit)));
 toPNG(pairName, tags=c(chrTag, "PairedPSCBS"), aspectRatio=0.6, {
   plotTracks(fit);
+  stext(side=3, pos=0, pairName);
+  stext(side=3, pos=1, chrTag);
+  stext(side=4, pos=1, sprintf("n=%d", nbrOfLoci(fit)));
+  stext(side=4, pos=1, getChipType(dsT));
 });

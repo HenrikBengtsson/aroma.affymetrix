@@ -37,7 +37,7 @@ compareESets <- function(eSet1, eSet2, tolerance=1e-4) {
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Setup
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-dataSet <- "GSE13372";
+dataSet <- "GSE13372,testset";
 chipType <- "GenomeWideSNP_6";
 
 cdf <- AffymetrixCdfFile$byChipType(chipType);

@@ -256,6 +256,18 @@ downloadAffymetrixDataSet <- function(dataSet, tags=NULL, chipType=chipType, ...
 
   pathname <- downloadAffymetrixFile(..., skip=skip);
   pathnames <- unzip(pathname, exdir=path);
+
+  # Did we extract a standalone root directory?  If so, "drop" the root.
+  paths <- list.files(path=path, full.names=TRUE);
+  if (length(paths) == 1 && isDirectory(paths)) {
+    pathS <- paths[1];
+    # Move all files in up one level
+    pathnamesT <- gsub(pathS, path, pathnames, fixed=TRUE);
+    for (kk in seq(along=pathnames)) {
+      file.rename(from=pathnames[kk], to=pathnamesT[kk]);
+    }
+  }
+
   ds <- getDataSet(path);
   ds;
 } # downloadAffymetrixDataSet();

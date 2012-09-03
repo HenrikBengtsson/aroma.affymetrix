@@ -1,21 +1,23 @@
-library("aroma.affymetrix")
-verbose <- Arguments$getVerbose(-4, timestamp=TRUE);
+library("aroma.affymetrix");
+verbose <- Arguments$getVerbose(-8, timestamp=TRUE);
 
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Setup
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-dataSet <- "GSE8605";
-chipType <- "Mapping10K_Xba142";
-csR <- AffymetrixCelSet$byName(dataSet, chipType=chipType, verbose=verbose);
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+dataSet <- "GSE13372,testset";
+chipType <- "GenomeWideSNP_6,Full";
+
+csR <- AffymetrixCelSet$byName(dataSet, chipType=chipType);
 print(csR);
 
+csR <- extract(csR, 1);
 
 
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# (a) CRMAv2 - six arrays
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-dsNList <- doASCRMAv2(csR, verbose=verbose);
-print(dsNList);
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# (a) AS-CRMAv2
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+res <- doASCRMAv2(csR, drop=FALSE, verbose=verbose);
+print(res);
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

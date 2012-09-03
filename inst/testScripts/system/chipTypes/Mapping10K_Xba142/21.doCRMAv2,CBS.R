@@ -3,7 +3,7 @@ verbose <- Arguments$getVerbose(-4, timestamp=TRUE);
 
 dataSet <- "GSE8605";
 chipType <- "Mapping10K_Xba142";
-res <- doCRMAv2(dataSet, chipType=chipType, arrays=1:6, drop=FALSE, verbose=verbose);
+res <- doCRMAv2(dataSet, chipType=chipType, drop=FALSE, verbose=verbose);
 print(res);
 
 

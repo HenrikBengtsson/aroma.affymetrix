@@ -14,7 +14,7 @@ print(csR);
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # CRMAv2
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-res <- doCRMAv2(csR, arrays=1:6, drop=FALSE, verbose=verbose);
+res <- doCRMAv2(csR, drop=FALSE, verbose=verbose);
 print(res);
 
 

@@ -3,14 +3,14 @@ verbose <- Arguments$getVerbose(-4, timestamp=TRUE);
 
 dataSet <- "GSE8605";
 chipType <- "Mapping10K_Xba142";
-csR <- AffymetrixCelSet$byName(dataSet, chipType=chipType, verbose=verbose);
+csR <- AffymetrixCelSet$byName(dataSet, chipType=chipType);
 print(csR);
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # AS-CRMAv2
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-res <- doASCRMAv2(csR, arrays=1:6, drop=FALSE, verbose=verbose);
+res <- doASCRMAv2(csR, drop=FALSE, verbose=verbose);
 print(res);
 
 

@@ -12,10 +12,10 @@ print(csR);
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# (a) CRMAv2
+# (a) AS-CRMAv2
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# Process only the first six arrays (and in reverse order)
-subset <- 6:1;
+# Process arrays in random order
+subset <- sample(1:nbrOfArrays(csR));
 res <- doASCRMAv2(csR, arrays=subset, drop=FALSE, verbose=verbose);
 print(res);
 

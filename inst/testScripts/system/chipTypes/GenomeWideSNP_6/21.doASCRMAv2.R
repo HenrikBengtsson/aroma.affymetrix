@@ -1,25 +1,26 @@
 ##########################################################################
-# Data set:
-# ...
+# Allele-specific CRMAv2
+#
+# Author: Henrik Bengtsson
+# Created on: 2011-11-11
+# Last updated: 2012-09-02
 ##########################################################################
 library("aroma.affymetrix");
-log <- Arguments$getVerbose(-8, timestamp=TRUE);
+verbose <- Arguments$getVerbose(-8, timestamp=TRUE);
 
-dataSet <- "HapMap270,6.0,CEU,testSet";
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Setup
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+dataSet <- "GSE13372,testset";
 chipType <- "GenomeWideSNP_6,Full";
 
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# doCRMAv2() on an AffymetrixCelSet object
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-cdf <- AffymetrixCdfFile$byChipType(chipType);
-print(cdf);
-
-csR <- AffymetrixCelSet$byName(dataSet, cdf=cdf);
+csR <- AffymetrixCelSet$byName(dataSet, chipType=chipType);
 print(csR);
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# doASCRMAv2() 
+# AS-CRMAv2
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-res <- doASCRMAv2(dataSet, chipType=chipType, verbose=log);
-print(res);
+dsNList <- doASCRMAv2(csR, verbose=verbose);
+print(dsNList);

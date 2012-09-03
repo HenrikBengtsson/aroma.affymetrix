@@ -1,85 +1,36 @@
 library("aroma.affymetrix");
+verbose <- Arguments$getVerbose(-8, timestamp=TRUE);
 
-log <- Arguments$getVerbose(-8, timestamp=TRUE);
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Setup
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+dataSet <- "GSE13372,testset";
+chipType <- "GenomeWideSNP_6,Full";
 
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# Setup of annotation files
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# CDF
-cdf <- AffymetrixCdfFile$byChipType("GenomeWideSNP_6", tags="Full");
-
-# Assert that an UGP annotation data file exists
-gi <- getGenomeInformation(cdf);
-print(gi);
-
-# Assert that an UFL annotation data file exists
-si <- getSnpInformation(cdf);
-print(si);
-
-# Assert than an ACS (probe-sequence) annotation files
-acs <- AromaCellSequenceFile$byChipType(getChipType(cdf, fullname=FALSE));
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# Tests for setting up CEL sets and locating the CDF file
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-csR <- AffymetrixCelSet$byName("HapMap270,6.0,CEU,testSet", cdf=cdf);
+csR <- AffymetrixCelSet$byName(dataSet, chipType=chipType);
 print(csR);
 
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# Allelic cross-talk calibration tests
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-acc <- AllelicCrosstalkCalibration(csR, model="CRMAv2");
-print(acc);
-csC <- process(acc, verbose=log);
-print(csC);
 
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# Base-position normalization
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-bpn <- BasePositionNormalization(csC, target="zero");
-print(bpn);
-
-csN <- process(bpn, verbose=log);
-print(csN);
-
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# Allele-specific chip effect estimates
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-plm <- AvgCnPlm(csN, mergeStrands=TRUE, combineAlleles=FALSE);
-print(plm);
-
-if (length(findUnitsTodo(plm)) > 0) {
-  # Fit CN probes quickly (~5-10s/array + some overhead)
-  units <- fitCnProbes(plm, verbose=log);
-  str(units);
-  units <- fit(plm, verbose=log);
-  str(units);
-}
-ces <- getChipEffectSet(plm);
-print(ces);
-
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# Fragment-length normalization test
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-fln <- FragmentLengthNormalization(ces, target="zero");
-print(fln);
-cesN <- process(fln, verbose=log);
-print(cesN);
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# AS-CRMAv2
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+res <- doASCRMAv2(csR, drop=FALSE, verbose=verbose);
+print(res);
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Extract (CN, freqB)
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-ceR <- getAverage(cesN, verbose=log);
+cesN <- res$cesN;
+ceR <- getAverage(cesN, verbose=verbose);
+print(ceR);
 
-gi <- getGenomeInformation(cdf);
+ugp <- getAromaUgpFile(cesN);
+print(ugp);
 
 chr <- 2
-units <- getUnitsOnChromosome(gi, chromosome=2, region=c(75,90)*1e6);
-pos <- getPositions(gi, units=units) / 1e6;
+units <- getUnitsOnChromosome(ugp, chromosome=2, region=c(75,90)*1e6);
+pos <- getPositions(ugp, units=units) / 1e6;
 
 thetaR <- extractTotalAndFreqB(ceR, units=units)[,"total"];
 ce <- getFile(cesN, 1);
@@ -113,8 +64,8 @@ abline(v=c(83.1,83.7))
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Stratify by SNPs and CN units
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-units <- getUnitsOnChromosome(gi, chromosome=2);
-pos <- getPositions(gi, units=units) / 1e6;
+units <- getUnitsOnChromosome(ugp, chromosome=2);
+pos <- getPositions(ugp, units=units) / 1e6;
 
 thetaR <- extractTotalAndFreqB(ceR, units=units)[,"total"];
 ce <- getFile(cesN, 1);

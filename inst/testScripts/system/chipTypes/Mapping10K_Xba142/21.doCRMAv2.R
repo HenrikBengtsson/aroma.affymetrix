@@ -14,21 +14,8 @@ print(csR);
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # (a) CRMAv2
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# Process only the first six arrays (and in reverse order)
-subset <- 6:1;
-res <- doCRMAv2(csR, arrays=subset, drop=FALSE, verbose=verbose);
+res <- doCRMAv2(csR, drop=FALSE, verbose=verbose);
 print(res);
-
-
-# Sanity checks
-# Assert same output as input arrays (in the same order)
-sampleNames <- getNames(csR)[subset];
-for (key in names(res)[-1]) {
-  ds <- res[[key]];
-  if (!inherits(ds, "GenericDataFileSet")) next;
-  stopifnot(getNames(ds) == sampleNames);
-}
-
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

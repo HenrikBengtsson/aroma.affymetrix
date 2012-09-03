@@ -3,7 +3,7 @@ verbose <- Arguments$getVerbose(-4, timestamp=TRUE);
 
 dataSet <- "GSE8605";
 chipType <- "Mapping10K_Xba142";
-dsNList <- doASCRMAv2(dataSet, chipType=chipType, arrays=1:6, verbose=verbose);
+dsNList <- doASCRMAv2(dataSet, chipType=chipType, verbose=verbose);
 print(dsNList);
 
 

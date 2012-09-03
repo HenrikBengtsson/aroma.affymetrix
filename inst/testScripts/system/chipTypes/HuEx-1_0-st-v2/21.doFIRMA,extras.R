@@ -1,7 +1,5 @@
 library("aroma.affymetrix");
-
-log <- Arguments$getVerbose(-3, timestamp=TRUE);
-
+verbose <- Arguments$getVerbose(-3, timestamp=TRUE);
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -18,51 +16,44 @@ print(csR);
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# Background correction and normalization
+# Process only cerebellum and heart
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-bc <- RmaBackgroundCorrection(csR);
-print(bc);
-csBC <- process(bc, verbose=log);
-print(csBC);
+types <- c("cerebellum", "heart");
+csR <- extract(csR, indexOf(csR, patterns=types));
 
-qn <- QuantileNormalization(csBC, typesToUpdate="pm");
-print(qn);
-csN <- process(qn, verbose=log);
-print(csN);
-
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# Probe-level summarization
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# Probe-level summarization
-plmList <- list(
-  merge   = ExonRmaPlm(csN, mergeGroups=TRUE), # all exons together
-  noMerge = ExonRmaPlm(csN, mergeGroups=FALSE) # each exon separately
-);
-print(plmList);
-
-# Fit the PLMs
-dummy <- lapply(plmList, FUN=fit, verbose=log);
-rm(dummy);
-
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# Residuals and weights (will otherwise be calculated by FIRMA)
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-resList <- lapply(plmList, FUN=calculateResiduals, verbose=log);
-print(resList);
-
-weightList <- lapply(plmList, FUN=calculateWeights, verbose=log);
-print(weightList);
+setFullName(csR, sprintf("%s,%s", dataSet, paste(types, collapse="+")));
+print(csR);
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # FIRMA
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# FIRMA can only be applied for PLMs with mergeGroups=TRUE
-plm <- plmList$merge;
-firma <- FirmaModel(plm);
-print(firma);
-fit(firma, verbose=log);
-fScores <- getFirmaScores(firma);
-print(fScores);
+res <- doFIRMA(csR, drop=FALSE, verbose=verbose);
+print(res);
+
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# PLMs
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+plmList <- list(
+  merge   = res$plm,                               # all exons together
+  noMerge = ExonRmaPlm(res$csN, mergeGroups=FALSE) # each exon separately
+);
+print(plmList);
+
+# Fit the per-exon PLM
+fit(plmList$noMerge, verbose=verbose);
+
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# PLM residuals (also calculated by FIRMA)
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+resList <- lapply(plmList, FUN=calculateResiduals, verbose=verbose);
+print(resList);
+
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# PLM weights
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+weightList <- lapply(plmList, FUN=calculateWeights, verbose=verbose);
+print(weightList);

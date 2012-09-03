@@ -1,13 +1,8 @@
-##########################################################################
-##########################################################################
 library("aroma.affymetrix");
 verbose <- Arguments$getVerbose(-8, timestamp=TRUE);
 
-cdf <- AffymetrixCdfFile$byChipType("Mapping10K_Xba142");
+cdf <- AffymetrixCdfFile$byChipType("Mapping50K_Hind240");
 print(cdf);
-
-acs <- AromaCellSequenceFile$byChipType(getChipType(cdf));
-print(acs);
 
 unitTypes <- getUnitTypes(cdf);
 print(table(unitTypes));

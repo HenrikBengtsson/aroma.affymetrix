@@ -27,13 +27,24 @@ print(as);
 cesT <- process(as, verbose=verbose);
 print(cesT);
 
+Y <- extractMatrix(cesT, verbose=verbose);
+print(head(Y));
+
+
+# Validation
+dsNList <- res$dsNList;
+Y0 <- extractMatrix(dsNList$total, verbose=verbose);
+print(head(Y0));
+
+# Sanity check
+stopifnot(all.equal(Y, Y0));
+
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Segmentation
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 cbs <- CbsModel(cesT);
 print(cbs);
-
 
 ce <- ChromosomeExplorer(cbs, zooms=2^(0:5));
 process(ce, arrays=1:2, chromosomes=18:23, verbose=verbose);

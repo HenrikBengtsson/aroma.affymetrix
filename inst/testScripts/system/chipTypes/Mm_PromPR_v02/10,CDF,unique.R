@@ -3,9 +3,6 @@ verbose <- Arguments$getVerbose(-20, timestamp=TRUE);
 
 chipType <- "Mm_PromPR_v02";
 
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# Setup the tiling array data set
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 cdf <- AffymetrixCdfFile$byChipType(chipType);
 print(cdf);
 

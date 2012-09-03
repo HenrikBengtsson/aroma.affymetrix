@@ -1,7 +1,5 @@
 library("aroma.affymetrix");
-
 verbose <- Arguments$getVerbose(-3, timestamp=TRUE);
-
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -14,6 +12,16 @@ print(cdf);
 
 # Setup CEL set using the core CDF.
 csR <- AffymetrixCelSet$byName(dataSet, cdf=cdf);
+print(csR);
+
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Process only cerebellum and heart
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+types <- c("cerebellum", "heart");
+csR <- extract(csR, indexOf(csR, patterns=types));
+
+setFullName(csR, sprintf("%s,%s", dataSet, paste(types, collapse="+")));
 print(csR);
 
 

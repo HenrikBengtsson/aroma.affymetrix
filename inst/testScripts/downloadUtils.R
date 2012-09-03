@@ -236,9 +236,35 @@ downloadGeoRawDataFiles <- function(..., sampleNames, skip=TRUE) {
 } # downloadGeoRawDataFiles()
 
 
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Affymetrix
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+downloadAffymetrixFile <- function(pathname, ..., urlRoot=Sys.getenv("AFFY_URLROOT", "http://www.affymetrix.com/Auth"), skip=TRUE) {
+  filename <- basename(pathname);
+  url <- file.path(urlRoot, pathname);
+  downloadFile(url, filename=filename, path=".", skip=skip);
+} # downloadAffymetrixFile()
+
+
+downloadAffymetrixDataSet <- function(dataSet, tags=NULL, chipType=chipType, ..., skip=TRUE) {
+  path <- getRawDataSetPath(dataSet, chipType=chipType);
+  ds <- getDataSet(path);
+  if (skip && nbrOfArrays(ds) > 0) {
+    return(ds);
+  }
+
+  pathname <- downloadAffymetrixFile(..., skip=skip);
+  pathnames <- unzip(pathname, exdir=path);
+  ds <- getDataSet(path);
+  ds;
+} # downloadAffymetrixDataSet();
+
+
 ############################################################################
 # HISTORY:
 # 2012-09-02
+# o Added downloadAffymetrixDataSet().
 # o Added downloadGeoRawDataFile().
 # 2012-09-01
 # o Added argument 'chipTypeAliases' to several download functions.

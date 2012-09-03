@@ -31,7 +31,7 @@ print(res);
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 cesN <- res$cesN;
 units <- c(1:4, 600+1:4, 1000+1:4, 1000000+1:4);  # A mix of unit types
-data <- extractDataFrame(ces, units=units, addNames=TRUE, verbose=verbose);
+data <- extractDataFrame(cesN, units=units, addNames=TRUE, verbose=verbose);
 str(data);
 print(data);
 

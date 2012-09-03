@@ -10,8 +10,6 @@ chipType <- "GenomeWideSNP_6,Full";
 csR <- AffymetrixCelSet$byName(dataSet, chipType=chipType);
 print(csR);
 
-csR <- extract(csR, 1);
-
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # (a) AS-CRMAv2
@@ -24,7 +22,7 @@ print(res);
 # (b) CRMAv2 - single array
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Setup a single array
-csR1 <- extract(csR, subset[1]);
+csR1 <- extract(csR, 1);
 
 # Rename data set in order to not pick up existing results
 setFullName(csR1, sprintf("%s,singleArray", getFullName(csR1)));

@@ -508,16 +508,16 @@ setMethodS3("process", "MatSmoothing", function(this, ..., units=NULL, force=FAL
     # ------------------------------------------------------
     # loop through each unit
     # ------------------------------------------------------
-    for (jj in seq_len( nbrOfUnits )) {
+    for (jj in seq_len(nbrOfUnits)) {
       # allocate space first time through
-      if ( is.null( outputList[[jj]] ) ) {
+      if (is.null(outputList[[jj]])) {
         zeroes <- rep(0, times=nRows[jj]);
         matScorePos[[jj]] <- zeroes;
         matScoreNeg[[jj]] <- zeroes; 
         outputList[[jj]] <- zeroes;
       }
       if (jj %% 1000 == 0) {
-        verbose && cat(verbose, sprintf("Completed %d/%d units ...", jj, nbrOfUnits));
+        verbose && cat(verbose, sprintf("Completed %d out of %d units...", jj, nbrOfUnits));
       }
            
       # loop through all columns in matrix
@@ -638,6 +638,9 @@ setMethodS3("process", "MatSmoothing", function(this, ..., units=NULL, force=FAL
   
   outputDataSet <- getOutputDataSet(this, force=TRUE);
 
+  # Sanity check
+  stopifnot(nbrOfFiles(outputDataSet) == ncol(design));
+
   verbose && exit(verbose);
   
   invisible(outputDataSet);
@@ -646,6 +649,10 @@ setMethodS3("process", "MatSmoothing", function(this, ..., units=NULL, force=FAL
 
 ############################################################################
 # HISTORY:
+# 2012-09-02 [HB]
+# o ROBUSTNESS: Added sanity check that process() for MatSmoothing returns
+#   a dataset with the same number of arrays as number of columns in 
+#   the design matrix.
 # 2009-06-28 [HB]
 # o BUG FIX: Added missing getExpectedOutputFullnames() for MatSmoothing.
 # 2009-05-27 [HB]

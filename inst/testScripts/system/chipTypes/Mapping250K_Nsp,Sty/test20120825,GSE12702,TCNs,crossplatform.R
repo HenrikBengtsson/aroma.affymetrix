@@ -26,6 +26,7 @@
 #
 # [1] http://aroma-project.org/data/annotationData/chipTypes/
 ##########################################################################
+library("aroma.affymetrix");
 library("aroma.cn");
 verbose <- Arguments$getVerbose(-8, timestamp=TRUE);
 
@@ -34,13 +35,13 @@ stopifnot(packageVersion("aroma.cn") >= "1.2.2");
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# Setup AS-CRMAv2 preprocessed TCN data sets
+# AS-CRMAv2
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 dataSet <- "GSE12702";
-tags <- "ACC,-XY,BPN,-XY,AVG,FLN,-XY";
 chipTypes <- c("Mapping250K_Nsp", "Mapping250K_Sty");
 dsList <- lapply(chipTypes, FUN=function(chipType) {
-  AromaUnitTotalCnBinarySet$byName(dataSet, tags=tags, chipType=chipType);
+  dsNList <- doASCRMAv2(dataSet, chipType=chipType, verbose=verbose);
+  dsNList$total;
 });
 names(dsList) <- chipTypes;
 print(dsList);

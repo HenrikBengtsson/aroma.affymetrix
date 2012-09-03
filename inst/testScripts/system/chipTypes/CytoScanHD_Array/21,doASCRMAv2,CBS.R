@@ -1,22 +1,27 @@
 library("aroma.affymetrix");
-
 verbose <- Arguments$getVerbose(-50, timestamp=TRUE);
-
-dataSetName <- "Affymetrix_2011-CytoScanHD";
-tags <- "ACC,ra,-XY,BPN,-XY,AVG,FLN,-XY";
-chipType <- "CytoScanHD_Array";
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Setting up data set
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-ds <- AromaUnitTotalCnBinarySet$byName(dataSetName, tags=tags, chipType=chipType);
-print(ds);
+dataSetName <- "Affymetrix_2011-CytoScanHD";
+chipType <- "CytoScanHD_Array";
+
+csR <- AffymetrixCelSet$byName(dataSetName, chipType=chipType);
+print(csR);
+
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Allele-specific CRMAv2
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+dsNList <- doASCRMAv2(csR, verbose=verbose);
+print(dsNList);
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Segmentation
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-seg <- CbsModel(ds);
+seg <- CbsModel(dsNList$total);
 print(seg);
 
 ce <- ChromosomeExplorer(seg);

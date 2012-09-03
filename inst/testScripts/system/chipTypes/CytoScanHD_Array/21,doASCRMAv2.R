@@ -1,22 +1,18 @@
 library("aroma.affymetrix");
-
 verbose <- Arguments$getVerbose(-50, timestamp=TRUE);
-
-dataSetName <- "Affymetrix_2011-CytoScanHD";
-chipType <- "CytoScanHD_Array";
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Setting up data set
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-cdf <- AffymetrixCdfFile$byChipType(chipType);
-print(cdf);
+dataSetName <- "Affymetrix_2011-CytoScanHD";
+chipType <- "CytoScanHD_Array";
 
-csR <- AffymetrixCelSet$byName(dataSetName, cdf=cdf);
+csR <- AffymetrixCelSet$byName(dataSetName, chipType=chipType);
 print(csR);
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Allele-specific CRMAv2
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-dsList <- doASCRMAv2(csR, verbose=verbose);
-print(dsList);
+dsNList <- doASCRMAv2(csR, verbose=verbose);
+print(dsNList);

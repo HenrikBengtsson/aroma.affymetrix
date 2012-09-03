@@ -5,7 +5,7 @@ verbose <- Arguments$getVerbose(-50, timestamp=TRUE);
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Setting up data set
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-dataSetName <- "Affymetrix_2011-CytoScanHD";
+dataSetName <- "Affymetrix-CytoScanHD";
 chipType <- "CytoScanHD_Array";
 
 csR <- AffymetrixCelSet$byName(dataSetName, chipType=chipType);

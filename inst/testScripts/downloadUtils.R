@@ -182,7 +182,7 @@ downloadGeoRawDataSet <- function(dataSet, tags=NULL, chipType, ..., chipTypeAli
 } # downloadGeoRawDataSet()
 
 
-downloadGeoRawDataFile <- function(dataSet, tags=NULL, chipType, sampleName, ext="CEL", url=getGeoDataFileURL(sampleName, ext), ..., gunzip=TRUE, skip=TRUE) {
+downloadGeoRawDataFile <- function(dataSet, tags=NULL, chipType, sampleName, ext="CEL", url=getGeoDataFileURL(sampleName, toupper(ext)), ..., gunzip=TRUE, skip=TRUE) {
   # Argument 'url':
   url <- Arguments$getCharacter(url);
 
@@ -197,7 +197,12 @@ downloadGeoRawDataFile <- function(dataSet, tags=NULL, chipType, sampleName, ext
     return(pathname);
   }
 
-  pathnameGZ <- downloadFile(url, path=path, ...);
+  tryCatch({
+    pathnameGZ <- downloadFile(url, path=path, ...);
+  }, error = function(ex) {
+    urlL <- getGeoDataFileURL(sampleName, tolower(ext));
+    pathnameGZ <- downloadFile(urlL, path=path, ...);
+  })
   if (gunzip) {
     gunzip(pathnameGZ);
     pathname <- gsub("[.]gz$", "", pathnameGZ);

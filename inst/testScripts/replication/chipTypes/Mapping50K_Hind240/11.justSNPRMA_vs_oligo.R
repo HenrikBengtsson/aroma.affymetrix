@@ -37,7 +37,7 @@ compareESets <- function(eSet1, eSet2, tolerance=1e-4) {
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Setup
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-dataSet <- "HapMap,CEU";
+dataSet <- "HapMap,CEU,testset";
 chipType <- "Mapping50K_Hind240";
 
 cdf <- AffymetrixCdfFile$byChipType(chipType);

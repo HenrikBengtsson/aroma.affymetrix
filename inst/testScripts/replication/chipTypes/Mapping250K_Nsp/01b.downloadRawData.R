@@ -11,7 +11,6 @@ verbose && enter(verbose, "Downloading raw data");
 # GSE34754/
 #   Mapping250K_Nsp/
 #    GSM854615.CEL, ..., GSM854626.CEL [12]
-#   Mapping250K_Sty/
 #
 # Overall design:
 #  Breast cancer cell lines HCC38 and HCC1143 and paired B 

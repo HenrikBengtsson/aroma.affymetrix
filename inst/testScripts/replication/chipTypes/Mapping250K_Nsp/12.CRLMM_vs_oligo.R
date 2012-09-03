@@ -31,11 +31,15 @@ library(pdPkgName, character.only=TRUE);
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# CRLMM according to aroma.affymetrix
+# SNPRMA according to aroma.affymetrix
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 ces <- justSNPRMA(csR, normalizeToHapmap=TRUE, returnESet=FALSE, verbose=verbose);
 print(ces);
 
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# CRLMM according to aroma.affymetrix
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 recalibrate <- TRUE;
 crlmm <- CrlmmModel(ces, tags="*,oligo", recalibrate=recalibrate);
 print(crlmm);

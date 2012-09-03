@@ -12,19 +12,10 @@ verbose <- Arguments$getVerbose(-8, timestamp=TRUE);
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Setup
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-dataSet <- "GSE12702";
+dataSet <- "GSE34754";
 chipType <- "Mapping250K_Nsp";
 
 csR <- AffymetrixCelSet$byName(dataSet, chipType=chipType);
-print(csR);
-
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# Extract a single tumor-normal pair
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# Extract tumor-normal pair
-pair <- c(T="GSM318736", N="GSM318737");
-csR <- extract(csR, indexOf(csR, pair));
 print(csR);
 
 

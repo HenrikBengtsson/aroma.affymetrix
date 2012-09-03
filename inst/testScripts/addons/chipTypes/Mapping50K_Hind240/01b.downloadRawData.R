@@ -11,12 +11,7 @@ verbose && enter(verbose, "Downloading raw data");
 #   Mapping50K_Hind240/
 #    GSM226867.CEL, ..., GSM226876.CEL [10 files]
 #
-# Overall design:
-#  [Ten] cervival cancer cell lines were hybridized to Affymetrix 
-#  Focus arrays in duplicate. Correlations were made with copynumber 
-#  profiles from arrayCGH and SNP arrays.
-#
-# URL: http://www.ncbi.nlm.nih.gov/projects/geo/query/acc.cgi?acc=GSE8605
+# URL: http://hapmap.ncbi.nlm.nih.gov/downloads/raw_data/affy100k/
 ##########################################################################
 dataSet <- "HapMap,CEU";
 chipTypes <- c("Mapping50K_Hind240", "Mapping50K_Xba240");

@@ -49,11 +49,14 @@ for (ii in 1:nbrOfArrays(csR)) {
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Spatial residual plots test
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-res <- doCRMAv1(csR, drop=FALSE, verbose=verbose);
+res <- doASCRMAv1(csR, drop=FALSE, verbose=verbose);
 plm <- res$plm;
 print(plm);
 
+# Calculate PLM residuals
 rs <- calculateResidualSet(plm, verbose=verbose);
+print(rs);
+
 ae <- ArrayExplorer(rs);
 setColorMaps(ae, c("log2,log2neg,rainbow", "log2,log2pos,rainbow"));
 print(ae);

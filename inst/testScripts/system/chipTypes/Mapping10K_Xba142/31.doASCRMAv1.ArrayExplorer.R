@@ -35,15 +35,15 @@ addColorMap(reporter, "log2center,rainbow");
 process(reporter, zrange=c(-2,2), verbose=verbose);
 
 ylab <- expression(log[2](y/y[R]));
-for (array in 1:nbrOfArrays(csR)) {
-  df <- getFile(csR, array);
+for (ii in 1:nbrOfArrays(csR)) {
+  df <- getFile(csR, ii);
 
   toPNG(getFullName(df), tags="spatial,rowMedians", width=300, aspectRatio=8/3, {
-    plotMargins(reporter, array=array, ylim=c(-1,1)*0.2, ylab=ylab, margins="rows", rotate=90);
+    plotMargins(reporter, array=ii, ylim=c(-1,1)*0.2, ylab=ylab, margins="rows", rotate=90);
   });
 
   toPNG(getFullName(df), tags="spatial,colMedians", width=800, aspectRatio=3/8, {
-    plotMargins(reporter, array=array, ylim=c(-1,1)*0.2, ylab=ylab, margins="columns", rotate=0);
+    plotMargins(reporter, array=ii, ylim=c(-1,1)*0.2, ylab=ylab, margins="columns", rotate=0);
   });
 }
 
@@ -51,16 +51,19 @@ for (array in 1:nbrOfArrays(csR)) {
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Spatial residual plots test
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-res <- doCRMAv1(csR, drop=FALSE, verbose=verbose);
+res <- doASCRMAv1(csR, drop=FALSE, verbose=verbose);
 plm <- res$plm;
 print(plm);
 
+# Calculate PLM residuals
 rs <- calculateResidualSet(plm, verbose=verbose);
+print(rs);
+
 ae <- ArrayExplorer(rs);
 setColorMaps(ae, c("log2,log2neg,rainbow", "log2,log2pos,rainbow"));
 print(ae);
 
 # Sanity check
-stopifnot(identical(unname(getArrays(ae)), getNames(csR)));
+stopifnot(all(getArrays(ae) == getNames(csR)));
 
 process(ae, interleaved="auto", verbose=verbose);

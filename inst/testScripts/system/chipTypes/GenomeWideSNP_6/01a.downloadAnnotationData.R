@@ -29,4 +29,7 @@ verbose && cat(verbose, "UGP: ", pathname);
 pathname <- downloadUGP(ar, chipType, tags=c(tags, ".*"));
 verbose && cat(verbose, "UGP: ", pathname);
 
+pathname <- downloadUGC(ar, chipType, tags=c(tags, ".*"));
+verbose && cat(verbose, "UGC: ", pathname);
+
 verbose && exit(verbose);

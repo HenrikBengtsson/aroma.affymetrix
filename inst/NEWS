@@ -1,12 +1,13 @@
 Package: aroma.affymetrix
 =========================
 
-Version: 2.5.10 [2012-09-02]
-o CLEANUP/ROBUSTNESS: Started to update test scripts by rewriting
-  some tests to be more clear/consistent on what they are testing
-  and by cleaning out tests that duplicates each other etc.
-o Added system test scripts that automatically install some extra
-  packages needed for some of the tests.
+Version: 2.5.10 [2012-09-04]
+o CLEANUP/ROBUSTNESS: Updated test scripts by rewriting some tests
+  to be more clear/consistent on what they are testing and by
+  cleaning out tests that duplicates each other etc.
+o Added system test scripts that automatically download the needed
+  test data sets and install some extra packages needed for some
+  of the tests.
 o BUG FIX/ROBUSTNESS: extractAlleleSet(), extractSnpCnvQSet() and
   extractSnpQSet() for SnpChipEffectSet would throw an exception
   iff the 'Biobase' package was not loaded.

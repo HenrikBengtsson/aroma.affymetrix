@@ -235,7 +235,7 @@ toPNG(getFullName(cesN), tags=c("ASCN"), {
     fit <- kmeans(X, centers=centers);
     print(fit$centers);
     points(fit$centers, pch=19, col="red");
-  } for (ii ...)
+  } # for (ii ...)
 });
 
 

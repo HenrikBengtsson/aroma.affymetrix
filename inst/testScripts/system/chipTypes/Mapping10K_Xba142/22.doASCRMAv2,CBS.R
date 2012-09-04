@@ -1,4 +1,4 @@
-library("aroma.affymetrix")
+library("aroma.affymetrix");
 verbose <- Arguments$getVerbose(-4, timestamp=TRUE);
 
 dataSet <- "GSE8605";

@@ -1,15 +1,16 @@
-library("aroma.affymetrix")
+library("aroma.affymetrix");
 verbose <- Arguments$getVerbose(-4, timestamp=TRUE);
 
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Setup
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 dataSet <- "GSE8605";
 chipType <- "Mapping10K_Xba142";
+csR <- AffymetrixCelSet$byName(dataSet, chipType=chipType, verbose=verbose);
 
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# Tests for setting up CEL sets and locating the CDF file
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-csR <- AffymetrixCelSet$byName(dataSet, chipType=chipType, verbose=log);
-keep <- 1:6;
-csR <- extract(csR, keep);
+# Process only the first six arrays (and in reverse order)
+subset <- 6:1;
+csR <- extract(csR, subset);
 print(csR);
 
 

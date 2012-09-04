@@ -1,55 +1,36 @@
 library("aroma.affymetrix");
-
 verbose <- Arguments$getVerbose(-4, timestamp=TRUE);
 
-
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Setup
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 dataSet <- "GSE8605";
 chipType <- "Mapping10K_Xba142";
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# Tests for setting up CEL sets and locating the CDF file
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 csR <- AffymetrixCelSet$byName(dataSet, chipType=chipType, verbose=verbose);
-keep <- 1:6;
-csR <- extract(csR, keep);
 print(csR);
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# Allelic cross-talk calibration tests
+# (a) AS-CRMAv2
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-acc <- AllelicCrosstalkCalibration(csR);
-print(acc);
-csC <- process(acc, verbose=verbose);
-print(csC);
-stopifnot(identical(getNames(csC), getNames(csR)));
+res <- doASCRMAv2(csR, drop=FALSE, verbose=verbose);
+print(res);
 
-
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# Probe-level modelling test (for CN analysis)
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-plm <- RmaSnpPlm(csC, mergeStrands=TRUE, shift=300);
-print(plm);
-
-fit(plm, verbose=verbose);
-ces <- getChipEffectSet(plm);
-print(ces);
-stopifnot(identical(getNames(ces), getNames(csR)));
+cesN <- res$cesN;
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Extraction test
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Extract unit and group name and indices together with chip effects
-data <- extractDataFrame(ces, units=1:50, addNames=TRUE, verbose=verbose);
+data <- extractDataFrame(cesN, units=1:50, addNames=TRUE, verbose=verbose);
 print(data[1:50,1:8]);
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Extract (thetaA, thetaB)
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-theta <- extractTheta(ces, groups=1:2, verbose=verbose);
+theta <- extractTheta(cesN, groups=1:2, verbose=verbose);
 dimnames(theta)[[2]] <- c("A", "B");
 thetaA <- theta[,"A",];
 thetaB <- theta[,"B",];
@@ -64,7 +45,7 @@ Blab <- expression(theta[B]/theta);
 
 nbrOfArrays <- ncol(theta);
 
-toPNG(getFullName(ces), tags="BAFvsTheta", width=1024, {
+toPNG(getFullName(cesN), tags="BAFvsTheta", width=1024, {
   layout(matrix(1:nbrOfArrays, ncol=2, byrow=TRUE));
   par(mar=c(3.8,4,3,1)+0.1);
   for (ii in seq(length=nbrOfArrays)) {
@@ -78,7 +59,7 @@ toPNG(getFullName(ces), tags="BAFvsTheta", width=1024, {
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Extract (log2(total), freqB)
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-data <- extractTotalAndFreqB(ces, verbose=verbose);
+data <- extractTotalAndFreqB(cesN, verbose=verbose);
 data[,1,] <- log2(data[,1,]);
 
 tlim <- c(9,15);
@@ -107,7 +88,7 @@ diagPanel <- function(x, pch=".", ...) {
 pairs <- matrix(1:nbrOfArrays, nrow=1, ncol=nbrOfArrays);
 colnames(pairs) <- dimnames(data)[[length(dim)]];
 
-toPNG(getFullName(ces), tags="pairs", width=1024, {
+toPNG(getFullName(cesN), tags="pairs", width=1024, {
   pairs(pairs, upper.panel=upperPanel, lower.panel=lowerPanel, 
                diag.panel=diagPanel, xlim=c(0,1), ylim=c(0,1));
 });

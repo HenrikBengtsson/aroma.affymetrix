@@ -90,6 +90,7 @@ okB <- which(is.finite(B));
 fit <- kmeans(B[okB], centers=c(0,1/2,1))
 
 # Identify non-polymorphic loci
+cdf <- getCdf(cesN);
 isCN <- (getUnitTypes(cdf, units=units) == 5);
 
 toPNG(getFullName(cesN), tags=c(sampleName, "PSCN,tracks,SNPsAndNonSNPs"), {

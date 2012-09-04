@@ -34,7 +34,7 @@ yB <- extractMatrix(dfB, verbose=verbose);
 print(head(yB));
 
 stopifnot(all.equal(yB, yA, 
-          check.names=(packageVersion("R.filesets") >= "1.1.6")));
+          check.attributes=(packageVersion("R.filesets") >= "1.1.6")));
 
 # (b) Multiple arrays
 YA <- extractMatrix(dsA, verbose=verbose);

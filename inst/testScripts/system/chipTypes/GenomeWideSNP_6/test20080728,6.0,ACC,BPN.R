@@ -1,23 +1,14 @@
-library("aroma.affymetrix")
-
-log <- Arguments$getVerbose(-50, timestamp=TRUE);
-
-dataSetName <- "HapMap270,6.0,CEU,testSet";
-chipType <- "GenomeWideSNP_6";
-
-# Expected sample names
-sampleNames <- c("NA06985", "NA06991", "NA06993", 
-                 "NA06994", "NA07000", "NA07019");
+library("aroma.affymetrix");
+verbose <- Arguments$getVerbose(-50, timestamp=TRUE);
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# Setting up CEL set and locating the CDF file
+# Setup
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-cdf <- AffymetrixCdfFile$byChipType(chipType, tags="Full");
-print(cdf);
+dataSet <- "GSE13372,testset";
+chipType <- "GenomeWideSNP_6,Full";
 
-csR <- AffymetrixCelSet$byName(dataSetName, cdf=cdf, verbose=log);
+csR <- AffymetrixCelSet$byName(dataSetName, chipType=chipType);
 print(csR);
-stopifnot(identical(getNames(csR), sampleNames));
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -26,9 +17,8 @@ stopifnot(identical(getNames(csR), sampleNames));
 acc <- AllelicCrosstalkCalibration(csR);
 print(acc);
 
-csC <- process(acc, verbose=log);
+csC <- process(acc, verbose=verbose);
 print(csC);
-stopifnot(identical(getNames(csC), getNames(csR)));
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -37,6 +27,5 @@ stopifnot(identical(getNames(csC), getNames(csR)));
 bpn <- BasePositionNormalization(csC, shift=+300);
 print(bpn);
 
-csN <- process(bpn, verbose=log);
+csN <- process(bpn, verbose=verbose);
 print(csN);
-stopifnot(identical(getNames(csN), getNames(csR)));

@@ -1,17 +1,13 @@
 library("aroma.affymetrix");
-
-log <- Arguments$getVerbose(-50, timestamp=TRUE);
-
-dataSetName <- "HapMap270,6.0,CEU,testSet";
-chipType <- "GenomeWideSNP_6";
+verbose <- Arguments$getVerbose(-50, timestamp=TRUE);
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# Setting up CEL set and locating the CDF file
+# Setup
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-cdf <- AffymetrixCdfFile$byChipType(chipType, tags="Full");
-print(cdf);
+dataSet <- "GSE13372,testset";
+chipType <- "GenomeWideSNP_6,Full";
 
-csR <- AffymetrixCelSet$byName(dataSetName, cdf=cdf, verbose=log);
+csR <- AffymetrixCelSet$byName(dataSetName, chipType=chipType);
 print(csR);
 
 
@@ -21,5 +17,5 @@ print(csR);
 acc <- AllelicCrosstalkCalibration(csR, mergeShifts=FALSE);
 print(acc);
 
-csC <- process(acc, verbose=log);
+csC <- process(acc, verbose=verbose);
 print(csC);

@@ -68,7 +68,6 @@ print(dsList);
 cns <- CbsModel(dsList$total);
 print(cns);
 
-ce <- ChromosomeExplorer(cns);
-setZooms(ce, 2^(0:5));
+ce <- ChromosomeExplorer(cns, zooms=2^(0:5));
 print(ce);
 process(ce, chromosomes=c(19, 22, 23), verbose=verbose);

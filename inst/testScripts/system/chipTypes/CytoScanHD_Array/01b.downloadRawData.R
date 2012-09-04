@@ -15,7 +15,7 @@ verbose && enter(verbose, "Downloading raw data");
 #
 # URL: http://www.affymetrix.com/estore/browse/products.jsp?productId=prod520004#1_3
 ##########################################################################
-dataSetName <- "Affymetrix-CytoScanHD";
+dataSet <- "Affymetrix-CytoScanHD";
 chipType <- "CytoScanHD_Array";
 
 ds <- downloadAffymetrixDataSet(dataSet, chipType=chipType, pathname="support/downloads/data/cytoscan_demo_data.zip");

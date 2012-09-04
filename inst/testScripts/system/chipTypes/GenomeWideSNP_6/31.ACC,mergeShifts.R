@@ -7,7 +7,7 @@ verbose <- Arguments$getVerbose(-50, timestamp=TRUE);
 dataSet <- "GSE13372,testset";
 chipType <- "GenomeWideSNP_6,Full";
 
-csR <- AffymetrixCelSet$byName(dataSetName, chipType=chipType);
+csR <- AffymetrixCelSet$byName(dataSet, chipType=chipType);
 print(csR);
 
 

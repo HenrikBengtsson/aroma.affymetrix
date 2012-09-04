@@ -75,8 +75,8 @@ stopifnot(all(rho > 0.99995));
 e <- (theta - theta0);
 stopifnot(mean(as.vector(e^2)) < 0.001);
 stopifnot(sd(as.vector(e^2)) < 0.001);
-stopifnot(quantile(abs(e), 0.99) < 0.05);
-stopifnot(max(abs(e)) < 0.17);
+stopifnot(quantile(abs(e), 0.99) < 0.07);
+stopifnot(max(abs(e)) < 0.26);
 
 # (c) Visual comparison
 toPNG(getFullName(csR), tags=c("doGCRMA_vs_gcrma"), width=800, {

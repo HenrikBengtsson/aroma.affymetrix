@@ -34,10 +34,17 @@ print(dsNList1);
 # Sanity checks
 dsNList0 <- lapply(dsNList, FUN=extract, 1);
 for (key in names(dsNList1)) {
+  print(key);
   dsN0 <- dsNList0[[key]];
   dsN1 <- dsNList1[[key]];
   stopifnot(getFullNames(dsN1) == getFullNames(dsN0));
   data0 <- extractMatrix(dsN0);
   data1 <- extractMatrix(dsN1);
+  rho <- cor(data1, data0);
+  print(rho);
+  res <- all.equal(data1, data0);
+  print(res);
+
+  # Sanity check
   stopifnot(all.equal(data1, data0));
-}
+} # for (key ...)

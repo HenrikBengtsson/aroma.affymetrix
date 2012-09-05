@@ -195,29 +195,33 @@ setMethodS3("getRlmFitFunctions", "RmaPlm", function(static, withPriors=FALSE, .
     }
 
     if (withPriors) {
+      # To please R CMD check
+      PACKAGE <- "preprocessCore";
       fcnList <- list(
         wrlm = function(y, phi, psiCode, psiK, w, scale=NULL) {
           # From preprocessCore::rcModelPLM()
           .Call("R_rlm_rma_given_probe_effects", 
-                y, phi, psiCode, psiK, w, scale, PACKAGE="preprocessCore");
+                y, phi, psiCode, psiK, w, scale, PACKAGE=PACKAGE);
         },
         rlm = function(y, phi, psiCode, psiK, w, scale=NULL) {
           # From preprocessCore::rcModelPLM()
           .Call("R_rlm_rma_given_probe_effects", 
-                y, phi, psiCode, psiK, scale, PACKAGE="preprocessCore");
+                y, phi, psiCode, psiK, scale, PACKAGE=PACKAGE);
         }
       );
     } else {
+      # To please R CMD check
+      PACKAGE <- "preprocessCore";
       fcnList <- list(
         wrlm = function(y, psiCode, psiK, w, scale=NULL) {
           # From preprocessCore::rcModelPLM()
           .Call("R_wrlm_rma_default_model", 
-                y, psiCode, psiK, w, scale, PACKAGE="preprocessCore");
+                y, psiCode, psiK, w, scale, PACKAGE=PACKAGE);
         },
         rlm = function(y, psiCode, psiK, w, scale=NULL) {
           # From preprocessCore::rcModelPLM()
           .Call("R_rlm_rma_default_model", 
-                y, psiCode, psiK, scale, PACKAGE="preprocessCore");
+                y, psiCode, psiK, scale, PACKAGE=PACKAGE);
         }
       );
     }
@@ -693,6 +697,9 @@ setMethodS3("getCalculateResidualsFunction", "RmaPlm", function(static, ...) {
 
 ############################################################################
 # HISTORY:
+# 2012-09-05
+# o Now getRlmFitFunctions() of RmaPlm no longer generates a warning 
+#   in R CMD check about external .Call():s.
 # 2012-09-01
 # o BUG FIX: getFitUnitGroupFunction() for RmaPlm would throw exception
 #   'Error in pkgDesc$Version : $ operator is invalid for atomic vectors'

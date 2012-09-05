@@ -14,8 +14,8 @@ print(csR);
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # (a) AS-CRMAv2
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-res <- doASCRMAv2(csR, drop=FALSE, verbose=verbose);
-print(res);
+dsNList <- doASCRMAv2(csR, verbose=verbose);
+print(dsNList);
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -34,10 +34,19 @@ print(dsNList1);
 # Sanity checks
 dsNList0 <- lapply(dsNList, FUN=extract, 1);
 for (key in names(dsNList1)) {
+  verbose && enter(verbose, key);
+
   dsN0 <- dsNList0[[key]];
+  verbose && print(verbose, dsN0);
   dsN1 <- dsNList1[[key]];
+  verbose && print(verbose, dsN1);
+
   stopifnot(getFullNames(dsN1) == getFullNames(dsN0));
   data0 <- extractMatrix(dsN0);
   data1 <- extractMatrix(dsN1);
+  res <- all.equal(data1, data0);
+  verbose && print(verbose, res);
   stopifnot(all.equal(data1, data0));
-}
+
+  verbose && exit(verbose);
+} # for (key ...)

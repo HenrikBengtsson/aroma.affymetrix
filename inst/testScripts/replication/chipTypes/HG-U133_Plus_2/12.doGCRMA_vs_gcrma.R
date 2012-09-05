@@ -73,10 +73,11 @@ stopifnot(all(rho > 0.99995));
 
 # (b) Assert differences
 e <- (theta - theta0);
+print(summary(e));
 stopifnot(mean(as.vector(e^2)) < 0.001);
-stopifnot(sd(as.vector(e^2)) < 0.001);
-stopifnot(quantile(abs(e), 0.99) < 0.07);
-stopifnot(max(abs(e)) < 0.26);
+stopifnot(sd(as.vector(e^2)) < 0.003);
+stopifnot(quantile(abs(e), 0.99) < 0.10);
+stopifnot(max(abs(e)) < 0.30);
 
 # (c) Visual comparison
 toPNG(getFullName(csR), tags=c("doGCRMA_vs_gcrma"), width=800, {

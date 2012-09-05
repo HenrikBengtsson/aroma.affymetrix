@@ -8,7 +8,7 @@ setConstructorS3("CrlmmModel", function(dataSet=NULL, balance=1.5, minLLRforCall
     dataSet <- Arguments$getInstanceOf(dataSet, "SnpChipEffectSet");
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    # Sanity check
+    # Sanity checks
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     chipType <- getChipType(dataSet, fullname=FALSE);
 
@@ -19,6 +19,12 @@ setConstructorS3("CrlmmModel", function(dataSet=NULL, balance=1.5, minLLRforCall
       throw("Cannot fit CRLMM model: Model fitting for this chip type is not supported/implemented: ", chipType);
     } else {
       throw("Cannot fit CRLMM model: Unsupported/unsafe chip type: ", chipType);
+    }
+
+    # CRLMM does not apply to chip effects for which strand-specific
+    # estimates have been combined (summed together).
+    if (getMergeStrands(dataSet)) {
+      throw("Cannot fit CRLMM model: CRLMM requires that the probe-level model was fitted without merging the strands (mergeStrands=FALSE).");
     }
   }
 
@@ -492,16 +498,18 @@ setMethodS3("fit", "CrlmmModel", function(this, units="remaining", force=FALSE, 
 
     verbose && enter(verbose, "Extract CRLMM priors");
     idxs <- match(unitNames, names(allSNPs));
+    verbose && cat(verbose, "Units:");
+    verbose && str(verbose, idxs);
     hapmapCallIndex <- crlmm$hapmapCallIndex[idxs];
     params <- crlmm$params;
     if (hasQuartets) {
-      params$centers <- params$centers[idxs,,];
-      params$scales <- params$scales[idxs,,];
+      params$centers <- params$centers[idxs,,,drop=FALSE];
+      params$scales <- params$scales[idxs,,,drop=FALSE];
     } else {
-      params$centers <- params$centers[idxs,];
-      params$scales <- params$scales[idxs,];
+      params$centers <- params$centers[idxs,,drop=FALSE];
+      params$scales <- params$scales[idxs,,drop=FALSE];
     }
-    params$N <- params$N[idxs,];
+    params$N <- params$N[idxs,,drop=FALSE];
     rm(idxs);
     verbose && cat(verbose, "CRLMM prior parameters (estimated from HapMap):");
     verbose && str(verbose, params);
@@ -525,7 +533,8 @@ setMethodS3("fit", "CrlmmModel", function(this, units="remaining", force=FALSE, 
         # NOTE: Do not specify sqsClass=class(eSet). Instead it should
         # default to sqsClass="SnpQSet" regardless of the class of 'eSet'.
         # See oligo:::justCRLMMv3() of oligo v1.12.0. /HB 2010-05-06
-        calls[index,] <- oligo:::getInitialAffySnpCalls(correction, index, verbose=as.logical(verbose));
+        verbose && str(verbose, correction);
+        calls[index,] <- oligo:::getInitialAffySnpCalls(correction, subset=index, verbose=as.logical(verbose));
       } else {
         throw("Not implemented for GWS chip types");
       }
@@ -538,7 +547,7 @@ setMethodS3("fit", "CrlmmModel", function(this, units="remaining", force=FALSE, 
       # NOTE: Do not specify sqsClass=class(eSet). Instead it should
       # default to sqsClass="SnpQSet" regardless of the class of 'eSet'.
       # See oligo:::justCRLMMv3() of oligo v1.12.0. /HB 2010-05-06
-      rparams <- oligo:::getAffySnpGenotypeRegionParams(eSet, calls, correction$fs, subset=index, verbose=as.logical(verbose));
+      rparams <- oligo:::getAffySnpGenotypeRegionParams(eSet, initialcalls=calls, f=correction$fs, subset=index, verbose=as.logical(verbose));
     } else {
       M <- extractLogRatios(eSet);
       rparams <- oligo:::getGenotypeRegionParams(M, calls, correction$fs, verbose=as.logical(verbose));
@@ -974,6 +983,10 @@ setMethodS3("calculateConfidenceScores", "CrlmmModel", function(this, ..., force
 
 ############################################################################
 # HISTORY:
+# 2012-09-05
+# o ROBUSTNESS: Now the CrlmmModel constructor asserts that the chip 
+#   effects were estimated without merging the strands (mergeStrands=FALSE).
+#   If not, an informative exception is thrown.
 # 2011-11-05
 # o FIX: The verbose enter/exit statements of fit() of CrlmmModel()
 #   did not match up, resulting deeper and deeper indentations.

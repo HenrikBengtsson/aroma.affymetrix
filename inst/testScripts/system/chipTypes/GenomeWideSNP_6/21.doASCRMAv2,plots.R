@@ -29,8 +29,10 @@ sampleName <- getName(ce);
 ceR <- getAverage(cesN, verbose=verbose);
 print(ceR);
 
-# Get genome annotation data
-ugp <- getAromaUgpFile(cesN);
+# Get annotation data
+cdf <- getCdf(cesN);
+ugp <- getAromaUgpFile(cdf);
+ufl <- getAromaUflFile(cdf);
 
 
 chr <- 2;
@@ -90,7 +92,6 @@ okB <- which(is.finite(B));
 fit <- kmeans(B[okB], centers=c(0,1/2,1))
 
 # Identify non-polymorphic loci
-cdf <- getCdf(cesN);
 isCN <- (getUnitTypes(cdf, units=units) == 5);
 
 toPNG(getFullName(cesN), tags=c(sampleName, "PSCN,tracks,SNPsAndNonSNPs"), {
@@ -135,7 +136,7 @@ toPNG(getFullName(cesN), tags=c(sampleName, "PSCN,tracks,SNPsAndNonSNPs"), {
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Identify non-polymorphic loci
 isCN <- (getUnitTypes(cdf, units=units) == 5);
-fl <- getFragmentLengths(si, units=units);
+fl <- getFragmentLengths(ufl, units=units);
 nbrOfEnzymes <- nbrOfEnzymes(fl);
 
 toPNG(getFullName(cesN), tags=c(sampleName, "TCNvsFragmentLength"), {

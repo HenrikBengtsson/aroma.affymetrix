@@ -40,7 +40,7 @@ for (key in names(dsNList1)) {
   stopifnot(getFullNames(dsN1) == getFullNames(dsN0));
   data0 <- extractMatrix(dsN0);
   data1 <- extractMatrix(dsN1);
-  rho <- cor(data1, data0);
+  rho <- cor(data1, data0, use="complete.obs");
   print(rho);
   res <- all.equal(data1, data0);
   print(res);

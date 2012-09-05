@@ -62,7 +62,7 @@ setMethodS3("doCRMAv1", "AffymetrixCelSet", function(csR, shift=+300, combineAll
   # CRMAv1
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
   verbose && enter(verbose, "CRMAv1/Allelic crosstalk calibration");
-  acc <- AllelicCrosstalkCalibration(csR, model="CRMA");
+  acc <- AllelicCrosstalkCalibration(csR, model="CRMA", tags="*,v1");
   verbose && print(verbose, acc);
   csC <- process(acc, verbose=verbose);
   verbose && print(verbose, csC);
@@ -180,6 +180,12 @@ setMethodS3("doASCRMAv1", "default", function(...) {
 
 ############################################################################
 # HISTORY:
+# 2012-09-05
+# o ROBUSTNESS: Now doCRMAv1() adds also tag "v1" to the allele-specific
+#   calibration step.  The reason for this is to differentiate it from 
+#   the output of doCRMAv2().  NOTE: This update means that any old CRMAv1
+#   analyses will not be detected by doCRMAv1(); to have doCRMAv1() detect 
+#   those add tag "v1" in that calibration step, e.g. "ACC,-XY,v1".
 # 2011-04-07
 # o Added argument 'drop'.
 # 2011-03-14

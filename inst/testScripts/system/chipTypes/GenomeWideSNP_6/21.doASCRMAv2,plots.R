@@ -136,8 +136,8 @@ toPNG(getFullName(cesN), tags=c(sampleName, "PSCN,tracks,SNPsAndNonSNPs"), {
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Identify non-polymorphic loci
 isCN <- (getUnitTypes(cdf, units=units) == 5);
-fl <- getFragmentLengths(ufl, units=units);
-nbrOfEnzymes <- nbrOfEnzymes(fl);
+fl <- ufl[units,];
+nbrOfEnzymes <- ncol(fl);
 
 toPNG(getFullName(cesN), tags=c(sampleName, "TCNvsFragmentLength"), {
   layout(matrix(1:4, ncol=1));

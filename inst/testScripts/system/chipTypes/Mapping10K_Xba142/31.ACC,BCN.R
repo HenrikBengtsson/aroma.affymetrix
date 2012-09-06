@@ -4,8 +4,8 @@ verbose <- Arguments$getVerbose(-50, timestamp=TRUE);
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Setup
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-dataSet <- "GSE13372,testset";
-chipType <- "GenomeWideSNP_6,Full";
+dataSet <- "GSE8605";
+chipType <- "Mapping10K_Xba142";
 
 csR <- AffymetrixCelSet$byName(dataSet, chipType=chipType);
 print(csR);

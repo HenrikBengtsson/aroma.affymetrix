@@ -248,7 +248,7 @@ toPNG(getFullName(cesN), tags=c("TCNvsBAF"), {
 
   # For each array...
   for (ii in 1:ncol(C)) {
-    xx <- freqB[,ii];
+    xx <- B[,ii];
     yy <- C[,ii];
     X <- cbind(xx,yy);
     ok <- (is.finite(X) & -1 < X & X < 30);

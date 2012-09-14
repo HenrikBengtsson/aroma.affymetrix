@@ -197,12 +197,13 @@ downloadGeoRawDataFile <- function(dataSet, tags=NULL, chipType, sampleName, ext
     return(pathname);
   }
 
-  tryCatch({
-    pathnameGZ <- downloadFile(url, path=path, ...);
+  pathnameGZ <- tryCatch({
+    downloadFile(url, path=path, ...);
   }, error = function(ex) {
     urlL <- getGeoDataFileURL(sampleName, tolower(ext));
-    pathnameGZ <- downloadFile(urlL, path=path, ...);
-  })
+    downloadFile(urlL, path=path, ...);
+  });
+
   if (gunzip) {
     gunzip(pathnameGZ);
     pathname <- gsub("[.]gz$", "", pathnameGZ);
@@ -275,6 +276,10 @@ downloadAffymetrixDataSet <- function(dataSet, tags=NULL, chipType=chipType, ...
 
 ############################################################################
 # HISTORY:
+# 2012-09-12
+# o BUG FIX: downloadGeoRawDataFile(..., gunzip=TRUE) would give an
+#   error that it could not gunzip the downloaded file, iff the filename
+#   extension was lower case, e.g. *.cel.gz instead of *.CEL.gz.
 # 2012-09-02
 # o Added downloadAffymetrixDataSet().
 # o Added downloadGeoRawDataFile().

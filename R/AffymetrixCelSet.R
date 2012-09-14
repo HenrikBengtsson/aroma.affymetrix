@@ -1047,7 +1047,7 @@ setMethodS3("getIntensities", "AffymetrixCelSet", function(this, ...) {
 #   @seeclass
 # }
 #*/###########################################################################
-setMethodS3("getUnitIntensities", "AffymetrixCelSet", function(this, units=NULL, ..., force=FALSE, cache=TRUE, verbose=FALSE) {
+setMethodS3("getUnitIntensities", "AffymetrixCelSet", function(this, units=NULL, ..., force=FALSE, cache=!is.null(units), verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -1082,7 +1082,7 @@ setMethodS3("getUnitIntensities", "AffymetrixCelSet", function(this, units=NULL,
   } else {
     # Always ask for CDF information from the CDF object!
     cdf <- getCdf(this);
-    cdfUnits <- readUnits(cdf, units=units, ...);
+    cdfUnits <- getCellIndices(cdf, units=units, ...);
   }
 
   res <- readCelUnits(pathnames, cdf=cdfUnits, readStdvs=FALSE, 
@@ -1102,7 +1102,7 @@ setMethodS3("getUnitIntensities", "AffymetrixCelSet", function(this, units=NULL,
 
 
 
-setMethodS3("readUnits", "AffymetrixCelSet", function(this, units=NULL, ..., force=FALSE, cache=TRUE, verbose=FALSE) {
+setMethodS3("readUnits", "AffymetrixCelSet", function(this, units=NULL, ..., force=FALSE, cache=!is.null(units), verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -1245,6 +1245,14 @@ setMethodS3("getUnitGroupCellMap", "AffymetrixCelSet", function(this, ...) {
 
 ############################################################################
 # HISTORY:
+# 2012-09-12
+# o MEMORY: Now getUnitIntensities() and readUnits() for AffymetrixCelSet
+#   no longer cache the results in memory if argument 'units' is NULL.
+# o BUG FIX/ROBUSTNESS: Although getUnitIntensities() for AffymetrixCelSet
+#   would retrieve the CDF tree structure and pass it to affxparser's
+#   readCelIntensities(), it was done in such a way that the latter would
+#   still need to find and read the CDF.  This meant that it would not
+#   necessarily retrieve the same CDF as the AffymetrixCelSet used.
 # 2011-08-16
 # o ROBUSTNESS: If static byName() for AffymetrixCelSet fails to setup
 #   a data set, it now reports the error message for each data set 

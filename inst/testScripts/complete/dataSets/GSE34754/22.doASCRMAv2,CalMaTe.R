@@ -2,6 +2,7 @@
 # Allele-specific CRMAv2
 ##########################################################################
 library("aroma.affymetrix");
+library("calmate");
 verbose <- Arguments$getVerbose(-8, timestamp=TRUE);
 
 

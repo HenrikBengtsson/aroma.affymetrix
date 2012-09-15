@@ -1,7 +1,9 @@
 ##########################################################################
-# Allele-specific CRMAv2
+# AS-CRMAv2 and Paired PSCBS
 ##########################################################################
 library("aroma.affymetrix");
+library("aroma.cn");  # PairedPscbsModel
+stopifnot(packageVersion("aroma.cn") >= "1.2.4");
 verbose <- Arguments$getVerbose(-8, timestamp=TRUE);
 
 
@@ -12,7 +14,6 @@ dataSet <- "GSE20584";
 chipType <- "GenomeWideSNP_6,Full";
 
 csR <- AffymetrixCelSet$byName(dataSet, chipType=chipType);
-print(csR);
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -25,7 +26,12 @@ dsN <- exportAromaUnitPscnBinarySet(dsNList);
 print(dsN);
 
 
-db <- TabularTextFile("GSE20584,samples.txt");
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Group samples by name and type
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# AD HOC: For now, just hardwire the path.
+path <- "testScripts/complete/dataSets/GSE20584/";
+db <- TabularTextFile("GSE20584,samples.txt", path=path);
 setColumnNameTranslator(db, function(names, ...) {
   names <- gsub("id", "fixed", names);
   names <- gsub("fullname", "replacement", names);
@@ -33,3 +39,33 @@ setColumnNameTranslator(db, function(names, ...) {
 });
 df <- readDataFrame(db, colClassPatterns=c("*"="character"));
 setFullNamesTranslator(dsN, df);
+
+# Identify unique sample names
+sampleNames <- unique(getNames(dsN));
+
+dsList <- lapply(sampleNames, FUN=function(sampleName) {
+  ds <- extract(dsN, sampleName);
+  lapply(c(T="T", N="N"), FUN=function(type) {
+    extract(ds, sapply(ds, hasTag, type));
+  });
+});
+names(dsList) <- sampleNames;
+
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Extract (single) tumor-normal pairs
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+dfTList <- lapply(dsList, FUN=function(dsList) { getFile(dsList$T, 1) });
+dsT <- newInstance(dsList[[1]]$T, dfTList);
+dfNList <- lapply(dsList, FUN=function(dsList) { getFile(dsList$N, 1) });
+dsN <- newInstance(dsList[[1]]$T, dfNList);
+
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Segment tumor-normal pairs
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+sm <- PairedPscbsModel(dsT=dsT, dsN=dsN, gapMinLength=2e6);
+print(sm);
+
+res <- fit(sm, verbose=verbose);
+print(res);

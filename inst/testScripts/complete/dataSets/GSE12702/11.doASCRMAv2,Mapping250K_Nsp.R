@@ -1,9 +1,5 @@
 ##########################################################################
 # Allele-specific CRMAv2
-#
-# Author: Henrik Bengtsson
-# Created on: 2011-11-11
-# Last updated: 2012-09-02
 ##########################################################################
 library("aroma.affymetrix");
 verbose <- Arguments$getVerbose(-8, timestamp=TRUE);
@@ -24,3 +20,6 @@ print(csR);
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 dsNList <- doASCRMAv2(csR, verbose=verbose);
 print(dsNList);
+
+dsN <- exportAromaUnitPscnBinarySet(dsNList);
+print(dsN);

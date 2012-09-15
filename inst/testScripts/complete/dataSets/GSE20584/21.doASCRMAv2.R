@@ -20,3 +20,6 @@ print(csR);
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 dsNList <- doASCRMAv2(csR, verbose=verbose);
 print(dsNList);
+
+dsN <- exportAromaUnitPscnBinarySet(dsNList);
+print(dsN);

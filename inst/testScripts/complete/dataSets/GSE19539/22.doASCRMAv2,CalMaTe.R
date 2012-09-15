@@ -8,7 +8,7 @@ verbose <- Arguments$getVerbose(-8, timestamp=TRUE);
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Setup
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-dataSet <- "GSE13372";
+dataSet <- "GSE19539";
 chipType <- "GenomeWideSNP_6,Full";
 
 csR <- AffymetrixCelSet$byName(dataSet, chipType=chipType);
@@ -23,3 +23,16 @@ print(dsNList);
 
 dsN <- exportAromaUnitPscnBinarySet(dsNList);
 print(dsN);
+
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# CalMaTe
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+cmt <- CalMaTeCalibration(dsNList);
+print(cmt);
+
+dsCList <- process(cmt, verbose=verbose);
+print(dsCList);
+
+dsC <- exportAromaUnitPscnBinarySet(dsCList);
+print(dsC);

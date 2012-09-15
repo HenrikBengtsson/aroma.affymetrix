@@ -23,3 +23,16 @@ print(dsNList);
 
 dsN <- exportAromaUnitPscnBinarySet(dsNList);
 print(dsN);
+
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# CalMaTe
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+cmt <- CalMaTeCalibration(dsNList);
+print(cmt);
+
+dsCList <- process(cmt, verbose=verbose);
+print(dsCList);
+
+dsC <- exportAromaUnitPscnBinarySet(dsCList);
+print(dsC);

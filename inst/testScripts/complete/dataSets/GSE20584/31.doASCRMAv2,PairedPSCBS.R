@@ -30,8 +30,8 @@ print(dsN);
 # Group samples by name and type
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # AD HOC: For now, just hardwire the path.
-path <- "testScripts/complete/dataSets/GSE20584/";
-db <- TabularTextFile("GSE20584,samples.txt", path=path);
+path <- file.path("testScripts/complete/dataSets", dataSet);
+db <- TabularTextFile(sprintf("%s,samples.txt", dataSet), path=path);
 setColumnNameTranslator(db, function(names, ...) {
   names <- gsub("id", "fixed", names);
   names <- gsub("fullname", "replacement", names);

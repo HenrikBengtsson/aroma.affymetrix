@@ -410,7 +410,7 @@ setMethodS3("process", "MatNormalization", function(this, ..., ram=NULL, force=F
     on.exit(popState(verbose));
   }
 
-  verbose && enter(verbose, "Normalization data set for probe-sequence effects");
+  verbose && enter(verbose, "Normalizing data set for probe-sequence effects");
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Already done?

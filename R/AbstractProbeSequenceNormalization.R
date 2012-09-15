@@ -218,7 +218,7 @@ setMethodS3("process", "AbstractProbeSequenceNormalization", function(this, ...,
   }
 
 
-  verbose && enter(verbose, "Normalization data set for probe-sequence effects");
+  verbose && enter(verbose, "Normalizing data set for probe-sequence effects");
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Already done?

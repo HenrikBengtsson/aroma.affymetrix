@@ -1,5 +1,5 @@
 ## http://www.ncbi.nlm.nih.gov/projects/geo/query/acc.cgi?acc=GSE34754
-
+id fullname	comments
 GSM854615	HCC1143,T,100,GSM854615	100% breast cancer cell line HCC1143 genomic DNA
 GSM854616	HCC1143,T,080,GSM854616	80% breast cancer cell line HCC1143 genomic DNA, 20% paired B lymphoblastoid cell line HCC1143-BL genomic DNA
 GSM854617	HCC1143,T,060,GSM854617	60% breast cancer cell line HCC1143 genomic DNA, 40% paired B lymphoblastoid cell line HCC1143-BL genomic DNA

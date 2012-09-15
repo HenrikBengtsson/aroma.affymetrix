@@ -10,7 +10,7 @@ verbose <- Arguments$getVerbose(-8, timestamp=TRUE);
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Setup
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-dataSet <- "GSE12702";
+dataSet <- "GSE34754";
 chipType <- "Mapping250K_Nsp";
 
 csR <- AffymetrixCelSet$byName(dataSet, chipType=chipType);
@@ -19,7 +19,7 @@ csR <- AffymetrixCelSet$byName(dataSet, chipType=chipType);
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # AS-CRMAv2
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-dsNList <- doASCRMAv2(csR, verbose=verbose);
+dsNList <- doASCRMAv2(csR);
 print(dsNList);
 
 dsN <- exportAromaUnitPscnBinarySet(dsNList);

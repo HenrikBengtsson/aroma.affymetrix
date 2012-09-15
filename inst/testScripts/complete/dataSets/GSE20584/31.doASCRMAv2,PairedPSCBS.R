@@ -69,3 +69,18 @@ print(sm);
 
 res <- fit(sm, verbose=verbose);
 print(res);
+
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Generate report
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+setOption("PSCBS::reports/pscnSegmentationTransitions", TRUE);
+
+sms <- GenericDataFileSet$byPath(getPath(sm));
+print(sms);
+
+# Generate report for first tumor-normal pair
+smf <- getFile(sms, 1);
+fit <- loadObject(getPathname(smf));
+pathname <- report(fit, studyName=getFullName(dsT), verbose=verbose);
+print(pathname);

@@ -72,7 +72,7 @@ print(res);
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# Generate report
+# Generate report (just to check)
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 setOption("PSCBS::reports/pscnSegmentationTransitions", TRUE);
 

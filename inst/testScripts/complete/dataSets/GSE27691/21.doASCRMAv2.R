@@ -18,5 +18,8 @@ print(csR);
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # AS-CRMAv2
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-res <- doASCRMAv2(csR, lengthRange=c(450,2000), drop=FALSE, verbose=verbose);
-print(res);
+dsNList <- doASCRMAv2(csR, lengthRange=c(450,2000), verbose=verbose);
+print(dsNList);
+
+dsN <- exportAromaUnitPscnBinarySet(dsNList);
+print(dsN);

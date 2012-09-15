@@ -1,7 +1,7 @@
 Package: aroma.affymetrix
 =========================
 
-Version: 2.6.1 [2012-09-12]
+Version: 2.6.1 [2012-09-14]
 o BUG FIX/ROBUSTNESS: Although getUnitIntensities() for AffymetrixCelSet
   would retrieve the CDF tree structure and pass it to affxparser's
   readCelIntensities(), it was done in such a way that the latter would
@@ -9,6 +9,8 @@ o BUG FIX/ROBUSTNESS: Although getUnitIntensities() for AffymetrixCelSet
   necessarily retrieve the same CDF as the AffymetrixCelSet used.
 o MEMORY: Now getUnitIntensities() and readUnits() for AffymetrixCelSet
   no longer cache the results in memory if argument 'units' is NULL.
+o CLEANUP: Restructured part of the test scripts tree.  Added a new
+  batch launcher.
 o BUG FIX: The utility function for downloading individual CEL files
   from GEO would give an error that it could not gunzip the downloaded
   file, iff the filename extension was lower case, e.g. *.cel.gz

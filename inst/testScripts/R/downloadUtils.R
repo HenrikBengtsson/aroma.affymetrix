@@ -198,7 +198,9 @@ downloadGeoRawDataFile <- function(dataSet, tags=NULL, chipType, sampleName, ext
   }
 
   pathnameGZ <- tryCatch({
-    downloadFile(url, path=path, ...);
+    suppressWarnings({
+      downloadFile(url, path=path, ...);
+    });
   }, error = function(ex) {
     urlL <- getGeoDataFileURL(sampleName, tolower(ext));
     downloadFile(urlL, path=path, ...);
@@ -244,7 +246,7 @@ downloadGeoRawDataFiles <- function(..., sampleNames, skip=TRUE) {
 downloadAffymetrixFile <- function(pathname, ..., urlRoot=Sys.getenv("AFFY_URLROOT", "http://www.affymetrix.com/Auth"), skip=TRUE) {
   filename <- basename(pathname);
   url <- file.path(urlRoot, pathname);
-  downloadFile(url, filename=filename, path=".", skip=skip);
+  downloadFile(url, filename=filename, path="downloads/", skip=skip);
 } # downloadAffymetrixFile()
 
 

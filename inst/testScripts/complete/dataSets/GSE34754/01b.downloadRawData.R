@@ -12,7 +12,7 @@ verbose && enter(verbose, "Downloading raw data");
 #    GSM854615.CEL, ..., GSM854626.CEL [12]
 #
 # Overall design:
-#  Breast cancer cell lines HCC38 and HCC1143 and paired B 
+#  Breast cancer cell lines HCC38 and HCC1143 and paired B
 #  lymphoblastoid cell lines HCC38-BL and HCC1143-BL were
 #  purchased from ATCC. [...] To mimic tumor containing normal cells,
 #  DNA from HCC38 and HCC1143 cells was mixed with DNA from autologous
@@ -21,6 +21,9 @@ verbose && enter(verbose, "Downloading raw data");
 #
 # URL: http://www.ncbi.nlm.nih.gov/projects/geo/query/acc.cgi?acc=GSE34754
 ##########################################################################
+
+
+
 dataSet <- "GSE34754";
 chipType <- "Mapping250K_Nsp";
 

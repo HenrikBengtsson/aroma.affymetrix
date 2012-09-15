@@ -1,0 +1,87 @@
+# createdOn: 2012-09-15 12:06:57 PDT
+# nbrOfRows: 80
+# nbrOfColumns: 3
+# columnNames: id	comment	fullname
+# columnClasses: character	character	character
+# URL: http://www.ncbi.nlm.nih.gov/projects/geo/query/acc.cgi?acc=GSE12702
+id	comment	fullname
+GSM318728	prostate tumor, patient 24 (Nsp)	patient24,T,GSM318728
+GSM318729	normal prostate, patient 24 (Nsp)	patient24,N,GSM318729
+GSM318730	prostate tumor, patient 25 (Nsp)	patient25,T,GSM318730
+GSM318731	normal prostate, patient 25 (Nsp)	patient25,N,GSM318731
+GSM318732	prostate tumor, patient 27 (Nsp)	patient27,T,GSM318732
+GSM318733	normal prostate, patient 27 (Nsp)	patient27,N,GSM318733
+GSM318734	prostate tumor, patient 31 (Nsp)	patient31,T,GSM318734
+GSM318735	normal prostate, patient 31 (Nsp)	patient31,N,GSM318735
+GSM318736	prostate tumor, patient 45 (Nsp)	patient45,T,GSM318736
+GSM318737	normal prostate, patient 45 (Nsp)	patient45,N,GSM318737
+GSM318738	prostate tumor, patient 52 (Nsp)	patient52,T,GSM318738
+GSM318739	normal prostate, patient 52 (Nsp)	patient52,N,GSM318739
+GSM318740	prostate tumor, patient 58 (Nsp)	patient58,T,GSM318740
+GSM318741	normal prostate, patient 58 (Nsp)	patient58,N,GSM318741
+GSM318742	prostate tumor, patient 60 (Nsp)	patient60,T,GSM318742
+GSM318743	normal prostate, patient 60 (Nsp)	patient60,N,GSM318743
+GSM318744	prostate tumor, patient 75 (Nsp)	patient75,T,GSM318744
+GSM318745	normal prostate, patient 75 (Nsp)	patient75,N,GSM318745
+GSM318746	prostate tumor, patient 110 (Nsp)	patient110,T,GSM318746
+GSM318747	normal prostate, patient 110 (Nsp)	patient110,N,GSM318747
+GSM318748	prostate tumor, patient 115 (Nsp)	patient115,T,GSM318748
+GSM318749	normal prostate, patient 115 (Nsp)	patient115,N,GSM318749
+GSM318750	prostate tumor, patient 122 (Nsp)	patient122,T,GSM318750
+GSM318751	normal prostate, patient 122 (Nsp)	patient122,N,GSM318751
+GSM318752	prostate tumor, patient 128 (Nsp)	patient128,T,GSM318752
+GSM318753	normal prostate, patient 128 (Nsp)	patient128,N,GSM318753
+GSM318754	prostate tumor, patient 137 (Nsp)	patient137,T,GSM318754
+GSM318755	normal prostate, patient 137 (Nsp)	patient137,N,GSM318755
+GSM318756	prostate tumor, patient 138 (Nsp)	patient138,T,GSM318756
+GSM318757	normal prostate, patient 138 (Nsp)	patient138,N,GSM318757
+GSM318758	prostate tumor, patient 140 (Nsp)	patient140,T,GSM318758
+GSM318759	normal prostate, patient 140 (Nsp)	patient140,N,GSM318759
+GSM318760	prostate tumor, patient 154 (Nsp)	patient154,T,GSM318760
+GSM318761	normal prostate, patient 154 (Nsp)	patient154,N,GSM318761
+GSM318762	prostate tumor, patient 167 (Nsp)	patient167,T,GSM318762
+GSM318763	normal prostate, patient 167 (Nsp)	patient167,N,GSM318763
+GSM318764	prostate tumor, patient 80 (Nsp)	patient80,T,GSM318764
+GSM318765	normal prostate, patient 80 (Nsp)	patient80,N,GSM318765
+GSM318766	prostate tumor, patient 96 (Nsp)	patient96,T,GSM318766
+GSM318767	normal prostate, patient 96 (Nsp)	patient96,N,GSM318767
+GSM318773	prostate tumor, patient 24 (Sty)	patient24,T,GSM318773
+GSM318774	normal prostate, patient 24 (Sty)	patient24,N,GSM318774
+GSM318775	prostate tumor, patient 25 (Sty)	patient25,T,GSM318775
+GSM318776	normal prostate, patient 25 (Sty)	patient25,N,GSM318776
+GSM318777	prostate tumor, patient 27 (Sty)	patient27,T,GSM318777
+GSM318778	normal prostate, patient 27 (Sty)	patient27,N,GSM318778
+GSM318779	prostate tumor, patient 31 (Sty)	patient31,T,GSM318779
+GSM318780	normal prostate, patient 31 (Sty)	patient31,N,GSM318780
+GSM318781	prostate tumor, patient 45 (Sty)	patient45,T,GSM318781
+GSM318782	normal prostate, patient 45 (Sty)	patient45,N,GSM318782
+GSM318783	prostate tumor, patient 52 (Sty)	patient52,T,GSM318783
+GSM318784	normal prostate, patient 52 (Sty)	patient52,N,GSM318784
+GSM318785	prostate tumor, patient 58 (Sty)	patient58,T,GSM318785
+GSM318786	normal prostate, patient 58 (Sty)	patient58,N,GSM318786
+GSM318787	prostate tumor, patient 60 (Sty)	patient60,T,GSM318787
+GSM318788	normal prostate, patient 60 (Sty)	patient60,N,GSM318788
+GSM318789	prostate tumor, patient 75 (Sty)	patient75,T,GSM318789
+GSM318790	normal prostate, patient 75 (Sty)	patient75,N,GSM318790
+GSM318791	prostate tumor, patient 110 (Sty)	patient110,T,GSM318791
+GSM318792	normal prostate, patient 110 (Sty)	patient110,N,GSM318792
+GSM318793	prostate tumor, patient 115 (Sty)	patient115,T,GSM318793
+GSM318794	normal prostate, patient 115 (Sty)	patient115,N,GSM318794
+GSM318795	prostate tumor, patient 122 (Sty)	patient122,T,GSM318795
+GSM318796	normal prostate, patient 122 (Sty)	patient122,N,GSM318796
+GSM318797	prostate tumor, patient 128 (Sty)	patient128,T,GSM318797
+GSM318798	normal prostate, patient 128 (Sty)	patient128,N,GSM318798
+GSM318799	prostate tumor, patient 137 (Sty)	patient137,T,GSM318799
+GSM318800	normal prostate, patient 137 (Sty)	patient137,N,GSM318800
+GSM318801	prostate tumor, patient 138 (Sty)	patient138,T,GSM318801
+GSM318802	normal prostate, patient 138 (Sty)	patient138,N,GSM318802
+GSM318803	prostate tumor, patient 140 (Sty)	patient140,T,GSM318803
+GSM318804	normal prostate, patient 140 (Sty)	patient140,N,GSM318804
+GSM318805	prostate tumor, patient 154 (Sty)	patient154,T,GSM318805
+GSM318806	normal prostate, patient 154 (Sty)	patient154,N,GSM318806
+GSM318807	prostate tumor, patient 167 (Sty)	patient167,T,GSM318807
+GSM318808	normal prostate, patient 167 (Sty)	patient167,N,GSM318808
+GSM318809	prostate tumor, patient 80 (Sty)	patient80,T,GSM318809
+GSM318810	normal prostate, patient 80 (Sty)	patient80,N,GSM318810
+GSM318811	prostate tumor, patient 96 (Sty)	patient96,T,GSM318811
+GSM318812	normal prostate, patient 96 (Sty)	patient96,N,GSM318812

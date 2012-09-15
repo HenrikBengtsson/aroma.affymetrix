@@ -41,43 +41,4 @@ print(ds);
 ## RAM: 0.02MB
 
 
-
-##########################################################################
-# Data set:
-# GSE12702/
-#   Mapping250K_Nsp/
-#    GSM318728.CEL, ..., GSM318767.CEL [40]
-#   Mapping250K_Sty/
-#    GSM318773.CEL, ..., GSM318812.CEL [40]
-#
-# Overall design:
-#  Profiles were generated on two Affymetrix array chips: 
-#  Nsp and Sty, each with ~250K SNPs represented. In all,
-#  20 tumors and 20 paired normal samples were profiled,
-#  40 profiles in all. Each tumor was centered on its 
-#  corresponding normal pair to define copy number alterations
-#  (CNA) in that tumor.
-#
-# URL: http://www.ncbi.nlm.nih.gov/projects/geo/query/acc.cgi?acc=GSE12702
-##########################################################################
-dataSet <- "GSE12702";
-chipType <- "Mapping250K_Nsp";
-
-verbose && cat(verbose, "Data set: ", dataSet);
-
-ds <- downloadGeoRawDataSet(dataSet, chipType=chipType);
-print(ds);
-## AffymetrixCelSet:
-## Name: GSE12702
-## Tags:
-## Path: rawData/GSE12702/Mapping250K_Nsp
-## Platform: Affymetrix
-## Chip type: Mapping250K_Nsp
-## Number of arrays: 40
-## Names: GSM318728, GSM318729, GSM318730, ..., GSM318767 [40]
-## Time period: 2008-04-03 13:52:53 -- 2008-04-10 20:08:49
-## Total file size: 2506.11MB
-## RAM: 0.04MB
-
-
 verbose && exit(verbose);

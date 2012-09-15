@@ -25,7 +25,7 @@ verbose && enter(verbose, "Downloading raw data");
 # URL: http://www.ncbi.nlm.nih.gov/projects/geo/query/acc.cgi?acc=GSE12702
 ##########################################################################
 dataSet <- "GSE12702";
-chipType <- "Mapping250K_Sty";
+chipType <- "Mapping250K_Nsp";
 
 verbose && cat(verbose, "Data set: ", dataSet);
 
@@ -34,13 +34,14 @@ print(ds);
 ## AffymetrixCelSet:
 ## Name: GSE12702
 ## Tags:
-## Path: rawData/GSE12702/Mapping250K_Sty
+## Path: rawData/GSE12702/Mapping250K_Nsp
 ## Platform: Affymetrix
-## Chip type: Mapping250K_Sty
+## Chip type: Mapping250K_Nsp
 ## Number of arrays: 40
-## Names: GSM318773, GSM318774, GSM318775, ..., GSM318812 [40]
-## Time period: 2007-10-03 16:11:06 -- 2008-02-21 15:18:27
-## Total file size: 2506.12MB
+## Names: GSM318728, GSM318729, GSM318730, ..., GSM318767 [40]
+## Time period: 2008-04-03 13:52:53 -- 2008-04-10 20:08:49
+## Total file size: 2506.11MB
 ## RAM: 0.04MB
+
 
 verbose && exit(verbose);

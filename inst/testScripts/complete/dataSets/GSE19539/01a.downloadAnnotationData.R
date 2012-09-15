@@ -14,10 +14,10 @@ verbose && cat(verbose, "ACS: ", pathname);
 pathname <- downloadCDF(ar, chipType, tags=tags);
 verbose && cat(verbose, "CDF: ", pathname);
 
-pathname <- downloadUFL(ar, chipType, tags=c(tags, ".*"));
-verbose && cat(verbose, "UFL: ", pathname);
-
-pathname <- downloadUGP(ar, chipType, tags=c(tags, ".*"));
+pathname <- downloadUGP(ar, chipType, tags=c(tags, "na31,hg19", ".*"));
 verbose && cat(verbose, "UGP: ", pathname);
+
+pathname <- downloadUFL(ar, chipType, tags=c(tags, "na31,hg19", ".*"));
+verbose && cat(verbose, "UFL: ", pathname);
 
 verbose && exit(verbose);

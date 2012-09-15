@@ -162,7 +162,7 @@ downloadGeoRawDataSet <- function(dataSet, tags=NULL, chipType, ..., chipTypeAli
     return(ds);
   }
 
-  pathname <- downloadFile(url, ...);
+  pathname <- downloadFile(url, path="downloads/", ...);
   pathD <- dirname(path);
   untar(pathname, exdir=pathD);
   if (gunzip) {

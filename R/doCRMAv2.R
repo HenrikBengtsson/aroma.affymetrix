@@ -69,7 +69,7 @@ setMethodS3("doCRMAv2", "AffymetrixCelSet", function(csR, combineAlleles=TRUE, l
     # The name, tags and chip type and array names of the results to look for
     dataSet <- getFullName(csR);
     cdf <- getCdf(csR);
-    chipType <- getChipType(cdf);
+    chipType <- getChipType(cdf, fullname=FALSE);
 
     # The fullnames of all arrays that should exist
     fullnames <- getFullNames(csR);
@@ -281,6 +281,9 @@ setMethodS3("doASCRMAv2", "default", function(...) {
 
 ############################################################################
 # HISTORY:
+# 2012-09-15
+# o BUG FIX: doCRMAv2() failed to quickly located already available results
+#   if the chip type of the CDF had tags, e.g. 'GenomeWideSNP_6,Full'.
 # 2012-08-24
 # o SPEED UP: Now doCRMAv2() will check upfront if the final results are
 #   already available.  If they are, they will be returned instantaneously.

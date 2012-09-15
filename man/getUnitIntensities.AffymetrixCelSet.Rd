@@ -19,7 +19,7 @@
   Gets cell signals for a subset of units and a subset of arrays.
 }
 
-\usage{\method{getUnitIntensities}{AffymetrixCelSet}(this, units=NULL, ..., force=FALSE, cache=TRUE, verbose=FALSE)}
+\usage{\method{getUnitIntensities}{AffymetrixCelSet}(this, units=NULL, ..., force=FALSE, cache=!is.null(units), verbose=FALSE)}
 
 \arguments{
  \item{units}{An \code{\link[base]{integer}} index \code{\link[base]{vector}} specifying units to be read.

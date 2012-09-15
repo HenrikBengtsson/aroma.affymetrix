@@ -9,7 +9,7 @@ library("R.utils");
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 verbose && enter(verbose, "Installing test-specific packages");
 
-pkgs <- c("CRAN:calmate", "CRAN:PSCBS");
+pkgs <- c("CRAN:calmate", "CRAN:PSCBS", "CRAN:aroma.cn");
 for (pkg in pkgs) {
   verbose && cat(verbose, "Package: ", pkg);
   installPkg(pkg);

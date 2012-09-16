@@ -83,6 +83,7 @@ print(sms);
 for (ii in 1:min(length(sms),5)) {
   smf <- getFile(sms, ii);
   fit <- loadObject(getPathname(smf));
-  pathname <- report(fit, studyName=getFullName(dsT), verbose=verbose);
+  sampleName <- getFullName(smf);
+  pathname <- report(fit, sampleName=sampleName, studyName=getFullName(dsT), verbose=verbose);
   print(pathname);
 } # for (ii ...)

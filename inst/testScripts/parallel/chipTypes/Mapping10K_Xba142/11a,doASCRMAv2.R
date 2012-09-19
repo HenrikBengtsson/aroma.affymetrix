@@ -12,24 +12,35 @@
 # URL: http://www.ncbi.nlm.nih.gov/projects/geo/query/acc.cgi?acc=GSE8605
 ##########################################################################
 library("aroma.affymetrix");
+library("parallel");
 verbose <- Arguments$getVerbose(-8, timestamp=TRUE);
 
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Setup raw data set
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 dataSet <- "GSE8605";
 chipType <- "Mapping10K_Xba142";
-
 dsR <- AffymetrixCelSet$byName(dataSet, chipType=chipType);
 print(dsR);
 
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# AS-CRMAv2
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Before running in parallel, assert that the monocell CDF has been created
 cdf <- getCdf(dsR);
 cdfM <- getMonoCell(cdf, verbose=verbose);
 
-library("parallel");
+# Allocate compute cluster
 cl <- makeCluster(2L);
+print(cl);
 
+# Share necessary information with the compute notes
 clusterExport(cl, "dsR");
 clusterExport(cl, "verbose");
 
+# Ask the compute nodes to run AS-CRMAv2 on individual arrays
 res <- parLapply(cl, X=seq(dsR), fun=function(ii) {
   library("aroma.affymetrix");
   verbose && enter(verbose, sprintf("Array #%d", ii));

@@ -29,6 +29,12 @@ print(dsN);
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Segment total CNs
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# RACE CONDITION: We must pre-calculate average reference here,
+# otherwise each process will try/need to do it.
+dfR <- getAverageFile(dsN);
+print(dfR);
+rm(dfR); # Not needed anymore
+
 # Allocate compute cluster
 cl <- makeCluster(2L);
 print(cl);

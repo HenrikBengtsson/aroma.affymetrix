@@ -67,7 +67,7 @@ for (key in names(dsList)) {
   dsNa <- extract(dsN, rep(1L, times=length(dsTa)));
 
   # (b) Same tumor vs replicated normals
-  dsNb <- extract(dsN, 1:min(length(dsT),R));
+  dsNb <- extract(dsN, 1:min(length(dsN),R));
   dsTb <- extract(dsT, rep(1L, times=length(dsNb)));
 
   # (c) Merge

@@ -53,12 +53,41 @@ names(dsList) <- sampleNames;
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# Extract (single) tumor-normal pairs
+# Extract tumor-normal pairs
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-dfTList <- lapply(dsList, FUN=function(dsList) { getFile(dsList$T, 1) });
-dsT <- newInstance(dsList[[1]]$T, dfTList);
-dfNList <- lapply(dsList, FUN=function(dsList) { getFile(dsList$N, 1) });
-dsN <- newInstance(dsList[[1]]$T, dfNList);
+R <- 4; # Number of replicates
+dsList2 <- list();
+for (key in names(dsList)) {
+  dsListKK <- dsList[[key]];
+  dsT <- dsListKK$T;
+  dsN <- dsListKK$N;
+
+  # (a) Replicated tumor vs same normal
+  dsTa <- extract(dsT, 1:min(length(dsT),R));
+  dsNa <- extract(dsN, rep(1L, times=length(dsTa)));
+
+  # (b) Same tumor vs replicated normals
+  dsNb <- extract(dsN, 1:min(length(dsT),R));
+  dsTb <- extract(dsT, rep(1L, times=length(dsNb)));
+
+  # (c) Merge
+  dsT <- append(dsTa, dsTb);
+  dsN <- append(dsNa, dsNb);
+
+  # (d) Drop duplicated tumor-normal pairs
+  nT <- getFullNames(dsT);
+  nN <- getFullNames(dsN);
+  nP <- paste(nT, nN, sep="_vs_");
+  dups <- duplicated(nP);
+  dsT <- extract(dsT, !dups);
+  dsN <- extract(dsN, !dups);
+  stopifnot(length(dsT) == length(dsN));
+  
+  dsList2[[key]] <- list(T=dsT, N=dsN);
+} # for kk ...)
+
+dsT <- Reduce(append, lapply(dsList2, FUN=function(x) x$T));
+dsN <- Reduce(append, lapply(dsList2, FUN=function(x) x$N));
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -77,10 +106,10 @@ print(sms);
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Call segments to be in ROH, AB and LOH.
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-caller <- PairedPscbsCaller(sms);
-print(caller);
-scs <- process(caller, verbose=verbose);
-print(scs);
+## caller <- PairedPscbsCaller(sms);
+## print(caller);
+## sms <- process(caller, verbose=verbose);
+## print(sms);
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -89,8 +118,8 @@ print(scs);
 setOption("PSCBS::reports/pscnSegmentationTransitions", TRUE);
 
 # Generate reports for tumor-normal pairs
-for (ii in 1:min(length(scs),5)) {
-  ff <- getFile(scs, ii);
+for (ii in 1:min(length(sms),5)) {
+  ff <- getFile(sms, ii);
   fit <- loadObject(df);
   sampleName <- getFullName(df);
   pathname <- report(fit, sampleName=sampleName, studyName=getFullName(dsT), verbose=verbose);

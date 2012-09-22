@@ -106,10 +106,10 @@ print(sms);
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Call segments to be in ROH, AB and LOH.
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-caller <- PairedPscbsCaller(sms);
-print(caller);
-scs <- process(caller, verbose=verbose);
-print(scs);
+## caller <- PairedPscbsCaller(sms);
+## print(caller);
+## sms <- process(caller, verbose=verbose);
+## print(sms);
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -118,8 +118,8 @@ print(scs);
 setOption("PSCBS::reports/pscnSegmentationTransitions", TRUE);
 
 # Generate reports for tumor-normal pairs
-for (ii in 1:min(length(scs),5)) {
-  df <- getFile(scs, ii);
+for (ii in 1:min(length(sms),5)) {
+  df <- getFile(sms, ii);
   fit <- loadObject(df);
   sampleName <- getFullName(df);
   pathname <- report(fit, sampleName=sampleName, studyName=getFullName(dsT), verbose=verbose);

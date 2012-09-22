@@ -55,7 +55,7 @@ names(dsList) <- sampleNames;
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Extract tumor-normal pairs
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-R <- 4; # Number of replicates
+R <- 5; # Number of replicates
 dsList2 <- list();
 for (key in names(dsList)) {
   dsListKK <- dsList[[key]];

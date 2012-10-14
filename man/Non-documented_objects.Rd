@@ -57,9 +57,6 @@
 \alias{AromaAffymetrix}
 \alias{AromaCellMatchScoreFile}
 \alias{AromaPipeline}
-\alias{AromaUfcFile}
-\alias{AromaUgcFile}
-\alias{AromaUnitGcContentFile}
 \alias{as.AffymetrixCelSet}
 \alias{as.AffymetrixCnChpSet}
 \alias{as.AffymetrixFileSet}
@@ -563,7 +560,6 @@
 \alias{getColumnNames.AffymetrixProbeTabFile}
 \alias{getColumnNames.AromaCellMatchScoreFile}
 \alias{getColumnNames.AromaUfcFile}
-\alias{getColumnNames.AromaUnitGcContentFile}
 \alias{getCombineAlleles}
 \alias{getCombineAlleles.CnChipEffectSet}
 \alias{getCombineAlleles.CnPlm}
@@ -636,7 +632,6 @@
 \alias{getExtensionPattern.AffymetrixTsvFile}
 \alias{getExtensionPattern.AromaCellMatchScoreFile}
 \alias{getExtensionPattern.AromaUfcFile}
-\alias{getExtensionPattern.AromaUnitGcContentFile}
 \alias{getExtensionPattern.CnagCfhFile}
 \alias{getExtensionPattern.DChipDcpFile}
 \alias{getField}
@@ -652,7 +647,6 @@
 \alias{getFileFormat.DChipDcpFile}
 \alias{getFilenameExtension.AromaCellMatchScoreFile}
 \alias{getFilenameExtension.AromaUfcFile}
-\alias{getFilenameExtension.AromaUnitGcContentFile}
 \alias{getFileSet}
 \alias{getFileSet.AffymetrixFileSetReporter}
 \alias{getFileSetClass}
@@ -1475,6 +1469,7 @@
 \alias{nbrOfRows.AffymetrixPgfFile}
 \alias{nbrOfUnits.AffymetrixPgfFile}
 \alias{readRawData.AffymetrixPgfFile}
+\alias{AromaUfcFile}
 
 \description{
   This page contains aliases for all "non-documented" objects that

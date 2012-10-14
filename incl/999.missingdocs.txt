@@ -16,8 +16,8 @@
   applyCCF0.CopyNumberChromosomalModel applyCFC0
   applyCFC0.CopyNumberChromosomalModel applyToUnitIntensities
   applyToUnitIntensities.AffymetrixCelSet AromaAffymetrix
-  AromaCellMatchScoreFile AromaPipeline AromaUfcFile AromaUgcFile
-  AromaUnitGcContentFile as.AffymetrixCelSet as.AffymetrixCnChpSet
+  AromaCellMatchScoreFile AromaPipeline 
+  as.AffymetrixCelSet as.AffymetrixCnChpSet
   as.AffymetrixFileSet as.character.AffymetrixCdfFile
   as.character.AffymetrixCelFile as.character.AffymetrixCelSetReporter
   as.character.AffymetrixCnChpFile as.character.AffymetrixProbeTabFile
@@ -266,7 +266,7 @@
   getColorMaps getColorMaps.ArrayExplorer getColorMaps.SpatialReporter
   getColumnNames.AffymetrixProbeTabFile
   getColumnNames.AromaCellMatchScoreFile getColumnNames.AromaUfcFile
-  getColumnNames.AromaUnitGcContentFile getCombineAlleles
+ getCombineAlleles
   getCombineAlleles.CnChipEffectSet getCombineAlleles.CnPlm
   getConfidenceScoreSet getConfidenceScoreSet.CrlmmModel getCovariates
   getCovariates.AdditiveCovariatesNormalization
@@ -309,7 +309,6 @@
   getExtensionPattern.AffymetrixTsvFile
   getExtensionPattern.AromaCellMatchScoreFile
   getExtensionPattern.AromaUfcFile
-  getExtensionPattern.AromaUnitGcContentFile
   getExtensionPattern.CnagCfhFile getExtensionPattern.DChipDcpFile
   getField getField.AffymetrixTsvFile getFields.SnpInformation
   getFields.UflSnpInformation getFileClass.FirmaSet getFileFormat
@@ -318,7 +317,7 @@
   getFileFormat.DChipDcpFile
   getFilenameExtension.AromaCellMatchScoreFile
   getFilenameExtension.AromaUfcFile
-  getFilenameExtension.AromaUnitGcContentFile getFileSet
+getFileSet
   getFileSet.AffymetrixFileSetReporter getFileSetClass
   getFileSetClass.FirmaModel getFirmaScores getFirmaSet
   getFirstCellIndices getFirstCellIndices.AffymetrixCdfFile
@@ -756,3 +755,4 @@ getPlatform.AffymetrixPgfFile getUnitNamesFile.AffymetrixPgfFile
 nbrOfCells.AffymetrixPgfFile nbrOfColumns.AffymetrixPgfFile
 nbrOfRows.AffymetrixPgfFile nbrOfUnits.AffymetrixPgfFile
 readRawData.AffymetrixPgfFile
+AromaUfcFile

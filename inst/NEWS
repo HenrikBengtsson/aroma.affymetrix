@@ -2,6 +2,7 @@ Package: aroma.affymetrix
 =========================
 
 Version: 2.6.3 [2012-10-14]
+o CLEANUP: Moved AromaUnitGcContentFile to aroma.core.
 o CLEANUP: Removed several defunct/obsolete methods and made
   deprecated methods defunct/obsolete.
 o CLEANUP: findByChipType() for AffymetrixCdfFile no longer support

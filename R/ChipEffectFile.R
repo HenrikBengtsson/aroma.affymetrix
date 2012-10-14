@@ -148,17 +148,8 @@ setMethodS3("createParamCdf", "ChipEffectFile", function(static, sourceCdf, ...,
   # Warn about deprecated filname <chipType>-monocell.
   if (!is.null(pathname) && (sep == "-")) {
     msg <- paste("Deprecated filename of monocell CDF detected (uses dash instead of comma): ", pathname);
-    warning(msg);
     verbose && cat(verbose, msg);
-    verbose && enter(verbose, "Renaming (old-style) monocell CDF");
-    verbose && cat(verbose, "Source: ", pathname);
-    dest <- gsub("-monocell[.]", ",monocell.", pathname);
-    verbose && cat(verbose, "Destination: ", dest);
-    res <- file.rename(pathname, dest);
-    if (!res)
-      throw("Failed to rename monocell CDF file: ", pathname, " -> ", dest);
-    pathname <- dest;
-    verbose && exit(verbose, msg);
+    throw(msg);
   }
 
   if (is.null(pathname)) {
@@ -889,6 +880,10 @@ setMethodS3("extractMatrix", "ChipEffectFile", function(this, ..., field=c("thet
 
 ############################################################################
 # HISTORY:
+# 2012-10-14
+# o CLEANUP: createParamCdf() for ChipEffectFile no longer support 
+#   '<chipType>-monocell' filenames.  If detected, an informative
+#   error is thrown.
 # 2009-05-19
 # o Now testing for file permissions for creat-/writ-/updating files/dirs.
 # 2008-07-20

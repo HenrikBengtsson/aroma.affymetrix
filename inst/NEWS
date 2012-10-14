@@ -4,6 +4,13 @@ Package: aroma.affymetrix
 Version: 2.6.3 [2012-10-14]
 o CLEANUP: Removed several defunct/obsolete methods and made
   deprecated methods defunct/obsolete.
+o CLEANUP: findByChipType() for AffymetrixCdfFile no longer support
+  monocell CDF file named <chipType>-monocell.CDF, and gives an 
+  informative error if that is still the case.  Since December 2012,
+  the filename should instead be <chipType>,monocell.CDF.
+o CLEANUP: createParamCdf() for ChipEffectFile and FirmaFile no longer 
+  support '<chipType>-monocell' filenames.  If detected, an informative
+  error is thrown.
 
 
 Version: 2.6.2 [2012-09-15]

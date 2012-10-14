@@ -239,13 +239,14 @@ setMethodS3("findByChipType", "AffymetrixCdfFile", function(static, chipType, ta
       pattern <- sprintf("^%s%s$", chipType, extPattern);
       pathname <- findAnnotationDataByChipType(parentChipType, pattern=pattern);
       if (!is.null(pathname)) {
-        msg <- paste("Deprecated filename of monocell CDF detected. Rename CDF file by replacing dash ('-') with a comma (','): ", pathname, sep="");
-        warning(msg);
+        msg <- paste("Deprecated filename of monocell CDF detected. Rename CDF file by replacing dash ('-') after 'monocell' with a comma (','): ", pathname, sep="");
+        throw(msg);
       }
     }
 
-    return(pathname);
+    throw("Detected obsolete filename pattern. Monocell CDF should no longer be named '.*-monocell.CDF' but rather '.*,monocell.CDF': ", pattern);
   }
+
 
   # Create the fullname
   fullname <- paste(c(chipType, tags), collapse=",");
@@ -1607,6 +1608,11 @@ setMethodS3("convertUnits", "AffymetrixCdfFile", function(this, units=NULL, keep
 
 ############################################################################
 # HISTORY:
+# 2012-10-14
+# o CLEANUP: findByChipType() for AffymetrixCdfFile no longer support
+#   monocell CDF file named <chipType>-monocell.CDF, and gives an 
+#   informative error if that is still the case.  Since December 2012,
+#   the filename should instead be <chipType>,monocell.CDF.
 # 2011-11-18
 # o CLEANUP: Now the filename extension pattern for findByChipType() 
 #   of AffymetrixCdfFile is inferred from getDefaultExtension().

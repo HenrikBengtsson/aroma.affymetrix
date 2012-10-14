@@ -116,17 +116,8 @@ setMethodS3("createParamCdf", "FirmaFile", function(static, sourceCdf, ..., verb
   # Warn about deprecated filname <chipType>-monocell.
   if (!is.null(pathname) && (sep == "-")) {
     msg <- paste("Deprecated filename of monocell CDF detected (uses dash instead of comma): ", pathname);
-    warning(msg);
     verbose && cat(verbose, msg);
-    verbose && enter(verbose, "Renaming (old-style) monocell CDF");
-    verbose && cat(verbose, "Source: ", pathname);
-    dest <- gsub("-monocell[.]", ",monocell.", pathname);
-    verbose && cat(verbose, "Destination: ", dest);
-    res <- file.rename(pathname, dest);
-    if (!res)
-      throw("Failed to rename monocell CDF file: ", pathname, " -> ", dest);
-    pathname <- dest;
-    verbose && exit(verbose, msg);
+    throw(msg);
   }
 
   if (is.null(pathname)) {
@@ -454,6 +445,10 @@ setMethodS3("extractMatrix", "FirmaFile", function (this, ..., field=c("intensit
 
 ############################################################################
 # HISTORY:
+# 2012-10-14
+# o CLEANUP: createParamCdf() for FirmaFile no longer support 
+#   '<chipType>-monocell' filenames.  If detected, an informative
+#   error is thrown.
 # 2010-05-12
 # o ROBUSTNESS: When fromDataFile() of FirmaFile creates a file, it
 #   is created first as a temporary file which is then renamed.  This

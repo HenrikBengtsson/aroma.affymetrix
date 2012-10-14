@@ -191,13 +191,6 @@ setMethodS3("fromCdf", "SnpInformation", function(static, cdf, ...) {
 #*/###########################################################################
 setMethodS3("byChipType", "SnpInformation", abstract=TRUE);
 
-setMethodS3("fromChipType", "SnpInformation", function(static, ...) {
-  className <- class(static)[1];
-  msg <- sprintf("%s$fromChipType() is defunct. Use %s$byChipType() instead.", 
-                                                        className, className);
-  throw(msg);
-}, static=TRUE, deprecated=TRUE)
-
 
 setMethodS3("fromDataSet", "SnpInformation", function(static, dataSet, ...) {
   chipType <- getChipType(dataSet);
@@ -360,9 +353,6 @@ setMethodS3("getFields", "SnpInformation", function(this, ...) {
 })
 
 
-setMethodS3("readData", "SnpInformation", function(this, ...) {
-  readDataFrame(this, ...);
-}, protected=TRUE, deprecated=TRUE)
 
 setMethodS3("readDataFrame", "SnpInformation", abstract=TRUE);
 

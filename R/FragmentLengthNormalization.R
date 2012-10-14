@@ -1016,7 +1016,6 @@ setMethodS3("process", "FragmentLengthNormalization", function(this, ..., force=
 #   normalization function on the total thetas, if allele specific.
 # o Now getTargetFunctions() utilizes extractTheta() and no longer 
 #   getDataFlat().
-# o Removed deprecated getTargetFunction().
 # 2008-03-29
 # o Added more verbose output for the getTargetFunctions() in order to
 #   simplify troubleshooting.

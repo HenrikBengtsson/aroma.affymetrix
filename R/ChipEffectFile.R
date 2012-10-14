@@ -556,11 +556,6 @@ setMethodS3("getUnitGroupCellMap", "ChipEffectFile", function(this, units=NULL, 
 }, private=TRUE)
 
 
-setMethodS3("getCellMap", "ChipEffectFile", function(this, ...) {
-  throw("getCellMap() is defunct. Use getUnitGroupCellMap() instead.");
-}, deprecated=TRUE)
-
-
 
 setMethodS3("getUnitGroupCellChromosomePositionMap", "ChipEffectFile", function(this, units=NULL, chromosomes=NULL, orderByPosition=TRUE, ..., force=FALSE, verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

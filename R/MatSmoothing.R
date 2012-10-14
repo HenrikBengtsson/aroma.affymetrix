@@ -164,16 +164,6 @@ setMethodS3("getExpectedOutputFullnames", "MatSmoothing", function(this, ..., ve
 }, protected=TRUE)
 
 
-setMethodS3("getExpectedOutputFiles", "MatSmoothing", function(this, ...) {
-  fullnames <- getExpectedOutputFullnames(this, ...);
-
-  # "Dummy" filenames
-  filenames <- sprintf("%s.CEL", fullnames);
-
-  filenames;
-}, protected=TRUE, deprecated=TRUE)
-
-
 
 
 ###########################################################################/**

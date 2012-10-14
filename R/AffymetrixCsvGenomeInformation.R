@@ -27,13 +27,6 @@ setMethodS3("findByChipType", "AffymetrixCsvGenomeInformation", function(static,
 }, static=TRUE, protected=TRUE)
 
 
-setMethodS3("fromChipType", "AffymetrixCsvGenomeInformation", function(static, ...) {
-  className <- class(static)[1];
-  msg <- sprintf("%s$fromChipType() is defunct. Use %s$byChipType() instead.", 
-                                                        className, className);
-  throw(msg);
-}, static=TRUE, deprecated=TRUE)
-
 setMethodS3("byChipType", "AffymetrixCsvGenomeInformation", function(static, chipType, version=NULL, ...) {
   # Search for the genome information file
   pathname <- findByChipType(static, chipType, version=version, ...);

@@ -682,30 +682,10 @@ setMethodS3("getUnitGroupCellMapWithUnique", "AffymetrixCdfFile", function(this,
 
 
 
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# BEGIN: DEPRECATED
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-setMethodS3("getUnique", "AffymetrixCdfFile", function(this, ...) {
-  getUniqueCdf(this, ...);
-}, private=TRUE, deprecated=TRUE)
-
-setMethodS3("createUnique", "AffymetrixCdfFile", function(this, ...) {
-  createUniqueCdf(this, ...);
-}, private=TRUE, deprecated=TRUE)
-
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# END: DEPRECATED
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-
-
 ############################################################################
 # HISTORY:
 # 2011-04-15 [HB]
 # o Added more help to createUniqueCdf() for AffymetrixCdfFile.
-# o DEPRECATED: getUnique() and createUnique() are deprecated. 
-#   Use getUniqueCdf() and createUniqueCdf() instead.
 # 2008-11-28 [HB]
 # o BUG FIX: createUniqueCdf() used 'cdf' instead of 'this'.
 # 2008-11-14 [MR]

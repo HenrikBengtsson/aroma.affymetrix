@@ -46,8 +46,6 @@ setMethodS3("getPcuTheta", "ChromosomalModel", function(this, chromosome, reorde
 
 ##############################################################################
 # HISTORY:
-# 2011-02-19
-# o Replaced deprecated getListOfChipEffectSets() with getSets().
 # 2008-07-20
 # o Updated the following methods to preallocate matrixes with the correct
 #   data type to avoid coercing later: getPcuTheta().

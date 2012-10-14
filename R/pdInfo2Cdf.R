@@ -199,19 +199,12 @@ pdInfo2Cdf <- function(pdpkg, celfile, overwrite=FALSE, verbose=TRUE, ...) {
 } # pdInfo2Cdf()
 
 
-PdInfo2Cdf <- function(...) {
-  throw("PdInfo2Cdf() is deprecated. Use pdInfo2Cdf() instead, which works identically.");
-  pdInfo2Cdf(...);
-} # PdInfo2Cdf()
-
 
 ############################################################################
 # HISTORY:
 # 2012-03-23
 # o Now pdInfo2Cdf() helps 'R CMD check' to locate read.celfiles()
 #   by explicitly requiring 'oligo'.
-# o CLEANUP: Deprecated PdInfo2Cdf() in favor (identical) pdInfo2Cdf(), 
-#   because the former does not follow the Aroma naming conventions.
 # 2010-12-04 [HB]
 # o Added more verbose output.
 # o DOCUMENTATION: Added more Rd documentation.

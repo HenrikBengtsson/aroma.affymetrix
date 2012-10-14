@@ -143,11 +143,6 @@ setMethodS3("getProbeAffinityFile", "ProbeLevelModel", function(this, ..., .clas
 
 
 
-setMethodS3("getProbeAffinities", "ProbeLevelModel", function(this, ...) {
-  getProbeAffinityFile(this, ...);
-}, protected=TRUE, deprecated=TRUE)
-
-
 ###########################################################################/**
 # @RdocMethod getChipEffectSet
 # @aliasmethod getChipEffects
@@ -225,12 +220,6 @@ setMethodS3("getChipEffectSet", "ProbeLevelModel", function(this, ..., verbose=F
 setMethodS3("getChipEffectSetClass", "ProbeLevelModel", function(static, ...) {
   ChipEffectSet;
 }, static=TRUE, private=TRUE)
-
-
-setMethodS3("getChipEffects", "ProbeLevelModel", function(this, ...) {
-  getChipEffectSet(this, ...);
-}, protected=TRUE, deprecated=TRUE)
-
 
 
 

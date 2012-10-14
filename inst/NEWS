@@ -1,6 +1,11 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 2.6.3 [2012-10-14]
+o CLEANUP: Removed several defunct/obsolete methods and made
+  deprecated methods defunct/obsolete.
+
+
 Version: 2.6.2 [2012-09-15]
 o BUG FIX: doCRMAv2() failed to quickly located already available results
   if the chip type of the CDF had tags, e.g. 'GenomeWideSNP_6,Full'.

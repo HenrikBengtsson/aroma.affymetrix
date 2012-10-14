@@ -95,76 +95,10 @@ setMethodS3("getOutputDataSet", "Transform", function(this, ..., verbose=FALSE) 
 })
 
 
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# OBSOLETE
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-setMethodS3("getOutputDataSetOLD20090509", "Transform", function(this, ..., force=FALSE, verbose=FALSE) {
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Validate arguments
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
-  if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
-  }
-
-
-  verbose && enter(verbose, "Getting output data set for ", class(this)[1]);
-
-  outputDataSet <- this$.outputDataSet;
-
-  if (force || is.null(outputDataSet)) {
-    verbose && enter(verbose, "Checking to see if data set is \"done\"");
-    isDone <- isDone(this, verbose=less(verbose));
-    verbose && exit(verbose);
-
-    if (isDone) {
-      verbose && enter(verbose, "Retrieving input data set");
-      ds <- getInputDataSet(this);
-      verbose && exit(verbose);
-      verbose && enter(verbose, "Retrieving files for ", class(ds)[1], " output data set");
-
-      # Inherit the CDF from the input data set.
-      cdf <- getCdf(ds);
-      args <- list(path=getPath(this), ..., cdf=cdf, checkChipType=FALSE);
-
-      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-      # Inherit certain arguments from the input data set
-      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-      # AD HOC (not using OO), but setting these arguments does speed
-      # up things. /HB 2007-09-17
-      if (inherits(ds, "CnChipEffectSet"))
-        args$combineAlleles <- ds$combineAlleles;
-      if (inherits(ds, "SnpChipEffectSet"))
-        args$mergeStrands <- ds$mergeStrands; 
-
-      verbose && cat(verbose, "Arguments:");
-      verbose && str(verbose, str);
-
-      clazz <- Class$forName(class(ds)[1]);
-      staticMethod <- clazz$byPath;
-      args$verbose <- less(verbose);
-      outputDataSet <- do.call("staticMethod", args=args);
-      rm(staticMethod, args); # Not needed anymore
-
-##      outputDataSet <- clazz$byPath(path=getPath(this), ...,
-##                             checkChipType=FALSE, verbose=less(verbose));
-
-      verbose && exit(verbose);
-
-      this$.outputDataSet <- outputDataSet;
-    }
-  }
-  verbose && exit(verbose);
-
-  outputDataSet;
-})
-
-
-
 ############################################################################
 # HISTORY:
+# 2012-10-14
+# o CLEANUP: Removed obsolete getOutputDataSetOLD20090509() for Transform.
 # 2009-05-23
 # o Now getOutputDataSet() of Transform may return NULL if the output 
 #   data set is empty. Before it gave an error say update2() is not

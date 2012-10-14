@@ -278,10 +278,6 @@ setMethodS3("fromDataFile", "FirmaFile", function(static, df=NULL, filename=spri
 }, static=TRUE, private=TRUE)
 
 
-setMethodS3("getCellMap", "FirmaFile", function(this, ...) {
-  throw("getCellMap() is defunct. Use getUnitGroupCellMap() instead.");
-}, deprecated=TRUE)
-
 setMethodS3("getUnitGroupCellMap", "FirmaFile", function(this, units=NULL, ..., force=FALSE, verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments

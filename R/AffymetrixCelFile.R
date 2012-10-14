@@ -914,12 +914,6 @@ setMethodS3("readRawData", "AffymetrixCelFile", function(this, indices=NULL, fie
 }, private=TRUE)
 
 
-setMethodS3("getData", "AffymetrixCelFile", function(this, ...) {
-  readRawData(this, ...);
-}, private=TRUE, deprecated=TRUE)
-
-
-
 setMethodS3("range", "AffymetrixCelFile", function(this, ..., na.rm=TRUE) {
   x <- getData(this, ...);
   range(x, na.rm=na.rm);

@@ -65,10 +65,6 @@ setMethodS3("getPlm", "QualityAssessmentModel", function(this, ...) {
   this$.plm;
 })
 
-setMethodS3("getChipEffects", "QualityAssessmentModel", function(this, ...) {
-  getChipEffectSet(this, ...);
-}, private=TRUE, deprecated=TRUE)
-
 setMethodS3("getChipEffectSet", "QualityAssessmentModel", function(this, ...) {
   plm <- getPlm(this);
   getChipEffectSet(plm);

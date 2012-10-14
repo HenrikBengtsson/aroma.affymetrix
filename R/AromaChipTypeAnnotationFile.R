@@ -176,14 +176,6 @@ setMethodS3("byName", "AromaChipTypeAnnotationFile", function(static, ...) {
 }, static=TRUE, protected=TRUE)
 
 
-setMethodS3("fromChipType", "AromaChipTypeAnnotationFile", function(static, ...) {
-  className <- class(static)[1];
-  msg <- sprintf("%s$fromChipType() is defunct. Use %s$byChipType() instead.", 
-                                                        className, className);
-  throw(msg);
-}, static=TRUE, deprecated=TRUE)
-
-
 
 
 setMethodS3("getDefaultExtension", "AromaChipTypeAnnotationFile", function(static, ...) {

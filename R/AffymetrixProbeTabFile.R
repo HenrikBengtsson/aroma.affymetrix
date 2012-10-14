@@ -493,14 +493,6 @@ setMethodS3("fromCdf", "AffymetrixProbeTabFile", function(static, cdf, ...) {
 }, static=TRUE);
 
 
-setMethodS3("fromChipType", "AffymetrixProbeTabFile", function(static, ...) {
-  className <- class(static)[1];
-  msg <- sprintf("%s$fromChipType() is defunct. Use %s$byChipType() instead.", 
-                                                        className, className);
-  throw(msg);
-}, static=TRUE, deprecated=TRUE)
-
-
 setMethodS3("byChipType", "AffymetrixProbeTabFile", function(static, chipType, what=NULL, nbrOfCells=NULL, ...) {
 
   pathname <- AffymetrixProbeTabFile$findByChipType(chipType, what=what, ...);

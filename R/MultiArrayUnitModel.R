@@ -86,11 +86,6 @@ setMethodS3("validate", "MultiArrayUnitModel", function(this, ...) {
 setMethodS3("getFitUnitGroupFunction", "MultiArrayUnitModel", abstract=TRUE, static=TRUE, private=TRUE);
 
 
-setMethodS3("getFitFunction", "MultiArrayUnitModel", function(...) {
-  throw("getFitFunction() is deprecated. Please use getFitUnitGroupFunction() instead.");
-}, private=TRUE, deprecated=TRUE)
-
-
 
 setMethodS3("getFitUnitFunction", "MultiArrayUnitModel", function(this, ...) {
   # Get the fit function for a single set of intensities

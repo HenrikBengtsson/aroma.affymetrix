@@ -40,14 +40,6 @@ setMethodS3("findByChipType", "AffymetrixTsvFile", function(static, chipType, ..
 }, static=TRUE, protected=TRUE)
 
 
-setMethodS3("fromChipType", "AffymetrixTsvFile", function(static, ...) {
-  className <- class(static)[1];
-  msg <- sprintf("%s$fromChipType() is defunct. Use %s$byChipType() instead.", 
-                                                        className, className);
-  throw(msg);
-}, static=TRUE, deprecated=TRUE)
-
-
 setMethodS3("byChipType", "AffymetrixTsvFile", function(static, chipType, ...) {
   # Search for the genome information file
   pathname <- findByChipType(static, chipType, ...);
@@ -132,11 +124,6 @@ setMethodS3("readDataFrame", "AffymetrixTsvFile", function(this, ..., verbose=FA
 
   df;
 })
-
-
-setMethodS3("readData", "AffymetrixTsvFile", function(this, ...) {
-  readDataFrame(this, ...);
-}, protected=TRUE, deprecated=TRUE)
 
 
 setMethodS3("getField", "AffymetrixTsvFile", function(this, units=NULL, field, ...) {

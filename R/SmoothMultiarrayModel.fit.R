@@ -431,8 +431,6 @@ setMethodS3("fitOneChromosome", "SmoothMultiarrayModel", function(this, chromoso
 
 ############################################################################
 # HISTORY:
-# 2011-02-19
-# o Replaced deprecated getListOfChipEffectSets() with getSets().
 # 2009-01-26
 # o Updated getPositionChipTypeUnit() of SmoothMultiarrayModel to utilize
 #   the UnitNamesFile Interface instead of assuming an AffymetrixCdfFile.

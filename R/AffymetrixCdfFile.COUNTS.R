@@ -204,21 +204,6 @@ setMethodS3("nbrOfCellsPerUnit", "AffymetrixCdfFile", function(this, units=NULL,
 
 
 
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# BEGIN DEPRECATED
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-setMethodS3("getUnitSizes", "AffymetrixCdfFile", function(this, ...) {
-  nbrOfGroupsPerUnit(this, ...);
-}, private=TRUE, deprecated=TRUE)
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# END DEPRECATED
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-
-
-
 ############################################################################
 # HISTORY:
 # 2008-10-09

@@ -285,11 +285,6 @@ setMethodS3("findUnitsTodo", "ResidualFile", function(this, units=NULL, ..., for
 })
 
 
-setMethodS3("getCellMap", "ResidualFile", function(this, ...) {
-  throw("getCellMap() is defunct. Use getUnitGroupCellMap() instead.");
-}, deprecated=TRUE)
-
-
 setMethodS3("getUnitGroupCellMap", "ResidualFile", function(this, units=NULL, ..., force=FALSE, verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments

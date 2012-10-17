@@ -50,14 +50,14 @@ setConstructorS3("CnPlm", function(...) {
 
 
 setMethodS3("getParameterSet", "CnPlm", function(this, ...) {
-  params <- NextMethod("getParameterSet", this, ...);
+  params <- NextMethod("getParameterSet");
   params$combineAlleles <- this$combineAlleles;
   params;
 }, private=TRUE)
 
 
 setMethodS3("getCellIndices", "CnPlm", function(this, ...) {
-  cells <- NextMethod("getCellIndices", this, ...);
+  cells <- NextMethod("getCellIndices");
 
   # If combining alleles, still return all groups as is.
   # The summing is taken care of by the fitUnit() function.
@@ -68,7 +68,7 @@ setMethodS3("getCellIndices", "CnPlm", function(this, ...) {
 
 
 ## setMethodS3("getSubname", "CnPlm", function(this, ...) {
-##   s <- NextMethod("getSubname", this, ...);
+##   s <- NextMethod("getSubname");
 ##   if (this$combineAlleles) {
 ##     s <- sprintf("%sTotal", s);
 ##   } else {
@@ -303,7 +303,7 @@ setMethodS3("getFitUnitFunction", "CnPlm", function(this, ...) {
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # (combineAlleles=FALSE, probeModel=*)
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    fitUnit <- NextMethod("getFitUnitFunction", this, ...);
+    fitUnit <- NextMethod("getFitUnitFunction");
   }
 
   fitUnit;
@@ -316,13 +316,13 @@ setMethodS3("getChipEffectSetClass", "CnPlm", function(this, ...) {
 
 
 setMethodS3("getChipEffectSet", "CnPlm", function(this, ...) {
-  ces <- NextMethod("getChipEffectSet", this, ...);
+  ces <- NextMethod("getChipEffectSet");
   setCombineAlleles(ces, this$combineAlleles);
   ces;
 })
 
 setMethodS3("getProbeAffinityFile", "CnPlm", function(this, ..., .class=CnProbeAffinityFile) {
-  paf <- NextMethod("getProbeAffinityFile", this, ..., .class=.class);
+  paf <- NextMethod("getProbeAffinityFile", .class=.class);
   setCombineAlleles(paf, this$combineAlleles);
   paf;
 })

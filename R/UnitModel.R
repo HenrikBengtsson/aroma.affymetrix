@@ -54,7 +54,7 @@ setConstructorS3("UnitModel", function(dataSet=NULL, probeModel=c("pm", "mm", "p
 
 
 setMethodS3("getParameterSet", "UnitModel", function(this, ...) {
-  params <- NextMethod("getParameterSet", this, ...);
+  params <- NextMethod("getParameterSet");
   params$probeModel <- this$probeModel;
   params$shift <- this$shift;
   params;
@@ -63,7 +63,7 @@ setMethodS3("getParameterSet", "UnitModel", function(this, ...) {
 
 setMethodS3("getAsteriskTags", "UnitModel", function(this, collapse=NULL, ...) {
   # Returns 'U' (but allow for future extensions)
-  tags <- NextMethod("getAsteriskTags", this, collapse=NULL);
+  tags <- NextMethod("getAsteriskTags", collapse=NULL);
   tags[1] <- "U";
 
   # Add class-specific tags

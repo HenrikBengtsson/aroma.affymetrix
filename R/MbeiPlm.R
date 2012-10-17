@@ -60,7 +60,7 @@ setConstructorS3("MbeiPlm", function(...) {
 
 setMethodS3("getAsteriskTags", "MbeiPlm", function(this, collapse=NULL, ...) {
   # Returns 'PLM[,<shift>]'
-  tags <- NextMethod("getAsteriskTags", this, collapse=NULL);
+  tags <- NextMethod("getAsteriskTags", collapse=NULL);
   tags[1] <- "MBEI";
 
   # Collapse
@@ -74,7 +74,7 @@ setMethodS3("getProbeAffinityFile", "MbeiPlm", function(this, ...) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Get the probe affinities (and create files etc)
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  paf <- NextMethod("getProbeAffinityFile", this, ...);
+  paf <- NextMethod("getProbeAffinityFile");
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Update the encode and decode functions

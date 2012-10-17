@@ -39,7 +39,7 @@ setConstructorS3("UnitTypeScaleNormalization", function(..., targetAvg=4400) {
 
 setMethodS3("getParameters", "UnitTypeScaleNormalization", function(this, ...) {
   # Get parameters from super class
-  params <- NextMethod(generic="getParameters", object=this, ...);
+  params <- NextMethod("getParameters");
 
   # Get parameters of this class
   params2 <- list(

@@ -46,7 +46,7 @@ setConstructorS3("ExonRmaPlm", function(..., mergeGroups=TRUE) {
 
 setMethodS3("getAsteriskTags", "ExonRmaPlm", function(this, collapse=NULL, ...) {
   # Returns 'RMA[,<flavor>]'
-  tags <- NextMethod("getAsteriskTags", this, collapse=collapse, ...);
+  tags <- NextMethod("getAsteriskTags", collapse=NULL);
 
   # Add class specific parameter tags
   if (this$mergeGroups)
@@ -75,7 +75,7 @@ cdfMergeGroups <- function(groups, ...) {
 
 setMethodS3("getCellIndices", "ExonRmaPlm", function(this, ...) {
 
-  cells <- NextMethod("getCellIndices", this, ...);
+  cells <- NextMethod("getCellIndices");
 
   # Merge groups?
   if (this$mergeGroups) {
@@ -92,7 +92,7 @@ setMethodS3("getChipEffectSetClass", "ExonRmaPlm", function(this, ...) {
 
 
 setMethodS3("getChipEffectSet", "ExonRmaPlm", function(this, ...) {
-  ces <- NextMethod("getChipEffectSet", this, ...);
+  ces <- NextMethod("getChipEffectSet");
   setMergeGroups(ces, this$mergeGroups);
   ces;
 })
@@ -104,7 +104,7 @@ setMethodS3("getChipEffects", "ExonRmaPlm", function(this, ...) {
 
 
 setMethodS3("getProbeAffinityFile", "ExonRmaPlm", function(this, ..., .class=ExonProbeAffinityFile) {
-  paf <- NextMethod("getProbeAffinityFile", this, ..., .class=.class);
+  paf <- NextMethod("getProbeAffinityFile", .class=.class);
   setMergeGroups(paf, this$mergeGroups);
   paf;
 })
@@ -125,7 +125,7 @@ setMethodS3("setMergeGroups", "ExonRmaPlm", function(this, ...) {
 
 
 setMethodS3("getParameterSet", "ExonRmaPlm", function(this, ...) {
-  params <- NextMethod("getParameterSet", this, ...);
+  params <- NextMethod("getParameterSet");
   params$mergeGroups <- this$mergeGroups;
   params;
 }, private=TRUE)

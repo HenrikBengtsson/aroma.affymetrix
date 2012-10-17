@@ -29,7 +29,7 @@ setConstructorS3("SmoothRmaModel", function(...) {
 
 
 setMethodS3("getAsteriskTags", "SmoothRmaModel", function(this, collapse=NULL, ...) {
-  tags <- NextMethod("getAsteriskTags", this, collapse=NULL, ...);
+  tags <- NextMethod("getAsteriskTags", collapse=NULL);
 
   # Replace first tags
   tags[1] <- "SRMA";

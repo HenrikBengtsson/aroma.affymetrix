@@ -79,7 +79,7 @@ setMethodS3("clearCache", "WeightsFile", function(this, ...) {
   }
 
   # Then for this object
-  NextMethod(generic="clearCache", object=this, ...);
+  NextMethod("clearCache");
 }, private=TRUE)
 
 
@@ -87,7 +87,7 @@ setMethodS3("as.character", "WeightsFile", function(x, ...) {
   # To please R CMD check
   this <- x;
 
-  s <- NextMethod(generic="as.character", this, ...);
+  s <- NextMethod("as.character");
   params <- paste(getParametersAsString(this), collapse=", ");
   s <- c(s, sprintf("Parameters: (%s)", params));
   class(s) <- "GenericSummary";
@@ -184,7 +184,7 @@ setMethodS3("readUnits", "WeightsFile", function(this, units=NULL, cdf=NULL, ...
 
   # Note that the actually call to the decoding is done in readUnits()
   # of the superclass.
-  res <- NextMethod("readUnits", this, cdf=cdf, ..., force=force, verbose=less(verbose));
+  res <- NextMethod("readUnits", cdf=cdf, force=force, verbose=less(verbose));
 
   # Store read units in cache?
   if (cache) {
@@ -208,7 +208,7 @@ setMethodS3("updateUnits", "WeightsFile", function(this, units=NULL, cdf=NULL, d
 
   # Note that the actually call to the encoding is done in updateUnits()
   # of the superclass.
-  NextMethod("updateUnits", this, cdf=cdf, data=data, ...);
+  NextMethod("updateUnits", cdf=cdf, data=data);
 }, private=TRUE);
 
 
@@ -461,11 +461,11 @@ setMethodS3("updateDataFlat", "WeightsFile", function(this, data, ..., verbose=F
 
 
 setMethodS3("getImage", "WeightsFile", function(this, zrange=c(-1,1)*15, transform=log2, palette=rainbow(256), ...) {
-  NextMethod("getImage", this, zrange=zrange, transform=transform, palette=palette, ...);
+  NextMethod("getImage", zrange=zrange, transform=transform, palette=palette);
 })
 
 setMethodS3("writeImage", "WeightsFile", function(this, ..., tags=c("*", "log2", "rainbow")) {
-  NextMethod("writeImage", this, ..., tags=tags);
+  NextMethod("writeImage", tags=tags);
 })
 
 

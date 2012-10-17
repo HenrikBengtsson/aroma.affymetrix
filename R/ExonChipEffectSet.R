@@ -38,7 +38,7 @@ setMethodS3("byPath", "ExonChipEffectSet", function(static, ..., mergeGroups="au
 
 
 setMethodS3("getAverageFile", "ExonChipEffectSet", function(this, ...) {
-  res <- NextMethod(generic="getAverageFile", object=this, ...);
+  res <- NextMethod("getAverageFile");
   res$mergeGroups <- getMergeGroups(this);
   res;
 })

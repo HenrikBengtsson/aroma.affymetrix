@@ -95,7 +95,7 @@ setMethodS3("getAsteriskTags", "SnpChipEffectGroupMerge", function(this, ...) {
 
 setMethodS3("getParameters", "SnpChipEffectGroupMerge", function(this, ...) {
   # Get parameters from super class
-  params <- NextMethod(generic="getParameters", object=this, ...);
+  params <- NextMethod("getParameters");
 
   # Get parameters of this class
   params2 <- list(

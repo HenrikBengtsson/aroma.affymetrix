@@ -62,7 +62,7 @@ setConstructorS3("GcContentNormalization", function(dataSet=NULL, ..., targetFun
 
 setMethodS3("getParameters", "GcContentNormalization", function(this, ...) {
   # Get parameters from super class
-  params <- NextMethod(generic="getParameters", object=this, ...);
+  params <- NextMethod("getParameters");
 
   # Get parameters of this class
   params2 <- list(
@@ -84,7 +84,7 @@ setMethodS3("getCdf", "GcContentNormalization", function(this, ...) {
 
 
 setMethodS3("getOutputDataSet00", "GcContentNormalization", function(this, ...) {
-  res <- NextMethod(generic="getOutputDataSet", object=this, ...);
+  res <- NextMethod("getOutputDataSet");
 
   # Carry over parameters too.  AD HOC for now. /HB 2007-01-07
   if (inherits(res, "SnpChipEffectSet")) {

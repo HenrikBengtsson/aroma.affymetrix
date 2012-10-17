@@ -73,7 +73,7 @@ setMethodS3("clearCache", "ParameterCelFile", function(this, ...) {
   }
 
   # Then for this object
-  NextMethod(generic="clearCache", object=this, ...);
+  NextMethod("clearCache");
 }, private=TRUE)
 
 
@@ -153,7 +153,7 @@ setMethodS3("readUnits", "ParameterCelFile", function(this, ..., readStdvs=FALSE
   # Retrieve and decoding data
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   verbose && enter(verbose, "Reading units");
-  units <- NextMethod("readUnits", this, ..., readStdvs=readStdvs, readPixels=readPixels, stratifyBy=stratifyBy, verbose=less(verbose));
+  units <- NextMethod("readUnits", readStdvs=readStdvs, readPixels=readPixels, stratifyBy=stratifyBy, verbose=less(verbose));
   verbose && exit(verbose);
 
   verbose && enter(verbose, "Decoding ", length(units), " units");
@@ -191,7 +191,7 @@ setMethodS3("updateUnits", "ParameterCelFile", function(this, data, cdf=NULL, ..
 #  verbose && str(verbose, cdf[1]);
 #  verbose && str(verbose, data[1]);
 
-  NextMethod("updateUnits", this, cdf=cdf, data=data, ..., verbose=less(verbose));
+  NextMethod("updateUnits", cdf=cdf, data=data, verbose=less(verbose));
 
   verbose && exit(verbose);
 

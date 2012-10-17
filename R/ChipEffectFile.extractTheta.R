@@ -46,9 +46,7 @@ setMethodS3("extractTheta", "SnpChipEffectFile", function(this, groups=NULL, ...
     groups <- 1:maxNbrOfGroups;
   }
 
-  theta <- NextMethod("extractTheta", this, groups=groups, ...);
-
-  theta;
+  NextMethod("extractTheta", groups=groups);
 }) # extractTheta()
 
 
@@ -65,9 +63,7 @@ setMethodS3("extractTheta", "CnChipEffectFile", function(this, groups=NULL, ...)
     groups <- 1:maxNbrOfGroups;
   }
 
-  theta <- NextMethod("extractTheta", this, groups=groups, ...);
-
-  theta;
+  NextMethod("extractTheta", groups=groups);
 }) # extractTheta()
 
 

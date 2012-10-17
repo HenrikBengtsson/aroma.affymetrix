@@ -38,7 +38,7 @@ setConstructorS3("SnpPlm", function(...) {
 })
 
 ## setMethodS3("getSubname", "SnpPlm", function(this, ...) {
-##   s <- NextMethod("getSubname", this, ...);
+##   s <- NextMethod("getSubname");
 ##   if (this$mergeStrands) {
 ##     s <- sprintf("%sStrandless", s);
 ##   } else {
@@ -49,7 +49,7 @@ setConstructorS3("SnpPlm", function(...) {
 
 
 setMethodS3("getParameterSet", "SnpPlm", function(this, ...) {
-  params <- NextMethod("getParameterSet", this, ...);
+  params <- NextMethod("getParameterSet");
   params$mergeStrands <- this$mergeStrands;
   params;
 }, private=TRUE)
@@ -62,7 +62,7 @@ setMethodS3("getCellIndices", "SnpPlm", function(this, ..., verbose=FALSE) {
 
   verbose && enter(verbose, "Identifying cell indices for a SnpPlm");
 
-  cells <- NextMethod("getCellIndices", this, ..., verbose=verbose);
+  cells <- NextMethod("getCellIndices", verbose=verbose);
 
   # Merge strands?
   if (this$mergeStrands) {
@@ -82,13 +82,13 @@ setMethodS3("getChipEffectSetClass", "SnpPlm", function(this, ...) {
 
 
 setMethodS3("getChipEffectSet", "SnpPlm", function(this, ...) {
-  ces <- NextMethod("getChipEffectSet", this, ...);
+  ces <- NextMethod("getChipEffectSet");
   setMergeStrands(ces, this$mergeStrands);
   ces;
 })
 
 setMethodS3("getProbeAffinityFile", "SnpPlm", function(this, ..., .class=SnpProbeAffinityFile) {
-  paf <- NextMethod("getProbeAffinityFile", this, ..., .class=.class);
+  paf <- NextMethod("getProbeAffinityFile", .class=.class);
   setMergeStrands(paf, this$mergeStrands);
   paf;
 })

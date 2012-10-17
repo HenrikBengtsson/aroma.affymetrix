@@ -129,7 +129,7 @@ setMethodS3("exportTotalAndFracB", "CnChipEffectFile", function(this, fields=c("
     fields <- setdiff(fields, "fracB");
   }
 
-  NextMethod("exportTotalAndFracB", this, fields=fields, ...);
+  NextMethod("exportTotalAndFracB", fields=fields);
 })
 
 

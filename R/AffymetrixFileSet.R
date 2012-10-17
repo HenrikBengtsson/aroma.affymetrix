@@ -137,8 +137,8 @@ setMethodS3("byPath", "AffymetrixFileSet", function(static, ..., fileClass="Affy
 }, static=TRUE)
 
 
-setMethodS3("getDefaultFullName", "AffymetrixFileSet", function(this, parent=1, ...) {
-  NextMethod("getDefaultFullName", this, parent=parent, ...);
+setMethodS3("getDefaultFullName", "AffymetrixFileSet", function(this, parent=1L, ...) {
+  NextMethod("getDefaultFullName", parent=parent);
 })
 
 

@@ -33,7 +33,7 @@ setConstructorS3("ExonProbeAffinityFile", function(..., mergeGroups=FALSE) {
 
 
 setMethodS3("getCellIndices", "ExonProbeAffinityFile", function(this, ...) {
-  cells <- NextMethod("getCellIndices", this, ...);
+  cells <- NextMethod("getCellIndices");
 
   # Merge groups?
   if (this$mergeGroups) {

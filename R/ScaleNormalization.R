@@ -80,7 +80,7 @@ setConstructorS3("ScaleNormalization", function(dataSet=NULL, ..., targetAvg=440
 
 
 setMethodS3("getAsteriskTags", "ScaleNormalization", function(this, collapse=NULL, ...) {
-  tags <- NextMethod("getAsteriskTags", this, collapse=collapse, ...);
+  tags <- NextMethod("getAsteriskTags", collapse=NULL);
 
   # Extra tags?
   tags <- c(tags, this$.extraTags);
@@ -265,7 +265,7 @@ setMethodS3("getSubsetToAvg", "ScaleNormalization", function(this, ..., verbose=
 
 setMethodS3("getParameters", "ScaleNormalization", function(this, ...) {
   # Get parameters from super class
-  params <- NextMethod(generic="getParameters", object=this, ...);
+  params <- NextMethod("getParameters");
 
   # Get parameters of this class
   params2 <- list(

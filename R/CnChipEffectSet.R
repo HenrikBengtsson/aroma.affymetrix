@@ -47,7 +47,7 @@ setMethodS3("byPath", "CnChipEffectSet", function(static, ..., combineAlleles="a
 
 
 setMethodS3("getAverageFile", "CnChipEffectSet", function(this, ...) {
-  res <- NextMethod(generic="getAverageFile", object=this, ...);
+  res <- NextMethod("getAverageFile");
   res$combineAlleles <- getCombineAlleles(this);
   res;
 })

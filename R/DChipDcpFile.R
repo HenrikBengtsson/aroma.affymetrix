@@ -40,7 +40,7 @@ setMethodS3("as.character", "DChipDcpFile", function(x, ...) {
   # To please R CMD check
   this <- x;
 
-  s <- NextMethod("as.character", this, ...);
+  s <- NextMethod("as.character");
   class <- class(s);
   s <- c(s, sprintf("File format: %s", getFileFormat(this)));
   s <- c(s, sprintf("Number of cells: %s", nbrOfCells(this)));

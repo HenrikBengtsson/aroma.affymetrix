@@ -85,7 +85,7 @@ setMethodS3("getAromaCellMatchScoreFile", "MatNormalization", function(this, ...
 
 
 setMethodS3("getAsteriskTags", "MatNormalization", function(this, collapse=NULL, ...) {
-  tags <- NextMethod("getAsteriskTags", this, collapse=collapse, ...);
+  tags <- NextMethod("getAsteriskTags", collapse=NULL);
 
   # Add model tag?
   model <- this$.model;
@@ -100,7 +100,7 @@ setMethodS3("getAsteriskTags", "MatNormalization", function(this, collapse=NULL,
 
 setMethodS3("getParameters", "MatNormalization", function(this, ...) {
   # Get parameters from super class
-  params <- NextMethod(generic="getParameters", object=this, ...);
+  params <- NextMethod("getParameters");
 
   params <- c(params, list(
     model = this$.model,

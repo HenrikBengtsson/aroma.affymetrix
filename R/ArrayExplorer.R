@@ -90,7 +90,7 @@ setMethodS3("getListOfReporters", "ArrayExplorer", function(this, ...) {
 
 
 setMethodS3("setAlias", "ArrayExplorer", function(this, ...) {
-  NextMethod("setAlias", this, ...);
+  NextMethod("setAlias");
   reporters <- getListOfReporters(this);
   lapply(reporters, FUN=setAlias, ...);
   invisible(this);
@@ -244,7 +244,7 @@ setMethodS3("updateSetupExplorerFile", "ArrayExplorer", function(this, ...) {
   env$chipTypes <- getChipTypes(setTuple, fullname=TRUE);
   env$arrays <- getFullNames(setTuple);
 
-  NextMethod("updateSetupExplorerFile", this, data=env, ...);
+  NextMethod("updateSetupExplorerFile", data=env);
 }, private=TRUE)
 
 

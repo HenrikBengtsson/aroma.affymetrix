@@ -49,7 +49,7 @@ setMethodS3("clearCache", "ResidualSet", function(this, ...) {
   }
 
   # Then for this object
-  NextMethod(generic="clearCache", object=this, ...);
+  NextMethod("clearCache");
 }, private=TRUE)
 
 
@@ -57,7 +57,7 @@ setMethodS3("as.character", "ResidualSet", function(x, ...) {
   # To please R CMD check
   this <- x;
 
-  s <- NextMethod(generic="as.character", object=this, ...);
+  s <- NextMethod("as.character");
   params <- paste(getParametersAsString(this), collapse=", ");
   s <- c(s, sprintf("Parameters: (%s)", params));
   class(s) <- "GenericSummary";
@@ -175,7 +175,7 @@ setMethodS3("readUnits", "ResidualSet", function(this, units=NULL, cdf=NULL, ...
   # Note that the actually call to the decoding is done in readUnits()
   # of the superclass.
   verbose && enter(verbose, "Calling readUnits() in superclass");
-  res <- NextMethod("readUnits", this, units=cdf, ..., verbose=less(verbose));
+  res <- NextMethod("readUnits", units=cdf, verbose=less(verbose));
   verbose && exit(verbose);
 
   # Get first residual file and use that to decode the read structure
@@ -258,7 +258,7 @@ setMethodS3("getAverageFile", "ResidualSet", function(this, ..., verbose=FALSE, 
     indices <- unlist(indices, use.names=FALSE);
   }
 
-  NextMethod(generic="getAverageFile", object=this, ..., indices=indices, verbose=verbose);
+  NextMethod("getAverageFile", indices=indices, verbose=verbose);
 })
 
 

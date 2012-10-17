@@ -60,7 +60,7 @@ setConstructorS3("FirmaModel", function(rmaPlm=NULL, summaryMethod=c("median", "
 
 setMethodS3("getAsteriskTags", "FirmaModel", function(this, collapse=NULL, ...) {
   # Returns 'U' (but allow for future extensions)
-  tags <- NextMethod("getAsteriskTags", this, collapse=NULL);
+  tags <- NextMethod("getAsteriskTags", collapse=NULL);
   tags[1] <- "FIRMA";
 
   # Append parameter tags
@@ -175,7 +175,7 @@ setMethodS3("clearCache", "FirmaModel", function(this, ...) {
   }
 
   # Then for this object
-  NextMethod(generic="clearCache", object=this, ...);
+  NextMethod("clearCache");
 }, private=TRUE)
 
 

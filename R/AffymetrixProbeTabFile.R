@@ -60,7 +60,7 @@ setMethodS3("clearCache", "AffymetrixProbeTabFile", function(this, ...) {
   }
 
   # Then for this object
-  NextMethod(generic="clearCache", object=this, ...);
+  NextMethod("clearCache");
 }, private=TRUE)
 
 
@@ -68,7 +68,7 @@ setMethodS3("as.character", "AffymetrixProbeTabFile", function(x, ...) {
   # To please R CMD check
   this <- x;
 
-  s <- NextMethod("as.character", this, ...);
+  s <- NextMethod("as.character");
   class <- class(s);
 
 #  s <- sprintf("%s:", class(this)[1]);
@@ -113,8 +113,7 @@ setMethodS3("translateFullName", "AffymetrixProbeTabFile", function(this, name, 
     name <- gsub(patterns[idx], sprintf("%s\\2", map[idx]), name);
   }
   
-  name <- NextMethod("translateFullName", this, name, ...);
-  name;
+  NextMethod("translateFullName");
 })
 
 
@@ -152,8 +151,7 @@ setMethodS3("translateColumnNames", "AffymetrixProbeTabFile", function(this, nam
   # Finally, convert 'foo bar doo' to 'fooBarDoo'
   names <- toCamelCase(names);
 
-  names <- NextMethod("translateColumnNames", this, names, ...);
-  names;
+  NextMethod("translateColumnNames", names=names);
 }, protected=TRUE)
 
 
@@ -175,8 +173,7 @@ setMethodS3("getColumnNames", "AffymetrixProbeTabFile", function(this, ..., tran
   verbose && enter(verbose, "Retrieving column names");
 
   verbose && enter(verbose, "Using method of super class");
-  columns <- NextMethod("getColumnNames", this, ..., translate=translate, 
-                                               verbose=less(verbose, 5));
+  columns <- NextMethod("getColumnNames", translate=translate, verbose=less(verbose, 5));
   verbose && cat(verbose, "Identfied columns (if any):");
   verbose && print(verbose, columns);
   verbose && exit(verbose);

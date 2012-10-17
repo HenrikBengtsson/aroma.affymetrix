@@ -52,7 +52,7 @@ setMethodS3("clearCache", "TransformReport", function(this, ...) {
   }
 
   # Then for this object
-  NextMethod(generic="clearCache", object=this, ...);
+  NextMethod("clearCache");
 }, private=TRUE)
 
 

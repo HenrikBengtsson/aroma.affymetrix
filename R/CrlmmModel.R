@@ -67,7 +67,7 @@ setMethodS3("getAsteriskTags", "CrlmmModel", function(this, collapse=NULL, ...) 
 
 
 setMethodS3("getParameterSet", "CrlmmModel", function(this, ...) {
-  params <- NextMethod("getParameterSet", this, ...);
+  params <- NextMethod("getParameterSet");
   params$balance <- this$balance;
   params$minLLRforCalls <- this$minLLRforCalls;
   params$recalibrate <- this$recalibrate;

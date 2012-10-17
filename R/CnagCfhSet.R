@@ -56,7 +56,7 @@ setMethodS3("clearCache", "CnagCfhSet", function(this, ...) {
   }
 
   # Then for this object
-  NextMethod(generic="clearCache", object=this, ...);
+  NextMethod("clearCache");
 }, private=TRUE)
 
 
@@ -67,7 +67,7 @@ setMethodS3("clone", "CnagCfhSet", function(this, ..., verbose=FALSE) {
   verbose && enter(verbose, "Cloning CNAG CFH set");
 
   # Clone itself and the files.  The call below will clear the cache!
-  object <- NextMethod("clone", clear=TRUE, ..., verbose=less(verbose));
+  object <- NextMethod("clone", clear=TRUE, verbose=less(verbose));
   clearCache(object);
 
   # Clone the CDF (this will update the CDF of all file object)
@@ -111,7 +111,7 @@ setMethodS3("append", "CnagCfhSet", function(this, other, clone=TRUE, ..., verbo
   }
 
   # Append other
-  this <- NextMethod("append", this, other=other, clone=clone, ...);
+  this <- NextMethod("append", other=other, clone=clone);
 
   # Set the same CDF for all CFH files
   verbose && enter(verbose, "Updating the CDF for all files");
@@ -1085,8 +1085,8 @@ setMethodS3("[[", "CnagCfhSet", function(this, units=NULL, ...) {
 })
 
 
-setMethodS3("getDefaultFullName", "CnagCfhSet", function(this, parent=1, ...) {
-  NextMethod("getDefaultFullName", this, parent=parent, ...);
+setMethodS3("getDefaultFullName", "CnagCfhSet", function(this, parent=1L, ...) {
+  NextMethod("getDefaultFullName", parent=parent);
 })
 
 

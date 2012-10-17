@@ -94,7 +94,7 @@ setMethodS3("clearCache", "ChipEffectFile", function(this, ...) {
   }
 
   # Then for this object
-  NextMethod(generic="clearCache", object=this, ...);
+  NextMethod("clearCache");
 }, private=TRUE)
 
 
@@ -102,7 +102,7 @@ setMethodS3("as.character", "ChipEffectFile", function(x, ...) {
   # To please R CMD check
   this <- x;
 
-  s <- NextMethod(generic="as.character", object=this, ...);
+  s <- NextMethod("as.character");
   params <- paste(getParametersAsString(this), collapse=", ");
   s <- c(s, sprintf("Parameters: (%s)", params));
   class(s) <- "GenericSummary";
@@ -195,7 +195,7 @@ setMethodS3("readUnits", "ChipEffectFile", function(this, units=NULL, cdf=NULL, 
 
   # Note that the actually call to the decoding is done in readUnits()
   # of the superclass.
-  res <- NextMethod("readUnits", this, cdf=cdf, ..., force=force, verbose=less(verbose));
+  res <- NextMethod("readUnits", cdf=cdf, force=force, verbose=less(verbose));
 
   # Store read units in cache?
   if (cache) {
@@ -219,7 +219,7 @@ setMethodS3("updateUnits", "ChipEffectFile", function(this, units=NULL, cdf=NULL
 
   # Note that the actually call to the encoding is done in updateUnits()
   # of the superclass.
-  NextMethod("updateUnits", this, cdf=cdf, data=data, ...);
+  NextMethod("updateUnits", cdf=cdf, data=data);
 }, private=TRUE);
 
 
@@ -873,7 +873,7 @@ setMethodS3("extractMatrix", "ChipEffectFile", function(this, ..., field=c("thet
   # Argument 'field':
   field <- match.arg(field);
 
-  NextMethod("extractMatrix", this, ..., field=field);
+  NextMethod("extractMatrix", field=field);
 })
 
 

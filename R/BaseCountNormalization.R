@@ -59,7 +59,7 @@ setConstructorS3("BaseCountNormalization", function(..., model=c("robustSmoothSp
 
 
 setMethodS3("getAsteriskTags", "BaseCountNormalization", function(this, collapse=NULL, ...) {
-  tags <- NextMethod("getAsteriskTags", this, collapse=collapse, ...);
+  tags <- NextMethod("getAsteriskTags", collapse=collapse);
 
   # Add model tag?
   model <- this$.model;
@@ -83,7 +83,7 @@ setMethodS3("getAsteriskTags", "BaseCountNormalization", function(this, collapse
 
 setMethodS3("getParameters", "BaseCountNormalization", function(this, ...) {
   # Get parameters from super class
-  params <- NextMethod(generic="getParameters", object=this, ...);
+  params <- NextMethod("getParameters");
 
   params <- c(params, list(
     model = this$.model,

@@ -70,7 +70,7 @@ setConstructorS3("LimmaBackgroundCorrection", function(..., args=NULL, addJitter
 })
 
 setMethodS3("getAsteriskTags", "LimmaBackgroundCorrection", function(this, collapse=NULL, ...) {
-  tags <- NextMethod("getAsteriskTags", this, collapse=collapse, ...);
+  tags <- NextMethod("getAsteriskTags", collapse=NULL);
 
   # Extra tags?
   params <- getParameters(this);
@@ -86,7 +86,7 @@ setMethodS3("getAsteriskTags", "LimmaBackgroundCorrection", function(this, colla
 
 setMethodS3("getParameters", "LimmaBackgroundCorrection", function(this, ...) {
   # Get parameters from super class
-  params <- NextMethod(generic="getParameters", object=this, ...);
+  params <- NextMethod("getParameters");
 
   pmOnly <- (this$.typesToUpdate == "pm");
   

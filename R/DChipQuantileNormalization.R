@@ -51,7 +51,7 @@ setMethodS3("as.character", "DChipQuantileNormalization", function(x, ...) {
   # To please R CMD check
   this <- x;
 
-  s <- NextMethod("as.character", this, ...);
+  s <- NextMethod("as.character");
   nExcl <- length(getExclCells(this));
   n <- nbrOfCells(getCdf(getInputDataSet(this)));
   s <- c(s, sprintf("Number of cells excluded (when fitting): %d (%.1f%%)", 
@@ -63,7 +63,7 @@ setMethodS3("as.character", "DChipQuantileNormalization", function(x, ...) {
 
 setMethodS3("getParameters", "DChipQuantileNormalization", function(this, ...) {
   # Get parameters from super class
-  params <- NextMethod(generic="getParameters", object=this, ...);
+  params <- NextMethod("getParameters");
 
   params$robust <- this$.robust;
   subsetToAvg <- params$subsetToAvg;
@@ -85,7 +85,7 @@ setMethodS3("getParameters", "DChipQuantileNormalization", function(this, ...) {
 
 
 setMethodS3("getSubsetToUpdate", "DChipQuantileNormalization", function(this, ...) {
-  subsetToUpdate <- NextMethod("getSubsetToUpdate", this, ...);
+  subsetToUpdate <- NextMethod("getSubsetToUpdate");
   if (is.null(subsetToUpdate)) {
     if (is.null(this$.typesToUpdate)) {
     } else if (this$.typesToUpdate == "pm") {

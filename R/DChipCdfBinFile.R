@@ -40,7 +40,7 @@ setMethodS3("clearCache", "DChipCdfBinFile", function(this, ...) {
   }
 
   # Then for this object
-  NextMethod(generic="clearCache", object=this, ...);
+  NextMethod("clearCache");
 }, private=TRUE)
  
 
@@ -48,7 +48,7 @@ setMethodS3("as.character", "DChipCdfBinFile", function(x, ...) {
   # To please R CMD check
   this <- x;
 
-  s <- NextMethod("as.character", this, ...);
+  s <- NextMethod("as.character");
   class <- class(s);
   s <- c(s, sprintf("Chip type: %s", getChipType(this)));
   s <- c(s, sprintf("File format: %s", getFileFormat(this)));

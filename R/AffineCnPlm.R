@@ -30,7 +30,7 @@ setConstructorS3("AffineCnPlm", function(..., combineAlleles=FALSE) {
 
 setMethodS3("getAsteriskTags", "AffineCnPlm", function(this, collapse=NULL, ...) {
   # Returns 'AFF[,<flavor>][,+-]'
-  tags <- NextMethod("getAsteriskTags", this, collapse=collapse, ...);
+  tags <- NextMethod("getAsteriskTags", collapse=collapse);
 
   # Add class specific parameter tags
   if (this$combineAlleles)

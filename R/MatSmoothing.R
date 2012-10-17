@@ -118,7 +118,7 @@ setMethodS3("getAromaCellPositionFile", "MatSmoothing", function(this, ..., forc
 
 setMethodS3("getParameters", "MatSmoothing", function(this, ...) {
   # Get parameters from super class
-  params <- NextMethod(generic="getParameters", object=this, ...);
+  params <- NextMethod("getParameters");
 
   # Get parameters of this class
   params2 <- list(

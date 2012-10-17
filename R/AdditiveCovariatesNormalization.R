@@ -111,7 +111,7 @@ setConstructorS3("AdditiveCovariatesNormalization", function(dataSet=NULL, ..., 
 
 
 setMethodS3("getAsteriskTags", "AdditiveCovariatesNormalization", function(this, collapse=NULL, ...) {
-  tags <- NextMethod("getAsteriskTags", this, collapse=collapse, ...);
+  tags <- NextMethod("getAsteriskTags", collapse=collapse);
 
   # Extra tags?
   tags <- c(tags, this$.extraTags);
@@ -136,13 +136,13 @@ setMethodS3("clearCache", "AdditiveCovariatesNormalization", function(this, ...)
   }
 
   # Then for this object 
-  NextMethod("clearCache", object=this, ...);
+  NextMethod("clearCache");
 })
 
 
 setMethodS3("getParameters", "AdditiveCovariatesNormalization", function(this, expand=TRUE, ...) {
   # Get parameters from super class
-  params <- NextMethod(generic="getParameters", object=this, expand=expand, ...);
+  params <- NextMethod("getParameters", expand=expand);
 
   # Get parameters of this class
   params <- c(params, list(

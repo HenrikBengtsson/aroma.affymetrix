@@ -52,7 +52,7 @@ setMethodS3("clearCache", "FirmaFile", function(this, ...) {
   }
 
   # Then for this object
-  NextMethod(generic="clearCache", object=this, ...);
+  NextMethod("clearCache");
 }, private=TRUE)
 
 
@@ -163,7 +163,7 @@ setMethodS3("readUnits", "FirmaFile", function(this, units=NULL, cdf=NULL,
 
   # Note that the actually call to the decoding is done in readUnits()
   # of the superclass.
-  res <- NextMethod("readUnits", this, cdf=cdf, ..., force=force, verbose=less(verbose));
+  res <- NextMethod("readUnits", cdf=cdf, force=force, verbose=less(verbose));
 
   # Store read units in cache?
   if (cache) {
@@ -186,7 +186,7 @@ setMethodS3("updateUnits", "FirmaFile", function(this, units=NULL, cdf=NULL, dat
   if (is.null(cdf))
     cdf <- getCellIndices(this, units=units);
 
-  NextMethod("updateUnits", this, cdf=cdf, data=data, ...);
+  NextMethod("updateUnits", cdf=cdf, data=data);
 }, private=TRUE);
 
 
@@ -439,7 +439,7 @@ setMethodS3("extractMatrix", "FirmaFile", function (this, ..., field=c("intensit
   # Argument 'field':
   field <- match.arg(field);
 
-  NextMethod("extractMatrix", this, ..., field=field);
+  NextMethod("extractMatrix", field=field);
 })
 
 

@@ -35,10 +35,10 @@ setConstructorS3("UgpGenomeInformation", function(..., .ugp=NULL, .verify=TRUE) 
 })
 
 setMethodS3("clearCache", "UgpGenomeInformation", function(this, ...) {
-  NextMethod("clearCache", this, ...);
   for (ff in c(".ugp")) {
     this[[ff]] <- NULL;
   }
+  NextMethod("clearCache");
 })
 
 

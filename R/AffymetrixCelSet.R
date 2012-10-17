@@ -87,7 +87,7 @@ setMethodS3("clearCache", "AffymetrixCelSet", function(this, ...) {
   }
 
   # Then for this object
-  NextMethod(generic="clearCache", object=this, ...);
+  NextMethod("clearCache");
 }, private=TRUE)
 
 
@@ -103,7 +103,7 @@ setMethodS3("clone", "AffymetrixCelSet", function(this, ..., verbose=FALSE) {
   verbose && enter(verbose, "Cloning Affymetrix CEL set");
 
   # Clone itself and the files.  The call below will clear the cache!
-  object <- NextMethod("clone", clear=TRUE, ..., verbose=less(verbose));
+  object <- NextMethod("clone", clear=TRUE, verbose=less(verbose));
   clearCache(object);
 
   if (nbrOfFiles(object) > 0) {

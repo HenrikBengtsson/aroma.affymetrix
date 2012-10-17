@@ -107,12 +107,12 @@ setMethodS3("clearCache", "ProbeLevelTransform3", function(this, ...) {
   }
 
   # Then for this object 
-  NextMethod("clearCache", object=this, ...);
+  NextMethod("clearCache");
 })
 
 
 setMethodS3("getAsteriskTags", "ProbeLevelTransform3", function(this, collapse=NULL, ...) {
-  tags <- NextMethod("getAsteriskTags", this, collapse=collapse, ...);
+  tags <- NextMethod("getAsteriskTags", collapse=NULL);
 
   # Extra tags?
   tags <- c(tags, this$.extraTags);
@@ -328,7 +328,7 @@ setMethodS3("getParameters", "ProbeLevelTransform3", function(this, expand=TRUE,
   verbose && enter(verbose, "Getting algorithm parameters");
 
   # Get parameters from super class
-  params <- NextMethod(generic="getParameters", object=this, expand=expand, ...);
+  params <- NextMethod("getParameters", expand=expand);
 
   # Get local parameters
   params2 <- list(

@@ -57,7 +57,7 @@ setMethodS3("clearCache", "QuantileNormalization", function(this, ...) {
   for (ff in c(".targetDistribution")) {
     this[[ff]] <- NULL;
   }
-  NextMethod("clearCache", this, ...);
+  NextMethod("clearCache");
 })
 
 setMethodS3("getSubsetToUpdate", "QuantileNormalization", function(this, ..., verbose=FALSE) {
@@ -175,7 +175,7 @@ setMethodS3("getSubsetToAvg", "QuantileNormalization", function(this, ..., verbo
 
 setMethodS3("getParameters", "QuantileNormalization", function(this, ...) {
   # Get parameters from super class
-  params <- NextMethod(generic="getParameters", object=this, ...);
+  params <- NextMethod("getParameters");
 
   # Get parameters of this class
   params2 <- list(

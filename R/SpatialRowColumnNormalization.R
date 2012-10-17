@@ -16,7 +16,7 @@ setConstructorS3("SpatialRowColumnNormalization", function(..., spar=c(0.7,0.7),
 
 setMethodS3("getParameters", "SpatialRowColumnNormalization", function(this, ...) {
   # Get parameters from super class
-  params <- NextMethod(generic="getParameters", object=this, ...);
+  params <- NextMethod("getParameters");
 
   # Get parameters of this class
   params2 <- list(

@@ -37,7 +37,7 @@ setConstructorS3("CnProbeAffinityFile", function(..., combineAlleles=FALSE) {
 
 
 setMethodS3("getCellIndices", "CnProbeAffinityFile", function(this, ...) {
-  cells <- NextMethod("getCellIndices", this, ...);
+  cells <- NextMethod("getCellIndices");
 
   # If combining alleles, return only every second group.
   # In order to improve readability we merge the names of alleles groups

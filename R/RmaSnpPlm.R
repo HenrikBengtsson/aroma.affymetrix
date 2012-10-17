@@ -31,7 +31,7 @@ setConstructorS3("RmaSnpPlm", function(..., mergeStrands=FALSE) {
 
 setMethodS3("getAsteriskTags", "RmaSnpPlm", function(this, collapse=NULL, ...) {
   # Returns 'RMA[,<flavor>]'
-  tags <- NextMethod("getAsteriskTags", this, collapse=collapse, ...);
+  tags <- NextMethod("getAsteriskTags", collapse=NULL);
 
   # Add class specific parameter tags
   if (!this$mergeStrands)

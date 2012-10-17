@@ -9,7 +9,7 @@ setConstructorS3("ChipEffectSetTuple", function(dsList=list(), ..., .setClass="C
 
 
 setMethodS3("getFullNames", "ChipEffectSetTuple", function(this, ..., exclude="chipEffects") {
-  NextMethod("getFullNames", this, ..., exclude=exclude);
+  NextMethod("getFullNames", exclude=exclude);
 })
 
 

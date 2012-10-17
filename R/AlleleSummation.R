@@ -44,7 +44,7 @@ setConstructorS3("AlleleSummation", function(dataSet=NULL, ignoreNAs=TRUE, ...) 
 
 setMethodS3("getAsteriskTags", "AlleleSummation", function(this, collapse=NULL, ...) {
   # Returns 'U' (but allow for future extensions)
-  tags <- NextMethod("getAsteriskTags", this, collapse=NULL);
+  tags <- NextMethod("getAsteriskTags", collapse=NULL);
   tags[1] <- "SA";
 
   if (!is.null(collapse)) {

@@ -44,7 +44,7 @@ setConstructorS3("NormExpBackgroundCorrection", function(..., method=c("rma", "s
 
 
 setMethodS3("getAsteriskTags", "NormExpBackgroundCorrection", function(this, collapse=NULL, ...) {
-  tags <- NextMethod("getAsteriskTags", this, collapse=NULL, ...);
+  tags <- NextMethod("getAsteriskTags", collapse=NULL);
 
   # Drop added 'normexp' tag
   tags <- setdiff(tags, "normexp");
@@ -58,7 +58,7 @@ setMethodS3("getAsteriskTags", "NormExpBackgroundCorrection", function(this, col
 
 setMethodS3("getParameters", "NormExpBackgroundCorrection", function(this, ...) {
   # Get parameters from super class
-  params <- NextMethod(generic="getParameters", object=this, ...);
+  params <- NextMethod("getParameters");
 
   # Overload the 'args' for calling limma
   args <- params$args;

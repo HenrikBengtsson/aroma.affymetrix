@@ -76,7 +76,7 @@ setMethodS3("setMergeFunction", "ChipEffectGroupMerge", function(this, fcn=NULL,
 
 setMethodS3("getParameters", "ChipEffectGroupMerge", function(this, ...) {
   # Get parameters from super class
-  params <- NextMethod(generic="getParameters", object=this, ...);
+  params <- NextMethod("getParameters");
 
   # Get parameters of this class
   params2 <- list(

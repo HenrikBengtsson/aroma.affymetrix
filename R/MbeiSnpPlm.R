@@ -30,7 +30,7 @@ setConstructorS3("MbeiSnpPlm", function(..., mergeStrands=FALSE) {
 
 setMethodS3("getAsteriskTags", "MbeiSnpPlm", function(this, collapse=NULL, ...) {
   # Returns 'MBEI[,<flavor>]'
-  tags <- NextMethod("getAsteriskTags", this, collapse=collapse, ...);
+  tags <- NextMethod("getAsteriskTags", collapse=NULL);
 
   # Add class specific parameter tags
   if (!this$mergeStrands)

@@ -236,12 +236,12 @@ setMethodS3("clearCache", "AllelicCrosstalkCalibration", function(this, ...) {
   }
 
   # Then for this object 
-  NextMethod("clearCache", object=this, ...);
+  NextMethod("clearCache");
 })
 
 
 setMethodS3("getAsteriskTags", "AllelicCrosstalkCalibration", function(this, collapse=NULL, ...) {
-  tags <- NextMethod("getAsteriskTags", this, collapse=collapse, ...);
+  tags <- NextMethod("getAsteriskTags", collapse=NULL);
 
   # shift tag?
   if (!this$.mergeShifts) {
@@ -341,7 +341,7 @@ setMethodS3("getSubsetToAvg", "AllelicCrosstalkCalibration", function(this, ...,
 
 setMethodS3("getParameters", "AllelicCrosstalkCalibration", function(this, expand=TRUE, ...) {
   # Get parameters from super class
-  params <- NextMethod(generic="getParameters", object=this, expand=expand, ...);
+  params <- NextMethod("getParameters", expand=expand);
 
   params <- c(params, list(
     rescaleBy = this$.rescaleBy,

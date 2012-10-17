@@ -46,7 +46,7 @@ setMethodS3("clearCache", "QualityAssessmentFile", function(this, ...) {
   }
 
   # Then for this object
-  NextMethod(generic="clearCache", object=this, ...);
+  NextMethod("clearCache");
 }, private=TRUE)
 
 

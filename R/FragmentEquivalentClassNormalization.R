@@ -102,15 +102,15 @@ setConstructorS3("FragmentEquivalentClassNormalization", function(dataSet=NULL, 
 
 
 setMethodS3("getAsteriskTags", "FragmentEquivalentClassNormalization", function(this, collapse=NULL, ...) {
-  tag <- NextMethod("getAsteriskTags", this, collapse=collapse, ...);
+  tags <- NextMethod("getAsteriskTags", collapse=NULL);
 
   # Extra tags?
-  tag <- c(tag, this$.extraTags);
+  tags <- c(tags, this$.extraTags);
 
   # Collapse?
-  tag <- paste(tag, collapse=collapse);
+  tags <- paste(tags, collapse=collapse);
 
-  tag;
+  tags;
 }, private=TRUE)
 
 
@@ -121,13 +121,13 @@ setMethodS3("clearCache", "FragmentEquivalentClassNormalization", function(this,
   }
 
   # Then for this object 
-  NextMethod("clearCache", object=this, ...);
+  NextMethod("clearCache");
 })
 
 
 setMethodS3("getParameters", "FragmentEquivalentClassNormalization", function(this, expand=TRUE, ...) {
   # Get parameters from super class
-  params <- NextMethod(generic="getParameters", object=this, expand=expand, ...);
+  params <- NextMethod("getParameters", expand=expand);
 
   # Get parameters of this class
   params <- c(params, list(

@@ -83,7 +83,7 @@ setMethodS3("validate", "AvgPlm", function(this, ...) {
 
 setMethodS3("getAsteriskTags", "AvgPlm", function(this, collapse=NULL, ...) {
   # Returns 'PLM[,<shift>]'
-  tags <- NextMethod("getAsteriskTags", this, collapse=NULL);
+  tags <- NextMethod("getAsteriskTags", collapse=NULL);
   tags[1] <- "AVG";
 
   # Add class specific parameter tags
@@ -99,7 +99,7 @@ setMethodS3("getAsteriskTags", "AvgPlm", function(this, collapse=NULL, ...) {
 
 
 setMethodS3("getParameterSet", "AvgPlm", function(this, ...) {
-  params <- NextMethod("getParameterSet", this, ...);
+  params <- NextMethod("getParameterSet");
   params$flavor <- this$.flavor;
   params;
 }, private=TRUE)
@@ -110,7 +110,7 @@ setMethodS3("getProbeAffinityFile", "AvgPlm", function(this, ...) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Get the probe affinities (and create files etc)
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  paf <- NextMethod("getProbeAffinityFile", this, ...);
+  paf <- NextMethod("getProbeAffinityFile");
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Update the encode and decode functions

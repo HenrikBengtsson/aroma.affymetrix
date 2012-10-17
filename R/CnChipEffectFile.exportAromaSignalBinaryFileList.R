@@ -12,7 +12,7 @@ setMethodS3("exportAromaSignalBinaryFileList", "CnChipEffectFile", function(this
     }
   }
 
-  NextMethod("exportAromaSignalBinaryFileList", this, whats=whats, ...);
+  NextMethod("exportAromaSignalBinaryFileList", whats=whats);
 })
 
 

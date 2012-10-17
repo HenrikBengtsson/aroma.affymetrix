@@ -12,7 +12,7 @@ setMethodS3("getOutputFiles", "Transform", function(this, pattern=NULL, ...) {
     pattern <- Arguments$getRegularExpression(pattern=pattern);
   }
 
-  NextMethod("getOutputFiles", pattern=pattern, ...);
+  NextMethod("getOutputFiles", pattern=pattern);
 }, protected=TRUE) 
 
 

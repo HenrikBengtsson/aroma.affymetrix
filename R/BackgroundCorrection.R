@@ -41,7 +41,7 @@ setMethodS3("getSubsetToUpdate", "BackgroundCorrection", function(this, ...) {
 
 setMethodS3("getParameters", "BackgroundCorrection", function(this, ...) {
   # Get parameters from super class
-  params <- NextMethod(generic="getParameters", object=this, ...);
+  params <- NextMethod("getParameters");
 
   # Get parameters of this class
   params2 <- list(

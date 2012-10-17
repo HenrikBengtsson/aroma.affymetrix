@@ -71,14 +71,14 @@ setMethodS3("clearCache", "ProbeLevelModel", function(this, ...) {
   }
 
   # Then for this object
-  NextMethod(generic="clearCache", object=this, ...);
+  NextMethod("clearCache");
 }, private=TRUE)
 
 
 
 setMethodS3("getAsteriskTags", "ProbeLevelModel", function(this, collapse=NULL, ...) {
   # Returns 'PLM' (but allow for future extensions)
-  tags <- NextMethod("getAsteriskTags", this, collapse=NULL);
+  tags <- NextMethod("getAsteriskTags", collapse=NULL);
   tags[1] <- "PLM";
   tags;
 }, protected=TRUE)

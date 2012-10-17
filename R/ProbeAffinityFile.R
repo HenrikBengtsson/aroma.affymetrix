@@ -45,7 +45,7 @@ setMethodS3("as.character", "ProbeAffinityFile", function(x, ...) {
   # To please R CMD check
   this <- x;
 
-  s <- NextMethod(generic="as.character", object=this, ...);
+  s <- NextMethod("as.character");
   params <- paste(getParametersAsString(this), collapse=", ");
   s <- c(s, sprintf("Parameters: (%s)", params));
   class(s) <- "GenericSummary";
@@ -78,7 +78,7 @@ setMethodS3("clearCache", "ProbeAffinityFile", function(this, ...) {
   }
 
   # Then for this object
-  NextMethod(generic="clearCache", object=this, ...);
+  NextMethod("clearCache");
 }, private=TRUE)
 
 
@@ -116,7 +116,7 @@ setMethodS3("readUnits", "ProbeAffinityFile", function(this, units=NULL, cdf=NUL
 
   # Note that the actually call to the decoding is done in readUnits()
   # of the superclass.
-  NextMethod("readUnits", this, cdf=cdf, readStdvs=TRUE, readPixels=TRUE, ...);
+  NextMethod("readUnits", cdf=cdf, readStdvs=TRUE, readPixels=TRUE);
 });
 
 
@@ -141,8 +141,7 @@ setMethodS3("updateUnits", "ProbeAffinityFile", function(this, units=NULL, cdf=N
 
   # Note that the actually call to the encoding is done in updateUnits()
   # of the superclass.
-  res <- NextMethod("updateUnits", this, cdf=cdf, data=data, ..., 
-                                               verbose=less(verbose, 1));
+  res <- NextMethod("updateUnits", cdf=cdf, data=data, verbose=less(verbose, 1));
 
   verbose && exit(verbose);
 

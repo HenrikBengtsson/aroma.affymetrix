@@ -61,12 +61,12 @@ setMethodS3("getExpandedCellMap", "ChipEffectFile", function(this, resetFields=N
 
 
 setMethodS3("getExpandedCellMap", "SnpChipEffectFile", function(this, resetFields=NULL, ...) {
-  NextMethod("getExpandedCellMap", this, resetFields=c("mergeStrands", resetFields), ...);
+  NextMethod("getExpandedCellMap", resetFields=c("mergeStrands", resetFields));
 })
 
 
 setMethodS3("getExpandedCellMap", "CnChipEffectFile", function(this, resetFields=NULL, ...) {
-  NextMethod("getExpandedCellMap", this, resetFields=c("combineAlleles", resetFields), ...);
+  NextMethod("getExpandedCellMap", resetFields=c("combineAlleles", resetFields));
 })
 
 

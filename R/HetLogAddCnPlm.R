@@ -35,7 +35,7 @@ setConstructorS3("HetLogAddCnPlm", function(..., combineAlleles=FALSE) {
 
 setMethodS3("getAsteriskTags", "HetLogAddCnPlm", function(this, collapse=NULL, ...) {
   # Returns 'HLA[,<flavor>][,+-]'
-  tags <- NextMethod("getAsteriskTags", this, collapse=collapse, ...);
+  tags <- NextMethod("getAsteriskTags", collapse=NULL);
 
   # Add class-specific parameter tags
   if (this$combineAlleles)

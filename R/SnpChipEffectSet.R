@@ -38,7 +38,7 @@ setMethodS3("byPath", "SnpChipEffectSet", function(static, ..., mergeStrands="au
 
 
 setMethodS3("getAverageFile", "SnpChipEffectSet", function(this, ...) {
-  res <- NextMethod(generic="getAverageFile", object=this, ...);
+  res <- NextMethod("getAverageFile");
   res$mergeStrands <- getMergeStrands(this);
   res;
 })

@@ -93,9 +93,7 @@ setMethodS3("extractTheta", "SnpChipEffectSet", function(this, groups=NULL, ...)
     groups <- 1:maxNbrOfGroups;
   }
 
-  theta <- NextMethod("extractTheta", this, groups=groups, ...);
-
-  theta;
+  NextMethod("extractTheta", groups=groups);
 })
 
 
@@ -112,9 +110,7 @@ setMethodS3("extractTheta", "CnChipEffectSet", function(this, groups=NULL, ...) 
     groups <- 1:maxNbrOfGroups;
   }
 
-  theta <- NextMethod("extractTheta", this, groups=groups, ...);
-
-  theta;
+  NextMethod("extractTheta", groups=groups);
 })
 
 

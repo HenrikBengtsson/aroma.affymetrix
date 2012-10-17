@@ -11,10 +11,10 @@ setConstructorS3("AffymetrixNetAffxCsvFile", function(..., .verify=TRUE) {
 
 
 setMethodS3("clearCache", "AffymetrixNetAffxCsvFile", function(this, ...) {
-  NextMethod("clearCache", this, ...);
   for (ff in c(".unitNames")) {
     this[[ff]] <- NULL;
   }
+  NextMethod("clearCache");
 })
 
 

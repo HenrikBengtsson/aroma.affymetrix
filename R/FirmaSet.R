@@ -37,7 +37,7 @@ setMethodS3("clearCache", "FirmaSet", function(this, ...) {
   }
 
   # Then for this object
-  NextMethod(generic="clearCache", object=this, ...);
+  NextMethod("clearCache");
 }, private=TRUE)
 
 
@@ -117,7 +117,7 @@ setMethodS3("readUnits", "FirmaSet", function(this, units=NULL, cdf=NULL, ..., v
   # Note that the actually call to the decoding is done in readUnits()
   # of the superclass.
   verbose && enter(verbose, "Calling readUnits() in superclass");
-  res <- NextMethod("readUnits", this, units=cdf, ..., verbose=less(verbose));
+  res <- NextMethod("readUnits", units=cdf, verbose=less(verbose));
   verbose && exit(verbose);
 
   # Get first file and use that to decode the read structure
@@ -203,7 +203,7 @@ setMethodS3("extractMatrix", "FirmaSet", function (this, ..., field=c("intensiti
   # Argument 'field':
   field <- match.arg(field);
 
-  NextMethod("extractMatrix", this, ..., field=field);
+  NextMethod("extractMatrix", field=field);
 }) 
 
 

@@ -79,7 +79,7 @@ setConstructorS3("RmaPlm", function(..., flavor=c("affyPLM", "oligo")) {
 
 setMethodS3("getAsteriskTags", "RmaPlm", function(this, collapse=NULL, ...) {
   # Returns 'PLM[,<shift>]'
-  tags <- NextMethod("getAsteriskTags", this, collapse=NULL);
+  tags <- NextMethod("getAsteriskTags", collapse=NULL);
   tags[1] <- "RMA";
 
   # Add class specific parameter tags
@@ -94,7 +94,7 @@ setMethodS3("getAsteriskTags", "RmaPlm", function(this, collapse=NULL, ...) {
 
 
 setMethodS3("getParameterSet", "RmaPlm", function(this, ...) {
-  params <- NextMethod("getParameterSet", this, ...);
+  params <- NextMethod("getParameterSet");
   params$flavor <- this$.flavor;
   params$treatNAsAs <- this$treatNAsAs;
   params;
@@ -106,7 +106,7 @@ setMethodS3("getProbeAffinityFile", "RmaPlm", function(this, ...) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Get the probe affinities (and create files etc)
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  paf <- NextMethod("getProbeAffinityFile", this, ...);
+  paf <- NextMethod("getProbeAffinityFile");
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Update the encode and decode functions

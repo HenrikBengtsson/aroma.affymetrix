@@ -50,13 +50,13 @@ setMethodS3("clearCache", "CnagCfhFile", function(this, ...) {
   }
 
   # Then for this object
-  NextMethod(generic="clearCache", object=this, ...);
+  NextMethod("clearCache");
 }, private=TRUE)
 
 
 setMethodS3("clone", "CnagCfhFile", function(this, ..., verbose=TRUE) {
   # Clone itself (and clear the cached fields)
-  object <- NextMethod("clone", clear=TRUE, ...);
+  object <- NextMethod("clone", clear=TRUE);
 
   # Clone the CDF here.
   if (!is.null(object$.cdf))
@@ -70,7 +70,7 @@ setMethodS3("as.character", "CnagCfhFile", function(x, ...) {
   # To please R CMD check
   this <- x;
 
-  s <- NextMethod("as.character", ...);
+  s <- NextMethod("as.character");
   s <- c(s, sprintf("Chip type: %s", getChipType(getCdf(this))));
   s <- c(s, sprintf("Timestamp: %s", as.character(getTimestamp(this))));
   class(s) <- "GenericSummary";

@@ -38,7 +38,7 @@ setConstructorS3("SnpProbeAffinityFile", function(..., mergeStrands=FALSE) {
 
 
 setMethodS3("getCellIndices", "SnpProbeAffinityFile", function(this, ...) {
-  cells <- NextMethod("getCellIndices", this, ...);
+  cells <- NextMethod("getCellIndices");
 
   # Merge strands?
   if (this$mergeStrands) {

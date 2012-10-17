@@ -26,7 +26,7 @@ setMethodS3("as.character", "AffymetrixCnChpFile", function(x, ...) {
   # To please R CMD check
   this <- x; 
 
-  s <- NextMethod("as.character", ...);
+  s <- NextMethod("as.character");
   class <- class(s);
   s <- c(s, sprintf("File format: %s", getFileFormat(this)));
   s <- c(s, sprintf("Chip type: %s", getChipType(getCdf(this))));
@@ -44,14 +44,14 @@ setMethodS3("clearCache", "AffymetrixCnChpFile", function(this, ...) {
   }
 
   # Then for this object
-  NextMethod(generic="clearCache", object=this, ...);
+  NextMethod("clearCache");
 }, private=TRUE)
 
 
 
 setMethodS3("clone", "AffymetrixCnChpFile", function(this, ..., verbose=TRUE) {
   # Clone itself (and clear the cached fields)
-  object <- NextMethod("clone", clear=TRUE, ...);
+  object <- NextMethod("clone", clear=TRUE);
 
   # Clone the CDF here.
   if (!is.null(object$.cdf))

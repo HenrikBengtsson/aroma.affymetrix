@@ -33,7 +33,7 @@ setConstructorS3("OpticalBackgroundCorrection", function(..., minimum=1) {
 
 setMethodS3("getParameters", "OpticalBackgroundCorrection", function(this, ...) {
   # Get parameters from super class
-  params <- NextMethod(generic="getParameters", object=this, ...);
+  params <- NextMethod("getParameters");
 
   # Get parameters of this class
   params2 <- list(

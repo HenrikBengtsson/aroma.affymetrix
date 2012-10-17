@@ -48,13 +48,13 @@ setMethodS3("clearCache", "ExonChipEffectFile", function(this, ...) {
   }
 
   # Then for this object
-  NextMethod(generic="clearCache", object=this, ...);
+  NextMethod("clearCache");
 }, private=TRUE)
 
 
 
 setMethodS3("getParameters", "ExonChipEffectFile", function(this, ...) {
-  params <- NextMethod(generic="getParameters", object=this, ...);
+  params <- NextMethod("getParameters");
   params$mergeGroups <- this$mergeGroups;
   params;
 })
@@ -106,8 +106,7 @@ setMethodS3("getCellIndices", "ExonChipEffectFile", function(this, ..., force=FA
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Get and restructure cell indices
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  cells <- NextMethod("getCellIndices", this, ..., force=force, 
-                                          .cache=FALSE, verbose=verbose);
+  cells <- NextMethod("getCellIndices", force=force, .cache=FALSE, verbose=verbose);
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -167,7 +166,7 @@ setMethodS3("readUnits", "ExonChipEffectFile", function(this, ..., force=FALSE, 
   }
 
   # Retrieve the data
-  res <- NextMethod("readUnits", this, ..., force=TRUE, cache=FALSE, verbose=verbose);
+  res <- NextMethod("readUnits", force=TRUE, cache=FALSE, verbose=verbose);
 
   # Store read units in cache?
   if (cache) {

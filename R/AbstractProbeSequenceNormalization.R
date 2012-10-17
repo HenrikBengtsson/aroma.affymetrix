@@ -53,7 +53,7 @@ setConstructorS3("AbstractProbeSequenceNormalization", function(..., target=NULL
 
 setMethodS3("getParameters", "AbstractProbeSequenceNormalization", function(this, ...) {
   # Get parameters from super class
-  params <- NextMethod(generic="getParameters", object=this, ...);
+  params <- NextMethod("getParameters");
 
   params <- c(params, list(
     target = this$.target

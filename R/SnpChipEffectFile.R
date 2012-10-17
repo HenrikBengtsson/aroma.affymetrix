@@ -49,13 +49,13 @@ setMethodS3("clearCache", "SnpChipEffectFile", function(this, ...) {
   }
 
   # Then for this object
-  NextMethod(generic="clearCache", object=this, ...);
+  NextMethod("clearCache");
 }, private=TRUE)
 
 
 
 setMethodS3("getParameters", "SnpChipEffectFile", function(this, ...) {
-  params <- NextMethod(generic="getParameters", object=this, ...);
+  params <- NextMethod("getParameters");
   params$mergeStrands <- this$mergeStrands;
   params;
 })
@@ -126,8 +126,7 @@ setMethodS3("getCellIndices", "SnpChipEffectFile", function(this, units=NULL, ..
     # Get and restructure cell indices
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 ## NOTE: NextMethod() does not work from within another function
-##    cells <- NextMethod("getCellIndices", this, units=unitChunk, ..., 
-##                            force=force, .cache=FALSE, verbose=verbose);
+##    cells <- NextMethod("getCellIndices", units=unitChunk, force=force, .cache=FALSE, verbose=verbose);
     cells <- getCellIndices.ChipEffectFile(this, units=unitChunk, ..., 
                              force=force, .cache=FALSE, verbose=verbose);
 
@@ -248,7 +247,7 @@ setMethodS3("readUnits", "SnpChipEffectFile", function(this, ..., force=FALSE, c
   }
 
   # Retrieve the data
-  res <- NextMethod("readUnits", this, ..., force=TRUE, cache=FALSE, verbose=verbose);
+  res <- NextMethod("readUnits", force=TRUE, cache=FALSE, verbose=verbose);
 
   # Store read units in cache?
   if (cache) {

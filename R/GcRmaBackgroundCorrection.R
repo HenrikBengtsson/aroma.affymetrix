@@ -78,7 +78,7 @@ setConstructorS3("GcRmaBackgroundCorrection", function(..., indicesNegativeContr
 
 setMethodS3("getParameters", "GcRmaBackgroundCorrection", function(this, ...) {
   # Get parameters from super class
-  params <- NextMethod(generic="getParameters", object=this, ...);
+  params <- NextMethod("getParameters");
 
   # Get parameters of this class
   params2 <- list(

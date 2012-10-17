@@ -56,7 +56,7 @@ setMethodS3("as.character", "SmoothMultiarrayModel", function(x, ...) {
   # To please R CMD check
   this <- x;
 
-  s <- NextMethod("as.character", this, ...);
+  s <- NextMethod("as.character");
   s <- c(s, sprintf("Kernel: %s", this$.kernel));
   s <- c(s, sprintf("Bandwidth: %.2fkb", getBandwidth(this)/1e3));
   class(s) <- "GenericSummary";
@@ -76,7 +76,7 @@ setMethodS3("clearCache", "SmoothMultiarrayModel", function(this, ...) {
   }
 
   # Then for this object
-  NextMethod(generic="clearCache", object=this, ...);
+  NextMethod("clearCache");
 })
 
 

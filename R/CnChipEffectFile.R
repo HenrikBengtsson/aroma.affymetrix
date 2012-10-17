@@ -52,7 +52,7 @@ setMethodS3("hasStrandiness", "CnChipEffectFile", function(this, ...) {
 
 
 setMethodS3("getParameters", "CnChipEffectFile", function(this, ...) {
-  params <- NextMethod(generic="getParameters", object=this, ...);
+  params <- NextMethod("getParameters");
   params$combineAlleles <- this$combineAlleles;
   params;
 })
@@ -123,8 +123,7 @@ setMethodS3("getCellIndices", "CnChipEffectFile", function(this, units=NULL, ...
     # Get and restructure cell indices
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 ## NOTE: NextMethod() does not work from within another function
-##    cells <- NextMethod("getCellIndices", this, units=unitChunk, ..., 
-##                            force=force, .cache=FALSE, verbose=verbose);
+##    cells <- NextMethod("getCellIndices", units=unitChunk, force=force, .cache=FALSE, verbose=verbose);
     cells <- getCellIndices.SnpChipEffectFile(this, units=unitChunk, ..., 
                              force=force, .cache=FALSE, verbose=verbose);
     gc <- gc();
@@ -220,7 +219,7 @@ setMethodS3("readUnits", "CnChipEffectFile", function(this, ..., force=FALSE, ca
   }
 
   # Retrieve the data
-  res <- NextMethod("readUnits", this, ..., force=TRUE, cache=FALSE, verbose=verbose);
+  res <- NextMethod("readUnits", force=TRUE, cache=FALSE, verbose=verbose);
 
 
   # Store read units in cache?
@@ -235,7 +234,7 @@ setMethodS3("readUnits", "CnChipEffectFile", function(this, ..., force=FALSE, ca
 
 
 setMethodS3("mergeStrands", "CnChipEffectFile", function(this, ...) {
-  cfM <- NextMethod("mergeStrands", this, ...);
+  cfM <- NextMethod("mergeStrands");
   cfM$combineAlleles <- this$combineAlleles;
   cfM;
 })

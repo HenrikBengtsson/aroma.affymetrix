@@ -136,7 +136,7 @@ setConstructorS3("FragmentLengthNormalization", function(dataSet=NULL, ..., targ
 
 
 setMethodS3("getAsteriskTags", "FragmentLengthNormalization", function(this, collapse=NULL, ...) {
-  tags <- NextMethod("getAsteriskTags", this, collapse=collapse, ...);
+  tags <- NextMethod("getAsteriskTags", collapse=NULL);
 
   # Extra tags?
   tags <- c(tags, this$.extraTags);
@@ -161,13 +161,13 @@ setMethodS3("clearCache", "FragmentLengthNormalization", function(this, ...) {
   }
 
   # Then for this object 
-  NextMethod("clearCache", object=this, ...);
+  NextMethod("clearCache");
 })
 
 
 setMethodS3("getParameters", "FragmentLengthNormalization", function(this, expand=TRUE, ...) {
   # Get parameters from super class
-  params <- NextMethod(generic="getParameters", object=this, expand=expand, ...);
+  params <- NextMethod("getParameters", expand=expand);
 
   # Get parameters of this class
   params <- c(params, list(

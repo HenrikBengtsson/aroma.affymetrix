@@ -51,7 +51,7 @@ setConstructorS3("RmaBackgroundCorrection", function(..., addJitter=FALSE, jitte
 
 setMethodS3("getParameters", "RmaBackgroundCorrection", function(this, ...) {
   # Get parameters from super class
-  params <- NextMethod(generic="getParameters", object=this, ...);
+  params <- NextMethod("getParameters");
 
   pmOnly <- (this$.typesToUpdate=="pm");
   

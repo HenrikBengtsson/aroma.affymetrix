@@ -95,12 +95,9 @@ setMethodS3("findByName", "ChipEffectSet", function(static, ..., paths="plmData(
     paths <- eval(formals(findByName.ChipEffectSet)[["paths"]]);
   }
 
-
-  # Unfortunately method dispatching does not work here.
-  path <- findByName.AffymetrixCelSet(static, ..., paths=paths);
-  
-  path;
+  NextMethod("findByName", paths=paths);
 }, static=TRUE)
+
 
 setMethodS3("byPath", "ChipEffectSet", function(static, path="plmData/", pattern=",chipEffects[.](c|C)(e|E)(l|L)$", cdf=NULL, checkChipType=FALSE, ..., fileClass=NULL) {
   # Argument 'cdf':
@@ -112,11 +109,12 @@ setMethodS3("byPath", "ChipEffectSet", function(static, path="plmData/", pattern
   }
 
   # Argument 'fileClass':
-  if (is.null(fileClass))
+  if (is.null(fileClass)) {
     fileClass <- gsub("Set$", "File", class(static)[1]);
+  }
 
-  # Unfortunately, method dispatching does not work here.
-  byPath.AffymetrixCelSet(static, path=path, pattern=pattern, ..., fileClass=fileClass, cdf=cdf, checkChipType=checkChipType);
+
+  NextMethod("byPath", path=path, pattern=pattern, fileClass=fileClass, cdf=cdf, checkChipType=checkChipType);
 }, protected=TRUE, static=TRUE)
 
 
@@ -141,8 +139,7 @@ setMethodS3("fromDataSet", "ChipEffectSet", function(static, dataSet, path, name
   verbose && cat(verbose, "Data set: ", name);
   for (kk in seq(dataSet)) {
     df <- getFile(dataSet, kk);
-    verbose && enter(verbose, 
-                           sprintf("Retrieving chip-effect #%d of %d (%s)",
+    verbose && enter(verbose, sprintf("Retrieving chip-effect #%d of %d (%s)",
                                                kk, length(ces), getName(df)));
     ce <- clazz$fromDataFile(df, path=path, name=name, cdf=cdf, ..., 
                                                        verbose=less(verbose));

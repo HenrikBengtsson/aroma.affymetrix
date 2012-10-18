@@ -32,7 +32,7 @@ setConstructorS3("ExonChipEffectSet", function(..., mergeGroups=TRUE) {
 })
 
 setMethodS3("byPath", "ExonChipEffectSet", function(static, ..., mergeGroups="auto") {
-  byPath.ChipEffectSet(static, ..., mergeGroups=mergeGroups);
+  NextMethod("byPath", mergeGroups=mergeGroups);
 }, protected=TRUE, static=TRUE)
 
 

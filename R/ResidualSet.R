@@ -95,7 +95,7 @@ setMethodS3("byPath", "ResidualSet", function(static, ..., pattern=",residuals[.
   if (is.null(fileClass))
     fileClass <- gsub("Set$", "File", class(static)[1]);
 
-  res <- byPath.AffymetrixFileSet(static, ..., pattern=pattern, fileClass=fileClass);
+  res <- NextMethod("byPath", pattern=pattern, fileClass=fileClass);
 
   # Set CDF?
   if (!is.null(cdf))

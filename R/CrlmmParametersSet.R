@@ -39,7 +39,7 @@ setMethodS3("byName", "CrlmmParametersSet", function(static, name, tags=NULL, ..
 
 setMethodS3("byPath", "CrlmmParametersSet", function(static, ...) {
   suppressWarnings({
-    byPath.GenericDataFileSet(static, ..., pattern=".*,CRLMM[.]atb$$");
+    NextMethod("byPath", pattern=".*,CRLMM[.]atb$$");
   })
 })
 

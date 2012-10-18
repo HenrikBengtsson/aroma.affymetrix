@@ -354,7 +354,8 @@ setMethodS3("getUnitTypesFile", "AffymetrixCelSet", function(this, ...) {
 # @keyword IO
 #*/###########################################################################
 setMethodS3("getCdf", "AffymetrixCelSet", function(this, ...) {
-  getCdf(this$files[[1]], ...);
+  aFile <- getFile(this, 1);
+  getCdf(aFile, ...);
 })
 
 
@@ -460,8 +461,8 @@ setMethodS3("findByName", "AffymetrixCelSet", function(static, ..., chipType=NUL
     paths <- eval(formals(findByName.AffymetrixCelSet)[["paths"]]);
   }
 
-  # NextMethod() does not work here.
-  findByName.GenericDataFileSet(static, ..., subdirs=chipType, paths=paths);
+  # Call the "next" method
+  NextMethod("findByName", subdirs=chipType, paths=paths);
 }, static=TRUE)
 
 
@@ -656,7 +657,8 @@ setMethodS3("byPath", "AffymetrixCelSet", function(static, path="rawData/", patt
     return(res);
   }
 
-  set <- byPath.AffymetrixFileSet(static, path=path, pattern=pattern, ..., fileClass=fileClass, verbose=less(verbose));
+  # Call the "next" method
+  set <- NextMethod("byPath", path=path, pattern=pattern, fileClass=fileClass, verbose=less(verbose));
   verbose && cat(verbose, "Retrieved files: ", nbrOfFiles(set));
 
   if (nbrOfFiles(set) > 0) {

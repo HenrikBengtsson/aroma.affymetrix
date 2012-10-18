@@ -568,14 +568,6 @@ setMethodS3("isMonocellCdf", "AffymetrixCdfFile", function(this, ...) {
 })
 
 
-setMethodS3("getMonoCell", "AffymetrixCdfFile", function(this, ...) {
-  getMonocellCdf(this, ...);
-})
-
-setMethodS3("createMonoCell", "AffymetrixCdfFile", function(this, ...) {
-  createMonocellCdf(this, ...);
-})
-
 
 # equals(getMainCdf(getMonocellCdf(cdf), cdf)) == TRUE
 setMethodS3("getMainCdf", "AffymetrixCdfFile", function(this, ...) {

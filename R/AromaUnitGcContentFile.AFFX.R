@@ -1,9 +1,8 @@
 setMethodS3("allocateFromCdf", "AromaUnitGcContentFile", function(static, cdf, ...) {
   types <- "double";
-  sizes <- 4;
+  sizes <- 4L;
 
-  # NextMethod() not supported here.
-  res <- allocateFromCdf.AromaUnitTabularBinaryFile(static, cdf=cdf, types=types, sizes=sizes, ...);
+  res <- NextMethod("allocateFromCdf", cdf=cdf, types=types, sizes=sizes);
   res[,1] <- as.double(NA);
 
   res;

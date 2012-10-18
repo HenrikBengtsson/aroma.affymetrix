@@ -333,7 +333,7 @@ setMethodS3("getTimestamp", "CnagCfhFile", function(this, format="%m/%d/%y %H:%M
 
 
 setMethodS3("nbrOfCells", "CnagCfhFile", function(this, ...) {
-  NA;
+  as.integer(NA);
 })
 
 

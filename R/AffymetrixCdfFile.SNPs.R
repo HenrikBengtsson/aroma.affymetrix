@@ -78,8 +78,7 @@ setMethodS3("isSnpChip", "AffymetrixCdfFile", function(this, ...) {
 setMethodS3("getSnpNames", "AffymetrixCdfFile", function(this, ...) {
   types <- getUnitTypes(this, ...);
   units <- (types == 2);
-  unitNames <- getUnitNames(this, units=units, ...);
-  unitNames;
+  getUnitNames(this, units=units, ...);
 }, private=TRUE)
 
 
@@ -117,8 +116,7 @@ setMethodS3("getSnpNames", "AffymetrixCdfFile", function(this, ...) {
 setMethodS3("getCnNames", "AffymetrixCdfFile", function(this, ...) {
   types <- getUnitTypes(this, ...);
   units <- (types == 5);
-  unitNames <- getUnitNames(this, units=units, ...);
-  unitNames;
+  getUnitNames(this, units=units, ...);
 }, private=TRUE)
 
 

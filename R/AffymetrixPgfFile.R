@@ -127,7 +127,7 @@ setMethodS3("fromFile", "AffymetrixPgfFile", function(static, filename, path=NUL
   # Assert that it is a PGF file
   header <- readPgfHeader(pathname);
 
-  fromFile.AromaChipTypeAnnotationFile(static, filename=pathname, ...);
+  NextMethod("fromFile", filename=pathname);
 }, static=TRUE, protected=TRUE)
 
 

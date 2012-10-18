@@ -50,7 +50,7 @@ setMethodS3("byPath", "FirmaSet", function(static, ..., pattern=",FIRMAscores[.]
   if (is.null(fileClass))
     fileClass <- gsub("Set$", "File", class(static)[1]);
 
-  byPath.AffymetrixFileSet(static, ..., pattern=pattern, fileClass=fileClass);
+  NextMethod("byPath", pattern=pattern, fileClass=fileClass);
 }, protected=TRUE, static=TRUE)
 
 

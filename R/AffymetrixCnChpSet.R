@@ -109,11 +109,7 @@ setMethodS3("findByName", "AffymetrixCnChpSet", function(static, ..., paths="chp
     paths <- eval(formals(findByName.AffymetrixCnChpSet)[["paths"]]);
   }
 
-
-  # Unfortunately method dispatching does not work here.
-  path <- findByName.AffymetrixCelSet(static, ..., paths=paths);
-  
-  path;
+  NextMethod("findByName", paths=paths);
 }, static=TRUE)
 
 
@@ -160,7 +156,7 @@ setMethodS3("byPath", "AffymetrixCnChpSet", function(static, path="rawData/", pa
   
   verbose && enter(verbose, "Defining ", class(static)[1], " from files");
 
-  set <- byPath.AffymetrixFileSet(static, path=path, pattern=pattern, ..., fileClass=fileClass, verbose=less(verbose));
+  set <- NextMethod("byPath", path=path, pattern=pattern, fileClass=fileClass, verbose=less(verbose));
 
   verbose && cat(verbose, "Retrieved files: ", nbrOfFiles(set));
 
@@ -310,13 +306,15 @@ setMethodS3("extractLogRatios", "AffymetrixCnChpSet", function(this, units=NULL,
     df <- getFile(this, kk);
     verbose && enter(verbose, sprintf("Array #%d ('%s') of %d", kk, getName(df), nbrOfArrays));
 
-    if (!is.null(readMap))
+    if (!is.null(readMap)) {
       setUnitReadMap(df, readMap=readMap);
+    }
 
     dataKK <- extractLogRatios(df, units=units, ..., verbose=less(verbose, 5));
 
-    if (is.null(readMap))
+    if (is.null(readMap)) {
       readMap <- getUnitReadMap(df);
+    }
 
     verbose && str(verbose, dataKK);
     if (is.null(data)) {
@@ -351,8 +349,10 @@ setMethodS3("extractLogRatios", "AffymetrixCnChpSet", function(this, units=NULL,
 
 
 setMethodS3("getCdf", "AffymetrixCnChpSet", function(this, ...) {
-  getCdf(this$files[[1]], ...);
+  aFile <- getFile(this, 1L);
+  getCdf(aFile, ...);
 })
+
  
 setMethodS3("setCdf", "AffymetrixCnChpSet", function(this, cdf, verbose=FALSE, ..., .checkArgs=TRUE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

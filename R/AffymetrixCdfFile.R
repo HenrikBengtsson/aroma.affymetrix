@@ -83,7 +83,8 @@ setMethodS3("getFileFormat", "AffymetrixCdfFile", function(this, ...) {
   if (rawToChar(raw[1:5]) == "[CDF]")
     return("v3 (text; ASCII)");
 
-  return(NA);
+  naValue <- as.character(NA);
+  return(naValue);
 })
 
 
@@ -152,7 +153,7 @@ setMethodS3("fromFile", "AffymetrixCdfFile", function(static, filename, path=NUL
   # Assert that it is a CDF file
   header <- readCdfHeader(pathname);
 
-  fromFile.AromaChipTypeAnnotationFile(static, filename=pathname, ...);
+  NextMethod("fromFile", filename=pathname);
 }, static=TRUE, protected=TRUE)
 
 

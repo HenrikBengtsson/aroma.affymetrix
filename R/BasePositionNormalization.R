@@ -45,7 +45,7 @@ setConstructorS3("BasePositionNormalization", function(..., model=c("smooth.spli
 
 
 setMethodS3("getAsteriskTags", "BasePositionNormalization", function(this, collapse=NULL, ...) {
-  tags <- NextMethod("getAsteriskTags", collapse=collapse);
+  tags <- NextMethod("getAsteriskTags", collapse=NULL);
 
   # Add model tag?
   model <- this$.model;

@@ -184,7 +184,7 @@ setMethodS3("getOutputDataSet00", "FragmentEquivalentClassNormalization", functi
 
   verbose && enter(verbose, "Getting output data set for ", class(this)[1]);
 
-  args <- list(generic="getOutputDataSet", object=this, ...);
+  args <- list("getOutputDataSet");
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Inherit certain arguments from the input data set

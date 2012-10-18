@@ -42,7 +42,7 @@ setMethodS3("hasStrandiness", "CnChipEffectSet", function(this, ...) {
 
 
 setMethodS3("byPath", "CnChipEffectSet", function(static, ..., combineAlleles="auto") {
-  byPath.SnpChipEffectSet(static, ..., combineAlleles=combineAlleles);
+  NextMethod("byPath", combineAlleles=combineAlleles);
 }, protected=TRUE, static=TRUE)
 
 

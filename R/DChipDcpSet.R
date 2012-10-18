@@ -109,11 +109,7 @@ setMethodS3("findByName", "DChipDcpSet", function(static, ..., paths=c("rawData(
     paths <- eval(formals(findByName.DChipDcpSet)[["paths"]]);
   }
 
-
-  # Unfortunately method dispatching does not work here.
-  path <- findByName.AffymetrixCelSet(static, ..., paths=paths);
-  
-  path;
+  NextMethod("findByName", paths=paths);
 }, static=TRUE)
 
 
@@ -149,7 +145,7 @@ setMethodS3("byPath", "DChipDcpSet", function(static, path="rawData/", pattern="
   
   verbose && enter(verbose, "Defining ", class(static)[1], " from files");
 
-  this <- byPath.AffymetrixFileSet(static, path=path, pattern=pattern, ..., fileClass=fileClass, verbose=less(verbose));
+  this <- NextMethod("byPath", path=path, pattern=pattern, fileClass=fileClass, verbose=less(verbose));
 
   verbose && cat(verbose, "Retrieved files: ", nbrOfFiles(this));
 

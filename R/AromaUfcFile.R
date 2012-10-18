@@ -51,11 +51,10 @@ setMethodS3("allocateFromCdf", "AromaUfcFile", function(static, cdf, nbrOfEnzyme
   # Argument 'nbrOfEnzymes':
   nbrOfEnzymes <- Arguments$getInteger(nbrOfEnzymes, range=c(1,10));
 
-  types <- rep("integer", nbrOfEnzymes);
-  sizes <- rep(1, nbrOfEnzymes);
+  types <- rep("integer", times=nbrOfEnzymes);
+  sizes <- rep(1L, times=nbrOfEnzymes);
 
-  # NextMethod() not supported here.
-  allocateFromCdf.AromaUnitTabularBinaryFile(static, cdf=cdf, types=types, sizes=sizes, ...);
+  NextMethod("allocateFromCdf", cdf=cdf, types=types, sizes=sizes);
 }, static=TRUE)
 
 

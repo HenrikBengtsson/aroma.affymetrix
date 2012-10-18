@@ -236,6 +236,18 @@ setMethodS3("createUnique", "AffymetrixCdfFile", function(this, ...) {
 }, protected=TRUE, deprecated=TRUE)
 
 
+setMethodS3("getMonoCell", "AffymetrixCdfFile", function(this, ...) {
+  .Deprecated("getMonocellCdf");
+  getMonocellCdf(this, ...);
+}, protected=TRUE, deprecated=TRUE)
+
+
+setMethodS3("createMonoCell", "AffymetrixCdfFile", function(this, ...) {
+  .Deprecated("createMonocellCdf");
+  createMonocellCdf(this, ...);
+}, protected=TRUE, deprecated=TRUE)
+
+
 setMethodS3("getData", "AffymetrixCelFile", function(this, ...) {
   .Deprecated("readRawData");
   readRawData(this, ...);
@@ -551,6 +563,8 @@ PdInfo2Cdf <- function(...) {
 
 ############################################################################
 # HISTORY:
+# 2012-10-17
+# o Deprecated getMonoCell() and createMonoCell().
 # 2012-10-14
 # o Created 999.DEPRECATED.R.
 # 2011-02-19

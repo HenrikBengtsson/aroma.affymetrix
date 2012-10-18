@@ -1,8 +1,10 @@
 setConstructorS3("AffymetrixCsvFile", function(..., sep=",", .verify=TRUE) {
   this <- extend(AffymetrixTabularFile(..., .verify=FALSE), "AffymetrixCsvFile");
 
-  if (.verify)
+  if (.verify) {
     verify(this, ...);
+  }
+
   this;
 })
 
@@ -19,7 +21,7 @@ setMethodS3("getExtensionPattern", "AffymetrixCsvFile", function(static, ...) {
 
 
 setMethodS3("findByChipType", "AffymetrixCsvFile", function(static, chipType, pattern=sprintf("^%s.*%s", chipType, getExtensionPattern(static)), ...) {
-  findByChipType.AffymetrixTabularFile(static, chipType=chipType, pattern=pattern, ...);
+  NextMethod("findByChipType", chipType=chipType, pattern=pattern);
 }, static=TRUE, protected=TRUE)
 
 

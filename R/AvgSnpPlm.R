@@ -30,7 +30,7 @@ setConstructorS3("AvgSnpPlm", function(..., mergeStrands=FALSE) {
 
 setMethodS3("getAsteriskTags", "AvgSnpPlm", function(this, collapse=NULL, ...) {
   # Returns 'AVG[,<flavor>]'
-  tags <- NextMethod("getAsteriskTags", collapse=collapse);
+  tags <- NextMethod("getAsteriskTags", collapse=NULL);
 
   # Add class specific parameter tags
   if (!this$mergeStrands)

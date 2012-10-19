@@ -30,7 +30,7 @@ print(dsR);
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Before running in parallel, assert that the monocell CDF has been created
 cdf <- getCdf(dsR);
-cdfM <- getMonoCell(cdf, verbose=verbose);
+cdfM <- getMonocellCdf(cdf, verbose=verbose);
 
 # Allocate compute cluster
 cl <- makeCluster(2L);

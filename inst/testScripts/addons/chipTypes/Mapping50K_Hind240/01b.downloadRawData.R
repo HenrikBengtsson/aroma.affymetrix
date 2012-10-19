@@ -7,13 +7,13 @@ verbose && enter(verbose, "Downloading raw data");
 
 ##########################################################################
 # Data set:
-# HapMap,CEU/
+# HapMap,CEU,testset/
 #   Mapping50K_Hind240/
 #    GSM226867.CEL, ..., GSM226876.CEL [10 files]
 #
 # URL: http://hapmap.ncbi.nlm.nih.gov/downloads/raw_data/affy100k/
 ##########################################################################
-dataSet <- "HapMap,CEU";
+dataSet <- "HapMap,CEU,testset";
 chipTypes <- c("Mapping50K_Hind240", "Mapping50K_Xba240");
 sampleNames <- c("CEU_NA06985", "CEU_NA06991", "CEU_NA06993",
                  "CEU_NA06994", "CEU_NA07000", "CEU_NA07019");

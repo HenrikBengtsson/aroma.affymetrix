@@ -61,7 +61,6 @@ extends \emph{\link[aroma.core]{UnitNamesFile}}\cr
 \tabular{rll}{
  \tab \code{\link[aroma.affymetrix:convert.AffymetrixCdfFile]{convert}} \tab Converts a CDF into the same CDF but with another format.\cr
  \tab \code{\link[aroma.affymetrix:createExonByTranscriptCdf.AffymetrixCdfFile]{createExonByTranscriptCdf}} \tab Creates an exon-by-transcript CDF.\cr
- \tab \code{createMonoCell} \tab  -\cr
  \tab \code{getACSFile} \tab  -\cr
  \tab \code{getAromaCellSequenceFile} \tab  -\cr
  \tab \code{\link[aroma.affymetrix:getCellIndices.AffymetrixCdfFile]{getCellIndices}} \tab Gets the cell indices unit by unit.\cr
@@ -70,7 +69,6 @@ extends \emph{\link[aroma.core]{UnitNamesFile}}\cr
  \tab \code{getFileFormat} \tab  -\cr
  \tab \code{\link[aroma.affymetrix:getGenomeInformation.AffymetrixCdfFile]{getGenomeInformation}} \tab Gets genome information for this chip type.\cr
  \tab \code{getImage} \tab  -\cr
- \tab \code{getMonoCell} \tab  -\cr
  \tab \code{getPlatform} \tab  -\cr
  \tab \code{getUnitGroupNamesFromUgcMap} \tab  -\cr
  \tab \code{\link[aroma.affymetrix:getUnitNames.AffymetrixCdfFile]{getUnitNames}} \tab Gets the names of each unit.\cr
@@ -88,6 +86,7 @@ extends \emph{\link[aroma.core]{UnitNamesFile}}\cr
  \tab \code{\link[aroma.affymetrix:readUnits.AffymetrixCdfFile]{readUnits}} \tab Reads CDF data unit by unit.\cr
  \tab \code{setGenomeInformation} \tab  -\cr
  \tab \code{setSnpInformation} \tab  -\cr
+ \tab \code{validate} \tab  -\cr
 }
 
 

@@ -63,7 +63,7 @@ fitOne, getAromaCellSequenceFile, getTargetFile, indexOfMissingSequences, predic
 clearCache, getCellsTo, getCellsToFit, getCellsToUpdate, getUnitsTo, getUnitsToFit, getUnitsToUpdate, writeSignals
 
  \bold{Methods inherited from Transform}:\cr
-getOutputDataSet, getOutputDataSetOLD20090509, getOutputFiles
+getOutputDataSet, getOutputFiles
 
  \bold{Methods inherited from AromaTransform}:\cr
 getExpectedOutputFiles, getExpectedOutputFullnames, getFullName, getInputDataSet, getName, getOutputDataSet, getOutputDataSet0, getOutputFiles, getPath, getTags, isDone, process, setTags

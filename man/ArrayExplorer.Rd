@@ -32,11 +32,10 @@ extends \emph{\link[aroma.core]{Explorer}}\cr
 
  }
 
- \usage{ArrayExplorer(csTuple=NULL, version=c("3.4", "3.0"), ...)}
+ \usage{ArrayExplorer(csTuple=NULL, ...)}
 
  \arguments{
    \item{csTuple}{An \code{\link{AffymetrixCelSet}} object.}
-   \item{version}{The version of the Explorer HTML/Javascript generated/used.}
    \item{...}{Not used.}
  }
 

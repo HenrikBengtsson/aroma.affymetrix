@@ -756,3 +756,4 @@ nbrOfCells.AffymetrixPgfFile nbrOfColumns.AffymetrixPgfFile
 nbrOfRows.AffymetrixPgfFile nbrOfUnits.AffymetrixPgfFile
 readRawData.AffymetrixPgfFile
 AromaUfcFile
+validate.AffymetrixCdfFile

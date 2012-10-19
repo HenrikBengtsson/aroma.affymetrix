@@ -23,14 +23,9 @@
 \usage{AffymetrixFileSet$byPath(..., fileClass="AffymetrixFile")}
 
 \arguments{
- \item{path}{The path where to search for Affymetrix files.}
- \item{pattern}{The filename pattern for match files.
-    If \code{\link[base]{NULL}}, filename extensions corresponding to known subclasses
-    of the abstract \code{\link{AffymetrixFile}} class are search for.}
- \item{recursive}{If \code{\link[base:logical]{TRUE}}, subdirectories are search recursively,
-    otherwise not.}
- \item{...}{Optional arguments passed to the constructor of the
-    static (calling) class.}
+ \item{...}{Additional arguments passed to the constructor of the static
+    (calling) class.}
+ \item{fileClass}{The name of the \code{\link{GenericDataFile}} class.}
 }
 
 \value{

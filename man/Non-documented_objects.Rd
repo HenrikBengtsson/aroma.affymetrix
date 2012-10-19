@@ -1470,6 +1470,7 @@
 \alias{nbrOfUnits.AffymetrixPgfFile}
 \alias{readRawData.AffymetrixPgfFile}
 \alias{AromaUfcFile}
+\alias{validate.AffymetrixCdfFile}
 
 \description{
   This page contains aliases for all "non-documented" objects that

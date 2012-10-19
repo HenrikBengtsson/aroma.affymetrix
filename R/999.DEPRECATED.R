@@ -248,12 +248,6 @@ setMethodS3("createMonoCell", "AffymetrixCdfFile", function(this, ...) {
 }, protected=TRUE, deprecated=TRUE)
 
 
-setMethodS3("getData", "AffymetrixCelFile", function(this, ...) {
-  .Deprecated("readRawData");
-  readRawData(this, ...);
-}, protected=TRUE, deprecated=TRUE)
-
-
 setMethodS3("getMatrixChipEffectFiles", "CopyNumberChromosomalModel", function(...) {
   .Deprecated("getDataFileMatrix");
   getDataFileMatrix(...);
@@ -558,6 +552,16 @@ PdInfo2Cdf <- function(...) {
   throw("PdInfo2Cdf() is deprecated. Use pdInfo2Cdf() instead, which works identically.");
   pdInfo2Cdf(...);
 } # PdInfo2Cdf() 
+
+
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# TODO, but still used alot internally.
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+setMethodS3("getData", "AffymetrixCelFile", function(this, ...) {
+##  .Deprecated("readRawData");
+  readRawData(this, ...);
+}, protected=TRUE, deprecated=TRUE)
 
 
 

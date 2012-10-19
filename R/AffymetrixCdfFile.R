@@ -1607,8 +1607,53 @@ setMethodS3("convertUnits", "AffymetrixCdfFile", function(this, units=NULL, keep
 }, private=TRUE)
 
 
+setMethodS3("validate", "AffymetrixCdfFile", function(this, ...) {
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Local functions
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  assertUnits <- function(expr, fmtstr="%d unit(s) (i.e. %s) are invalid: %s") {
+    units <- which(expr);
+    nunits <- length(units);
+    if (nunits > 0L) {
+      fmtstr <- paste("Detected invalid/corrupt CDF: ", fmtstr, sep="");
+      msg <- sprintf(fmtstr, nunits, hpaste(units), getPathname(this));
+      throw(msg);
+    }
+  } # assertUnits()
+
+  
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Check for empty unit names
+  #
+  # Examples: 
+  # o HTHGU133A_Hs_ENTREZG.cdf (v 12.0.0):
+  #    Error: Detected 1 unit(s) (i.e. 11973) with empty unit names: ...
+  #   because it's CDF header claims to have 11,973 units, whereas there
+  #   are only 11,972.  See also thread '[customcdf] ENTREZG, AUGUSTUST
+  #   for pig species is updated' on May 8, 2012 [http://goo.gl/Xg1pp]
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  unitNames <- getUnitNames(this);
+  assertUnits(nchar(unitNames) == 0L, "%d unit(s) (i.e. %s) with empty unit names: %s");
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Check for units with zero unit groups
+  #
+  # Examples:
+  # o HTHGU133A_Hs_ENTREZG.cdf (v 12.0.0) [as above]
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  ns <- nbrOfGroupsPerUnit(this);
+  assertUnits(ns == 0L, "%d unit(s) (i.e. %s) with zero unit groups: %s");
+
+  invisible(this);
+})
+
+
 ############################################################################
 # HISTORY:
+# 2012-10-18
+# o Added validate() for AffymetrixCdfFile, which validate a CDF for
+#   the most "common" errors, to help troubleshooting.  Note that the
+#   validation is not complete, i.e. rare/unknown errors are not caught.
 # 2012-10-14
 # o CLEANUP: findByChipType() for AffymetrixCdfFile no longer support
 #   monocell CDF file named <chipType>-monocell.CDF, and gives an 

@@ -136,6 +136,14 @@ setMethodS3("createMonocellCdf", "AffymetrixCdfFile", function(this, chipType=ge
 
   verbose && cat(verbose, "Chip type: ", getChipType(this));
 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Validate source CDF
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  verbose && enter(verbose, "Validate (main) CDF");
+  validate(this);
+  verbose && exit(verbose);
+
+
   # Get the pathname of the source
   src <- getPathname(this);
   src <- Arguments$getReadablePathname(src);
@@ -643,6 +651,10 @@ setMethodS3("getUnitGroupCellMapWithMonocell", "AffymetrixCdfFile", function(thi
 
 ############################################################################
 # HISTORY:
+# 2012-10-18
+# o ROBUSTNESS: Now createMonocellCdf() for AffymetrixCdfFile validates
+#   the CDF before trying to create the monocell CDF.  This should catch
+#   for instance invalid Brainarray custom CDFs, cf. ...
 # 2011-04-15
 # o CLEANUP: Dropped argument 'sep' of createMonocellCdf() and 
 #   createUniqueCdf() for AffymetrixCdfFile.

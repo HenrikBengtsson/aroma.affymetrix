@@ -25,7 +25,7 @@ setMethodS3("getDefaultExtension", "AffymetrixNetAffxCsvFile", function(static, 
 
 
 setMethodS3("findByChipType", "AffymetrixNetAffxCsvFile", function(static, chipType, tags=".*", pattern=sprintf("^%s%s([.]|_)%s$", chipType, tags, getDefaultExtension(static)), ...) {
-  findByChipType.AffymetrixCsvFile(static, chipType=chipType, pattern=pattern, ...);
+  NextMethod("findByChipType", chipType=chipType, pattern=pattern);
 }, static=TRUE, protected=TRUE)
 
 

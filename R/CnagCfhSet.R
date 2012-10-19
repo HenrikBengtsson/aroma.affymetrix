@@ -324,11 +324,7 @@ setMethodS3("findByName", "CnagCfhSet", function(static, ..., paths="cnagData(|,
     paths <- eval(formals(findByName.CnagCfhSet)[["paths"]]);
   }
 
-
-  # Unfortunately method dispatching does not work here.
-  path <- findByName.AffymetrixCelSet(static, ..., paths=paths);
-  
-  path;
+  NextMethod("findByName", paths=paths);
 }, static=TRUE)
 
 
@@ -363,7 +359,7 @@ setMethodS3("byPath", "CnagCfhSet", function(static, path="rawData/", pattern="[
   
   verbose && enter(verbose, "Defining ", class(static)[1], " from files");
 
-  this <- byPath.GenericDataFileSet(static, path=path, pattern=pattern, ..., fileClass=fileClass, verbose=less(verbose));
+  this <- NextMethod("byPath", path=path, pattern=pattern, fileClass=fileClass, verbose=less(verbose));
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Handle duplicates

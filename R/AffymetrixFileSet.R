@@ -102,14 +102,9 @@ setMethodS3("as.AffymetrixFileSet", "default", function(object, ...) {
 # @synopsis
 #
 # \arguments{
-#  \item{path}{The path where to search for Affymetrix files.}
-#  \item{pattern}{The filename pattern for match files. 
-#     If @NULL, filename extensions corresponding to known subclasses
-#     of the abstract @see "AffymetrixFile" class are search for.}
-#  \item{recursive}{If @TRUE, subdirectories are search recursively,
-#     otherwise not.}
-#  \item{...}{Optional arguments passed to the constructor of the
-#     static (calling) class.}
+#  \item{...}{Additional arguments passed to the constructor of the static
+#     (calling) class.}
+#  \item{fileClass}{The name of the @see "GenericDataFile" class.}
 # }
 #
 # \value{
@@ -132,8 +127,15 @@ setMethodS3("as.AffymetrixFileSet", "default", function(object, ...) {
 # }
 #*/###########################################################################
 setMethodS3("byPath", "AffymetrixFileSet", function(static, ..., fileClass="AffymetrixFile") {
-  # NextMethod() does not work here
-  byPath.GenericDataFileSet(static, ..., fileClass=fileClass);
+  # WORKAROUND: Note, NextMethod() passes all arguments ever passed in the
+  # sequence of calls (i.e. the calls to the generic function, and each
+  # of the "next" methods before reaching this one).  It is not possible
+  # grab/exclude any of them when calling NextMethod().  Because of this
+  # above '...' may contain several methods that are not accepted down
+  # stream.  Indeed, here '...' will be passed by byPath() for GenericDataSet
+  # to newInstance(static, ...), which will generate an error unless
+  # .onUnknownArgs="ignore". /HB 2012-10-18
+  NextMethod("byPath", fileClass=fileClass, .onUnknownArgs="ignore");
 }, static=TRUE)
 
 
@@ -145,6 +147,9 @@ setMethodS3("getDefaultFullName", "AffymetrixFileSet", function(this, parent=1L,
 
 ############################################################################
 # HISTORY:
+# 2012-10-18
+# o WORKAROUND: Now byPath() for AffymetrixFileSet passes 
+#   .onUnknownArgs="ignore" to the "next" method.
 # 2009-10-02
 # o Added getDefaultFullName() to AffymetrixFileSet.
 # 2008-05-18

@@ -142,10 +142,13 @@ setMethodS3("byName", "AffymetrixCnChpSet", function(static, name, tags=NULL, ch
 }, static=TRUE)
 
 
-setMethodS3("byPath", "AffymetrixCnChpSet", function(static, path="rawData/", pattern="[.](cnchp|CNCHP)$", cdf=NULL, checkChipType=is.null(cdf), ..., fileClass="AffymetrixCnChpFile", verbose=FALSE) {
+setMethodS3("byPath", "AffymetrixCnChpSet", function(static, path, pattern="[.](cnchp|CNCHP)$", cdf=NULL, checkChipType=is.null(cdf), ..., fileClass="AffymetrixCnChpFile", verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # Argument 'path':
+  path <- Arguments$getReadablePath(path, mustExist=TRUE);
+
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
   if (verbose) {
@@ -156,7 +159,16 @@ setMethodS3("byPath", "AffymetrixCnChpSet", function(static, path="rawData/", pa
   
   verbose && enter(verbose, "Defining ", class(static)[1], " from files");
 
-  set <- NextMethod("byPath", path=path, pattern=pattern, fileClass=fileClass, verbose=less(verbose));
+  # Call the "next" method
+  # WORKAROUND: For unknown reasons it is not possible to specify
+  # 'path=path' below, because it is already passed implicitly by
+  # NextMethod() and if done, then argument 'recursive' to byPath() for
+  # GenericDataFileSet will also be assign the value of 'path', e.g. 
+  # try byPath(AffymetrixCelSet(), "path/to/").  This seems to be related
+  # to R-devel thread 'Do *not* pass '...' to NextMethod() - it'll do it 
+  # for you; missing documentation, a bug or just me?' on Oct 16, 2012. 
+  ##  set <- NextMethod("byPath", path=path, pattern=pattern, fileClass=fileClass, verbose=less(verbose));
+  set <- NextMethod("byPath", pattern=pattern, fileClass=fileClass, verbose=less(verbose));
 
   verbose && cat(verbose, "Retrieved files: ", nbrOfFiles(set));
 

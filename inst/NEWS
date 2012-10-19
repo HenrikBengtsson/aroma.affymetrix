@@ -1,6 +1,21 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 2.6.5 [2012-10-18]
+o ROBUSTNESS: Now createMonocellCdf() for AffymetrixCdfFile validates
+  the CDF (via new validate()).  This will give more informative
+  error message in case the CDF is invalid, e.g. containing "empty"
+  units.
+o ROBUSTNESS: Added validate() for AffymetrixCdfFile, which validate
+  a CDF for the most "common" errors, to help troubleshooting.  Note
+  that the validation is not complete, i.e. rare/unknown errors are 
+  not caught.
+o Now as.character() for all AromaChipTypeAnnotationFile classes,
+  and hence print(), reports the file size both as abbreviated as
+  well as in exact number of bytes, e.g. "24.66 MB (25853850 bytes)"
+  (used to only be "24.66 MB").
+
+
 Version: 2.6.4 [2012-10-16]
 o ROBUSTNESS/BUG FIX: No longer passing '...' to NextMethod(), cf.
   R-devel thread 'Do *not* pass '...' to NextMethod() - it'll do it 

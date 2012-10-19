@@ -628,10 +628,13 @@ setMethodS3("updateSampleAnnotationSet", "AffymetrixCelSet", function(this, ...,
 }, private=TRUE)  # updateSampleAnnotationSet()
 
 
-setMethodS3("byPath", "AffymetrixCelSet", function(static, path="rawData/", pattern="[.](c|C)(e|E)(l|L)$", cdf=NULL, checkChipType=is.null(cdf), ..., onDuplicates=c("keep", "exclude", "error"), fileClass="AffymetrixCelFile", force=TRUE, verbose=FALSE) {
+setMethodS3("byPath", "AffymetrixCelSet", function(static, path, cdf=NULL, pattern="[.](c|C)(e|E)(l|L)$", ..., checkChipType=is.null(cdf), onDuplicates=c("keep", "exclude", "error"), fileClass="AffymetrixCelFile", force=TRUE, verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # Argument 'path':
+  path <- Arguments$getReadablePath(path, mustExist=TRUE);
+
   # Argument 'onDuplicates':
   onDuplicates <- match.arg(onDuplicates);
 
@@ -657,8 +660,19 @@ setMethodS3("byPath", "AffymetrixCelSet", function(static, path="rawData/", patt
     return(res);
   }
 
+
   # Call the "next" method
-  set <- NextMethod("byPath", path=path, pattern=pattern, fileClass=fileClass, verbose=less(verbose));
+
+  # WORKAROUND: For unknown reasons it is not possible to specify
+  # 'path=path' below, because it is already passed implicitly by
+  # NextMethod() and if done, then argument 'recursive' to byPath() for
+  # GenericDataFileSet will also be assign the value of 'path', e.g. 
+  # try byPath(AffymetrixCelSet(), "path/to/").  This seems to be related
+  # to R-devel thread 'Do *not* pass '...' to NextMethod() - it'll do it 
+  # for you; missing documentation, a bug or just me?' on Oct 16-18, 2012.
+  args <- list("byPath", pattern=pattern, fileClass=fileClass, verbose=less(verbose));
+#  set <- do.call(NextMethod, args);
+  set <- NextMethod(generic="byPath", object=static, pattern=pattern, fileClass=fileClass, verbose=less(verbose));
   verbose && cat(verbose, "Retrieved files: ", nbrOfFiles(set));
 
   if (nbrOfFiles(set) > 0) {
@@ -767,7 +781,7 @@ setMethodS3("byPath", "AffymetrixCelSet", function(static, path="rawData/", patt
   verbose && exit(verbose);
 
   set;
-}, protected=TRUE, static=TRUE) # byPath()
+}, static=TRUE, protected=TRUE) # byPath()
 
 
 

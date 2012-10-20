@@ -7,7 +7,7 @@ verbose && enter(verbose, "Downloading raw data");
 
 ##########################################################################
 # Data set:
-# HapMap,CEU/
+# HapMap,CEU,testset/
 #   Mapping50K_Hind240/
 #    GSM226867.CEL, ..., GSM226876.CEL [10 files]
 #

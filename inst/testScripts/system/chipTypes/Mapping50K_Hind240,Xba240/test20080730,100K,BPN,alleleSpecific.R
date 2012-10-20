@@ -2,7 +2,7 @@ library("aroma.affymetrix");
 
 log <- Arguments$getVerbose(-4, timestamp=TRUE);
 
-dataSetName <- "HapMap270,100K,CEU,testSet";
+dataSetName <- "HapMap,CEU,testset";
 chipType <- "Mapping50K_Hind240";
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

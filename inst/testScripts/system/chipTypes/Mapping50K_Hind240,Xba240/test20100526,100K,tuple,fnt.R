@@ -5,7 +5,7 @@ verbose <- Verbose(threshold=-4, timestamp=TRUE);
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # A tuple
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-dataSet <- "HapMap270,100K,CEU,testSet";
+dataSetName <- "HapMap,CEU,testset";
 chipTypes <- c("Mapping50K_Hind240", "Mapping50K_Xba240");
 
 dsList <- lapply(chipTypes, FUN=function(chipType) {

@@ -3,7 +3,7 @@ log <- Arguments$getVerbose(-4, timestamp=TRUE);
 
 
 
-dataSetName <- "HapMap270,100K,CEU,testSet";
+dataSetName <- "HapMap,CEU,testset";
 chipTypes <- c("Mapping50K_Hind240", "Mapping50K_Xba240");
 
 # Expected sample names

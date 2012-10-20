@@ -7,9 +7,11 @@ verbose && enter(verbose, "Downloading raw data");
 
 ##########################################################################
 # Data set:
-# HapMap,CEU/
+# HapMap,CEU,testset/
 #   Mapping50K_Hind240/
-#    GSM226867.CEL, ..., GSM226876.CEL [10 files]
+#    CEU_NA06985_HIND.CEL, ..., CEU_NA07019_HIND.CEL [6 files]
+#   Mapping50K_Xba240/
+#    CEU_NA06985_XBA.CEL, ..., CEU_NA07019_XBA.CEL [6 files]
 #
 # URL: http://hapmap.ncbi.nlm.nih.gov/downloads/raw_data/affy100k/
 ##########################################################################
@@ -36,5 +38,17 @@ print(ds);
 
 ds <- downloadHapMapSamples(dataSet, chipType=chipTypes[2], sampleNames=sampleNames);
 print(ds);
+## AffymetrixCelSet:
+## Name: HapMap
+## Tags: CEU,testset
+## Path: rawData/HapMap,CEU,testset/Mapping50K_Xba240
+## Platform: Affymetrix
+## Chip type: Mapping50K_Xba240
+## Number of arrays: 6
+## Names: CEU_NA06985_XBA, CEU_NA06991_XBA, CEU_NA06993_XBA, ..., CEU_NA07019_XBA [6]
+## Time period: 2004-01-15 17:45:24 -- 2004-01-23 16:05:32
+## Total file size: 146.85MB
+## RAM: 0.01MB
+
 
 verbose && exit(verbose);

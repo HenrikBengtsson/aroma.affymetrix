@@ -4,8 +4,11 @@ verbose <- Arguments$getVerbose(-4, timestamp=TRUE);
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Tests for setting up CEL sets and locating the CDF file
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-cdf <- AffymetrixCdfFile$byChipType("Mapping50K_Hind240");
-csR <- AffymetrixCelSet$byName("HapMap270,100K,CEU,testSet", cdf=cdf);
+dataSetName <- "HapMap,CEU,testset";
+chipType <- "Mapping50K_Hind240";
+
+cdf <- AffymetrixCdfFile$byChipType(chipType);
+csR <- AffymetrixCelSet$byName(dataSetName, cdf=cdf);
 setFullNamesTranslator(csR, function(names, ...) {
   # Turn into comma-separated tags
   names <- gsub("_", ",", names);

@@ -21,12 +21,7 @@ sourceTestScript <- function(pathname, devel=FALSE, ...) {
 
   # Use special file cache for testing
   key <- "R.cache::rootPath";
-  oopts <- setOption(key, "~/.Rcache,scratch");
-  on.exit({
-    setOption(key, oopts);
-  }, add=TRUE);
-  key <- "R.cache::rootPath";
-  oopts <- setOption(key, TRUE);
+  oopts <- setOption(key, ".Rcache");
   on.exit({
     setOption(key, oopts);
   }, add=TRUE);
@@ -145,6 +140,8 @@ launchTestGroups <- function(groups="system", ...) {
 
 ############################################################################
 # HISTORY:
+# 2012-10-19
+# o BUG FIX: The temporary cache directory was set to 'TRUE'.
 # 2012-09-14
 # o Created.
 ############################################################################

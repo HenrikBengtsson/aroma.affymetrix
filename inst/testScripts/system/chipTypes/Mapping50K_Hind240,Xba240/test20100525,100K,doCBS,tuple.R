@@ -5,7 +5,7 @@ verbose <- Verbose(threshold=-4, timestamp=TRUE);
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # doCBS() with explicit data set tuple
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-dataSetName <- "HapMap,CEU,testset";
+dataSet <- "HapMap,CEU,testset";
 tags <- "ACC,-XY,RMA,+300,A+B,FLN,-XY";
 chipTypes <- c("Mapping50K_Hind240", "Mapping50K_Xba240");
 

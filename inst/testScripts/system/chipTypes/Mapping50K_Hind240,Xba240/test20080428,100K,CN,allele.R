@@ -2,7 +2,7 @@ library("aroma.affymetrix")
 log <- Arguments$getVerbose(-4, timestamp=TRUE);
 
 
-dataSetName <- "HapMap,CEU,testset";
+dataSet <- "HapMap,CEU,testset";
 chipType <- "Mapping50K_Xba240";
 
 # Expected sample names
@@ -12,7 +12,7 @@ sampleNames <- c("NA06985", "NA06991", "NA06993",
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Tests for setting up CEL sets and locating the CDF file
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-cs <- AffymetrixCelSet$byName(dataSetName, chipType=chipType, verbose=log);
+cs <- AffymetrixCelSet$byName(dataSet, chipType=chipType);
 keep <- 1:6;
 cs <- extract(cs, keep);
 sampleNames <- sampleNames[keep];

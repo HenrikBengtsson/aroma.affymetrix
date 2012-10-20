@@ -2,7 +2,7 @@ library("aroma.affymetrix");
 
 log <- Arguments$getVerbose(-4, timestamp=TRUE);
 
-dataSetName <- "HapMap,CEU,testset";
+dataSet <- "HapMap,CEU,testset";
 chipType <- "Mapping50K_Hind240";
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -17,7 +17,7 @@ acs <- AromaCellSequenceFile$byChipType(chipType);
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Tests for setting up CEL sets and locating the CDF file
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-csR <- AffymetrixCelSet$byName(dataSetName, cdf=cdf);
+csR <- AffymetrixCelSet$byName(dataSet, cdf=cdf);
 print(csR);
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

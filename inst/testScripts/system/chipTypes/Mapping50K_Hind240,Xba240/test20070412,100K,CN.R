@@ -3,7 +3,7 @@ log <- Arguments$getVerbose(-4, timestamp=TRUE);
 
 
 
-dataSetName <- "HapMap,CEU,testset";
+dataSet <- "HapMap,CEU,testset";
 chipTypes <- c("Mapping50K_Hind240", "Mapping50K_Xba240");
 
 # Expected sample names
@@ -15,7 +15,7 @@ sampleNames <- c("NA06985", "NA06991", "NA06993",
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 csRList <- list();
 for (chipType in chipTypes) {
-  cs <- AffymetrixCelSet$byName(dataSetName, chipType=chipType, verbose=log);
+  cs <- AffymetrixCelSet$byName(dataSet, chipType=chipType);
   print(cs);
   stopifnot(identical(getNames(cs), sampleNames));
   csRList[[chipType]] <- cs;

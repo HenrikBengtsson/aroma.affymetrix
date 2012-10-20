@@ -21,6 +21,12 @@ print(csR);
 # Currently, you must use the standard CDF file.
 bc <- GcRmaBackgroundCorrection(csR, type="affinities");
 print(bc);
-csB <- process(bc, verbose=verbose);
-print(csB);
 
+# This should throw "Error: Cannot perform GCRMA background 
+# (type="affinities") correction: The number (0) of negative
+# control is too small."
+tryCatch({
+  csB <- process(bc, verbose=verbose);
+}, error = function(ex) {
+  print(ex);
+})

@@ -20,11 +20,12 @@ sourceTestScript <- function(pathname, devel=FALSE, ...) {
   }
 
   # Use special file cache for testing
-  key <- "R.cache::rootPath";
-  oopts <- setOption(key, ".Rcache");
+  library("R.cache");
+  opath <- getCacheRootPath();
   on.exit({
-    setOption(key, oopts);
+    setCacheRootPath(opath);
   }, add=TRUE);
+  setCacheRootPath(".Rcache");
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

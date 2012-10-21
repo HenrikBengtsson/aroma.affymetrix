@@ -58,7 +58,7 @@ setMethodS3("writeWig", "CnChipEffectSet", function(this, reference=NULL, arrays
   arrayNames <- getNames(this);
 
   path <- filePath("glad", dataSetName, chipType, expandLinks="any");
-  mkdirs(path);
+  path <- Arguments$getWritablePath(path);
 
   pathnames <- c();
   con <- NULL;

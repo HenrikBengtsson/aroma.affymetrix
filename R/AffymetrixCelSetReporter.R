@@ -99,9 +99,7 @@ setMethodS3("getPath", "AffymetrixCelSetReporter", function(this, ...) {
   # The full path
   path <- filePath(mainPath, chipType, set, expandLinks="any");
   if (!isDirectory(path)) {
-    mkdirs(path);
-    if (!isDirectory(path))
-      throw("Failed to create output directory: ", path);
+    path <- Arguments$getWritablePath(path);
   }
 
   path;

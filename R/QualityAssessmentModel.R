@@ -147,7 +147,6 @@ setMethodS3("getPath", "QualityAssessmentModel", function(this, ...) {
 
   # Root path
   rootPath <- getRootPath(this);
-  mkdirs(rootPath);
 
   # Full name
   fullname <- getFullName(this);
@@ -161,9 +160,7 @@ setMethodS3("getPath", "QualityAssessmentModel", function(this, ...) {
 
   # Create path?
   if (!isDirectory(path)) {
-    mkdirs(path);
-    if (!isDirectory(path))
-      throw("Failed to create output directory: ", path);
+    path <- Arguments$getWritablePath(path);
   }
 
   path;
@@ -272,7 +269,7 @@ setMethodS3("getResiduals", "QualityAssessmentModel", function(this, units=NULL,
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Generating output pathnames
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  mkdirs(path);
+  path <- Arguments$getWritablePath(path);
   filenames <- getNames(ces);
   pathnames <- sapply(filenames, function(filename) {
     filename <- sprintf("%s,residuals.CEL", filename);
@@ -481,7 +478,7 @@ setMethodS3("getWeights", "QualityAssessmentModel", function(this, path=NULL, na
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Generating output pathname
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  mkdirs(path);
+  path <- Arguments$getWritablePath(path);
   ces <- getChipEffectSet(this);
   names <- getNames(ces);
   pathname <- sapply(names, function(name) {

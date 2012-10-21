@@ -61,7 +61,6 @@ setMethodS3("bgAdjustOptical", "AffymetrixCelSet", function(this, path=NULL, nam
   if (identical(getPath(this), path)) {
     throw("Cannot calibrate data file. Argument 'path' refers to the same path as the path of the data file to be calibrated: ", path);
   }
-  mkdirs(path);
 
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
@@ -320,7 +319,6 @@ setMethodS3("bgAdjustGcrma", "AffymetrixCelSet", function(this, path=NULL, name=
   if (identical(getPath(this), path)) {
     throw("Cannot calibrate data file. Argument 'path' refers to the same path as the path of the data file to be calibrated: ", path);
   }
-  mkdirs(path);
 
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
@@ -479,7 +477,6 @@ setMethodS3("bgAdjustRma", "AffymetrixCelSet", function(this, path=NULL, tags="R
   if (identical(getPath(this), path)) {
     throw("Cannot calibrate data file. Argument 'path' refers to the same path as the path of the data file to be calibrated: ", path);
   }
-  mkdirs(path);
 
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
@@ -516,6 +513,9 @@ setMethodS3("bgAdjustRma", "AffymetrixCelSet", function(this, path=NULL, tags="R
 
 ############################################################################
 # HISTORY:
+# 2012-10-21 [HB]
+# o CLEANUP: Dropped unneeded mkdirs(), because they were all preceeded
+#   by an Arguments$getWritablePath().
 # 2010-09-29 [HB]
 # o ROBUSTNESS: Now bgAdjustGcrma(..., affinities=NULL) is deprecated and
 #   throws an exception.

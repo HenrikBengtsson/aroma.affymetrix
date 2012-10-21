@@ -166,7 +166,7 @@ setMethodS3("process", "ChipEffectGroupMerge", function(this, ..., force=FALSE, 
 
   # Get (and create) the output path
   path <- getPath(this);
-  mkdirs(path);
+  path <- Arguments$getWritablePath(path);
 
   # Fields to be merged
   fields <- c("theta", "sdTheta");

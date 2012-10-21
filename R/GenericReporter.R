@@ -274,9 +274,7 @@ setMethodS3("getMainPath", "GenericReporter", function(this, ...) {
   # The full path
   path <- filePath(rootPath, name, tags, expandLinks="any");
   if (!isDirectory(path)) {
-    mkdirs(path);
-    if (!isDirectory(path))
-      throw("Failed to create output directory: ", path);
+    path <- Arguments$getWritablePath(path);
   }
 
   path;

@@ -63,7 +63,6 @@ setMethodS3("normalizeQuantile", "AffymetrixCelSet", function(this, path=NULL, n
   if (identical(getPath(this), path)) {
     throw("Cannot calibrate data file. Argument 'path' refers to the same path as the path of the data file to be calibrated: ", path);
   }
-  mkdirs(path);
 
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
@@ -349,6 +348,9 @@ setMethodS3("transformAffine", "AffymetrixCelSet", function(this, outPath=file.p
 
 ############################################################################
 # HISTORY:
+# 2012-10-21 [HB]
+# o CLEANUP: Dropped unneeded mkdirs(), because they were all preceeded
+#   by an Arguments$getWritablePath().
 # 2007-04-11
 # o Added more verbose output to averageQuantile() in the case when NAs
 #   are detected.  Added some Rdoc comments on how NAs are handles.

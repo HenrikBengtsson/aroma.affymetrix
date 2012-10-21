@@ -1,6 +1,13 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 2.6.6 [2012-10-21]
+o ROBUSTNESS: Now using Arguments$getWritablePath() everywhere instead
+  of mkdirs(), because the former will do a better job in creating
+  and asserting directories on slow shared file systems, and when it
+  fails it gives a more informative error message.
+
+
 Version: 2.6.5 [2012-10-18]
 o ROBUSTNESS: Now createMonocellCdf() for AffymetrixCdfFile validates
   the CDF (via new validate()).  This will give more informative

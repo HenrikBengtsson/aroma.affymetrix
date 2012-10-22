@@ -90,7 +90,7 @@ for (chipType in names(cesNList)) {
     sets[[type]][[chipType]] <- extract(ces, idxs);
   }
 }
-cns <- CbsModel(sets$tumor, sets$normal);
+cns <- CbsModel(sets$tumor, sets$normal, maxNAFraction=1/5);
 print(cns);
 
 # Link the ChromosomeExplorer to the segmentation model
@@ -101,4 +101,4 @@ print(ce);
 process(ce, arrays=1:2, chromosomes=c(2, 19), verbose=log);
 
 # The X chromosome is very noisy and generates quite a few missing values
-process(ce, arrays=1:2, chromosomes=23, maxNAFraction=1/5, verbose=log);
+process(ce, arrays=1:2, chromosomes=23, verbose=log);

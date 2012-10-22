@@ -405,7 +405,7 @@ if (!equals(dsCTs, dsCT) && !equals(dsCNs, dsCN)) {
 }
 
 # Setup paired tumor-normal segmentation model on binned data
-segS <- CbsModel(dsCTs, ref=dsCNs, tags=c(segTags, "*"));
+segS <- CbsModel(dsCTs, ref=dsCNs, tags=c(segTags, "*"), maxNAFraction=1);
 print(segS);
 
 ce <- ChromosomeExplorer(segS);
@@ -413,7 +413,7 @@ ce <- ChromosomeExplorer(segS);
 # Segment Chr8 of tumor GSM318736 as in FigS3 of the CalMaTe paper.
 sampleName <- sad["GSM318736", "sampleName"];
 idx <- match(sampleName, getNames(ce));
-process(ce, arrays=idx, chromosomes=c(8), maxNAFraction=1, verbose=verbose);
+process(ce, arrays=idx, chromosomes=c(8), verbose=verbose);
 
 
 ##########################################################################

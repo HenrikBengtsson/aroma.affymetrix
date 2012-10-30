@@ -339,7 +339,7 @@ setMethodS3("bgAdjustGcrma", "AffymetrixCelSet", function(this, path=NULL, name=
     if (is.null(affinities)) {
       # Alternative 2: Using old probe-tab files (deprecated)
       filename <- paste(getChipType(cdf), "-affinities.apa", sep="");
-      pathname <- filePath(path, filename, expandLinks="any");
+      pathname <- Arguments$getReadablePathname(filename, path=path, mustExist=FALSE);
   
       if (isFile(pathname)) {
         verbose && enter(verbose, "Reading saved affinities: ", pathname);

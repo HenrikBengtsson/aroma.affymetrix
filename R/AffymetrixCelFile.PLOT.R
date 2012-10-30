@@ -716,7 +716,7 @@ setMethodS3("writeImage", "AffymetrixCelFile", function(this, filename=NULL, ful
     # image set
     set <- "spatial";
 
-    path <- filePath(rootPath, dataSet, dataSetTags, chipType, set, expandLinks="any");
+    path <- filePath(rootPath, dataSet, dataSetTags, chipType, set);
   }
   path <- Arguments$getWritablePath(path);
 

@@ -62,7 +62,9 @@ setMethodS3("findByChipType", "DChipSnpInformation", function(static, chipType, 
   # As a backup search the "old" style
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (is.null(pathname)) {
-    path <- filePath("annotations", chipType, expandLinks="any");
+    path <- filePath("annotations", chipType);
+    path <- Arguments$getReadablePath(path, mustExist=FALSE);
+
     if (isDirectory(path)) {
       pathnames <- list.files(path=path, pattern=pattern, full.names=TRUE);
       nfiles <- length(pathnames);

@@ -250,12 +250,8 @@ setMethodS3("getPath", "TransformReport", function(this, ...) {
   set <- "transform";
 
   # The full path
-  path <- filePath(rootPath, fullname, chipType, set, expandLinks="any");
-
-  # Create path?
-  if (!isDirectory(path)) {
-    path <- Arguments$getWritablePath(path);
-  }
+  path <- filePath(rootPath, fullname, chipType, set);
+  path <- Arguments$getWritablePath(path);
 
   path;
 })

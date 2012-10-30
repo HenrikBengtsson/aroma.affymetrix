@@ -153,7 +153,7 @@ setMethodS3("createUniqueCdf", "AffymetrixCdfFile", function(this, chipType=getC
   # Create the pathname of the destination CDF
   if (is.null(path)) {
     mainChipType <- gsub("[,].*", "", chipType);
-    path <- filePath("annotationData", "chipTypes", mainChipType, expandLinks="any");
+    path <- filePath("annotationData", "chipTypes", mainChipType);
   }
 
   # Write to a temporary file first, and rename it when we know its complete

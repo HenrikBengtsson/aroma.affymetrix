@@ -156,12 +156,8 @@ setMethodS3("getPath", "QualityAssessmentModel", function(this, ...) {
   chipType <- getChipType(cdf, fullname=FALSE);
 
   # The full path
-  path <- filePath(rootPath, fullname, chipType, expandLinks="any");
-
-  # Create path?
-  if (!isDirectory(path)) {
-    path <- Arguments$getWritablePath(path);
-  }
+  path <- filePath(rootPath, fullname, chipType);
+  path <- Arguments$getWritablePath(path);
 
   path;
 })

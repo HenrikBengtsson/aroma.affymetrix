@@ -97,10 +97,8 @@ setMethodS3("getPath", "AffymetrixCelSetReporter", function(this, ...) {
   set <- getReportSet(this);
 
   # The full path
-  path <- filePath(mainPath, chipType, set, expandLinks="any");
-  if (!isDirectory(path)) {
-    path <- Arguments$getWritablePath(path);
-  }
+  path <- filePath(mainPath, chipType, set);
+  path <- Arguments$getWritablePath(path);
 
   path;
 }, protected=TRUE)

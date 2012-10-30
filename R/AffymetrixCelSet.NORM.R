@@ -78,7 +78,8 @@ setMethodS3("normalizeQuantile", "AffymetrixCelSet", function(this, path=NULL, n
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
   if (is.null(xTarget)) {
     filename <- paste(getChipType(cdf), "-quantiles.apq", sep="");
-    pathname <- filePath(path, filename, expandLinks="any");
+    pathname <- Arguments$getReadablePathname(filename, path=path, mustExist=FALSE);
+
     verbose && enter(verbose, "Getting average empirical distribution");
     if (isFile(pathname)) {
       verbose && enter(verbose, "Reading saved distribution: ", pathname);

@@ -308,7 +308,7 @@ setMethodS3("getTargetDistributionPathname", "QuantileNormalization", function(t
   filename <- sprintf(".averageQuantile-%s.apq", id);
   verbose && cat(verbose, "Filename: ", filename);
 
-  pathname <- filePath(path, filename, expandLinks="any");
+  pathname <- Arguments$getReadablePathname(filename, path=path, mustExist=FALSE);
   verbose && cat(verbose, "Pathname:");
   verbose && print(verbose, pathname);
 
@@ -375,8 +375,9 @@ setMethodS3("findTargetDistributionFile", "QuantileNormalization", function(this
   verbose && cat(verbose, "Existing paths:");
   verbose && print(verbose, paths);
   
-  pathnames <- file.path(paths, filename);
-  pathnames <- sapply(pathnames, FUN=filePath, expandLinks="any");
+  pathnames <- sapply(paths, FUN=function(path) {
+    Arguments$getReadablePathname(filename, path=path, mustExist=FALSE);
+  });
 
   # Keep only existing pathnames
   pathnames <- pathnames[sapply(pathnames, FUN=isFile)];

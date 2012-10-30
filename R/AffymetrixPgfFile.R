@@ -219,7 +219,7 @@ setMethodS3("findByChipType", "AffymetrixPgfFile", function(static, chipType, ta
     pathname <- do.call("findAnnotationDataByChipType", args=args);
     if (!is.null(pathname)) {
       # ..and expand it
-      pathname <- filePath(pathname, expandLinks="any");
+      pathname <- Arguments$getReadablePathname(pathname, mustExist=FALSE);
       if (!isFile(pathname))
         pathname <- NULL;
     }

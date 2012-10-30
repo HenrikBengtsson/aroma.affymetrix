@@ -438,12 +438,8 @@ setMethodS3("getPath", "Model", function(this, ...) {
   chipType <- getChipType(cdf, fullname=FALSE);
 
   # The full path
-  path <- filePath(rootPath, fullname, chipType, expandLinks="any");
-
-  # Create directory?
-  if (!isDirectory(path)) {
-    path <- Arguments$getWritablePath(path);
-  }
+  path <- filePath(rootPath, fullname, chipType);
+  path <- Arguments$getWritablePath(path);
 
   path;
 })

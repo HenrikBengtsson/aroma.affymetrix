@@ -151,7 +151,7 @@ setMethodS3("createMonocellCdf", "AffymetrixCdfFile", function(this, chipType=ge
   # Create the pathname of the destination CDF
   if (is.null(path)) {
     mainChipType <- gsub("[,].*", "", chipType);
-    path <- filePath("annotationData", "chipTypes", mainChipType, expandLinks="any");
+    path <- filePath("annotationData", "chipTypes", mainChipType);
   }
 
   name <- paste(c(chipType, tags), collapse=",");

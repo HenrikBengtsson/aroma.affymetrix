@@ -272,10 +272,8 @@ setMethodS3("getMainPath", "GenericReporter", function(this, ...) {
   }
 
   # The full path
-  path <- filePath(rootPath, name, tags, expandLinks="any");
-  if (!isDirectory(path)) {
-    path <- Arguments$getWritablePath(path);
-  }
+  path <- filePath(rootPath, name, tags);
+  path <- Arguments$getWritablePath(path);
 
   path;
 }, protected=TRUE)

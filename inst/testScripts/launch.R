@@ -21,7 +21,15 @@ print(args);
 
 printf("Hostname: %s\n", System$getHostname());
 
-library("aroma.affymetrix");
+tryCatch({
+  library("aroma.affymetrix");
+}, error = function(ex) {
+  print(traceback());
+  print(ex);
+  # Sleep for a while and try again
+  Sys.sleep(10);
+  library("aroma.affymetrix");
+})
 
 path <- system.file(package="aroma.affymetrix");
 path <- Arguments$getReadablePath(path);

@@ -88,7 +88,7 @@ setMethodS3("getAlleleCellPairs", "AffymetrixCdfFile", function(this, units=NULL
   unitTypes <- getUnitTypes(this, units=units, verbose=less(verbose, 1));
   verbose && exit(verbose);
 
-  keep <- whichVector(unitTypes == 2);
+  keep <- which(unitTypes == 2);
   if (is.null(units)) {
     units <- keep;
   } else {
@@ -103,7 +103,7 @@ setMethodS3("getAlleleCellPairs", "AffymetrixCdfFile", function(this, units=NULL
   verbose && print(verbose, table(unitSizes));
   verbose && exit(verbose);
 
-  keep <- whichVector(is.element(unitSizes, c(2,4)));
+  keep <- which(is.element(unitSizes, c(2,4)));
   units <- units[keep];
   rm(unitSizes, keep); 
  

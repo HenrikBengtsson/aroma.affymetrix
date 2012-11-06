@@ -205,7 +205,7 @@ setMethodS3("getNormalEquations", "LinearModelProbeSequenceNormalization", funct
     # Keep only data points with finite signals
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     verbose && enter(verbose, "Excluding non-finite data points");
-    keep <- whichVector(is.finite(yCC));
+    keep <- which(is.finite(yCC));
     yCC <- yCC[keep];
     X <- X[keep,,drop=FALSE];
     rm(keep);

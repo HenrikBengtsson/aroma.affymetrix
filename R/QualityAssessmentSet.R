@@ -33,4 +33,3 @@ setConstructorS3("QualityAssessmentSet", function(...) {
 # o Removed argument 'tags' to constructor of QualityAssessmentSet,
 #   because it was never used anywhere.
 ##########################################################################
- 

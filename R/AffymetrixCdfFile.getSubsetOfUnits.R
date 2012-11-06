@@ -127,7 +127,7 @@ setMethodS3("getSubsetOfUnits", "AffymetrixCdfFile", function(this, units=NULL, 
     verbose && str(verbose, ut);
 
     verbose && cat(verbose, "Keeping units of interest:");
-    keep <- whichVector(ut %in% unitTypes);
+    keep <- which(ut %in% unitTypes);
     rm(ut);
     units <- units[keep];
     rm(keep);

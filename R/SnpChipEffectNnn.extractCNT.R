@@ -45,7 +45,7 @@ setMethodS3("extractCNT", "SnpChipEffectFile", function(this, reference, units=N
 
   # Subset by chromosome?
   if (!is.null(chromosomes)) {
-    keep <- whichVector(gp[,1] %in% chromosomes);
+    keep <- which(gp[,1] %in% chromosomes);
     units <- units[keep];
     gp <- gp[keep,,drop=FALSE];
     rm(keep);

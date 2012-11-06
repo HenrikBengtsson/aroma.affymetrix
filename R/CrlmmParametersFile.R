@@ -50,7 +50,7 @@ setMethodS3("findUnitsTodo", "CrlmmParametersFile", function(this, units=NULL, .
   # Reading all calls
   values <- this[,1,drop=TRUE];
 
-  units <- whichVector(values == 0);
+  units <- which(values == 0);
   verbose && exit(verbose);
 
   units;

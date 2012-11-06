@@ -837,7 +837,7 @@ setMethodS3("readRawData", "AffymetrixCelFile", function(this, indices=NULL, fie
     
   # Workaround for readCel() not handling NA indices
   if (!is.null(indices)) {
-    nas <- whichVector(is.na(indices));
+    nas <- which(is.na(indices));
     hasNAs <- length(nas);
     if (hasNAs)
       indices[nas] <- 1;

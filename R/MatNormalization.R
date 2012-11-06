@@ -201,7 +201,7 @@ setMethodS3("fitOne", "MatNormalization", function(this, df, ram=NULL, ..., verb
   verbose && exit(verbose);
 
   verbose && enter(verbose, "Reading 'non-missing' cells to fit");
-  cellsToFit <- whichVector( !(isMissing(aps) | isMissing(apm)) );
+  cellsToFit <- which( !(isMissing(aps) | isMissing(apm)) );
   nbrOfCells <- length(cellsToFit);
   verbose && cat(verbose, "Cells to fit:");
   verbose && str(verbose, cellsToFit);
@@ -303,7 +303,7 @@ setMethodS3("predictOne", "MatNormalization", function(this, fit, ram=NULL, ...,
   verbose && exit(verbose);
   
   verbose && enter(verbose, "Reading 'non-missing' cells to predict");
-  cellsToPredict <- whichVector( !(isMissing(aps) | isMissing(apm)) );
+  cellsToPredict <- which( !(isMissing(aps) | isMissing(apm)) );
   nbrOfCells <- length(cellsToPredict);
   verbose && cat(verbose, "Cells to predict:");
   verbose && str(verbose, cellsToPredict);
@@ -442,7 +442,7 @@ setMethodS3("process", "MatNormalization", function(this, ..., ram=NULL, force=F
   verbose && exit(verbose);
 
   verbose && enter(verbose, "Reading 'non-missing' cells to fit");
-  cellsToFit <- whichVector( !(isMissing(aps) | isMissing(apm)) );
+  cellsToFit <- which( !(isMissing(aps) | isMissing(apm)) );
   verbose && cat(verbose, "Cells to fit:");
   verbose && str(verbose, cellsToFit);
   verbose && exit(verbose);

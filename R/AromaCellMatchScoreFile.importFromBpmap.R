@@ -28,8 +28,8 @@ setMethodS3("importFromBpMap", "AromaCellMatchScoreFile", function(this, srcPath
     verbose && enter(verbose, "Updating ", bp$seqInfo$fullname[1]);
 
     ms <- round(bp$matchscore*1e6);
-    # whichVector() is faster than which()
-    w <- whichVector(ms >= 1 & ms <= 10);
+    # which() is faster than which()
+    w <- which(ms >= 1 & ms <= 10);
     if(length(w) > 0) {
       cells <- bp$pmy[w]*rows + bp$pmx[w] + 1;
       updateMatchScores(this, cells=cells, scores=ms[w]);

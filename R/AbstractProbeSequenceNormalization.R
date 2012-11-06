@@ -142,7 +142,7 @@ setMethodS3("indexOfMissingSequences", "AbstractProbeSequenceNormalization", fun
   acs <- getAromaCellSequenceFile(this, verbose=less(verbose, 5));
 
   idxs <- isMissing(acs, verbose=less(verbose, 5));
-  idxs <- whichVector(idxs);
+  idxs <- which(idxs);
   verbose && cat(verbose, "Cells with unknown sequences:");
   verbose && str(verbose, idxs);
   rm(acs);
@@ -432,7 +432,7 @@ setMethodS3("process", "AbstractProbeSequenceNormalization", function(this, ...,
       summary(verbose, rho);
 
       # Update only subset with "finite" corrections
-      keep <- whichVector(is.finite(rho));
+      keep <- which(is.finite(rho));
       rho <- rho[keep];
       y <- y[keep];
       cellsToUpdateKK <- cellsToUpdate[keep];

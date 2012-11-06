@@ -385,7 +385,7 @@ setMethodS3("bgAdjustGcrma", "AffymetrixCelFile", function(this, path=NULL, type
     n <- sum(keepB);
     verbose && printf(verbose, "Number of finite PM affinities: %d out of %d (%.1f%%)\n", n, n0, 100*n/n0);
 
-    keep <- whichVector(keepA & keepB);
+    keep <- which(keepA & keepB);
     n <- length(keep);
     verbose && printf(verbose, "Number of PMs kept: %d out of %d (%.1f%%)\n", n, n0, 100*n/n0);
 
@@ -405,7 +405,7 @@ setMethodS3("bgAdjustGcrma", "AffymetrixCelFile", function(this, path=NULL, type
     n <- sum(keepB);
     verbose && printf(verbose, "Number of finite negative-control affinities: %d out of %d (%.1f%%)\n", n, n0, 100*n/n0);
 
-    keep <- whichVector(keepA & keepB);
+    keep <- which(keepA & keepB);
     n <- length(keep);
     verbose && printf(verbose, "Number of negative controls kept: %d out of %d (%.1f%%)\n", n, n0, 100*n/n0);
 

@@ -304,7 +304,7 @@ setMethodS3("fitOne", "BaseCountNormalization", function(this, df, ..., verbose=
     verbose && enter(verbose, "Identify finite data points");
     n <- length(y);
     # Fit only finite subset
-    keep <- whichVector(is.finite(y));
+    keep <- which(is.finite(y));
     y <- y[keep];
     cells <- cells[keep];
     rm(keep);
@@ -501,9 +501,9 @@ setMethodS3("predictOne", "BaseCountNormalization", function(this, fit, ..., ver
             mu <- rep(as.double(NA), times=nrow(X));
             if (mode(X) == "raw") {
               # Note: 'X' may be a "raw" matrix (to save memory)
-              idxs <- whichVector(X[,cc] != as.raw(255));
+              idxs <- which(X[,cc] != as.raw(255));
             } else {
-              idxs <- whichVector(is.finite(X[,cc]));
+              idxs <- which(is.finite(X[,cc]));
             }
             x <- as.double(X[idxs,cc]);
             mu[idxs] <- predict(fit, x=x)$y;
@@ -613,7 +613,7 @@ setMethodS3("predictOne", "BaseCountNormalization", function(this, fit, ..., ver
 #   have saved a lot of memory.  Before this, it peaked at 2.2-2.4GB of RAM
 #   to normalize GWS6 data whereas now it peaks at approx 1.4GB.
 # o Now fitOne() and predictOne() can handle "raw" design matrices.
-# o Now using more efficient whichVector() instead of which().
+# o Now using more efficient which() instead of which().
 # o Added protected getDesignMatrix(), fitOne(), and predictOne().
 #   This makes the process() code cleaner and we can save more memory by
 #   utilizing file caching.

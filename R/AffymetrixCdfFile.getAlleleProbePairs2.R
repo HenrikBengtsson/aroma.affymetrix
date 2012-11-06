@@ -9,7 +9,7 @@ setMethodS3("getAlleleProbePairs2", "AffymetrixCdfFile", function(this, ..., ver
   verbose && enter(verbose, "Loading all possible allele basepairs");
   # Use only units that are SNPs
   types <- getUnitTypes(this, verbose=verbose);
-  units <- whichVector(types == 2);
+  units <- which(types == 2);
 
   # Read group names for the SNPs
   groupNames <- readCdfGroupNames(cdfFile, units=units);
@@ -45,7 +45,7 @@ setMethodS3("getAlleleProbePairs2", "AffymetrixCdfFile", function(this, ..., ver
   for (bp in uBasepairs) {
     for (kk in 1:length(bpIdx)) {
       set <- uBasepairs0[[kk]];
-      bpIdx[[kk]] <- kk + whichVector(bp == set)/10;
+      bpIdx[[kk]] <- kk + which(bp == set)/10;
     }
     map[[bp]] <- unlist(bpIdx);
   }
@@ -69,7 +69,7 @@ setMethodS3("getAlleleProbePairs2", "AffymetrixCdfFile", function(this, ..., ver
     verbose && cat(verbose, "Located in ", length(unique(gIdx)), " group(s).");
     
     idx <- base::lapply(groupNames, FUN=identical, basepair);
-    idx <- whichVector(unlist(idx, use.names=FALSE));
+    idx <- which(unlist(idx, use.names=FALSE));
     cdf <- cdfAll[idx];
 
     cdf0 <- vector("list", length=4);

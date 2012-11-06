@@ -638,18 +638,18 @@ setMethodS3("readSequenceDataFrame", "AffymetrixProbeTabFile", function(this, ..
   verbose && enter(verbose, "Asserting that columns for probe (x,y) and sequence exist");
 
   # Identify the columns with (x,y) cell positions
-  xcol <- whichVector(columnNames == "probeXPos");
+  xcol <- which(columnNames == "probeXPos");
   if (length(xcol) != 1) {
     throw("Failed to identify the column with x cell positions: ", getPathname(xcol));
   }
 
-  ycol <- whichVector(columnNames == "probeYPos");
+  ycol <- which(columnNames == "probeYPos");
   if (length(ycol) != 1) {
     throw("Failed to identify the column with y cell positions: ", getPathname(ycol));
   }
 
   # Identify the column with probe sequences
-  seqcol <- whichVector(columnNames == "probeSequence");
+  seqcol <- which(columnNames == "probeSequence");
   if (length(seqcol) != 1) {
     throw("Failed to identify the column with probe sequences: ", getPathname(seqcol));
   }

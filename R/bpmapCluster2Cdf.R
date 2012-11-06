@@ -349,7 +349,7 @@ setMethodS3("bpmapCluster2Cdf", "default", function(pathname, chipType, tags=NUL
     # Splitting when distances between neighboring probes are too large
     d <- diff(sp);
     keep <- (d > maxProbeDistance);
-    idxsII <- whichVector(keep);
+    idxsII <- which(keep);
     nbrOfSplitsII <- length(idxsII);
     if (nbrOfSplitsII > 0L) {
       verbose && printf(verbose, "Splitting into %d subsequence because there were %d too large (>%d) gaps between neighboring probes.\n", nbrOfSplitsII+1L, nbrOfSplitsII, maxProbeDistance);
@@ -371,7 +371,7 @@ setMethodS3("bpmapCluster2Cdf", "default", function(pathname, chipType, tags=NUL
     } else if (flavor == "v1") {
       keep <- (counts >= minNbrOfProbes + 2L);
     }
-    rowsII <- whichVector(keep);
+    rowsII <- which(keep);
     nbrOfUnitsII <- length(rowsII);
     nbrOfDroppedSeqs <- length(starts) - nbrOfUnitsII;
     if (nbrOfDroppedSeqs > 0L) {

@@ -31,7 +31,7 @@ setMethodS3("fitCnProbes", "UnitModel", function(this, ..., verbose=FALSE) {
 
   verbose && enter(verbose, "Identifying CN units");
   cdf <- getCdf(ds);
-  units <- whichVector(getUnitTypes(cdf) == 5);
+  units <- which(getUnitTypes(cdf) == 5);
   verbose && str(verbose, units);
   verbose && exit(verbose);
 
@@ -65,7 +65,7 @@ setMethodS3("fitCnProbes", "UnitModel", function(this, ..., verbose=FALSE) {
 
   verbose && enter(verbose, "Keeping only single-cell units");
   unitCellCounts <- sapply(cells, FUN=length);
-  keep <- whichVector(unitCellCounts == 1);
+  keep <- which(unitCellCounts == 1);
   rm(unitCellCounts);
   units <- units[keep];
   verbose && cat(verbose, "Single-cell units:");

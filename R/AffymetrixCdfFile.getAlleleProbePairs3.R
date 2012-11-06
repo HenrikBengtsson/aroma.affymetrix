@@ -82,7 +82,7 @@ setMethodS3("getAlleleProbePairs3", "AffymetrixCdfFile", function(this, units=NU
   unitTypes <- getUnitTypes(this, verbose=less(verbose, 1));
   verbose && exit(verbose);
 
-  units <- whichVector(unitTypes == 2);
+  units <- which(unitTypes == 2);
   verbose && cat(verbose, "Number of SNP units: ", length(units));
   rm(unitTypes);
 
@@ -172,7 +172,7 @@ setMethodS3("getAlleleProbePairs3", "AffymetrixCdfFile", function(this, units=NU
       nucleotides <- names(unit);
       directions <- sapply(unit, .subset2, "groupdirection");
       directions <- unlist(directions, use.names=FALSE);
-      swap <- whichVector(directions == "sense");
+      swap <- which(directions == "sense");
       if (length(swap) > 0) {
         nucleotides[swap] <- complementaryMap[nucleotides[swap]];
       }
@@ -290,7 +290,7 @@ setMethodS3("getAlleleProbePairs3", "AffymetrixCdfFile", function(this, units=NU
   unitTypes <- getUnitTypes(this, verbose=verbose);  # Takes time
   verbose && cat(verbose, "Table of identified unit types:");
   verbose && print(verbose, table(unitTypes));
-  units <- whichVector(unitTypes != 2);
+  units <- which(unitTypes != 2);
   rm(unitTypes);
 
   if (!is.null(unitsWanted)) {

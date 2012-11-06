@@ -525,7 +525,7 @@ setMethodS3("fit", "CrlmmModel", function(this, units="remaining", force=FALSE, 
     verbose && enter(verbose, "Genotype calling");
     naValue <- as.integer(NA);
     calls <- matrix(naValue, nrow=nrow(eSet), ncol=ncol(eSet));
-    index <- whichVector(!hapmapCallIndex);
+    index <- which(!hapmapCallIndex);
     if (length(index) > 0) {
       verbose && enter(verbose, "Initial SNP calling");
       verbose && str(verbose, index);
@@ -580,7 +580,7 @@ setMethodS3("fit", "CrlmmModel", function(this, units="remaining", force=FALSE, 
     }
     rm(params, index);
 
-    indexX <- whichVector(is.element(unitNames, names(snpsOnChrX)));
+    indexX <- which(is.element(unitNames, names(snpsOnChrX)));
     # NOTE: Do not specify sqsClass=class(eSet). Instead it should
     # default to sqsClass="SnpQSet" regardless of the class of 'eSet'.
     # See oligo:::justCRLMMv3() of oligo v1.12.0. /HB 2010-05-06
@@ -826,7 +826,7 @@ setMethodS3("calculateConfidenceScores", "CrlmmModel", function(this, ..., force
 
     # Identified units called by CRLMM.  This will for instance also
     # skip CN units.
-    unitsKK <- whichVector(!is.na(isHet));
+    unitsKK <- which(!is.na(isHet));
     isHet <- isHet[unitsKK];
     nbrOfCalled <- length(unitsKK);
     verbose && printf(verbose, "Number of called units: %d (%.2f%%)\n", 
@@ -848,7 +848,7 @@ setMethodS3("calculateConfidenceScores", "CrlmmModel", function(this, ..., force
     if (force) {
     } else {
       verbose && enter(verbose, "Identifying subset of units not yet calculated units");
-      idxs <- whichVector(is.na(conf));
+      idxs <- which(is.na(conf));
       unitsKK <- unitsKK[idxs];
       conf <- conf[idxs];
       rm(idxs);
@@ -887,9 +887,9 @@ setMethodS3("calculateConfidenceScores", "CrlmmModel", function(this, ..., force
         verbose && str(verbose, paramsT);
   
         if (what == "homozygotes") {
-          idxs <- whichVector(!isHet);
+          idxs <- which(!isHet);
         } else {
-          idxs <- whichVector(isHet);
+          idxs <- which(isHet);
         }
   
         verbose && cat(verbose, "Number of ", what, ": ", length(idxs));
@@ -902,7 +902,7 @@ setMethodS3("calculateConfidenceScores", "CrlmmModel", function(this, ..., force
           confT <- coefs[1] + coefs[2]*llrT;
   
           delta <- llrT - k2;
-          idxsT <- whichVector(delta > 0);
+          idxsT <- which(delta > 0);
           if (length(idxsT) > 0) {
             confT[idxsT] <- confT[idxsT] + coefs[3]*delta[idxsT];
           }

@@ -93,7 +93,7 @@ setMethodS3("getSetsOfProbes", "AllelicCrosstalkCalibration", function(this, ...
     } else if (version == 4) {
       verbose && enter(verbose, "Identifying cell indices for all non-SNP units");
       unitTypes <- getUnitTypes(cdf, verbose=verbose);
-      units <- whichVector(unitTypes != 2);
+      units <- which(unitTypes != 2);
       rm(unitTypes); 
       verbose && enter(verbose, "Non-SNP units:");
       verbose && str(verbose, units);
@@ -193,9 +193,9 @@ setMethodS3("getSetsOfProbes", "AllelicCrosstalkCalibration", function(this, ...
         for (ss in seq(along=possibleShifts)) {
           shift <- possibleShifts[ss];
           if (is.na(shift)) {
-            idxs <- whichVector(is.na(shifts));
+            idxs <- which(is.na(shifts));
           } else {
-            idxs <- whichVector(shifts == shift);
+            idxs <- which(shifts == shift);
           }
           cellsSS <- cells[idxs,,drop=FALSE];
           subgroups[[ss]] <- cellsSS;

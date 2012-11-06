@@ -1,6 +1,11 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 2.6.8 [2012-11-05]
+o CLEANUP: Replaced all whichVector() with which(), because the
+  latter is now the fastest again.
+
+
 Version: 2.6.7 [2012-10-29]
 o CLEANUP: Now using Arguments$get(Read|Writ)ablePath() instead of
   filePath(..., expandLinks="any"). 

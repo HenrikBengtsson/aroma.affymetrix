@@ -34,7 +34,7 @@ setMethodS3("extractChromosomalDataFrame", "ChipEffectFile", function(this, unit
     verbose && enter(verbose, "Subsetting by chromosome(s)");
     verbose && cat(verbose, "Chromosomes:");
     verbose && print(verbose, chromosomes);
-    keep <- whichVector(gp[,1] %in% chromosomes);
+    keep <- which(gp[,1] %in% chromosomes);
     gp <- gp[keep,,drop=FALSE];
     if (is.null(units)) {
       units <- keep;

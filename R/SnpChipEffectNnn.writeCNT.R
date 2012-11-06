@@ -55,7 +55,7 @@ setMethodS3("writeCNT", "SnpChipEffectFile", function(this, reference, filename=
   data <- extractCNT(this, reference=reference, fields=fields, chromosomes=chromosomes, ..., verbose=less(verbose,5));
   if (nrow(data) > 0) {
     # Round signals
-    cc <- whichVector(sapply(data, FUN=is.double));
+    cc <- which(sapply(data, FUN=is.double));
     data[,cc] <- round(data[,cc], digits=digits);
   }
   verbose && str(verbose, data);
@@ -160,7 +160,7 @@ setMethodS3("writeCNT", "SnpChipEffectSet", function(this, reference, filename=N
 
     if (nrow(data) > 0) {
       # Round signals
-      cc <- whichVector(sapply(data, FUN=is.double));
+      cc <- which(sapply(data, FUN=is.double));
       data[,cc] <- round(data[,cc], digits=digits);
 
       # Write to file

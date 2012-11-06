@@ -75,7 +75,7 @@ setMethodS3("getProbeSequenceData", "AffymetrixCdfFile", function(this, paths=NU
     y <- unlist(y, use.names=FALSE);
 
     # Now, find that (x,y) coordinate in the CDF file
-    idx <- whichVector(xySeq[1] == x & xySeq[2] == y);
+    idx <- which(xySeq[1] == x & xySeq[2] == y);
 
     # Sanity check
     if (length(idx) != 1) {

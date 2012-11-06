@@ -169,7 +169,7 @@ setMethodS3("fit", "ProbeLevelModel", function(this, units="remaining", ..., for
 ##     verbose && enter(verbose, "Identifying single-cell units");
 ##     counts <- nbrOfCellsPerUnit(cdf, units=units, verbose=less(verbose, 5));
 ##     verbose && print(verbose, table(verbose));
-##     singleCellUnits <- whichVector(counts == 1);
+##     singleCellUnits <- which(counts == 1);
 ##     rm(counts);
 ##     verbose && str(verbose, singleCellUnits);
 ##     verbose && exit(verbose);

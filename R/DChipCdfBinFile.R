@@ -175,7 +175,7 @@ setMethodS3("readDataFrame", "DChipCdfBinFile", function(this, units=NULL, field
   names <- gsub("unitNames", "unitName", names, fixed=TRUE);
   names <- gsub("numProbes", "unitSize", names, fixed=TRUE);
   names <- gsub("CellPos", "cellPos", names, fixed=TRUE);
-  keep <- whichVector(is.element(names, fields));
+  keep <- which(is.element(names, fields));
   data <- data[keep];
   names(data) <- fields;
 

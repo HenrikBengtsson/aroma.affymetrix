@@ -177,7 +177,7 @@ setMethodS3("importFromAffymetrixProbeTabFile", "AromaCellSequenceFile", functio
     # Identify probe sequences to be kept?
     if (!is.null(keepSequenceLengths)) {
       keep <- is.element(n, keepSequenceLengths);
-      keep <- whichVector(keep);
+      keep <- which(keep);
       if (length(keep) != length(seqs)) {
         verbose && enter(verbose, "Dropping probe sequence with odd lengths");
         msg <- paste("Dropped ", length(seqs)-length(keep), 
@@ -239,7 +239,7 @@ setMethodS3("inferMmFromPm", "AromaCellSequenceFile", function(this, cdf, units=
 
     Xc <- X;
     for (kk in 1:4) {
-      idxs <- whichVector(X == from[kk]);
+      idxs <- which(X == from[kk]);
       Xc[idxs] <- to[kk];
     }
 
@@ -321,7 +321,7 @@ setMethodS3("inferMmFromPm", "AromaCellSequenceFile", function(this, cdf, units=
 
     # Keep only (PM,MM) pairs for which we know the PM sequence
     keep <- (seqs[,1] != as.raw(0));
-    keep <- whichVector(keep);
+    keep <- which(keep);
     verbose && printf(verbose, "Keeping %d of %d (%.1f%%) non-missing PM sequences\n", length(keep), nrow(seqs), 100*length(keep)/nrow(seqs));
     
     seqs <- seqs[keep,, drop=FALSE];

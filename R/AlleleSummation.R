@@ -176,7 +176,7 @@ setMethodS3("process", "AlleleSummation", function(this, ..., verbose=FALSE) {
 ## OLD:
 ## snps <- indexOf(cdf, "SNP");
   types <- getUnitTypes(cdf, units=units);
-  snps <- whichVector(types == 2);
+  snps <- which(types == 2);
   rm(types);
 
   # WORKAROUND: Some of the units reported as SNPs, may actually be 

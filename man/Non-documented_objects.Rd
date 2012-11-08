@@ -1471,6 +1471,8 @@
 \alias{readRawData.AffymetrixPgfFile}
 \alias{AromaUfcFile}
 \alias{validate.AffymetrixCdfFile}
+\alias{getDefaultColumnNames.AromaCellMatchScoreFile}
+\alias{getDefaultColumnNames.AromaUfcFile}
 
 \description{
   This page contains aliases for all "non-documented" objects that

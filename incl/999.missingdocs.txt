@@ -757,3 +757,5 @@ nbrOfRows.AffymetrixPgfFile nbrOfUnits.AffymetrixPgfFile
 readRawData.AffymetrixPgfFile
 AromaUfcFile
 validate.AffymetrixCdfFile
+getDefaultColumnNames.AromaCellMatchScoreFile
+getDefaultColumnNames.AromaUfcFile

@@ -81,7 +81,7 @@ setMethodS3("calculateBaseline", "ChipEffectSet", function(this, chromosomes=NUL
   gc <- gc();
   verbose && print(verbose, gc);
   
-  n <- nbrOfArrays(this);
+  n <- length(this);
   for (chromosome in chromosomes) {
     verbose && enter(verbose, "Chromosome ", chromosome);
 

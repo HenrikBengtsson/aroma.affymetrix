@@ -54,7 +54,7 @@ dropCellsFromCdfList <- function(cdfList, maxNbrOfCells, cellsToExclude, ..., ve
   nCells <- 0L;
 
   fields <- c("x", "y", "indices", "pbase", "tbase", "atom", "indexpos");
-  for (jj in seq(length=nbrOfUnits)) {
+  for (jj in seq_len(nbrOfUnits)) {
     if(verbose >= 1 && jj %% 10e3 == 1) {
       cat(nbrOfUnits-jj+1L, ", ", sep="");
     } 
@@ -75,7 +75,7 @@ dropCellsFromCdfList <- function(cdfList, maxNbrOfCells, cellsToExclude, ..., ve
     nCellsUU <- 0L;
 
     nbrOfGroups <- length(groups);
-    for (gg in seq(length=nbrOfGroups)) {
+    for (gg in seq_len(nbrOfGroups)) {
       group <- groups[[gg]];
 
       indices <- group$indices;
@@ -102,8 +102,8 @@ dropCellsFromCdfList <- function(cdfList, maxNbrOfCells, cellsToExclude, ..., ve
         }
 
         # The 'atom' and 'indexpos' fields must be "complete" (I think)
-        group$atom <- seq(length=nbrOfCellsGG);
-        group$indexpos <- seq(length=nbrOfCellsGG);
+        group$atom <- seq_len(nbrOfCellsGG);
+        group$indexpos <- seq_len(nbrOfCellsGG);
 #print(group);
 
         nDropUU <- nDropUU + nDropGG;

@@ -17,7 +17,7 @@
 
 \description{
   Gets the number of arrays in the file set.
-  This is just a wrapper for \code{nbrOfFiles()}.
+  This is just a wrapper for \code{length()}.
 }
 
 \usage{\method{nbrOfArrays}{AffymetrixCelSet}(this, ...)}

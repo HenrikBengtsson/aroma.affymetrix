@@ -1,6 +1,13 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 2.6.10 [2012-11-12]
+o CLEANUP: Now seq_along(x) instead of seq(along=x) everywhere.
+  Similarly, seq(ds) where 'ds' is GenericDataFileSet is now
+  replaced by seq_along(ds).  Likewise, seq_len(x) replaces 
+  seq(length=x), and length(ds) replaces nbrOfFiles(ds).
+
+
 Version: 2.6.9 [2012-11-08]
 o Renamed getColumnNames() to getDefaultColumnNames() for all
   classes inheriting from GenericTabularFile, because of the

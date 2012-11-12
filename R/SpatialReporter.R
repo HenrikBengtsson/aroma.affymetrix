@@ -41,7 +41,7 @@ setMethodS3("as.character", "SpatialReporter", function(x, ...) {
   s <- sprintf("%s:", class(this)[1]);
   s <- c(s, paste("Name:", getName(this)));
   s <- c(s, paste("Tags:", paste(getTags(this), collapse=",")));
-  s <- c(s, paste("Number of arrays:", nbrOfArrays(this)));
+  s <- c(s, paste("Number of arrays:", length(this)));
 
   # Reference?
   refFile <- getReference(this);
@@ -203,9 +203,9 @@ setMethodS3("writeImages", "SpatialReporter", function(this, arrays=NULL, aliase
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'arrays':
   cs <- getDataSet(this);
-  nbrOfArrays <- nbrOfArrays(cs);
+  nbrOfArrays <- length(cs);
   if (is.null(arrays)) {
-    arrays <- seq(length=nbrOfArrays);
+    arrays <- seq_len(nbrOfArrays);
   } else {
     arrays <- Arguments$getIndices(arrays, max=nbrOfArrays);
     nbrOfArrays <- length(arrays);
@@ -238,14 +238,14 @@ setMethodS3("writeImages", "SpatialReporter", function(this, arrays=NULL, aliase
   }
 
   # For each array...
-  for (kk in seq(along=arrays)) {
+  for (kk in seq_along(arrays)) {
     df <- getFile(cs, arrays[kk]);
     setAlias(df, aliases[kk]);
     verbose && enter(verbose, sprintf("Array #%d of %d ('%s')", 
                                              kk, nbrOfArrays, getName(df)));
     verbose && cat(verbose, "Alias: ", getAlias(df));
     # For each color map...
-    for (ll in seq(along=colorMaps)) {
+    for (ll in seq_along(colorMaps)) {
       colorMap <- colorMaps[[ll]];
       tags <- colorMap$tags;
       verbose && enter(verbose, sprintf("Color map #%d ('%s')", ll, tags));
@@ -376,7 +376,7 @@ setMethodS3("plotMargins", "SpatialReporter", function(this, array, margins=c("r
   
   if (is.null(ylim)) {
     ylim <- c(NA, NA);
-    for (kk in seq(along=yMargins)) {
+    for (kk in seq_along(yMargins)) {
       ylim <- range(c(ylim, range(yMargins[[1]], na.rm=TRUE)));
     }
   }
@@ -389,15 +389,15 @@ setMethodS3("plotMargins", "SpatialReporter", function(this, array, margins=c("r
   mains <- paste("Average signal per", substring(margins, 1, nchar(margins)-1));
   
   if (length(yMargins) > 1) {
-    layout(matrix(seq(along=yMargins), ncol=1));
+    layout(matrix(seq_along(yMargins), ncol=1));
   }
 
-  for (ff in seq(along=yMargins)) {
+  for (ff in seq_along(yMargins)) {
     xlab <- xlabs[ff];
     main <- mains[ff];
     y <- yMargins[[ff]];
 
-    x <- seq(along=y);
+    x <- seq_along(y);
     if (rotate == -90) {
       x <- rev(x);
     }

@@ -29,7 +29,7 @@ setMethodS3("calculateWeights", "ProbeLevelModel", function(this, units=NULL, ra
 
   rs <- getResidualSet(this, verbose=verbose);
   ws <- getWeightsSet(this, verbose=verbose);
-  nbrOfArrays <- nbrOfArrays(rs);
+  nbrOfArrays <- length(rs);
 
   verbose && enter(verbose, "Calculating PLM weights");
 
@@ -51,7 +51,7 @@ setMethodS3("calculateWeights", "ProbeLevelModel", function(this, units=NULL, ra
 
   unitsToDo <- findUnitsTodo(ws);
   
-  unitsPerChunk <- ram * 100000/nbrOfArrays(getDataSet(this));
+  unitsPerChunk <- ram * 100000/length(getDataSet(this));
   unitsPerChunk <- Arguments$getInteger(unitsPerChunk, range=c(1,Inf));
   nbrOfChunks <- ceiling(nbrOfUnits / unitsPerChunk);
   verbose && printf(verbose, "Number of chunks: %d (%d units/chunk)\n",
@@ -79,7 +79,7 @@ setMethodS3("calculateWeights", "ProbeLevelModel", function(this, units=NULL, ra
 
     cdf <- getCellIndices(getCdf(ds), units=units, stratifyBy="pm", ...);
     
-    for (ii in seq(ds)) {
+    for (ii in seq_along(ds)) {
       wf <- getFile(ws, ii);
 
       verbose && enter(verbose, sprintf("Array #%d ('%s') of %d", ii, getName(wf), length(ds)));

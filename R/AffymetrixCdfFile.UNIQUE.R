@@ -67,7 +67,7 @@ setMethodS3("createUniqueCdf", "AffymetrixCdfFile", function(this, chipType=getC
 
     verbose && printf(verbose, "Units: ");
     if (hasGroups) {
-      for (kk in seq(along=units)) {
+      for (kk in seq_along(units)) {
         if (verbose) {
           if (kk %% 1000 == 0) {
             printf(verbose, "%d, ", kk);
@@ -77,7 +77,7 @@ setMethodS3("createUniqueCdf", "AffymetrixCdfFile", function(this, chipType=getC
         }
         # groups <- units[[kk]]$groups;
         groups <- .subset2(.subset2(units, kk), "groups");
-        for (ll in seq(along=groups)) {
+        for (ll in seq_along(groups)) {
           group <- .subset2(groups, ll);
           # Number of cells in this group
           nindices <- length(.subset2(group, "indices"));
@@ -89,7 +89,7 @@ setMethodS3("createUniqueCdf", "AffymetrixCdfFile", function(this, chipType=getC
         units[[kk]]$groups <- groups;
       }
     } else {
-      for (kk in seq(along=units)) {
+      for (kk in seq_along(units)) {
         if (verbose) {
           if (kk %% 1000 == 0) {
             printf(verbose, "%d, ", kk);

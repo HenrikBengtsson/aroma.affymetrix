@@ -297,7 +297,7 @@ setMethodS3("readRawData", "AffymetrixCnChpFile", function(this, fields=c("Probe
   verbose && str(verbose, res);
 
   # Trim all strings (should really be done by readCcg(). /HB 2008-08-23)
-  for (kk in seq(length=ncol(res))) {
+  for (kk in seq_len(ncol(res))) {
     values <- res[,kk];
     if (is.character(values)) {
       values <- trim(values);

@@ -83,7 +83,7 @@ setMethodS3("readUnitsByQuartets", "AffymetrixCdfFile", function(this, units=NUL
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'units':
   if (is.null(units)) {
-    units <- seq(length=nbrOfUnits(this));
+    units <- seq_len(nbrOfUnits(this));
   } else {
     units <- Arguments$getIndices(units, max=nbrOfUnits(this));
   }
@@ -105,14 +105,14 @@ setMethodS3("readUnitsByQuartets", "AffymetrixCdfFile", function(this, units=NUL
   verbose && enter(verbose, "Restructuring (and validating assumptions about) fields 'pbase', 'tbase', and 'indices'");
   verbose && cat(verbose, "Number of units: ", length(cdfUnits));
   # Restructure and validate
-  for (uu in seq(along=cdfUnits)) {
+  for (uu in seq_along(cdfUnits)) {
     verbose && enter(verbose, sprintf("Unit #%d ('%s') of %d", uu, names(cdfUnits)[uu], length(cdfUnits)));
 
     cdfUnit <- cdfUnits[[uu]];
     cdfGroups <- cdfUnit$groups;
     verbose && cat(verbose, "Number of groups: ", length(cdfGroups));
 
-    for (gg in seq(along=cdfGroups)) {
+    for (gg in seq_along(cdfGroups)) {
       verbose && enter(verbose, sprintf("Group #%d ('%s') of %d", gg, names(cdfGroups)[gg], length(cdfGroups)));
 
       cdfGroup <- cdfGroups[[gg]];
@@ -238,10 +238,10 @@ setMethodS3("getCellQuartets", "AffymetrixCdfFile", function(this, units=NULL, m
   rm(cdfUnits);  # Not needed anymore
 
   # Attach 'tbase' as column names to 'cells'
-  for (uu in seq(along=cells)) {
+  for (uu in seq_along(cells)) {
     cellsUU <- cells[[uu]];
     tbaseUU <- tbase[[uu]];
-    for (gg in seq(along=cellsUU)) {
+    for (gg in seq_along(cellsUU)) {
       cellsGG <- cellsUU[[gg]];
       tbaseGG <- tbaseUU[[gg]];
       colnames(cellsGG) <- tbaseGG;
@@ -257,11 +257,11 @@ setMethodS3("getCellQuartets", "AffymetrixCdfFile", function(this, units=NULL, m
   # Merging groups
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (mergeGroups) {
-    for (uu in seq(along=cells)) {
+    for (uu in seq_along(cells)) {
       cellsUU <- cells[[uu]];
       cells[[uu]] <- cellsUU;
       cellsUUMerged <- NULL;
-      for (gg in seq(along=cellsUU)) {
+      for (gg in seq_along(cellsUU)) {
         cellsGG <- cellsUU[[gg]];
         cellsUUMerged <- cbind(cellsUUMerged, cellsGG);
       } # for (gg ...)

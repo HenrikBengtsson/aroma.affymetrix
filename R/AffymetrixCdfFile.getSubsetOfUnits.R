@@ -95,7 +95,7 @@ setMethodS3("getSubsetOfUnits", "AffymetrixCdfFile", function(this, units=NULL, 
   }
 
   if (is.null(unitsIncl))
-    unitsIncl <- seq(length=nbrOfUnits(this));
+    unitsIncl <- seq_len(nbrOfUnits(this));
 
   verbose && cat(verbose, "Units to include:");
   verbose && str(verbose, unitsIncl);

@@ -23,7 +23,7 @@ setMethodS3("calculateFieldBoxplotStats", "ChipEffectSet", function(this, field=
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-  nbrOfArrays <- nbrOfArrays(this);
+  nbrOfArrays <- length(this);
   cdfMono <- getCdf(this);
   nbrOfUnits <- nbrOfUnits(cdfMono);
 
@@ -40,7 +40,7 @@ setMethodS3("calculateFieldBoxplotStats", "ChipEffectSet", function(this, field=
 
   # Argument 'arrays':
   if (is.null(arrays)) {
-    arrays <- seq(length=nbrOfArrays);
+    arrays <- seq_len(nbrOfArrays);
   } else {
     arrays <- Arguments$getIndices(arrays, max=nbrOfArrays);
     nbrOfArrays <- length(arrays);
@@ -76,7 +76,7 @@ setMethodS3("calculateFieldBoxplotStats", "ChipEffectSet", function(this, field=
   
   # For each file, calculate boxplot statistics
   stats <- list();
-  for (kk in seq(along=arrays)) {
+  for (kk in seq_along(arrays)) {
     array <- arrays[kk];
     cef <- getFile(this, array);
     verbose && enter(verbose, sprintf("Array #%d ('%s') of %d", 
@@ -121,13 +121,13 @@ setMethodS3("calculateRleBoxplotStats", "ChipEffectSet", function(this, arrays=N
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-  nbrOfArrays <- nbrOfArrays(this);
+  nbrOfArrays <- length(this);
   cdfMono <- getCdf(this);
   nbrOfUnits <- nbrOfUnits(cdfMono);
 
   # Argument 'arrays':
   if (is.null(arrays)) {
-    arrays <- seq(length=nbrOfArrays);
+    arrays <- seq_len(nbrOfArrays);
   } else {
     arrays <- Arguments$getIndices(arrays, max=nbrOfArrays);
     nbrOfArrays <- length(arrays);
@@ -174,7 +174,7 @@ setMethodS3("calculateRleBoxplotStats", "ChipEffectSet", function(this, arrays=N
   
   # For each file, calculate boxplot statistics
   stats <- list();
-  for (kk in seq(along=arrays)) {
+  for (kk in seq_along(arrays)) {
     array <- arrays[kk];
     cef <- getFile(this, array);
     verbose && enter(verbose, sprintf("Array #%d ('%s') of %d", 
@@ -214,11 +214,11 @@ setMethodS3("calculateNuseBoxplotStats", "ChipEffectSet", function(this, arrays=
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
   cdfMono <- getCdf(this);
   nbrOfUnits <- nbrOfUnits(cdfMono);
-  nbrOfArrays <- nbrOfArrays(this);
+  nbrOfArrays <- length(this);
 
   # Argument 'arrays':
   if (is.null(arrays)) {
-    arrays <- seq(length=nbrOfArrays);
+    arrays <- seq_len(nbrOfArrays);
   } else {
     arrays <- Arguments$getIndices(arrays, max=nbrOfArrays);
     nbrOfArrays <- length(arrays);
@@ -266,7 +266,7 @@ setMethodS3("calculateNuseBoxplotStats", "ChipEffectSet", function(this, arrays=
 
   # For each file, calculate boxplot statistics
   stats <- list();
-  for (kk in seq(along=arrays)) {
+  for (kk in seq_along(arrays)) {
     array <- arrays[kk];
     cef <- getFile(this, array);
     verbose && enter(verbose, sprintf("Array #%d ('%s') of %d", 

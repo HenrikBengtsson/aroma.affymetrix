@@ -150,7 +150,7 @@ setMethodS3("getAm", "AffymetrixCelFile", function(this, reference, indices=NULL
     keep <- which(y1 != 0);
     y1 <- y1[keep];
   } else {
-    keep <- seq(along=y1);
+    keep <- seq_along(y1);
   }
   y1 <- y1 + offset;
   y1 <- log(y1, base=2);

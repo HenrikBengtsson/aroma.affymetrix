@@ -277,7 +277,7 @@ setMethodS3("inferMmFromPm", "AromaCellSequenceFile", function(this, cdf, units=
 
 
   if (is.null(units)) {
-    units <- seq(length=nbrOfUnits(cdf));
+    units <- seq_len(nbrOfUnits(cdf));
   } else {
     units <- Arguments$getIndices(units, max=nbrOfUnits(cdf));
   }

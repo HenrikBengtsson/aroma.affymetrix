@@ -16,7 +16,7 @@ setMethodS3("doCRMAv2", "AffymetrixCelSet", function(csR, combineAlleles=TRUE, l
 
   # Argument 'arrays':
   if (!is.null(arrays)) {
-    arrays <- Arguments$getIndices(arrays, max=nbrOfArrays(csR));
+    arrays <- Arguments$getIndices(arrays, max=length(csR));
     if (plm == "RmaCnPlm") {
       throw(sprintf("Argument 'arrays' must not be specified when argument 'plm' is \"%s\".", plm));
     }

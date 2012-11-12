@@ -173,7 +173,7 @@ setMethodS3("getAverageFile", "AffymetrixCelSet", function(this, name=NULL, pref
     verbose && cat(verbose, "Filename: ", filename);
 
     pathname <- NULL;
-    for (kk in seq(along=paths)) {
+    for (kk in seq_along(paths)) {
       path <- paths[kk];
       verbose && enter(verbose, sprintf("Searching path #%d of %d", kk, length(paths)));
 
@@ -276,7 +276,7 @@ setMethodS3("getAverageFile", "AffymetrixCelSet", function(this, name=NULL, pref
     # multiple filenames turning every data fields into a 
     # matrix. /HB 2007-01-07
     X <- matrix(as.double(NA), nrow=length(ii), ncol=nbrOfArrays);
-    for (kk in seq(length=nbrOfArrays)) {
+    for (kk in seq_len(nbrOfArrays)) {
       X[,kk] <- readCel(filename = pathnames[kk],
                         indices = indices[ii],
                         readIntensities = readIntensities,

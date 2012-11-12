@@ -106,7 +106,7 @@ setMethodS3("getPositionChipTypeUnit", "CopyNumberSegmentationModel", function(t
   names(posList) <- names(unitsList);
   chipTypeList <- vector("list", length(unitsList));
   names(chipTypeList) <- names(unitsList);
-  for (kk in seq(along=posList)) {
+  for (kk in seq_along(posList)) {
     ugp <- ugpList[[kk]];
     units <- unitsList[[kk]];
     pos <- getPositions(ugp, units=units);
@@ -197,7 +197,7 @@ setMethodS3("createOutputTuple", "SmoothMultiarrayModel", function(this, ..., fo
   outList <- vector("list", nbrOfChipTypes);
   names(outList) <- names(inList);
   parentPath <- getParentPath(this);
-  for (kk in seq(along=inList)) {
+  for (kk in seq_along(inList)) {
     chipType <- names(inList)[kk];
     verbose && enter(verbose, "Chip type #", kk, "'(", chipType, ")' of ", nbrOfChipTypes);
     inSet <- inList[[chipType]];
@@ -208,8 +208,8 @@ setMethodS3("createOutputTuple", "SmoothMultiarrayModel", function(this, ..., fo
     path <- Arguments$getWritablePath(file.path(parentPath, chipType));
     verbose && enter(verbose, "Creating output data set using input data set as a template (by copying)");
     verbose && cat(verbose, "Path: ", path);
-    nbrOfArrays <- nbrOfArrays(inSet);
-    for (jj in seq(length=nbrOfArrays)) {
+    nbrOfArrays <- length(inSet);
+    for (jj in seq_len(nbrOfArrays)) {
       inFile <- getFile(inSet, jj);
       outFile <- createFrom(inFile, filename=getFilename(inFile), path=path, methods=c("create", "copy"), clear=TRUE, verbose=less(verbose, 10));
     }
@@ -355,7 +355,7 @@ setMethodS3("fitOneChromosome", "SmoothMultiarrayModel", function(this, chromoso
   verbose && cat(verbose, "List of output data sets:");
   verbose && print(verbose, outList);
 
-  for (kk in seq(length=nbrOfChipTypes(this))) {
+  for (kk in seq_len(nbrOfChipTypes(this))) {
     verbose && enter(verbose, "Chip type #", kk, " of ", nbrOfChipTypes(this));
 
     outSet <- outList[[kk]];
@@ -374,7 +374,7 @@ setMethodS3("fitOneChromosome", "SmoothMultiarrayModel", function(this, chromoso
 
 
     map <- outData <- NULL;
-    for (aa in seq(length=ncol(theta))) {
+    for (aa in seq_len(ncol(theta))) {
       verbose && enter(verbose, "Array #", aa, " of ", ncol(theta));
 
       outFile <- getFile(outSet, aa);

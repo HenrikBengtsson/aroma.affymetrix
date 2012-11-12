@@ -39,8 +39,8 @@ setMethodS3("findByCdf2", "default", function(chipType, tags=NULL, nbrOfUnits=NU
   pathnames <- NULL;
 
   cdf <- NULL;
-  for (kk in rev(c(0,seq(along=tags)))) {
-    cdfTags <- tags[seq(length=kk)];
+  for (kk in rev(c(0,seq_along(tags)))) {
+    cdfTags <- tags[seq_len(kk)];
     fullname <- paste(c(chipType, cdfTags), collapse=",");
     verbose && printf(verbose, "Trying '%s'...", fullname);
     tryCatch({

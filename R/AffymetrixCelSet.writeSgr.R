@@ -1,5 +1,5 @@
 
-setMethodS3("writeSgr", "AffymetrixCelSet", function(this, units=NULL, ..., tags=getTags(this), verbose=FALSE, fileExtension="sgr", fileSep="\t",nbrOfFigures=3) {
+setMethodS3("writeSgr", "AffymetrixCelSet", function(this, units=NULL, ..., tags=getTags(this), verbose=FALSE, fileExtension="sgr", fileSep="\t", nbrOfFigures=3) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -13,7 +13,7 @@ setMethodS3("writeSgr", "AffymetrixCelSet", function(this, units=NULL, ..., tags
   chrText <- paste(c(1:22, "X", "Y", "M"), sep="");
   names(chrText) <- 1:25;
   
-  nbrOfArrays <- nbrOfArrays(this);
+  nbrOfArrays <- length(this);
   cdf <- getCdf(this);
 
   

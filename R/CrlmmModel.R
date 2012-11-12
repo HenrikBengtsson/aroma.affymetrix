@@ -115,13 +115,13 @@ setMethodS3("getCallSet", "CrlmmModel", function(this, ..., verbose=FALSE) {
   fullnames <- gsub(",chipEffects$", "", fullnames);
   filenames <- sprintf("%s,genotypes.acf", fullnames);
 
-  nbrOfArrays <- nbrOfArrays(ces);
+  nbrOfArrays <- length(ces);
   nbrOfUnits <- nbrOfUnits(cdf);
   platform <- getPlatform(cdf);
 
   verbose && enter(verbose, "Retrieving genotype call set");
   agcList <- list();
-  for (kk in seq(along=filenames)) {
+  for (kk in seq_along(filenames)) {
     filename <- filenames[kk];
     verbose && enter(verbose, sprintf("Array #%d ('%s') of %d", kk, filename, nbrOfArrays));
     pathname <- filePath(outPath, filename);
@@ -172,13 +172,13 @@ setMethodS3("getConfidenceScoreSet", "CrlmmModel", function(this, ..., verbose=F
   fullnames <- gsub(",chipEffects$", "", fullnames);
   filenames <- sprintf("%s,confidenceScores.acf", fullnames);
 
-  nbrOfArrays <- nbrOfArrays(ces);
+  nbrOfArrays <- length(ces);
   nbrOfUnits <- nbrOfUnits(cdf);
   platform <- getPlatform(cdf);
 
   verbose && enter(verbose, "Retrieving genotype call confidence set");
   agcList <- list();
-  for (kk in seq(along=filenames)) {
+  for (kk in seq_along(filenames)) {
     filename <- filenames[kk];
     verbose && enter(verbose, sprintf("Array #%d ('%s') of %d", kk, filename, nbrOfArrays));
     pathname <- filePath(outPath, filename);
@@ -230,13 +230,13 @@ setMethodS3("getCrlmmParametersSet", "CrlmmModel", function(this, ..., verbose=F
   fullnames <- gsub(",chipEffects$", "", fullnames);
   filenames <- sprintf("%s,CRLMM.atb", fullnames);
 
-  nbrOfArrays <- nbrOfArrays(ces);
+  nbrOfArrays <- length(ces);
   nbrOfUnits <- nbrOfUnits(cdf);
   platform <- getPlatform(cdf);
 
   verbose && enter(verbose, "Retrieving CRLMM parameters set");
   atbList <- list();
-  for (kk in seq(along=filenames)) {
+  for (kk in seq_along(filenames)) {
     filename <- filenames[kk];
     verbose && enter(verbose, sprintf("Array #%d ('%s') of %d", kk, filename, nbrOfArrays));
     pathname <- filePath(outPath, filename);
@@ -436,8 +436,8 @@ setMethodS3("fit", "CrlmmModel", function(this, units="remaining", force=FALSE, 
   crlmm <- getCrlmmPriors(this, verbose=less(verbose,1));
 
   ces <- getDataSet(this);
-  nbrOfArrays <- nbrOfArrays(ces);
-  data <- data.frame(gender=rep("female", nbrOfArrays));
+  nbrOfArrays <- length(ces);
+  data <- data.frame(gender=rep("female", times=nbrOfArrays));
   phenoData <- new("AnnotatedDataFrame", data=data);
 
 
@@ -636,7 +636,7 @@ setMethodS3("fit", "CrlmmModel", function(this, units="remaining", force=FALSE, 
     # Storing results
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     verbose && enter(verbose, "Storing CRLMM parameter estimates, confidence scores and genotypes");
-    for (kk in seq(callSet)) {
+    for (kk in seq_along(callSet)) {
       agc <- getFile(callSet, kk);
       atb <- getFile(paramSet, kk);
       verbose && enter(verbose, sprintf("Array #%d ('%s') of %d", kk, getName(agc), nbrOfArrays));
@@ -703,7 +703,7 @@ setMethodS3("fit", "CrlmmModel", function(this, units="remaining", force=FALSE, 
   verbose && cat(verbose, "Average SNR per array (over all chunks):");
   verbose && str(verbose, snrPerArray);
 
-  for (kk in seq(paramSet)) {
+  for (kk in seq_along(paramSet)) {
     pf <- getFile(paramSet, kk);
     updateParameter(pf, "snr", snrPerArray[kk], verbose=less(verbose, -20));
   }
@@ -745,7 +745,7 @@ setMethodS3("calculateConfidenceScores", "CrlmmModel", function(this, ..., force
   confSet <- getConfidenceScoreSet(this, verbose=less(verbose,1));
   paramSet <- getCrlmmParametersSet(this, verbose=less(verbose,1));
 
-  nbrOfArrays <- nbrOfFiles(callSet);
+  nbrOfArrays <- length(callSet);
   verbose && cat(verbose, "Number of arrays: ", nbrOfArrays);
   cf <- getFile(callSet,1);
   nbrOfUnits <- nbrOfUnits(cf);
@@ -810,7 +810,7 @@ setMethodS3("calculateConfidenceScores", "CrlmmModel", function(this, ..., force
   # possible confidence score is 1/3. /HB 2009-01-12
   minConf <- 1/3;
 
-  for (kk in seq(length=nbrOfArrays)) {
+  for (kk in seq_len(nbrOfArrays)) {
     cf <- getFile(callSet, kk);
     pf <- getFile(paramSet, kk);
     sf <- getFile(confSet, kk);
@@ -956,7 +956,7 @@ setMethodS3("calculateConfidenceScores", "CrlmmModel", function(this, ..., force
     for (name in names(srcFiles)) {
       srcFile <- srcFiles[[name]];
       attr <- list(
-        nbrOfArrays = nbrOfFiles(callSet),
+        nbrOfArrays = length(callSet),
         filename = getFilename(srcFile),
         filesize = getFileSize(srcFile),
         checksum = getChecksum(srcFile) 

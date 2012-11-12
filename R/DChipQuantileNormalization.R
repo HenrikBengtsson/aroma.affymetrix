@@ -249,9 +249,9 @@ setMethodS3("process", "DChipQuantileNormalization", function(this, ..., force=F
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Normalize each array
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  verbose && enter(verbose, "Normalizing ", nbrOfArrays(ds), " arrays");
+  verbose && enter(verbose, "Normalizing ", length(ds), " arrays");
   dataFiles <- list();
-  for (kk in seq(ds)) {
+  for (kk in seq_along(ds)) {
     verbose && enter(verbose, "Array #", kk);
     df <- getFile(ds, kk);
     verbose && print(verbose, df);
@@ -317,7 +317,7 @@ setMethodS3("process", "DChipQuantileNormalization", function(this, ..., force=F
     dataFiles[[kk]] <- fromFile(df, pathname);
     
     verbose && exit(verbose);
-  } # for (kk in seq(ds))
+  } # for (kk ...)
   verbose && exit(verbose);
 
   # Not needed anymore

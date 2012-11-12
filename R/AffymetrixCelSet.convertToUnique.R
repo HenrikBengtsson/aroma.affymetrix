@@ -105,7 +105,7 @@ setMethodS3("convertToUnique", "AffymetrixCelSet", function(this, ..., tags="UNQ
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Process all arrays simultaneously
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  nbrOfArrays <- nbrOfArrays(this);
+  nbrOfArrays <- length(this);
   
   # Get CDF header
   cdfHeader <- getHeader(cdfUnique);

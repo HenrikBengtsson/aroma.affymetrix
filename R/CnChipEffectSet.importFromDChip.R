@@ -259,7 +259,7 @@ setMethodS3("importFromDChip", "CnChipEffectSet", function(static, filename, pat
   gc <- gc();
 
   verbose && enter(verbose, "Importing ", nbrOfSamples, " samples");
-  for (kk in seq(length=nbrOfSamples)) {
+  for (kk in seq_len(nbrOfSamples)) {
     sampleName <- sampleNames[kk];
     verbose && enter(verbose, sprintf("Sample #%d (%s) of %d", 
                                             kk, sampleName, nbrOfSamples));

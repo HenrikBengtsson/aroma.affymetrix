@@ -305,7 +305,7 @@ setMethodS3("getFitUnitGroupFunction", "RmaPlm", function(this, ..., verbose=FAL
     # If input data are dimensionless, return NAs. /KS 2006-01-30
     dim <- dim(y);
     if (is.null(dim)) {
-      nbrOfArrays <- nbrOfArrays(getDataSet(this));
+      nbrOfArrays <- length(getDataSet(this));
       return(list(theta=rep(NA, nbrOfArrays),
                   sdTheta=rep(NA, nbrOfArrays),
                   thetaOutliers=rep(NA, nbrOfArrays), 

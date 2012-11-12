@@ -262,7 +262,7 @@ setMethodS3("findUnitsTodo", "ChipEffectFile", function(this, units=NULL, ..., f
     units0 <- units;
     if (is.null(units)) {
       cdf <- getCdf(this);
-      units <- seq(length=nbrOfUnits(cdf));
+      units <- seq_len(nbrOfUnits(cdf));
     }
     nbrOfUnits <- length(units);
 
@@ -456,7 +456,7 @@ setMethodS3("getUnitGroupCellMap", "ChipEffectFile", function(this, units=NULL, 
   } else {
     verbose && enter(verbose, "Retrieving cell indices for specified units");
     if (is.null(units))
-      units <- seq(length=nbrOfUnits(cdf));
+      units <- seq_len(nbrOfUnits(cdf));
     chunks <- splitInChunks(units, chunkSize=100e3);
     nbrOfChunks <- length(chunks);
     nbrOfUnits <- length(units);
@@ -469,12 +469,12 @@ setMethodS3("getUnitGroupCellMap", "ChipEffectFile", function(this, units=NULL, 
     cells <- vector("list", nbrOfChunks);
     
     offset <- 0;
-    for (kk in seq(length=nbrOfChunks)) {
+    for (kk in seq_len(nbrOfChunks)) {
       verbose && printf(verbose, "Chunk #%d of %d\n", kk, length(chunks));
       chunk <- chunks[[kk]];
       chunks[[kk]] <- NA;
       cells0 <- getCellIndices(this, units=chunk, force=force, .cache=FALSE, verbose=less(verbose));
-      idxs <- offset + seq(length=length(chunk));
+      idxs <- offset + seq_len(length(chunk));
       offset <- offset + length(chunk);
       rm(chunk);
       unitNames[idxs] <- names(cells0);
@@ -503,10 +503,10 @@ setMethodS3("getUnitGroupCellMap", "ChipEffectFile", function(this, units=NULL, 
   verbose && cat(verbose, "Number of units: ", length(unitNames));
 
   if (is.null(units))
-    units <- seq(length=nbrOfUnits(cdf));
+    units <- seq_len(nbrOfUnits(cdf));
 
   # The following is too slow:
-  #  groups <- sapply(unitSizes, FUN=function(n) seq(length=n));
+  #  groups <- sapply(unitSizes, FUN=function(n) seq_len(n));
 
   # Instead, updated size by size
   verbose && printf(verbose, "Allocating matrix of size %dx%d.\n", 
@@ -694,7 +694,7 @@ setMethodS3("getDataFlat", "ChipEffectFile", function(this, units=NULL, fields=c
   suppressWarnings({
     data <- getData(this, indices=map[,"cell"], fields=celFields[fields]);
   })
-  rownames(data) <- seq(length=nrow(data));  # Work around?!? /HB 2006-11-28
+  rownames(data) <- seq_len(nrow(data));  # Work around?!? /HB 2006-11-28
 
   # Decode
   names <- colnames(data);

@@ -165,7 +165,7 @@ setMethodS3("as.character", "CnagCfhSet", function(x, ...) {
   s <- c(s, sprintf("Tags: %s", tags));
   s <- c(s, sprintf("Path: %s", getPath(this)));
   s <- c(s, sprintf("Chip type: %s", getChipType(getCdf(this))));
-  n <- nbrOfArrays(this);
+  n <- length(this);
   s <- c(s, sprintf("Number of arrays: %d", n));
   names <- getNames(this);
   s <- c(s, sprintf("Names: %s [%d]", hpaste(names), n));
@@ -382,7 +382,7 @@ setMethodS3("byPath", "CnagCfhSet", function(static, path="rawData/", pattern="[
     }
   }
  
-  if (nbrOfFiles(this) > 0) {
+  if (length(this) > 0) {
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
     # Scan all CFH files for possible chip types
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
@@ -447,7 +447,7 @@ setMethodS3("byPath", "CnagCfhSet", function(static, path="rawData/", pattern="[
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
     verbose && enter(verbose, "Scanning for and applying sample annotation files");
     sas <- SampleAnnotationSet$loadAll(verbose=less(verbose));
-    if (nbrOfFiles(sas) == 0) {
+    if (length(sas) == 0) {
       verbose && cat(verbose, "No sample annotation files found.");
     } else {
       verbose && print(verbose, sas);
@@ -473,7 +473,7 @@ setMethodS3("byPath", "CnagCfhSet", function(static, path="rawData/", pattern="[
 #
 # \description{
 #   @get "title".
-#   This is just a wrapper for \code{nbrOfFiles()}.
+#   This is just a wrapper for \code{length()}.
 # }
 #
 # @synopsis
@@ -493,8 +493,8 @@ setMethodS3("byPath", "CnagCfhSet", function(static, path="rawData/", pattern="[
 # }
 #*/###########################################################################
 setMethodS3("nbrOfArrays", "CnagCfhSet", function(this, ...) {
-  nbrOfFiles(this, ...);
-})
+  length(this, ...);
+}, protected=TRUE)
 
 
 
@@ -594,7 +594,7 @@ setMethodS3("getData", "CnagCfhSet", function(this, indices=NULL, fields=c("x", 
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
 
-  nbrOfArrays <- nbrOfArrays(this);
+  nbrOfArrays <- length(this);
   verbose && enter(verbose, "Getting cell data for ", nbrOfArrays, " arrays.");
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -618,7 +618,7 @@ setMethodS3("getData", "CnagCfhSet", function(this, indices=NULL, fields=c("x", 
   # Reading cell signals
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   verbose && enter(verbose, "Retrieving data from ", nbrOfArrays, " arrays");
-  for (kk in seq(length=nbrOfArrays)) {
+  for (kk in seq_len(nbrOfArrays)) {
     verbose && enter(verbose, "Array #", kk, " of ", nbrOfArrays);
     dataFile <- this$files[[kk]];
     value <- getData(dataFile, indices=indices, fields=fields, verbose=less(verbose));
@@ -884,7 +884,7 @@ setMethodS3("getAverageFile", "CnagCfhSet", function(this, name=NULL, prefix="av
     verbose && cat(verbose, "Filename: ", filename);
 
     pathname <- NULL;
-    for (kk in seq(along=paths)) {
+    for (kk in seq_along(paths)) {
       path <- paths[kk];
       verbose && enter(verbose, sprintf("Searching path #%d of %d", kk, length(paths)));
 
@@ -988,7 +988,7 @@ setMethodS3("getAverageFile", "CnagCfhSet", function(this, name=NULL, prefix="av
     # matrix. /HB 2007-01-07
     naValue <- as.double(NA);
     X <- matrix(naValue, nrow=length(ii), ncol=nbrOfArrays);
-    for (kk in seq(length=nbrOfArrays)) {
+    for (kk in seq_len(nbrOfArrays)) {
       X[,kk] <- readCel(filename = pathnames[kk],
                         indices = indices[ii],
                         readIntensities = readIntensities,

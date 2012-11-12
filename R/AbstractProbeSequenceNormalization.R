@@ -255,7 +255,7 @@ setMethodS3("process", "AbstractProbeSequenceNormalization", function(this, ...,
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Normalize each array
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  nbrOfArrays <- nbrOfArrays(ds);
+  nbrOfArrays <- length(ds);
   df <- getFile(ds, 1);
   nbrOfCells <- nbrOfCells(df);
   verbose && enter(verbose, "Normalizing ", nbrOfArrays, " arrays");

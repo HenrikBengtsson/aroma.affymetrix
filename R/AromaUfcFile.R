@@ -39,7 +39,7 @@ setMethodS3("readDataFrame", "AromaUfcFile", function(this, ...) {
   data <- NextMethod("readDataFrame");
 
   # Interpret zeros as NAs
-  for (cc in seq(length=ncol(data))) {
+  for (cc in seq_len(ncol(data))) {
     nas <- (data[,cc] == 0);
     data[nas,cc] <- NA;
   }

@@ -38,7 +38,7 @@ setMethodS3("groupUnitsByDimension", "AffymetrixCdfFile", function(this, units=N
     units <- Arguments$getIndices(units, max=nbrOfUnits(this));
     allUnits <- units;
   } else {
-    allUnits <- seq(length=nbrOfUnits(this));
+    allUnits <- seq_len(nbrOfUnits(this));
   }
 
   # Argument 'sort':
@@ -77,7 +77,7 @@ setMethodS3("groupUnitsByDimension", "AffymetrixCdfFile", function(this, units=N
 
   res <- list();
 
-  for (uu in seq(along=uSizes)) {
+  for (uu in seq_along(uSizes)) {
     sizeUU <- uSizes[uu];
     verbose && enter(verbose, sprintf("Unit size #%d (nbrOfGroups=%d) of %d", uu, sizeUU, length(uSizes)));
     verbose && cat(verbose, "Number of groups per unit: ", sizeUU);
@@ -109,13 +109,13 @@ setMethodS3("groupUnitsByDimension", "AffymetrixCdfFile", function(this, units=N
     resUU$sets <- list();
 
     # For each group of equal dimension
-    for (kk in seq(length=nrow(uDimsUU))) {
+    for (kk in seq_len(nrow(uDimsUU))) {
       dimKK <- uDimsUU[kk, ,drop=TRUE];
       verbose && enter(verbose, sprintf("Dimension #%d of %d", kk, nrow(uDimsUU)));
       verbose && cat(verbose, "Number of cells per group: ", paste(dimKK, collapse=", "));
 
       keep <- rep(TRUE, times=length(unitsUU));
-      for (cc in seq(length=ncol(uDimsUU))) {
+      for (cc in seq_len(ncol(uDimsUU))) {
         keep <- keep & (dimKK[cc] == sizesUU[,cc, drop=TRUE]);
       }
       idxsKK <- which(keep);

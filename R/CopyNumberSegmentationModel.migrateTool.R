@@ -23,7 +23,7 @@ setMethodS3("migrateTool", "CopyNumberSegmentationModel", function(static, what=
 
     # Find all non-abstract subclasses
     classes <- c(getKnownSubclasses(static), getName(static));
-    for (cc in seq(along=classes)) {
+    for (cc in seq_along(classes)) {
       className <- classes[cc];
       clazz <- Class$forName(className);
       # Ignore abstract classes
@@ -34,7 +34,7 @@ setMethodS3("migrateTool", "CopyNumberSegmentationModel", function(static, what=
 
 
     # Scan the output directories for those classes
-    for (cc in seq(along=classes)) {
+    for (cc in seq_along(classes)) {
       className <- classes[cc];
       clazz <- Class$forName(className);
       obj <- newInstance(clazz);
@@ -70,7 +70,7 @@ setMethodS3("migrateTool", "CopyNumberSegmentationModel", function(static, what=
 
       verbose && enter(verbose, "Adding asterisk tag (", aTag, ") to ", length(dirs), " data sets");
       newDirs <- paste(dirs, aTag, sep=",");
-      for (jj in seq(along=dirs)) {
+      for (jj in seq_along(dirs)) {
         file.rename(dirs[jj], newDirs[jj]);
         verbose && printf(verbose, "Renamed '%s' to '%s' in '%s'.\n", basename(dirs[jj]), basename(newDirs[jj]), dirname(dirs[jj]));
       }

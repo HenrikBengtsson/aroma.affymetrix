@@ -226,7 +226,7 @@ setMethodS3("nbrOfEnzymes", "UflSnpInformation", function(this, ...) {
   length(cols);
 })
 
-setMethodS3("getFragmentLengths", "UflSnpInformation", function(this, enzymes=seq(length=nbrOfEnzymes(this)), ...) {
+setMethodS3("getFragmentLengths", "UflSnpInformation", function(this, enzymes=seq_len(nbrOfEnzymes(this)), ...) {
   data <- getData(this, ..., fields=getDataColumns(this)[enzymes]);
   fl <- data[,enzymes,drop=FALSE];
   fl <- as.matrix(fl);

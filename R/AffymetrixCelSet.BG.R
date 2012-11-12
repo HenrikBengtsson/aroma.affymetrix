@@ -76,10 +76,10 @@ setMethodS3("bgAdjustOptical", "AffymetrixCelSet", function(this, path=NULL, nam
   # optical effect correction for each array
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  nbrOfArrays <- nbrOfArrays(this);
+  nbrOfArrays <- length(this);
   verbose && enter(verbose, "Adjusting ", nbrOfArrays, " arrays");
   dataFiles <- list();
-  for (kk in seq(this)) {
+  for (kk in seq_along(this)) {
     verbose && enter(verbose, sprintf("Array #%d of %d", kk, nbrOfArrays));
     df <- getFile(this, kk);
     verbose && print(verbose, df);
@@ -385,10 +385,10 @@ setMethodS3("bgAdjustGcrma", "AffymetrixCelSet", function(this, path=NULL, name=
   # NSB correction for each array
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  nbrOfArrays <- nbrOfArrays(this);
+  nbrOfArrays <- length(this);
   verbose && enter(verbose, "Adjusting ", nbrOfArrays, " arrays");
   dataFiles <- list();
-  for (kk in seq(this)) {
+  for (kk in seq_along(this)) {
     verbose && enter(verbose, sprintf("Array #%d of %d", kk, nbrOfArrays));
     df <- getFile(this, kk);
     verbose && print(verbose, df);
@@ -485,10 +485,10 @@ setMethodS3("bgAdjustRma", "AffymetrixCelSet", function(this, path=NULL, tags="R
   # apply normal+exponential model to each array
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  nbrOfArrays <- nbrOfArrays(this);
+  nbrOfArrays <- length(this);
   verbose && enter(verbose, "Adjusting ", nbrOfArrays, " arrays");
   dataFiles <- list();
-  for (kk in seq(this)) {
+  for (kk in seq_along(this)) {
     verbose && enter(verbose, sprintf("Array #%d of %d", kk, nbrOfArrays));
     df <- getFile(this, kk);
     verbose && print(verbose, df);

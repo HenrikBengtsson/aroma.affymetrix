@@ -129,7 +129,7 @@ setMethodS3("getAlleleCellPairs", "AffymetrixCdfFile", function(this, units=NULL
 
   verbose && enter(verbose, "Merging groups by allele pair");
   verbose && printf(verbose, "Units left: ");
-  for (uu in seq(along=cells)) {
+  for (uu in seq_along(cells)) {
     if (uu %% 5000 == 0)
       verbose && writeRaw(verbose, length(cells)-uu, ", ");
     unit <- cells[[uu]];

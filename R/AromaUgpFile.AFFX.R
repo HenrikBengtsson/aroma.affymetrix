@@ -115,7 +115,7 @@ setMethodS3("importFromAffymetrixNetAffxCsvFile", "AromaUgpFile", function(this,
       } else {
         avgFcn <- mean;
       }
-      for (kk in seq(along=dupUnits)) {
+      for (kk in seq_along(dupUnits)) {
         if (kk %% 500 == 0)
          verbose && printf(verbose, "%d, ", kk);
         dupUnit <- dupUnits[kk];

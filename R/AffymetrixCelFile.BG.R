@@ -347,7 +347,7 @@ setMethodS3("bgAdjustGcrma", "AffymetrixCelFile", function(this, path=NULL, type
     verbose && cat(verbose, "Number of MMs: ", length(mm));
 
     pm <- gcrma::bg.adjust.fullmodel(pms=pm, mms=mm, ncs=ncs, apm=apm, amm=amm, anc=anc,
-                      index.affinities=seq(length=length(pm)), k=k, rho=rho, fast=fast);
+                      index.affinities=seq_len(length(pm)), k=k, rho=rho, fast=fast);
 
     verbose && exit(verbose);
   } else if (type == "affinities") {
@@ -423,7 +423,7 @@ setMethodS3("bgAdjustGcrma", "AffymetrixCelFile", function(this, path=NULL, type
     }
 
     pm <- gcrma::bg.adjust.affinities(pms=pm, ncs=ncs, apm=apm, anc=anc, 
-          index.affinities=seq(length=length(pm)), k=k, fast=fast, nomm=nomm);
+          index.affinities=seq_len(length(pm)), k=k, fast=fast, nomm=nomm);
 
     verbose && exit(verbose);
   } # if (type == ...)

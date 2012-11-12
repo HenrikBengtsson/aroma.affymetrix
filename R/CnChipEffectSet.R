@@ -58,7 +58,7 @@ setMethodS3("getChipEffectFileClass", "CnChipEffectSet", function(static, ...) {
 
 
 setMethodS3("getCombineAlleles", "CnChipEffectSet", function(this, ...) {
-  if (nbrOfFiles(this) == 0)
+  if (length(this) == 0)
     return(FALSE);
   ce <- getFile(this, 1);
   ce$combineAlleles;
@@ -68,7 +68,7 @@ setMethodS3("getCombineAlleles", "CnChipEffectSet", function(this, ...) {
 
 
 setMethodS3("setCombineAlleles", "CnChipEffectSet", function(this, status, ...) {
-  if (nbrOfFiles(this) == 0)
+  if (length(this) == 0)
     return(FALSE);
 
   ce <- getFile(this, 1);

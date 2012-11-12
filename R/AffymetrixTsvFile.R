@@ -129,7 +129,7 @@ setMethodS3("readDataFrame", "AffymetrixTsvFile", function(this, ..., verbose=FA
 setMethodS3("getField", "AffymetrixTsvFile", function(this, units=NULL, field, ...) {
   if (is.null(units)) {
     unf <- getUnitNamesFile(this);
-    units <- seq(length=nbrOfUnits(unf));
+    units <- seq_len(nbrOfUnits(unf));
   }
 
   data <- getData(this, ...);

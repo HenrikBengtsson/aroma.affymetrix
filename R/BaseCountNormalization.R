@@ -415,7 +415,7 @@ setMethodS3("fitOne", "BaseCountNormalization", function(this, df, ..., verbose=
       } else {
         # Update parameters for each subfit
         deltaMax <- 0;
-        for (kk in seq(along=fit)) {
+        for (kk in seq_along(fit)) {
           fitKK <- fit[[kk]];
 
           fitBKK <- fitB[[kk]];

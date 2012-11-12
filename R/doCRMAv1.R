@@ -17,7 +17,7 @@ setMethodS3("doCRMAv1", "AffymetrixCelSet", function(csR, shift=+300, combineAll
   # Argument 'arrays':
   if (!is.null(arrays)) {
     throw("Not supported. Argument 'arrays' should be NULL.");
-    arrays <- Arguments$getIndices(arrays, max=nbrOfArrays(csR));
+    arrays <- Arguments$getIndices(arrays, max=length(csR));
   }
 
   # Argument 'drop':

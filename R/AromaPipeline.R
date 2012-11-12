@@ -26,7 +26,7 @@ setMethodS3("process", "AromaPipeline", function(this, ..., verbose=FALSE) {
 
   ds <- getInputDataSet(this);
   steps <- getSteps(this);
-  for (kk in seq(along=steps)) {
+  for (kk in seq_along(steps)) {
     step <- steps[[kk]];
     ds <- step(ds, verbose=verbose);
   }

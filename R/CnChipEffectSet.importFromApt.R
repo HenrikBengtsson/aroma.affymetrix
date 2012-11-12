@@ -116,7 +116,7 @@ setMethodS3("importFromApt", "CnChipEffectSet", function(static, filename, path=
   verbose && cat(verbose, "File header:");
   verbose && str(verbose, header);
 
-  nbrOfArrays <- nbrOfArrays(apt);
+  nbrOfArrays <- length(apt);
   arrayNames <- getArrayNames(apt);
   verbose && printf(verbose, "Arrays [%d]: %s\n", nbrOfArrays,
                                         paste(arrayNames, collapse=", "));
@@ -135,7 +135,7 @@ setMethodS3("importFromApt", "CnChipEffectSet", function(static, filename, path=
 
   verbose && enter(verbose, "Importing ", nbrOfArrays, " arrays");
   cells <- NULL;
-  for (kk in seq(length=nbrOfArrays)) {
+  for (kk in seq_len(nbrOfArrays)) {
     arrayName <- arrayNames[kk];
     verbose && enter(verbose, sprintf("Array #%d (%s) of %d", 
                                             kk, arrayName, nbrOfArrays));

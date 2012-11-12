@@ -224,10 +224,10 @@ setMethodS3("process", "LimmaBackgroundCorrection", function(this, ..., force=FA
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # apply normal+exponential model to each array
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  nbrOfArrays <- nbrOfArrays(ds);
+  nbrOfArrays <- length(ds);
   verbose && enter(verbose, "Adjusting ", nbrOfArrays, " arrays");
   dataFiles <- list();
-  for (kk in seq(ds)) {
+  for (kk in seq_along(ds)) {
     verbose && enter(verbose, sprintf("Array #%d of %d", kk, nbrOfArrays));
     df <- getFile(ds, kk);
     verbose && print(verbose, df);

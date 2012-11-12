@@ -386,7 +386,7 @@ setMethodS3("nbrOfEnzymes", "SnpInformation", function(this, ...) {
   as.integer(1);
 })
 
-setMethodS3("getFragmentLengths", "SnpInformation", function(this, enzymes=seq(length=nbrOfEnzymes(this)), ...) {
+setMethodS3("getFragmentLengths", "SnpInformation", function(this, enzymes=seq_len(nbrOfEnzymes(this)), ...) {
   data <- getData(this, ..., fields="fragmentLength");
   fl <- data[,enzymes,drop=FALSE];
   fl <- as.matrix(fl);
@@ -397,7 +397,7 @@ setMethodS3("getFragmentLengths", "SnpInformation", function(this, enzymes=seq(l
 })
 
 
-setMethodS3("getFragmentStarts", "SnpInformation", function(this, enzymes=seq(length=nbrOfEnzymes(this)), ...) {
+setMethodS3("getFragmentStarts", "SnpInformation", function(this, enzymes=seq_len(nbrOfEnzymes(this)), ...) {
   data <- getData(this, ..., fields="start");
   fl <- data[,enzymes,drop=FALSE];
   fl <- as.matrix(fl);
@@ -408,7 +408,7 @@ setMethodS3("getFragmentStarts", "SnpInformation", function(this, enzymes=seq(le
 })
 
 
-setMethodS3("getFragmentStops", "SnpInformation", function(this, enzymes=seq(length=nbrOfEnzymes(this)), ...) {
+setMethodS3("getFragmentStops", "SnpInformation", function(this, enzymes=seq_len(nbrOfEnzymes(this)), ...) {
   data <- getData(this, ..., fields="stop");
   fl <- data[,enzymes,drop=FALSE];
   fl <- as.matrix(fl);

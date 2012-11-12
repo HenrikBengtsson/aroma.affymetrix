@@ -57,7 +57,7 @@ setMethodS3("getUnitGroupCellMatrixMap", "ChipEffectFile", function(this, units=
   naValue <- as.integer(NA);
   map <- matrix(naValue, nrow=nbrOfUnits, ncol=nbrOfGroups);
   
-  for (gg in seq(length=nbrOfGroups)) {
+  for (gg in seq_len(nbrOfGroups)) {
     group <- groups[gg];
     verbose && enter(verbose, sprintf("Group %d (%d) of %d", 
                                                   gg, group, nbrOfGroups));
@@ -154,7 +154,7 @@ setMethodS3("getUnitGroupCellArrayMap", "ChipEffectFile", function(this, units=N
   naValue <- as.integer(NA);
   map <- matrix(naValue, nrow=nbrOfUnits, ncol=nbrOfGroups);
   
-  for (gg in seq(length=nbrOfGroups)) {
+  for (gg in seq_len(nbrOfGroups)) {
     group <- groups[gg];
     verbose && enter(verbose, sprintf("Group %d (%d) of %d", 
                                                   gg, group, nbrOfGroups));

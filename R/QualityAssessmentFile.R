@@ -59,7 +59,7 @@ setMethodS3("findUnitsTodo", "QualityAssessmentFile", function(this, units=NULL,
 
   verbose && cat(verbose, "Pathname: ", getPathname(this));
   if (is.null(units)) {
-    units <- seq(length=nbrOfUnits(getCdf(this)));
+    units <- seq_len(nbrOfUnits(getCdf(this)));
   }
   
   # Read 'pixels' from each unit

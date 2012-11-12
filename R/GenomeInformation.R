@@ -294,7 +294,7 @@ setMethodS3("getChromosomeStats", "GenomeInformation", function(this, na.rm=TRUE
     stats <- matrix(naValue, nrow=nbrOfChromosomes, ncol=3);
     colnames(stats) <- c("min", "max", "n");
     rownames(stats) <- chromosomes;
-    for (kk in seq(along=chromosomes)) {
+    for (kk in seq_along(chromosomes)) {
       chr <- chromosomes[kk];
       verbose && enter(verbose, sprintf("Chromosome %d ('Chr%02d') of %d", 
                                           kk, chr, nbrOfChromosomes));

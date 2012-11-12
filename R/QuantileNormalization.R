@@ -354,7 +354,7 @@ setMethodS3("findTargetDistributionFile", "QuantileNormalization", function(this
   verbose && print(verbose, rootPaths);
 
   # Identify subdirectories
-  subdirs <- sapply(seq(length=depth), FUN=function(d) {
+  subdirs <- sapply(seq_len(depth), FUN=function(d) {
     basename(getParent(path, depth=d-1L));
   });
   subdirs <- rev(subdirs);

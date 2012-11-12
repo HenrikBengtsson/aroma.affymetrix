@@ -222,7 +222,7 @@ setMethodS3("fit", "SingleArrayUnitModel", function(this, arrays=NULL, units="re
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Fit model array by array
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  for (aa in seq(along=arrays)) {
+  for (aa in seq_along(arrays)) {
     array <- arrays[aa];
     verbose && enter(verbose, aa);
 

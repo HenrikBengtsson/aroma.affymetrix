@@ -35,7 +35,7 @@ setMethodS3("applyAnyOrder", "CopyNumberChromosomalModel", function(this, chipTy
   # Argument 'arrays':
   if (is.null(arrays)) {
     arrayNames <- allArrays;
-    arrays <- seq(along=allArrays);
+    arrays <- seq_along(allArrays);
   } else if (is.character(arrays)) { 
     if (!all(arrays %in% allArrays)) {
       throw("Argument 'arrays' contains an unknown value: ", 
@@ -92,10 +92,10 @@ setMethodS3("applyAnyOrder", "CopyNumberChromosomalModel", function(this, chipTy
   refTuple <- extract(refTuple, arrays=arrays);
   verbose && exit(verbose);
 
-  nbrOfArrays <- nbrOfArrays(cesTuple);
+  nbrOfArrays <- length(cesTuple);
 
   # Sanity check
-  stopifnot(nbrOfArrays(refTuple) == nbrOfArrays);
+  stopifnot(length(refTuple) == nbrOfArrays);
 
  
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
@@ -115,7 +115,7 @@ setMethodS3("applyAnyOrder", "CopyNumberChromosomalModel", function(this, chipTy
   nbrOfChipTypes <- nbrOfChipTypes(cesTuple);
   ceFiles <- vector("list", nbrOfChipTypes);
   names(ceFiles) <- chipTypes;
-  for (kk in seq(length=nbrOfChipTypes)) {
+  for (kk in seq_len(nbrOfChipTypes)) {
     ces <- cesSets[[kk]];
     ceFiles[[kk]] <- getFile(ces, pair[kk]);
     rm(ces);
@@ -125,7 +125,7 @@ setMethodS3("applyAnyOrder", "CopyNumberChromosomalModel", function(this, chipTy
   nbrOfChromosomes <- length(chromosomes);
   maps <- vector("list", nbrOfChipTypes);
   names(maps) <- chipTypes;
-  for (kk in seq(length=nbrOfChipTypes)) {
+  for (kk in seq_len(nbrOfChipTypes)) {
     chipType <- chipTypes[[kk]];
     verbose && enter(verbose, sprintf("Chip type #%d ('%s') of %d", 
                                           kk, chipType, nbrOfChipTypes));
@@ -136,7 +136,7 @@ setMethodS3("applyAnyOrder", "CopyNumberChromosomalModel", function(this, chipTy
     rm(mapsT);
 
     ce <- ceFiles[[kk]];
-    for (ll in seq(length=nbrOfChromosomes)) {
+    for (ll in seq_len(nbrOfChromosomes)) {
       chromosome <- chromosomes[ll];
       verbose && enter(verbose, sprintf("Chromosome #%d ('%s') of %d",
                                       ll, chromosome, nbrOfChromosomes));
@@ -185,13 +185,13 @@ setMethodS3("applyCCF0", "CopyNumberChromosomalModel", function(this, cesSets, r
   nbrOfChromosomes <- length(maps[[1]]);
   chromosomes <- names(maps[[1]]);
 
-  nbrOfArrays <- nbrOfArrays(cesSets[[1]]);
-  arrays <- seq(length=nbrOfArrays);
+  nbrOfArrays <- length(cesSets[[1]]);
+  arrays <- seq_len(nbrOfArrays);
 
 
   valuesCT <- vector("list", nbrOfChipTypes);
   names(valuesCT) <- chipTypes;
-  for (kk in seq(length=nbrOfChipTypes)) {
+  for (kk in seq_len(nbrOfChipTypes)) {
     chipType <- chipTypes[[kk]];
     verbose && enter(verbose, sprintf("Chip type #%d ('%s') of %d", 
                                           kk, chipType, nbrOfChipTypes));
@@ -203,7 +203,7 @@ setMethodS3("applyCCF0", "CopyNumberChromosomalModel", function(this, cesSets, r
     names(valuesC) <- chromosomes;
     valuesCT[[kk]] <- valuesC;
 
-    for (ll in seq(length=nbrOfChromosomes)) {
+    for (ll in seq_len(nbrOfChromosomes)) {
       chromosome <- chromosomes[ll];
       verbose && enter(verbose, sprintf("Chromosome #%d ('%s') of %d",
                                       ll, chromosome, nbrOfChromosomes));
@@ -216,7 +216,7 @@ setMethodS3("applyCCF0", "CopyNumberChromosomalModel", function(this, cesSets, r
       names(valuesA) <- getNames(ces);
       valuesCT[[kk]][[ll]] <- valuesA;
 
-      for (mm in seq(length=nbrOfArrays)) {
+      for (mm in seq_len(nbrOfArrays)) {
         ce <- getFile(ces, mm);
         re <- getFile(res, mm);
         verbose && enter(verbose, sprintf("Array #%d ('%s') of %d",
@@ -251,14 +251,14 @@ setMethodS3("applyCFC0", "CopyNumberChromosomalModel", function(this, cesSets, r
   nbrOfChromosomes <- length(maps[[1]]);
   chromosomes <- names(maps[[1]]);
 
-  nbrOfArrays <- nbrOfArrays(cesSets[[1]]);
-  arrays <- seq(length=nbrOfArrays);
+  nbrOfArrays <- length(cesSets[[1]]);
+  arrays <- seq_len(nbrOfArrays);
   arrayNames <- getNames(cesSets[[1]]);
 
   valuesC <- vector("list", nbrOfChromosomes);
   names(valuesC) <- chromosomes;
 
-  for (ll in seq(length=nbrOfChromosomes)) {
+  for (ll in seq_len(nbrOfChromosomes)) {
     chromosome <- chromosomes[ll];
     verbose && enter(verbose, sprintf("Chromosome #%d ('%s') of %d",
                                     ll, chromosome, nbrOfChromosomes));
@@ -267,7 +267,7 @@ setMethodS3("applyCFC0", "CopyNumberChromosomalModel", function(this, cesSets, r
     names(valuesA) <- arrayNames;
     valuesC[[ll]] <- valuesA;
 
-    for (mm in seq(length=nbrOfArrays)) {
+    for (mm in seq_len(nbrOfArrays)) {
       ces <- cesSets[[1]];
       ce <- getFile(ces, mm);
       verbose && enter(verbose, sprintf("Array #%d ('%s') of %d",
@@ -276,7 +276,7 @@ setMethodS3("applyCFC0", "CopyNumberChromosomalModel", function(this, cesSets, r
       names(valuesCT) <- chipTypes;
       valuesC[[ll]][[mm]] <- valuesCT;
 
-      for (kk in seq(length=nbrOfChipTypes)) {
+      for (kk in seq_len(nbrOfChipTypes)) {
         chipType <- chipTypes[[kk]];
         verbose && enter(verbose, sprintf("Chip type #%d ('%s') of %d", 
                                             kk, chipType, nbrOfChipTypes));

@@ -179,7 +179,7 @@ setMethodS3("process", "ChipEffectGroupMerge", function(this, ..., force=FALSE, 
   fl <- NULL;
   targetFcn <- NULL;
   map <- NULL;
-  nbrOfArrays <- nbrOfArrays(ces);
+  nbrOfArrays <- length(ces);
   res <- vector("list", nbrOfArrays);
   for (kk in seq_len(nbrOfArrays)) {
     ce <- getFile(ces, kk);

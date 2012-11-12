@@ -64,7 +64,7 @@ setMethodS3("fromDataSet", "FirmaSet", function(static, dataSet, path, name=getN
   verbose && enter(verbose, "Retrieving FIRMA results");
   fs <- vector("list", length(dataSet));
   verbose && cat(verbose, "Data set: ", name);
-  for (kk in seq(dataSet)) {
+  for (kk in seq_along(dataSet)) {
     df <- getFile(dataSet, kk);
     verbose && enter(verbose,
                      sprintf("Retrieving FIRMA results file #%d of %d (%s)",
@@ -106,7 +106,7 @@ setMethodS3("readUnits", "FirmaSet", function(this, units=NULL, cdf=NULL, ..., v
     on.exit(popState(verbose));
   }
 
-  verbose && enter(verbose, "Reading FIRMA results unit by unit for ", nbrOfArrays(this), " arrays");
+  verbose && enter(verbose, "Reading FIRMA results unit by unit for ", length(this), " arrays");
 
   if (is.null(cdf)) {
     verbose && enter(verbose, "Getting cell indices from CDF");
@@ -147,7 +147,7 @@ setMethodS3("updateUnits", "FirmaSet", function(this, units=NULL, cdf=NULL, data
   }
 
   # Update each file one by one
-  arrays <- seq(this);
+  arrays <- seq_along(this);
   nbrOfArrays <- length(this);
   verbose && enter(verbose, "Updating ", nbrOfArrays, " FIRMA result files");
 

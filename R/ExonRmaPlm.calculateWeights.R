@@ -41,7 +41,7 @@ setMethodS3("calculateWeights", "ExonRmaPlm", function(this, units=NULL, ram=NUL
 
   rs <- calculateResiduals(this, verbose=verbose);
   ws <- getWeightsSet(this, verbose=verbose);
-  nbrOfArrays <- nbrOfArrays(rs);
+  nbrOfArrays <- length(rs);
 
   verbose && enter(verbose, "Calculating PLM weights");
 
@@ -68,7 +68,7 @@ setMethodS3("calculateWeights", "ExonRmaPlm", function(this, units=NULL, ram=NUL
   
   verbose && printf(verbose, "Number of units: %d\n", nbrOfUnits);
 
-  unitsPerChunk <- ram * 100000/nbrOfArrays(getDataSet(this));
+  unitsPerChunk <- ram * 100000/length(getDataSet(this));
   unitsPerChunk <- Arguments$getInteger(unitsPerChunk, range=c(1,Inf));
   
   nbrOfChunks <- ceiling(nbrOfUnits / unitsPerChunk);
@@ -98,7 +98,7 @@ setMethodS3("calculateWeights", "ExonRmaPlm", function(this, units=NULL, ram=NUL
 
     cdf <- getCellIndices(getCdf(ds), units=units, stratifyBy="pm", ...);
     
-    for (ii in seq(ds)) {
+    for (ii in seq_along(ds)) {
       wf <- getFile(ws, ii);
 
       verbose && enter(verbose, sprintf("Array #%d ('%s') of %d", ii, getName(wf), length(ds)));

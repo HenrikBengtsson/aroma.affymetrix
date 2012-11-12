@@ -436,7 +436,7 @@ setMethodS3("hasUnitTypes", "AffymetrixCdfFile", function(this, types, ..., verb
   }
 
   # ...otherwise, scan for unit types
-  allUnits <- seq(length=nbrOfUnits(this));
+  allUnits <- seq_len(nbrOfUnits(this));
   chunkSize <- 5000;
   while (length(allUnits) > 0) {
     idxs <- 1:min(chunkSize, length(allUnits));
@@ -781,7 +781,7 @@ setMethodS3("getCellIndices", "AffymetrixCdfFile", function(this, units=NULL, ..
 
   units0 <- units;
   if (is.null(units)) {
-    units <- seq(length=nbrOfUnits(this));
+    units <- seq_len(nbrOfUnits(this));
   }
   nbrOfUnits <- length(units);
 

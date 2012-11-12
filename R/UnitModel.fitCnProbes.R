@@ -97,7 +97,7 @@ setMethodS3("fitCnProbes", "UnitModel", function(this, ..., verbose=FALSE) {
   # "Fitting"
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   verbose && enter(verbose, "Fitting ", length(ds), " arrays");
-  for (kk in seq(ds)) {
+  for (kk in seq_along(ds)) {
     df <- getFile(ds, kk);
     verbose && enter(verbose, sprintf("Array #%d ('%s') of %d", kk, getName(df), length(ds)));
 

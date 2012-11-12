@@ -48,7 +48,7 @@ setMethodS3("getPositionChipTypeUnit", "ChromosomalModel", function(this, chromo
   names(posList) <- names(unitsList);
   chipTypeList <- vector("list", length(unitsList));
   names(chipTypeList) <- names(unitsList);
-  for (kk in seq(along=posList)) {
+  for (kk in seq_along(posList)) {
     ugp <- ugpList[[kk]];
     units <- unitsList[[kk]];
     pos <- getPositions(ugp, units=units);

@@ -47,7 +47,7 @@ setMethodS3("as.character", "ArrayExplorer", function(x, ...) {
   s <- c(s, sprintf("Name: %s", getName(this)));
   s <- c(s, sprintf("Tags: %s", paste(getTags(this), collapse=",")));
   s <- c(s, sprintf("Number of chip types: %d", nbrOfChipTypes(this)));
-  s <- c(s, paste("Number of arrays:", nbrOfArrays(this)));
+  s <- c(s, paste("Number of arrays:", length(this)));
   colorMaps <- getColorMaps(this);
   if (length(colorMaps) == 0) {
     colorMaps <- "<not specified>";
@@ -279,7 +279,7 @@ setMethodS3("process", "ArrayExplorer", function(this, arrays=NULL, ..., verbose
   # Argument 'arrays':
   if (is.null(arrays)) {
   } else {
-    arrays <- Arguments$getIndices(arrays, max=nbrOfArrays(this));
+    arrays <- Arguments$getIndices(arrays, max=length(this));
   }
 
   # Argument 'verbose':

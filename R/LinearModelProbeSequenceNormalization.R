@@ -80,7 +80,7 @@ setMethodS3("getNormalEquations", "LinearModelProbeSequenceNormalization", funct
 
   # Expand 'cells'?
   if (is.null(cells)) {
-    cells <- seq(length=nbrOfCells(acs));
+    cells <- seq_len(nbrOfCells(acs));
   }
 
   verbose && enter(verbose, "Retrieving signal transform");
@@ -343,8 +343,8 @@ setMethodS3("fitOne", "LinearModelProbeSequenceNormalization", function(this, df
   }
   df <- length(coefs)/length(factors);
   verbose && cat(verbose, "Degrees of freedom: ", df);
-  idxs <- seq(length=df);
-  for (kk in seq(along=factors)) {
+  idxs <- seq_len(df);
+  for (kk in seq_along(factors)) {
     key <- names(factors)[kk];
     if (is.null(key)) {
       key <- sprintf("factor%02d", kk);

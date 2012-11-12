@@ -66,7 +66,7 @@ cdfMergeGroups <- function(groups, ...) {
   
   nbrOfFields <- length(.subset2(groups,1));
   newGroup <- vector("list", nbrOfFields);
-  for (ff in seq(length=nbrOfFields)) {
+  for (ff in seq_len(nbrOfFields)) {
     newGroup[[ff]] <- unlist(base::lapply(groups, .subset2, ff), use.names=FALSE);
   }
   names(newGroup) <- names(.subset2(groups,1));
@@ -196,7 +196,7 @@ setMethodS3("getFitUnitGroupFunction", "ExonRmaPlm", function(this, ..., verbose
     # If input data are dimensionless, return NAs. /KS 2006-01-30
     dim <- dim(y);
     if (is.null(dim)) {
-      nbrOfArrays <- nbrOfArrays(getDataSet(this));
+      nbrOfArrays <- length(getDataSet(this));
       return(list(theta=rep(NA, nbrOfArrays),
                   sdTheta=rep(NA, nbrOfArrays),
                   thetaOutliers=rep(NA, nbrOfArrays), 

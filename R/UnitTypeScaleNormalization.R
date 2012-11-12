@@ -88,7 +88,7 @@ setMethodS3("fitOne", "UnitTypeScaleNormalization", function(this, df, ..., verb
   verbose && exit(verbose);
 
   fit <- list();  
-  for (kk in seq(along=uniqueUnitTypes)) {
+  for (kk in seq_along(uniqueUnitTypes)) {
     unitType <- uniqueUnitTypes[kk];   
     key <- names(knownUnitTypes)[unitType == knownUnitTypes];
     names(unitType) <- key;
@@ -192,7 +192,7 @@ setMethodS3("getNormalizeSignalsOne", "UnitTypeScaleNormalization", function(thi
 
 
   data <- data.frame(cell=NULL, y=NULL);
-  for (kk in seq(along=uniqueUnitTypes)) {
+  for (kk in seq_along(uniqueUnitTypes)) {
     unitType <- uniqueUnitTypes[kk];
     key <- names(knownUnitTypes)[unitType == knownUnitTypes];
     names(unitType) <- key;
@@ -328,8 +328,8 @@ setMethodS3("process", "UnitTypeScaleNormalization", function(this, ..., skip=FA
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Normalize each array
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  verbose && enter(verbose, "Normalizing ", nbrOfArrays(dataSet), " arrays");
-  for (kk in seq(dataSet)) {
+  verbose && enter(verbose, "Normalizing ", length(dataSet), " arrays");
+  for (kk in seq_along(dataSet)) {
     verbose && enter(verbose, "Array #", kk);
     df <- getFile(dataSet, kk);
     verbose && print(verbose, df);

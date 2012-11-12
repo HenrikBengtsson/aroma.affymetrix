@@ -69,12 +69,12 @@ setMethodS3("extractTotalAndFreqB", "CnChipEffectSet", function(this, units=NULL
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
   # Read data
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-  nbrOfArrays <- nbrOfArrays(this);
+  nbrOfArrays <- length(this);
   dim <- c(nbrOfUnits, 2, nbrOfArrays);
   dimnames <- list(NULL, c("total", "freqB"), getNames(this));
   data <- array(NA, dim=dim, dimnames=dimnames);
 
-  for (kk in seq(length=nbrOfArrays)) {
+  for (kk in seq_len(nbrOfArrays)) {
     ce <- getFile(this, kk);
     dataKK <- extractTotalAndFreqB(ce, units=ugcMap, ..., 
                                                 verbose=less(verbose, 5));
@@ -167,12 +167,12 @@ setMethodS3("extractTotalAndFreqB", "SnpChipEffectSet", function(this, units=NUL
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
   # Read data
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-  nbrOfArrays <- nbrOfArrays(this);
+  nbrOfArrays <- length(this);
   dim <- c(nbrOfUnits, 2, nbrOfArrays);
   dimnames <- list(NULL, c("total", "freqB"), getNames(this));
   data <- array(NA, dim=dim, dimnames=dimnames);
 
-  for (kk in seq(length=nbrOfArrays)) {
+  for (kk in seq_len(nbrOfArrays)) {
     ce <- getFile(this, kk);
     dataKK <- extractTotalAndFreqB(ce, units=ugcMap, ..., 
                                                 verbose=less(verbose, 5));

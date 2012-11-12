@@ -40,7 +40,7 @@
 #   @seeclass
 # }
 #*/###########################################################################
-setMethodS3("plotDensity", "AffymetrixCelSet", function(this, subset=NULL, types=NULL, ..., col=seq(this), lty=NULL, lwd=NULL, annotate=TRUE, add=FALSE, verbose=FALSE) {
+setMethodS3("plotDensity", "AffymetrixCelSet", function(this, subset=NULL, types=NULL, ..., col=seq_along(this), lty=NULL, lwd=NULL, annotate=TRUE, add=FALSE, verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
@@ -49,11 +49,11 @@ setMethodS3("plotDensity", "AffymetrixCelSet", function(this, subset=NULL, types
   } else if (is.numeric(subset)) {
   }
 
-  nbrOfArrays <- nbrOfArrays(this);
+  nbrOfArrays <- length(this);
   
   # Argument 'col':
   if (is.null(col)) {
-    col <- seq(length=nbrOfArrays);
+    col <- seq_len(nbrOfArrays);
   } else {
     col <- rep(col, length.out=nbrOfArrays);
   }
@@ -85,7 +85,7 @@ setMethodS3("plotDensity", "AffymetrixCelSet", function(this, subset=NULL, types
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Plot densities
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-  for (kk in seq(length=nbrOfArrays)) {
+  for (kk in seq_len(nbrOfArrays)) {
     df <- getFile(this, kk);
     verbose && enter(verbose, sprintf("Array #%d ('%s') of %d", kk, 
                                                 getName(df), nbrOfArrays));

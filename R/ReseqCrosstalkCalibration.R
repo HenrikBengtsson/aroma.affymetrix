@@ -350,7 +350,7 @@ setMethodS3("fitOne", "ReseqCrosstalkCalibration", function(this, yAll, ..., ver
   fits <- vector("list", nbrOfUnits);
   names(fits) <- names(cellQuartets);
 
-  for (uu in seq(length=nbrOfUnits)) {
+  for (uu in seq_len(nbrOfUnits)) {
     keyUU <- names(cellQuartets)[uu];
     verbose && enter(verbose, sprintf("Unit #%d ('%s') of %d", 
                                            uu, keyUU, nbrOfUnits));
@@ -361,7 +361,7 @@ setMethodS3("fitOne", "ReseqCrosstalkCalibration", function(this, yAll, ..., ver
     fitsUU <- vector("list", nbrOfGroups);
     names(fitsUU) <- names(cellsUU);
 
-    for (gg in seq(length=nbrOfGroups)) {
+    for (gg in seq_len(nbrOfGroups)) {
       keyGG <- names(cellsUU)[gg];
       verbose && enter(verbose, sprintf("Group #%d ('%s') of %d", 
                                 gg, keyGG, nbrOfGroups));
@@ -423,7 +423,7 @@ setMethodS3("calibrateOne", "ReseqCrosstalkCalibration", function(this, yAll, fi
   rescaleFits <- vector("list", nbrOfUnits);
   names(rescaleFits) <- names(cellQuartets);
 
-  for (uu in seq(length=nbrOfUnits)) {
+  for (uu in seq_len(nbrOfUnits)) {
     keyUU <- names(cellQuartets)[uu];
     verbose && enter(verbose, sprintf("Unit #%d ('%s') of %d", 
                                            uu, keyUU, nbrOfUnits));
@@ -434,7 +434,7 @@ setMethodS3("calibrateOne", "ReseqCrosstalkCalibration", function(this, yAll, fi
 
     rescaleFitsUU <- vector("list", nbrOfGroups);
     names(rescaleFitsUU) <- names(fitsUU);
-    for (gg in seq(length=nbrOfGroups)) {
+    for (gg in seq_len(nbrOfGroups)) {
       keyGG <- names(cellsUU)[gg];
       verbose && enter(verbose, sprintf("Group #%d ('%s') of %d", 
                                            gg, keyGG, nbrOfGroups));
@@ -578,7 +578,7 @@ setMethodS3("process", "ReseqCrosstalkCalibration", function(this, ..., force=FA
   # Calibrate each array
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   cdf <- getCdf(ds);
-  nbrOfArrays <- nbrOfArrays(ds);
+  nbrOfArrays <- length(ds);
   verbose && enter(verbose, "Calibrating ", nbrOfArrays, " arrays");
   verbose && cat(verbose, "Path: ", outputPath);
   for (kk in seq_len(nbrOfArrays)) {

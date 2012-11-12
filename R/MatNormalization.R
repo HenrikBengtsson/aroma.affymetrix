@@ -451,7 +451,7 @@ setMethodS3("process", "MatNormalization", function(this, ..., ram=NULL, force=F
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Normalize all arrays simultaneously
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  nbrOfArrays <- nbrOfArrays(ds);
+  nbrOfArrays <- length(ds);
   verbose && enter(verbose, "Normalizing ", nbrOfArrays, " arrays");
   verbose && enter(verbose, "Path: ", outputPath);
 
@@ -499,7 +499,7 @@ setMethodS3("process", "MatNormalization", function(this, ..., ram=NULL, force=F
     verbose && exit(verbose);
 
     verbose && enter(verbose, "Calculating cross product X'y for each array");
-    for (ii in seq(length=nbrOfArrays)) {
+    for (ii in seq_len(nbrOfArrays)) {
       df <- getFile(ds, ii);
       verbose && enter(verbose, sprintf("Array #%d ('%s') of %d", 
                                           ii, getName(df), nbrOfArrays));
@@ -538,7 +538,7 @@ setMethodS3("process", "MatNormalization", function(this, ..., ram=NULL, force=F
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Save model fits
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  for (ii in seq(length=nbrOfArrays)) {
+  for (ii in seq_len(nbrOfArrays)) {
     df <- getFile(ds, ii);
     verbose && enter(verbose, sprintf("Array #%d ('%s') of %d", 
                                               ii, getName(df), nbrOfArrays));
@@ -613,7 +613,7 @@ setMethodS3("process", "MatNormalization", function(this, ..., ram=NULL, force=F
     xtx <- xtx + crossprod(X);
 
     verbose && enter(verbose, "Processing ", nbrOfArrays, " arrays");
-    for (ii in seq(length=nbrOfArrays)) {
+    for (ii in seq_len(nbrOfArrays)) {
       df <- getFile(ds, ii);
       verbose && enter(verbose, sprintf("Array #%d ('%s') of %d", 
                                               ii, getName(df), nbrOfArrays));
@@ -664,9 +664,9 @@ setMethodS3("process", "MatNormalization", function(this, ..., ram=NULL, force=F
   probs <- (0:nbrOfBins) / nbrOfBins;
   verbose && cat(verbose, "Quantile probabilities:");
   verbose && str(verbose, probs);
-  cutLabels <- seq(length=nbrOfBins);
+  cutLabels <- seq_len(nbrOfBins);
 
-  for (ii in seq(length=nbrOfArrays)) {
+  for (ii in seq_len(nbrOfArrays)) {
     verbose && enter(verbose, "Binning predicted values, calculating and scaling residuals");
     df <- getFile(ds, ii);
 

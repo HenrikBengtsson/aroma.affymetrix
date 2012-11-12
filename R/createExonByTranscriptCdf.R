@@ -369,7 +369,7 @@ setMethodS3("createExonByTranscriptCdf", "AffymetrixCdfFile", function(cdf, csv,
   names(cdfList) <- transcriptNames;
 
   unitnumber <- 0L;
-  for (jj in seq(length=nbrOfTranscripts)) {
+  for (jj in seq_len(nbrOfTranscripts)) {
     unitnumber <- unitnumber + 1L;
     if (unitnumber %% 100 == 0) {
       if (isVisible(verbose)) printf(", %d", unitnumber);

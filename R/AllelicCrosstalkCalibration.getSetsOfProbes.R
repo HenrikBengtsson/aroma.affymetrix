@@ -77,7 +77,7 @@ setMethodS3("getSetsOfProbes", "AllelicCrosstalkCalibration", function(this, ...
     } else if (version == 3) {
       setsOfProbes <- getAlleleProbePairs3(cdf, ignoreOrder=TRUE, verbose=verbose);
       snps <- setsOfProbes$snps;
-      for (kk in seq(along=snps)) {
+      for (kk in seq_along(snps)) {
         cells <- snps[[kk]][3:4,,drop=FALSE];
         o <- order(cells[1,]); 
         cells <- cells[,o,drop=FALSE];
@@ -117,7 +117,7 @@ setMethodS3("getSetsOfProbes", "AllelicCrosstalkCalibration", function(this, ...
                                                      verbose=verbose);
       rm(cells, shifts);
       # Clean out empty sets
-      for (kk in seq(along=snps)) {
+      for (kk in seq_along(snps)) {
         cells <- snps[[kk]];
         if (length(cells) == 0)
           snps[[kk]] <- NULL;
@@ -134,7 +134,7 @@ setMethodS3("getSetsOfProbes", "AllelicCrosstalkCalibration", function(this, ...
       verbose && enter(verbose, "Merging SNP groups");
       snpsT <- list(all=NULL);
       snps <- setsOfProbes$snps;
-      for (kk in seq(along=snps)) {
+      for (kk in seq_along(snps)) {
         snpsT$all <- cbind(snpsT$all, snps[[kk]]);
       }
       rm(snps);
@@ -159,7 +159,7 @@ setMethodS3("getSetsOfProbes", "AllelicCrosstalkCalibration", function(this, ...
       verbose && enter(verbose, "Grouping probe pairs by their shift relative to SNP");
 
       # For each set of cells...
-      for (gg in seq(along=setsOfProbes)) {
+      for (gg in seq_along(setsOfProbes)) {
         cells <- setsOfProbes[[gg]];
         groupTag <- names(setsOfProbes)[gg];
         verbose && enter(verbose, sprintf("Set #%d ('%s') of %d", gg, groupTag, length(setsOfProbes)));
@@ -190,7 +190,7 @@ setMethodS3("getSetsOfProbes", "AllelicCrosstalkCalibration", function(this, ...
         shiftTags <- sprintf("shift=%+d", possibleShifts);
         names(subgroups) <- paste(groupTag, shiftTags, sep=",");
 
-        for (ss in seq(along=possibleShifts)) {
+        for (ss in seq_along(possibleShifts)) {
           shift <- possibleShifts[ss];
           if (is.na(shift)) {
             idxs <- which(is.na(shifts));
@@ -217,7 +217,7 @@ setMethodS3("getSetsOfProbes", "AllelicCrosstalkCalibration", function(this, ...
     if (fakeSymmetry) {
       verbose && enter(verbose, "Flipping every 2nd (A,B) to (B,A)");
       snps <- setsOfProbes$snps;
-      for (kk in seq(along=snps)) {
+      for (kk in seq_along(snps)) {
         idxs <- snps[[kk]];
         cc <- seq(from=1, to=ncol(idxs), by=2);
         idxs[,cc] <- idxs[2:1,cc, drop=FALSE];
@@ -235,7 +235,7 @@ setMethodS3("getSetsOfProbes", "AllelicCrosstalkCalibration", function(this, ...
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # For each set of cells...
     snps <- setsOfProbes$snps;
-    for (kk in seq(along=snps)) {
+    for (kk in seq_along(snps)) {
       snps[[kk]] <- t(snps[[kk]]);
     } # for (gg ...)
     setsOfProbes$snps <- snps;

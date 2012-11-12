@@ -104,7 +104,7 @@ setMethodS3("fromDataSet", "WeightsSet", function(static, dataSet, path, fullnam
   verbose && enter(verbose, "Retrieving probe-level weights from data set");
   ws <- vector("list", length(dataSet));
   verbose && cat(verbose, "Data set: ", fullname);
-  for (kk in seq(dataSet)) {
+  for (kk in seq_along(dataSet)) {
     df <- getFile(dataSet, kk);
     verbose && enter(verbose, 
                            sprintf("Retrieving weights file #%d of %d (%s)",
@@ -145,7 +145,7 @@ setMethodS3("readUnits", "WeightsSet", function(this, units=NULL, cdf=NULL, ...,
     on.exit(popState(verbose));
   }
 
-  verbose && enter(verbose, "Reading weights unit by unit for ", nbrOfArrays(this), " arrays");
+  verbose && enter(verbose, "Reading weights unit by unit for ", length(this), " arrays");
 
   if (is.null(cdf)) {
     verbose && enter(verbose, "Getting cell indices from CDF");
@@ -182,7 +182,7 @@ setMethodS3("updateUnits", "WeightsSet", function(this, units=NULL, cdf=NULL, da
   }
 
   # Update each file one by one
-  arrays <- seq(this);
+  arrays <- seq_along(this);
   nbrOfArrays <- length(arrays);
   verbose && cat(verbose, "Number of files: ", nbrOfArrays);
 

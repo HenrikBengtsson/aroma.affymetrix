@@ -282,7 +282,7 @@ setMethodS3("getAlleleProbePairs", "AffymetrixCdfFile", function(this, units=NUL
     # Should really make use of the group 'direction' in the CDF,
     # but that is really slow.  For the CDFs we've checked, all
     # 2 and 4 groups follow this assumption. /HB 2008-02-21
-    for (ll in seq(length=nbrOfPairs)) {
+    for (ll in seq_len(nbrOfPairs)) {
       value2 <- probeSets2[[bp]];
       if (is.null(value2))
         value2 <- vector("list", length=2);

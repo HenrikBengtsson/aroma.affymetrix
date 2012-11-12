@@ -325,7 +325,7 @@ setMethodS3("bpmapCluster2Cdf", "default", function(pathname, chipType, tags=NUL
   unitGroups <- vector("list", length=1L);
 
   uu <- 1L;
-  for (ii in seq(along=bpmapdfList)) {
+  for (ii in seq_along(bpmapdfList)) {
     name <- names(bpmapdfList)[ii];
     verbose && enter(verbose, sprintf("Sequence #%d ('%s') of %d", ii, name, length(bpmapdfList)));
 
@@ -392,7 +392,7 @@ setMethodS3("bpmapCluster2Cdf", "default", function(pathname, chipType, tags=NUL
     # Only for verbose output
     unitNamesII <- character(length=nbrOfUnitsII);
 
-    for (jj in seq(length=nbrOfUnitsII)) {
+    for (jj in seq_len(nbrOfUnitsII)) {
       rowsJJ <- rowsII[jj];
       startJJ <- starts[rowsJJ];
       endJJ <- ends[rowsJJ];

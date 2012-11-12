@@ -81,7 +81,7 @@ setMethodS3("readHeader", "AffymetrixAptSummaryFile", function(this, ..., verbos
 
   # Extract APT parameters from header comments
   comments <- header$comments;
-  names(comments) <- sprintf("commentRow%03d", seq(along=comments));
+  names(comments) <- sprintf("commentRow%03d", seq_along(comments));
   isParam <- (regexpr("^#%", comments) != -1);
   header$comments <- comments[!isParam];
   params <- comments[isParam];

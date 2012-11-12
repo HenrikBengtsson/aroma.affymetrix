@@ -82,7 +82,7 @@ setMethodS3("process", "SpatialRowColumnNormalization", function(this, ..., forc
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Normalize
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  nbrOfArrays <- nbrOfArrays(ds);
+  nbrOfArrays <- length(ds);
   verbose && enter(verbose, "Normalizing ", nbrOfArrays, " arrays");
   verbose && enter(verbose, "Path: ", outputPath);
   dataFiles <- list();
@@ -146,7 +146,7 @@ setMethodS3("process", "SpatialRowColumnNormalization", function(this, ..., forc
       # Write calibrated data to file
       verbose2 <- -as.integer(verbose)-2;
       if (is.null(cells)) {
-        cells <- matrix(seq(along=y), nrow=dim[1], ncol=dim[2], byrow=TRUE);
+        cells <- matrix(seq_along(y), nrow=dim[1], ncol=dim[2], byrow=TRUE);
         verbose && str(verbose, cells);
       }
       updateCel(pathname, indices=cells, intensities=y, verbose=verbose2);

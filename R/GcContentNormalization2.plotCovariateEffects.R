@@ -11,7 +11,7 @@ setMethodS3("plotCovariateEffects", "GcContentNormalization2", function(this, ar
   dataSet <- getInputDataSet(this);
   # Argument 'arrays':
   if (!is.null(arrays)) {
-    arrays <- Arguments$getIndices(arrays, max=nbrOfArrays(dataSet));
+    arrays <- Arguments$getIndices(arrays, max=length(dataSet));
   }
 
   if (is.null(ref)) {
@@ -25,7 +25,7 @@ setMethodS3("plotCovariateEffects", "GcContentNormalization2", function(this, ar
   unf <- getUnitNamesFile(dataSet);
   # Argument 'units':
   if (is.null(units)) {
-    units <- seq(length=nbrOfUnits(unf));
+    units <- seq_len(nbrOfUnits(unf));
   } else {
     units <- Arguments$getIndices(units, max=nbrOfUnits(unf));
   }
@@ -103,10 +103,10 @@ setMethodS3("plotCovariateEffects", "GcContentNormalization2", function(this, ar
   }
 
   verbose && enter(verbose, "Plotting");
-  nbrOfArrays <- nbrOfArrays(dataSet);
+  nbrOfArrays <- length(dataSet);
   subplots(nbrOfArrays);
   par(mar=c(4,3,1,0.5)+0.1, mgp=c(2.0, 0.8, 0));
-  for (cc in seq(length=nbrOfArrays)) {
+  for (cc in seq_len(nbrOfArrays)) {
     ce <- getFile(dataSet, cc);
     name <- getFullName(ce);
     name <- gsub(",chipEffects", "", name);

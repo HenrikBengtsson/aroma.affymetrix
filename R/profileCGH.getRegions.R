@@ -54,7 +54,7 @@ setMethodS3("getRegions", "profileCGH", function(this, nbrOfSnps=c(1,Inf), smoot
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Extract each region
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  for (rr in seq(along=uRegions)) {
+  for (rr in seq_along(uRegions)) {
     # Get the region ID
     region <- uRegions[rr];
 
@@ -112,7 +112,7 @@ setMethodS3("getRegions", "profileCGH", function(this, nbrOfSnps=c(1,Inf), smoot
   # Smoothing regions
   if (!is.null(smoothing)) {
     keep <- rep(FALSE, nrow(df));
-    for (kk in seq(length=nrow(smoothing))) {
+    for (kk in seq_len(nrow(smoothing))) {
       range <- smoothing[kk,];
       keep <- keep | (range[1] <= df$Smoothing & df$Smoothing <= range[2]);
     }

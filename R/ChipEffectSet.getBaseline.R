@@ -58,7 +58,7 @@ setMethodS3("getBaseline", "ChipEffectSet", function(this, force=FALSE, verbose=
   verbose && cat(verbose, "Filename: ", filename);
 
   pathname <- NULL;
-  for (kk in seq(along=paths)) {
+  for (kk in seq_along(paths)) {
     path <- paths[kk];
     verbose && enter(verbose, sprintf("Searching path #%d of %d", kk, length(paths)));
 

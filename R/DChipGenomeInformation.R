@@ -182,7 +182,7 @@ setMethodS3("readDataFrame", "DChipGenomeInformation", function(this, units=NULL
 
   # Try to read with the designated read function.
   res <- NULL;
-  for (kk in seq(along=readFcns)) {
+  for (kk in seq_along(readFcns)) {
     pattern <- names(readFcns)[kk];
     if (regexpr(pattern, chipType) != -1) {
       readFcn <- readFcns[[kk]];
@@ -196,7 +196,7 @@ setMethodS3("readDataFrame", "DChipGenomeInformation", function(this, units=NULL
 
   # If failed, re-try using all read functions.
   if (is.null(res)) {
-    for (kk in seq(along=readFcns)) {
+    for (kk in seq_along(readFcns)) {
       readFcn <- readFcns[[kk]];
       tryCatch({
         res <- readFcn(this, ...);

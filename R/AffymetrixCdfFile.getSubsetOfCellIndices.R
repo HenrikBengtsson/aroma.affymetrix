@@ -151,7 +151,7 @@ setMethodS3("getSubsetOfCellIndices", "AffymetrixCdfFile", function(this, units=
   if (is.null(cellsIncl)) {
     # All types cells of cells?
     if (is.null(stratifyBy)) {
-      cellsIncl <- seq(length=nbrOfCells(this));
+      cellsIncl <- seq_len(nbrOfCells(this));
     } else {
       verbose && enter(verbose, "Reading cell indices to include");
       cellsIncl <- getCellIndices(this, stratifyBy=stratifyBy, 

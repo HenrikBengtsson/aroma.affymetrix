@@ -1,4 +1,4 @@
-setMethodS3("writeWig", "CnChipEffectSet", function(this, reference=NULL, arrays=1:nbrOfArrays(this), chromosomes=c(1:22,"X"), na.rm=TRUE, oneFile=FALSE, gzip=TRUE, ylim=c(-1,1), digits=3, group="Copy numbers", col=NULL, smoothingWindow=5, verbose=FALSE, ...) {
+setMethodS3("writeWig", "CnChipEffectSet", function(this, reference=NULL, arrays=1:length(this), chromosomes=c(1:22,"X"), na.rm=TRUE, oneFile=FALSE, gzip=TRUE, ylim=c(-1,1), digits=3, group="Copy numbers", col=NULL, smoothingWindow=5, verbose=FALSE, ...) {
   allChromosomes <- c(1:22,"X");
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -18,7 +18,7 @@ setMethodS3("writeWig", "CnChipEffectSet", function(this, reference=NULL, arrays
   }
 
   # Argument 'arrays':
-  arrays <- Arguments$getIndices(arrays, max=nbrOfArrays(this));
+  arrays <- Arguments$getIndices(arrays, max=length(this));
 
   # Argument 'chromosomes':
   chromosomes <- Arguments$getCharacters(chromosomes);

@@ -50,14 +50,14 @@ setMethodS3("getChipEffectFileClass", "SnpChipEffectSet", function(static, ...) 
 }, static=TRUE, private=TRUE)
 
 setMethodS3("getMergeStrands", "SnpChipEffectSet", function(this, ...) {
-  if (nbrOfFiles(this) == 0)
+  if (length(this) == 0)
     return(FALSE);
   ce <- getFile(this, 1);
   ce$mergeStrands;
 })
 
 setMethodS3("setMergeStrands", "SnpChipEffectSet", function(this, status, ...) {
-  if (nbrOfFiles(this) == 0)
+  if (length(this) == 0)
     return(FALSE);
 
   oldStatus <- getMergeStrands(this);

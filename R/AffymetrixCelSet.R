@@ -80,7 +80,7 @@ setMethodS3("clearCache", "AffymetrixCelSet", function(this, ...) {
   }
   this$.averageFiles <- list();
 
-  if (nbrOfFiles(this) > 0) {
+  if (length(this) > 0) {
     # Clear the cache for the CDF.
     cdf <- getCdf(this);
     clearCache(cdf);
@@ -106,7 +106,7 @@ setMethodS3("clone", "AffymetrixCelSet", function(this, ..., verbose=FALSE) {
   object <- NextMethod("clone", clear=TRUE, verbose=less(verbose));
   clearCache(object);
 
-  if (nbrOfFiles(object) > 0) {
+  if (length(object) > 0) {
     # Clone the CDF (this will update the CDF of all file object)
     verbose && enter(verbose, "Cloning CDF");
     cdf <- getCdf(object);
@@ -212,7 +212,7 @@ setMethodS3("as.character", "AffymetrixCelSet", function(x, ...) {
   s <- c(s, sprintf("Path: %s", getPath(this)));
   s <- c(s, sprintf("Platform: %s", getPlatform(this)));
   s <- c(s, sprintf("Chip type: %s", getChipType(this)));
-  n <- nbrOfArrays(this);
+  n <- length(this);
   s <- c(s, sprintf("Number of arrays: %d", n));
   names <- getNames(this);
   s <- c(s, sprintf("Names: %s [%d]", hpaste(names), n));
@@ -301,7 +301,7 @@ setMethodS3("getIdentifier", "AffymetrixCelSet", function(this, ..., force=FALSE
 # @keyword IO
 #*/###########################################################################
 setMethodS3("getChipType", "AffymetrixCelSet", function(this, ...) {
-  if (nbrOfFiles(this) == 0) {
+  if (length(this) == 0) {
     return(as.character(NA));
   }
   unf <- getUnitNamesFile(this);
@@ -400,7 +400,7 @@ setMethodS3("setCdf", "AffymetrixCelSet", function(this, cdf, verbose=FALSE, ...
     cdf <- Arguments$getInstanceOf(cdf, "AffymetrixCdfFile");
   
     # Assure that the CDF is compatible with the CEL file
-    if (nbrOfFiles(this) > 0) {
+    if (length(this) > 0) {
       cf <- getFile(this, 1);
       if (nbrOfCells(cdf) != nbrOfCells(cf)) {
         throw("Cannot set CDF. The specified CDF structure ('", getChipType(cdf), "') is not compatible with the chip type ('", getChipType(cf), "') of the CEL file. The number of cells do not match: ", nbrOfCells(cdf), " != ", nbrOfCells(cf));
@@ -528,7 +528,7 @@ setMethodS3("byName", "AffymetrixCelSet", function(static, name, tags=NULL, chip
   exList <- list();
 
   res <- NULL;
-  for (kk in seq(along=paths)) {
+  for (kk in seq_along(paths)) {
     path <- paths[kk];
     verbose && enter(verbose, sprintf("Trying path #%d of %d", kk, length(paths)));
     verbose && cat(verbose, "Path: ", path);
@@ -545,7 +545,7 @@ setMethodS3("byName", "AffymetrixCelSet", function(static, name, tags=NULL, chip
     });
 
     if (!is.null(res)) {
-      if (nbrOfFiles(res) > 0) {
+      if (length(res) > 0) {
         verbose && cat(verbose, "Successful setup of data set.");
         verbose && exit(verbose);
         break;
@@ -560,7 +560,7 @@ setMethodS3("byName", "AffymetrixCelSet", function(static, name, tags=NULL, chip
       sprintf("%s (while trying '%s').", 
                    ex$exception$message, ex$path);
     });
-    exMsgs <- sprintf("(%d) %s", seq(along=exMsgs), exMsgs);
+    exMsgs <- sprintf("(%d) %s", seq_along(exMsgs), exMsgs);
     exMsgs <- paste(exMsgs, collapse="  ");
     msg <- sprintf("Failed to setup a data set for any of %d data directories located. The following reasons were reported: %s", length(paths), exMsgs);
     verbose && cat(verbose, msg);
@@ -608,9 +608,9 @@ setMethodS3("updateSampleAnnotationSet", "AffymetrixCelSet", function(this, ...,
   verbose && enter(verbose, "Scanning for and applying sample annotation files");
 
   # Nothing to do?
-  if (nbrOfFiles(this) > 0) {
+  if (length(this) > 0) {
     sas <- SampleAnnotationSet$loadAll(verbose=less(verbose));
-    if (nbrOfFiles(sas) == 0) {
+    if (length(sas) == 0) {
       verbose && cat(verbose, "No sample annotation files found.");
     } else {
       verbose && print(verbose, sas);
@@ -673,9 +673,9 @@ setMethodS3("byPath", "AffymetrixCelSet", function(static, path, cdf=NULL, patte
   args <- list("byPath", pattern=pattern, fileClass=fileClass, verbose=less(verbose));
 #  set <- do.call(NextMethod, args);
   set <- NextMethod(generic="byPath", object=static, pattern=pattern, fileClass=fileClass, verbose=less(verbose));
-  verbose && cat(verbose, "Retrieved files: ", nbrOfFiles(set));
+  verbose && cat(verbose, "Retrieved files: ", length(set));
 
-  if (nbrOfFiles(set) > 0) {
+  if (length(set) > 0) {
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Handle duplicates
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
@@ -793,7 +793,7 @@ setMethodS3("byPath", "AffymetrixCelSet", function(static, path, cdf=NULL, patte
 #
 # \description{
 #   @get "title".
-#   This is just a wrapper for \code{nbrOfFiles()}.
+#   This is just a wrapper for \code{length()}.
 # }
 #
 # @synopsis
@@ -813,8 +813,8 @@ setMethodS3("byPath", "AffymetrixCelSet", function(static, path, cdf=NULL, patte
 # }
 #*/###########################################################################
 setMethodS3("nbrOfArrays", "AffymetrixCelSet", function(this, ...) {
-  nbrOfFiles(this, ...);
-})
+  length(this, ...);
+}, protected=TRUE)
 
 
 
@@ -971,7 +971,7 @@ setMethodS3("getData", "AffymetrixCelSet", function(this, indices=NULL, fields=c
   # Reading cell signals
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   verbose && enter(verbose, "Retrieving data from ", nbrOfArrays, " arrays");
-  for (kk in seq(length=nbrOfArrays)) {
+  for (kk in seq_len(nbrOfArrays)) {
     verbose && enter(verbose, "Array #", kk, " of ", nbrOfArrays);
     dataFile <- this$files[[kk]];
     value <- getData(dataFile, indices=indices, fields=fields, verbose=less(verbose));

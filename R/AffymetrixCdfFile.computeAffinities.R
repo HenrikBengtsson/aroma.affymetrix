@@ -215,7 +215,7 @@ setMethodS3("computeAffinities", "AffymetrixCdfFile", function(this, safe=TRUE, 
       }
     }
   
-    for (ii in seq(along=apm)) {
+    for (ii in seq_along(apm)) {
       if (!is.null(pb) && (ii %% 1000 == 0)) {
         increase(pb);
       }
@@ -278,7 +278,7 @@ setMethodS3("computeAffinities", "AffymetrixCdfFile", function(this, safe=TRUE, 
       }
     }
   
-    for (ii in seq(along=idxs)) {
+    for (ii in seq_along(idxs)) {
       if (!is.null(pb) && (ii %% 1000 == 0)) {
         increase(pb);
       }
@@ -471,7 +471,7 @@ setMethodS3("computeAffinitiesByACS", "AffymetrixCdfFile", function(this, ..., m
     verbose && exit(verbose);
 
     bases <- c("A", "C", "G", "T");
-    for (ii in seq(along=cells)) {
+    for (ii in seq_along(cells)) {
       if (!is.null(pb) && (ii %% 1000 == 0)) {
         increase(pb);
       }
@@ -518,7 +518,7 @@ setMethodS3("computeAffinitiesByACS", "AffymetrixCdfFile", function(this, ..., m
       coefsKK <- affinity.spline.coefs[idxs];
   
       # For each sequence...
-      for (ii in seq(along=cells)) {
+      for (ii in seq_along(cells)) {
         seqMatrixII <- seqMatrix[ii,,drop=TRUE];
         isBase <- (seqMatrixII == base);
         basesII <- which(isBase);
@@ -543,7 +543,7 @@ setMethodS3("computeAffinitiesByACS", "AffymetrixCdfFile", function(this, ..., m
     bases <- c("A", "C", "G", "T");
     affinitiesT <- double(length(cells));
     # For each position...
-    for (pp in seq(length=nbrOfPositions)) {
+    for (pp in seq_len(nbrOfPositions)) {
       verbose && enter(verbose, sprintf("Nucleotide position #%d of %d", pp, nbrOfPositions));
 
       affinityBasisPP <- affinity.basis.matrix[pp,,drop=TRUE];

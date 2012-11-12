@@ -45,7 +45,7 @@ setMethodS3("plotAllelePairs", "AllelicCrosstalkCalibration", function(this, arr
   setsOfProbes <- setsOfProbes$snps;
   nbrOfPairs <- length(setsOfProbes);
   if (is.null(pairs)) {
-    pairs <- seq(length=nbrOfPairs);
+    pairs <- seq_len(nbrOfPairs);
   } else {
     pairs <- Arguments$getIndices(pairs, max=nbrOfPairs);
     nbrOfPairs <- length(pairs);
@@ -64,9 +64,9 @@ setMethodS3("plotAllelePairs", "AllelicCrosstalkCalibration", function(this, arr
   # Plot data
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
   # Set up the plot grid
-  layout(matrix(seq(length=nbrOfPairs), nrow=floor(sqrt(nbrOfPairs))));
+  layout(matrix(seq_len(nbrOfPairs), nrow=floor(sqrt(nbrOfPairs))));
   par(mar=c(3,3,1,1)+0.1, mgp=c(1.8,0.5,0), oma=c(0,0,3,0));
-  for (kk in seq(length=nbrOfPairs)) {
+  for (kk in seq_len(nbrOfPairs)) {
     cells <- setsOfProbes[[kk]];
     name <- names(setsOfProbes)[kk];
     y <- extractMatrix(df, cells=cells);

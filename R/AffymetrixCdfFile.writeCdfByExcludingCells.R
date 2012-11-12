@@ -69,7 +69,7 @@ setMethodS3("writeCdfByExcludingCells", "AffymetrixCdfFile", function(this, tags
   verbose && printf(verbose, "Number of cells to exclude: %d (%.1f%%) out of %d\n", length(cellsToExclude), 100*length(cellsToExclude)/nbrOfCells, nbrOfCells);
 
   nbrOfUnitsPerChunk <- ram*100e3;
-  units <- seq(length=nbrOfUnits);
+  units <- seq_len(nbrOfUnits);
   nbrOfChunks <- ceiling(nbrOfUnits / nbrOfUnitsPerChunk);
   nbrOfUnits <- nbrOfUnits(this);
   verbose && cat(verbose, "Number of units per chunk: ", nbrOfUnitsPerChunk);
@@ -116,7 +116,7 @@ setMethodS3("writeCdfByExcludingCells", "AffymetrixCdfFile", function(this, tags
       verbose && enter(verbose, "Dropping empty unit groups");
       nbrOfGroups <- 0L;
       nbrDropped <- 0L;
-      for (uu in seq(along=cdfListChunkF)) {
+      for (uu in seq_along(cdfListChunkF)) {
         unit <- cdfListChunkF[[uu]];
         groups <- unit$groups;
         nbrOfGroups <- nbrOfGroups + length(groups);

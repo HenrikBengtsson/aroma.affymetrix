@@ -116,7 +116,7 @@ setMethodS3("getCellIndices", "CnChipEffectFile", function(this, units=NULL, ...
   # Get units in chunks
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (is.null(units))
-    units <- seq(length=nbrOfUnits(cdf));
+    units <- seq_len(nbrOfUnits(cdf));
 
   cells <- lapplyInChunks(units, function(unitChunk) {
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

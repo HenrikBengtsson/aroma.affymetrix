@@ -753,7 +753,7 @@ setMethodS3("process", "AllelicCrosstalkCalibration", function(this, ..., force=
   # Calibrate each array
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   cdf <- getCdf(ds);
-  nbrOfArrays <- nbrOfArrays(ds);
+  nbrOfArrays <- length(ds);
   verbose && enter(verbose, "Calibrating ", nbrOfArrays, " arrays");
   verbose && cat(verbose, "Path: ", outputPath);
 
@@ -1055,7 +1055,7 @@ setMethodS3("plotBasepair", "AllelicCrosstalkCalibration", function(this, array,
   }
 
   # Argument 'array':
-  array <- Arguments$getIndex(array, max=nbrOfArrays(cs));
+  array <- Arguments$getIndex(array, max=length(cs));
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -1128,7 +1128,7 @@ setMethodS3("plotBasepair", "AllelicCrosstalkCalibration", function(this, array,
 
   nbrOfPairs <- length(basepairs);
   verbose && enter(verbose, "Plotting (PMA,PMB) for ", nbrOfPairs, " basepair(s) ", what, " calibration");
-  for (kk in seq(along=basepairs)) {
+  for (kk in seq_along(basepairs)) {
     name <- basepairs[kk];
     verbose && enter(verbose, "Plotting (PMA,PMB) for basepair ", name, " in array ", array, " ('", getName(cf), "')");
 

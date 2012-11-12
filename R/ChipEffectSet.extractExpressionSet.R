@@ -54,7 +54,7 @@ setMethodS3("extractExpressionSet", "ChipEffectSet", function(this, ..., logBase
   verbose && enter(verbose, "Extract an ExpressionSet");  
 
   verbose && print(verbose, this);
-  verbose && cat(verbose, "Number of arrays: ", nbrOfArrays(this));  
+  verbose && cat(verbose, "Number of arrays: ", length(this));  
 
 
   verbose && enter(verbose, "Reading data");  

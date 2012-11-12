@@ -370,8 +370,8 @@ setMethodS3("process", "ScaleNormalization", function(this, ..., skip=FALSE, for
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Normalize each array
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  verbose && enter(verbose, "Normalizing ", nbrOfArrays(ds), " arrays");
-  for (kk in seq(ds)) {
+  verbose && enter(verbose, "Normalizing ", length(ds), " arrays");
+  for (kk in seq_along(ds)) {
     verbose && enter(verbose, "Array #", kk);
     df <- getFile(ds, kk);
     verbose && print(verbose, df);
@@ -463,7 +463,7 @@ setMethodS3("process", "ScaleNormalization", function(this, ..., skip=FALSE, for
     verbose && print(verbose, gc);
 
     verbose && exit(verbose);
-  } # for (kk in seq(ds))
+  } # for (kk ...)
   verbose && exit(verbose);
 
   # Garbage collection

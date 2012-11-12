@@ -88,7 +88,7 @@ setMethodS3("as.character", "AffymetrixCnChpSet", function(x, ...) {
   tags <- paste(tags, collapse=",");
   s <- c(s, sprintf("Tags: %s", tags));
   s <- c(s, sprintf("Path: %s", getPath(this)));
-  n <- nbrOfArrays(this);
+  n <- length(this);
   s <- c(s, sprintf("Number of arrays: %d", n));
   names <- getNames(this);
   s <- c(s, sprintf("Names: %s [%d]", hpaste(names), n));
@@ -170,9 +170,9 @@ setMethodS3("byPath", "AffymetrixCnChpSet", function(static, path, pattern="[.](
   ##  set <- NextMethod("byPath", path=path, pattern=pattern, fileClass=fileClass, verbose=less(verbose));
   set <- NextMethod("byPath", pattern=pattern, fileClass=fileClass, verbose=less(verbose));
 
-  verbose && cat(verbose, "Retrieved files: ", nbrOfFiles(set));
+  verbose && cat(verbose, "Retrieved files: ", length(set));
 
-  if (nbrOfFiles(set) > 0) {
+  if (length(set) > 0) {
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
     # Scan all CHP files for possible chip types
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
@@ -227,7 +227,7 @@ setMethodS3("byPath", "AffymetrixCnChpSet", function(static, path, pattern="[.](
 #
 # \description{
 #   @get "title".
-#   This is just a wrapper for \code{nbrOfFiles()}.
+#   This is just a wrapper for \code{length()}.
 # }
 #
 # @synopsis
@@ -247,8 +247,8 @@ setMethodS3("byPath", "AffymetrixCnChpSet", function(static, path, pattern="[.](
 # }
 #*/###########################################################################
 setMethodS3("nbrOfArrays", "AffymetrixCnChpSet", function(this, ...) {
-  nbrOfFiles(this, ...);
-})
+  length(this, ...);
+}, protected=TRUE)
 
 
 
@@ -312,9 +312,9 @@ setMethodS3("extractLogRatios", "AffymetrixCnChpSet", function(this, units=NULL,
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
   readMap <- NULL;
   data <- NULL;
-  nbrOfArrays <- nbrOfArrays(this);
+  nbrOfArrays <- length(this);
   gcCount <- 0;
-  for (kk in seq(length=nbrOfArrays)) {
+  for (kk in seq_len(nbrOfArrays)) {
     df <- getFile(this, kk);
     verbose && enter(verbose, sprintf("Array #%d ('%s') of %d", kk, getName(df), nbrOfArrays));
 

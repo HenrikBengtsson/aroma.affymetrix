@@ -137,7 +137,7 @@ setMethodS3("fromDataSet", "ChipEffectSet", function(static, dataSet, path, name
   verbose && enter(verbose, "Retrieving chip-effects from data set");
   ces <- vector("list", length(dataSet));
   verbose && cat(verbose, "Data set: ", name);
-  for (kk in seq(dataSet)) {
+  for (kk in seq_along(dataSet)) {
     df <- getFile(dataSet, kk);
     verbose && enter(verbose, sprintf("Retrieving chip-effect #%d of %d (%s)",
                                                kk, length(ces), getName(df)));
@@ -178,7 +178,7 @@ setMethodS3("readUnits", "ChipEffectSet", function(this, units=NULL, cdf=NULL, .
     on.exit(popState(verbose));
   }
 
-  verbose && enter(verbose, "Reading chip effects unit by unit for ", nbrOfArrays(this), " arrays");
+  verbose && enter(verbose, "Reading chip effects unit by unit for ", length(this), " arrays");
 
   if (is.null(cdf)) {
     verbose && enter(verbose, "Getting cell indices from CDF");
@@ -223,7 +223,7 @@ setMethodS3("updateUnits", "ChipEffectSet", function(this, units=NULL, cdf=NULL,
   }
 
   # Update each file one by one
-  arrays <- seq(this);
+  arrays <- seq_along(this);
   nbrOfArrays <- length(arrays);
   verbose && cat(verbose, "Number of files: ", nbrOfArrays);
 

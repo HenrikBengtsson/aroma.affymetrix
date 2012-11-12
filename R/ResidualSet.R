@@ -117,7 +117,7 @@ setMethodS3("fromDataSet", "ResidualSet", function(static, dataSet, path, fullna
   verbose && enter(verbose, "Retrieving probe-level residuals from data set");
   rs <- vector("list", length(dataSet));
   verbose && cat(verbose, "Data set: ", fullname);
-  for (kk in seq(dataSet)) {
+  for (kk in seq_along(dataSet)) {
     df <- getFile(dataSet, kk);
     verbose && enter(verbose, 
                            sprintf("Retrieving residual file #%d of %d (%s)",
@@ -164,7 +164,7 @@ setMethodS3("readUnits", "ResidualSet", function(this, units=NULL, cdf=NULL, ...
     on.exit(popState(verbose));
   }
 
-  verbose && enter(verbose, "Reading residuals unit by unit for ", nbrOfArrays(this), " arrays");
+  verbose && enter(verbose, "Reading residuals unit by unit for ", length(this), " arrays");
 
   if (is.null(cdf)) {
     verbose && enter(verbose, "Getting cell indices from CDF");
@@ -216,7 +216,7 @@ setMethodS3("updateUnits", "ResidualSet", function(this, units=NULL, cdf=NULL, d
   verbose && exit(verbose);
 
   verbose <- less(verbose);
-  for (ii in seq(this)) {
+  for (ii in seq_along(this)) {
     verbose && enter(verbose, sprintf("Array #%d of %d: %s", 
                                        ii, nbrOfArrays, names[ii]));
     rf <- getFile(this, ii);

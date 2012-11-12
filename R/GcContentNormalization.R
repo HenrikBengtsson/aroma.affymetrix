@@ -363,7 +363,7 @@ setMethodS3("process", "GcContentNormalization", function(this, ..., force=FALSE
   gcContents <- NULL;
   targetFcn <- NULL;
   map <- NULL;
-  nbrOfArrays <- nbrOfArrays(ces);
+  nbrOfArrays <- length(ces);
   res <- vector("list", nbrOfArrays);
   for (kk in seq_len(nbrOfArrays)) {
     ce <- getFile(ces, kk);

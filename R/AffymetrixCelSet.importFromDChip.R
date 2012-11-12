@@ -79,7 +79,7 @@ setMethodS3("importFromDChip", "AffymetrixCelSet", function(static, path, name=N
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   verbose && enter(verbose, "Getting the dChip CEL set");
   cs <- byPath(static, path=path, ..., verbose=less(verbose));
-  verbose && cat(verbose, "Number of arrays: ", nbrOfArrays(cs));  
+  verbose && cat(verbose, "Number of arrays: ", length(cs));  
   verbose && exit(verbose);
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -141,7 +141,7 @@ setMethodS3("importFromDChip", "AffymetrixCelSet", function(static, path, name=N
   verbose && enter(verbose, "Rotating data back: ", !is.null(readMap));
 
   # Import each CEL file
-  for (kk in seq(cs)) {
+  for (kk in seq_along(cs)) {
     verbose && enter(verbose, "Converting ASCII CEL file to binary CEL file");
     df <- getFile(cs, kk);
 

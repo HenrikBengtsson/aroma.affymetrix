@@ -56,7 +56,7 @@ setMethodS3("createMonocellCdf", "AffymetrixCdfFile", function(this, chipType=ge
 
     verbose && printf(verbose, "Units: ");
     if (hasGroups) {
-      for (kk in seq(along=units)) {
+      for (kk in seq_along(units)) {
         if (verbose) {
           if (kk %% 1000 == 0) {
             printf(verbose, "%d, ", kk);
@@ -66,7 +66,7 @@ setMethodS3("createMonocellCdf", "AffymetrixCdfFile", function(this, chipType=ge
         }
         # groups <- units[[kk]]$groups;
         groups <- .subset2(.subset2(units, kk), "groups");
-        for (ll in seq(along=groups)) {
+        for (ll in seq_along(groups)) {
           group <- .subset2(groups, ll);
           # Number of cells in this group
           # nindices <- length(group$indices);
@@ -81,7 +81,7 @@ setMethodS3("createMonocellCdf", "AffymetrixCdfFile", function(this, chipType=ge
         units[[kk]]$groups <- groups;
       }
     } else {
-      for (kk in seq(along=units)) {
+      for (kk in seq_along(units)) {
         if (verbose) {
           if (kk %% 1000 == 0) {
             printf(verbose, "%d, ", kk);

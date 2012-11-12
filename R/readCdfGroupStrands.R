@@ -20,7 +20,7 @@ readCdfGroupStrands <- function(..., what=c("probe", "target")) {
   # Extract the strandinformation
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   swapIdxs <- c();
-  for (uu in seq(along=cdf)) {
+  for (uu in seq_along(cdf)) {
     unit <- .subset2(cdf, uu);
 
     unitDirection <- .subset2(unit, "unitdirection");

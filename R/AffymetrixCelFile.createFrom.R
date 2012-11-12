@@ -182,7 +182,7 @@ setMethodS3("createFrom", "AffymetrixCelFile", function(this, filename, path=NUL
         }
       } else {
         verbose && enter(verbose, "Copying CEL data");
-        cells <- seq(length=nbrOfCells(this));
+        cells <- seq_len(nbrOfCells(this));
         lapplyInChunks(cells, function(cells) {
           verbose && enter(verbose, "Reading subset of data from source CEL file");
           data <- readCel(getPathname(this), indices=cells, readIntensities=TRUE, readStdvs=TRUE, readPixels=TRUE);

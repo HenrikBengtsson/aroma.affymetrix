@@ -128,7 +128,7 @@ setMethodS3("fitPlasqUnit", "matrix", function(ly, ptype, maxIter=1000, acc=0.1,
   sigmaIdxs <- paramIndMat2[,4];
   rm(paramIndMat, paramIndMat2);
 
-  iis <- seq(length=nbrOfSamples);
+  iis <- seq_len(nbrOfSamples);
   offsets <- nbrOfProbes*(iis-1);
 
   # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
@@ -181,7 +181,7 @@ setMethodS3("fitPlasqUnit", "matrix", function(ly, ptype, maxIter=1000, acc=0.1,
   # Treating {Z_il}_il as latent variables.
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   converged <- FALSE;
-  for (rr in seq(length=maxIter)) {
+  for (rr in seq_len(maxIter)) {
     zs.old <- zs;
     betasF.old <- betasF;
     betasR.old <- betasR;

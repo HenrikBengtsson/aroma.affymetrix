@@ -194,8 +194,8 @@ setMethodS3("process", "AlleleSummation", function(this, ..., verbose=FALSE) {
 
   ignoreNAs <- this$ignoreNAs;
 
-  nbrOfArrays <- nbrOfArrays(inputSet);
-  for (aa in seq(length=nbrOfArrays)) {
+  nbrOfArrays <- length(inputSet);
+  for (aa in seq_len(nbrOfArrays)) {
     inputFile <- getFile(inputSet, aa);
     verbose && enter(verbose, sprintf("Array #%d ('%s') of %d", aa, getName(inputFile), nbrOfArrays));
     outputFile <- getFile(outputSet, aa);

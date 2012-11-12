@@ -36,7 +36,7 @@ setMethodS3("as.character", "AffymetrixCelSetReporter", function(x, ...) {
   s <- c(s, paste("Name:", getName(this)));
   s <- c(s, paste("Tags:", paste(getTags(this), collapse=",")));
   s <- c(s, paste("Chip type:", getChipType(this)));
-  s <- c(s, paste("Number of arrays:", nbrOfArrays(this)));
+  s <- c(s, paste("Number of arrays:", length(this)));
   s <- c(s, sprintf("Path: %s", getPath(this)));
   s <- c(s, sprintf("RAM: %.2fMB", objectSize(this)/1024^2));
   class(s) <- "GenericSummary";
@@ -76,7 +76,7 @@ setMethodS3("getDataSet", "AffymetrixCelSetReporter", function(this, ...) {
 })
 
 setMethodS3("nbrOfArrays", "AffymetrixCelSetReporter", function(this, ...) {
-  nbrOfArrays(getDataSet(this));
+  length(getDataSet(this));
 }, protected=TRUE)
 
 

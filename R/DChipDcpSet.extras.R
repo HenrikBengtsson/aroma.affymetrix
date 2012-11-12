@@ -15,7 +15,7 @@ setMethodS3("getCdfBin", "DChipDcpSet", function(this, force=FALSE, ...) {
 
     df <- getFile(this, 1);
     nbrOfUnits <- nbrOfUnits(df);
-    for (pp in seq(along=pathnames)) {
+    for (pp in seq_along(pathnames)) {
       pathname <- pathnames[pp];
       cdfBin <- DChipCdfBinFile(pathname);
       if (nbrOfUnits(cdfBin) == nbrOfUnits) {
@@ -87,7 +87,7 @@ setMethodS3("exportTotalAndFracB", "DChipDcpSet", function(this, ..., overwrite=
   outPath <- Arguments$getWritablePath(outPath);
   verbose && cat(verbose, "Output path: ", outPath);
 
-  for (kk in seq(this)) {
+  for (kk in seq_along(this)) {
     ce <- getFile(this, kk);
     verbose && enter(verbose, sprintf("File %d ('%s') of %d", kk, getName(ce), nbrOfFiles));
 

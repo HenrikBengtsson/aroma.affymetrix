@@ -72,7 +72,7 @@ setMethodS3("getChipEffectSet", "QualityAssessmentModel", function(this, ...) {
 
 setMethodS3("nbrOfArrays", "QualityAssessmentModel", function(this, ...) {
   ces <- getChipEffectSet(this);
-  nbrOfArrays(ces);
+  length(ces);
 })
 
 setMethodS3("getCdf", "QualityAssessmentModel", function(this, ...) {
@@ -244,7 +244,7 @@ setMethodS3("getResiduals", "QualityAssessmentModel", function(this, units=NULL,
     on.exit(popState(verbose));
   }
   
-  unitsPerChunk <- ram * 100000/nbrOfArrays(this);
+  unitsPerChunk <- ram * 100000/length(this);
   unitsPerChunk <- Arguments$getInteger(unitsPerChunk, range=c(1,Inf));
 
   # If residuals already calculated, and if force==FALSE, just return
@@ -278,7 +278,7 @@ setMethodS3("getResiduals", "QualityAssessmentModel", function(this, units=NULL,
   nbrOfFiles <- length(pathnames);
   
 
-  nbrOfArrays <- nbrOfArrays(ds);
+  nbrOfArrays <- length(ds);
   cdf <- getCdf(ds);
   cdfHeader <- getHeader(cdf);  # Might be used later
 
@@ -292,7 +292,7 @@ setMethodS3("getResiduals", "QualityAssessmentModel", function(this, units=NULL,
     if (is.null(units)) {
       unitsToDo <- units;
     } else {
-      unitsToDo <- seq(length=nbrOfUnits);
+      unitsToDo <- seq_len(nbrOfUnits);
     }
   }
 
@@ -305,7 +305,7 @@ setMethodS3("getResiduals", "QualityAssessmentModel", function(this, units=NULL,
   nbrOfChunks <- ceiling(nbrOfUnits / unitsPerChunk);
   verbose && printf(verbose, "Number of chunks: %d (%d units/chunk)\n",
                     nbrOfChunks, unitsPerChunk);
-  head <- seq(length=unitsPerChunk);
+  head <- seq_len(unitsPerChunk);
   count <- 1;
   while (length(unitsToDo) > 0) {
     if (length(unitsToDo) < unitsPerChunk) {
@@ -341,7 +341,7 @@ setMethodS3("getResiduals", "QualityAssessmentModel", function(this, units=NULL,
     verbose && exit(verbose);
     
     # Store residuals
-    for (kk in seq(along=pathnames)) {
+    for (kk in seq_along(pathnames)) {
       # Back-transform data to intensity scale and encode as CEL structure
       verbose && enter(verbose, "Encode as CEL structure");
       data <- lapply(residualsList, FUN=function(groups) {
@@ -465,7 +465,7 @@ setMethodS3("getWeights", "QualityAssessmentModel", function(this, path=NULL, na
 
 
   # Argument 'unitsPerChunk':
-  unitsPerChunk <- ram * 100000/nbrOfArrays(this);
+  unitsPerChunk <- ram * 100000/length(this);
   unitsPerChunk <- Arguments$getInteger(unitsPerChunk, range=c(1,Inf));
 
   # If residuals already calculated, and if force==FALSE, just return
@@ -518,7 +518,7 @@ setMethodS3("getWeights", "QualityAssessmentModel", function(this, path=NULL, na
     verbose && printf(verbose, "Chunk #%d of %d (%d units)\n",
                                         count, nbrOfChunks, length(units));
 
-    logTransform <- rep(list(log2), nbrOfArrays(this));
+    logTransform <- rep(list(log2), length(this));
 
     rawDataList <- readUnits(ds, units=units, transforms=logTransform, verbose=less(verbose), stratifyBy="pm");
     chipEffectList <- readUnits(ces, units=units, transforms=logTransform, verbose=less(verbose));
@@ -532,7 +532,7 @@ setMethodS3("getWeights", "QualityAssessmentModel", function(this, path=NULL, na
     
     cdf <- getCellIndices(getCdf(ds), units=units, stratifyBy="pm", ...);
   
-    for (kk in seq(pathname)) {
+    for (kk in seq_along(pathname)) {
       if (!isFile(pathname[kk])) {
         cdfHeader <- getHeader(getCdf(ds));
         celHeader <- cdfHeaderToCelHeader(cdfHeader, sampleName=getName(getFile(ds,kk)));

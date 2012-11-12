@@ -84,7 +84,7 @@ setConstructorS3("FragmentLengthNormalization", function(dataSet=NULL, ..., targ
       }
     } else if (is.list(target)) {
       # Validate each element
-      for (kk in seq(along=target)) {
+      for (kk in seq_along(target)) {
         if (!is.function(target[[kk]])) {
           throw("One element in 'target' is not a function: ", 
                                           class(target[[kk]])[1]);
@@ -282,7 +282,7 @@ setMethodS3("getFilteredFragmentLengths", "FragmentLengthNormalization", functio
 
   if (!is.null(range)) {
     naValue <- as.double(NA);
-    for (ee in seq(length=ncol(fl))) {
+    for (ee in seq_len(ncol(fl))) {
       flEE <- fl[,ee];
       ok <- (!is.na(flEE));
   
@@ -365,7 +365,7 @@ setMethodS3("getSubsetToFit", "FragmentLengthNormalization", function(this, forc
     verbose && enter(verbose, "Identifying finite fragment lengths");
     fl <- getFilteredFragmentLengths(this, units=units, verbose=less(verbose,3));
     keep <- rep(FALSE, nrow(fl));
-    for (ee in seq(length=ncol(fl))) {
+    for (ee in seq_len(ncol(fl))) {
       keep <- keep | is.finite(fl[,ee]);
     }
     units <- units[keep];
@@ -434,7 +434,7 @@ setMethodS3("getSubsetToFit", "FragmentLengthNormalization", function(this, forc
 
     # Make sure to keep data points at the tails too
     extremeUnits <- c();
-    for (ee in seq(length=ncol(fl))) {
+    for (ee in seq_len(ncol(fl))) {
       extremeUnits <- c(extremeUnits, which.min(fl[,ee]), which.max(fl[,ee]));
     }
     rm(fl);
@@ -609,7 +609,7 @@ setMethodS3("getTargetFunctions", "FragmentLengthNormalization", function(this, 
     verbose && summary(verbose, hasFL);
 
     nbrOfEnzymes <- ncol(fl);
-    allEnzymes <- seq(length=nbrOfEnzymes);
+    allEnzymes <- seq_len(nbrOfEnzymes);
 
     fits <- list();
     for (ee in allEnzymes) {
@@ -653,7 +653,7 @@ setMethodS3("getTargetFunctions", "FragmentLengthNormalization", function(this, 
 
     # Create a target prediction function for each enzyme
     fcns <- vector("list", length(fits));
-    for (ee in seq(along=fits)) {
+    for (ee in seq_along(fits)) {
       fcns[[ee]] <- function(x, ...) {
         predict(fits[[ee]], x, ...);  # Dispatched predict.lowess().
       }
@@ -782,7 +782,7 @@ setMethodS3("process", "FragmentLengthNormalization", function(this, ..., force=
   targetFcns <- NULL;
 #  map <- NULL;
   cellMatrixMap <- NULL;
-  nbrOfArrays <- nbrOfArrays(ces);
+  nbrOfArrays <- length(ces);
   for (kk in seq_len(nbrOfArrays)) {
     ce <- getFile(ces, kk);
     verbose && enter(verbose, sprintf("Array #%d of %d ('%s')",

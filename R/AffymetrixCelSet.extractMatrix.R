@@ -90,7 +90,7 @@ setMethodS3("extractMatrix", "AffymetrixCelSet", function(this, cells=NULL, ...,
     rm(srt);
     verbose && exit(verbose);
   } else {
-    o <- seq(length=ncells);
+    o <- seq_len(ncells);
   }
   
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

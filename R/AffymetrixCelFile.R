@@ -870,7 +870,7 @@ setMethodS3("readRawData", "AffymetrixCelFile", function(this, indices=NULL, fie
   stopifnot(length(cel) > 0);
 
   if (hasNAs) {
-    for (kk in seq(along=cel)) {
+    for (kk in seq_along(cel)) {
       naValue <- NA;
       storage.mode(naValue) <- storage.mode(cel[[kk]]);
       cel[[kk]][nas] <- naValue;

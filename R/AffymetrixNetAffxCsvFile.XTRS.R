@@ -71,7 +71,7 @@ setMethodS3("readGeneAssignments", "AffymetrixNetAffxCsvFile", function(this, ..
   if (parse) {
     verbose && enter(verbose, "Parsing entries");
     
-    rows <- seq(length=nrow(map));
+    rows <- seq_len(nrow(map));
     pairs <- map$geneAssignment;
     verbose && cat(verbose, "Number of entries: ", length(rows));
 
@@ -206,7 +206,7 @@ setMethodS3("readGeneAssignments", "AffymetrixNetAffxCsvFile", function(this, ..
       verbose && cat(verbose, "Number of unique ids: ", length(unique(ids)));
 
       unitNames <- idxs <- c();
-      for (ii in seq(along=uns)) {
+      for (ii in seq_along(uns)) {
         n <- uns[ii];
         verbose && enter(verbose, sprintf("Size %d (n=%d) of %d", ii, n, length(uns)));
         keep <- which(ns == n);
@@ -240,7 +240,7 @@ setMethodS3("readGeneAssignments", "AffymetrixNetAffxCsvFile", function(this, ..
         ends <- starts + chunkSize - 1L;
         ends[length(ends)] <- len;
         dataList2 <- vector("list", length(starts));
-        for (kk in seq(along=starts)) {
+        for (kk in seq_along(starts)) {
           verbose && enter(verbose, sprintf("Chunk #%d of %d", kk, length(starts)));
           idxs <- starts[kk]:ends[kk];
           dataKK <- Reduce(rbind, dataList[idxs]);

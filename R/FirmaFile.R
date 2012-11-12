@@ -326,7 +326,7 @@ setMethodS3("getUnitGroupCellMap", "FirmaFile", function(this, units=NULL, ..., 
   uUnitSizes <- unique(unitSizes);
   if (is.null(units)) {
     cdf <- getCdf(this);
-    units <- seq(length=nbrOfUnits(cdf));
+    units <- seq_len(nbrOfUnits(cdf));
   }
 
 # BUG!  Fix this in ChipEffectFile.R
@@ -334,14 +334,14 @@ setMethodS3("getUnitGroupCellMap", "FirmaFile", function(this, units=NULL, ..., 
   units <- rep(units, unitSizes);  
 
   # The following is too slow:
-  #  groups <- sapply(unitSizes, FUN=function(n) seq(length=n));
+  #  groups <- sapply(unitSizes, FUN=function(n) seq_len(n));
 
   # Instead, updated size by size
   naValue <- as.integer(NA);
   groups <- matrix(naValue, nrow=max(uUnitSizes), ncol=length(unitNames));
   for (size in uUnitSizes) {
     cc <- which(unitSizes == size);
-    seq <- seq(length=size);
+    seq <- seq_len(size);
     groups[seq,cc] <- seq;
   }
 
@@ -380,7 +380,7 @@ setMethodS3("getDataFlat", "FirmaFile", function(this, units=NULL, fields=c("int
   suppressWarnings({
     data <- getData(this, indices=map[,"cell"], fields=celFields[fields]);
   })
-  rownames(data) <- seq(length=nrow(data));  # Work around?!? /HB 2006-11-28
+  rownames(data) <- seq_len(nrow(data));  # Work around?!? /HB 2006-11-28
 
   verbose && str(verbose, data);
 

@@ -523,7 +523,7 @@ setMethodS3("getIndexToRowMap", "AffymetrixProbeTabFile", function(this, ..., fo
 
     # Get the cell index to (x,y) map.
     map <- rep(NA, nbrOfCells(cdf));
-    map[indices] <- seq(along=indices);
+    map[indices] <- seq_along(indices);
 
     this$.indexToRowMap <- map;
   }
@@ -593,7 +593,7 @@ setMethodS3("readDataFrame2", "AffymetrixProbeTabFile", function(this, cells=NUL
 #  df <- as.list(df);
 #  nas <- which(!ok);
 #  rm(ok);
-#  for (kk in seq(along=df)) {
+#  for (kk in seq_along(df)) {
 #    df[[kk]] <- insert(df[[kk]], at=nas, values=NA);
 #  }
 #  df <- as.data.frame(df);

@@ -47,8 +47,8 @@ setMethodS3("as.character", "QualityAssessmentModel", function(x, ...) {
 
   s <- sprintf("%s:", class(this)[1]);
   s <- c(s, paste("Name:", getName(this)));
-  s <- c(s, paste("Tags:", paste(getTags(this), collapse=",")));
-  s <- c(s, sprintf("Path: %s", getPath(this)));
+  s <- c(s, paste("Tags:", getTags(this, collapse=",")));
+  s <- c(s, paste("Path:", getPath(this)));
   s <- c(s, "Chip-effect set:");
   s <- c(s, paste("   ", as.character(getChipEffectSet(this))));
   s <- c(s, sprintf("RAM: %.2fMB", objectSize(this)/1024^2));
@@ -81,7 +81,8 @@ setMethodS3("getCdf", "QualityAssessmentModel", function(this, ...) {
 }, protected=TRUE)
 
 setMethodS3("getName", "QualityAssessmentModel", function(this, ...) {
-  getName(this$.plm);
+  plm <- getPlm(this)
+  getName(plm);
 })
 
 
@@ -309,7 +310,7 @@ setMethodS3("getResiduals", "QualityAssessmentModel", function(this, units=NULL,
   count <- 1;
   while (length(unitsToDo) > 0) {
     if (length(unitsToDo) < unitsPerChunk) {
-      head <- 1:length(unitsToDo);
+      head <- seq_along(unitsToDo);
     }
     units <- unitsToDo[head];
     verbose && printf(verbose, "Chunk #%d of %d (%d units)\n",
@@ -501,18 +502,18 @@ setMethodS3("getWeights", "QualityAssessmentModel", function(this, path=NULL, na
     qaf <- QualityAssessmentFile$fromFile(pathname[nbrOfFiles]);
     unitsToDo <- findUnitsTodo(qaf);
   } else {
-    unitsToDo <- 1:nbrOfUnits;
+    unitsToDo <- seq_len(nbrOfUnits);
   }
 
   nbrOfChunks <- ceiling(nbrOfUnits / unitsPerChunk);
   verbose && printf(verbose, "Number of chunks: %d (%d units/chunk)\n",
                     nbrOfChunks, unitsPerChunk);
-  head <- 1:unitsPerChunk;
+  head <- seq_len(unitsPerChunk);
   verbose && enter(verbose, "Extracting unit data");
   count <- 1;
   while (length(unitsToDo) > 0) {
     if (length(unitsToDo) < unitsPerChunk) {
-      head <- 1:length(unitsToDo);
+      head <- seq_along(unitsToDo);
     }
     units <- unitsToDo[head];
     verbose && printf(verbose, "Chunk #%d of %d (%d units)\n",
@@ -525,39 +526,44 @@ setMethodS3("getWeights", "QualityAssessmentModel", function(this, path=NULL, na
     probeAffinityList <- readUnits(paf, units=units, transforms=list(log2), verbose=verbose);
 
     
-   weightsList <- lapply(head, FUN=resFcn);
-   weightsList <- lapply(weightsList, .subset2, 1);
+    weightsList <- lapply(head, FUN=resFcn);
+    weightsList <- lapply(weightsList, .subset2, 1);
 
-# update output files
-    
-    cdf <- getCellIndices(getCdf(ds), units=units, stratifyBy="pm", ...);
+    # update output files
+    cdf <- getCdf(ds);
+    cdfList <- getCellIndices(cdf, units=units, stratifyBy="pm", ...);
   
     for (kk in seq_along(pathname)) {
+      # Create CEL file?
       if (!isFile(pathname[kk])) {
-        cdfHeader <- getHeader(getCdf(ds));
-        celHeader <- cdfHeaderToCelHeader(cdfHeader, sampleName=getName(getFile(ds,kk)));
+        cdfHeader <- getHeader(cdf);
+        dfKK <- getFile(ds, kk);
+        sampleName <- getName(dfKK);
+        celHeader <- cdfHeaderToCelHeader(cdfHeader, sampleName=sampleName);
         createCel(pathname[kk], header=celHeader, verbose=less(verbose));
       }
+
       data <- lapply(weightsList, function(x){
         nrow <- nrow(x); 
         list(list(
           intensities=2^x[,kk], 
-          stdvs=rep(1, nrow), 
-          pixels=rep(1, nrow)
+          stdvs=rep(1, times=nrow), 
+          pixels=rep(1, times=nrow)
         ))
       });
-      updateCelUnits(pathname[kk], cdf=cdf, data=data);
-    }
+
+      updateCelUnits(pathname[kk], cdf=cdfList, data=data);
+    } # for (kk ...)
     
     unitsToDo <- unitsToDo[-head];
     count <- count + 1;
-  }
+  } # while(...)
 
+  # Load output QA data set
   res <- QualityAssessmentSet$byPath(path=path, pattern=",weights.[cC][eE][lL]$");
-  setAlias(res, getName(this));
 
   res;
-})
+}) # getWeights()
 
 
 
@@ -576,6 +582,9 @@ setMethodS3("plotRle", "QualityAssessmentModel", function(this, ...) {
 
 ##########################################################################
 # HISTORY:
+# 2012-11-14
+# o CLEANUP: getWeights() for QualityAssessmentModel no longer sets the
+#   alias of the returned data set, because the use aliases is deprecated.
 # 2008-02-25
 # o Added Rdoc comments.
 # o Now plot{Nuse|Rle}() calls plotBoxplot() of ChipEffectSet.

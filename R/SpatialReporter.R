@@ -240,10 +240,15 @@ setMethodS3("writeImages", "SpatialReporter", function(this, arrays=NULL, aliase
   # For each array...
   for (kk in seq_along(arrays)) {
     df <- getFile(cs, arrays[kk]);
-    setAlias(df, aliases[kk]);
+
+    # Aliases are deprecated
+    if (!is.null(aliases)) {
+      setAlias(df, aliases[kk]);
+    }
+
     verbose && enter(verbose, sprintf("Array #%d of %d ('%s')", 
                                              kk, nbrOfArrays, getName(df)));
-    verbose && cat(verbose, "Alias: ", getAlias(df));
+
     # For each color map...
     for (ll in seq_along(colorMaps)) {
       colorMap <- colorMaps[[ll]];

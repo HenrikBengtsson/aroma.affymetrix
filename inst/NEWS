@@ -1,6 +1,11 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 2.6.12 [2012-11-14]
+o CLEANUP: getWeights() for QualityAssessmentModel no longer sets the
+  alias of the returned data set, because the use aliases is deprecated.
+
+
 Version: 2.6.11 [2012-11-13]
 o CLEANUP: Properly declared all cached fields, making it possible
   to remove nearly all clearCache() implementations because the one

@@ -57,9 +57,7 @@ extends \emph{\link[aroma.affymetrix]{ProbeLevelTransform}}\cr
 
  \section{Fields and Methods}{
   \bold{Methods:}\cr
-\tabular{rll}{
- \tab \code{clearCache} \tab  -\cr
-}
+\emph{No methods defined}.
 
 
  \bold{Methods inherited from Transform}:\cr

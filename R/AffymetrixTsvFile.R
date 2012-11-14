@@ -8,12 +8,6 @@ setConstructorS3("AffymetrixTsvFile", function(...) {
   this;
 })
 
-setMethodS3("clearCache", "AffymetrixTsvFile", function(this, ...) {
-  for (ff in c(".cdf", ".data")) {
-    this[[ff]] <- NULL;
-  }
-})
-
 setMethodS3("getChipType", "AffymetrixTsvFile", function(this, ...) {
   getName(this);
 })

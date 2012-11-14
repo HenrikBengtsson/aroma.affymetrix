@@ -25,20 +25,13 @@
 #*/###########################################################################
 setConstructorS3("UgpGenomeInformation", function(..., .ugp=NULL, .verify=TRUE) {
   this <- extend(GenomeInformation(..., .verify=FALSE), "UgpGenomeInformation",
-    .ugp = .ugp
+    "cached:.ugp" = .ugp
   );
   if (.verify) {
     if (!is.null(getPathname(this)))
       verify(this);
   }
   this;
-})
-
-setMethodS3("clearCache", "UgpGenomeInformation", function(this, ...) {
-  for (ff in c(".ugp")) {
-    this[[ff]] <- NULL;
-  }
-  NextMethod("clearCache");
 })
 
 

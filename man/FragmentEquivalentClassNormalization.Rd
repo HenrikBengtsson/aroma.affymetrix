@@ -57,7 +57,6 @@ extends \emph{\link[aroma.affymetrix]{ChipEffectTransform}}\cr
  \section{Fields and Methods}{
   \bold{Methods:}\cr
 \tabular{rll}{
- \tab \code{clearCache} \tab  -\cr
  \tab \code{getAromaUfcFile} \tab  -\cr
  \tab \code{getCdf} \tab  -\cr
  \tab \code{getOutputDataSet00} \tab  -\cr

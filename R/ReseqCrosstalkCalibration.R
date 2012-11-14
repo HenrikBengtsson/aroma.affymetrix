@@ -77,6 +77,8 @@ setConstructorS3("ReseqCrosstalkCalibration", function(dataSet=NULL, ..., target
   
 
   extend(ProbeLevelTransform(dataSet=dataSet, ...), "ReseqCrosstalkCalibration",
+    "cached.setsOfProbes" = NULL,
+    "cached.subsetToAvgExpanded" = NULL,
     .targetAvg = targetAvg,
     .subsetToAvg = subsetToAvg,
     .mergeGroups = mergeGroups,
@@ -86,17 +88,6 @@ setConstructorS3("ReseqCrosstalkCalibration", function(dataSet=NULL, ..., target
     .q = q,
     .Q = Q
   )
-})
-
-
-setMethodS3("clearCache", "ReseqCrosstalkCalibration", function(this, ...) {
-  # Clear all cached values.
-  for (ff in c(".setsOfProbes", ".subsetToAvgExpanded")) {
-    this[[ff]] <- NULL;
-  }
-
-  # Then for this object 
-  NextMethod("clearCache");
 })
 
 

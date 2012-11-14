@@ -64,22 +64,6 @@ setMethodS3("as.character", "SmoothMultiarrayModel", function(x, ...) {
 }, protected=TRUE)
 
 
-setMethodS3("clearCache", "SmoothMultiarrayModel", function(this, ...) {
-  # Clear all cached values.
-  # /AD HOC. clearCache() in Object should be enough! /HB 2007-01-16
-  for (ff in c()) {
-    this[[ff]] <- NULL;
-  }
-
-  if (!is.null(this$.outTuple)) {
-   this$.outTuple <- NULL;
-  }
-
-  # Then for this object
-  NextMethod("clearCache");
-})
-
-
 setMethodS3("getAsteriskTags", "SmoothMultiarrayModel", function(this, collapse=NULL, ...) {
   classTag <- toupper(gsub("Model$", "", class(this)[1]));
   weightsTag <- switch(this$.typoOfWeights, "1/s2"="w=s2inv", "");

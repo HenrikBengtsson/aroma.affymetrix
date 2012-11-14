@@ -52,14 +52,6 @@ setConstructorS3("QuantileNormalization", function(..., subsetToUpdate=NULL, typ
 })
 
 
-setMethodS3("clearCache", "QuantileNormalization", function(this, ...) {
-  # Clear all cached values
-  for (ff in c(".targetDistribution")) {
-    this[[ff]] <- NULL;
-  }
-  NextMethod("clearCache");
-})
-
 setMethodS3("getSubsetToUpdate", "QuantileNormalization", function(this, ..., verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments

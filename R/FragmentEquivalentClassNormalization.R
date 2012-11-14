@@ -100,7 +100,6 @@ setConstructorS3("FragmentEquivalentClassNormalization", function(dataSet=NULL, 
 })
 
 
-
 setMethodS3("getAsteriskTags", "FragmentEquivalentClassNormalization", function(this, collapse=NULL, ...) {
   tags <- NextMethod("getAsteriskTags", collapse=NULL);
 
@@ -113,16 +112,6 @@ setMethodS3("getAsteriskTags", "FragmentEquivalentClassNormalization", function(
   tags;
 }, private=TRUE)
 
-
-setMethodS3("clearCache", "FragmentEquivalentClassNormalization", function(this, ...) {
-  # Clear all cached values.
-  for (ff in c(".units", ".unitSets", ".ufc")) {
-    this[[ff]] <- NULL;
-  }
-
-  # Then for this object 
-  NextMethod("clearCache");
-})
 
 
 setMethodS3("getParameters", "FragmentEquivalentClassNormalization", function(this, expand=TRUE, ...) {

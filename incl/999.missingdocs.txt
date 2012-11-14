@@ -66,25 +66,8 @@
   calculateWeights.ExonRmaPlm calculateWeights.FirmaModel
   calculateWeights.ProbeLevelModel calibrateOne
   calibrateOne.ReseqCrosstalkCalibration cdfMergeGroups
-  ChipEffectSetTuple clearCache.AdditiveCovariatesNormalization
-  clearCache.AffymetrixCdfFile clearCache.AffymetrixCelFile
-  clearCache.AffymetrixCelSet clearCache.AffymetrixCnChpFile
-  clearCache.AffymetrixNetAffxCsvFile clearCache.AffymetrixProbeTabFile
-  clearCache.AffymetrixTsvFile clearCache.AllelicCrosstalkCalibration
-  clearCache.ChipEffectFile clearCache.ChipEffectSet
-  clearCache.CnagCfhFile clearCache.CnagCfhSet
-  clearCache.DChipCdfBinFile clearCache.ExonChipEffectFile
-  clearCache.FirmaFile clearCache.FirmaModel clearCache.FirmaSet
-  clearCache.FragmentEquivalentClassNormalization
-  clearCache.FragmentLengthNormalization clearCache.GenomeInformation
-  clearCache.ParameterCelFile clearCache.ProbeAffinityFile
-  clearCache.ProbeLevelModel clearCache.ProbeLevelTransform3
-  clearCache.QualityAssessmentFile clearCache.QuantileNormalization
-  clearCache.ReseqCrosstalkCalibration clearCache.ResidualFile
-  clearCache.ResidualSet clearCache.SmoothMultiarrayModel
-  clearCache.SnpChipEffectFile clearCache.SnpInformation
-  clearCache.TransformReport clearCache.UgpGenomeInformation
-  clearCache.WeightsFile clearCache.WeightsSet clearData
+  ChipEffectSetTuple 
+  clearCache.AffymetrixCelSet
   clone.AffymetrixCelFile clone.AffymetrixCelSet
   clone.AffymetrixCnChpFile clone.CnagCfhFile clone.CnagCfhSet
   CnChipEffectSetTuple compare computeAffinities convert
@@ -746,7 +729,7 @@ writeCdfByExcludingCells.AffymetrixCdfFile writeCdfByExcludingCells
   getDefaultExtension.AromaCellMatchScoreFile
   getDefaultExtension.AromaChipTypeAnnotationFile
 updateSetupExplorerFile.ArrayExplorer
-as.character.AffymetrixPgfFile clearCache.AffymetrixPgfFile
+as.character.AffymetrixPgfFile 
 getChipType.AffymetrixPgfFile
 getDefaultExtension.AffymetrixPgfFile
 getDimension.AffymetrixPgfFile
@@ -759,3 +742,4 @@ AromaUfcFile
 validate.AffymetrixCdfFile
 getDefaultColumnNames.AromaCellMatchScoreFile
 getDefaultColumnNames.AromaUfcFile
+clearData

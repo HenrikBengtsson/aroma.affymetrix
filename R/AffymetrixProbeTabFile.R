@@ -52,18 +52,6 @@ setConstructorS3("AffymetrixProbeTabFile", function(...) {
 }, private=TRUE)
 
 
-setMethodS3("clearCache", "AffymetrixProbeTabFile", function(this, ...) {
-  # Clear all cached values.
-  # /AD HOC. clearCache() in Object should be enough! /HB 2007-01-16
-  for (ff in c(".indexToRowMap")) {
-    this[[ff]] <- NULL;
-  }
-
-  # Then for this object
-  NextMethod("clearCache");
-}, private=TRUE)
-
-
 setMethodS3("as.character", "AffymetrixProbeTabFile", function(x, ...) {
   # To please R CMD check
   this <- x;

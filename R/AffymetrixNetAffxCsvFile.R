@@ -1,22 +1,13 @@
 setConstructorS3("AffymetrixNetAffxCsvFile", function(..., .verify=TRUE) {
   this <- extend(AffymetrixCsvFile(..., .verify=FALSE), 
                   c("AffymetrixNetAffxCsvFile", uses("UnitNamesFile")),
-    "cache:.unitNames" = NULL
+    "cached:.unitNames" = NULL
   );
 
   if (.verify)
     verify(this, ...);
   this;
 })
-
-
-setMethodS3("clearCache", "AffymetrixNetAffxCsvFile", function(this, ...) {
-  for (ff in c(".unitNames")) {
-    this[[ff]] <- NULL;
-  }
-  NextMethod("clearCache");
-})
-
 
 
 setMethodS3("getDefaultExtension", "AffymetrixNetAffxCsvFile", function(static, ...) {

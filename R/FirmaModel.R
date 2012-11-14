@@ -53,7 +53,10 @@ setConstructorS3("FirmaModel", function(rmaPlm=NULL, summaryMethod=c("median", "
      .plm = rmaPlm,
      summaryMethod = summaryMethod,
      operateOn = operateOn,
-     "cached:.fs" = NULL
+     "cached:.fs" = NULL,
+     "cached:.paFile" = NULL,
+     "cached:.chipFiles" = NULL,
+     "cached:.lastPlotData" = NULL
    );
 })
 
@@ -166,17 +169,6 @@ setMethodS3("as.character", "FirmaModel", function(x, ...) {
 setMethodS3("calculateWeights", "FirmaModel", function(this, ...) {
   calculateWeights(this$.plm, ...);
 })
-
-setMethodS3("clearCache", "FirmaModel", function(this, ...) {
-  # Clear all cached values.
-  # /AD HOC. clearCache() in Object should be enough! /HB 2007-01-16
-  for (ff in c(".fs", ".paFile", ".chipFiles", ".lastPlotData")) {
-    this[[ff]] <- NULL;
-  }
-
-  # Then for this object
-  NextMethod("clearCache");
-}, private=TRUE)
 
 
 

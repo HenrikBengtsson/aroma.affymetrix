@@ -29,18 +29,6 @@ setConstructorS3("FirmaSet", function(...) {
 })
 
 
-setMethodS3("clearCache", "FirmaSet", function(this, ...) {
-  # Clear all cached values.
-  # /AD HOC. clearCache() in Object should be enough! /HB 2007-01-16
-  for (ff in c(".firstCells")) {
-    this[[ff]] <- NULL;
-  }
-
-  # Then for this object
-  NextMethod("clearCache");
-}, private=TRUE)
-
-
 setMethodS3("getFileClass", "FirmaSet", function(static, ...) {
   FirmaFile;
 }, static=TRUE, private=TRUE)

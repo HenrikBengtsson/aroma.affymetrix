@@ -54,6 +54,7 @@ setMethodS3("as.character", "ProbeAffinityFile", function(x, ...) {
 
 setMethodS3("getParameters", "ProbeAffinityFile", function(this, ...) {
   params <- list(
+    "cached:.firstCells" = NULL,
     probeModel = this$probeModel
   );
   params;
@@ -70,16 +71,6 @@ setMethodS3("getParametersAsString", "ProbeAffinityFile", function(this, ...) {
 }, private=TRUE)
 
 
-setMethodS3("clearCache", "ProbeAffinityFile", function(this, ...) {
-  # Clear all cached values.
-  # /AD HOC. clearCache() in Object should be enough! /HB 2007-01-16
-  for (ff in c(".firstCells")) {
-    this[[ff]] <- NULL;
-  }
-
-  # Then for this object
-  NextMethod("clearCache");
-}, private=TRUE)
 
 
 setMethodS3("getCellIndices", "ProbeAffinityFile", function(this, ..., verbose=FALSE) {

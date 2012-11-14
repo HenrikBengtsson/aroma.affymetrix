@@ -72,12 +72,9 @@ setConstructorS3("AffymetrixCelSet", function(files=NULL, ...) {
 
 
 setMethodS3("clearCache", "AffymetrixCelSet", function(this, ...) {
-  # Clear all cached values.
-  # /AD HOC. clearCache() in Object should be enough! /HB 2007-01-16
-  for (ff in c(".intensities", ".intensitiesIdxs", ".readUnitsCache", 
-           ".getUnitIntensitiesCache", ".timestamps", ".fileSize")) {
-    this[[ff]] <- NULL;
-  }
+  # Then for this object
+  NextMethod("clearCache");
+
   this$.averageFiles <- list();
 
   if (length(this) > 0) {
@@ -86,8 +83,7 @@ setMethodS3("clearCache", "AffymetrixCelSet", function(this, ...) {
     clearCache(cdf);
   }
 
-  # Then for this object
-  NextMethod("clearCache");
+  invisible(this);
 }, private=TRUE)
 
 

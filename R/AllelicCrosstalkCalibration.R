@@ -216,6 +216,8 @@ setConstructorS3("AllelicCrosstalkCalibration", function(dataSet=NULL, ..., mode
   
 
   extend(ProbeLevelTransform(dataSet=dataSet, ...), "AllelicCrosstalkCalibration",
+    "cached:.setsOfProbes" = NULL,
+    "cached:.subsetToAvgExpanded" = NULL,
     .rescaleBy = rescaleBy,
     .targetAvg = targetAvg,
     .subsetToAvg = subsetToAvg,
@@ -226,17 +228,6 @@ setConstructorS3("AllelicCrosstalkCalibration", function(dataSet=NULL, ..., mode
     .pairBy = pairBy,
     .extraTags = extraTags
   )
-})
-
-
-setMethodS3("clearCache", "AllelicCrosstalkCalibration", function(this, ...) {
-  # Clear all cached values.
-  for (ff in c(".setsOfProbes", ".subsetToAvgExpanded")) {
-    this[[ff]] <- NULL;
-  }
-
-  # Then for this object 
-  NextMethod("clearCache");
 })
 
 

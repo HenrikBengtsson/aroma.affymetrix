@@ -41,19 +41,6 @@ setConstructorS3("SnpChipEffectFile", function(..., mergeStrands=FALSE) {
 })
 
 
-setMethodS3("clearCache", "SnpChipEffectFile", function(this, ...) {
-  # Clear all cached values.
-  # /AD HOC. clearCache() in Object should be enough! /HB 2007-01-16
-  for (ff in c(".cellIndices")) {
-    this[[ff]] <- NULL;
-  }
-
-  # Then for this object
-  NextMethod("clearCache");
-}, private=TRUE)
-
-
-
 setMethodS3("getParameters", "SnpChipEffectFile", function(this, ...) {
   params <- NextMethod("getParameters");
   params$mergeStrands <- this$mergeStrands;

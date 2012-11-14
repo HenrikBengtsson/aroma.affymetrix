@@ -26,6 +26,7 @@ setConstructorS3("AffymetrixCdfFile", function(...) {
             uses("UnitNamesFile", "UnitTypesFile", "AromaPlatformInterface")),
     "cached:.header" = NULL,
     "cached:.unitNames" = NULL,
+    "cached:.unitTypes" = NULL,
     "cached:.cellIndices" = NULL,
     "cached:.isPm" = NULL,
     "cached:.gi" = NULL,
@@ -44,18 +45,6 @@ setMethodS3("getExtensionPattern", "AffymetrixCdfFile", function(static, ...) {
   "[.](cdf|CDF)$";
 }, static=TRUE, protected=TRUE)
 
-
-
-setMethodS3("clearCache", "AffymetrixCdfFile", function(this, ...) {
-  # Clear all cached values.
-  # /AD HOC. clearCache() in Object should be enough! /HB 2007-01-16
-  for (ff in c(".header", ".unitNames", ".unitTypes", ".cellIndices", ".isPm", ".gi", ".si")) {
-    this[[ff]] <- NULL;
-  }
-
-  # Then for this object
-  NextMethod("clearCache");
-}, private=TRUE)
 
 
 setMethodS3("getUnitNamesFile", "AffymetrixCdfFile", function(this, ...) {

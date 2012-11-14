@@ -1,6 +1,12 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 2.6.11 [2012-11-13]
+o CLEANUP: Properly declared all cached fields, making it possible
+  to remove nearly all clearCache() implementations because the one
+  for Object takes does the job.
+
+
 Version: 2.6.10 [2012-11-12]
 o CLEANUP: Now seq_along(x) instead of seq(along=x) everywhere.
   Similarly, seq(ds) where 'ds' is GenericDataFileSet is now

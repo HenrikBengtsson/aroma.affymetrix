@@ -37,18 +37,6 @@ setMethodS3("as.character", "AffymetrixCnChpFile", function(x, ...) {
 }, private=TRUE) 
 
 
-setMethodS3("clearCache", "AffymetrixCnChpFile", function(this, ...) {
-  # Clear all cached values.
-  for (ff in c(".header", ".unitReadMap")) {
-    this[[ff]] <- NULL;
-  }
-
-  # Then for this object
-  NextMethod("clearCache");
-}, private=TRUE)
-
-
-
 setMethodS3("clone", "AffymetrixCnChpFile", function(this, ..., verbose=TRUE) {
   # Clone itself (and clear the cached fields)
   object <- NextMethod("clone", clear=TRUE);

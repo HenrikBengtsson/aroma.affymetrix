@@ -44,18 +44,6 @@ setConstructorS3("FirmaFile", function(...) {
   this;
 })
 
-setMethodS3("clearCache", "FirmaFile", function(this, ...) {
-  # Clear all cached values.
-  # /AD HOC. clearCache() in Object should be enough! /HB 2007-01-16
-  for (ff in c()) {
-    this[[ff]] <- NULL;
-  }
-
-  # Then for this object
-  NextMethod("clearCache");
-}, private=TRUE)
-
-
 
 setMethodS3("findUnitsTodo", "FirmaFile", function(this, units=NULL, ..., force=FALSE, verbose=FALSE) {
   # Argument 'verbose':

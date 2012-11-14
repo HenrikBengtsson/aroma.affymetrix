@@ -124,15 +124,15 @@ setConstructorS3("FragmentLengthNormalization", function(dataSet=NULL, ..., targ
 
 
   extend(ChipEffectTransform(dataSet, ...), "FragmentLengthNormalization", 
+    "cached:.targetFunctions" = NULL,
+    "cached:.target" = target,
     .subsetToFit = subsetToFit,
-    .target = target,
     .lengthRange = lengthRange,
     .onMissing = onMissing,
     .extraTags = extraTags,
     shift = shift
   )
 })
-
 
 
 setMethodS3("getAsteriskTags", "FragmentLengthNormalization", function(this, collapse=NULL, ...) {
@@ -153,16 +153,6 @@ setMethodS3("getAsteriskTags", "FragmentLengthNormalization", function(this, col
   tags;
 }, private=TRUE)
 
-
-setMethodS3("clearCache", "FragmentLengthNormalization", function(this, ...) {
-  # Clear all cached values.
-  for (ff in c(".target", ".targetFunctions")) {
-    this[[ff]] <- NULL;
-  }
-
-  # Then for this object 
-  NextMethod("clearCache");
-})
 
 
 setMethodS3("getParameters", "FragmentLengthNormalization", function(this, expand=TRUE, ...) {

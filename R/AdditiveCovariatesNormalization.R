@@ -101,7 +101,7 @@ setConstructorS3("AdditiveCovariatesNormalization", function(dataSet=NULL, ..., 
 
   extend(ChipEffectTransform(dataSet, ...), "AdditiveCovariatesNormalization", 
     .subsetToFit = subsetToFit,
-    .target = target,
+    "cached:.target" = target,
     .onMissing = onMissing,
     .extraTags = extraTags,
     shift = shift
@@ -127,17 +127,6 @@ setMethodS3("getAsteriskTags", "AdditiveCovariatesNormalization", function(this,
 
   tags;
 }, private=TRUE)
-
-
-setMethodS3("clearCache", "AdditiveCovariatesNormalization", function(this, ...) {
-  # Clear all cached values.
-  for (ff in c(".target")) {
-    this[[ff]] <- NULL;
-  }
-
-  # Then for this object 
-  NextMethod("clearCache");
-})
 
 
 setMethodS3("getParameters", "AdditiveCovariatesNormalization", function(this, expand=TRUE, ...) {

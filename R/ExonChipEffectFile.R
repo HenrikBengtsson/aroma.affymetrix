@@ -41,18 +41,6 @@ setConstructorS3("ExonChipEffectFile", function(..., mergeGroups=FALSE) {
 })
 
 
-setMethodS3("clearCache", "ExonChipEffectFile", function(this, ...) {
-  # Clear all cached values.
-  for (ff in c(".cellIndices")) {
-    this[[ff]] <- NULL;
-  }
-
-  # Then for this object
-  NextMethod("clearCache");
-}, private=TRUE)
-
-
-
 setMethodS3("getParameters", "ExonChipEffectFile", function(this, ...) {
   params <- NextMethod("getParameters");
   params$mergeGroups <- this$mergeGroups;

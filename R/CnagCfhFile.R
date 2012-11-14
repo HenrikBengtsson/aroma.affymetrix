@@ -42,17 +42,6 @@ setConstructorS3("CnagCfhFile", function(..., cdf=NULL) {
   this;
 })
 
-setMethodS3("clearCache", "CnagCfhFile", function(this, ...) {
-  # Clear all cached values.
-  # /AD HOC. clearCache() in Object should be enough! /HB 2007-01-16
-  for (ff in c(".header")) {
-    this[[ff]] <- NULL;
-  }
-
-  # Then for this object
-  NextMethod("clearCache");
-}, private=TRUE)
-
 
 setMethodS3("clone", "CnagCfhFile", function(this, ..., verbose=TRUE) {
   # Clone itself (and clear the cached fields)

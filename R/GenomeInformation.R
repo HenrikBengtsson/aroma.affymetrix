@@ -22,7 +22,8 @@
 #*/###########################################################################
 setConstructorS3("GenomeInformation", function(..., .verify=TRUE) {
   extend(GenericDataFile(...), "GenomeInformation",
-    "cached:.data"=NULL
+    "cached:.data"=NULL,
+    "cached:.chromosomeStats"=NULL
   );
 })
 
@@ -37,17 +38,6 @@ setMethodS3("as.character", "GenomeInformation", function(x, ...) {
   s;
 }, private=TRUE)
 
-
-setMethodS3("clearCache", "GenomeInformation", function(this, ...) {
-  # Clear all cached values.
-  # /AD HOC. clearCache() in Object should be enough! /HB 2007-01-16
-  for (ff in c(".data", ".chromosomeStats")) {
-    this[[ff]] <- NULL;
-  }
-
-  # Then for this object
-  NextMethod("clearCache");
-}, private=TRUE)
 
 
 

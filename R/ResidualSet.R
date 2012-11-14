@@ -41,17 +41,6 @@ setConstructorS3("ResidualSet", function(..., probeModel=c("pm")) {
   )
 })
 
-setMethodS3("clearCache", "ResidualSet", function(this, ...) {
-  # Clear all cached values.
-  # /AD HOC. clearCache() in Object should be enough! /HB 2007-01-16
-  for (ff in c(".firstCells")) {
-    this[[ff]] <- NULL;
-  }
-
-  # Then for this object
-  NextMethod("clearCache");
-}, private=TRUE)
-
 
 setMethodS3("as.character", "ResidualSet", function(x, ...) {
   # To please R CMD check

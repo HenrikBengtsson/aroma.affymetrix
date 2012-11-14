@@ -62,7 +62,7 @@ extends \emph{\link[aroma.affymetrix]{ProbeLevelTransform3}}\cr
 
 
  \bold{Methods inherited from ProbeLevelTransform3}:\cr
-clearCache, getCellsTo, getCellsToFit, getCellsToUpdate, getUnitsTo, getUnitsToFit, getUnitsToUpdate, writeSignals
+getCellsTo, getCellsToFit, getCellsToUpdate, getUnitsTo, getUnitsToFit, getUnitsToUpdate, writeSignals
 
  \bold{Methods inherited from Transform}:\cr
 getOutputDataSet, getOutputFiles

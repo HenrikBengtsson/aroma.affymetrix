@@ -90,24 +90,15 @@ setConstructorS3("ProbeLevelTransform3", function(dataSet=NULL, ..., unitsToFit=
 
 
   extend(ProbeLevelTransform(dataSet=dataSet, ...), "ProbeLevelTransform3",
-    shift = shift,
+    "cached:.cellsToUpdate" = NULL,
+    "cached:.cellsToFit" = NULL,
     .typesToUpdate = typesToUpdate,
     .unitsToUpdate = unitsToUpdate,
     .typesToFit = typesToFit,
     .unitsToFit = unitsToFit,
-    .extraTags = extraTags
+    .extraTags = extraTags,
+    shift = shift
   )
-})
-
-
-setMethodS3("clearCache", "ProbeLevelTransform3", function(this, ...) {
-  # Clear all cached values.
-  for (ff in c(".cellsToUpdate", ".cellsToFit")) {
-    this[[ff]] <- NULL;
-  }
-
-  # Then for this object 
-  NextMethod("clearCache");
 })
 
 

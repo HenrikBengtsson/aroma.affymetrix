@@ -44,17 +44,6 @@ setConstructorS3("TransformReport", function(inSet=NULL, outSet=NULL, ...) {
 }, abstract=TRUE)
 
 
-setMethodS3("clearCache", "TransformReport", function(this, ...) {
-  # Clear all cached values.
-  # /AD HOC. clearCache() in Object should be enough! /HB 2007-01-16
-  for (ff in c()) {
-    this[[ff]] <- NULL;
-  }
-
-  # Then for this object
-  NextMethod("clearCache");
-}, private=TRUE)
-
 
 setMethodS3("getRootPath", "TransformReport", function(this, ...) {
   "reports";

@@ -56,7 +56,7 @@ extends \emph{\link[aroma.affymetrix]{AdditiveCovariatesNormalization}}\cr
 
 
  \bold{Methods inherited from AdditiveCovariatesNormalization}:\cr
-clearCache, getCdf, getCovariates, getOutputDataSet00, process
+getCdf, getCovariates, getOutputDataSet00, process
 
  \bold{Methods inherited from Transform}:\cr
 getOutputDataSet, getOutputFiles

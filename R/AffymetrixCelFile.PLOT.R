@@ -740,10 +740,7 @@ setMethodS3("writeImage", "AffymetrixCelFile", function(this, filename=NULL, ful
 
   # Generate the pathname
   if (is.null(fullname)) {
-    # Ad hoc. /HB 2007-03-20
-    fullname <- getAlias(this);
-    if (is.null(fullname))
-      fullname <- getFullName(this);
+    fullname <- getFullName(this);
   }
   fullname <- paste(c(fullname, tags), collapse=",");
   if (is.null(filename)) {
@@ -775,6 +772,9 @@ setMethodS3("writeImage", "AffymetrixCelFile", function(this, filename=NULL, ful
 
 ############################################################################
 # HISTORY:
+# 2012-11-14
+# o CLEANUP: writeImage() for AffymetrixCelFile no longer supports
+#   sample name aliases.
 # 2011-01-30
 # o CLEAN UP: getImage(), plotImage() and writeImage() for AffymetrixCelFile
 #   no longer depend explicitly on EBImage but instead calls aroma.core's 

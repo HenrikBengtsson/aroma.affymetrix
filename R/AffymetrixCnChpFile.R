@@ -347,7 +347,6 @@ setMethodS3("getData", "AffymetrixCnChpFile", function(this, units=NULL, fields=
   key <- list(method="getData", class="AffymetrixCnChpFile", 
               header=unlist(getHeader(this)), fields=fields, units=units);
   dirs <- c("aroma.affymetrix", "GTC");
-  verbose && print(verbose, generateCache(key=key, dirs=dirs));
   res <- loadCache(key=key, dirs=dirs);
   if (!force && !is.null(res)) {
     verbose && cat(verbose, "Cached results found.");
@@ -384,7 +383,6 @@ setMethodS3("getData", "AffymetrixCnChpFile", function(this, units=NULL, fields=
   verbose && exit(verbose);
 
   verbose && enter(verbose, "Caching to file");
-  verbose && print(verbose, generateCache(key=key, dirs=dirs));
   saveCache(res, key=key, dirs=dirs);
   verbose && exit(verbose);
 

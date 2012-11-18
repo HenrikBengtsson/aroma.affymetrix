@@ -322,7 +322,6 @@ setMethodS3("importFromDChip", "CnChipEffectSet", function(static, filename, pat
       dirs <- c("aroma.affymetrix", "dChip");
       key <- list(method="importFromDChip", class="CnChipEffectSet", result="importUnits", fileHeader=header, fileSize=file.info(srcPathname)$size, colNames=colNames, chipType=getChipType(monocellCdf));
       verbose && str(verbose, key);
-      verbose && print(verbose, generateCache(key, dirs=dirs));
       verbose && exit(verbose);
 
       force <- FALSE;

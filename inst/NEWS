@@ -1,7 +1,7 @@
 Package: aroma.affymetrix
 =========================
 
-Version: 2.6.13 [2012-11-17]
+Version: 2.6.13 [2012-11-18]
 o Now package explicitly imports R.cache, because aroma.core is no
   longer loading it.
 

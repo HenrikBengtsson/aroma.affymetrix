@@ -1,6 +1,11 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 2.6.13 [2012-11-17]
+o Now package explicitly imports R.cache, because aroma.core is no
+  longer loading it.
+
+
 Version: 2.6.12 [2012-11-14]
 o CLEANUP: getWeights() for QualityAssessmentModel no longer sets the
   alias of the returned data set, because the use aliases is deprecated.
@@ -71,7 +76,7 @@ o CLEANUP: Removed several defunct/obsolete methods and made
   deprecated methods defunct/obsolete.
 o CLEANUP: findByChipType() for AffymetrixCdfFile no longer support
   monocell CDF file named <chipType>-monocell.CDF, and gives an 
-  informative error if that is still the case.  Since December 2012,
+  informative error if that is still the case.  Since December 2007,
   the filename should instead be <chipType>,monocell.CDF.
 o CLEANUP: createParamCdf() for ChipEffectFile and FirmaFile no longer 
   support '<chipType>-monocell' filenames.  If detected, an informative

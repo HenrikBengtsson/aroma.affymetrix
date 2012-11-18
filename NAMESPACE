@@ -1,8 +1,15 @@
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # IMPORTS
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+importFrom("R.methodsS3", "setMethodS3")
+importFrom("R.methodsS3", "throw")
+import("R.oo")
+
 # importFrom(R.utils, cat)
-import(R.utils)
+import("R.utils")
+
+importFrom("R.cache", "loadCache")
+importFrom("R.cache", "saveCache")
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

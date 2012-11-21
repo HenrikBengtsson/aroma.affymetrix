@@ -1,108 +1,5 @@
 ###########################################################################/**
 # @set "class=AffymetrixCelSet"
-# @RdocMethod bgAdjustOptical
-#
-# @title "Applies optical background correction to a set of CEL files"
-#
-# \description{
-#  @get "title".
-#
-#  Adapted from @see "gcrma::bg.adjust.optical" in the \pkg{gcrma} package.
-# }
-#
-# @synopsis
-#
-# \arguments{
-#   \item{path}{The location to save the adjusted data files.}
-#   \item{minimum}{The minimum adjusted intensity.  Defaults to 1.}
-#   \item{subsetToUpdate}{The indices of the probes to be updated.
-#     If @NULL, all are updated.}
-#   \item{typesToUpdate}{Types of probes to be updated.  For more details,
-#     see argument \code{types} of \code{identifyCells()} for the
-#     @see "AffymetrixCdfFile" class.}
-#   \item{...}{Not used.}
-#   \item{overwrite}{If @TRUE, already adjusted arrays are overwritten,
-#     unless skipped, otherwise an error is thrown.}
-#   \item{skip}{If @TRUE, the array is not normalized if it already exists.}
-#   \item{verbose}{See @see "R.utils::Verbose".}
-#   \item{.deprecated}{Internal argument.}
-# }
-#
-# \value{
-#  Returns the background adjusted @see "AffymetrixCelSet" object.
-# }
-#
-# \author{
-#   Ken Simpson (ksimpson[at]wehi.edu.au).
-# }
-#*/###########################################################################
-setMethodS3("bgAdjustOptical", "AffymetrixCelSet", function(this, path=NULL, name="bgOptical", subsetToUpdate=NULL, typesToUpdate=NULL, minimum=1, overwrite=FALSE, skip=!overwrite, ..., verbose=FALSE, .deprecated=TRUE) {
-  if (.deprecated) {
-    throw("bgAdjustOptical() is deprecated.  Please use the OpticalBackgroundCorrection class");
-  }
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Validate arguments
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  cdf <- getCdf(this);
-
-  # Argument 'path':
-  if (is.null(path)) {
-    # Path structure: /probeData/<dataSet,tags>/<chipType>/
-    rootPath <- "probeData";
-    chipType <- getChipType(cdf, fullname=FALSE);
-    path <- file.path(rootPath, getFullName(this), chipType);
-  }
-  if (!is.null(path)) {
-    # Verify this path (and create if missing)
-    path <- Arguments$getWritablePath(path);
-  }
-
-  if (identical(getPath(this), path)) {
-    throw("Cannot calibrate data file. Argument 'path' refers to the same path as the path of the data file to be calibrated: ", path);
-  }
-
-  # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
-
-  verbose && enter(verbose, "Identifying the probes to be updated");
-  subsetToUpdate <- identifyCells(cdf, indices=subsetToUpdate,
-                                                     types=typesToUpdate);
-  verbose && exit(verbose);
-
-  verbose && cat(verbose, "Adjusting for optical effect for ", length(subsetToUpdate), " probes");
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # optical effect correction for each array
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  nbrOfArrays <- length(this);
-  verbose && enter(verbose, "Adjusting ", nbrOfArrays, " arrays");
-  dataFiles <- list();
-  for (kk in seq_along(this)) {
-    verbose && enter(verbose, sprintf("Array #%d of %d", kk, nbrOfArrays));
-    df <- getFile(this, kk);
-    verbose && print(verbose, df);
-    dataFiles[[kk]] <- bgAdjustOptical(df, path=path, subsetToUpdate=subsetToUpdate, typesToUpdate=NULL, minimum=minimum, verbose=less(verbose), .deprecated=.deprecated);
-    verbose && exit(verbose);
-
-    rm(df);
-
-    # Garbage collect
-    gc <- gc();
-    verbose && print(verbose, gc);
-  }
-  verbose && exit(verbose);
-
-  # CDF inheritance
-  res <- newInstance(this, dataFiles);
-  setCdf(res, getCdf(this));
-
-  res;
-}, private=TRUE)
-
-
-###########################################################################/**
 # @RdocMethod calculateParametersGsb
 #
 # @title "Computes parameters for adjustment of specific binding"
@@ -128,29 +25,33 @@ setMethodS3("bgAdjustOptical", "AffymetrixCelSet", function(this, path=NULL, nam
 #   Ken Simpson (ksimpson[at]wehi.edu.au).
 # }
 #*/###########################################################################
-setMethodS3("calculateParametersGsb", "AffymetrixCelSet", function(this, nbrOfPms=25000, affinities=NULL, path=NULL, ..., verbose=FALSE) {
+setMethodS3("calculateParametersGsb", "AffymetrixCelSet", function(this, nbrOfPms=25000, affinities=NULL, ..., verbose=FALSE) {
+  # Argument 'affinities':
+  if (is.null(affinities)) {
+    throw("DEPRECATED: Argument 'affinities' to calculateParametersGsb() must not be NULL.");
+  }
 
+  args <- list(...);
+  for (key in c("path")) {
+    if (is.element(key, names(args))) {
+      throw(sprintf("DEPRECATED: bgAdjustGcrma() no longer takes argument '%s'.", key));
+    }
+  }
+
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Validate arguments
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
+  if (verbose) {
+    pushState(verbose);
+    on.exit(popState(verbose));
+  }
+
 
   cdf <- getCdf(this);
   
-  # get path to affinities  
-  if (is.null(path)) {
-    # try to find affinities file
-    paths <- getPathnames(this)[1];
-    paths <- getParent(paths);
-    paths <- getParent(paths);
-    paths <- paste(".",
-                   paths,
-                   "data/",
-                   sep=";", collapse=";");
-
-    pattern <- paste(getChipType(cdf, "-affinities.apa", sep=""));
-    affinityFile <- findFiles(pattern=pattern, paths=paths, firstOnly=TRUE);
-    if (is.null(affinityFile))
-      throw("Could not locate probe affinities file: ", pattern);
-  }
-
   verbose && enter(verbose, "Extracting PM indices");
   cells <- getCellIndices(cdf, useNames=FALSE, unlist=TRUE, verbose=less(verbose,2));
   pmCells <- cells[isPm(cdf, cache=FALSE)];
@@ -176,35 +77,23 @@ setMethodS3("calculateParametersGsb", "AffymetrixCelSet", function(this, nbrOfPm
   verbose && enter(verbose, "Extracting ", nbrOfPms, " random PM intensities across CEL set");
   # make sure we don't just sample from a single array; avoids problems
   # if we happened to choose a low quality or otherwise aberrant array
-  iarray <- sample(1:narray, size=nbrOfPms, replace=TRUE);
+  iarray <- sample(seq_len(narray), size=nbrOfPms, replace=TRUE);
 
   # For each array, read the signals randomized for that array
   # Confirmed to give identical results. /HB 2007-03-26
   pathnames <- getPathnames(this);
-  pm.random2 <- vector("double", nbrOfPms);
-  for (aa in 1:narray) {
-    verbose && enter(verbose, sprintf("Array #%d of %d", aa, narray));
+  pm.random2 <- vector("double", length=nbrOfPms);
+  for (ii in seq_len(narray)) {
+    verbose && enter(verbose, sprintf("Array #%d of %d", ii, narray));
     # Cells to be read for this array
-    idxs <- which(iarray == aa);
+    idxs <- which(iarray == ii);
     cells <- pmCells.random[idxs];
-    pm.random2[idxs] <- readCel(pathnames[aa], indices=cells, 
+    pm.random2[idxs] <- readCel(pathnames[ii], indices=cells, 
                        readIntensities=TRUE, readStdvs=FALSE)$intensities;
     rm(idxs, cells);
     verbose && exit(verbose);
-  }
+  } # for (ii ...)
   rm(iarray, pathnames);
-
-##   pm.random22 <- pm.random2;
-##   # TO DO: Don't read all probes from all arrays
-##   pm.random <- readCelIntensities(getPathnames(this), indices=pmCells.random);
-##   pm.random2 <- vector("double", nrow(pm.random));
-##   for (i in 1:nbrOfPms) {
-##     pm.random2[i] <- pm.random[i, iarray[i]];
-##   }
-##   verbose && exit(verbose);
-##   # clean up
-##   rm(pm.random, iarray);   # Not needed anymore
-##   stopifnot(identical(pm.random2, pm.random22))
 
   # Garbage collect
   gc <- gc();
@@ -214,11 +103,7 @@ setMethodS3("calculateParametersGsb", "AffymetrixCelSet", function(this, nbrOfPm
 
   verbose && enter(verbose, "Extracting probe affinities and fitting linear model")
 
-  if (is.null(affinities)) {
-    aff <- readApd(affinityFile, indices=pmCells.random)$affinities;
-  } else {
-    aff <- affinities[pmCells.random];
-  }
+  aff <- affinities[pmCells.random];
   rm(pmCells.random);  # Not needed anymore
 
   # Work on the log2 scale
@@ -295,34 +180,41 @@ setMethodS3("calculateParametersGsb", "AffymetrixCelSet", function(this, nbrOfPm
 #  @seeclass
 # }
 #*/###########################################################################
-setMethodS3("bgAdjustGcrma", "AffymetrixCelSet", function(this, path=NULL, name="bgGcrma", probePath=NULL, affinities=NULL, type="fullmodel",  indicesNegativeControl=NULL, opticalAdjust=TRUE, gsbAdjust=TRUE, k=6 * fast + 0.5 * (1 - fast), rho=0.7, stretch=1.15*fast + (1-fast), fast=TRUE, overwrite=FALSE, skip=!overwrite, ..., verbose=FALSE, .deprecated=TRUE) {
+setMethodS3("bgAdjustGcrma", "AffymetrixCelSet", function(this, path, affinities=NULL, type="fullmodel",  indicesNegativeControl=NULL, opticalAdjust=TRUE, gsbAdjust=TRUE, k=6 * fast + 0.5 * (1 - fast), rho=0.7, stretch=1.15*fast + (1-fast), fast=TRUE, overwrite=FALSE, skip=!overwrite, ..., verbose=FALSE, .deprecated=TRUE) {
   if (.deprecated) {
     throw("bgAdjustGcrma() is deprecated.  Please use the GcRmaBackgroundCorrection class");
   }
 
+  if (is.null(path)) {
+    throw("DEPRECATED: Argument 'path' to bgAdjustGcrma() must no longer be NULL.");
+  }
+
+  args <- list(...);
+  for (key in c("name", "probePath")) {
+    if (is.element(key, names(args))) {
+      throw(sprintf("DEPRECATED: bgAdjustGcrma() no longer takes argument '%s'.", key));
+    }
+  }
+
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  cdf <- getCdf(this);
-
   # Argument 'path':
-  if (is.null(path)) {
-    rootPath <- "probeData";
-    chipType <- getChipType(cdf);
-    path <- file.path(rootPath, getFullName(this), chipType);
-  }
-  if (!is.null(path)) {
-    # Verify this path (and create if missing)
-    path <- Arguments$getWritablePath(path);
-  }
-
+  path <- Arguments$getWritablePath(path);
   if (identical(getPath(this), path)) {
     throw("Cannot calibrate data file. Argument 'path' refers to the same path as the path of the data file to be calibrated: ", path);
   }
 
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
+  if (verbose) {
+    pushState(verbose);
+    on.exit(popState(verbose));
+  }
 
+
+  cdf <- getCdf(this);
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Calculate probe affinities, if not already existing
@@ -330,26 +222,15 @@ setMethodS3("bgAdjustGcrma", "AffymetrixCelSet", function(this, path=NULL, name=
   if (is.null(affinities)) {
     verbose && enter(verbose, "Computing probe affinities (independent of data)");
 
-    # Alternative 1: Using ACS annotation file
+    # Alternative #1: Using ACS annotation file
     affinities <- NULL;
     tryCatch({
       affinities <- computeAffinitiesByACS(cdf, ..., verbose=less(verbose));
     }, error = function(ex) {});
 
     if (is.null(affinities)) {
-      # Alternative 2: Using old probe-tab files (deprecated)
-      filename <- paste(getChipType(cdf), "-affinities.apa", sep="");
-      pathname <- Arguments$getReadablePathname(filename, path=path, mustExist=FALSE);
-  
-      if (isFile(pathname)) {
-        verbose && enter(verbose, "Reading saved affinities: ", pathname);
-        affinities <- readApd(pathname)$affinities;
-        verbose && exit(verbose);
-      } else {
-        affinities <- computeAffinities(cdf, paths=probePath, ..., verbose=less(verbose));
-        verbose && cat(verbose, "Saving affinities: ", pathname);
-        writeApd(pathname, data=affinities, name="affinities");
-      }
+      # Alternative #2: Using Affymetrix probe-tab files (deprecated)
+      affinities <- computeAffinities(cdf, ..., verbose=less(verbose));
     }
 
     verbose && printf(verbose, "RAM: %.2fMB\n", 
@@ -360,7 +241,6 @@ setMethodS3("bgAdjustGcrma", "AffymetrixCelSet", function(this, path=NULL, name=
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # optical background correction
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   if (opticalAdjust) {
     OBG <- OpticalBackgroundCorrection(this);
     dsOBG <- process(OBG, ..., verbose=verbose);
@@ -372,10 +252,9 @@ setMethodS3("bgAdjustGcrma", "AffymetrixCelSet", function(this, path=NULL, name=
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # estimate specific binding (GSB, in gcrma terminology)
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  
   if (gsbAdjust) {
     verbose && enter(verbose, "Estimating specific binding parameters (data dependent)");
-    parametersGsb <- calculateParametersGsb(this, affinities=affinities, path=path, ..., verbose=verbose);
+    parametersGsb <- calculateParametersGsb(this, affinities=affinities, ..., verbose=verbose);
     verbose && cat(verbose, "parametersGsb:");
     verbose && print(verbose, parametersGsb);
     verbose && exit(verbose);
@@ -388,11 +267,11 @@ setMethodS3("bgAdjustGcrma", "AffymetrixCelSet", function(this, path=NULL, name=
   nbrOfArrays <- length(this);
   verbose && enter(verbose, "Adjusting ", nbrOfArrays, " arrays");
   dataFiles <- list();
-  for (kk in seq_along(this)) {
-    verbose && enter(verbose, sprintf("Array #%d of %d", kk, nbrOfArrays));
-    df <- getFile(this, kk);
+  for (ii in seq_along(this)) {
+    verbose && enter(verbose, sprintf("Array #%d of %d", ii, nbrOfArrays));
+    df <- getFile(this, ii);
     verbose && print(verbose, df);
-    dataFiles[[kk]] <- bgAdjustGcrma(df, path=path, type=type, indicesNegativeControl=indicesNegativeControl, affinities=affinities, gsbAdjust=gsbAdjust, parametersGsb=parametersGsb, k=k, rho=rho, stretch=stretch, fast=fast, overwrite=overwrite, skip=skip, ..., verbose=less(verbose), .deprecated=.deprecated);
+    dataFiles[[ii]] <- bgAdjustGcrma(df, path=path, type=type, indicesNegativeControl=indicesNegativeControl, affinities=affinities, gsbAdjust=gsbAdjust, parametersGsb=parametersGsb, k=k, rho=rho, stretch=stretch, fast=fast, overwrite=overwrite, skip=skip, ..., verbose=less(verbose), .deprecated=.deprecated);
 
     rm(df);
 
@@ -401,118 +280,26 @@ setMethodS3("bgAdjustGcrma", "AffymetrixCelSet", function(this, path=NULL, name=
     verbose && print(verbose, gc);
 
     verbose && exit(verbose);
-  }
+  } # for (ii ...)
   verbose && exit(verbose);
 
   res <- newInstance(this, dataFiles);
-  setCdf(res, getCdf(this));
+  setCdf(res, cdf);
 
   res;
-}, private=TRUE)
-
-
-
-###########################################################################/**
-# @set "class=AffymetrixCelSet"
-# @RdocMethod bgAdjustRma
-#
-# @title "Applies RMA background correction to a set of
-# CEL files"
-#
-# \description{
-#  @get "title".
-#
-#  Adapted from @see "affy::bg.adjust" in the \pkg{affy} package.
-# }
-#
-# @synopsis
-#
-# \arguments{
-#   \item{path}{The path where to save the adjusted data files.}
-#   \item{name}{Name of the set containing the background corrected files.}
-#   \item{overwrite}{If @TRUE, already adjusted arrays are overwritten,
-#     unless skipped, otherwise an error is thrown.}
-#   \item{skip}{If @TRUE, the array is not normalized if it already exists.}
-#   \item{verbose}{See @see "R.utils::Verbose".}
-#   \item{...}{Not used.}
-#   \item{.deprecated}{Internal argument.}
-# }
-#
-# \value{
-#  Returns the background adjusted @see "AffymetrixCelFile" object.
-# }
-#
-# \author{
-#   Ken Simpson (ksimpson[at]wehi.edu.au).
-# }
-#
-# \seealso{
-#  @see "affy::bg.adjust"
-#  @seeclass
-# }
-#*/###########################################################################
-setMethodS3("bgAdjustRma", "AffymetrixCelSet", function(this, path=NULL, tags="RBC", pmonly=TRUE, addJitter=FALSE, jitterSd=0.2, overwrite=FALSE, skip=!overwrite, ..., verbose=FALSE, .deprecated=TRUE) {
-  if (.deprecated) {
-    throw("bgAdjustRma() is deprecated.  Please use the RmaBackgroundCorrection class");
-  }
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Validate arguments
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  cdf <- getCdf(this);
-
-  # Argument 'path':
-  if (is.null(path)) {
-    # Path structure: /bgRma/<data set name>/chip_data/<chip type>/
-    rootPath <- "probeData";
-    fullname <- paste(c(getFullName(this), tags), collapse=",");
-    chipType <- getChipType(cdf);
-    path <- file.path(rootPath, fullname, chipType);
-  }
-  if (!is.null(path)) {
-    # Verify this path (and create if missing)
-    path <- Arguments$getWritablePath(path);
-  }
-
-  if (identical(getPath(this), path)) {
-    throw("Cannot calibrate data file. Argument 'path' refers to the same path as the path of the data file to be calibrated: ", path);
-  }
-
-  # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # apply normal+exponential model to each array
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  nbrOfArrays <- length(this);
-  verbose && enter(verbose, "Adjusting ", nbrOfArrays, " arrays");
-  dataFiles <- list();
-  for (kk in seq_along(this)) {
-    verbose && enter(verbose, sprintf("Array #%d of %d", kk, nbrOfArrays));
-    df <- getFile(this, kk);
-    verbose && print(verbose, df);
-    dataFiles[[kk]] <- bgAdjustRma(df, path=path, pmonly=pmonly, addJitter=addJitter, jitterSd=jitterSd, overwrite=overwrite, skip=skip, ..., verbose=less(verbose), .deprecated=.deprecated);
-
-    rm(df);
-
-    # Garbage collect
-    gc <- gc();
-    verbose && print(verbose, gc);
-
-    verbose && exit(verbose);
-  }
-  verbose && exit(verbose);
-
-  res <- newInstance(this, dataFiles);
-  setCdf(res, getCdf(this));
-
-  res;
-}, private=TRUE)
+}, private=TRUE) # bgAdjustGcrma()
 
 
 ############################################################################
 # HISTORY:
+# 2012-11-20 [HB]
+# o CLEANUP: Removed bgAdjustRma() for AffymetrixCelSet.
+# o CLEANUP: Removed bgAdjustOptical() for AffymetrixCelSet.
+# o Now using index 'ii' for arrays everywhere.
+# o CLEANUP: bgAdjustOptical(), bgAdjustRma() and bgAdjustGcrma() no
+#   longer accepts argument 'path' to be NULL.
+# o CLEANUP: bgAdjustGcrma() for AffymetrixCelSet no longer reads 
+#   and write probe affinity files in the deprecated APD format.
 # 2012-10-21 [HB]
 # o CLEANUP: Dropped unneeded mkdirs(), because they were all preceeded
 #   by an Arguments$getWritablePath().

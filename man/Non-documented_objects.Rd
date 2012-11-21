@@ -1436,6 +1436,8 @@
 \alias{getDefaultColumnNames.AromaCellMatchScoreFile}
 \alias{getDefaultColumnNames.AromaUfcFile}
 \alias{clearData}
+\alias{bgAdjustOptical.AffymetrixCelSet}
+\alias{bgAdjustRma.AffymetrixCelSet}
 
 \description{
   This page contains aliases for all "non-documented" objects that

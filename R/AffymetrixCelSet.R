@@ -1033,8 +1033,8 @@ setMethodS3("getIntensities", "AffymetrixCelSet", function(this, ...) {
 # \arguments{
 #  \item{units}{An @integer index @vector specifying units to be read. 
 #    If @NULL, all units are read.}
-#  \item{...}{Arguments passed to the low-level function for read units, 
-#    e.g. @see "affxparser::readCelUnits" or @see "aroma.apd::readApdUnits".
+#  \item{...}{Arguments passed to the low-level function for reading
+#    CEL units, i.e. @see "affxparser::readCelUnits".
 #    If \code{units} is not already a CDF @list structure, these arguments
 #    are also passed to \code{readUnits()} of @see "AffymetrixCdfFile".}
 #  \item{force}{If @TRUE, cached values are ignored.}

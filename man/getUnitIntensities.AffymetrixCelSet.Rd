@@ -24,8 +24,8 @@
 \arguments{
  \item{units}{An \code{\link[base]{integer}} index \code{\link[base]{vector}} specifying units to be read.
    If \code{\link[base]{NULL}}, all units are read.}
- \item{...}{Arguments passed to the low-level function for read units,
-   e.g. \code{\link[affxparser]{readCelUnits}} or \code{\link[aroma.apd]{readApdUnits}}.
+ \item{...}{Arguments passed to the low-level function for reading
+   CEL units, i.e. \code{\link[affxparser]{readCelUnits}}.
    If \code{units} is not already a CDF \code{\link[base]{list}} structure, these arguments
    are also passed to \code{readUnits()} of \code{\link{AffymetrixCdfFile}}.}
  \item{force}{If \code{\link[base:logical]{TRUE}}, cached values are ignored.}

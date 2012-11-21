@@ -27,7 +27,7 @@
 }
 
 \value{
- Returns a \code{\link[base]{double}} \code{\link[base]{vector}}.
+ Returns the output data set.
 }
 
 \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}

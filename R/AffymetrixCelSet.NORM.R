@@ -64,6 +64,11 @@ setMethodS3("normalizeQuantile", "AffymetrixCelSet", function(this, path=NULL, n
     throw("Cannot calibrate data file. Argument 'path' refers to the same path as the path of the data file to be calibrated: ", path);
   }
 
+  # Argument 'xTarget':
+  if (is.null(xTarget)) {
+    throw("DEPRECATED: normalizeQuantile() must no longer be called with xTarget=NULL.");
+  }
+
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
   if (verbose) {
@@ -71,35 +76,6 @@ setMethodS3("normalizeQuantile", "AffymetrixCelSet", function(this, path=NULL, n
     on.exit(popState(verbose));
   }
 
-
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-  # Get the average empirical quantiles across all arrays
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-  if (is.null(xTarget)) {
-    filename <- paste(getChipType(cdf), "-quantiles.apq", sep="");
-    pathname <- Arguments$getReadablePathname(filename, path=path, mustExist=FALSE);
-
-    verbose && enter(verbose, "Getting average empirical distribution");
-    if (isFile(pathname)) {
-      verbose && enter(verbose, "Reading saved distribution: ", pathname);
-      xTarget <- readApd(pathname)$quantiles;
-      verbose && exit(verbose);
-    } else {
-      probes <- identifyCells(cdf, indices=subsetToAvg, types=typesToAvg,
-                                                  verbose=less(verbose));
-      verbose && cat(verbose, "Using ", length(probes), " probes");
-      verbose && cat(verbose, "Calculating target distribution from ", 
-                                                length(this), " arrays");
-
-      xTarget <- averageQuantile(this, probes=probes, 
-                                                  verbose=less(verbose));
-      rm(probes);
-      verbose && cat(verbose, "Saving distribution: ", pathname);
-      writeApd(pathname, data=xTarget, name="quantiles");
-    }
-    verbose && exit(verbose);
-  }
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Identify the subset of probes to be updated
@@ -220,7 +196,7 @@ setMethodS3("averageQuantile", "AffymetrixCelSet", function(this, probes=NULL, e
   quantiles <- (0:(nbrOfObservations-1))/(nbrOfObservations-1);
 
   # Create a vector to hold the target distribution
-  xTarget <- vector("double", nbrOfObservations);
+  xTarget <- vector("double", length=nbrOfObservations);
 
   verbose && enter(verbose, "Calculating the average empircal distribution across ", nbrOfChannels, " arrays");
 

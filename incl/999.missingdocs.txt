@@ -743,3 +743,4 @@ validate.AffymetrixCdfFile
 getDefaultColumnNames.AromaCellMatchScoreFile
 getDefaultColumnNames.AromaUfcFile
 clearData
+bgAdjustOptical.AffymetrixCelSet  bgAdjustRma.AffymetrixCelSet

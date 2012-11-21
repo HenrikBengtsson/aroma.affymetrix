@@ -35,9 +35,13 @@
 #   Ken Simpson (ksimpson[at]wehi.edu.au).
 # }
 #*/###########################################################################
-setMethodS3("bgAdjustOptical", "AffymetrixCelFile", function(this, path=file.path("bgOptical", getChipType(this)), minimum=1, subsetToUpdate=NULL, typesToUpdate=NULL, overwrite=FALSE, skip=!overwrite, verbose=FALSE, ..., .deprecated=TRUE) {
+setMethodS3("bgAdjustOptical", "AffymetrixCelFile", function(this, path, minimum=1, subsetToUpdate=NULL, typesToUpdate=NULL, overwrite=FALSE, skip=!overwrite, verbose=FALSE, ..., .deprecated=TRUE) {
   if (.deprecated) {
     throw("bgAdjustOptical() is deprecated.  Please use the OpticalBackgroundCorrection class");
+  }
+
+  if (is.null(path)) {
+    throw("DEPRECATED: Argument 'path' to bgAdjustOptical() must no longer be NULL.");
   }
 
 
@@ -184,9 +188,13 @@ setMethodS3("bgAdjustOptical", "AffymetrixCelFile", function(this, path=file.pat
 #  @seeclass
 # }
 #*/###########################################################################
-setMethodS3("bgAdjustGcrma", "AffymetrixCelFile", function(this, path=NULL, type=c("fullmodel", "affinities"), indicesNegativeControl=NULL, affinities=NULL, gsbAdjust=TRUE, parametersGsb=NULL, k=ifelse(fast,6,0.5), rho=0.7, stretch=ifelse(fast,1.15,1), fast=TRUE, overwrite=FALSE, skip=!overwrite, ..., verbose=FALSE, .deprecated=TRUE) {
+setMethodS3("bgAdjustGcrma", "AffymetrixCelFile", function(this, path, type=c("fullmodel", "affinities"), indicesNegativeControl=NULL, affinities=NULL, gsbAdjust=TRUE, parametersGsb=NULL, k=ifelse(fast,6,0.5), rho=0.7, stretch=ifelse(fast,1.15,1), fast=TRUE, overwrite=FALSE, skip=!overwrite, ..., verbose=FALSE, .deprecated=TRUE) {
   if (.deprecated) {
     throw("bgAdjustGcrma() is deprecated.  Please use the GcRmaBackgroundCorrection class");
+  }
+
+  if (is.null(path)) {
+    throw("DEPRECATED: Argument 'path' to bgAdjustGcrma() must no longer be NULL.");
   }
 
   if (is.null(affinities)) {
@@ -251,31 +259,6 @@ setMethodS3("bgAdjustGcrma", "AffymetrixCelFile", function(this, path=NULL, type
   }
 
   
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Reading probe affinity file (DEPRECATED; REMOVE? /HB 2010-09-29)
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  if (is.null(affinities)) {
-    verbose && enter(verbose, "Loading probe affinities from file");
-    # try to find APD file containing probe affinities
-
-    paths <- path;
-    paths <- paste(".",
-                   paths,
-                   "data/",
-                   sep=";", collapse=";");
-
-    pattern <- paste(getChipType(getCdf(this)), "-affinities.apa", sep="");
-    affinityFilename <- findFiles(pattern=pattern, paths=paths, firstOnly=TRUE);
-    if (is.null(affinityFilename)) {
-      throw("Could not locate probe affinities file: ", pattern);
-    }
-
-    affinities <- readApd(affinityFilename)$affinities;
-    verbose && str(verbose, affinities);
-    verbose && exit(verbose);
-  }
-
-
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Reading probe signals
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -528,9 +511,13 @@ setMethodS3("bgAdjustGcrma", "AffymetrixCelFile", function(this, path=NULL, type
 #  @seeclass
 # }
 #*/###########################################################################
-setMethodS3("bgAdjustRma", "AffymetrixCelFile", function(this, path=NULL, pmonly=TRUE, addJitter=FALSE, jitterSd=0.2, overwrite=FALSE, skip=!overwrite, ..., verbose=FALSE, .deprecated=TRUE) {
+setMethodS3("bgAdjustRma", "AffymetrixCelFile", function(this, path, pmonly=TRUE, addJitter=FALSE, jitterSd=0.2, overwrite=FALSE, skip=!overwrite, ..., verbose=FALSE, .deprecated=TRUE) {
   if (.deprecated) {
     throw("bgAdjustRma() is deprecated.  Please use the RmaBackgroundCorrection class");
+  }
+
+  if (is.null(path)) {
+    throw("DEPRECATED: Argument 'path' to bgAdjustRma() must no longer be NULL.");
   }
 
   # Load required packages
@@ -641,14 +628,18 @@ setMethodS3("bgAdjustRma", "AffymetrixCelFile", function(this, path=NULL, pmonly
 
 ############################################################################
 # HISTORY:
+# 2012-11-20
+# o CLEANUP: Removed obsolete code from internal bgAdjustOptical() that 
+#   was never reached and that loaded affinities via obsolete APD files.
+# 2011-03-26
 # o ROBUSTNESS: Now internal bgAdjustGcrma(..., type="affinities") for
 #   AffymetrixCelFile gives a more informative error message when there
 #   are too few negative controls.
-# 2010-10-02 [HB]
+# 2010-10-02
 # o We now use nomm=TRUE for all cases for type="affinities".  See code
 #   for explanation.  This also solves the problems of using for instance 
 #   chip type MoEx-1_0-st-v1.
-# 2010-09-29 [HB]
+# 2010-09-29
 # o ROBUSTNESS: Now bgAdjustGcrma(..., affinities=NULL) is deprecated and
 #   throws an exception.
 # o CLEANUP: Cleaned up bgAdjustGcrma().

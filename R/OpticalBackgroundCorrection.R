@@ -65,7 +65,7 @@ setMethodS3("getParameters", "OpticalBackgroundCorrection", function(this, ...) 
 # }
 #
 # \value{
-#  Returns a @double @vector.
+#  Returns the output data set.
 # }
 #
 # @author
@@ -88,7 +88,7 @@ setMethodS3("process", "OpticalBackgroundCorrection", function(this, ..., force=
     verbose && cat(verbose, "Already background corrected for \"optical\" effects");
     verbose && exit(verbose);
     outputDataSet <- getOutputDataSet(this);
-    return(invisible(outputDataSet));
+    return(outputDataSet);
   }
   
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -97,24 +97,58 @@ setMethodS3("process", "OpticalBackgroundCorrection", function(this, ..., force=
   # Get input data set
   ds <- getInputDataSet(this);
 
-  # Get algorithm parameters (including the target distribution)
-  params <- getParameters(this);
-
   # Get the output path
   outputPath <- getPath(this);
 
-  args <- c(list(ds, path=outputPath, verbose=verbose, overwrite=force), params, .deprecated=FALSE);
+  cdf <- getCdf(ds);
 
-  outputDataSet <- do.call("bgAdjustOptical", args=args);
-  
+  # Get algorithm parameters (including the target distribution)
+  params <- getParameters(this);
+  subsetToUpdate <- params$subsetToUpdate;
+  typesToUpdate <- params$typesToUpdate;
+  minimum <- params$minimum;
+  rm(params);
+
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Identifying the cells to be updated
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  verbose && enter(verbose, "Identifying cells to be updated");
+  subsetToUpdate <- identifyCells(cdf, indices=subsetToUpdate,
+                                                      types=typesToUpdate);
+  verbose && cat(verbose, "Number of cells: ", length(subsetToUpdate));
+  verbose && str(verbose, subsetToUpdate);
+  verbose && exit(verbose);
+
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Background correct
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  nbrOfArrays <- length(ds);
+  verbose && cat(verbose, "Number of arrays: ", nbrOfArrays);
+  for (ii in seq_along(ds)) {
+    df <- getFile(ds, ii);
+    verbose && enter(verbose, sprintf("Array #%d ('%s') of %d", ii, getName(df), nbrOfArrays));
+
+    dfD <- bgAdjustOptical(df, path=outputPath, subsetToUpdate=subsetToUpdate, typesToUpdate=NULL, minimum=minimum, overwrite=force, verbose=less(verbose), .deprecated=FALSE);
+    verbose && print(verbose, dfD);
+
+    # Not needed anymore
+    rm(df, dfD);
+
+    verbose && exit(verbose);
+  } # for (ii ...)
+
+  rm(subsetToUpdate);
+
   # Garbage collect
   gc <- gc();
   verbose && print(verbose, gc);
 
-  verbose && exit(verbose);
+  # Get the output data set
+  outputDataSet <- getOutputDataSet(this);
 
-  # Update the output data set
-  this$.outputDataSet <- outputDataSet;
+  verbose && exit(verbose);
 
   outputDataSet;
 })
@@ -123,6 +157,10 @@ setMethodS3("process", "OpticalBackgroundCorrection", function(this, ..., force=
 
 ############################################################################
 # HISTORY:
+# 2012-11-20
+# o CLEANUP: process() for OpticalBackgroundCorrection now processes
+#   each file by itself, i.e. it no longer calls bgAdjustOptical() for
+#   AffymetrixCelSet (which has been removed).
 # 2007-08-24
 # o BUG FIX: Forgot to pass argument '.deprecated=FALSE' to bgAdjustGcrma()
 #   because the latter is deprecated at the user-API level.

@@ -215,6 +215,15 @@ setMethodS3("getFitFunction", "MultiArrayUnitModel", function(...) {
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Misc.
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+setMethodS3("bgAdjustOptical", "AffymetrixCelSet", function(this, ...) {
+  .Defunct("OpticalBackgroundCorrection");
+}, private=TRUE, deprecated=TRUE)
+
+setMethodS3("bgAdjustRma", "AffymetrixCelSet", function(this, ...) {
+  .Defunct("RmaBackgroundCorrection");
+}, private=TRUE, deprecated=TRUE)
+  
+
 setMethodS3("getUnitSizes", "AffymetrixCdfFile", function(this, ...) {
   .Deprecated("nbrOfGroupsPerUnit");
   nbrOfGroupsPerUnit(this, ...);
@@ -567,6 +576,8 @@ setMethodS3("getData", "AffymetrixCelFile", function(this, ...) {
 
 ############################################################################
 # HISTORY:
+# 2012-11-20
+# o Defuncted bgAdjust(Optical|Rma)() for AffymetrixCelSet.
 # 2012-10-17
 # o Deprecated getMonoCell() and createMonoCell().
 # 2012-10-14

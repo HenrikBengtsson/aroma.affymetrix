@@ -113,7 +113,7 @@ setMethodS3("getParameters", "GcRmaBackgroundCorrection", function(this, ...) {
 # }
 #
 # \value{
-#  Returns a @double @vector.
+#  Returns the output data set.
 # }
 #
 # @author
@@ -136,7 +136,7 @@ setMethodS3("process", "GcRmaBackgroundCorrection", function(this, ..., force=FA
     verbose && cat(verbose, "Already background corrected");
     verbose && exit(verbose);
     outputDataSet <- getOutputDataSet(this);
-    return(invisible(outputDataSet));
+    return(outputDataSet);
   }
 
 

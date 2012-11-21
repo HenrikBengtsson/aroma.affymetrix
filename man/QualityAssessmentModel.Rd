@@ -41,7 +41,6 @@ extends \link[R.oo]{Object}\cr
 \section{Fields and Methods}{
  \bold{Methods:}\cr
 \tabular{rll}{
- \tab \code{getAsteriskTags} \tab  -\cr
  \tab \code{getChipEffectSet} \tab  -\cr
  \tab \code{getDataSet} \tab  -\cr
  \tab \code{getFullName} \tab  -\cr
@@ -49,7 +48,6 @@ extends \link[R.oo]{Object}\cr
  \tab \code{getPath} \tab  -\cr
  \tab \code{getPlm} \tab  -\cr
  \tab \code{\link[aroma.affymetrix:getResiduals.QualityAssessmentModel]{getResiduals}} \tab Calculates the residuals from a probe-level model.\cr
- \tab \code{getRootPath} \tab  -\cr
  \tab \code{getTags} \tab  -\cr
  \tab \code{\link[aroma.affymetrix:getWeights.QualityAssessmentModel]{getWeights}} \tab Calculates the weights from the robust fit to a probe-level model.\cr
  \tab \code{nbrOfArrays} \tab  -\cr

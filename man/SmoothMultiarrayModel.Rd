@@ -52,7 +52,6 @@ extends \emph{\link[aroma.core]{ChromosomalModel}}\cr
  \tab \code{fitOneChromosome} \tab  -\cr
  \tab \code{getBandwidth} \tab  -\cr
  \tab \code{getOutputTuple} \tab  -\cr
- \tab \code{getRootPath} \tab  -\cr
  \tab \code{setBandwidth} \tab  -\cr
 }
 

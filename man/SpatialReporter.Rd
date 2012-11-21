@@ -60,13 +60,13 @@ extends \emph{\link[aroma.affymetrix]{AffymetrixCelSetReporter}}\cr
 
 
  \bold{Methods inherited from AffymetrixCelSetReporter}:\cr
-getChipType, getDataSet, getPath, nbrOfArrays
+as.character, getChipType, getDataSet, getPath, nbrOfArrays
 
  \bold{Methods inherited from AffymetrixFileSetReporter}:\cr
 getFileSet, getInputName, getInputTags
 
  \bold{Methods inherited from GenericReporter}:\cr
-getAlias, getAsteriskTags, getFullName, getInputName, getInputTags, getMainPath, getName, getPath, getReportSet, getTags, process, setAlias, setup
+as.character, getAlias, getAsteriskTags, getFullName, getInputName, getInputTags, getMainPath, getName, getPath, getReportSet, getRootPath, getTags, process, setAlias, setup
 
  \bold{Methods inherited from Object}:\cr
 asThis, $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save, print

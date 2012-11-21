@@ -69,7 +69,7 @@ setMethodS3("clone", "CnagCfhSet", function(this, ..., verbose=FALSE) {
   verbose && exit(verbose);
 
   object;
-}, private=TRUE)
+}, protected=TRUE)
 
 
 setMethodS3("append", "CnagCfhSet", function(this, other, clone=TRUE, ..., verbose=FALSE) {
@@ -109,7 +109,7 @@ setMethodS3("append", "CnagCfhSet", function(this, other, clone=TRUE, ..., verbo
   verbose && exit(verbose);
 
   this;
-})
+}, protected=TRUE)
 
 
 

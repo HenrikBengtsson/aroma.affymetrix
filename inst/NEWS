@@ -1,7 +1,7 @@
 Package: aroma.affymetrix
 =========================
 
-Version: 2.6.14 [2012-11-20]
+Version: 2.6.14 [2012-11-21]
 o DOCUMENTATION: Hiding more internal methods.
 o CLEANUP: Now utilizing the new ParametersInterface.
 o CLEANUP: Replaced all getParameterSet() with getParameters().

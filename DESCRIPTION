@@ -3,7 +3,7 @@ Version: 2.6.14
 Depends: R (>= 2.14.0), R.oo (>= 1.10.1), R.utils (>= 1.18.0), R.filesets (>= 1.6.0), aroma.core (>= 2.6.15), aroma.light (>= 1.22.0), aroma.apd (>= 0.2.2), R.rsp (>= 0.8.2), affxparser (>= 1.26.0)
 Imports: methods, R.methodsS3 (>= 1.4.2), R.oo (>= 1.10.1), R.cache (>= 0.6.5), MASS, splines, matrixStats (>= 0.6.2)
 Suggests: RColorBrewer (>= 1.0-5), preprocessCore (>= 1.8.0), affyPLM (>= 1.22.0), affy (>= 1.24.0), limma (>= 3.2.0), gcrma (>= 2.10.0), gsmoothr (>= 0.1.5), dChipIO (>= 0.1.1), Biobase (>= 2.7), oligo (>= 1.12.0), oligoClasses (>= 1.10.0), DBI (>= 0.2-5), pdInfoBuilder (>= 1.12.0), Biobase (>= 2.9.0), AffymetrixDataTestFiles
-Date: 2012-11-20
+Date: 2012-11-21
 Title: Analysis of large Affymetrix microarray data sets
 Author: Henrik Bengtsson, James Bullard, Kasper Hansen, Pierre Neuvial, Elizabeth Purdom, Mark Robinson, Ken Simpson
 Maintainer: Henrik Bengtsson <henrikb@braju.com>

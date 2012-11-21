@@ -100,7 +100,7 @@ byChipType, getAromaUflFile, getAromaUgpFile, getChipType, getDefaultExtension, 
 getAromaPlatform, getAromaUgpFile, getPlatform, getUnitAnnotationDataFile, getUnitNamesFile, getUnitTypesFile, isCompatibleWith
 
  \bold{Methods inherited from AromaChipTypeAnnotationFile}:\cr
-byChipType, byName, findByChipType, fromFile, getChipType, getDefaultExtension, getHeader, getPlatform
+as.character, byChipType, byName, findByChipType, fromFile, getChipType, getDefaultExtension, getHeader, getPlatform
 
  \bold{Methods inherited from AromaMicroarrayDataFile}:\cr
 getAttributeXY, getChipType, getPlatform, getPloidy, getXAM, hasAttributeXY, isAverageFile, setAttributesByTags, setAttributeXY

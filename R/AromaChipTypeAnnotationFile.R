@@ -239,7 +239,7 @@ setMethodS3("getDefaultExtension", "AromaChipTypeAnnotationFile", function(stati
 # @keyword IO
 # @keyword programming
 #*/###########################################################################
-setMethodS3("findByChipType", "AromaChipTypeAnnotationFile", abstract=TRUE, procted=TRUE);
+setMethodS3("findByChipType", "AromaChipTypeAnnotationFile", abstract=TRUE, protected=TRUE);
 
 
 

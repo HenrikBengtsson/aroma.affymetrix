@@ -53,7 +53,6 @@ extends \emph{\link[aroma.affymetrix]{AffymetrixFile}}\cr
 \tabular{rll}{
  \tab \code{dim} \tab  -\cr
  \tab \code{extractTheta} \tab  -\cr
- \tab \code{fromFile} \tab  -\cr
  \tab \code{getCalls} \tab  -\cr
  \tab \code{getExcludes} \tab  -\cr
  \tab \code{getFileFormat} \tab  -\cr

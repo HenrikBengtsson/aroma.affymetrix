@@ -104,12 +104,12 @@ setMethodS3("getUnitGroupNamesFromUgcMap", "AffymetrixCdfFile", function(this, u
   verbose && exit(verbose);
 
   res;
-}) # getUnitGroupNamesFromUgcMap()
+}, protected=TRUE) # getUnitGroupNamesFromUgcMap()
 
 
 ############################################################################
 # HISTORY:
-# 2011-11-18:
+# 2011-11-18
 # o Now the verbose progress output of getUnitGroupNamesFromUgcMap()
 #   is more informative on what subset in order is currently processed.
 # 2008-04-28

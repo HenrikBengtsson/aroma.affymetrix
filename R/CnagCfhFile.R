@@ -52,7 +52,7 @@ setMethodS3("clone", "CnagCfhFile", function(this, ..., verbose=TRUE) {
     object$.cdf <- clone(object$.cdf);
 
   object;
-})
+}, protected=TRUE)
 
 
 setMethodS3("as.character", "CnagCfhFile", function(x, ...) {

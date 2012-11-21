@@ -43,7 +43,7 @@ setMethodS3("verify", "AffymetrixCsvGenomeInformation", function(this, ...) {
                                                   getPathname(this));
   })
   invisible(TRUE);
-}, private=TRUE)
+}, protected=TRUE)
 
 
 setMethodS3("readDataFrame", "AffymetrixCsvGenomeInformation", function(this, ..., verbose=FALSE) {

@@ -58,9 +58,6 @@
  }
 
  \references{
-  Some of the reference below can be found at
-  \url{http://www.maths.lth.se/bioinformatics/publications/}.\cr
-
   [1] H. Bengtsson, K. Simpson, J. Bullard, and K. Hansen, \emph{aroma.affymetrix: A generic framework in R for analyzing small to very large Affymetrix data sets in bounded memory}, Tech Report \#745, Department of Statistics, University of California, Berkeley, February 2008.
  \cr
   [2] H. Bengtsson, R. Irizarry, B. Carvalho, and T. Speed, \emph{Estimation and assessment of raw copy numbers at the single locus level}, Bioinformatics, 2008.

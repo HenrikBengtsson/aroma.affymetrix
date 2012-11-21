@@ -56,8 +56,6 @@ extends \emph{\link[aroma.core]{UnitNamesFile}}\cr
   \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{byChipType} \tab  -\cr
- \tab \code{findByChipType} \tab  -\cr
- \tab \code{fromFile} \tab  -\cr
  \tab \code{getChipType} \tab  -\cr
  \tab \code{getFileFormat} \tab  -\cr
  \tab \code{getHeader} \tab  -\cr

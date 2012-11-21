@@ -116,7 +116,7 @@ setMethodS3("clone", "AffymetrixCelSet", function(this, ..., verbose=FALSE) {
   verbose && exit(verbose);
 
   object;
-}, private=TRUE)
+}, protected=TRUE)
 
 
 
@@ -163,7 +163,7 @@ setMethodS3("append", "AffymetrixCelSet", function(this, other, ..., verbose=FAL
   verbose && exit(verbose);
 
   this;
-})
+}, protected=TRUE)
 
 
 

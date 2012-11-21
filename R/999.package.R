@@ -45,9 +45,6 @@
 # }
 # 
 # \references{
-#  Some of the reference below can be found at 
-#  \url{http://www.maths.lth.se/bioinformatics/publications/}.\cr
-#
 #  [1] @include "../incl/BengtssonH_etal_2008b.bib.Rdoc" \cr
 #  [2] @include "../incl/BengtssonH_etal_2008.bib.Rdoc" \cr
 #  [3] @include "../incl/BengtssonH_2003.bib.Rdoc" \cr

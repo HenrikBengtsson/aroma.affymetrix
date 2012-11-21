@@ -60,16 +60,19 @@ extends \link[aroma.affymetrix]{LimmaBackgroundCorrection}\cr
 
 
  \bold{Methods inherited from LimmaBackgroundCorrection}:\cr
-process
+getAsteriskTags, getParameters, process
 
  \bold{Methods inherited from BackgroundCorrection}:\cr
 process
+
+ \bold{Methods inherited from ProbeLevelTransform}:\cr
+getRootPath
 
  \bold{Methods inherited from Transform}:\cr
 getOutputDataSet, getOutputFiles
 
  \bold{Methods inherited from AromaTransform}:\cr
-as.character, getExpectedOutputFiles, getExpectedOutputFullnames, getFullName, getInputDataSet, getName, getOutputDataSet, getOutputDataSet0, getOutputFiles, getPath, getRootPath, getTags, isDone, process, setTags
+as.character, getAsteriskTags, getExpectedOutputFiles, getExpectedOutputFullnames, getFullName, getInputDataSet, getName, getOutputDataSet, getOutputDataSet0, getOutputFiles, getPath, getRootPath, getTags, isDone, process, setTags
 
  \bold{Methods inherited from ParametersInterface}:\cr
 getParameters, getParametersAsString

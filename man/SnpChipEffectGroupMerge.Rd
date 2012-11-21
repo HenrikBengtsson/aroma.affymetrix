@@ -56,7 +56,6 @@ extends \link[aroma.affymetrix]{ChipEffectGroupMerge}\cr
  \section{Fields and Methods}{
   \bold{Methods:}\cr
 \tabular{rll}{
- \tab \code{getAsteriskTags} \tab  -\cr
  \tab \code{getMergeFunction} \tab  -\cr
 }
 
@@ -64,11 +63,14 @@ extends \link[aroma.affymetrix]{ChipEffectGroupMerge}\cr
  \bold{Methods inherited from ChipEffectGroupMerge}:\cr
 getCdf, getMergeFunction, process, setMergeFunction
 
+ \bold{Methods inherited from ChipEffectTransform}:\cr
+getRootPath
+
  \bold{Methods inherited from Transform}:\cr
 getOutputDataSet, getOutputFiles
 
  \bold{Methods inherited from AromaTransform}:\cr
-as.character, getExpectedOutputFiles, getExpectedOutputFullnames, getFullName, getInputDataSet, getName, getOutputDataSet, getOutputDataSet0, getOutputFiles, getPath, getRootPath, getTags, isDone, process, setTags
+as.character, getAsteriskTags, getExpectedOutputFiles, getExpectedOutputFullnames, getFullName, getInputDataSet, getName, getOutputDataSet, getOutputDataSet0, getOutputFiles, getPath, getRootPath, getTags, isDone, process, setTags
 
  \bold{Methods inherited from ParametersInterface}:\cr
 getParameters, getParametersAsString

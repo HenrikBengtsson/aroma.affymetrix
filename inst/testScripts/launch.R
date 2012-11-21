@@ -21,6 +21,7 @@ print(args);
 
 printf("Hostname: %s\n", System$getHostname());
 
+# Load aroma.affymetrix (in a fault-tolerant way)
 kk <- 1L;
 while (kk < 10L) {
   printf("#%02d. Trying to load aroma.affymetrix...\n", kk);
@@ -40,6 +41,10 @@ while (kk < 10L) {
 } # while()
 if (kk >= 10L) throw("Failed to load aroma.affymetrix.");
 
+# Use a R.cache path specific to the aroma tests
+setCacheRootPath("~/.Rcache,aroma")
+printf("Cache root path: %s\n", getCacheRootPath());
+
 path <- system.file(package="aroma.affymetrix");
 path <- Arguments$getReadablePath(path);
 
@@ -55,6 +60,8 @@ do.call(launchTestGroups, args);
 
 ############################################################################
 # HISTORY:
+# 2012-11-21
+# o Now using R.cache root path specific to the aroma tests.
 # 2012-10-19
 # o ROBUSTNESS: Better pathname validation.
 # o Adding system details to output at the beginning.

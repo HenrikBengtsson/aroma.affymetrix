@@ -42,7 +42,7 @@ setConstructorS3("ChipEffectTransform", function(dataSet=NULL, ...) {
 
 setMethodS3("getRootPath", "ChipEffectTransform", function(this, ...) {
   "plmData";
-}, private=TRUE)
+}, protected=TRUE)
 
 
 ############################################################################

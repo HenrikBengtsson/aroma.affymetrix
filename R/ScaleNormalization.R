@@ -95,7 +95,7 @@ setMethodS3("getAsteriskTags", "ScaleNormalization", function(this, collapse=NUL
   tags <- paste(tags, collapse=collapse);
 
   tags;
-}, private=TRUE)
+}, protected=TRUE)
  
 
 

@@ -37,19 +37,9 @@ setConstructorS3("SnpPlm", function(...) {
   extend(Interface(), "SnpPlm");
 })
 
-## setMethodS3("getSubname", "SnpPlm", function(this, ...) {
-##   s <- NextMethod("getSubname");
-##   if (this$mergeStrands) {
-##     s <- sprintf("%sStrandless", s);
-##   } else {
-##     s <- sprintf("%sStrands", s);
-##   }
-##   s;
-## })
 
-
-setMethodS3("getParameterSet", "SnpPlm", function(this, ...) {
-  params <- NextMethod("getParameterSet");
+setMethodS3("getParameters", "SnpPlm", function(this, ...) {
+  params <- NextMethod("getParameters");
   params$mergeStrands <- this$mergeStrands;
   params;
 }, private=TRUE)

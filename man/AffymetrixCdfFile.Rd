@@ -84,9 +84,6 @@ extends \emph{\link[aroma.core]{UnitNamesFile}}\cr
  \tab \code{nbrOfUnits} \tab  -\cr
  \tab \code{readDataFrame} \tab  -\cr
  \tab \code{\link[aroma.affymetrix:readUnits.AffymetrixCdfFile]{readUnits}} \tab Reads CDF data unit by unit.\cr
- \tab \code{setGenomeInformation} \tab  -\cr
- \tab \code{setSnpInformation} \tab  -\cr
- \tab \code{validate} \tab  -\cr
 }
 
 

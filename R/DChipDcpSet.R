@@ -96,7 +96,7 @@ setMethodS3("as.character", "DChipDcpSet", function(x, ...) {
   s <- c(s, sprintf("RAM: %.2fMB", objectSize(this)/1024^2));
   class(s) <- "GenericSummary";
   s;
-}, private=TRUE)
+}, protected=TRUE)
 
 
 
@@ -110,7 +110,7 @@ setMethodS3("findByName", "DChipDcpSet", function(static, ..., paths=c("rawData(
   }
 
   NextMethod("findByName", paths=paths);
-}, static=TRUE)
+}, static=TRUE, protected=TRUE)
 
 
 setMethodS3("byName", "DChipDcpSet", function(static, name, tags=NULL, chipType, paths=NULL, ...) {
@@ -164,7 +164,7 @@ setMethodS3("byPath", "DChipDcpSet", function(static, path="rawData/", pattern="
   verbose && exit(verbose);
 
   this;
-})
+}, protected=TRUE)
 
 
 

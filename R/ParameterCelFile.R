@@ -47,7 +47,7 @@
 # @keyword "IO"
 #*/###########################################################################
 setConstructorS3("ParameterCelFile", function(..., encodeFunction=NULL, decodeFunction=NULL) {
-  this <- extend(AffymetrixCelFile(...), "ParameterCelFile",
+  this <- extend(AffymetrixCelFile(...), c("ParameterCelFile", uses("ParametersInterface")),
     "cached:.readUnitsCache" = NULL,
     encodeFunction = encodeFunction,
     decodeFunction = decodeFunction
@@ -59,12 +59,6 @@ setConstructorS3("ParameterCelFile", function(..., encodeFunction=NULL, decodeFu
 
   this;
 })
-
-
-setMethodS3("getParameters", "ParameterCelFile", function(this, ...) {
-  list();
-}, protected=TRUE)
-
 
 setMethodS3("setEncodeFunction", "ParameterCelFile", function(this, fcn, ...) {
   if (is.null(fcn)) {
@@ -193,6 +187,9 @@ setMethodS3("updateUnits", "ParameterCelFile", function(this, data, cdf=NULL, ..
 
 ############################################################################
 # HISTORY:
+# 2012-11-20
+# o Added getParametersAsString() to ParameterCelFile.  Used to be in
+#   direct subclasses.
 # 2007-08-10
 # o Now all lapply() calls are done to base::lapply() explicitly to avoid
 #   method dispatching, because lapply() is made into a generic function

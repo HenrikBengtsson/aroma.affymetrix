@@ -55,7 +55,7 @@ setMethodS3("as.character", "AromaChipTypeAnnotationFile", function(x, ...) {
   s <- c(s, sprintf("RAM: %.2fMB", objectSize(this)/1024^2));
   class(s) <- "GenericSummary";
   s;
-}, private=TRUE)
+}, protected=TRUE)
 
 
 
@@ -239,7 +239,7 @@ setMethodS3("getDefaultExtension", "AromaChipTypeAnnotationFile", function(stati
 # @keyword IO
 # @keyword programming
 #*/###########################################################################
-setMethodS3("findByChipType", "AromaChipTypeAnnotationFile", abstract=TRUE);
+setMethodS3("findByChipType", "AromaChipTypeAnnotationFile", abstract=TRUE, procted=TRUE);
 
 
 

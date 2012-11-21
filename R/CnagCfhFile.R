@@ -64,7 +64,7 @@ setMethodS3("as.character", "CnagCfhFile", function(x, ...) {
   s <- c(s, sprintf("Timestamp: %s", as.character(getTimestamp(this))));
   class(s) <- "GenericSummary";
   s;
-}, private=TRUE)
+}, protected=TRUE)
 
 
 setMethodS3("getExtensionPattern", "CnagCfhFile", function(static, ...) {
@@ -153,7 +153,7 @@ setMethodS3("fromFile", "CnagCfhFile", function(static, filename, path=NULL, ...
 
   # Create a new instance of the same class
   newInstance(static, pathname);
-}, static=TRUE)
+}, static=TRUE, protected=TRUE)
 
 
 
@@ -450,31 +450,18 @@ setMethodS3("readUnits", "CnagCfhFile", function(this, units=NULL, ..., verbose=
 }, private=TRUE)
 
 
-setMethodS3("[", "CnagCfhFile", function(this, units=NULL, alleles=NULL, drop=FALSE) {
-  data <- readUnits(this, units=units);
-  if (!is.null(alleles)) {
-    data <- data[, alleles, drop=drop];
-  } else {
-    if (drop && length(data) == 1)
-      data <- data[[1]];
-  }
-  data;
-})
-
-setMethodS3("[[", "CnagCfhFile", function(this, unit=NULL) {
-  this[units=unit, drop=TRUE];
-})
-
-
 setMethodS3("range", "CnagCfhFile", function(this, ..., na.rm=TRUE) {
   x <- readDataFrame(this, ...);
   range(x, na.rm=na.rm);
-}, private=TRUE)
+}, protected=TRUE)
 
 
 
 ############################################################################
 # HISTORY:
+# 2012-11-20
+# o CLEANUP: Deprecated "[" and "[[", because they should be used to
+#   subset files and not units.
 # 2011-02-24
 # o BACKWARD COMPATILITY: getIdentifier() for CnagCfhFile generates
 #   a checksum id based on the relative pathname.  For now, we simply

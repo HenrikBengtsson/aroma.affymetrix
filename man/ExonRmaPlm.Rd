@@ -57,7 +57,6 @@ extends \link[aroma.affymetrix]{RmaPlm}\cr
  \section{Fields and Methods}{
   \bold{Methods:}\cr
 \tabular{rll}{
- \tab \code{calculateWeights} \tab  -\cr
  \tab \code{getCellIndices} \tab  -\cr
  \tab \code{getChipEffects} \tab  -\cr
  \tab \code{getChipEffectSet} \tab  -\cr

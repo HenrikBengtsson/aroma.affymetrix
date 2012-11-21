@@ -134,7 +134,7 @@ setMethodS3("calculateWeights", "ExonRmaPlm", function(this, units=NULL, ram=NUL
   verbose && exit(verbose);
 
   invisible(ws);
-})
+}, protected=TRUE)
 
 
 ##########################################################################

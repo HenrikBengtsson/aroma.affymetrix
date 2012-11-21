@@ -82,7 +82,7 @@ setMethodS3("writeCNT", "SnpChipEffectFile", function(this, reference, filename=
   verbose && exit(verbose);
 
   invisible(pathname);
-})
+}, protected=TRUE)
 
 
 
@@ -175,9 +175,7 @@ setMethodS3("writeCNT", "SnpChipEffectSet", function(this, reference, filename=N
   verbose && exit(verbose);
 
   invisible(pathname);
-})
-
-
+}, protected=TRUE)
 
 
 

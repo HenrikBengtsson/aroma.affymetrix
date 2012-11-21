@@ -286,7 +286,7 @@ setMethodS3("calculateBaseline", "ChipEffectSet", function(this, chromosomes=NUL
   verbose && exit(verbose);
 
   csBaseline;
-}) # calculateBaseline()
+}, protected=TRUE) # calculateBaseline()
 
 
 

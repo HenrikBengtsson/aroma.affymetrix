@@ -41,7 +41,7 @@ setMethodS3("as.character", "AffymetrixCelSetReporter", function(x, ...) {
   s <- c(s, sprintf("RAM: %.2fMB", objectSize(this)/1024^2));
   class(s) <- "GenericSummary";
   s;
-}, private=TRUE)
+}, protected=TRUE)
 
 
 

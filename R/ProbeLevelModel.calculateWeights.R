@@ -122,7 +122,7 @@ setMethodS3("calculateWeights", "ProbeLevelModel", function(this, units=NULL, ra
   verbose && exit(verbose);
 
   invisible(ws);
-})
+}, protected=TRUE)
 
 
 ##########################################################################

@@ -57,8 +57,6 @@ extends \emph{\link[aroma.affymetrix]{AffymetrixFile}}\cr
  \section{Fields and Methods}{
   \bold{Methods:}\cr
 \tabular{rll}{
- \tab \code{[} \tab  -\cr
- \tab \code{[[} \tab  -\cr
  \tab \code{clone} \tab  -\cr
  \tab \code{extractMatrix} \tab  -\cr
  \tab \code{\link[aroma.affymetrix:fromFile.AffymetrixCelFile]{fromFile}} \tab Defines an AffymetrixCelFile object from a CEL file.\cr
@@ -68,7 +66,6 @@ extends \emph{\link[aroma.affymetrix]{AffymetrixFile}}\cr
  \tab \code{\link[aroma.affymetrix:getImage.AffymetrixCelFile]{getImage}} \tab Creates an RGB Image object from a CEL file.\cr
  \tab \code{getUnitNamesFile} \tab  -\cr
  \tab \code{getUnitTypesFile} \tab  -\cr
- \tab \code{highlight} \tab  -\cr
  \tab \code{\link[aroma.affymetrix:image270.AffymetrixCelFile]{image270}} \tab Displays all or a subset of the data spatially.\cr
  \tab \code{nbrOfCells} \tab  -\cr
  \tab \code{\link[aroma.affymetrix:plotDensity.AffymetrixCelFile]{plotDensity}} \tab Plots the density of the probe signals on the array.\cr

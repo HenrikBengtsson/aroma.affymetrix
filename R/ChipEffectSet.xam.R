@@ -253,7 +253,7 @@ setMethodS3("getXAM", "ChipEffectSet", function(this, other, chromosome, units=N
   verbose && exit(verbose);
 
   xam;
-}) # getXAM()
+}, protected=TRUE) # getXAM()
 
 
 ############################################################################

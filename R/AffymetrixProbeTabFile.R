@@ -73,7 +73,7 @@ setMethodS3("as.character", "AffymetrixProbeTabFile", function(x, ...) {
 
   class(s) <- class;
   s;
-}, private=TRUE)
+}, protected=TRUE)
 
 
 setMethodS3("translateFullName", "AffymetrixProbeTabFile", function(this, name, ...) {
@@ -102,7 +102,7 @@ setMethodS3("translateFullName", "AffymetrixProbeTabFile", function(this, name, 
   }
   
   NextMethod("translateFullName");
-})
+}, protected=TRUE)
 
 
 setMethodS3("hasColumnHeader", "AffymetrixProbeTabFile", function(this, ...) {
@@ -475,7 +475,7 @@ setMethodS3("fromCdf", "AffymetrixProbeTabFile", function(static, cdf, ...) {
   res <- byChipType(static, chipType=getChipType(cdf), nbrOfCells=nbrOfCells(cdf), ...);
   res$.cdf <- cdf;
   res;
-}, static=TRUE);
+}, static=TRUE, protected=TRUE);
 
 
 setMethodS3("byChipType", "AffymetrixProbeTabFile", function(static, chipType, what=NULL, nbrOfCells=NULL, ...) {

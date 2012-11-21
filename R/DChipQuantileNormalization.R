@@ -58,7 +58,7 @@ setMethodS3("as.character", "DChipQuantileNormalization", function(x, ...) {
                                                          nExcl, 100*nExcl/n));
   class(s) <- "GenericSummary";
   s;
-}, private=TRUE)
+}, protected=TRUE)
 
 
 setMethodS3("getParameters", "DChipQuantileNormalization", function(this, ...) {

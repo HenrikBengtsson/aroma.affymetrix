@@ -176,7 +176,7 @@ setMethodS3("as.character", "CnagCfhSet", function(x, ...) {
   s <- c(s, sprintf("RAM: %.2fMB", objectSize(this)/1024^2));
   class(s) <- "GenericSummary";
   s;
-}, private=TRUE)
+}, protected=TRUE)
 
 
 setMethodS3("getTimestamps", "CnagCfhSet", function(this, ..., force=FALSE) {
@@ -313,7 +313,7 @@ setMethodS3("findByName", "CnagCfhSet", function(static, ..., paths="cnagData(|,
   }
 
   NextMethod("findByName", paths=paths);
-}, static=TRUE)
+}, static=TRUE, protected=TRUE)
 
 
 setMethodS3("byName", "CnagCfhSet", function(static, name, tags=NULL, chipType, paths=NULL, ...) {
@@ -449,7 +449,7 @@ setMethodS3("byPath", "CnagCfhSet", function(static, path="rawData/", pattern="[
   verbose && exit(verbose);
 
   this;
-})
+}, static=TRUE, protected=TRUE)
 
 
 
@@ -564,7 +564,7 @@ setMethodS3("isDuplicated", "CnagCfhSet", function(this, ...) {
   names(dups) <- getNames(this);
 
   dups;
-})
+}, protected=TRUE)
 
 
 
@@ -1054,29 +1054,20 @@ setMethodS3("getAverageAsinh", "CnagCfhSet", function(this, ...) {
 
 setMethodS3("range", "CnagCfhSet", function(this, ...) {
   range(unlist(lapply(this, FUN=range, ...), use.names=FALSE));
-})
-
-
-setMethodS3("[", "CnagCfhSet", function(this, units=NULL, ..., drop=FALSE) {
-  res <- readUnits(this, units=units, ...);
-  if (drop && length(res) == 1)
-    res <- res[[1]];
-  res;
-})
-
-setMethodS3("[[", "CnagCfhSet", function(this, units=NULL, ...) {
-  this[units=units, ..., drop=TRUE];
-})
+}, protected=TRUE)
 
 
 setMethodS3("getDefaultFullName", "CnagCfhSet", function(this, parent=1L, ...) {
   NextMethod("getDefaultFullName", parent=parent);
-})
+}, protected=TRUE)
 
 
 
 ############################################################################
 # HISTORY:
+# 2012-11-20
+# o CLEANUP: Deprecated "[" and "[[", because they should be used to
+#   subset files and not units.
 # 2011-03-03
 # o GENERALIZATION: Now CnagCfhSet locates sample annotation files and 
 #   sets the attributes following the new aroma search convention.

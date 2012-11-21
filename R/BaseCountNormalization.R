@@ -77,7 +77,7 @@ setMethodS3("getAsteriskTags", "BaseCountNormalization", function(this, collapse
   tags <- paste(tags, collapse=collapse);
 
   tags;
-}, private=TRUE)
+}, protected=TRUE)
 
 
 
@@ -94,7 +94,7 @@ setMethodS3("getParameters", "BaseCountNormalization", function(this, ...) {
   ));
 
   params;
-}, private=TRUE)
+}, protected=TRUE)
 
 
 

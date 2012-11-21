@@ -99,7 +99,7 @@ setMethodS3("getOutputDataSet00", "GcContentNormalization", function(this, ...) 
   update2(res, verbose=less(verbose, 1));
 
   res;
-})
+}, protected=TRUE)
 
 
 setMethodS3("getGcContent", "GcContentNormalization", function(this, units=NULL, force=FALSE, ..., verbose=FALSE) {

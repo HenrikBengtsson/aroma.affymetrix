@@ -118,7 +118,7 @@ setMethodS3("getAsteriskTags", "ProbeLevelTransform3", function(this, collapse=N
   tags <- paste(tags, collapse=collapse);
 
   tags;
-}, private=TRUE)
+}, protected=TRUE)
 
 
 

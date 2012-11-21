@@ -109,7 +109,7 @@ setMethodS3("getAsteriskTags", "ReseqCrosstalkCalibration", function(this, colla
   tags <- paste(tags, collapse=collapse);
 
   tags;
-}, private=TRUE)
+}, protected=TRUE)
 
 
 
@@ -202,7 +202,7 @@ setMethodS3("getParameters", "ReseqCrosstalkCalibration", function(this, expand=
   }
 
   params;
-}, private=TRUE)
+}, protected=TRUE)
 
 
 

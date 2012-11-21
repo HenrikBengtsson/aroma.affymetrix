@@ -65,7 +65,8 @@ setMethodS3("as.character", "TransformReport", function(x, ...) {
   s <- c(s, sprintf("RAM: %.2fMB", objectSize(this)/1024^2));
   class(s) <- "GenericSummary";
   s;
-}, private=TRUE)
+}, protected=TRUE)
+
 
 
 ###########################################################################/**
@@ -104,14 +105,14 @@ setMethodS3("getName", "TransformReport", function(this, ...) {
 
 setMethodS3("getAlias", "TransformReport", function(this, ...) {
   this$.alias;
-})
+}, protected=TRUE)
 
 setMethodS3("setAlias", "TransformReport", function(this, alias, ...) {
   if (!is.null(alias)) {
     alias <- Arguments$getCharacter(alias, nchar=c(1,Inf), length=c(1,1));
   }
   this$.alias <- alias;
-})
+}, protected=TRUE)
 
 
 ###########################################################################/**

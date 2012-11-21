@@ -107,7 +107,7 @@ setMethodS3("getBaseline", "ChipEffectSet", function(this, force=FALSE, verbose=
   verbose && exit(verbose);
 
   res;
-})
+}, protected=TRUE)
 
 
 
@@ -115,13 +115,14 @@ setMethodS3("getBaseline", "SnpChipEffectSet", function(this, ...) {
   res <- NextMethod("getBaseline");
   res$mergeStrands <- getMergeStrands(this);
   res;
-})
+}, protected=TRUE)
+
 
 setMethodS3("getBaseline", "CnChipEffectSet", function(this, ...) {
   res <- NextMethod("getBaseline");
   res$combineAlleles <- getCombineAlleles(this);
   res;
-})
+}, protected=TRUE)
 
 
 

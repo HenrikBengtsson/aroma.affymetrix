@@ -71,7 +71,7 @@ setMethodS3("fromDataSet", "FirmaSet", function(static, dataSet, path, name=getN
 
   # Create a FirmaSet
   newInstance(static, fs);
-})
+}, static=TRUE, protected=TRUE)
 
 
 setMethodS3("getCellIndices", "FirmaSet", function(this, ...) {

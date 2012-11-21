@@ -95,7 +95,7 @@ setMethodS3("getAsteriskTags", "MatNormalization", function(this, collapse=NULL,
   tags <- paste(tags, collapse=collapse);
 
   tags;
-}, private=TRUE)
+}, protected=TRUE)
 
 
 setMethodS3("getParameters", "MatNormalization", function(this, ...) {
@@ -108,7 +108,7 @@ setMethodS3("getParameters", "MatNormalization", function(this, ...) {
   ));
 
   params;
-}, private=TRUE)
+}, protected=TRUE)
 
 
 

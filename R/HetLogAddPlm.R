@@ -41,7 +41,7 @@ setMethodS3("getAsteriskTags", "HetLogAddPlm", function(this, collapse=NULL, ...
   tags <- paste(tags, collapse=collapse); 
 
   tags;
-})
+}, protected=TRUE)
 
 
 
@@ -142,8 +142,7 @@ setMethodS3("getFitUnitGroupFunction", "HetLogAddPlm", function(this, ..., verbo
   verbose && exit(verbose);
 
   fitPlm;
-}, private=TRUE)
-
+}, protected=TRUE)
 
 
 

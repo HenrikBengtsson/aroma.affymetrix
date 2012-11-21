@@ -57,17 +57,17 @@ setMethodS3("getExpandedCellMap", "ChipEffectFile", function(this, resetFields=N
   stopifnot(length(map) == nbrOfCells(this));
 
   map;
-})
+}, protected=TRUE)
 
 
 setMethodS3("getExpandedCellMap", "SnpChipEffectFile", function(this, resetFields=NULL, ...) {
   NextMethod("getExpandedCellMap", resetFields=c("mergeStrands", resetFields));
-})
+}, protected=TRUE)
 
 
 setMethodS3("getExpandedCellMap", "CnChipEffectFile", function(this, resetFields=NULL, ...) {
   NextMethod("getExpandedCellMap", resetFields=c("combineAlleles", resetFields));
-})
+}, protected=TRUE)
 
 
 setMethodS3("getCellMapForMainCdf", "ChipEffectFile", function(this, ..., verbose=FALSE) {
@@ -96,7 +96,7 @@ setMethodS3("getCellMapForMainCdf", "ChipEffectFile", function(this, ..., verbos
   stopifnot(length(readMap2) == nbrOfCells(cdf));
 
   readMap2;
-})
+}, protected=TRUE)
 
 
 setMethodS3("writeAsFullCelFile", "ChipEffectFile", function(this, name=getName(this), tags="*", ..., cells=NULL, verbose=FALSE) {

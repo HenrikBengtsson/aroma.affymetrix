@@ -78,7 +78,7 @@ setMethodS3("getAsteriskTags", "AffinePlm", function(this, collapse=NULL, ...) {
   tags <- paste(tags, collapse=collapse);
 
   tags;
-})
+}, protected=TRUE)
 
 
 setMethodS3("getProbeAffinityFile", "AffinePlm", function(this, ...) {
@@ -190,7 +190,7 @@ setMethodS3("getFitUnitGroupFunction", "AffinePlm", function(this, ...) {
   } # affineFit()
 
   affineFit;
-}, private=TRUE)
+}, protected=TRUE)
 
 
 

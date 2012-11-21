@@ -54,7 +54,8 @@ setConstructorS3("CrlmmModel", function(dataSet=NULL, balance=1.5, minLLRforCall
 
 setMethodS3("getRootPath", "CrlmmModel", function(this, ...) {
   "crlmmData";
-}) 
+}, protected=TRUE)
+
 
 setMethodS3("getAsteriskTags", "CrlmmModel", function(this, collapse=NULL, ...) { 
   tags <- "CRLMM";
@@ -63,17 +64,17 @@ setMethodS3("getAsteriskTags", "CrlmmModel", function(this, collapse=NULL, ...) 
   }
 
   tags;
-})
+}, protected=TRUE)
 
 
-setMethodS3("getParameterSet", "CrlmmModel", function(this, ...) {
-  params <- NextMethod("getParameterSet");
+setMethodS3("getParameters", "CrlmmModel", function(this, ...) {
+  params <- NextMethod("getParameters");
   params$balance <- this$balance;
   params$minLLRforCalls <- this$minLLRforCalls;
   params$recalibrate <- this$recalibrate;
   params$flavor <- this$flavor;
   params;
-}, private=TRUE) 
+}, protected=TRUE) 
 
 
 

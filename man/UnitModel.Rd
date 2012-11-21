@@ -51,7 +51,6 @@ extends \emph{\link[aroma.affymetrix]{Model}}\cr
   \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{\link[aroma.affymetrix:findUnitsTodo.UnitModel]{findUnitsTodo}} \tab Identifies non-fitted units.\cr
- \tab \code{getFitSingleCellUnitFunction} \tab  -\cr
 }
 
 

@@ -37,7 +37,7 @@ setConstructorS3("FirmaModel", function(rmaPlm=NULL, summaryMethod=c("median", "
     rmaPlm <- Arguments$getInstanceOf(rmaPlm, "ExonRmaPlm");
 
     # Assert that the RmaPlm has 'mergeGroups=TRUE'.
-    params <- getParameterSet(rmaPlm);
+    params <- getParameters(rmaPlm);
     if (!params$mergeGroups) {
       throw("Cannot setup FirmaModel. The probe-level model must be for transcripts (mergeGroups=TRUE), not exons.");
     }
@@ -88,7 +88,7 @@ setMethodS3("getAsteriskTags", "FirmaModel", function(this, collapse=NULL, ...) 
   tags <- paste(tags, collapse=collapse);
 
   tags;
-})
+}, protected=TRUE)
 
 
 setMethodS3("getTags", "FirmaModel", function(this, collapse=NULL, ...) {
@@ -163,12 +163,12 @@ setMethodS3("as.character", "FirmaModel", function(x, ...) {
   s <- c(s, sprintf("RAM: %.2fMB", objectSize(this)/1024^2));
   class(s) <- "GenericSummary";
   s;
-}, private=TRUE)
+}, protected=TRUE)
 
 
 setMethodS3("calculateWeights", "FirmaModel", function(this, ...) {
   calculateWeights(this$.plm, ...);
-})
+}, protected=TRUE)
 
 
 
@@ -179,7 +179,7 @@ setMethodS3("getFileSetClass", "FirmaModel", function(static, ...) {
 
 setMethodS3("getRootPath", "FirmaModel", function(this, ...) {
   "firmaData";
-}, private=TRUE)
+}, protected=TRUE)
 
 
 
@@ -250,7 +250,7 @@ setMethodS3("getFirmaSet", "FirmaModel", function(this, ..., verbose=FALSE) {
 
 setMethodS3("getFirmaScores", "FirmaModel", function(this, ...) {
   getFirmaSet(this, ...);
-})
+}, protected=TRUE)
 
 
 ###########################################################################/**
@@ -282,11 +282,8 @@ setMethodS3("getFirmaScores", "FirmaModel", function(this, ...) {
 #*/###########################################################################
 setMethodS3("calculateResidualSet", "FirmaModel", function(this, ...) {
   calculateResidualSet(this$.plm, ...)
-})
+}, protected=TRUE)
 
-setMethodS3("calculateResiduals", "FirmaModel", function(this, ...) {
-  calculateResidualSet(this, ...);
-}, private=TRUE)
 
 
 
@@ -378,7 +375,7 @@ setMethodS3("getFitUnitGroupFunction", "FirmaModel", function(this, ...) {
     }
   }
   fitfcn;
-})
+}, protected=TRUE)
 
 
 setMethodS3("getFitUnitFunction", "FirmaModel", function(this, ...) {

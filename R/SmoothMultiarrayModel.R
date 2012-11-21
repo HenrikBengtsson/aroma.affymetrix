@@ -82,7 +82,8 @@ setMethodS3("getAsteriskTags", "SmoothMultiarrayModel", function(this, collapse=
 setMethodS3("getRootPath", "SmoothMultiarrayModel", function(this, ...) {
   tag <- getAsteriskTags(this)[1];
   sprintf("%sData", tolower(tag));
-})
+}, protected=TRUE)
+
 
 setMethodS3("getBandwidth", "SmoothMultiarrayModel", function(this, ...) {
   this$.bandwidth;

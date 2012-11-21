@@ -75,7 +75,7 @@ setMethodS3("clone", "AffymetrixCelFile", function(this, ..., verbose=TRUE) {
     object$.cdf <- clone(object$.cdf);
 
   object;
-})
+}, protected=TRUE)
 
 
 setMethodS3("getExtensionPattern", "AffymetrixCelFile", function(static, ...) {
@@ -119,7 +119,7 @@ setMethodS3("as.character", "AffymetrixCelFile", function(x, ...) {
   s <- c(s, sprintf("Timestamp: %s", as.character(getTimestamp(this))));
   class(s) <- "GenericSummary";
   s;
-}, private=TRUE)
+}, protected=TRUE)
 
 
 setMethodS3("getIdentifier", "AffymetrixCelFile", function(this, ..., force=FALSE) {
@@ -211,7 +211,7 @@ setMethodS3("fromFile", "AffymetrixCelFile", function(static, filename, path=NUL
 
   # Create a new instance of the same class
   newInstance(static, pathname);
-}, static=TRUE)
+}, static=TRUE, protected=TRUE)
 
 
 
@@ -741,19 +741,6 @@ setMethodS3("clearData", "AffymetrixCelFile", function(this, fields=c("intensiti
 
 
 
-setMethodS3("[", "AffymetrixCelFile", function(this, units=NULL, drop=FALSE) {
-  data <- readUnits(this, units=units);
-  if (drop && length(data) == 1)
-    data <- data[[1]];
-  data;
-})
-
-setMethodS3("[[", "AffymetrixCelFile", function(this, unit=NULL) {
-  this[units=unit, drop=TRUE];
-})
-
-
-
 ###########################################################################/**
 # @RdocMethod readRawData
 # @aliasmethod getData
@@ -906,7 +893,7 @@ setMethodS3("readRawData", "AffymetrixCelFile", function(this, indices=NULL, fie
 setMethodS3("range", "AffymetrixCelFile", function(this, ..., na.rm=TRUE) {
   x <- getData(this, ...);
   range(x, na.rm=na.rm);
-}, private=TRUE)
+}, protected=TRUE)
 
 
 setMethodS3("readRawDataRectangle", "AffymetrixCelFile", function(this, xrange=c(0,Inf), yrange=c(0,Inf), fields=c("intensities", "stdvs", "pixels"), ..., drop=FALSE) {
@@ -929,6 +916,9 @@ setMethodS3("getRectangle", "AffymetrixCelFile", function(this, ...) {
 
 ############################################################################
 # HISTORY:
+# 2012-11-20
+# o CLEANUP: Deprecated "[" and "[[", because they should be used to
+#   subset files and not units.
 # 2011-11-18
 # o ROBUSTNESS: Added validiation of argument 'fields' to readRawData()
 #   of AffymetrixCelFile and more internal sanity checks in that method.

@@ -47,7 +47,6 @@ extends \emph{\link[aroma.affymetrix]{SmoothMultiarrayModel}}\cr
  \section{Fields and Methods}{
   \bold{Methods:}\cr
 \tabular{rll}{
- \tab \code{getFitUnitGroupFunction} \tab  -\cr
  \tab \code{getRootPath} \tab  -\cr
 }
 

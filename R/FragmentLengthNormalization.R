@@ -151,7 +151,7 @@ setMethodS3("getAsteriskTags", "FragmentLengthNormalization", function(this, col
   tags <- paste(tags, collapse=collapse);
 
   tags;
-}, private=TRUE)
+}, protected=TRUE)
 
 
 
@@ -175,7 +175,7 @@ setMethodS3("getParameters", "FragmentLengthNormalization", function(this, expan
   }
 
   params;
-}, private=TRUE)
+}, protected=TRUE)
 
 
 setMethodS3("getCdf", "FragmentLengthNormalization", function(this, ...) {
@@ -236,7 +236,7 @@ setMethodS3("getOutputDataSet00", "FragmentLengthNormalization", function(this, 
   verbose && exit(verbose);
 
   res;
-})
+}, protected=TRUE)
 
 
 setMethodS3("getFilteredFragmentLengths", "FragmentLengthNormalization", function(this, ..., verbose=FALSE) {

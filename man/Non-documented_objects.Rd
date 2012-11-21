@@ -778,23 +778,13 @@
 \alias{getParameters.UnitTypeScaleNormalization}
 \alias{getParameters.WeightsFile}
 \alias{getParameters.WeightsSet}
-\alias{getParametersAsString.ChipEffectFile}
-\alias{getParametersAsString.ChipEffectSet}
-\alias{getParametersAsString.Model}
-\alias{getParametersAsString.ProbeAffinityFile}
-\alias{getParametersAsString.ResidualFile}
-\alias{getParametersAsString.ResidualSet}
-\alias{getParametersAsString.WeightsFile}
-\alias{getParametersAsString.WeightsSet}
-\alias{getParameterSet}
-\alias{getParameterSet.AvgPlm}
-\alias{getParameterSet.CnPlm}
-\alias{getParameterSet.CrlmmModel}
-\alias{getParameterSet.ExonRmaPlm}
-\alias{getParameterSet.Model}
-\alias{getParameterSet.RmaPlm}
-\alias{getParameterSet.SnpPlm}
-\alias{getParameterSet.UnitModel}
+\alias{getParameters.AvgPlm}
+\alias{getParameters.CnPlm}
+\alias{getParameters.CrlmmModel}
+\alias{getParameters.ExonRmaPlm}
+\alias{getParameters.RmaPlm}
+\alias{getParameters.SnpPlm}
+\alias{getParameters.UnitModel}
 \alias{getPath.AffymetrixCelSetReporter}
 \alias{getPath.GenericReporter}
 \alias{getPath.QualityAssessmentModel}
@@ -1438,6 +1428,10 @@
 \alias{clearData}
 \alias{bgAdjustOptical.AffymetrixCelSet}
 \alias{bgAdjustRma.AffymetrixCelSet}
+\alias{calculateAffinities}
+\alias{calculateAffinities.GcRmaBackgroundCorrection}
+\alias{getParameterSet}
+\alias{getParameterSet.Model}
 
 \description{
   This page contains aliases for all "non-documented" objects that

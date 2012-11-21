@@ -185,7 +185,7 @@ setMethodS3("convertToUnique", "AffymetrixCelSet", function(this, ..., tags="UNQ
   verbose && exit(verbose);
   
   invisible(res);
-})
+}, protected=TRUE) # convertToUnique()
 
 
 ############################################################################

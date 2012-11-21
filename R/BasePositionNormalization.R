@@ -63,7 +63,7 @@ setMethodS3("getAsteriskTags", "BasePositionNormalization", function(this, colla
   tags <- paste(tags, collapse=collapse);
 
   tags;
-}, private=TRUE)
+}, protected=TRUE)
 
 
 
@@ -77,7 +77,7 @@ setMethodS3("getParameters", "BasePositionNormalization", function(this, ...) {
   ));
 
   params;
-}, private=TRUE)
+}, protected=TRUE)
 
 
 

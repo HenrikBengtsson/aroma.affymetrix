@@ -59,7 +59,7 @@ setMethodS3("as.character", "ArrayExplorer", function(x, ...) {
   s <- c(s, sprintf("RAM: %.2fMB", objectSize(this)/1024^2));
   class(s) <- "GenericSummary";
   s;
-}, private=TRUE)
+}, protected=TRUE)
 
 
 
@@ -89,17 +89,18 @@ setMethodS3("setAlias", "ArrayExplorer", function(this, ...) {
   reporters <- getListOfReporters(this);
   lapply(reporters, FUN=setAlias, ...);
   invisible(this);
-})
+}, protected=TRUE)
+
 
 setMethodS3("getAlias", "ArrayExplorer", function(this, ...) {
   reporters <- getListOfReporters(this);
   getAlias(reporters[[1]], ...);
-})
+}, protected=TRUE)
 
 
 setMethodS3("getAsteriskTags", "ArrayExplorer", function(this, ...) {
   "";
-})
+}, protected=TRUE)
 
 
 

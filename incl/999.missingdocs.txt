@@ -398,15 +398,11 @@ getFileSet
   getParameters.SnpChipEffectFile getParameters.SnpChipEffectGroupMerge
   getParameters.SpatialRowColumnNormalization
   getParameters.UnitTypeScaleNormalization getParameters.WeightsFile
-  getParameters.WeightsSet getParametersAsString.ChipEffectFile
-  getParametersAsString.ChipEffectSet getParametersAsString.Model
-  getParametersAsString.ProbeAffinityFile
-  getParametersAsString.ResidualFile getParametersAsString.ResidualSet
-  getParametersAsString.WeightsFile getParametersAsString.WeightsSet
-  getParameterSet getParameterSet.AvgPlm getParameterSet.CnPlm
-  getParameterSet.CrlmmModel getParameterSet.ExonRmaPlm
-  getParameterSet.Model getParameterSet.RmaPlm getParameterSet.SnpPlm
-  getParameterSet.UnitModel getPath.AffymetrixCelSetReporter
+  getParameters.WeightsSet 
+  getParameters.AvgPlm getParameters.CnPlm
+  getParameters.CrlmmModel getParameters.ExonRmaPlm
+  getParameters.Model getParameters.RmaPlm getParameters.SnpPlm
+  getParameters.UnitModel getPath.AffymetrixCelSetReporter
   getPath.GenericReporter getPath.QualityAssessmentModel getPcuTheta
   getPcuTheta.ChromosomalModel getPlasqTypes
   getPlatform.AffymetrixCdfFile getPlatform.AffymetrixCelFile
@@ -744,3 +740,5 @@ getDefaultColumnNames.AromaCellMatchScoreFile
 getDefaultColumnNames.AromaUfcFile
 clearData
 bgAdjustOptical.AffymetrixCelSet  bgAdjustRma.AffymetrixCelSet
+calculateAffinities calculateAffinities.GcRmaBackgroundCorrection
+getParameterSet getParameterSet.Model

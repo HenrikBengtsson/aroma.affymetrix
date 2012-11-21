@@ -126,7 +126,7 @@ setMethodS3("getAsteriskTags", "AdditiveCovariatesNormalization", function(this,
   tags <- paste(tags, collapse=collapse);
 
   tags;
-}, private=TRUE)
+}, protected=TRUE)
 
 
 setMethodS3("getParameters", "AdditiveCovariatesNormalization", function(this, expand=TRUE, ...) {
@@ -148,7 +148,7 @@ setMethodS3("getParameters", "AdditiveCovariatesNormalization", function(this, e
   }
 
   params;
-}, private=TRUE)
+}, protected=TRUE)
 
 
 setMethodS3("getCdf", "AdditiveCovariatesNormalization", function(this, ...) {
@@ -209,9 +209,9 @@ setMethodS3("getOutputDataSet00", "AdditiveCovariatesNormalization", function(th
   verbose && exit(verbose);
 
   res;
-})
+}, protected=TRUE)
 
-setMethodS3("getCovariates", "AdditiveCovariatesNormalization", abstract=TRUE);
+setMethodS3("getCovariates", "AdditiveCovariatesNormalization", abstract=TRUE, protected=TRUE);
 
 
 setMethodS3("getSubsetToFit", "AdditiveCovariatesNormalization", function(this, force=FALSE, ..., verbose=FALSE) {

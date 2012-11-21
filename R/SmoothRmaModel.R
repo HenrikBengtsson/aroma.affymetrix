@@ -46,12 +46,12 @@ setMethodS3("getAsteriskTags", "SmoothRmaModel", function(this, collapse=NULL, .
 
 setMethodS3("getRootPath", "SmoothRmaModel", function(this, ...) {
   "plmData";
-})
+}, protected=TRUE)
 
 
 setMethodS3("getFitUnitGroupFunction", "SmoothRmaModel", function(this, ...) {
   smoothWRMA;
-})
+}, protected=TRUE)
 
 
 ##############################################################################

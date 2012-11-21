@@ -311,7 +311,7 @@ setMethodS3("calculateResidualSet", "ProbeLevelModel", function(this, units=NULL
   verbose && exit(verbose);
 
   invisible(rs);
-})
+}, protected=TRUE)
 
 
 setMethodS3("getCalculateResidualsFunction", "ProbeLevelModel", function(static, ...) {
@@ -319,11 +319,6 @@ setMethodS3("getCalculateResidualsFunction", "ProbeLevelModel", function(static,
     y-yhat;
   }
 }, static=TRUE, protected=TRUE)
-
-
-setMethodS3("calculateResiduals", "ProbeLevelModel", function(this, ...) {
-  calculateResidualSet(this, ...);
-}, private=TRUE)
 
 
 

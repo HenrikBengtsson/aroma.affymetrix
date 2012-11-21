@@ -235,7 +235,7 @@ setMethodS3("as.character", "AffymetrixCelSet", function(x, ...) {
   s <- c(s, sprintf("RAM: %.2fMB", objectSize(this)/1024^2));
   class(s) <- "GenericSummary";
   s;
-}, private=TRUE)
+}, protected=TRUE)
 
 
 setMethodS3("getTimestamps", "AffymetrixCelSet", function(this, ..., force=FALSE) {
@@ -459,7 +459,7 @@ setMethodS3("findByName", "AffymetrixCelSet", function(static, ..., chipType=NUL
 
   # Call the "next" method
   NextMethod("findByName", subdirs=chipType, paths=paths);
-}, static=TRUE)
+}, static=TRUE, protected=TRUE)
 
 
 
@@ -920,7 +920,7 @@ setMethodS3("isDuplicated", "AffymetrixCelSet", function(this, ..., verbose=FALS
   verbose && exit(verbose);
 
   dups;
-})
+}, protected=TRUE)
 
 
 
@@ -1213,7 +1213,7 @@ setMethodS3("getAverageAsinh", "AffymetrixCelSet", function(this, ...) {
 
 setMethodS3("range", "AffymetrixCelSet", function(this, ...) {
   range(unlist(lapply(this, FUN=range, ...), use.names=FALSE));
-})
+}, protected=TRUE)
 
 
 
@@ -1230,18 +1230,6 @@ setMethodS3("applyToUnitIntensities", "AffymetrixCelSet", function(this, units=N
 }, private=TRUE)
 
 
-setMethodS3("[", "AffymetrixCelSet", function(this, units=NULL, ..., drop=FALSE) {
-  res <- readUnits(this, units=units, ...);
-  if (drop && length(res) == 1)
-    res <- res[[1]];
-  res;
-})
-
-setMethodS3("[[", "AffymetrixCelSet", function(this, units=NULL, ...) {
-  this[units=units, ..., drop=TRUE];
-})
-
-
 setMethodS3("getUnitGroupCellMap", "AffymetrixCelSet", function(this, ...) {
   ce <- getFile(this, 1);
   getUnitGroupCellMap(ce, ...);
@@ -1250,6 +1238,9 @@ setMethodS3("getUnitGroupCellMap", "AffymetrixCelSet", function(this, ...) {
 
 ############################################################################
 # HISTORY:
+# 2012-11-20
+# o CLEANUP: Deprecated "[" and "[[", because they should be used to
+#   subset files and not units.
 # 2012-09-12
 # o MEMORY: Now getUnitIntensities() and readUnits() for AffymetrixCelSet
 #   no longer cache the results in memory if argument 'units' is NULL.

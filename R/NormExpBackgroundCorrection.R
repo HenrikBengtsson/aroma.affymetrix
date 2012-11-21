@@ -53,7 +53,7 @@ setMethodS3("getAsteriskTags", "NormExpBackgroundCorrection", function(this, col
   tags <- paste(tags, collapse=collapse);
 
   tags;
-}, private=TRUE)
+}, protected=TRUE)
 
 
 setMethodS3("getParameters", "NormExpBackgroundCorrection", function(this, ...) {
@@ -67,7 +67,7 @@ setMethodS3("getParameters", "NormExpBackgroundCorrection", function(this, ...) 
   params$args <- args;
 
   params;
-}, private=TRUE)
+}, protected=TRUE)
 
 
 ############################################################################

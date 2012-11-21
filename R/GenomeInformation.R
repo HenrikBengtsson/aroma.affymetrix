@@ -36,7 +36,7 @@ setMethodS3("as.character", "GenomeInformation", function(x, ...) {
   s <- c(s, sprintf("Chip type: %s", getChipType(this)));
   class(s) <- "GenericSummary";
   s;
-}, private=TRUE)
+}, protected=TRUE)
 
 
 
@@ -69,7 +69,7 @@ setMethodS3("as.character", "GenomeInformation", function(x, ...) {
 #*/###########################################################################
 setMethodS3("verify", "GenomeInformation", function(this, ...) {
   TRUE;
-}, private=TRUE)
+}, protected=TRUE)
 
 
 
@@ -106,7 +106,7 @@ setMethodS3("byChipType", "GenomeInformation", static=TRUE, abstract=TRUE);
 setMethodS3("fromDataSet", "GenomeInformation", function(static, dataSet, ...) {
   chipType <- getChipType(dataSet);
   byChipType(static, chipType=chipType, ...);
-}, static=TRUE)
+}, static=TRUE, protected=TRUE)
 
 
 

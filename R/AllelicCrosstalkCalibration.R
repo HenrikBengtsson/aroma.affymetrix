@@ -257,7 +257,7 @@ setMethodS3("getAsteriskTags", "AllelicCrosstalkCalibration", function(this, col
   tags <- paste(tags, collapse=collapse);
 
   tags;
-}, private=TRUE)
+}, protected=TRUE)
 
 
 

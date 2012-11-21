@@ -1,4 +1,65 @@
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# [() and [[() should be used to extract files (and nothing else)
+#
+# 2012-11-20
+# o CLEANUP: Deprecated "[" and "[[" for AffymetrixCelFile,
+#   AffymetrixCelSet CnagCfhFile, and CnagCfhSet, because they
+#   should be used to subset files (and not units).
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+setMethodS3("[", "AffymetrixCelFile", function(this, units=NULL, drop=FALSE) {
+  data <- readUnits(this, units=units);
+  if (drop && length(data) == 1)
+    data <- data[[1]];
+  data;
+}, protected=TRUE, deprecated=TRUE)
+
+setMethodS3("[[", "AffymetrixCelFile", function(this, unit=NULL) {
+  this[units=unit, drop=TRUE];
+}, protected=TRUE, deprecated=TRUE)
+
+
+setMethodS3("[", "AffymetrixCelSet", function(this, units=NULL, ..., drop=FALSE) {
+  res <- readUnits(this, units=units, ...);
+  if (drop && length(res) == 1)
+    res <- res[[1]];
+  res;
+}, protected=TRUE, deprecated=TRUE)
+
+setMethodS3("[[", "AffymetrixCelSet", function(this, units=NULL, ...) {
+  this[units=units, ..., drop=TRUE];
+}, protected=TRUE, deprecated=TRUE)
+
+
+setMethodS3("[", "CnagCfhFile", function(this, units=NULL, alleles=NULL, drop=FALSE) {
+  data <- readUnits(this, units=units);
+  if (!is.null(alleles)) {
+    data <- data[, alleles, drop=drop];
+  } else {
+    if (drop && length(data) == 1)
+      data <- data[[1]];
+  }
+  data;
+}, protected=TRUE, deprecated=TRUE)
+
+setMethodS3("[[", "CnagCfhFile", function(this, unit=NULL) {
+  this[units=unit, drop=TRUE];
+}, protected=TRUE, deprecated=TRUE)
+
+
+setMethodS3("[", "CnagCfhSet", function(this, units=NULL, ..., drop=FALSE) {
+  res <- readUnits(this, units=units, ...);
+  if (drop && length(res) == 1)
+    res <- res[[1]];
+  res;
+}, protected=TRUE, deprecated=TRUE)
+
+setMethodS3("[[", "CnagCfhSet", function(this, units=NULL, ...) {
+  this[units=units, ..., drop=TRUE];
+}, protected=TRUE, deprecated=TRUE)
+
+
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # fromName() => byName()
 #
 # 2009-09-05
@@ -196,10 +257,20 @@ setMethodS3("getChipEffects", "QualityAssessmentModel", function(this, ...) {
   getChipEffectSet(this, ...);
 }, protected=TRUE, deprecated=TRUE)
 
+setMethodS3("getChipEffects", "ExonRmaPlm", function(this, ...) {
+  .Defunct("getChipEffectSet");
+  getChipEffectSet(this, ...);
+})
+
 setMethodS3("getProbeAffinities", "ProbeLevelModel", function(this, ...) {
   .Defunct("getProbeAffinityFile");
   getProbeAffinityFile(this, ...);
 }, protected=TRUE, deprecated=TRUE)
+
+setMethodS3("getProbeAffinities", "ExonRmaPlm", function(this, ...) {
+  .Defunct("getProbeAffinityFile");
+  getProbeAffinityFile(this, ...);
+})
 
 # 2008-09-03
 # o Added getFitUnitGroupFunction() model, which is a better name than
@@ -209,6 +280,11 @@ setMethodS3("getFitFunction", "MultiArrayUnitModel", function(...) {
   throw("getFitFunction() is deprecated. Please use getFitUnitGroupFunction() instead.");
 }, protected=TRUE, deprecated=TRUE)
 
+
+setMethodS3("getParameterSet", "Model", function(this, ...) {
+  .Deprecated("getParameters");
+  getParameters(this, ...);
+}, protected=TRUE)
 
 
 
@@ -262,6 +338,17 @@ setMethodS3("getMatrixChipEffectFiles", "CopyNumberChromosomalModel", function(.
   getDataFileMatrix(...);
 }, protected=TRUE, deprecated=TRUE)
 
+
+setMethodS3("calculateResiduals", "ProbeLevelModel", function(this, ...) {
+  .Deprecated("calculateResidualSet");
+  calculateResidualSet(this, ...);
+}, private=TRUE)
+
+
+setMethodS3("calculateResiduals", "FirmaModel", function(this, ...) {
+  .Deprecated("calculateResidualSet");
+  calculateResidualSet(this, ...);
+}, private=TRUE)
 
 
 # 2011-11-19
@@ -577,6 +664,7 @@ setMethodS3("getData", "AffymetrixCelFile", function(this, ...) {
 ############################################################################
 # HISTORY:
 # 2012-11-20
+# o Deprecated getParameterSet() in favor of old getParameters().
 # o Defuncted bgAdjust(Optical|Rma)() for AffymetrixCelSet.
 # 2012-10-17
 # o Deprecated getMonoCell() and createMonoCell().

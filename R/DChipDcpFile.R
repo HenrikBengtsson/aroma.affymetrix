@@ -56,7 +56,7 @@ setMethodS3("as.character", "DChipDcpFile", function(x, ...) {
 
   class(s) <- class;
   s;
-}, private=TRUE) 
+}, protected=TRUE) 
 
 
 setMethodS3("getFileFormat", "DChipDcpFile", function(this, ...) {
@@ -81,7 +81,8 @@ setMethodS3("fromFile", "DChipDcpFile", function(static, filename, path=NULL, ..
   hdr <- getHeader(df);
 
   df;
-})
+}, protected=TRUE) 
+
 
 
 setMethodS3("getHeader", "DChipDcpFile", function(this, force=FALSE, ...) {

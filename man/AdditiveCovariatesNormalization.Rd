@@ -19,13 +19,15 @@
 
 \code{\link[R.oo]{Object}}\cr
 \code{~~|}\cr
-\code{~~+--}\code{\link[aroma.core]{AromaTransform}}\cr
+\code{~~+--}\code{\link[aroma.core]{ParametersInterface}}\cr
 \code{~~~~~~~|}\cr
-\code{~~~~~~~+--}\code{\link[aroma.affymetrix]{Transform}}\cr
+\code{~~~~~~~+--}\code{\link[aroma.core]{AromaTransform}}\cr
 \code{~~~~~~~~~~~~|}\cr
-\code{~~~~~~~~~~~~+--}\code{\link[aroma.affymetrix]{ChipEffectTransform}}\cr
+\code{~~~~~~~~~~~~+--}\code{\link[aroma.affymetrix]{Transform}}\cr
 \code{~~~~~~~~~~~~~~~~~|}\cr
-\code{~~~~~~~~~~~~~~~~~+--}\emph{\code{AdditiveCovariatesNormalization}}\cr
+\code{~~~~~~~~~~~~~~~~~+--}\code{\link[aroma.affymetrix]{ChipEffectTransform}}\cr
+\code{~~~~~~~~~~~~~~~~~~~~~~|}\cr
+\code{~~~~~~~~~~~~~~~~~~~~~~+--}\emph{\code{AdditiveCovariatesNormalization}}\cr
 
 \bold{Directly known subclasses:}\cr
 \link[aroma.affymetrix]{GcContentNormalization2}\cr
@@ -59,8 +61,6 @@ extends \emph{\link[aroma.affymetrix]{ChipEffectTransform}}\cr
   \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{getCdf} \tab  -\cr
- \tab \code{getCovariates} \tab  -\cr
- \tab \code{getOutputDataSet00} \tab  -\cr
  \tab \code{\link[aroma.affymetrix:process.AdditiveCovariatesNormalization]{process}} \tab Normalizes the data set.\cr
 }
 
@@ -69,7 +69,10 @@ extends \emph{\link[aroma.affymetrix]{ChipEffectTransform}}\cr
 getOutputDataSet, getOutputFiles
 
  \bold{Methods inherited from AromaTransform}:\cr
-getExpectedOutputFiles, getExpectedOutputFullnames, getFullName, getInputDataSet, getName, getOutputDataSet, getOutputDataSet0, getOutputFiles, getPath, getTags, isDone, process, setTags
+as.character, getExpectedOutputFiles, getExpectedOutputFullnames, getFullName, getInputDataSet, getName, getOutputDataSet, getOutputDataSet0, getOutputFiles, getPath, getRootPath, getTags, isDone, process, setTags
+
+ \bold{Methods inherited from ParametersInterface}:\cr
+getParameters, getParametersAsString
 
  \bold{Methods inherited from Object}:\cr
 asThis, $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save, print

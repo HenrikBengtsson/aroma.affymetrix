@@ -50,15 +50,12 @@ extends \emph{\link[aroma.affymetrix]{UnitModel}}\cr
  \section{Fields and Methods}{
   \bold{Methods:}\cr
 \tabular{rll}{
- \tab \code{\link[aroma.affymetrix:calculateResidualSet.FirmaModel]{calculateResidualSet}} \tab Gets the set of residuals corresponding to the PLM.\cr
- \tab \code{calculateWeights} \tab  -\cr
  \tab \code{\link[aroma.affymetrix:fit.FirmaModel]{fit}} \tab Estimates the model parameters.\cr
  \tab \code{getAsteriskTags} \tab  -\cr
  \tab \code{getCdf} \tab  -\cr
  \tab \code{getDataSet} \tab  -\cr
  \tab \code{getFirmaScores} \tab  -\cr
  \tab \code{\link[aroma.affymetrix:getFirmaSet.FirmaModel]{getFirmaSet}} \tab Gets the set of FIRMA results for this model.\cr
- \tab \code{\link[aroma.affymetrix:getFitUnitGroupFunction.FirmaModel]{getFitUnitGroupFunction}} \tab Static method to get the low-level function that fits the PLM.\cr
  \tab \code{getName} \tab  -\cr
  \tab \code{getPlm} \tab  -\cr
  \tab \code{getTags} \tab  -\cr

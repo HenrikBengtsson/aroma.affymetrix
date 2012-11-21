@@ -49,7 +49,7 @@ setMethodS3("as.character", "GenericReporter", function(x, ...) {
   s <- c(s, sprintf("RAM: %.2fMB", objectSize(this)/1024^2));
   class(s) <- "GenericSummary";
   s;
-}, private=TRUE)
+}, protected=TRUE)
 
 
 
@@ -83,7 +83,7 @@ setMethodS3("as.character", "GenericReporter", function(x, ...) {
 #*/###########################################################################
 setMethodS3("getAlias", "GenericReporter", function(this, ...) {
   this$.alias;
-})
+}, protected=TRUE)
 
 
 
@@ -131,7 +131,7 @@ setMethodS3("setAlias", "GenericReporter", function(this, alias=NULL, ...) {
   }
 
   this$.alias <- alias;
-})
+}, protected=TRUE)
 
 
 ###########################################################################/**
@@ -231,12 +231,13 @@ setMethodS3("getTags", "GenericReporter", function(this, collapse=NULL, ...) {
   tags;
 })
 
-setMethodS3("getInputName", "GenericReporter", abstract=TRUE);
-setMethodS3("getInputTags", "GenericReporter", abstract=TRUE);
+setMethodS3("getInputName", "GenericReporter", abstract=TRUE, protected=TRUE)
+
+setMethodS3("getInputTags", "GenericReporter", abstract=TRUE, protected=TRUE)
 
 setMethodS3("getAsteriskTags", "GenericReporter", function(this, ...) {
   "";
-})
+}, protected=TRUE)
 
 
 setMethodS3("getFullName", "GenericReporter", function(this, ...) {
@@ -253,7 +254,7 @@ setMethodS3("getReportSet", "GenericReporter", abstract=TRUE, protected=TRUE);
 
 setMethodS3("getRootPath", "GenericReporter", function(this, ...) {
   "reports";
-}, private=TRUE)
+}, protected=TRUE)
 
 
 setMethodS3("getMainPath", "GenericReporter", function(this, ...) {

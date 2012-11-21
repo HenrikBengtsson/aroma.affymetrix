@@ -60,16 +60,13 @@ extends \link[aroma.affymetrix]{ChipEffectSet}\cr
   \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{extractAlleleSet} \tab  -\cr
- \tab \code{extractCNT} \tab  -\cr
  \tab \code{extractSnpCnvQSet} \tab  -\cr
  \tab \code{extractSnpQSet} \tab  -\cr
  \tab \code{extractTheta} \tab  -\cr
  \tab \code{extractTotalAndFreqB} \tab  -\cr
  \tab \code{getAverageFile} \tab  -\cr
- \tab \code{getBaseline} \tab  -\cr
  \tab \code{getMergeStrands} \tab  -\cr
  \tab \code{setMergeStrands} \tab  -\cr
- \tab \code{writeCNT} \tab  -\cr
 }
 
 
@@ -80,7 +77,7 @@ boxplotStats, byPath, calculateBaseline, calculateFieldBoxplotStats, calculateNu
 extractDataFrame, extractMatrix
 
  \bold{Methods inherited from AffymetrixCelSet}:\cr
-[, [[, append, as, as.AffymetrixCelSet, averageQuantile, byName, byPath, convertToUnique, doCRMAv1, doCRMAv2, doFIRMA, doGCRMA, doRMA, extractAffyBatch, extractMatrix, extractSnpFeatureSet, findByName, getAverage, getAverageAsinh, getAverageFile, getAverageLog, getCdf, getChipType, getData, getIntensities, getPlatform, getTimestamps, getUnitGroupCellMap, getUnitIntensities, getUnitNamesFile, getUnitTypesFile, isDuplicated, justSNPRMA, nbrOfArrays, normalizeQuantile, plotDensity, range, readUnits, setCdf, update2, writeSgr
+append, as, as.AffymetrixCelSet, averageQuantile, byName, byPath, convertToUnique, doCRMAv1, doCRMAv2, doFIRMA, doGCRMA, doRMA, extractAffyBatch, extractMatrix, extractSnpFeatureSet, findByName, getAverage, getAverageAsinh, getAverageFile, getAverageLog, getCdf, getChipType, getData, getIntensities, getPlatform, getTimestamps, getUnitGroupCellMap, getUnitIntensities, getUnitNamesFile, getUnitTypesFile, isDuplicated, justSNPRMA, nbrOfArrays, normalizeQuantile, plotDensity, range, readUnits, setCdf, update2, writeSgr
 
  \bold{Methods inherited from AffymetrixFileSet}:\cr
 as, as.AffymetrixFileSet, byPath, getDefaultFullName

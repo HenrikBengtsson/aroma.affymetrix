@@ -59,7 +59,6 @@ extends \emph{\link[aroma.affymetrix]{AffymetrixFileSet}}\cr
  \tab \code{byPath} \tab  -\cr
  \tab \code{exportTotalAndFracB} \tab  -\cr
  \tab \code{extractTheta} \tab  -\cr
- \tab \code{findByName} \tab  -\cr
  \tab \code{getCdfBin} \tab  -\cr
  \tab \code{getChipType} \tab  -\cr
 }

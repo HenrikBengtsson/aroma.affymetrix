@@ -35,7 +35,7 @@ setConstructorS3("WeightsSet", function(..., probeModel=c("pm")) {
   # Argument 'probeModel':
   probeModel <- match.arg(probeModel);
 
-  extend(AffymetrixCelSet(...), "WeightsSet",
+  extend(AffymetrixCelSet(...), c("WeightsSet", uses("ParametersInterface")),
     "cached:.firstCells" = NULL,
     probeModel = probeModel
   )
@@ -51,23 +51,13 @@ setMethodS3("as.character", "WeightsSet", function(x, ...) {
   s <- c(s, sprintf("Parameters: (%s)", params));
   class(s) <- "GenericSummary";
   s;
-}, private=TRUE)
+}, protected=TRUE)
 
 
 setMethodS3("getParameters", "WeightsSet", function(this, ...) {
   rf <- getFile(this, 1);
   getParameters(rf, ...);
 })
-
-setMethodS3("getParametersAsString", "WeightsSet", function(this, ...) {
-  params <- getParameters(this);
-  params <- trim(capture.output(str(params)))[-1];
-  params <- gsub("^[$][ ]*", "", params);
-  params <- gsub(" [ ]*", " ", params);
-  params <- gsub("[ ]*:", ":", params);
-  params;
-}, private=TRUE)
-
 
 setMethodS3("getWeightsFileClass", "WeightsSet", function(static, ...) {
   WeightsFile;
@@ -112,7 +102,7 @@ setMethodS3("fromDataSet", "WeightsSet", function(static, dataSet, path, fullnam
 
   # Create an WeightsSet
   newInstance(static, ws);
-})
+}, static=TRUE, protected=TRUE)
 
 setMethodS3("getCellIndices", "WeightsSet", function(this, ...) {
   # Use the first weights file to get the CDF structure.

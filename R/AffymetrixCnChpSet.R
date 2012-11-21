@@ -96,7 +96,7 @@ setMethodS3("as.character", "AffymetrixCnChpSet", function(x, ...) {
   s <- c(s, sprintf("RAM: %.2fMB", objectSize(this)/1024^2));
   class(s) <- "GenericSummary";
   s;
-}, private=TRUE)
+}, protected=TRUE)
 
 
 
@@ -139,7 +139,7 @@ setMethodS3("byName", "AffymetrixCnChpSet", function(static, name, tags=NULL, ch
   suppressWarnings({
     byPath(static, path=path, cdf=cdf, ...);
   })
-}, static=TRUE)
+}, static=TRUE, protected=TRUE)
 
 
 setMethodS3("byPath", "AffymetrixCnChpSet", function(static, path, pattern="[.](cnchp|CNCHP)$", cdf=NULL, checkChipType=is.null(cdf), ..., fileClass="AffymetrixCnChpFile", verbose=FALSE) {
@@ -215,7 +215,7 @@ setMethodS3("byPath", "AffymetrixCnChpSet", function(static, path, pattern="[.](
   verbose && exit(verbose);
 
   set;
-})
+}, protected=TRUE)
 
 
 

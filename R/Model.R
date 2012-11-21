@@ -43,7 +43,7 @@ setConstructorS3("Model", function(dataSet=NULL, tags="*", ...) {
   }
 
 
-  this <- extend(Object(), "Model",
+  this <- extend(Object(), c("Model", uses("ParametersInterface")),
     .dataSet = dataSet,
     .tags = NULL
   );
@@ -71,7 +71,7 @@ setMethodS3("as.character", "Model", function(x, ...) {
   s <- c(s, sprintf("RAM: %.2fMB", objectSize(this)/1024^2));
   class(s) <- "GenericSummary";
   s;
-}, private=TRUE)
+}, protected=TRUE)
 
 
 ###########################################################################/**
@@ -104,7 +104,7 @@ setMethodS3("as.character", "Model", function(x, ...) {
 setMethodS3("getRootPath", "Model", function(this, ...) {
   # Default root path
   paste("model", class(this)[1], sep="");
-})
+}, protected=TRUE)
 
 
 
@@ -176,7 +176,7 @@ setMethodS3("getName", "Model", function(this, ...) {
 #*/###########################################################################
 setMethodS3("getAlias", "Model", function(this, ...) {
   this$.alias;
-})
+}, protected=TRUE)
 
 
 
@@ -222,7 +222,7 @@ setMethodS3("setAlias", "Model", function(this, alias=NULL, ...) {
   this$.alias <- alias;
 
   invisible(this);
-})
+}, protected=TRUE)
 
 
 setMethodS3("getAsteriskTags", "Model", function(this, collapse=NULL, ...) {
@@ -506,24 +506,6 @@ setMethodS3("getCdf", "Model", function(this, ...) {
   getCdf(getDataSet(this));
 }, private=TRUE)
 
-
-setMethodS3("getParameterSet", "Model", function(this, ...) {
-  list();
-}, private=TRUE)
-
-setMethodS3("getParameters", "Model", function(this, ...) {
-  getParameterSet(this, ...);
-}, private=TRUE)
-
-setMethodS3("getParametersAsString", "Model", function(this, ...) {
-  params <- getParameterSet(this);
-  params <- trim(capture.output(str(params)))[-1];
-  params <- gsub("^[$][ ]*", "", params);
-  params <- gsub(" [ ]*", " ", params);
-  params <- gsub("[ ]*:", ":", params);
-  params <- paste(params, collapse="; ");
-  params;
-}, private=TRUE)
 
 
 ###########################################################################/**

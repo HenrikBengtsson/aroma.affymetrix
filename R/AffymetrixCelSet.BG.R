@@ -26,7 +26,6 @@
 # }
 #*/###########################################################################
 setMethodS3("calculateParametersGsb", "AffymetrixCelSet", function(this, nbrOfPms=25000, affinities=NULL, ..., verbose=FALSE) {
-  # Argument 'affinities':
   if (is.null(affinities)) {
     throw("DEPRECATED: Argument 'affinities' to calculateParametersGsb() must not be NULL.");
   }
@@ -189,6 +188,10 @@ setMethodS3("bgAdjustGcrma", "AffymetrixCelSet", function(this, path, affinities
     throw("DEPRECATED: Argument 'path' to bgAdjustGcrma() must no longer be NULL.");
   }
 
+  if (is.null(affinities)) {
+    throw("DEPRECATED: Argument 'affinities' to bgAdjustGcrma() must not be NULL.");
+  }
+
   args <- list(...);
   for (key in c("name", "probePath")) {
     if (is.element(key, names(args))) {
@@ -213,30 +216,6 @@ setMethodS3("bgAdjustGcrma", "AffymetrixCelSet", function(this, path, affinities
     on.exit(popState(verbose));
   }
 
-
-  cdf <- getCdf(this);
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Calculate probe affinities, if not already existing
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  if (is.null(affinities)) {
-    verbose && enter(verbose, "Computing probe affinities (independent of data)");
-
-    # Alternative #1: Using ACS annotation file
-    affinities <- NULL;
-    tryCatch({
-      affinities <- computeAffinitiesByACS(cdf, ..., verbose=less(verbose));
-    }, error = function(ex) {});
-
-    if (is.null(affinities)) {
-      # Alternative #2: Using Affymetrix probe-tab files (deprecated)
-      affinities <- computeAffinities(cdf, ..., verbose=less(verbose));
-    }
-
-    verbose && printf(verbose, "RAM: %.2fMB\n", 
-                                         object.size(affinities)/1024^2);
-    verbose && exit(verbose);
-  }
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # optical background correction
@@ -263,17 +242,18 @@ setMethodS3("bgAdjustGcrma", "AffymetrixCelSet", function(this, path, affinities
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # NSB correction for each array
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   nbrOfArrays <- length(this);
   verbose && enter(verbose, "Adjusting ", nbrOfArrays, " arrays");
   dataFiles <- list();
   for (ii in seq_along(this)) {
-    verbose && enter(verbose, sprintf("Array #%d of %d", ii, nbrOfArrays));
     df <- getFile(this, ii);
-    verbose && print(verbose, df);
-    dataFiles[[ii]] <- bgAdjustGcrma(df, path=path, type=type, indicesNegativeControl=indicesNegativeControl, affinities=affinities, gsbAdjust=gsbAdjust, parametersGsb=parametersGsb, k=k, rho=rho, stretch=stretch, fast=fast, overwrite=overwrite, skip=skip, ..., verbose=less(verbose), .deprecated=.deprecated);
+    verbose && enter(verbose, sprintf("Array #%d ('%s') of %d", ii, getName(df), nbrOfArrays));
 
-    rm(df);
+    dfD <- bgAdjustGcrma(df, path=path, type=type, indicesNegativeControl=indicesNegativeControl, affinities=affinities, gsbAdjust=gsbAdjust, parametersGsb=parametersGsb, k=k, rho=rho, stretch=stretch, fast=fast, overwrite=overwrite, skip=skip, ..., verbose=less(verbose), .deprecated=.deprecated);
+    verbose && print(verbose, dfD);
+
+    dataFiles[[ii]] <- dfD;
+    rm(df, dfD);
 
     # Garbage collect
     gc <- gc();
@@ -284,7 +264,7 @@ setMethodS3("bgAdjustGcrma", "AffymetrixCelSet", function(this, path, affinities
   verbose && exit(verbose);
 
   res <- newInstance(this, dataFiles);
-  setCdf(res, cdf);
+  setCdf(res, getCdf(this));
 
   res;
 }, private=TRUE) # bgAdjustGcrma()

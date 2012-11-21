@@ -60,7 +60,7 @@ setMethodS3("as.character", "SpatialReporter", function(x, ...) {
   class(s) <- "GenericSummary";
 
   s;
-}, private=TRUE)
+}, protected=TRUE)
 
 
 setMethodS3("getReportSet", "SpatialReporter", function(this, ...) {

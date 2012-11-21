@@ -38,7 +38,7 @@ setMethodS3("getRootPath", "ProbeLevelTransform", function(this, ...) {
     return("plmData");
 
   "probeData";
-}, private=TRUE)
+}, protected=TRUE)
 
 
 

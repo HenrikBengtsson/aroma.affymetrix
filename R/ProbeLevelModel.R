@@ -74,7 +74,7 @@ setMethodS3("getAsteriskTags", "ProbeLevelModel", function(this, collapse=NULL, 
 
 setMethodS3("getRootPath", "ProbeLevelModel", function(this, ...) {
   "plmData";
-}, private=TRUE)
+}, protected=TRUE)
 
 
 

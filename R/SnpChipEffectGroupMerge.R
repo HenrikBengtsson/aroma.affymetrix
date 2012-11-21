@@ -90,7 +90,7 @@ setMethodS3("getAsteriskTags", "SnpChipEffectGroupMerge", function(this, ...) {
     tags <- c(tags, "F+R");
 
   tags;
-})
+}, protected=TRUE)
 
 
 setMethodS3("getParameters", "SnpChipEffectGroupMerge", function(this, ...) {
@@ -106,7 +106,7 @@ setMethodS3("getParameters", "SnpChipEffectGroupMerge", function(this, ...) {
   params <- c(params, params2);
 
   params;
-}, private=TRUE)
+}, protected=TRUE)
 
 
 ############################################################################

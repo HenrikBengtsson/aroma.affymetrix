@@ -67,7 +67,7 @@ setMethodS3("getAsteriskTags", "MbeiPlm", function(this, collapse=NULL, ...) {
   tags <- paste(tags, collapse=collapse);
 
   tags;
-})
+}, protected=TRUE)
 
 
 setMethodS3("getProbeAffinityFile", "MbeiPlm", function(this, ...) {
@@ -237,7 +237,7 @@ setMethodS3("getFitUnitGroupFunction", "MbeiPlm", function(this, ...) {
   } # liWong()
 
   liWong;
-}, private=TRUE)
+}, protected=TRUE)
 
 
 

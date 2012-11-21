@@ -37,8 +37,7 @@ setMethodS3("as.character", "SnpInformation", function(x, ...) {
   s <- c(s, sprintf("Number of enzymes: %s", nbrOfEnzymes(this)));
   class(s) <- "GenericSummary";
   s;
-}, private=TRUE)
-
+}, protected=TRUE)
 
 
 
@@ -70,7 +69,7 @@ setMethodS3("as.character", "SnpInformation", function(x, ...) {
 #*/###########################################################################
 setMethodS3("verify", "SnpInformation", function(this, ...) {
   TRUE;
-}, private=TRUE)
+}, protected=TRUE)
 
 
 
@@ -184,8 +183,7 @@ setMethodS3("byChipType", "SnpInformation", abstract=TRUE);
 setMethodS3("fromDataSet", "SnpInformation", function(static, dataSet, ...) {
   chipType <- getChipType(dataSet);
   byChipType(static, chipType=chipType, ...);
-}, static=TRUE)
-
+}, static=TRUE, protected=TRUE)
 
 
 

@@ -54,7 +54,6 @@ extends \emph{\link[aroma.core]{AromaPlatformInterface}}\cr
  \tab \code{as} \tab  -\cr
  \tab \code{\link[aroma.affymetrix:as.AffymetrixFileSet.AffymetrixFileSet]{as.AffymetrixFileSet}} \tab Coerce an object to an AffymetrixFileSet object.\cr
  \tab \code{\link[aroma.affymetrix:byPath.AffymetrixFileSet]{byPath}} \tab Defines an AffymetrixFileSet object by searching for Affymetrix files.\cr
- \tab \code{getDefaultFullName} \tab  -\cr
 }
 
 

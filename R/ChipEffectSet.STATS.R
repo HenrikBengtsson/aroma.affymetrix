@@ -101,7 +101,7 @@ setMethodS3("calculateFieldBoxplotStats", "ChipEffectSet", function(this, field=
   attr(stats, "transform") <- transform;
 
   stats;
-}) # calculateFieldBoxplotStats()
+}, protected=TRUE) # calculateFieldBoxplotStats()
 
 
 
@@ -204,7 +204,7 @@ setMethodS3("calculateRleBoxplotStats", "ChipEffectSet", function(this, arrays=N
   attr(stats, "type") <- "RLE";
 
   stats;
-}) # calculateRleBoxplotStats()
+}, protected=TRUE) # calculateRleBoxplotStats()
 
 
 
@@ -295,7 +295,7 @@ setMethodS3("calculateNuseBoxplotStats", "ChipEffectSet", function(this, arrays=
   attr(stats, "type") <- "NUSE";
 
   stats;
-}) # calculateNuseStats()
+}, protected=TRUE) # calculateNuseStats()
 
 
 ##########################################################################

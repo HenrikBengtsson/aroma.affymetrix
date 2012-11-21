@@ -80,25 +80,14 @@ setMethodS3("as.character", "ResidualFile", function(x, ...) {
   s <- c(s, sprintf("Parameters: (%s)", params));
   class(s) <- "GenericSummary";
   s;
-}, private=TRUE)
+}, protected=TRUE)
 
 
 setMethodS3("getParameters", "ResidualFile", function(this, ...) {
-  # Get parameters from superclass
   params <- NextMethod("getParameters");
   params$probeModel <- this$probeModel;
   params;
 })
-
-setMethodS3("getParametersAsString", "ResidualFile", function(this, ...) {
-  params <- getParameters(this);
-  params <- trim(capture.output(str(params)))[-1];
-  params <- gsub("^[$][ ]*", "", params);
-  params <- gsub(" [ ]*", " ", params);
-  params <- gsub("[ ]*:", ":", params);
-  params;
-}, private=TRUE)
-
 
 
 setMethodS3("fromDataFile", "ResidualFile", function(static, df=NULL, filename=sprintf("%s,residuals.CEL", getFullName(df)), path, cdf=NULL, ..., verbose=FALSE) {

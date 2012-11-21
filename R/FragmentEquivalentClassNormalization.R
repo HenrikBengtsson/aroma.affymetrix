@@ -110,7 +110,7 @@ setMethodS3("getAsteriskTags", "FragmentEquivalentClassNormalization", function(
   tags <- paste(tags, collapse=collapse);
 
   tags;
-}, private=TRUE)
+}, protected=TRUE)
 
 
 
@@ -130,7 +130,7 @@ setMethodS3("getParameters", "FragmentEquivalentClassNormalization", function(th
   }
 
   params;
-}, private=TRUE)
+}, protected=TRUE)
 
 
 setMethodS3("getCdf", "FragmentEquivalentClassNormalization", function(this, ...) {
@@ -206,7 +206,7 @@ setMethodS3("getOutputDataSet00", "FragmentEquivalentClassNormalization", functi
   verbose && exit(verbose);
 
   res;
-})
+}, protected=TRUE)
 
 setMethodS3("getSubsetToFit", "FragmentEquivalentClassNormalization", function(this, force=FALSE, ..., verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

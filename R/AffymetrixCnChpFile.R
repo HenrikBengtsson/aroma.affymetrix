@@ -34,7 +34,7 @@ setMethodS3("as.character", "AffymetrixCnChpFile", function(x, ...) {
   s <- c(s, sprintf("Unit read map: %s", capture.output(str(getUnitReadMap(this)))));
   class(s) <- class;
   s;
-}, private=TRUE) 
+}, protected=TRUE)
 
 
 setMethodS3("clone", "AffymetrixCnChpFile", function(this, ..., verbose=TRUE) {
@@ -46,7 +46,7 @@ setMethodS3("clone", "AffymetrixCnChpFile", function(this, ..., verbose=TRUE) {
     object$.cdf <- clone(object$.cdf);
 
   object;
-}) 
+}, protected=TRUE)
 
 
 setMethodS3("getExtensionPattern", "AffymetrixCnChpFile", function(static, ...) {
@@ -104,7 +104,7 @@ setMethodS3("fromFile", "AffymetrixCnChpFile", function(static, filename, path=N
 
   # Create a new instance of the same class
   newInstance(static, pathname, ...);
-}, static=TRUE)
+}, static=TRUE, protected=TRUE)
 
 
 setMethodS3("getChipType", "AffymetrixCnChpFile", function(this, ...) {

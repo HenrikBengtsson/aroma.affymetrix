@@ -46,7 +46,6 @@ extends \emph{\link[R.filesets]{GenericDataFile}}\cr
 \tabular{rll}{
  \tab \code{\link[aroma.affymetrix:byChipType.GenomeInformation]{byChipType}} \tab Static method to define a genome information set by chip type.\cr
  \tab \code{\link[aroma.affymetrix:fromCdf.GenomeInformation]{fromCdf}} \tab Static method to define a genome information set from a CDF.\cr
- \tab \code{fromDataSet} \tab  -\cr
  \tab \code{\link[aroma.affymetrix:getChipType.GenomeInformation]{getChipType}} \tab Gets the chip type of this genome information set.\cr
  \tab \code{getChromosomes} \tab  -\cr
  \tab \code{getChromosomeStats} \tab  -\cr

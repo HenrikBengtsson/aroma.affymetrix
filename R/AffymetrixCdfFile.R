@@ -98,7 +98,7 @@ setMethodS3("as.character", "AffymetrixCdfFile", function(x, ...) {
   class(s) <- class;
 
   s;
-}, private=TRUE)
+}, protected=TRUE)
 
 
 
@@ -1451,7 +1451,9 @@ setMethodS3("setGenomeInformation", "AffymetrixCdfFile", function(this, gi=NULL,
 
 
   this$.gi <- gi;
-})
+
+  invisible(this);
+}, protected=TRUE)
 
 
 setMethodS3("getSnpInformation", "AffymetrixCdfFile", function(this, types=c("UFL", "dChip"), ..., force=FALSE, verbose=FALSE) {
@@ -1534,7 +1536,9 @@ setMethodS3("setSnpInformation", "AffymetrixCdfFile", function(this, si=NULL, ..
   }
 
   this$.si <- si;
-})
+
+  invisible(this);
+}, protected=TRUE)
 
 
 ###########################################################################/**
@@ -1634,7 +1638,7 @@ setMethodS3("validate", "AffymetrixCdfFile", function(this, ...) {
   assertUnits(ns == 0L, "%d unit(s) (i.e. %s) with zero unit groups: %s");
 
   invisible(this);
-})
+}, protected=TRUE)
 
 
 ############################################################################

@@ -118,9 +118,9 @@ setMethodS3("extractCNT", "SnpChipEffectFile", function(this, reference, units=N
   rm(dataHead);
 
   data;  
-})
+}, protected=TRUE)
 
-setMethodS3("extractCNT", "SnpChipEffectSet", extractCNT.SnpChipEffectFile);
+setMethodS3("extractCNT", "SnpChipEffectSet", extractCNT.SnpChipEffectFile, protected=TRUE)
 
 
 

@@ -24,7 +24,7 @@
 # @keyword "IO"
 #*/###########################################################################
 setConstructorS3("ParameterCelSet", function(...) {
-  this <- extend(AffymetrixCelSet(...), "ParameterCelSet");
+  this <- extend(AffymetrixCelSet(...), c("ParameterCelSet", uses("ParametersInterface")));
 
   # Parse attributes (all subclasses must call this in the constructor).
   if (!is.null(this$.pathname))
@@ -276,6 +276,11 @@ setMethodS3("extractDataFrame", "ParameterCelSet", function(this, addNames=FALSE
 
 ############################################################################
 # HISTORY:
+# 2012-11-20
+# o Added getParametersAsString() to ParameterCelSet.  Used to be in
+#   direct subclasses.
+# o Added getParameters() to ParameterCelSet, which calls ditto of
+#   the first file.  Used to be in direct subclasses.
 # 2008-07-20
 # o Updated the following methods to preallocate matrixes with the correct
 #   data type to avoid coercing later: extractMatrix().

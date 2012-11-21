@@ -55,7 +55,6 @@ extends \emph{\link[aroma.affymetrix]{AffymetrixFileSet}}\cr
 \tabular{rll}{
  \tab \code{as} \tab  -\cr
  \tab \code{\link[aroma.affymetrix:as.AffymetrixCnChpSet.AffymetrixCnChpSet]{as.AffymetrixCnChpSet}} \tab Coerce an object to an AffymetrixCnChpSet object.\cr
- \tab \code{byName} \tab  -\cr
  \tab \code{byPath} \tab  -\cr
  \tab \code{exportTotalCnRatioSet} \tab  -\cr
  \tab \code{extractLogRatios} \tab  -\cr

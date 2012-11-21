@@ -97,21 +97,11 @@ setMethodS3("getChipEffectSet", "ExonRmaPlm", function(this, ...) {
   ces;
 })
 
-setMethodS3("getChipEffects", "ExonRmaPlm", function(this, ...) {
-  getChipEffectSet(this, ...);
-})
-
-
 
 setMethodS3("getProbeAffinityFile", "ExonRmaPlm", function(this, ..., .class=ExonProbeAffinityFile) {
   paf <- NextMethod("getProbeAffinityFile", .class=.class);
   setMergeGroups(paf, this$mergeGroups);
   paf;
-})
-
-
-setMethodS3("getProbeAffinities", "ExonRmaPlm", function(this, ...) {
-  getProbeAffinityFile(this, ...);
 })
 
 
@@ -124,8 +114,8 @@ setMethodS3("setMergeGroups", "ExonRmaPlm", function(this, ...) {
 
 
 
-setMethodS3("getParameterSet", "ExonRmaPlm", function(this, ...) {
-  params <- NextMethod("getParameterSet");
+setMethodS3("getParameters", "ExonRmaPlm", function(this, ...) {
+  params <- NextMethod("getParameters");
   params$mergeGroups <- this$mergeGroups;
   params;
 }, private=TRUE)

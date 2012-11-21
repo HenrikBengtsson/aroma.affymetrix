@@ -50,27 +50,15 @@ setMethodS3("as.character", "ProbeAffinityFile", function(x, ...) {
   s <- c(s, sprintf("Parameters: (%s)", params));
   class(s) <- "GenericSummary";
   s;
-}, private=TRUE)
+}, protected=TRUE)
+
 
 setMethodS3("getParameters", "ProbeAffinityFile", function(this, ...) {
-  params <- list(
-    "cached:.firstCells" = NULL,
-    probeModel = this$probeModel
-  );
+  params <- NextMethod("getParameters");
+  params$.firstCells <- NULL;
+  params$probeModel <- this$probeModel;
   params;
 })
-
-
-setMethodS3("getParametersAsString", "ProbeAffinityFile", function(this, ...) {
-  params <- getParameters(this);
-  params <- trim(capture.output(str(params)))[-1];
-  params <- gsub("^[$][ ]*", "", params);
-  params <- gsub(" [ ]*", " ", params);
-  params <- gsub("[ ]*:", ":", params);
-  params;
-}, private=TRUE)
-
-
 
 
 setMethodS3("getCellIndices", "ProbeAffinityFile", function(this, ..., verbose=FALSE) {

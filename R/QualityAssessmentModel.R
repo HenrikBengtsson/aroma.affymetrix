@@ -54,7 +54,7 @@ setMethodS3("as.character", "QualityAssessmentModel", function(x, ...) {
   s <- c(s, sprintf("RAM: %.2fMB", objectSize(this)/1024^2));
   class(s) <- "GenericSummary";
   s;
-}, private=TRUE)
+}, protected=TRUE)
 
 
 setMethodS3("getDataSet", "QualityAssessmentModel", function(this, ...) {
@@ -96,7 +96,7 @@ setMethodS3("getAsteriskTags", "QualityAssessmentModel", function(this, collapse
   tags <- paste(tags, collapse=collapse);
 
   tags;
-})
+}, protected=TRUE)
 
 
 setMethodS3("getTags", "QualityAssessmentModel", function(this, collapse=NULL, ...) {
@@ -141,7 +141,8 @@ setMethodS3("getFullName", "QualityAssessmentModel", function(this, ...) {
 
 setMethodS3("getRootPath", "QualityAssessmentModel", function(this, ...) {
   "qcData";
-})
+}, protected=TRUE)
+
 
 setMethodS3("getPath", "QualityAssessmentModel", function(this, ...) {
   # Create the (sub-)directory tree for the dataset

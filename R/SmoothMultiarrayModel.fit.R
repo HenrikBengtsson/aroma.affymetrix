@@ -1,4 +1,4 @@
-setMethodS3("getFitUnitGroupFunction", "SmoothMultiarrayModel", abstract=TRUE);
+setMethodS3("getFitUnitGroupFunction", "SmoothMultiarrayModel", abstract=TRUE, protected=TRUE);
 
 
 ###########################################################################/**

@@ -35,7 +35,7 @@ setConstructorS3("ResidualSet", function(..., probeModel=c("pm")) {
   # Argument 'probeModel':
   probeModel <- match.arg(probeModel);
 
-  extend(AffymetrixCelSet(...), "ResidualSet",
+  extend(AffymetrixCelSet(...), c("ResidualSet", uses("ParametersInterface")),
     "cached:.firstCells" = NULL,
     probeModel = probeModel
   )
@@ -51,22 +51,13 @@ setMethodS3("as.character", "ResidualSet", function(x, ...) {
   s <- c(s, sprintf("Parameters: (%s)", params));
   class(s) <- "GenericSummary";
   s;
-}, private=TRUE)
+}, protected=TRUE)
 
 
 setMethodS3("getParameters", "ResidualSet", function(this, ...) {
   rf <- getFile(this, 1);
   getParameters(rf, ...);
 })
-
-setMethodS3("getParametersAsString", "ResidualSet", function(this, ...) {
-  params <- getParameters(this);
-  params <- trim(capture.output(str(params)))[-1];
-  params <- gsub("^[$][ ]*", "", params);
-  params <- gsub(" [ ]*", " ", params);
-  params <- gsub("[ ]*:", ":", params);
-  params;
-}, private=TRUE)
 
 
 setMethodS3("getResidualFileClass", "ResidualSet", function(static, ...) {
@@ -130,7 +121,7 @@ setMethodS3("fromDataSet", "ResidualSet", function(static, dataSet, path, fullna
 
   # Create an ResidualSet
   newInstance(static, rs);
-})
+}, static=TRUE, protected=TRUE)
 
 
 setMethodS3("getCellIndices", "ResidualSet", function(this, ...) {

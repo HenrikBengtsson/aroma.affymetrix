@@ -45,7 +45,7 @@ setMethodS3("as.character", "DChipCdfBinFile", function(x, ...) {
 
   class(s) <- class;
   s;
-}, private=TRUE) 
+}, protected=TRUE)
 
 
 setMethodS3("getFileFormat", "DChipCdfBinFile", function(this, ...) {
@@ -99,7 +99,8 @@ setMethodS3("findByChipType", "DChipCdfBinFile", function(this, chipType, tags=N
   pathname <- findAnnotationDataByChipType(chipType, pattern=pattern);
 
   pathname;
-})
+}, protected=TRUE)
+
 
 setMethodS3("byChipType", "DChipCdfBinFile", function(this, ...) {
   pathname <- findByChipType(this, ...);
@@ -112,7 +113,7 @@ setMethodS3("fromFile", "DChipCdfBinFile", function(static, filename, path=NULL,
   # Try to read the header
   hdr <- getHeader(df);
   df;
-})
+}, protected=TRUE)
 
 
 setMethodS3("getHeader", "DChipCdfBinFile", function(this, force=FALSE, ...) {

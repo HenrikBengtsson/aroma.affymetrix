@@ -51,22 +51,8 @@ setMethodS3("as.character", "ChipEffectSet", function(x, ...) {
   s <- c(s, sprintf("Parameters: (%s)", params));
   class(s) <- "GenericSummary";
   s;
-}, private=TRUE)
+}, protected=TRUE)
 
-
-setMethodS3("getParameters", "ChipEffectSet", function(this, ...) {
-  ce <- getFile(this, 1);
-  getParameters(ce, ...);
-})
-
-setMethodS3("getParametersAsString", "ChipEffectSet", function(this, ...) {
-  params <- getParameters(this);
-  params <- trim(capture.output(str(params)))[-1];
-  params <- gsub("^[$][ ]*", "", params);
-  params <- gsub(" [ ]*", " ", params);
-  params <- gsub("[ ]*:", ":", params);
-  params;
-}, private=TRUE)
 
 
 setMethodS3("getChipEffectFileClass", "ChipEffectSet", function(static, ...) {
@@ -103,7 +89,7 @@ setMethodS3("byPath", "ChipEffectSet", function(static, path="plmData/", pattern
 
 
   NextMethod("byPath", path=path, pattern=pattern, fileClass=fileClass, cdf=cdf, checkChipType=checkChipType);
-}, protected=TRUE, static=TRUE)
+}, static=TRUE, protected=TRUE)
 
 
 
@@ -143,7 +129,7 @@ setMethodS3("fromDataSet", "ChipEffectSet", function(static, dataSet, path, name
 
   # Create an ChipEffectSet
   newInstance(static, ces);
-})
+}, static=TRUE, protected=TRUE)
 
 
 setMethodS3("getCellIndices", "ChipEffectSet", function(this, ...) {

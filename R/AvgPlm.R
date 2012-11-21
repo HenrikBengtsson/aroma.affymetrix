@@ -94,15 +94,15 @@ setMethodS3("getAsteriskTags", "AvgPlm", function(this, collapse=NULL, ...) {
   tags <- paste(tags, collapse=collapse); 
 
   tags;
-})
+}, protected=TRUE)
 
 
 
-setMethodS3("getParameterSet", "AvgPlm", function(this, ...) {
-  params <- NextMethod("getParameterSet");
+setMethodS3("getParameters", "AvgPlm", function(this, ...) {
+  params <- NextMethod("getParameters");
   params$flavor <- this$.flavor;
   params;
-}, private=TRUE)
+}, protected=TRUE)
 
 
 

@@ -90,15 +90,15 @@ setMethodS3("getAsteriskTags", "RmaPlm", function(this, collapse=NULL, ...) {
   tags <- paste(tags, collapse=collapse); 
 
   tags;
-})
+}, protected=TRUE)
 
 
-setMethodS3("getParameterSet", "RmaPlm", function(this, ...) {
-  params <- NextMethod("getParameterSet");
+setMethodS3("getParameters", "RmaPlm", function(this, ...) {
+  params <- NextMethod("getParameters");
   params$flavor <- this$.flavor;
   params$treatNAsAs <- this$treatNAsAs;
   params;
-}, private=TRUE)
+}, protected=TRUE)
 
 
 

@@ -141,7 +141,7 @@ setMethodS3("byPath", "AffymetrixFileSet", function(static, ..., fileClass="Affy
 
 setMethodS3("getDefaultFullName", "AffymetrixFileSet", function(this, parent=1L, ...) {
   NextMethod("getDefaultFullName", parent=parent);
-})
+}, protected=TRUE)
 
 
 

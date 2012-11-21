@@ -95,24 +95,14 @@ setMethodS3("as.character", "ChipEffectFile", function(x, ...) {
   s <- c(s, sprintf("Parameters: (%s)", params));
   class(s) <- "GenericSummary";
   s;
-}, private=TRUE)
+}, protected=TRUE)
 
 
 setMethodS3("getParameters", "ChipEffectFile", function(this, ...) {
-  params <- list(
-    probeModel = this$probeModel
-  );
+  params <- NextMethod("getParameters");
+  params$probeModel <- this$probeModel;
   params;
 })
-
-setMethodS3("getParametersAsString", "ChipEffectFile", function(this, ...) {
-  params <- getParameters(this);
-  params <- trim(capture.output(str(params)))[-1];
-  params <- gsub("^[$][ ]*", "", params);
-  params <- gsub(" [ ]*", " ", params);
-  params <- gsub("[ ]*:", ":", params);
-  params;
-}, private=TRUE)
 
 
 setMethodS3("createParamCdf", "ChipEffectFile", function(static, sourceCdf, ..., verbose=FALSE) {
@@ -654,7 +644,7 @@ setMethodS3("getUnitGroupCellChromosomePositionMap", "ChipEffectFile", function(
   verbose && exit(verbose);
 
   map;  
-})
+}, private=TRUE)
 
 
 

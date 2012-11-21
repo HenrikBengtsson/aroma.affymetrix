@@ -379,7 +379,7 @@ setMethodS3("highlight", "AffymetrixCelFile", function(this, indices=NULL, ...) 
     data <- data[indices,,drop=FALSE];
   points(data[,1:2], ...);
   invisible(data);
-})
+}, protected=TRUE)
 
 
 ###########################################################################/**

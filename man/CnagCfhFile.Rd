@@ -52,8 +52,6 @@ extends \emph{\link[aroma.affymetrix]{AffymetrixFile}}\cr
  \section{Fields and Methods}{
   \bold{Methods:}\cr
 \tabular{rll}{
- \tab \code{[} \tab  -\cr
- \tab \code{[[} \tab  -\cr
  \tab \code{clone} \tab  -\cr
  \tab \code{\link[aroma.affymetrix:fromFile.CnagCfhFile]{fromFile}} \tab Defines an CnagCfhFile object from a CFH file.\cr
  \tab \code{\link[aroma.affymetrix:getCdf.CnagCfhFile]{getCdf}} \tab Gets the CDF structure for this CEL file.\cr

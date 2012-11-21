@@ -81,7 +81,7 @@ setMethodS3("getAsteriskTags", "LimmaBackgroundCorrection", function(this, colla
   tags <- paste(tags, collapse=collapse);
 
   tags;
-}, private=TRUE)
+}, protected=TRUE)
 
 
 setMethodS3("getParameters", "LimmaBackgroundCorrection", function(this, ...) {
@@ -104,7 +104,7 @@ setMethodS3("getParameters", "LimmaBackgroundCorrection", function(this, ...) {
   params <- c(params, params2);
 
   params;
-}, private=TRUE)
+}, protected=TRUE)
 
 
 setMethodS3("getSubsetToUpdate0", "LimmaBackgroundCorrection", function(this, ..., verbose=FALSE) {

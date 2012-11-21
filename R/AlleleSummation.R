@@ -52,12 +52,12 @@ setMethodS3("getAsteriskTags", "AlleleSummation", function(this, collapse=NULL, 
   }
 
   tags;
-})
+}, protected=TRUE)
 
 
 setMethodS3("getRootPath", "AlleleSummation", function(this, ...) {
   "plmData";
-}, private=TRUE)
+}, protected=TRUE)
 
 
 setMethodS3("findUnitsTodo", "AlleleSummation", function(this, ...) {

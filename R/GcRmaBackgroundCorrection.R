@@ -94,7 +94,44 @@ setMethodS3("getParameters", "GcRmaBackgroundCorrection", function(this, ...) {
   params <- c(params, params2);
 
   params;
-}, private=TRUE)
+}, protected=TRUE)
+
+
+setMethodS3("calculateAffinities", "GcRmaBackgroundCorrection", function(this, ..., verbose=FALSE) {
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Validate arguments
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  verbose <- Arguments$getVerbose(verbose);
+  if (verbose) {
+    pushState(verbose);
+    on.exit(popState(verbose));
+  }
+
+
+  verbose && enter(verbose, "Computing probe affinities (independent of data)");
+
+  ds <- getInputDataSet(this);
+  cdf <- getCdf(ds);
+
+  # Alternative #1: Using ACS annotation file
+  affinities <- NULL;
+  tryCatch({
+    affinities <- computeAffinitiesByACS(cdf, ..., verbose=less(verbose));
+  }, error = function(ex) {});
+
+  if (is.null(affinities)) {
+    # Alternative #2: Using Affymetrix probe-tab files (deprecated)
+    affinities <- computeAffinities(cdf, ..., verbose=less(verbose));
+  }
+
+  verbose && printf(verbose, "RAM: %.2fMB\n", object.size(affinities)/1024^2);
+
+  verbose && exit(verbose);
+
+  affinities;
+}, protected=TRUE)
+
+
 
 ###########################################################################/**
 # @RdocMethod process
@@ -123,12 +160,15 @@ setMethodS3("getParameters", "GcRmaBackgroundCorrection", function(this, ...) {
 # }
 #*/###########################################################################
 setMethodS3("process", "GcRmaBackgroundCorrection", function(this, ..., force=FALSE, verbose=FALSE) {
-
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Validate arguments
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   verbose <- Arguments$getVerbose(verbose);
   if (verbose) {
     pushState(verbose);
     on.exit(popState(verbose));
   }
+
 
   verbose && enter(verbose, "Background correcting data set");
 
@@ -146,15 +186,29 @@ setMethodS3("process", "GcRmaBackgroundCorrection", function(this, ..., force=FA
   # Get input data set
   ds <- getInputDataSet(this);
 
-  # Get algorithm parameters
-  params <- getParameters(this);
-
   # Get the output path
   outputPath <- getPath(this);
 
+  # Get algorithm parameters
+  params <- getParameters(this);
+
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Get/calculate affinities
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  affinities <- params$affinities;
+  if (is.null(affinities)) {
+    affinities <- calculateAffinities(this, verbose=less(verbose));
+  }
+  params$affinities <- affinities;
+
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Background correct
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   args <- c(list(ds, path=outputPath, verbose=verbose, overwrite=force), params, .deprecated=FALSE);
 
-  outputDataSet <- do.call("bgAdjustGcrma", args=args);
+  do.call("bgAdjustGcrma", args=args);
   
   # Garbage collect
   gc <- gc();
@@ -162,8 +216,8 @@ setMethodS3("process", "GcRmaBackgroundCorrection", function(this, ..., force=FA
 
   verbose && exit(verbose);
 
-  # Update the output data set
-  this$.outputDataSet <- outputDataSet;
+  # Gets the output data set
+  outputDataSet <- getOutputDataSet(this);
 
   outputDataSet;
 })
@@ -172,6 +226,9 @@ setMethodS3("process", "GcRmaBackgroundCorrection", function(this, ..., force=FA
 
 ############################################################################
 # HISTORY:
+# 2012-11-20
+# o Now process() calculates affinities.
+# o Added calculateAffinities() to GcRmaBackgroundCorrection.
 # 2010-10-01
 # o Now GcRmaBackgroundCorrection tries to calculate probe affinites based
 #   on ACS annotation files and then as a backup/backward compatibility

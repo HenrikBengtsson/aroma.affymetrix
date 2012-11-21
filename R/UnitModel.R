@@ -53,8 +53,8 @@ setConstructorS3("UnitModel", function(dataSet=NULL, probeModel=c("pm", "mm", "p
 
 
 
-setMethodS3("getParameterSet", "UnitModel", function(this, ...) {
-  params <- NextMethod("getParameterSet");
+setMethodS3("getParameters", "UnitModel", function(this, ...) {
+  params <- NextMethod("getParameters");
   params$probeModel <- this$probeModel;
   params$shift <- this$shift;
   params;
@@ -179,7 +179,7 @@ setMethodS3("getFitUnitFunction", "UnitModel", abstract=TRUE, private=TRUE);
 
 setMethodS3("getFitSingleCellUnitFunction", "UnitModel", function(this, ...) {
   NULL;
-})
+}, protected=TRUE)
 
 
 ############################################################################

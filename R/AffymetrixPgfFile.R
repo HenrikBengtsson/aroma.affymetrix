@@ -70,7 +70,7 @@ setMethodS3("as.character", "AffymetrixPgfFile", function(x, ...) {
   class(s) <- class;
 
   s;
-}, private=TRUE)
+}, protected=TRUE)
 
 
 

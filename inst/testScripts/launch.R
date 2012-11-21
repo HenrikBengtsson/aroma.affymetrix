@@ -21,15 +21,24 @@ print(args);
 
 printf("Hostname: %s\n", System$getHostname());
 
-tryCatch({
-  library("aroma.affymetrix");
-}, error = function(ex) {
-  print(traceback());
-  print(ex);
-  # Sleep for a while and try again
-  Sys.sleep(10);
-  library("aroma.affymetrix");
-})
+kk <- 1L;
+while (kk < 10L) {
+  printf("#%02d. Trying to load aroma.affymetrix...\n", kk);
+  tryCatch({
+    library("aroma.affymetrix");
+    break;
+  }, error = function(ex) { 
+    print(traceback());
+    print(ex);
+    cat(".libPaths():\n");
+    print(.libPaths());
+    # Sleep for a while and try again
+    Sys.sleep(10);
+    FALSE;
+  });
+  kk <- kk + 1L;
+} # while()
+if (kk >= 10L) throw("Failed to load aroma.affymetrix.");
 
 path <- system.file(package="aroma.affymetrix");
 path <- Arguments$getReadablePath(path);

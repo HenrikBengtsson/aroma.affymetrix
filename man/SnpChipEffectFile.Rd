@@ -64,7 +64,6 @@ extends \emph{\link[aroma.affymetrix]{ChipEffectFile}}\cr
  \tab \code{extractTheta} \tab  -\cr
  \tab \code{extractTotalAndFracB} \tab  -\cr
  \tab \code{getCellIndices} \tab  -\cr
- \tab \code{getParameters} \tab  -\cr
  \tab \code{readUnits} \tab  -\cr
 }
 

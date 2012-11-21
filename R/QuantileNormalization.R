@@ -182,7 +182,7 @@ setMethodS3("getParameters", "QuantileNormalization", function(this, ...) {
   params <- c(params, params2);
 
   params;
-}, private=TRUE)
+}, protected=TRUE)
 
 
 

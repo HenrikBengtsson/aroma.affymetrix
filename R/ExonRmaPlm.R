@@ -118,7 +118,7 @@ setMethodS3("getParameters", "ExonRmaPlm", function(this, ...) {
   params <- NextMethod("getParameters");
   params$mergeGroups <- this$mergeGroups;
   params;
-}, private=TRUE)
+}, protected=TRUE)
 
 
 

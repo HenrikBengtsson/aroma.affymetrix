@@ -53,7 +53,7 @@ setMethodS3("getParameters", "CnPlm", function(this, ...) {
   params <- NextMethod("getParameters");
   params$combineAlleles <- this$combineAlleles;
   params;
-}, private=TRUE)
+}, protected=TRUE)
 
 
 setMethodS3("getCellIndices", "CnPlm", function(this, ...) {

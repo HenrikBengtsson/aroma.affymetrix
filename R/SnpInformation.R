@@ -146,7 +146,7 @@ setMethodS3("getChipType", "SnpInformation", function(this, ...) {
 #*/###########################################################################
 setMethodS3("fromCdf", "SnpInformation", function(static, cdf, ...) {
   byChipType(static, chipType=getChipType(cdf), nbrOfUnits=nbrOfUnits(cdf), ...);
-}, static=TRUE)
+}, static=TRUE, protected=TRUE)
 
 
 
@@ -337,7 +337,7 @@ setMethodS3("nbrOfUnits", "SnpInformation", function(this, ...) {
 setMethodS3("getFields", "SnpInformation", function(this, ...) {
   data <- getData(this);
   colnames(data);
-})
+}, protected=TRUE)
 
 
 

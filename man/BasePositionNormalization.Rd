@@ -67,10 +67,10 @@ extends \emph{\link[aroma.affymetrix]{LinearModelProbeSequenceNormalization}}\cr
 fitOne, getDesignMatrix, getNormalEquations, getSignalTransform, predictOne
 
  \bold{Methods inherited from AbstractProbeSequenceNormalization}:\cr
-fitOne, getAromaCellSequenceFile, getTargetFile, indexOfMissingSequences, predictOne, process
+fitOne, getAromaCellSequenceFile, getParameters, getTargetFile, indexOfMissingSequences, predictOne, process
 
  \bold{Methods inherited from ProbeLevelTransform3}:\cr
-getAsteriskTags, getCellsTo, getCellsToFit, getCellsToUpdate, getUnitsTo, getUnitsToFit, getUnitsToUpdate, writeSignals
+getAsteriskTags, getCellsTo, getCellsToFit, getCellsToUpdate, getParameters, getUnitsTo, getUnitsToFit, getUnitsToUpdate, writeSignals
 
  \bold{Methods inherited from ProbeLevelTransform}:\cr
 getRootPath

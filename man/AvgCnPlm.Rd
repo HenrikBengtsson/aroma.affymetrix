@@ -62,10 +62,10 @@ extends \link[aroma.affymetrix]{CnPlm}\cr
 
 
  \bold{Methods inherited from CnPlm}:\cr
-getCellIndices, getChipEffectSet, getCombineAlleles, getProbeAffinityFile, setCombineAlleles
+getCellIndices, getChipEffectSet, getCombineAlleles, getParameters, getProbeAffinityFile, setCombineAlleles
 
  \bold{Methods inherited from SnpPlm}:\cr
-getCellIndices, getChipEffectSet, getMergeStrands, getProbeAffinityFile, setMergeStrands
+getCellIndices, getChipEffectSet, getMergeStrands, getParameters, getProbeAffinityFile, setMergeStrands
 
  \bold{Methods inherited from AvgSnpPlm}:\cr
 getAsteriskTags
@@ -80,7 +80,7 @@ calculateResidualSet, calculateWeights, fit, getAsteriskTags, getCalculateResidu
 getListOfPriors, setListOfPriors, validate
 
  \bold{Methods inherited from UnitModel}:\cr
-findUnitsTodo, getAsteriskTags, getFitSingleCellUnitFunction
+findUnitsTodo, getAsteriskTags, getFitSingleCellUnitFunction, getParameters
 
  \bold{Methods inherited from Model}:\cr
 as.character, fit, getAlias, getAsteriskTags, getDataSet, getFullName, getName, getParameterSet, getPath, getRootPath, getTags, setAlias, setTags

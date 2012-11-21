@@ -61,7 +61,7 @@ extends \emph{\link[aroma.affymetrix]{BackgroundCorrection}}\cr
 
 
  \bold{Methods inherited from BackgroundCorrection}:\cr
-process
+getParameters, process
 
  \bold{Methods inherited from ProbeLevelTransform}:\cr
 getRootPath

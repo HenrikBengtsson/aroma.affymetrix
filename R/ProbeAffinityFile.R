@@ -58,7 +58,7 @@ setMethodS3("getParameters", "ProbeAffinityFile", function(this, ...) {
   params$.firstCells <- NULL;
   params$probeModel <- this$probeModel;
   params;
-})
+}, protected=TRUE)
 
 
 setMethodS3("getCellIndices", "ProbeAffinityFile", function(this, ..., verbose=FALSE) {

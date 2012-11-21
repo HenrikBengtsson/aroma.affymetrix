@@ -24,7 +24,7 @@
  \section{Requirements}{
    This package requires several packages from CRAN, Bioconductor,
    R-forge and our local braju.com repository.  We are moving more
-   and more of the package to CRAN and Bioconductor.
+   and more of the packages to CRAN and Bioconductor.
  }
 
  \section{Installation and updates}{
@@ -39,12 +39,16 @@
  }
 
  \section{How to cite this package}{
-   Please cite references [1] and [2] when using this package.
+  In order to keep improving and providing support for this project,
+  please cite references [1], [2], or any applicable publication listed on
+  \url{http://aroma-project.org/publications/}, whenever you publish
+  work that have been used any of the Aroma Framework.
  }
 
  \author{
-   Henrik Bengtsson with great contributions from
-   Ken Simpson, Elizabeth Purdom, and Mark Robinson.
+   Henrik Bengtsson with great contributions from several others.
+   Please see \url{http://aroma-project.org/about/} for a current
+   list of co-authors and major contributors.
  }
 
  \section{License}{
@@ -64,5 +68,7 @@
  \cr
   [3] H. Bengtsson, \emph{The R.oo package - Object-Oriented Programming with References Using Standard R Code}, In Kurt Hornik, Friedrich Leisch and Achim Zeileis, editors, Proceedings of the 3rd International Workshop on Distributed Statistical Computing (DSC 2003), March 20-22, Vienna, Austria. \url{http://www.ci.tuwien.ac.at/Conferences/DSC-2003/Proceedings/}
  \cr
+
+  For a complete list, see \url{http://aroma-project.org/publications/}.
  }
 \keyword{package}

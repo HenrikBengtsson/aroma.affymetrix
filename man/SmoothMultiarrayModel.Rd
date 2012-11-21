@@ -48,8 +48,6 @@ extends \emph{\link[aroma.core]{ChromosomalModel}}\cr
  \section{Fields and Methods}{
   \bold{Methods:}\cr
 \tabular{rll}{
- \tab \code{createOutputTuple} \tab  -\cr
- \tab \code{fitOneChromosome} \tab  -\cr
  \tab \code{getBandwidth} \tab  -\cr
  \tab \code{getOutputTuple} \tab  -\cr
  \tab \code{setBandwidth} \tab  -\cr

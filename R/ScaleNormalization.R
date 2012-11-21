@@ -281,7 +281,7 @@ setMethodS3("getParameters", "ScaleNormalization", function(this, ...) {
   params <- c(params, params2);
 
   params;
-}, private=TRUE)
+}, protected=TRUE)
 
 
 

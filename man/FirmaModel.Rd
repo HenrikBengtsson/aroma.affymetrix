@@ -63,7 +63,7 @@ extends \emph{\link[aroma.affymetrix]{UnitModel}}\cr
 
 
  \bold{Methods inherited from UnitModel}:\cr
-findUnitsTodo, getAsteriskTags, getFitSingleCellUnitFunction
+findUnitsTodo, getAsteriskTags, getFitSingleCellUnitFunction, getParameters
 
  \bold{Methods inherited from Model}:\cr
 as.character, fit, getAlias, getAsteriskTags, getDataSet, getFullName, getName, getParameterSet, getPath, getRootPath, getTags, setAlias, setTags

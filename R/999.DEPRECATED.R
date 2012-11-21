@@ -7,6 +7,7 @@
 #   should be used to subset files (and not units).
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 setMethodS3("[", "AffymetrixCelFile", function(this, units=NULL, drop=FALSE) {
+  .Deprecated("readUnits");
   data <- readUnits(this, units=units);
   if (drop && length(data) == 1)
     data <- data[[1]];
@@ -14,11 +15,13 @@ setMethodS3("[", "AffymetrixCelFile", function(this, units=NULL, drop=FALSE) {
 }, protected=TRUE, deprecated=TRUE)
 
 setMethodS3("[[", "AffymetrixCelFile", function(this, unit=NULL) {
+  .Deprecated("readUnits");
   this[units=unit, drop=TRUE];
 }, protected=TRUE, deprecated=TRUE)
 
 
 setMethodS3("[", "AffymetrixCelSet", function(this, units=NULL, ..., drop=FALSE) {
+  .Deprecated("readUnits");
   res <- readUnits(this, units=units, ...);
   if (drop && length(res) == 1)
     res <- res[[1]];
@@ -26,11 +29,13 @@ setMethodS3("[", "AffymetrixCelSet", function(this, units=NULL, ..., drop=FALSE)
 }, protected=TRUE, deprecated=TRUE)
 
 setMethodS3("[[", "AffymetrixCelSet", function(this, units=NULL, ...) {
+  .Deprecated("readUnits");
   this[units=units, ..., drop=TRUE];
 }, protected=TRUE, deprecated=TRUE)
 
 
 setMethodS3("[", "CnagCfhFile", function(this, units=NULL, alleles=NULL, drop=FALSE) {
+  .Deprecated("readUnits");
   data <- readUnits(this, units=units);
   if (!is.null(alleles)) {
     data <- data[, alleles, drop=drop];
@@ -42,11 +47,13 @@ setMethodS3("[", "CnagCfhFile", function(this, units=NULL, alleles=NULL, drop=FA
 }, protected=TRUE, deprecated=TRUE)
 
 setMethodS3("[[", "CnagCfhFile", function(this, unit=NULL) {
+  .Deprecated("readUnits");
   this[units=unit, drop=TRUE];
 }, protected=TRUE, deprecated=TRUE)
 
 
 setMethodS3("[", "CnagCfhSet", function(this, units=NULL, ..., drop=FALSE) {
+  .Deprecated("readUnits");
   res <- readUnits(this, units=units, ...);
   if (drop && length(res) == 1)
     res <- res[[1]];
@@ -54,6 +61,7 @@ setMethodS3("[", "CnagCfhSet", function(this, units=NULL, ..., drop=FALSE) {
 }, protected=TRUE, deprecated=TRUE)
 
 setMethodS3("[[", "CnagCfhSet", function(this, units=NULL, ...) {
+  .Deprecated("readUnits");
   this[units=units, ..., drop=TRUE];
 }, protected=TRUE, deprecated=TRUE)
 
@@ -270,7 +278,7 @@ setMethodS3("getProbeAffinities", "ProbeLevelModel", function(this, ...) {
 setMethodS3("getProbeAffinities", "ExonRmaPlm", function(this, ...) {
   .Defunct("getProbeAffinityFile");
   getProbeAffinityFile(this, ...);
-})
+}, protected=TRUE, deprecated=TRUE)
 
 # 2008-09-03
 # o Added getFitUnitGroupFunction() model, which is a better name than

@@ -70,7 +70,7 @@ setMethodS3("findByName", "ChipEffectSet", function(static, ..., paths="plmData(
   }
 
   NextMethod("findByName", paths=paths);
-}, static=TRUE)
+}, static=TRUE, protected=TRUE)
 
 
 setMethodS3("byPath", "ChipEffectSet", function(static, path="plmData/", pattern=",chipEffects[.](c|C)(e|E)(l|L)$", cdf=NULL, checkChipType=FALSE, ..., fileClass=NULL) {

@@ -58,7 +58,7 @@ setMethodS3("getParameters", "UnitModel", function(this, ...) {
   params$probeModel <- this$probeModel;
   params$shift <- this$shift;
   params;
-}, private=TRUE)
+}, protected=TRUE)
 
 
 setMethodS3("getAsteriskTags", "UnitModel", function(this, collapse=NULL, ...) {

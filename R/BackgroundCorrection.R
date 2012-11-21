@@ -53,7 +53,7 @@ setMethodS3("getParameters", "BackgroundCorrection", function(this, ...) {
   params <- c(params, params2);
 
   params;
-}, private=TRUE)
+}, protected=TRUE)
 
 
 ###########################################################################/**

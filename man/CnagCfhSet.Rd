@@ -47,7 +47,6 @@ extends \link[R.filesets]{GenericDataFileSet}\cr
  \section{Fields and Methods}{
   \bold{Methods:}\cr
 \tabular{rll}{
- \tab \code{append} \tab  -\cr
  \tab \code{as} \tab  -\cr
  \tab \code{\link[aroma.affymetrix:as.CnagCfhSet.CnagCfhSet]{as.CnagCfhSet}} \tab Coerce an object to an CnagCfhSet object.\cr
  \tab \code{byName} \tab  -\cr

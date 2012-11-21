@@ -62,7 +62,6 @@ extends \link[aroma.affymetrix]{ParameterCelSet}\cr
  \tab \code{\link[aroma.affymetrix:extractExpressionSet.ChipEffectSet]{extractExpressionSet}} \tab Extracts an in-memory ExpressionSet object.\cr
  \tab \code{extractMatrix} \tab  -\cr
  \tab \code{extractTheta} \tab  -\cr
- \tab \code{findByName} \tab  -\cr
  \tab \code{findUnitsTodo} \tab  -\cr
  \tab \code{\link[aroma.affymetrix:getAM.ChipEffectSet]{getAM}} \tab Gets the log-intensities and log-ratios of chip effects of the set relative to a reference chip effect file.\cr
  \tab \code{getAverageFile} \tab  -\cr
@@ -79,7 +78,7 @@ extractDataFrame, extractMatrix
 getParameters, getParametersAsString
 
  \bold{Methods inherited from AffymetrixCelSet}:\cr
-append, as, as.AffymetrixCelSet, as.character, averageQuantile, byName, byPath, convertToUnique, doCRMAv1, doCRMAv2, doFIRMA, doGCRMA, doRMA, extractAffyBatch, extractMatrix, extractSnpFeatureSet, findByName, getAverage, getAverageAsinh, getAverageFile, getAverageLog, getCdf, getChipType, getData, getIntensities, getPlatform, getTimestamps, getUnitGroupCellMap, getUnitIntensities, getUnitNamesFile, getUnitTypesFile, isDuplicated, justSNPRMA, nbrOfArrays, normalizeQuantile, plotDensity, range, readUnits, setCdf, update2, writeSgr
+append, as, as.AffymetrixCelSet, as.character, averageQuantile, byName, byPath, clone, convertToUnique, doCRMAv1, doCRMAv2, doFIRMA, doGCRMA, doRMA, extractAffyBatch, extractMatrix, extractSnpFeatureSet, findByName, getAverage, getAverageAsinh, getAverageFile, getAverageLog, getCdf, getChipType, getData, getIntensities, getPlatform, getTimestamps, getUnitGroupCellMap, getUnitIntensities, getUnitNamesFile, getUnitTypesFile, isDuplicated, justSNPRMA, nbrOfArrays, normalizeQuantile, plotDensity, range, readUnits, setCdf, update2, writeSgr
 
  \bold{Methods inherited from AffymetrixFileSet}:\cr
 as, as.AffymetrixFileSet, byPath, getDefaultFullName

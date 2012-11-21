@@ -339,7 +339,7 @@ setMethodS3("readRawDataRectangle", "SpatialReporter", function(this, array, ...
   }
 
   y;  
-})
+}, protected=TRUE)
 
 
 setMethodS3("calculateMargins", "SpatialReporter", function(this, unshift=TRUE, ..., verbose=FALSE) {
@@ -362,7 +362,7 @@ setMethodS3("calculateMargins", "SpatialReporter", function(this, unshift=TRUE, 
   yC <- colMedians(y, na.rm=TRUE);
 
   list(rowAvgs=yR, colAvgs=yC);
-})
+}, protected=TRUE)
 
 
 setMethodS3("plotMargins", "SpatialReporter", function(this, array, margins=c("rows", "columns"), ..., pch=20, cex=0.7, ylim=NULL, ylab=NULL, rotate=0, verbose=FALSE) {plotMargins

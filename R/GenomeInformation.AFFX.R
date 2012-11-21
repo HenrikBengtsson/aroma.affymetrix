@@ -217,7 +217,7 @@ setMethodS3("getData", "GenomeInformation", function(this, units=NULL, fields=c(
 #*/###########################################################################
 setMethodS3("fromCdf", "GenomeInformation", function(static, cdf, ...) {
   byChipType(static, chipType=getChipType(cdf), nbrOfUnits=nbrOfUnits(cdf), ...);
-}, static=TRUE)
+}, static=TRUE, protected=TRUE)
 
 
 

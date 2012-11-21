@@ -53,7 +53,6 @@ extends \emph{\link[aroma.affymetrix]{AffymetrixFile}}\cr
   \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{\link[aroma.affymetrix:byChipType.AromaChipTypeAnnotationFile]{byChipType}} \tab Defines an AromaChipTypeAnnotationFile object by chip type.\cr
- \tab \code{\link[aroma.affymetrix:findByChipType.AromaChipTypeAnnotationFile]{findByChipType}} \tab Locates an annotation file by its chip type.\cr
  \tab \code{getChipType} \tab  -\cr
  \tab \code{\link[aroma.affymetrix:getHeader.AromaChipTypeAnnotationFile]{getHeader}} \tab Gets the header of the annotation file.\cr
  \tab \code{getPlatform} \tab  -\cr

@@ -42,7 +42,7 @@ setMethodS3("getParameters", "SnpPlm", function(this, ...) {
   params <- NextMethod("getParameters");
   params$mergeStrands <- this$mergeStrands;
   params;
-}, private=TRUE)
+}, protected=TRUE)
 
 
 setMethodS3("getCellIndices", "SnpPlm", function(this, ..., verbose=FALSE) {

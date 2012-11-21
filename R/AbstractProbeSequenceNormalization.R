@@ -60,7 +60,7 @@ setMethodS3("getParameters", "AbstractProbeSequenceNormalization", function(this
   ));
 
   params;
-}, private=TRUE)
+}, protected=TRUE)
 
 
 

@@ -247,7 +247,7 @@ setMethodS3("createOutputTuple", "SmoothMultiarrayModel", function(this, ..., fo
   this$.outTuple <- outTuple;
 
   outTuple;
-})
+}, protected=TRUE)
 
 
 setMethodS3("fitOneChromosome", "SmoothMultiarrayModel", function(this, chromosome, ..., vebose=FALSE) {
@@ -426,7 +426,7 @@ setMethodS3("fitOneChromosome", "SmoothMultiarrayModel", function(this, chromoso
   verbose && exit(verbose);
 
   invisible(outTuple);
-})
+}, protected=TRUE)
 
 
 ############################################################################

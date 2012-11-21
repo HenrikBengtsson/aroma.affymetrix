@@ -62,7 +62,6 @@ extends \link[aroma.affymetrix]{RmaPlm}\cr
  \tab \code{getCellIndices} \tab  -\cr
  \tab \code{getChipEffects} \tab  -\cr
  \tab \code{getChipEffectSet} \tab  -\cr
- \tab \code{getProbeAffinities} \tab  -\cr
  \tab \code{getProbeAffinityFile} \tab  -\cr
  \tab \code{setMergeGroups} \tab  -\cr
 }
@@ -78,7 +77,7 @@ calculateResidualSet, calculateWeights, fit, getAsteriskTags, getCalculateResidu
 getListOfPriors, setListOfPriors, validate
 
  \bold{Methods inherited from UnitModel}:\cr
-findUnitsTodo, getAsteriskTags, getFitSingleCellUnitFunction
+findUnitsTodo, getAsteriskTags, getFitSingleCellUnitFunction, getParameters
 
  \bold{Methods inherited from Model}:\cr
 as.character, fit, getAlias, getAsteriskTags, getDataSet, getFullName, getName, getParameterSet, getPath, getRootPath, getTags, setAlias, setTags

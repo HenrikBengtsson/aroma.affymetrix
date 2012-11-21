@@ -55,9 +55,9 @@ setMethodS3("as.character", "WeightsSet", function(x, ...) {
 
 
 setMethodS3("getParameters", "WeightsSet", function(this, ...) {
-  rf <- getFile(this, 1);
+  rf <- getFile(this, 1L);
   getParameters(rf, ...);
-})
+}, protected=TRUE)
 
 setMethodS3("getWeightsFileClass", "WeightsSet", function(static, ...) {
   WeightsFile;

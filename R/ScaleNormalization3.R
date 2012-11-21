@@ -50,7 +50,7 @@ setMethodS3("getParameters", "ScaleNormalization3", function(this, ...) {
   params <- c(params, params2);
 
   params;
-}, private=TRUE)
+}, protected=TRUE)
 
 
 

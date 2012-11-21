@@ -87,7 +87,7 @@ setMethodS3("getParameters", "ResidualFile", function(this, ...) {
   params <- NextMethod("getParameters");
   params$probeModel <- this$probeModel;
   params;
-})
+}, protected=TRUE)
 
 
 setMethodS3("fromDataFile", "ResidualFile", function(static, df=NULL, filename=sprintf("%s,residuals.CEL", getFullName(df)), path, cdf=NULL, ..., verbose=FALSE) {

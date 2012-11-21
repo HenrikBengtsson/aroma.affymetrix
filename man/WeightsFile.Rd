@@ -62,7 +62,6 @@ extends \emph{\link[aroma.affymetrix]{ParameterCelFile}}\cr
  \tab \code{findUnitsTodo} \tab  -\cr
  \tab \code{getCellIndices} \tab  -\cr
  \tab \code{getImage} \tab  -\cr
- \tab \code{getParameters} \tab  -\cr
  \tab \code{readUnits} \tab  -\cr
  \tab \code{writeImage} \tab  -\cr
 }

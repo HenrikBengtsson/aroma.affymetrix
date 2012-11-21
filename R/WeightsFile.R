@@ -87,7 +87,7 @@ setMethodS3("getParameters", "WeightsFile", function(this, ...) {
   params <- NextMethod("getParameters");
   params$probeModel <- this$probeModel;
   params;
-})
+}, protected=TRUE)
 
 
 setMethodS3("fromDataFile", "WeightsFile", function(static, df=NULL, filename=sprintf("%s,weights.CEL", getFullName(df)), path, cdf=NULL, ..., verbose=FALSE) {

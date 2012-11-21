@@ -87,7 +87,7 @@ setMethodS3("getParameters", "ChipEffectGroupMerge", function(this, ...) {
   params <- c(params, params2);
 
   params;
-}, private=TRUE)
+}, protected=TRUE)
 
 
 setMethodS3("getCdf", "ChipEffectGroupMerge", function(this, ...) {

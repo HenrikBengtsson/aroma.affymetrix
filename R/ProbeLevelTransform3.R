@@ -347,7 +347,7 @@ setMethodS3("getParameters", "ProbeLevelTransform3", function(this, expand=TRUE,
   verbose && exit(verbose);
 
   params;
-}, private=TRUE)
+}, protected=TRUE)
 
 
 

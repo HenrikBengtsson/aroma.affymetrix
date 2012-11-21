@@ -81,7 +81,7 @@ setMethodS3("getParameters", "DChipQuantileNormalization", function(this, ...) {
   params$subsetToAvg <- subsetToAvg;
 
   params;
-}, private=TRUE)
+}, protected=TRUE)
 
 
 setMethodS3("getSubsetToUpdate", "DChipQuantileNormalization", function(this, ...) {

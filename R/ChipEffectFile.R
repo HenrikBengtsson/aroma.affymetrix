@@ -102,7 +102,7 @@ setMethodS3("getParameters", "ChipEffectFile", function(this, ...) {
   params <- NextMethod("getParameters");
   params$probeModel <- this$probeModel;
   params;
-})
+}, protected=TRUE)
 
 
 setMethodS3("createParamCdf", "ChipEffectFile", function(static, sourceCdf, ..., verbose=FALSE) {

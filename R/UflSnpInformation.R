@@ -124,7 +124,7 @@ setMethodS3("getDataColumns", "UflSnpInformation", function(this, ...) {
 	
 setMethodS3("getFields", "UflSnpInformation", function(this, ...) {
   getDataColumns(this, ...);
-})
+}, protected=TRUE)
 
 setMethodS3("nbrOfUnits", "UflSnpInformation", function(this, ...) {
   ufl <- getAromaUflFile(this);

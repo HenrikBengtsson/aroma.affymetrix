@@ -29,7 +29,7 @@ setMethodS3("getParameters", "SpatialRowColumnNormalization", function(this, ...
   params <- c(params, params2);
 
   params;
-}, private=TRUE)
+}, protected=TRUE)
  
 
 setMethodS3("getSpar", "SpatialRowColumnNormalization", function(this, ...) {

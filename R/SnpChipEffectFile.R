@@ -45,7 +45,7 @@ setMethodS3("getParameters", "SnpChipEffectFile", function(this, ...) {
   params <- NextMethod("getParameters");
   params$mergeStrands <- this$mergeStrands;
   params;
-})
+}, protected=TRUE)
 
 
 setMethodS3("getCellIndices", "SnpChipEffectFile", function(this, units=NULL, ..., force=FALSE, .cache=TRUE, verbose=FALSE) {

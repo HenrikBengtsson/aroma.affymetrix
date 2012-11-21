@@ -59,7 +59,6 @@ extends \emph{\link[aroma.affymetrix]{ParameterCelFile}}\cr
   \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{getCellIndices} \tab  -\cr
- \tab \code{getParameters} \tab  -\cr
  \tab \code{readUnits} \tab  -\cr
 }
 

@@ -53,7 +53,6 @@ extends \emph{\link[aroma.affymetrix]{AffymetrixFileSet}}\cr
  \section{Fields and Methods}{
   \bold{Methods:}\cr
 \tabular{rll}{
- \tab \code{append} \tab  -\cr
  \tab \code{as} \tab  -\cr
  \tab \code{\link[aroma.affymetrix:as.AffymetrixCelSet.AffymetrixCelSet]{as.AffymetrixCelSet}} \tab Coerce an object to an AffymetrixCelSet object.\cr
  \tab \code{byName} \tab  -\cr

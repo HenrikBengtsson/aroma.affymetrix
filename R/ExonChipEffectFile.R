@@ -45,7 +45,7 @@ setMethodS3("getParameters", "ExonChipEffectFile", function(this, ...) {
   params <- NextMethod("getParameters");
   params$mergeGroups <- this$mergeGroups;
   params;
-})
+}, protected=TRUE)
 
 
 setMethodS3("getCellIndices", "ExonChipEffectFile", function(this, ..., force=FALSE, .cache=TRUE, verbose=FALSE) {

@@ -55,9 +55,9 @@ setMethodS3("as.character", "ResidualSet", function(x, ...) {
 
 
 setMethodS3("getParameters", "ResidualSet", function(this, ...) {
-  rf <- getFile(this, 1);
+  rf <- getFile(this, 1L);
   getParameters(rf, ...);
-})
+}, protected=TRUE)
 
 
 setMethodS3("getResidualFileClass", "ResidualSet", function(static, ...) {

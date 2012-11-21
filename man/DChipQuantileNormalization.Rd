@@ -60,7 +60,7 @@ extends \link[aroma.affymetrix]{QuantileNormalization}\cr
 
 
  \bold{Methods inherited from QuantileNormalization}:\cr
-findTargetDistributionFile, process
+findTargetDistributionFile, getParameters, process
 
  \bold{Methods inherited from ProbeLevelTransform}:\cr
 getRootPath

@@ -55,7 +55,7 @@ setMethodS3("getParameters", "CnChipEffectFile", function(this, ...) {
   params <- NextMethod("getParameters");
   params$combineAlleles <- this$combineAlleles;
   params;
-})
+}, protected=TRUE)
 
 
 setMethodS3("getCellIndices", "CnChipEffectFile", function(this, units=NULL, ..., force=FALSE, .cache=TRUE, verbose=FALSE) {

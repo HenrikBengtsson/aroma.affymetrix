@@ -70,7 +70,6 @@ extends \emph{\link[aroma.core]{UnitNamesFile}}\cr
  \tab \code{\link[aroma.affymetrix:getGenomeInformation.AffymetrixCdfFile]{getGenomeInformation}} \tab Gets genome information for this chip type.\cr
  \tab \code{getImage} \tab  -\cr
  \tab \code{getPlatform} \tab  -\cr
- \tab \code{getUnitGroupNamesFromUgcMap} \tab  -\cr
  \tab \code{\link[aroma.affymetrix:getUnitNames.AffymetrixCdfFile]{getUnitNames}} \tab Gets the names of each unit.\cr
  \tab \code{\link[aroma.affymetrix:getUnitTypes.AffymetrixCdfFile]{getUnitTypes}} \tab Gets the types of a set of units.\cr
  \tab \code{hasUnitTypes} \tab  -\cr

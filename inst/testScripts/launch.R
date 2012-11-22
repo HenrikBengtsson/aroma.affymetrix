@@ -41,10 +41,6 @@ while (kk < 10L) {
 } # while()
 if (kk >= 10L) throw("Failed to load aroma.affymetrix.");
 
-# Use a R.cache path specific to the aroma tests
-setCacheRootPath("~/.Rcache,aroma")
-printf("Cache root path: %s\n", getCacheRootPath());
-
 path <- system.file(package="aroma.affymetrix");
 path <- Arguments$getReadablePath(path);
 

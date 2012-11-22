@@ -66,7 +66,7 @@ setMethodS3("as.character", "Model", function(x, ...) {
   s <- c(s, sprintf("Chip type: %s", getChipType(getCdf(ds))));
   s <- c(s, sprintf("Input tags: %s", getTags(ds, collapse=",")));
   s <- c(s, sprintf("Output tags: %s", getTags(this, collapse=",")));
-  s <- c(s, sprintf("Parameters: (%s).", getParametersAsString(this)));
+  s <- c(s, sprintf("Parameters: %s", getParametersAsString(this)));
   s <- c(s, sprintf("Path: %s", getPath(this)));
   s <- c(s, sprintf("RAM: %.2fMB", objectSize(this)/1024^2));
   class(s) <- "GenericSummary";

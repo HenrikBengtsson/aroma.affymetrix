@@ -91,8 +91,7 @@ setMethodS3("as.character", "ChipEffectFile", function(x, ...) {
   this <- x;
 
   s <- NextMethod("as.character");
-  params <- paste(getParametersAsString(this), collapse=", ");
-  s <- c(s, sprintf("Parameters: (%s)", params));
+  s <- c(s, sprintf("Parameters: %s", getParametersAsString(this)));
   class(s) <- "GenericSummary";
   s;
 }, protected=TRUE)

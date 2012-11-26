@@ -1,6 +1,12 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 2.7.1 [2012-11-26]
+o Lowered the package dependencies to aroma.light (>= 1.22.0)
+  and affxparser (>= 1.26.4) so that this package can be easily
+  installed on R (>= 2.14.0).
+
+
 Version: 2.7.0 [2012-11-24]
 o Bumped version for CRAN submission.
 o Bumped up package dependencies.

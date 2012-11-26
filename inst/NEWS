@@ -17,7 +17,7 @@ o DOCUMENTATION: Hiding more internal methods from the help indices.
 o CLEANUP: Now utilizing the new ParametersInterface.
 o CLEANUP: Replaced all getParameterSet() with getParameters().
 o CLEANUP: Deprecated "[" and "[[" for AffymetrixCelFile,
-  AffymetrixCelSet CnagCfhFile, and CnagCfhSet.
+  AffymetrixCelSet, CnagCfhFile, and CnagCfhSet.
 o CLEANUP: bgAdjustOptical() and bgAdjustRma() for AffymetrixCelSet
   are now defunct.  Instead, see OpticalBackgroundCorrection and
   RmaBackgroundCorrection.
@@ -34,7 +34,7 @@ o Now package explicitly imports R.cache, because aroma.core is no
 
 Version: 2.6.12 [2012-11-14]
 o CLEANUP: getWeights() for QualityAssessmentModel no longer sets the
-  alias of the returned data set, because the use aliases is deprecated.
+  alias of the returned data set, because the use of aliases is deprecated.
 o CLEANUP: writeImage() for AffymetrixCelFile no longer supports
   sample name aliases.
 
@@ -98,8 +98,8 @@ o ROBUSTNESS/BUG FIX: No longer passing '...' to NextMethod(), cf.
 
 Version: 2.6.3 [2012-10-14]
 o CLEANUP: Moved AromaUnitGcContentFile to aroma.core.
-o CLEANUP: Removed several defunct/obsolete methods and made
-  deprecated methods defunct/obsolete.
+o CLEANUP: Removed several defunct/obsolete methods and turned
+  deprecated methods into defunct/obsolete ones.
 o CLEANUP: findByChipType() for AffymetrixCdfFile no longer support
   monocell CDF file named <chipType>-monocell.CDF, and gives an 
   informative error if that is still the case.  Since December 2007,

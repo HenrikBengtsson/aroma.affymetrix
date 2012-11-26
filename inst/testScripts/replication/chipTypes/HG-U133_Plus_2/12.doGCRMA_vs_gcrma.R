@@ -87,7 +87,7 @@ toPNG(getFullName(csR), tags=c("doGCRMA_vs_gcrma"), width=800, {
   
   xlab <- expression(log[2](theta[gcrma]));
   ylab <- expression(log[2](theta[aroma.affymetrix]));
-  for (kk in seq(length=ncol(theta))) {
+  for (kk in seq_len(ncol(theta))) {
     main <- colnames(theta)[kk];
     plot(theta0[,kk], theta[,kk], pch=".", xlab=xlab, ylab=ylab, main=main);
     abline(0,1, col="blue");

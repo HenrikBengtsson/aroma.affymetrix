@@ -14,7 +14,7 @@ ds <- AffymetrixCelSet$byPath(path);
 if (nbrOfFiles(ds) == 0) {
   pathT <- system.file(path, "2.Calvin", package="AffymetrixDataTestFiles");
   pathnames <- list.files(pathT, pattern="[.]CEL$", full.names=TRUE);
-  for (ii in seq(along=pathnames)) {
+  for (ii in seq_along(pathnames)) {
     pathname <- pathnames[ii];
     pathnameD <- file.path(path, basename(pathname));
     copyFile(pathname, pathnameD);

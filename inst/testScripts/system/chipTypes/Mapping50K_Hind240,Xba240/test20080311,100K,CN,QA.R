@@ -84,13 +84,13 @@ par(mar=c(4,4,0.5,2)+0.1);
 xlim <- c(1,(ncol(res)+2));
 ylim <- c(0, 1.05*max(res, na.rm=TRUE));
 ylab <- expression(hat(sigma)==s[Delta](log2(theta/theta[R])));
-cols <- seq(length=nrow(res));
+cols <- seq_len(nrow(res));
 ltys <- rep(1, times=nrow(res));
 cols[chrX] <- "blue";
 ltys[chrX] <- 4;
 
 plot(NA, xlim=xlim, ylim=ylim, xlab="", ylab=ylab);
-for (kk in seq(length=nrow(res))) {
+for (kk in seq_len(nrow(res))) {
   chromosome <- rownames(res)[kk];
   points(res[kk,], col=cols[kk], pch=19);
   lines(res[kk,], col=cols[kk], lty=ltys[kk], lwd=2);
@@ -100,7 +100,7 @@ legend("topright", col=cols, lty=ltys, pch=19, lwd=2,
 
 
 df <- as.data.frame(res[-chrX,,drop=FALSE]);
-colnames(df) <- seq(length=nrow(df));
+colnames(df) <- seq_len(nrow(df));
 boxplot(df, ylim=ylim, ylab=ylab, xlab="Array");
 points(res[chrX,], col="blue", pch=19, cex=1.5);
 legend("bottomright", col=c("black", cols[chrX]), pch=19, lwd=2, 

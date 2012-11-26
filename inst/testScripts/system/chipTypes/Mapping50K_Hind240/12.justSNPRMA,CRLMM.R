@@ -46,9 +46,9 @@ units <- getUnitsOnChromosome(ugp, chromosome=chr);
 pos <- getPositions(ugp, units=units)/1e6;
 
 toPNG(getFullName(ces), tags=c(chrTag), {
-  layout(matrix(seq(ces), ncol=2, byrow=TRUE));
+  layout(matrix(seq_along(ces), ncol=2, byrow=TRUE));
   par(mar=c(3.5,4,1.5,1), mgp=c(1.8,0.5,0), pch=".");
-  for (ii in seq(ces)) {
+  for (ii in seq_along(ces)) {
     ce <- getFile(ces, ii);
     gc <- getFile(callSet, ii);
     data <- extractTotalAndFracB(ce, units=units, drop=TRUE);

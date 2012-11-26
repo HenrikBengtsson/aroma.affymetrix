@@ -56,7 +56,7 @@ setFullNamesTranslator(csU, function(names, ...) { sampleNamesMap[names] });
 # Validate the "unique" estimates
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 csList <- list(csM, csU);
-for (ii in seq(csU)) {
+for (ii in seq_along(csU)) {
   yList <- lapply(csList, FUN=function(cs) {
     cf <- getFile(cs, ii);
     cdf <- getCdf(cf);
@@ -91,7 +91,7 @@ str(cells);
 pos <- acpU[cells,2,drop=TRUE]; 
 
 yR <- extractMatrix(cfR, cells=cells, drop=TRUE, verbose=verbose);
-for (ii in seq(csU)) {
+for (ii in seq_along(csU)) {
   cf <- getFile(csU, ii);
   sampleName <- getName(cf);
 

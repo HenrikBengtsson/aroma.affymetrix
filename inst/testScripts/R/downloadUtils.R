@@ -266,7 +266,7 @@ downloadAffymetrixDataSet <- function(dataSet, tags=NULL, chipType=chipType, ...
     pathS <- paths[1];
     # Move all files in up one level
     pathnamesT <- gsub(pathS, path, pathnames, fixed=TRUE);
-    for (kk in seq(along=pathnames)) {
+    for (kk in seq_along(pathnames)) {
       file.rename(from=pathnames[kk], to=pathnamesT[kk]);
     }
   }

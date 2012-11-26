@@ -92,7 +92,7 @@ toPNG(getFullName(csR), tags=c("doRMA_vs_affyPLM"), width=800, {
   
   xlab <- expression(log[2](theta[affyPLM]));
   ylab <- expression(log[2](theta[aroma.affymetrix]));
-  for (kk in seq(length=ncol(theta))) {
+  for (kk in seq_len(ncol(theta))) {
     main <- colnames(theta)[kk];
     plot(theta0[,kk], theta[,kk], pch=".", xlab=xlab, ylab=ylab, main=main);
     abline(0,1, col="blue");

@@ -37,7 +37,7 @@ if (length(paths) > 0) {
   verbose && cat(verbose, paste(paths, collapse="\n"));
   
   
-  for (kk in seq(along=paths)) {
+  for (kk in seq_along(paths)) {
     path <- paths[kk];
     verbose && enter(verbose, sprintf("Root directory #%s ('%s') of %s", kk, path, length(paths)));
     removeDirectory(path, recursive=TRUE);

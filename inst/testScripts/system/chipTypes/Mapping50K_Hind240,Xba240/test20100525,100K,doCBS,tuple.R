@@ -11,7 +11,7 @@ chipTypes <- c("Mapping50K_Hind240", "Mapping50K_Xba240");
 
 nbrOfSets <- length(chipTypes);
 dsList <- vector("list", nbrOfSets);
-for (kk in seq(length=nbrOfSets)) {
+for (kk in seq_len(nbrOfSets)) {
   chipType <- chipTypes[kk];
   ds <- CnChipEffectSet$byName(dataSet, tags=tags, chipType=chipType,
                               mergeStrands=TRUE, combineAlleles=TRUE);

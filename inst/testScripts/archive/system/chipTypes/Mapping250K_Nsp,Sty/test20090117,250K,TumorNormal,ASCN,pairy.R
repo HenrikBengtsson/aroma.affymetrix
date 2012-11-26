@@ -76,7 +76,7 @@ devSet(2);
 subplots(3, ncol=1);
 par(mar=c(2,4,1,1)+0.1);
 par(ask=TRUE);
-for (kk in seq(length=ncol(C))) {
+for (kk in seq_len(ncol(C))) {
   plot(pos, C[,kk], ylim=Clim, ylab=Clab);
   abline(h=1, lty=3, col="red");
   stext(side=3, pos=0, paste(pairs[kk,], collapse="/"));
@@ -93,9 +93,9 @@ devSet(3);
 BNlab <- expression(beta[N]);
 BTlab <- expression(beta[T]);
 unitNames <- getUnitNames(cdf, units=units);
-col <- seq(length=ncol(C));
+col <- seq_len(ncol(C));
 par(ask=TRUE);
-for (kk in seq(length=nrow(C))) {
+for (kk in seq_len(nrow(C))) {
   plot(NA, xlim=Blim, ylim=Blim, xlab=BNlab, ylab=BTlab);
   stext(side=3, pos=0, unitNames[kk]);
   points(B[kk,,], col=col, pch=19);

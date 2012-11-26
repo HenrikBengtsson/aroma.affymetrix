@@ -12,7 +12,7 @@ pattern <- "downloadRawData.R$";
 pathnames <- list.files(path=path, pattern=pattern, full.names=TRUE, recursive=TRUE);
 
 nbrOfTestSets <- length(pathnames);
-for (kk in seq(length=nbrOfTestSets)) {
+for (kk in seq_len(nbrOfTestSets)) {
   pathname <- pathnames[kk];
   dropPattern <- sprintf("^%s/", path);
   testSet <- gsub(dropPattern, "", dirname(pathname));

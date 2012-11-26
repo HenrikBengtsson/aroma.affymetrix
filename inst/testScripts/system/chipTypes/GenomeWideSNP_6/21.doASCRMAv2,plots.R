@@ -180,7 +180,7 @@ toPNG(getFullName(cesN), tags=c(sampleName, "BAFDensityByTCN"), {
   plot(NA, xlim=c(0,1), ylim=c(0,3), xlab="BAF", ylab="density");
 
   # For each TCN bin...
-  for (kk in seq(along=ucuts)) {
+  for (kk in seq_along(ucuts)) {
     idxs <- whichVector(cuts == kk);
     zkk <- na.omit(B[idxs]);
     if (length(zkk) > 1) {

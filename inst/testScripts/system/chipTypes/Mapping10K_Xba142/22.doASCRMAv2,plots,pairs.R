@@ -48,7 +48,7 @@ nbrOfArrays <- ncol(theta);
 toPNG(getFullName(cesN), tags="BAFvsTheta", width=1024, {
   layout(matrix(1:nbrOfArrays, ncol=2, byrow=TRUE));
   par(mar=c(3.8,4,3,1)+0.1);
-  for (ii in seq(length=nbrOfArrays)) {
+  for (ii in seq_len(nbrOfArrays)) {
     name <- colnames(theta)[ii];
     smoothScatter(log2(theta[,ii]), freqB[,ii], 
                   xlim=tlim, ylim=Blim, xlab=tlab, ylab=Blab, main=name);

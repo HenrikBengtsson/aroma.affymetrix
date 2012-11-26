@@ -88,9 +88,9 @@ for (chipType in names(csList)) {
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Emulate list of ChipEffectSet:s where some arrays on exists in
 # one of the sets
-for (kk in seq(along=cesNList)) {
+for (kk in seq_along(cesNList)) {
   ces <- cesNList[[kk]];
-  ces <- extract(ces, setdiff(seq(ces), length(ces)+1-kk));
+  ces <- extract(ces, setdiff(seq_along(ces), length(ces)+1-kk));
   cesNList[[kk]] <- ces;
 }
 

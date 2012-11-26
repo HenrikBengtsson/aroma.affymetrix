@@ -137,10 +137,10 @@ pos <- getPositions(ugp, units=units)/1e6;
 chrTag <- sprintf("Chr%02d", chr);
 
 toPNG(getFullName(ces), tags=c(chrTag, "TCN,BAF"), aspectRatio=0.5*nbrOfArrays(ces), {
-  layout(matrix(seq(ces), ncol=1));
+  layout(matrix(seq_along(ces), ncol=1));
   par(mar=c(3.5,4,1.5,1), mgp=c(1.8,0.5,0), pch=".");
 
-  for (ii in seq(ces)) {
+  for (ii in seq_along(ces)) {
     ce <- getFile(ces, ii);
     gc <- getFile(callSet, ii);
     sampleName <- getName(ce);

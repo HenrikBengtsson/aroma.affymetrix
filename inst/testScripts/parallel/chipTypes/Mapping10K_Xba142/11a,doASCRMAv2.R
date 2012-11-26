@@ -41,7 +41,7 @@ clusterExport(cl, "dsR");
 clusterExport(cl, "verbose");
 
 # Ask the compute nodes to run AS-CRMAv2 on individual arrays
-res <- parLapply(cl, X=seq(dsR), fun=function(ii) {
+res <- parLapply(cl, X=seq_along(dsR), fun=function(ii) {
   library("aroma.affymetrix");
   verbose && enter(verbose, sprintf("Array #%d", ii));
   dsListII <- doASCRMAv2(dsR, arrays=ii);

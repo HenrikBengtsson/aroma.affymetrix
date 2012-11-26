@@ -44,7 +44,7 @@ clusterExport(cl, "dsN");
 clusterExport(cl, "verbose");
 
 # Ask the compute nodes to run CBS on individual arrays
-res <- parLapply(cl, X=seq(dsN), fun=function(ii) {
+res <- parLapply(cl, X=seq_along(dsN), fun=function(ii) {
   library("aroma.affymetrix");
   verbose && enter(verbose, sprintf("Array #%d", ii));
   dsCBS <- doCBS(dsN, arrays=ii);

@@ -56,6 +56,9 @@ setMethodS3("getAlleleProbePairs3", "AffymetrixCdfFile", function(this, units=NU
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   chipType <- getChipType(this);
   key <- list(method="getAlleleProbePairs", class=class(this)[1], version="2008-08-31", chipType=chipType, units=units, ignoreOrder=ignoreOrder);
+  if (getOption(aromaSettings, "devel/useCacheKeyInterface", FALSE)) {
+    key <- getCacheKey(this, method="getAlleleProbePairs3", chipType=chipType, units=units, ignoreOrder=ignoreOrder);
+  }
   dirs <- c("aroma.affymetrix", chipType);
   if (!force) {
     res <- loadCache(key=key, dirs=dirs);

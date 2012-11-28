@@ -346,6 +346,9 @@ setMethodS3("getData", "AffymetrixCnChpFile", function(this, units=NULL, fields=
   # Check for cached results
   key <- list(method="getData", class="AffymetrixCnChpFile", 
               header=unlist(getHeader(this)), fields=fields, units=units);
+  if (getOption(aromaSettings, "devel/useCacheKeyInterface", FALSE)) {
+    key <- getCacheKey(this, method="getData", header=unlist(getHeader(this)), fields=fields, units=units);
+  }
   dirs <- c("aroma.affymetrix", "GTC");
   res <- loadCache(key=key, dirs=dirs);
   if (!force && !is.null(res)) {

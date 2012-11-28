@@ -136,7 +136,7 @@ setMethodS3("fromDataFile", "ResidualFile", function(static, df=NULL, filename=s
 
 
 
-setMethodS3("readUnits", "ResidualFile", function(this, units=NULL, cdf=NULL, ..., force=FALSE, cache=TRUE, verbose=FALSE) {
+setMethodS3("readUnits", "ResidualFile", function(this, units=NULL, cdf=NULL, ..., force=FALSE, cache=FALSE, verbose=FALSE) {
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
 
@@ -145,6 +145,9 @@ setMethodS3("readUnits", "ResidualFile", function(this, units=NULL, cdf=NULL, ..
   key <- list(method="readUnits", class=class(this)[1], 
               pathname=getPathname(this),
               cdf=cdf, units=units, ...);
+  if (getOption(aromaSettings, "devel/useCacheKeyInterface", FALSE)) {
+    key <- getCacheKey(this, method="readUnits", pathname=getPathname(this), cdf=cdf, units=units, ...);
+  }
   id <- digest2(key);
   res <- this$.readUnitsCache[[id]];
   if (!force && !is.null(res)) {

@@ -47,6 +47,9 @@ setMethodS3("getSubsetOfCellIndices", "AffymetrixCdfFile", function(this, units=
   key <- list(method="getSubsetOfCellIndices", class=class(this)[1], 
               chipType=getChipType(this), giChecksum=giChecksum, 
               units=units, stratifyBy=stratifyBy, ...);
+  if (getOption(aromaSettings, "devel/useCacheKeyInterface", FALSE)) {
+    key <- getCacheKey(this, method="getSubsetOfCellIndices", chipType=getChipType(this), giChecksum=giChecksum, units=units, stratifyBy=stratifyBy, ...);
+  }
   dirs <- c("aroma.affymetrix", getChipType(this));
   if (!force) {
     res <- loadCache(key=key, dirs=dirs);

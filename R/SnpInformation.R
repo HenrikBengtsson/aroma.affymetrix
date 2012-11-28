@@ -20,7 +20,8 @@
 # @author
 #*/###########################################################################
 setConstructorS3("SnpInformation", function(...) {
-  this <- extend(GenericDataFile(...), "SnpInformation",
+  this <- extend(GenericDataFile(...), c("SnpInformation"
+                                             , uses("FileCacheKeyInterface")),
     "cached:.data" = NULL
   );
   if (!is.null(getPathname(this)))

@@ -65,6 +65,9 @@ setMethodS3("getAlleleCellPairs", "AffymetrixCdfFile", function(this, units=NULL
   chipType <- getChipType(this);
   key <- list(method="getAlleleCellPairs", class=class(this)[1], 
                     chipType=chipType, units=units, stratifyBy=stratifyBy);
+  if (getOption(aromaSettings, "devel/useCacheKeyInterface", FALSE)) {
+    key <- getCacheKey(this, method="getAlleleCellPairs", chipType=chipType, units=units, stratifyBy=stratifyBy);
+  }
   dirs <- c("aroma.affymetrix", chipType);
   if (!force) {
     verbose && enter(verbose, "Checking for cached results");

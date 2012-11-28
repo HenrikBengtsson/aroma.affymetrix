@@ -187,6 +187,9 @@ setMethodS3("getCellQuartets", "AffymetrixCdfFile", function(this, units=NULL, m
 
   key <- list(method="getCellQuartets", class=class(this)[1], 
               units=units, mergeGroups=mergeGroups);
+  if (getOption(aromaSettings, "devel/useCacheKeyInterface", FALSE)) {
+    key <- getCacheKey(this, method="getCellQuartets", units=units, mergeGroups=mergeGroups);
+  }
   dirs <- c("aroma.affymetrix", getChipType(this));
   if (!force) {
     cells <- loadCache(key=key, dirs=dirs);

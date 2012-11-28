@@ -1,6 +1,14 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 2.7.2 [2012-11-28]
+o ROBUSTNESS: Added the FileCacheKeyInterface to all classes directly
+  extending GenericDataFile and TabularTextFile.
+o MEMORY: readUnits() for ChipEffectFile, FirmaFile, ParameterCelFile,
+  ResidualFile, and WeightsFile and getCellIndices() for SnpChipEffectFile
+  no longer cache results in memory by default.
+
+
 Version: 2.7.1 [2012-11-26]
 o Lowered the package dependencies to aroma.light (>= 1.22.0)
   and affxparser (>= 1.26.4) so that this package can be easily

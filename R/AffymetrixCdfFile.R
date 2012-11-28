@@ -517,6 +517,9 @@ setMethodS3("getUnitTypes", "AffymetrixCdfFile", function(this, units=NULL, ...,
       # Check in file cache
       chipType <- getChipType(this);
       key <- list(method="getUnitTypes", class=class(this)[1], version="2008-09-03", chipType=chipType);
+      if (getOption(aromaSettings, "devel/useCacheKeyInterface", FALSE)) {
+        key <- getCacheKey(this, method="getUnitTypes", chipType=chipType);
+      }
       dirs <- c("aroma.affymetrix", chipType);
       if (force) {
         types <- NULL;
@@ -591,6 +594,9 @@ setMethodS3("getGroupDirections", "AffymetrixCdfFile", function(this, units=NULL
     # Check in file cache
     chipType <- getChipType(this);
     key <- list(method="getGroupDirections", class=class(this)[1], chipType=chipType);
+    if (getOption(aromaSettings, "devel/useCacheKeyInterface", FALSE)) {
+      key <- getCacheKey(this, method="getGroupDirections", chipType=chipType);
+    }
     dirs <- c("aroma.affymetrix", chipType);
     if (force) {
       groupDirections <- NULL;
@@ -741,6 +747,9 @@ setMethodS3("getCellIndices", "AffymetrixCdfFile", function(this, units=NULL, ..
   key <- list(method="getCellIndices", class=class(this)[1], 
              chipType=getChipType(this), units=units, ...,
              useNames=useNames, unlist=unlist);
+  if (getOption(aromaSettings, "devel/useCacheKeyInterface", FALSE)) {
+    key <- getCacheKey(this, method="getCellIndices", chipType=getChipType(this), units=units, ..., useNames=useNames, unlist=unlist);
+  }
 
   # This is a trick to store either to memory or file cache
   key <- digest2(key);
@@ -1094,6 +1103,9 @@ setMethodS3("identifyCells", "AffymetrixCdfFile", function(this, indices=NULL, f
     verbose && enter(verbose, "Checking cache");
     chipType <- getChipType(this);
     key <- list(method="identifyCells", class=class(this)[1], chipType=chipType, indices=indices, from=from, to=to, types=types, sort=sort);
+    if (getOption(aromaSettings, "devel/useCacheKeyInterface", FALSE)) {
+      key <- getCacheKey(this, method="identifyCells", chipType=chipType, indices=indices, from=from, to=to, types=types, sort=sort);
+    }
     comment <- sprintf("%s: %s", key$method, key$chipType);
     dirs <- c("aroma.affymetrix", chipType);
     if (!.force) {
@@ -1190,6 +1202,9 @@ setMethodS3("getFirstCellIndices", "AffymetrixCdfFile", function(this, units=NUL
   verbose && enter(verbose, "Trying to load cached results");
   chipType <- getChipType(this);
   key <- list(method="getFirstCellIndices", class=class(this)[1], chipType=chipType, stratifyBy=stratifyBy, restructor=body(this$.restructor));
+  if (getOption(aromaSettings, "devel/useCacheKeyInterface", FALSE)) {
+    key <- getCacheKey(this, method="getFirstCellIndices", chipType=chipType, stratifyBy=stratifyBy, restructor=body(this$.restructor));
+  }
   dirs <- c("aroma.affymetrix", chipType);
   res <- if (force) {
     NULL;

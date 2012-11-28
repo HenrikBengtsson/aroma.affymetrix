@@ -66,6 +66,9 @@ setMethodS3("nbrOfGroupsPerUnit", "AffymetrixCdfFile", function(this, units=NULL
     chipType <- getChipType(this);
     key <- list(method="nbrOfGroupsPerUnit", class=class(this)[1], 
                 chipType=chipType);
+    if (getOption(aromaSettings, "devel/useCacheKeyInterface", FALSE)) {
+      key <- getCacheKey(this, method="nbrOfGroupsPerUnit", chipType=chipType);
+    }
     dirs <- c("aroma.affymetrix", chipType);
     if (force) {
       sizes <- NULL;
@@ -111,6 +114,9 @@ setMethodS3("nbrOfCellsPerUnitGroup", "AffymetrixCdfFile", function(this, units=
 
   key <- list(method="nbrOfCellsPerUnitGroup", class=class(this)[1],
               chipType=chipType, useNames=useNames);
+  if (getOption(aromaSettings, "devel/useCacheKeyInterface", FALSE)) {
+    key <- getCacheKey(this, method="nbrOfCellsPerUnitGroup", chipType=chipType, useNames=useNames);
+  }
   dirs <- c("aroma.affymetrix", chipType);
   if (force) {
     counts <- NULL;
@@ -166,6 +172,9 @@ setMethodS3("nbrOfCellsPerUnit", "AffymetrixCdfFile", function(this, units=NULL,
 
   key <- list(method="nbrOfCellsPerUnit", class=class(this)[1],
               chipType=chipType, useNames=useNames);
+  if (getOption(aromaSettings, "devel/useCacheKeyInterface", FALSE)) {
+    key <- getCacheKey(this, method="nbrOfCellsPerUnit", chipType=chipType, useNames=useNames);
+  }
   dirs <- c("aroma.affymetrix", chipType);
   if (force) {
     counts <- NULL;

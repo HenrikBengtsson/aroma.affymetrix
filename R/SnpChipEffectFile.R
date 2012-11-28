@@ -48,7 +48,7 @@ setMethodS3("getParameters", "SnpChipEffectFile", function(this, ...) {
 }, protected=TRUE)
 
 
-setMethodS3("getCellIndices", "SnpChipEffectFile", function(this, units=NULL, ..., force=FALSE, .cache=TRUE, verbose=FALSE) {
+setMethodS3("getCellIndices", "SnpChipEffectFile", function(this, units=NULL, ..., force=FALSE, .cache=FALSE, verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -77,6 +77,9 @@ setMethodS3("getCellIndices", "SnpChipEffectFile", function(this, units=NULL, ..
     key <- list(method="getCellIndices", class=class(this)[1], 
                 pathname=getPathname(this),
                 chipType=chipType, params=params, units=units, ...);
+    if (getOption(aromaSettings, "devel/useCacheKeyInterface", FALSE)) {
+      key <- getCacheKey(this, method="getCellIndices", pathname=getPathname(this), chipType=chipType, params=params, units=units, ...);
+    }
     dirs <- c("aroma.affymetrix", chipType);
     id <- digest2(key);
   }
@@ -219,7 +222,7 @@ setMethodS3("mergeStrands", "SnpChipEffectFile", function(this, ...) {
 
 
 
-setMethodS3("readUnits", "SnpChipEffectFile", function(this, ..., force=FALSE, cache=TRUE, verbose=FALSE) {
+setMethodS3("readUnits", "SnpChipEffectFile", function(this, ..., force=FALSE, cache=FALSE, verbose=FALSE) {
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
 

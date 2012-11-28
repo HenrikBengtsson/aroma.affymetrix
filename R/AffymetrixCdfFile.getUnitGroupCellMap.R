@@ -75,6 +75,9 @@ setMethodS3("getUnitGroupCellMap", "AffymetrixCdfFile", function(this, units=NUL
   verbose && enter(verbose, "Checking cache");
   key <- list(method="getUnitGroupCellMap", class=class(this)[1], 
                    chipType=chipType, units=units, retNames=retNames, ...); 
+  if (getOption(aromaSettings, "devel/useCacheKeyInterface", FALSE)) {
+    key <- getCacheKey(this, method="getUnitGroupCellMap", chipType=chipType, units=units, retNames=retNames, ...);
+  }
   dirs <- c("aroma.affymetrix", chipType); 
   map <- NULL;
   if (!force) 
@@ -191,6 +194,9 @@ setMethodS3("getUnitGroupCellChromosomePositionMap", "AffymetrixCdfFile", functi
               class=class(this)[1], 
               chipType=chipType, units=units, ugcMap=ugcMap, 
               chromosomes=chromosomes, orderByPosition=orderByPosition);
+  if (getOption(aromaSettings, "devel/useCacheKeyInterface", FALSE)) {
+    key <- getCacheKey(this, method="getUnitGroupCellChromosomePositionMap", chipType=chipType, units=units, ugcMap=ugcMap, chromosomes=chromosomes, orderByPosition=orderByPosition);
+  }
   dirs <- c("aroma.affymetrix", chipType);
   if (!force) {
     map <- loadCache(key=key, dirs=dirs); 

@@ -45,7 +45,8 @@
 #*/###########################################################################
 setConstructorS3("AffymetrixProbeTabFile", function(...) {
   extend(TabularTextFile(..., mustExist=TRUE),
-                  c("AffymetrixProbeTabFile", uses("AromaPlatformInterface")),
+                  c("AffymetrixProbeTabFile", uses("AromaPlatformInterface"),
+                                              uses("FileCacheKeyInterface")),
     ".cdf" = NULL,
     "cached:.indexToRowMap" = NULL
   )

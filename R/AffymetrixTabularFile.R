@@ -1,6 +1,7 @@
 setConstructorS3("AffymetrixTabularFile", function(...) {
   extend(TabularTextFile(...), c("AffymetrixTabularFile", 
-                                          uses("AromaPlatformInterface")));
+              uses("AromaPlatformInterface"), uses("FileCacheKeyInterface"))
+  );
 })
 
 

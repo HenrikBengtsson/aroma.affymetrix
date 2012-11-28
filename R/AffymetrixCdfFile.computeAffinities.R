@@ -100,6 +100,9 @@ setMethodS3("computeAffinities", "AffymetrixCdfFile", function(this, safe=TRUE, 
   # Checking cache
   key <- list(method="computeAffinities", class=class(this)[1], 
               chipTypeFull=chipTypeFull, version="2009-05-09");
+  if (getOption(aromaSettings, "devel/useCacheKeyInterface", FALSE)) {
+    key <- getCacheKey(this, method="computeAffinities", chipTypeFull=chipTypeFull);
+  }
   dirs <- c("aroma.affymetrix", chipTypeFull);
   if (!force) {
     res <- loadCache(key=key, dirs=dirs);
@@ -399,6 +402,9 @@ setMethodS3("computeAffinitiesByACS", "AffymetrixCdfFile", function(this, ..., m
   # Checking cache
   key <- list(method="computeAffinities", class=class(this)[1], 
               chipType=chipTypeS, version="2010-09-29");
+  if (getOption(aromaSettings, "devel/useCacheKeyInterface", FALSE)) {
+    key <- getCacheKey(this, method="computeAffinitiesByACS", chipType=chipTypeS);
+  }
   dirs <- c("aroma.affymetrix", chipTypeS);
   if (!force) {
     res <- loadCache(key=key, dirs=dirs);

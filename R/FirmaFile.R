@@ -127,7 +127,7 @@ original CDF. NOTE: This will take several minutes or more!");
 
 
 setMethodS3("readUnits", "FirmaFile", function(this, units=NULL, cdf=NULL,
-..., force=FALSE, cache=TRUE, verbose=FALSE) {
+..., force=FALSE, cache=FALSE, verbose=FALSE) {
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
 
@@ -135,6 +135,9 @@ setMethodS3("readUnits", "FirmaFile", function(this, units=NULL, cdf=NULL,
   key <- list(method="readUnits", class=class(this)[1],
               pathname=getPathname(this),
               cdf=cdf, units=units, ...);
+  if (getOption(aromaSettings, "devel/useCacheKeyInterface", FALSE)) {
+    key <- getCacheKey(this, method="readUnits", pathname=getPathname(this), cdf=cdf, units=units, ...);
+  }
   id <- digest2(key);
   res <- this$.readUnitsCache[[id]];
   if (!force && !is.null(res)) {

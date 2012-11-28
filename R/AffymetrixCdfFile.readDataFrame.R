@@ -61,6 +61,9 @@ setMethodS3("readDataFrame", "AffymetrixCdfFile", function(this, units=NULL, fie
   args <- args[keep];
   key <- list(method="readDataFrame", class=class(this)[1],
               chipType=getChipType(this, fullname=TRUE));
+  if (getOption(aromaSettings, "devel/useCacheKeyInterface", FALSE)) {
+    key <- getCacheKey(this, method="readDataFrame", chipType=getChipType(this, fullname=TRUE));
+  }
   key <- c(key, args);
   verbose && str(verbose, key);
   dirs <- c("aroma.affymetrix", getChipType(this, fullname=TRUE));

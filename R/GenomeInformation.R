@@ -21,7 +21,8 @@
 # @author
 #*/###########################################################################
 setConstructorS3("GenomeInformation", function(..., .verify=TRUE) {
-  extend(GenericDataFile(...), "GenomeInformation",
+  extend(GenericDataFile(...), c("GenomeInformation",
+                                               uses("FileCacheKeyInterface")),
     "cached:.data"=NULL,
     "cached:.chromosomeStats"=NULL
   );

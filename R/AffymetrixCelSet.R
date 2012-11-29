@@ -648,7 +648,7 @@ setMethodS3("byPath", "AffymetrixCelSet", function(static, path, cdf=NULL, patte
   # Look for cached results (useful for extremely large data set)
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   key <- list(method="byPath", class=class(static)[1], path=path, pattern=pattern, cdf=cdf, checkChipType=checkChipType, ..., fileClass=fileClass);
-  dirs <- "aroma.affymetrix";
+  dirs <- c("aroma.affymetrix", "dataSets", class(static)[1]);
   res <- loadCache(key=key, dirs=dirs);
   if (!force && !is.null(res)) {
     verbose && cat(verbose, "Found cached results");
@@ -1238,6 +1238,9 @@ setMethodS3("getUnitGroupCellMap", "AffymetrixCelSet", function(this, ...) {
 
 ############################################################################
 # HISTORY:
+# 2012-11-28
+# o CLARIFICATION: Now the cache path used by byPath() for AffymetrixCelSet
+#   includes "dataSets" and <staticClassName>.
 # 2012-11-20
 # o CLEANUP: Deprecated "[" and "[[", because they should be used to
 #   subset files and not units.

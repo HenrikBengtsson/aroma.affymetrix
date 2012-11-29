@@ -243,18 +243,20 @@ downloadGeoRawDataFiles <- function(..., sampleNames, skip=TRUE) {
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Affymetrix
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-downloadAffymetrixFile <- function(pathname, ..., urlRoot=Sys.getenv("AFFY_URLROOT", "http://www.affymetrix.com/Auth"), skip=TRUE) {
+downloadAffymetrixFile <- function(filename, path=NULL, ..., urlRoot=Sys.getenv("AFFY_URLROOT", "http://www.affymetrix.com/Auth"), skip=TRUE) {
+  pathname <- Arguments$getReadablePathname(filename, path=path, mustExist=FALSE);
   filename <- basename(pathname);
+  filename <- Arguments$getFilename(filename);
   url <- file.path(urlRoot, pathname);
   downloadFile(url, filename=filename, path="downloads/", skip=skip);
 } # downloadAffymetrixFile()
 
 
-downloadAffymetrixNetAffxCsvFile <- function(filename, ..., skip=TRUE) {
-  # Argument 'filename':
+downloadAffymetrixNetAffxCsvFile <- function(pathname, ..., skip=TRUE) {
+  filename <- basename(pathname);
   filename <- Arguments$getFilename(filename);
   pattern <- "^([^.]*)[.]((cn[.])*na[0-9]{2})[.].*.csv$";
-  stopifnot(regexpr(pattern, filename) != -1);
+  stopifnot(regexpr(pattern, filename) != -1L);
 
   # Infer chip type and NA tag
   chipType <- gsub(pattern, "\\1", filename);
@@ -273,8 +275,8 @@ downloadAffymetrixNetAffxCsvFile <- function(filename, ..., skip=TRUE) {
   path <- Arguments$getWritablePath(path);
 
   # Download file
-  filenameZ <- sprintf("%s.zip", filename);
-  pathnameZ <- downloadAffymetrixFile(file.path(srcPath, filenameZ));
+  pathnameZ <- sprintf("%s.zip", pathname);
+  pathnameZ <- downloadAffymetrixFile(pathnameZ, ...);
 
   # Unzip to destination
   unzip(pathnameZ, exdir=path);
@@ -315,6 +317,8 @@ downloadAffymetrixDataSet <- function(dataSet, tags=NULL, chipType=chipType, ...
 
 ############################################################################
 # HISTORY:
+# 2012-11-29
+# o Added argument 'path' to downloadAffymetrixFile().
 # 2012-11-28
 # o Added downloadAffymetrixNetAffxCsvFile().
 # 2012-09-12

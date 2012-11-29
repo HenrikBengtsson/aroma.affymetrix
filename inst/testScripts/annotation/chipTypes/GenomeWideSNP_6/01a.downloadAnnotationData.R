@@ -21,10 +21,11 @@ pathname <- downloadCDF(ar, chipType, tags=tags);
 verbose && cat(verbose, "CDF: ", pathname);
 
 # Affymetrix NetAffx CSV file
-pathname <- downloadAffymetrixNetAffxCsvFile("GenomeWideSNP_6.na32.annot.csv");
+path <- "path/analysis/downloads/na32/genotyping/";
+pathname <- downloadAffymetrixNetAffxCsvFile("GenomeWideSNP_6.na32.annot.csv", path=path);
 verbose && cat(verbose, "NetAffx CSV: ", pathname);
 
-pathname <- downloadAffymetrixNetAffxCsvFile("GenomeWideSNP_6.cn.na32.annot.csv");
+pathname <- downloadAffymetrixNetAffxCsvFile("GenomeWideSNP_6.cn.na32.annot.csv", path=path);
 verbose && cat(verbose, "NetAffx CN CSV: ", pathname);
 
 verbose && exit(verbose);

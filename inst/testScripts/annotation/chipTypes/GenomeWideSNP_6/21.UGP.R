@@ -55,13 +55,7 @@ print(csvList);
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 tags <- sprintf("na%s,%s,%s%s", naVersion, genomeVersion, user, datestamp);
 tags <- c("TEST-ONLY", tags);
-ugp <- NULL;
-tryCatch({
-  ugp <- AromaUgpFile$byChipType(getChipType(cdf), tags=tags);
-}, error = function(ex) {})
-if (is.null(ugp)) {
-  ugp <- AromaUgpFile$allocateFromCdf(cdf, tags=tags);
-}
+ugp <- AromaUgpFile$allocateFromCdf(cdf, tags=tags);
 print(ugp);
 
 

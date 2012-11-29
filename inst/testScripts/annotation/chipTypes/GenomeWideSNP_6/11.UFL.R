@@ -56,13 +56,7 @@ print(csvList);
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 tags <- sprintf("na%s,%s,%s%s", naVersion, genomeVersion, user, datestamp);
 tags <- c("TEST-ONLY", tags);
-ufl <- NULL;
-tryCatch({
-  ufl <- AromaUflFile$byChipType(getChipType(cdf), tags=tags);
-}, error = function(ex) {})
-if (is.null(ufl)) {
-  ufl <- AromaUflFile$allocateFromCdf(cdf, tags=tags, nbrOfEnzymes=nbrOfEnzymes);
-}
+ufl <- AromaUflFile$allocateFromCdf(cdf, tags=tags, nbrOfEnzymes=nbrOfEnzymes);
 print(ufl);
 
 for (kk in seq(along=csvList)) {

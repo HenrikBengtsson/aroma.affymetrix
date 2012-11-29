@@ -96,7 +96,8 @@ setMethodS3("getCellIndices", "CnProbeAffinityFile", function(this, ..., unlist=
       }
       groups;
     })
-  }
+  } # if (combineAlleles)
+
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Unlist?

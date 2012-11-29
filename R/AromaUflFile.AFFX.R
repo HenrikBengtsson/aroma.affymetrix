@@ -1,14 +1,17 @@
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # BEGIN: AFFX
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-setMethodS3("allocateFromCdf", "AromaUflFile", function(static, cdf, nbrOfEnzymes=1, ...) {
+setMethodS3("allocateFromCdf", "AromaUflFile", function(static, cdf, nbrOfEnzymes=1L, ...) {
+  # Argument 'cdf':
+  cdf <- Arguments$getInstanceOf(cdf, "AffymetrixCdfFile");
+
   # Argument 'nbrOfEnzymes':
   nbrOfEnzymes <- Arguments$getInteger(nbrOfEnzymes, range=c(1,10));
 
   types <- rep("integer", times=nbrOfEnzymes);
   sizes <- rep(2L, times=nbrOfEnzymes);
 
-  NextMethod("allocateFromCdf", cdf=cdf, types=types, sizes=sizes);
+  NextMethod("allocateFromCdf", types=types, sizes=sizes);
 }, static=TRUE)
 
 

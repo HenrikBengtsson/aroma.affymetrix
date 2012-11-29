@@ -1,6 +1,18 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 2.7.3 [2012-11-28]
+o ROBUSTNESS: Added system test scripts for building UGP and UFL
+  file from Affymetrix CSF and NetAffx CSV files for GenomeWideSNP_6.
+o BUG FIX: Static allocateFromCdf() for AromaUfcFile and AromaUflFile
+  would throw errors on "Cannot retrieve writable file/directory 
+  because it is NA.".  This turns out to be related to the trap
+  reported in R-devel thread 'Do *not* pass '...' to NextMethod() - 
+  it'll do it for you; missing documentation, a bug or just me?' 
+  on Oct 16, 2012.  Thanks Ioana Cutcutache (Duke-NUS in Singapore)
+  for reporting on this.
+
+
 Version: 2.7.2 [2012-11-28]
 o ROBUSTNESS: Added the FileCacheKeyInterface to all classes directly
   extending GenericDataFile and TabularTextFile.

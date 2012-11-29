@@ -1,8 +1,11 @@
 setMethodS3("allocateFromCdf", "AromaUnitGcContentFile", function(static, cdf, ...) {
+  # Argument 'cdf':
+  cdf <- Arguments$getInstanceOf(cdf, "AffymetrixCdfFile");
+
   types <- "double";
   sizes <- 4L;
 
-  res <- NextMethod("allocateFromCdf", cdf=cdf, types=types, sizes=sizes);
+  res <- NextMethod("allocateFromCdf", types=types, sizes=sizes);
   res[,1] <- as.double(NA);
 
   res;

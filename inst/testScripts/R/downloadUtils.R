@@ -250,6 +250,43 @@ downloadAffymetrixFile <- function(pathname, ..., urlRoot=Sys.getenv("AFFY_URLRO
 } # downloadAffymetrixFile()
 
 
+downloadAffymetrixNetAffxCsvFile <- function(filename, ..., skip=TRUE) {
+  # Argument 'filename':
+  filename <- Arguments$getFilename(filename);
+  pattern <- "^([^.]*)[.]((cn[.])*na[0-9]{2})[.].*.csv$";
+  stopifnot(regexpr(pattern, filename) != -1);
+
+  # Infer chip type and NA tag
+  chipType <- gsub(pattern, "\\1", filename);
+  naTag <- gsub(pattern, "\\2", filename);
+
+  tags <- sprintf(".%s", naTag);
+
+  # Already available?
+  pathname <- AffymetrixNetAffxCsvFile$findByChipType(chipType, tags=tags);
+  if (skip && isFile(pathname)) {
+    return(pathname);
+  }
+
+  # Destination path
+  path <- file.path("annotationData", "chipTypes", chipType);
+  path <- Arguments$getWritablePath(path);
+
+  # Download file
+  filenameZ <- sprintf("%s.zip", filename);
+  pathnameZ <- downloadAffymetrixFile(file.path(srcPath, filenameZ));
+
+  # Unzip to destination
+  unzip(pathnameZ, exdir=path);
+
+  # Assert
+  pathname <- AffymetrixNetAffxCsvFile$findByChipType(chipType, tags=tags);
+  stopifnot(!is.null(pathname));
+
+  pathname;
+} # downloadAffymetrixNetAffxCsvFile()
+
+
 downloadAffymetrixDataSet <- function(dataSet, tags=NULL, chipType=chipType, ..., skip=TRUE) {
   path <- getRawDataSetPath(dataSet, chipType=chipType);
   ds <- getDataSet(path);
@@ -278,6 +315,8 @@ downloadAffymetrixDataSet <- function(dataSet, tags=NULL, chipType=chipType, ...
 
 ############################################################################
 # HISTORY:
+# 2012-11-28
+# o Added downloadAffymetrixNetAffxCsvFile().
 # 2012-09-12
 # o BUG FIX: downloadGeoRawDataFile(..., gunzip=TRUE) would give an
 #   error that it could not gunzip the downloaded file, iff the filename

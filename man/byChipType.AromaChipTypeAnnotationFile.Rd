@@ -23,13 +23,14 @@
  Defines an AromaChipTypeAnnotationFile object by chip type.
 }
 
-\synopsis{byChipType.AromaChipTypeAnnotationFile(static, chipType, tags=NULL, ...)}
-\usage{AromaChipTypeAnnotationFile$byChipType(chipType, tags=NULL, ...)}
+\synopsis{byChipType.AromaChipTypeAnnotationFile(static, chipType, tags=NULL, ..., verbose=FALSE)}
+\usage{AromaChipTypeAnnotationFile$byChipType(chipType, tags=NULL, ..., verbose=FALSE)}
 
 \arguments{
  \item{chipType}{A \code{\link[base]{character}} string.}
  \item{tags}{An optional \code{\link[base]{character}} \code{\link[base]{vector}} of tags.}
  \item{...}{Not used.}
+ \item{verbose}{See \code{\link[R.utils]{Verbose}}.}
 }
 
 \value{

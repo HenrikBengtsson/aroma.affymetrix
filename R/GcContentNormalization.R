@@ -96,7 +96,7 @@ setMethodS3("getOutputDataSet00", "GcContentNormalization", function(this, ...) 
   }
 
   # Let the set update itself
-  update2(res, verbose=less(verbose, 1));
+  update2(res);
 
   res;
 }, protected=TRUE)
@@ -480,6 +480,9 @@ setMethodS3("process", "GcContentNormalization", function(this, ..., force=FALSE
 
 ############################################################################
 # HISTORY:
+# 2012-11-29
+# o getOutputDataSet00() for GcContentNormalization called the global
+#   'verbose'.
 # 2009-03-22
 # o Updated to work with AromaUgcFile:s as well.
 # o Added protected getGcContent() method.

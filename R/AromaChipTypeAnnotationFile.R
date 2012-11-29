@@ -135,6 +135,7 @@ setMethodS3("fromFile", "AromaChipTypeAnnotationFile", function(static, filename
 #  \item{chipType}{A @character string.}
 #  \item{tags}{An optional @character @vector of tags.}
 #  \item{...}{Not used.}
+#  \item{verbose}{See @see "R.utils::Verbose".}
 # }
 #
 # \value{
@@ -151,11 +152,24 @@ setMethodS3("fromFile", "AromaChipTypeAnnotationFile", function(static, filename
 # @keyword IO
 # @keyword programming
 #*/###########################################################################
-setMethodS3("byChipType", "AromaChipTypeAnnotationFile", function(static, chipType, tags=NULL, ...) {
+setMethodS3("byChipType", "AromaChipTypeAnnotationFile", function(static, chipType, tags=NULL, ..., verbose=FALSE) {
+  # Argument 'verbose':
+  verbose <- Arguments$getVerbose(verbose);
+  if (verbose) {
+    pushState(verbose);
+    on.exit(popState(verbose));
+  }
+
+
+  verbose && enter(verbose, "Setting up ", class(static)[1L], " by chip type");
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Search for a matching annotation file
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  pathname <- findByChipType(static, chipType, tags=tags);
+  pathname <- findByChipType(static, chipType, tags=tags, verbose=less(verbose, 50));
+  verbose && cat(verbose, "Located file:");
+
+  verbose && print(verbose, pathname);
 
   if (is.null(pathname)) {
     ext <- getDefaultExtension(static);
@@ -176,6 +190,8 @@ setMethodS3("byChipType", "AromaChipTypeAnnotationFile", function(static, chipTy
 
   res <- fromFile(static, filename=pathname, path=NULL, ...);
   verbose && print(verbose, res);
+
+  verbose && exit(verbose);
 
   res;
 }, static=TRUE)
@@ -284,6 +300,8 @@ setMethodS3("getChipType", "AromaChipTypeAnnotationFile", abstract=TRUE);
 
 ############################################################################
 # HISTORY:
+# 2012-11-29
+# o byChipType() for AromaChipTypeAnnotationFile called global 'verbose'.
 # 2012-10-18
 # o Now as.character() for AromaChipTypeAnnotationFile reports the file
 #   size as "24.66 MB (25853850 bytes)" and not just as "24.66 MB".

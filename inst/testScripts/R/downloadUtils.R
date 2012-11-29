@@ -243,16 +243,19 @@ downloadGeoRawDataFiles <- function(..., sampleNames, skip=TRUE) {
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Affymetrix
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-downloadAffymetrixFile <- function(filename, path=NULL, ..., urlRoot=Sys.getenv("AFFY_URLROOT", "http://www.affymetrix.com/Auth"), skip=TRUE) {
-  pathname <- Arguments$getReadablePathname(filename, path=path, mustExist=FALSE);
+downloadAffymetrixFile <- function(pathname, ..., urlRoot=Sys.getenv("AFFY_URLROOT", "http://www.affymetrix.com/Auth"), skip=TRUE) {
+  # Argument 'pathname':
   filename <- basename(pathname);
   filename <- Arguments$getFilename(filename);
+
+  # Download URL
   url <- file.path(urlRoot, pathname);
   downloadFile(url, filename=filename, path="downloads/", skip=skip);
 } # downloadAffymetrixFile()
 
 
 downloadAffymetrixNetAffxCsvFile <- function(pathname, ..., skip=TRUE) {
+  # Argument 'pathname':
   filename <- basename(pathname);
   filename <- Arguments$getFilename(filename);
   pattern <- "^([^.]*)[.]((cn[.])*na[0-9]{2})[.].*.csv$";
@@ -265,9 +268,9 @@ downloadAffymetrixNetAffxCsvFile <- function(pathname, ..., skip=TRUE) {
   tags <- sprintf(".%s", naTag);
 
   # Already available?
-  pathname <- AffymetrixNetAffxCsvFile$findByChipType(chipType, tags=tags);
-  if (skip && isFile(pathname)) {
-    return(pathname);
+  pathnameD <- AffymetrixNetAffxCsvFile$findByChipType(chipType, tags=tags);
+  if (skip && isFile(pathnameD)) {
+    return(pathnameD);
   }
 
   # Destination path
@@ -282,10 +285,10 @@ downloadAffymetrixNetAffxCsvFile <- function(pathname, ..., skip=TRUE) {
   unzip(pathnameZ, exdir=path);
 
   # Assert
-  pathname <- AffymetrixNetAffxCsvFile$findByChipType(chipType, tags=tags);
-  stopifnot(!is.null(pathname));
+  pathnameD <- AffymetrixNetAffxCsvFile$findByChipType(chipType, tags=tags);
+  stopifnot(!is.null(pathnameD));
 
-  pathname;
+  pathnameD;
 } # downloadAffymetrixNetAffxCsvFile()
 
 

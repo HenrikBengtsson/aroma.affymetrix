@@ -218,7 +218,7 @@
   getCellIndices.ExonProbeAffinityFile getCellIndices.ExonRmaPlm
   getCellIndices.FirmaFile getCellIndices.FirmaSet
   getCellIndices.ProbeAffinityFile getCellIndices.ResidualFile
-  getCellIndices.ResidualSet getCellIndices.SnpChipEffectFile
+  getCellIndices.ResidualSet 
   getCellIndices.SnpPlm getCellIndices.SnpProbeAffinityFile
   getCellIndices.WeightsFile getCellIndices.WeightsSet getCellMap
   getCellMap.FirmaFile getCellMap.ResidualFile getCellMap.WeightsFile

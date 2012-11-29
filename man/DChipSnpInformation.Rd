@@ -23,9 +23,13 @@
 \code{~~~~~~~|}\cr
 \code{~~~~~~~+--}\code{\link[R.filesets]{GenericDataFile}}\cr
 \code{~~~~~~~~~~~~|}\cr
-\code{~~~~~~~~~~~~+--}\code{\link[aroma.affymetrix]{SnpInformation}}\cr
+\code{~~~~~~~~~~~~+--}\code{\link[aroma.core]{CacheKeyInterface}}\cr
 \code{~~~~~~~~~~~~~~~~~|}\cr
-\code{~~~~~~~~~~~~~~~~~+--}\emph{\code{DChipSnpInformation}}\cr
+\code{~~~~~~~~~~~~~~~~~+--}\code{\link[aroma.core]{FileCacheKeyInterface}}\cr
+\code{~~~~~~~~~~~~~~~~~~~~~~|}\cr
+\code{~~~~~~~~~~~~~~~~~~~~~~+--}\code{\link[aroma.affymetrix]{SnpInformation}}\cr
+\code{~~~~~~~~~~~~~~~~~~~~~~~~~~~|}\cr
+\code{~~~~~~~~~~~~~~~~~~~~~~~~~~~+--}\emph{\code{DChipSnpInformation}}\cr
 
 \bold{Directly known subclasses:}\cr
 \cr
@@ -57,14 +61,20 @@ extends \emph{\link[aroma.affymetrix]{SnpInformation}}\cr
  \bold{Methods inherited from SnpInformation}:\cr
 as.character, byChipType, fromCdf, fromDataSet, getChipType, getData, getFields, getFragmentLengths, getFragmentStarts, getFragmentStops, isCompatibleWithCdf, nbrOfEnzymes, nbrOfUnits, readDataFrame, verify
 
+ \bold{Methods inherited from FileCacheKeyInterface}:\cr
+getCacheKey
+
+ \bold{Methods inherited from CacheKeyInterface}:\cr
+getCacheKey
+
  \bold{Methods inherited from GenericDataFile}:\cr
-getParentName, compareChecksum, copyTo, equals, fromFile, getAttribute, getAttributes, getChecksum, getCreatedOn, getDefaultFullName, getExtension, getExtensionPattern, getFilename, getFilenameExtension, getFileSize, getFileType, getLastAccessedOn, getLastModifiedOn, getOutputExtension, getPath, getPathname, gunzip, gzip, hasBeenModified, isFile, readChecksum, renameTo, renameToUpperCaseExt, setAttribute, setAttributes, setAttributesBy, setAttributesByTags, setExtensionPattern, testAttributes, validate, validateChecksum, writeChecksum
+getParentName, as.character, clone, compareChecksum, copyTo, equals, fromFile, getAttribute, getAttributes, getChecksum, getCreatedOn, getDefaultFullName, getExtension, getExtensionPattern, getFilename, getFilenameExtension, getFileSize, getFileType, getLastAccessedOn, getLastModifiedOn, getOutputExtension, getPath, getPathname, gunzip, gzip, hasBeenModified, isFile, readChecksum, renameTo, renameToUpperCaseExt, setAttribute, setAttributes, setAttributesBy, setAttributesByTags, setExtensionPattern, testAttributes, validate, validateChecksum, writeChecksum
 
  \bold{Methods inherited from FullNameInterface}:\cr
 appendFullNameTranslator, appendFullNameTranslatorBycharacter, appendFullNameTranslatorBydata.frame, appendFullNameTranslatorByfunction, appendFullNameTranslatorBylist, appendFullNameTranslatorByNULL, appendFullNameTranslatorByTabularTextFile, appendFullNameTranslatorByTabularTextFileSet, clearFullNameTranslator, clearListOfFullNameTranslators, getDefaultFullName, getFullName, getFullNameTranslator, getListOfFullNameTranslators, getName, getTags, hasTag, hasTags, setFullName, setFullNameTranslator, setListOfFullNameTranslators, setName, setTags, updateFullName
 
  \bold{Methods inherited from Object}:\cr
-asThis, $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save, print
+asThis, $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save
 
 
  }

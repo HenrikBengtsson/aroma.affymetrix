@@ -136,22 +136,23 @@ setMethodS3("updateUnits", "FirmaSet", function(this, units=NULL, cdf=NULL, data
 
   # Update each file one by one
   arrays <- seq_along(this);
-  nbrOfArrays <- length(this);
+  nbrOfArrays <- length(arrays);
   verbose && enter(verbose, "Updating ", nbrOfArrays, " FIRMA result files");
 
-  names <- getNames(this);
-
-  verbose && enter(verbose, "Making sure the files are updated in lexicographic order");
-  # Reorder such that the file with the "last" name is saved last
-  fullnames <- getFullNames(this);
-  o <- order(fullnames, decreasing=FALSE);
-  arrays <- arrays[o];
-  verbose && str(verbose, arrays);
-  verbose && cat(verbose, "Last array: ", fullnames[arrays[nbrOfArrays]]);
-  rm(fullnames, o);
-  verbose && exit(verbose);
+  if (nbrOfArrays > 1L) {
+    verbose && enter(verbose, "Making sure the files are updated in lexicographic order");
+    # Reorder such that the file with the "last" name is saved last
+    fullnames <- getFullNames(this);
+    o <- order(fullnames, decreasing=FALSE);
+    arrays <- arrays[o];
+    verbose && str(verbose, arrays);
+    verbose && cat(verbose, "Last array: ", fullnames[arrays[nbrOfArrays]]);
+    rm(fullnames, o);
+    verbose && exit(verbose);
+  }
 
   verbose <- less(verbose);
+  names <- getNames(this);
   for (ii in arrays) {
     verbose && enter(verbose, sprintf("Array #%d of %d: %s", 
                                        ii, nbrOfArrays, names[ii]));

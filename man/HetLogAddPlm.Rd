@@ -31,13 +31,13 @@
 \code{~~~~~~~~~~~~~~~~~~~~~~~~~~~|}\cr
 \code{~~~~~~~~~~~~~~~~~~~~~~~~~~~+--}\code{\link[aroma.affymetrix]{RmaPlm}}\cr
 \code{~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|}\cr
-\code{~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~+--}\code{HetLogAddPlm}\cr
+\code{~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~+--}\emph{\code{HetLogAddPlm}}\cr
 
 \bold{Directly known subclasses:}\cr
-\link[aroma.affymetrix]{HetLogAddCnPlm}, \link[aroma.affymetrix]{HetLogAddSnpPlm}\cr
+\emph{\link[aroma.affymetrix]{HetLogAddCnPlm}}, \emph{\link[aroma.affymetrix]{HetLogAddSnpPlm}}\cr
 
-public static class \bold{HetLogAddPlm}\cr
-extends \link[aroma.affymetrix]{RmaPlm}\cr
+public abstract static class \bold{HetLogAddPlm}\cr
+extends \emph{\link[aroma.affymetrix]{RmaPlm}}\cr
 
 
 
@@ -73,10 +73,10 @@ findUnitsTodo, getAsteriskTags, getFitSingleCellUnitFunction, getParameters
 as.character, fit, getAlias, getAsteriskTags, getDataSet, getFullName, getName, getParameterSet, getPath, getRootPath, getTags, setAlias, setTags
 
  \bold{Methods inherited from ParametersInterface}:\cr
-getParameters, getParametersAsString
+getParameters, getParametersAsString, getParameterSets
 
  \bold{Methods inherited from Object}:\cr
-asThis, $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save, print
+asThis, $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save
 
 
  }

@@ -1,6 +1,11 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 2.7.4 [2012-11-29]
+o ROBUSTNESS: updateUnits() for ResidualSet did not update the files
+  in lexicographic order as claimed.
+
+
 Version: 2.7.3 [2012-11-28]
 o ROBUSTNESS: Added system test scripts for building UGP and UFL
   file from Affymetrix CSF and NetAffx CSV files for GenomeWideSNP_6.
@@ -17,8 +22,8 @@ Version: 2.7.2 [2012-11-28]
 o ROBUSTNESS: Added the FileCacheKeyInterface to all classes directly
   extending GenericDataFile and TabularTextFile.
 o MEMORY: readUnits() for ChipEffectFile, FirmaFile, ParameterCelFile,
-  ResidualFile, and WeightsFile and getCellIndices() for SnpChipEffectFile
-  no longer cache results in memory by default.
+  ResidualFile, and WeightsFile no longer cache results in memory 
+  by default.
 
 
 Version: 2.7.1 [2012-11-26]

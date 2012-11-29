@@ -200,19 +200,20 @@ setMethodS3("updateUnits", "ChipEffectSet", function(this, units=NULL, cdf=NULL,
   nbrOfArrays <- length(arrays);
   verbose && cat(verbose, "Number of files: ", nbrOfArrays);
 
-  names <- getNames(this);
-
-  verbose && enter(verbose, "Making sure the files are updated in lexicographic order");
-  # Reorder such that the file with the "last" name is saved last
-  fullnames <- getFullNames(this);
-  o <- order(fullnames, decreasing=FALSE);
-  arrays <- arrays[o];
-  verbose && str(verbose, arrays);
-  verbose && cat(verbose, "Last array: ", fullnames[arrays[nbrOfArrays]]);
-  rm(fullnames, o);
-  verbose && exit(verbose);
+  if (nbrOfArrays > 1L) {
+    verbose && enter(verbose, "Making sure the files are updated in lexicographic order");
+    # Reorder such that the file with the "last" name is saved last
+    fullnames <- getFullNames(this);
+    o <- order(fullnames, decreasing=FALSE);
+    arrays <- arrays[o];
+    verbose && str(verbose, arrays);
+    verbose && cat(verbose, "Last array: ", fullnames[arrays[nbrOfArrays]]);
+    rm(fullnames, o);
+    verbose && exit(verbose);
+  }
 
   verbose <- less(verbose);
+  names <- getNames(this);
   for (ii in arrays) {
     verbose && enter(verbose, sprintf("Array #%d of %d ('%s')",
                                          ii, nbrOfArrays, names[ii]));

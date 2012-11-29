@@ -24,7 +24,7 @@
 \code{~~~~~~~+--}\code{CnPlm}\cr
 
 \bold{Directly known subclasses:}\cr
-\link[aroma.affymetrix]{AffineCnPlm}, \link[aroma.affymetrix]{AvgCnPlm}, \link[aroma.affymetrix]{HetLogAddCnPlm}, \link[aroma.affymetrix]{MbeiCnPlm}, \link[aroma.affymetrix]{RmaCnPlm}\cr
+\emph{\link[aroma.affymetrix]{AffineCnPlm}}, \emph{\link[aroma.affymetrix]{AvgCnPlm}}, \emph{\link[aroma.affymetrix]{HetLogAddCnPlm}}, \emph{\link[aroma.affymetrix]{MbeiCnPlm}}, \emph{\link[aroma.affymetrix]{RmaCnPlm}}\cr
 
 public class \bold{CnPlm}\cr
 extends \link[aroma.affymetrix]{SnpPlm}\cr

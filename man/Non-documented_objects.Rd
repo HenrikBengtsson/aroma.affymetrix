@@ -460,7 +460,6 @@
 \alias{getCellIndices.ProbeAffinityFile}
 \alias{getCellIndices.ResidualFile}
 \alias{getCellIndices.ResidualSet}
-\alias{getCellIndices.SnpChipEffectFile}
 \alias{getCellIndices.SnpPlm}
 \alias{getCellIndices.SnpProbeAffinityFile}
 \alias{getCellIndices.WeightsFile}

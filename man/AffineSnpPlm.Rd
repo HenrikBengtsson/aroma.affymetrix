@@ -33,12 +33,12 @@
 \code{~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|}\cr
 \code{~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~+--}\code{\link[aroma.affymetrix]{SnpPlm}}\cr
 \code{~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|}\cr
-\code{~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~+--}\code{AffineSnpPlm}\cr
+\code{~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~+--}\emph{\code{AffineSnpPlm}}\cr
 
 \bold{Directly known subclasses:}\cr
-\link[aroma.affymetrix]{AffineCnPlm}\cr
+\emph{\link[aroma.affymetrix]{AffineCnPlm}}\cr
 
-public static class \bold{AffineSnpPlm}\cr
+public abstract static class \bold{AffineSnpPlm}\cr
 extends \link[aroma.affymetrix]{SnpPlm}\cr
 
 
@@ -76,10 +76,10 @@ findUnitsTodo, getAsteriskTags, getFitSingleCellUnitFunction, getParameters
 as.character, fit, getAlias, getAsteriskTags, getDataSet, getFullName, getName, getParameterSet, getPath, getRootPath, getTags, setAlias, setTags
 
  \bold{Methods inherited from ParametersInterface}:\cr
-getParameters, getParametersAsString
+getParameters, getParametersAsString, getParameterSets
 
  \bold{Methods inherited from Object}:\cr
-asThis, $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save, print
+asThis, $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save
 
 
  }

@@ -30,13 +30,13 @@
 \code{~~~~~~~~~~~~~~~~~~~~~~|}\cr
 \code{~~~~~~~~~~~~~~~~~~~~~~+--}\code{\link[aroma.affymetrix]{ProbeLevelModel}}\cr
 \code{~~~~~~~~~~~~~~~~~~~~~~~~~~~|}\cr
-\code{~~~~~~~~~~~~~~~~~~~~~~~~~~~+--}\code{AffinePlm}\cr
+\code{~~~~~~~~~~~~~~~~~~~~~~~~~~~+--}\emph{\code{AffinePlm}}\cr
 
 \bold{Directly known subclasses:}\cr
-\link[aroma.affymetrix]{AffineCnPlm}, \link[aroma.affymetrix]{AffineSnpPlm}\cr
+\emph{\link[aroma.affymetrix]{AffineCnPlm}}, \emph{\link[aroma.affymetrix]{AffineSnpPlm}}\cr
 
-public static class \bold{AffinePlm}\cr
-extends \link[aroma.affymetrix]{ProbeLevelModel}\cr
+public abstract static class \bold{AffinePlm}\cr
+extends \emph{\link[aroma.affymetrix]{ProbeLevelModel}}\cr
 
 
 
@@ -74,10 +74,10 @@ findUnitsTodo, getAsteriskTags, getFitSingleCellUnitFunction, getParameters
 as.character, fit, getAlias, getAsteriskTags, getDataSet, getFullName, getName, getParameterSet, getPath, getRootPath, getTags, setAlias, setTags
 
  \bold{Methods inherited from ParametersInterface}:\cr
-getParameters, getParametersAsString
+getParameters, getParametersAsString, getParameterSets
 
  \bold{Methods inherited from Object}:\cr
-asThis, $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save, print
+asThis, $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save
 
 
  }

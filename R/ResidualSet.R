@@ -179,23 +179,25 @@ setMethodS3("updateUnits", "ResidualSet", function(this, units=NULL, cdf=NULL, d
     cdf <- getCellIndices(this, units=units);
 
   # Update each file one by one
-  nbrOfArrays <- length(this);
+  arrays <- seq_along(this);
+  nbrOfArrays <- length(arrays);
   verbose && cat(verbose, "Number of files: ", nbrOfArrays);
 
-  names <- getNames(this);
-
-  verbose && enter(verbose, "Making sure the files are updated in lexicographic order");
-  # Reorder such that the file with the "last" name is saved last
-  fullnames <- getFullNames(this);
-  o <- order(fullnames, decreasing=FALSE);
-  arrays <- arrays[o];
-  verbose && str(verbose, arrays);
-  verbose && cat(verbose, "Last array: ", fullnames[arrays[nbrOfArrays]]);
-  rm(fullnames, o);
-  verbose && exit(verbose);
+  if (nbrOfArrays > 1L) {
+    verbose && enter(verbose, "Making sure the files are updated in lexicographic order");
+    # Reorder such that the file with the "last" name is saved last
+    fullnames <- getFullNames(this);
+    o <- order(fullnames, decreasing=FALSE);
+    arrays <- arrays[o];
+    verbose && str(verbose, arrays);
+    verbose && cat(verbose, "Last array: ", fullnames[arrays[nbrOfArrays]]);
+    rm(fullnames, o);
+    verbose && exit(verbose);
+  }
 
   verbose <- less(verbose);
-  for (ii in seq_along(this)) {
+  names <- getNames(this);
+  for (ii in arrays) {
     verbose && enter(verbose, sprintf("Array #%d of %d: %s", 
                                        ii, nbrOfArrays, names[ii]));
     rf <- getFile(this, ii);
@@ -253,6 +255,9 @@ setMethodS3("findUnitsTodo", "ResidualSet", function(this, ...) {
 
 ############################################################################
 # HISTORY:
+# 2012-11-29
+# o ROBUSTNESS: updateUnits() for ResidualSet did not update the files
+#   in lexicographic order.
 # 2010-05-08
 # o Now all findUnitsTodo() for data sets checks the data file that comes
 #   last in a lexicographic ordering.  This is now consistent with how

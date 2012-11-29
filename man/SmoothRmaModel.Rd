@@ -23,12 +23,12 @@
 \code{~~~~~~~|}\cr
 \code{~~~~~~~+--}\code{\link[aroma.affymetrix]{SmoothMultiarrayModel}}\cr
 \code{~~~~~~~~~~~~|}\cr
-\code{~~~~~~~~~~~~+--}\code{SmoothRmaModel}\cr
+\code{~~~~~~~~~~~~+--}\emph{\code{SmoothRmaModel}}\cr
 
 \bold{Directly known subclasses:}\cr
 \cr
 
-public static class \bold{SmoothRmaModel}\cr
+public abstract static class \bold{SmoothRmaModel}\cr
 extends \emph{\link[aroma.affymetrix]{SmoothMultiarrayModel}}\cr
 
 
@@ -56,7 +56,7 @@ as.character, createOutputTuple, fitOneChromosome, getAsteriskTags, getBandwidth
 getListOfGenomeInformations, getPcuTheta, getPositionChipTypeUnit, as.character, fit, getAlias, getAromaGenomeTextFile, getAsteriskTags, getChipType, getChipTypes, getChromosomes, getFullName, getFullNames, getGenome, getGenomeData, getGenomeFile, getListOfAromaUgpFiles, getName, getNames, getParentPath, getPath, getReportPath, getRootPath, getSets, getSetTuple, getTags, indexOf, nbrOfArrays, nbrOfChipTypes, setGenome
 
  \bold{Methods inherited from Object}:\cr
-asThis, $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save, print
+asThis, $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save
 
 
  }

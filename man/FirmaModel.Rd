@@ -25,12 +25,12 @@
 \code{~~~~~~~~~~~~|}\cr
 \code{~~~~~~~~~~~~+--}\code{\link[aroma.affymetrix]{UnitModel}}\cr
 \code{~~~~~~~~~~~~~~~~~|}\cr
-\code{~~~~~~~~~~~~~~~~~+--}\code{FirmaModel}\cr
+\code{~~~~~~~~~~~~~~~~~+--}\emph{\code{FirmaModel}}\cr
 
 \bold{Directly known subclasses:}\cr
 \cr
 
-public static class \bold{FirmaModel}\cr
+public abstract static class \bold{FirmaModel}\cr
 extends \emph{\link[aroma.affymetrix]{UnitModel}}\cr
 
 
@@ -69,10 +69,10 @@ findUnitsTodo, getAsteriskTags, getFitSingleCellUnitFunction, getParameters
 as.character, fit, getAlias, getAsteriskTags, getDataSet, getFullName, getName, getParameterSet, getPath, getRootPath, getTags, setAlias, setTags
 
  \bold{Methods inherited from ParametersInterface}:\cr
-getParameters, getParametersAsString
+getParameters, getParametersAsString, getParameterSets
 
  \bold{Methods inherited from Object}:\cr
-asThis, $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save, print
+asThis, $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save
 
 
  }

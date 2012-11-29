@@ -428,10 +428,10 @@ setMethodS3("fit", "ProbeLevelModel", function(this, units="remaining", ..., for
       tFit <- processTime();
   
       if (hasPriors) {
-        verbose && cat(verbose, "Calling fitUnit() via mapply");
+        verbose && cat(verbose, "Calling fitUnit() via mapply() with prior parameter estimates");
         fit <- base::mapply(y, priors=priors, FUN=fitUnit, SIMPLIFY=FALSE);
       } else {
-        verbose && cat(verbose, "Calling fitUnit() via lapply");
+        verbose && cat(verbose, "Calling fitUnit() via lapply()");
         fit <- base::lapply(y, FUN=fitUnit);
       }
 

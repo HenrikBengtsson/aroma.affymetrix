@@ -30,7 +30,7 @@
 \code{~~~~~~~~~~~~~~~~~~~~~~+--}\emph{\code{ProbeLevelTransform3}}\cr
 
 \bold{Directly known subclasses:}\cr
-\emph{\link[aroma.affymetrix]{AbstractProbeSequenceNormalization}}, \link[aroma.affymetrix]{BaseCountNormalization}, \link[aroma.affymetrix]{BasePositionNormalization}, \emph{\link[aroma.affymetrix]{LinearModelProbeSequenceNormalization}}, \link[aroma.affymetrix]{MatNormalization}, \link[aroma.affymetrix]{ScaleNormalization3}, \link[aroma.affymetrix]{UnitTypeScaleNormalization}\cr
+\emph{\link[aroma.affymetrix]{AbstractProbeSequenceNormalization}}, \link[aroma.affymetrix]{BaseCountNormalization}, \emph{\link[aroma.affymetrix]{BasePositionNormalization}}, \emph{\link[aroma.affymetrix]{LinearModelProbeSequenceNormalization}}, \link[aroma.affymetrix]{MatNormalization}, \link[aroma.affymetrix]{ScaleNormalization3}, \link[aroma.affymetrix]{UnitTypeScaleNormalization}\cr
 
 public abstract static class \bold{ProbeLevelTransform3}\cr
 extends \emph{\link[aroma.affymetrix]{ProbeLevelTransform}}\cr
@@ -72,10 +72,10 @@ getOutputDataSet, getOutputFiles
 as.character, getAsteriskTags, getExpectedOutputFiles, getExpectedOutputFullnames, getFullName, getInputDataSet, getName, getOutputDataSet, getOutputDataSet0, getOutputFiles, getPath, getRootPath, getTags, isDone, process, setTags
 
  \bold{Methods inherited from ParametersInterface}:\cr
-getParameters, getParametersAsString
+getParameters, getParametersAsString, getParameterSets
 
  \bold{Methods inherited from Object}:\cr
-asThis, $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save, print
+asThis, $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save
 
 
  }

@@ -66,7 +66,6 @@ extends \emph{\link[aroma.affymetrix]{ParameterCelFile}}\cr
  \tab \code{extractTheta} \tab  -\cr
  \tab \code{findUnitsTodo} \tab  -\cr
  \tab \code{\link[aroma.affymetrix:getAM.ChipEffectFile]{getAM}} \tab Gets the log-intensities and log-ratios of chip effects for two arrays.\cr
- \tab \code{getCellIndices} \tab  -\cr
  \tab \code{readUnits} \tab  -\cr
 }
 

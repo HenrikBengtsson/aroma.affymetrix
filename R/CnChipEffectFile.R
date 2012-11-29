@@ -58,7 +58,44 @@ setMethodS3("getParameters", "CnChipEffectFile", function(this, ...) {
 }, protected=TRUE)
 
 
-setMethodS3("getCellIndices", "CnChipEffectFile", function(this, units=NULL, ..., force=FALSE, .cache=TRUE, verbose=FALSE) {
+
+###########################################################################/**
+# @RdocMethod getCellIndices
+#
+# @title "Retrieves tree list of cell indices for a set of units"
+#
+# \description{
+#   @get "title".
+# }
+#
+# @synopsis
+#
+# \arguments{
+#  \item{units}{Unit indices to be retrieved.
+#               If @NULL, all units are considered.}
+#  \item{...}{Additional arguments passed to \code{getCellIndices()}
+#             of @see "ChipEffectFile".}
+#  \item{unlist}{If @TRUE, the cell indices are returned as a @vector.}
+#  \item{force}{If @TRUE, the cell indices are re-read regardless whether
+#     they are already cached in memory or not.}
+#  \item{.cache}{(internal) If @TRUE, the result is cached in memory.}
+#  \item{verbose}{See @see "R.utils::Verbose".}
+# }
+#
+# \value{
+#   Returns a @list structure, where each element corresponds to a unit.
+#   If argument \code{unlist=TRUE} is passed, an @integer @vector is returned.
+# }
+#
+# @author
+#
+# \seealso{
+#   @seeclass
+# }
+#
+# @keyword internal
+#*/###########################################################################
+setMethodS3("getCellIndices", "CnChipEffectFile", function(this, units=NULL, ..., unlist=FALSE, force=FALSE, .cache=TRUE, verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -69,6 +106,9 @@ setMethodS3("getCellIndices", "CnChipEffectFile", function(this, units=NULL, ...
     units <- Arguments$getIndices(units, max=nbrOfUnits(cdf));
   }
 
+  # Argument 'unlist':
+  unlist <- Arguments$getLogical(unlist);
+
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
   if (verbose) {
@@ -77,7 +117,14 @@ setMethodS3("getCellIndices", "CnChipEffectFile", function(this, units=NULL, ...
   }
 
 
-  verbose && enter(verbose, "getCellIndices.CnChipEffectFile()");
+  verbose && enter(verbose, "getCellIndices() for CnChipEffectFile");
+
+
+  # Supported case?
+  combineAlleles <- this$combineAlleles;
+  if (unlist && combineAlleles) {
+    throw("Unsupported request: Argument 'unlist' have to be TRUE when parameter 'combineAlleles' is TRUE: ", unlist);
+  }
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -86,8 +133,11 @@ setMethodS3("getCellIndices", "CnChipEffectFile", function(this, units=NULL, ...
   if (!force || .cache) {
     chipType <- getChipType(getCdf(this));
     params <- getParameters(this);
-    key <- list(method="getCellIndices", class=class(this)[1], 
-                chipType=chipType, params=params, units=units, ...);
+    key <- list(method="getCellIndices", class=class(this)[1L], 
+                chipType=chipType, params=params, units=units, unlist=unlist, ...);
+    if (getOption(aromaSettings, "devel/useCacheKeyInterface", FALSE)) {
+      key <- getCacheKey(cdf, method="getCellIndices", class=class(this)[1L], chipType=chipType, params=params, units=units, unlist=unlist, ...);
+    }
     dirs <- c("aroma.affymetrix", chipType);
     id <- digest2(key);
   }
@@ -115,8 +165,10 @@ setMethodS3("getCellIndices", "CnChipEffectFile", function(this, units=NULL, ...
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Get units in chunks
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  if (is.null(units))
+  if (is.null(units)) {
     units <- seq_len(nbrOfUnits(cdf));
+  }
+  nbrOfUnits <- length(units);
 
   cells <- lapplyInChunks(units, function(unitChunk) {
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -125,9 +177,7 @@ setMethodS3("getCellIndices", "CnChipEffectFile", function(this, units=NULL, ...
 ## NOTE: NextMethod() does not work from within another function
 ##    cells <- NextMethod("getCellIndices", units=unitChunk, force=force, .cache=FALSE, verbose=verbose);
     cells <- getCellIndices.SnpChipEffectFile(this, units=unitChunk, ..., 
-                             force=force, .cache=FALSE, verbose=verbose);
-    gc <- gc();
-    verbose && print(verbose, gc);
+              unlist=unlist, force=force, .cache=FALSE, verbose=verbose);
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Combine alleles?
@@ -135,24 +185,24 @@ setMethodS3("getCellIndices", "CnChipEffectFile", function(this, units=NULL, ...
     # If combining alleles, return only every second group.
     # In order to improve readability we merge the names of alleles groups
     # combined, e.g. groups 'C' and 'G' become group 'CG'.
-    if (this$combineAlleles) {
+    if (combineAlleles) {
       verbose && enter(verbose, "Combining alleles");
       # Hard-wiring 1, 2 & 4 groups speed things up 3 times!
 
       cells <- applyCdfGroups(cells, function(groups) {
         ngroups <- length(groups);
         names <- names(groups);
-        if (ngroups == 4) {
-          groups <- .subset(groups, c(1,3));
-          names <- paste(.subset(names, c(1,3)), .subset(names, c(2,4)), sep="");
-        } else if (ngroups == 2) {
-          groups <- .subset(groups, 1);
-          names <- paste(.subset(names, 1), .subset(names, 2), sep="");
-        } else if (ngroups == 1) {
-          groups <- .subset(groups, 1);
+        if (ngroups == 4L) {
+          groups <- .subset(groups, c(1L,3L));
+          names <- paste(.subset(names, c(1L,3L)), .subset(names, c(2L,4L)), sep="");
+        } else if (ngroups == 2L) {
+          groups <- .subset(groups, 1L);
+          names <- paste(.subset(names, 1L), .subset(names, 2L), sep="");
+        } else if (ngroups == 1L) {
+          groups <- .subset(groups, 1L);
         } else {
-          odds <- seq(from=1, to=ngroups, by=2);
-          evens <- seq(from=2, to=ngroups, by=2);
+          odds <- seq(from=1L, to=ngroups, by=2L);
+          evens <- seq(from=2L, to=ngroups, by=2L);
           groups <- .subset(groups, odds);
           names <- paste(.subset(names, odds), .subset(names, evens), sep="");
         }
@@ -161,10 +211,22 @@ setMethodS3("getCellIndices", "CnChipEffectFile", function(this, units=NULL, ...
       }) # applyCdfGroups()
       verbose && printf(verbose, "Number of units: %d\n", length(cells));
       verbose && exit(verbose);
-    }
+    } # if (combineAlleles)
 
     cells;
   }, chunkSize=100e3, verbose=less(verbose)) # lapplyInChunks()
+
+  # Sanity check
+  if (!unlist) {
+    stopifnot(length(cells) != nbrOfUnits);
+  }
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Unlist?
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  if (unlist) {
+    cells <- unlist(cells, use.names=FALSE);
+  }
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -193,7 +255,7 @@ setMethodS3("getCellIndices", "CnChipEffectFile", function(this, units=NULL, ...
   verbose && exit(verbose);
 
   cells;
-})
+}, protected=TRUE) # getCellIndices()
 
 
 setMethodS3("readUnits", "CnChipEffectFile", function(this, ..., force=FALSE, cache=TRUE, verbose=FALSE) {
@@ -290,6 +352,10 @@ setMethodS3("getNumberOfFilesAveraged", "CnChipEffectFile", function(this, ..., 
 
 ############################################################################
 # HISTORY:
+# 2012-11-29
+# o ROBUSTNESS: Added protection for getCellIndices(..., unlist=TRUE)
+#   for SnpChipEffectFile and CnChipEffectFile.
+# o Added Rdoc help for getCellIndices() for CnChipEffectFile.
 # 2009-11-18
 # o Added getNumberOfFilesAveraged() for CnChipEffectFile.  It should only
 #   be used for files generated by getAverageFile(), otherwise an error

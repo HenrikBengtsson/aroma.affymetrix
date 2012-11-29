@@ -64,10 +64,7 @@ extends \emph{\link[aroma.affymetrix]{ProbeAffinityFile}}\cr
 
  \section{Fields and Methods}{
   \bold{Methods:}\cr
-\tabular{rll}{
- \tab \code{getCellIndices} \tab  -\cr
- \tab \code{setMergeStrands} \tab  -\cr
-}
+\emph{No methods defined}.
 
 
  \bold{Methods inherited from ProbeAffinityFile}:\cr

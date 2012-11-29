@@ -66,10 +66,7 @@ extends \emph{\link[aroma.affymetrix]{SnpProbeAffinityFile}}\cr
 
  \section{Fields and Methods}{
   \bold{Methods:}\cr
-\tabular{rll}{
- \tab \code{getCellIndices} \tab  -\cr
- \tab \code{setCombineAlleles} \tab  -\cr
-}
+\emph{No methods defined}.
 
 
  \bold{Methods inherited from SnpProbeAffinityFile}:\cr

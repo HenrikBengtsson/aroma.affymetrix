@@ -176,9 +176,40 @@ setMethodS3("readUnits", "WeightsFile", function(this, units=NULL, cdf=NULL, ...
 })
 
 
+###########################################################################/**
+# @RdocMethod getCellIndices
+#
+# @title "Retrieves tree list of cell indices for a set of units"
+#
+# \description{
+#   @get "title" from the associated CDF.
+# }
+#
+# @synopsis
+#
+# \arguments{
+#  \item{...}{Additional arguments passed to \code{getCellIndices()}
+#             of @see "AffymetrixCdfFile".}
+#  \item{.cache}{Ignored.}
+# }
+#
+# \value{
+#   Returns a @list structure, where each element corresponds to a unit.
+#   If argument \code{unlist=TRUE} is passed, an @integer @vector is returned.
+# }
+#
+# @author
+#
+# \seealso{
+#   @seeclass
+# }
+#
+# @keyword internal
+#*/###########################################################################
 setMethodS3("getCellIndices", "WeightsFile", function(this, ..., .cache=TRUE) {
-  getCellIndices(getCdf(this), ...);
-})
+  cdf <- getCdf(this);
+  getCellIndices(cdf, ...);
+}, protected=TRUE)
 
 
 setMethodS3("updateUnits", "WeightsFile", function(this, units=NULL, cdf=NULL, data, ...) {

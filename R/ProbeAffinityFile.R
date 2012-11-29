@@ -60,6 +60,37 @@ setMethodS3("getParameters", "ProbeAffinityFile", function(this, ...) {
 }, protected=TRUE)
 
 
+
+###########################################################################/**
+# @RdocMethod getCellIndices
+#
+# @title "Retrieves tree list of cell indices for a set of units"
+#
+# \description{
+#   @get "title" from the associated CDF.
+# }
+#
+# @synopsis
+#
+# \arguments{
+#  \item{...}{Additional arguments passed to \code{getCellIndices()}
+#             of @see "AffymetrixCdfFile".}
+#  \item{verbose}{See @see "R.utils::Verbose".}
+# }
+#
+# \value{
+#   Returns a @list structure, where each element corresponds to a unit.
+#   If argument \code{unlist=TRUE} is passed, an @integer @vector is returned.
+# }
+#
+# @author
+#
+# \seealso{
+#   @seeclass
+# }
+#
+# @keyword internal
+#*/###########################################################################
 setMethodS3("getCellIndices", "ProbeAffinityFile", function(this, ..., verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
@@ -84,7 +115,8 @@ setMethodS3("getCellIndices", "ProbeAffinityFile", function(this, ..., verbose=F
   verbose && exit(verbose);
 
   res;
-})
+}, protected=TRUE) # getCellIndices()
+
 
 
 setMethodS3("readUnits", "ProbeAffinityFile", function(this, units=NULL, cdf=NULL, ...) {

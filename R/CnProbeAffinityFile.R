@@ -36,20 +36,61 @@ setConstructorS3("CnProbeAffinityFile", function(..., combineAlleles=FALSE) {
 })
 
 
-setMethodS3("getCellIndices", "CnProbeAffinityFile", function(this, ...) {
+###########################################################################/**
+# @RdocMethod getCellIndices
+#
+# @title "Retrieves tree list of cell indices for a set of units"
+#
+# \description{
+#   @get "title" from the associated CDF.
+# }
+#
+# @synopsis
+#
+# \arguments{
+#  \item{...}{Additional arguments passed to \code{getCellIndices()}
+#             of @see "SnpProbeAffinityFile".}
+#  \item{unlist}{If @TRUE, the cell indices are returned as a @vector.}
+# }
+#
+# \value{
+#   Returns a @list structure, where each element corresponds to a unit.
+#   If argument \code{unlist=TRUE} is passed, an @integer @vector is returned.
+# }
+#
+# @author
+#
+# \seealso{
+#   @seeclass
+# }
+#
+# @keyword internal
+#*/###########################################################################
+setMethodS3("getCellIndices", "CnProbeAffinityFile", function(this, ..., unlist=FALSE) {
+  # Argument 'unlist':
+  unlist <- Arguments$getLogical(unlist);
+
+
+  # Supported case?
+  combineAlleles <- this$combineAlleles;
+  if (unlist && combineAlleles) {
+    throw("Unsupported request: Argument 'unlist' have to be TRUE when parameter 'combineAlleles' is TRUE: ", unlist);
+  }
+
+
   cells <- NextMethod("getCellIndices");
 
   # If combining alleles, return only every second group.
   # In order to improve readability we merge the names of alleles groups
   # combined, e.g. groups 'C' and 'G' become group 'CG'.
-  if (this$combineAlleles) {
+  if (combineAlleles) {
     cells <- applyCdfGroups(cells, function(groups) {
       ngroups <- length(groups);
-      odds <- seq(from=1, to=ngroups, by=2);
+      odds <- seq(from=1L, to=ngroups, by=2L);
       names <- names(groups);
       groups <- groups[odds];
-      if (ngroups >= 2) {
-        evens <- seq(from=2, to=ngroups, by=2);
+      if (ngroups >= 2L) {
+        evens <- seq(from=2L, to=ngroups, by=2L);
         names <- paste(names[odds], names[evens], sep="");
         names(groups) <- names;
       }
@@ -57,13 +98,20 @@ setMethodS3("getCellIndices", "CnProbeAffinityFile", function(this, ...) {
     })
   }
 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Unlist?
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  if (unlist) {
+    cells <- unlist(cells, use.names=FALSE);
+  }
+
   cells;
-})
+}, protected=TRUE) # getCellIndices()
+
 
 setMethodS3("setCombineAlleles", "CnProbeAffinityFile", function(this, status, ...) {
   this$combineAlleles <- status;
-})
-
+}, protected=TRUE)
 
 
 ############################################################################

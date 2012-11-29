@@ -2,8 +2,9 @@ Package: aroma.affymetrix
 =========================
 
 Version: 2.7.4 [2012-11-29]
-o ROBUSTNESS: updateUnits() for ResidualSet did not update the files
-  in lexicographic order as claimed.
+o DOCUMENTATION: Added help pages to more methods.
+o ROBUSTNESS: updateUnits() for ResidualSet did not update the
+  files in lexicographic order as previously claimed.
 
 
 Version: 2.7.3 [2012-11-28]

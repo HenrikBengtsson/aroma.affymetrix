@@ -32,20 +32,70 @@ setConstructorS3("ExonProbeAffinityFile", function(..., mergeGroups=FALSE) {
 })
 
 
-setMethodS3("getCellIndices", "ExonProbeAffinityFile", function(this, ...) {
+###########################################################################/**
+# @RdocMethod getCellIndices
+#
+# @title "Retrieves tree list of cell indices for a set of units"
+#
+# \description{
+#   @get "title" from the associated CDF.
+# }
+#
+# @synopsis
+#
+# \arguments{
+#  \item{...}{Additional arguments passed to \code{getCellIndices()}
+#             of @see "ProbeAffinityFile".}
+#  \item{unlist}{If @TRUE, the cell indices are returned as a @vector.}
+# }
+#
+# \value{
+#   Returns a @list structure, where each element corresponds to a unit.
+#   If argument \code{unlist=TRUE} is passed, an @integer @vector is returned.
+# }
+#
+# @author
+#
+# \seealso{
+#   @seeclass
+# }
+#
+# @keyword internal
+#*/###########################################################################
+setMethodS3("getCellIndices", "ExonProbeAffinityFile", function(this, ..., unlist=FALSE) {
+  # Argument 'unlist':
+  unlist <- Arguments$getLogical(unlist);
+
+
+  # Supported case?
+  mergeGroups <- this$mergeGroups;
+  if (unlist && mergeGroups) {
+    throw("Unsupported request: Argument 'unlist' have to be TRUE when parameter 'mergeGroups' is TRUE: ", unlist);
+  } 
+ 
   cells <- NextMethod("getCellIndices");
 
   # Merge groups?
-  if (this$mergeGroups) {
+  if (mergeGroups) {
     cells <- applyCdfGroups(cells, cdfMergeGroups);
   }
 
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Unlist?
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  if (unlist) {
+    cells <- unlist(cells, use.names=FALSE);
+  }
+
+
   cells;
-})
+}, protected=TRUE) # getCellIndices()
+
 
 setMethodS3("setMergeGroups", "ExonProbeAffinityFile", function(this, status, ...) {
   this$mergeGroups <- status;
-})
+}, protected=TRUE)
 
 
 ############################################################################

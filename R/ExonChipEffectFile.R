@@ -48,7 +48,46 @@ setMethodS3("getParameters", "ExonChipEffectFile", function(this, ...) {
 }, protected=TRUE)
 
 
-setMethodS3("getCellIndices", "ExonChipEffectFile", function(this, ..., force=FALSE, .cache=TRUE, verbose=FALSE) {
+###########################################################################/**
+# @RdocMethod getCellIndices
+#
+# @title "Retrieves tree list of cell indices for a set of units"
+#
+# \description{
+#   @get "title".
+# }
+#
+# @synopsis
+#
+# \arguments{
+#  \item{units}{Unit indices to be retrieved.
+#               If @NULL, all units are considered.}
+#  \item{...}{Additional arguments passed to \code{getCellIndices()}
+#             of @see "ChipEffectFile".}
+#  \item{unlist}{If @TRUE, the cell indices are returned as a @vector.}
+#  \item{force}{If @TRUE, the cell indices are re-read regardless whether
+#     they are already cached in memory or not.}
+#  \item{.cache}{(internal) If @TRUE, the result is cached in memory.}
+#  \item{verbose}{See @see "R.utils::Verbose".}
+# }
+#
+# \value{
+#   Returns a @list structure, where each element corresponds to a unit.
+#   If argument \code{unlist=TRUE} is passed, an @integer @vector is returned.
+# }
+#
+# @author
+#
+# \seealso{
+#   @seeclass
+# }
+#
+# @keyword internal
+#*/###########################################################################
+setMethodS3("getCellIndices", "ExonChipEffectFile", function(this, ..., unlist=FALSE, force=FALSE, .cache=TRUE, verbose=FALSE) {
+  # Argument 'unlist':
+  unlist <- Arguments$getLogical(unlist);
+
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
   if (verbose) {
@@ -56,17 +95,27 @@ setMethodS3("getCellIndices", "ExonChipEffectFile", function(this, ..., force=FA
     on.exit(popState(verbose));
   }
 
-  verbose && enter(verbose, "getCellIndices.ExonChipEffectFile()");
+  verbose && enter(verbose, "getCellIndices() for ExonChipEffectFile");
+
+  # Supported case?
+  mergeGroups <- this$mergeGroups;
+  if (unlist && mergeGroups) {
+    throw("Unsupported request: Argument 'unlist' have to be TRUE when parameter 'mergeGroups' is TRUE: ", unlist);
+  }
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Check for cached data
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (!force || .cache) {
-    chipType <- getChipType(getCdf(this));
+    cdf <- getCdf(this);
+    chipType <- getChipType(cdf);
     params <- getParameters(this);
     key <- list(method="getCellIndices", class=class(this)[1], 
                 pathname=getPathname(this),
-                chipType=chipType, params=params, ...);
+                chipType=chipType, params=params, unlist=unlist, ...);
+    if (getOption(aromaSettings, "devel/useCacheKeyInterface", FALSE)) {
+      key <- getCacheKey(cdf, method="getCellIndices", class=class(this)[1L], chipType=chipType, params=params, units=units, unlist=unlist, ...);
+    }
     dirs <- c("aroma.affymetrix", chipType);
     id <- digest2(key);
   }
@@ -94,23 +143,29 @@ setMethodS3("getCellIndices", "ExonChipEffectFile", function(this, ..., force=FA
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Get and restructure cell indices
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  cells <- NextMethod("getCellIndices", force=force, .cache=FALSE, verbose=verbose);
+  cells <- NextMethod("getCellIndices", .cache=FALSE, verbose=verbose);
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Merge groups?
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # If merging groups, we only need one chip-effect parameter per unit
-  if (this$mergeGroups) {
+  if (mergeGroups) {
     verbose && enter(verbose, "Merging groups");
     cells <- applyCdfGroups(cells, function(groups) {
-      .subset(groups, 1);
+      .subset(groups, 1L);
     })
     verbose && exit(verbose);
   }
 
-  gc <- gc();
-  verbose && print(verbose, gc);
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Unlist?
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  if (unlist) {
+    cells <- unlist(cells, use.names=FALSE);
+  }
+
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Store read units in cache
@@ -136,7 +191,7 @@ setMethodS3("getCellIndices", "ExonChipEffectFile", function(this, ..., force=FA
   verbose && exit(verbose);
 
   cells;
-})
+}, protected=TRUE) # getCellIndices()
 
 
 setMethodS3("readUnits", "ExonChipEffectFile", function(this, ..., force=FALSE, cache=TRUE, verbose=FALSE) {

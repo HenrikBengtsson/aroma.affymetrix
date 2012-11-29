@@ -64,6 +64,7 @@ setMethodS3("getParameters", "SnpChipEffectFile", function(this, ...) {
 #               If @NULL, all units are considered.}
 #  \item{...}{Additional arguments passed to \code{getCellIndices()}
 #             of @see "ChipEffectFile".}
+#  \item{unlist}{If @TRUE, the cell indices are returned as a @vector.}
 #  \item{force}{If @TRUE, the cell indices are re-read regardless whether
 #     they are already cached in memory or not.}
 #  \item{.cache}{(internal) If @TRUE, the result is cached in memory.}
@@ -72,6 +73,7 @@ setMethodS3("getParameters", "SnpChipEffectFile", function(this, ...) {
 #
 # \value{
 #   Returns a @list structure, where each element corresponds to a unit.
+#   If argument \code{unlist=TRUE} is passed, an @integer @vector is returned.
 # }
 #
 # @author
@@ -82,7 +84,7 @@ setMethodS3("getParameters", "SnpChipEffectFile", function(this, ...) {
 #
 # @keyword internal
 #*/###########################################################################
-setMethodS3("getCellIndices", "SnpChipEffectFile", function(this, units=NULL, ..., force=FALSE, .cache=TRUE, verbose=FALSE) {
+setMethodS3("getCellIndices", "SnpChipEffectFile", function(this, units=NULL, ..., unlist=FALSE, force=FALSE, .cache=TRUE, verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -93,6 +95,9 @@ setMethodS3("getCellIndices", "SnpChipEffectFile", function(this, units=NULL, ..
     units <- Arguments$getIndices(units, max=nbrOfUnits(cdf));
   }
 
+  # Argument 'unlist':
+  unlist <- Arguments$getLogical(unlist);
+
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
   if (verbose) {
@@ -100,7 +105,14 @@ setMethodS3("getCellIndices", "SnpChipEffectFile", function(this, units=NULL, ..
     on.exit(popState(verbose));
   }
 
-  verbose && enter(verbose, "getCellIndices.SnpChipEffectFile()");
+  verbose && enter(verbose, "getCellIndices() for SnpChipEffectFile");
+
+  # Supported case?
+  mergeStrands <- this$mergeStrands;
+  if (unlist && mergeStrands) {
+    throw("Unsupported request: Argument 'unlist' have to be TRUE when parameter 'mergeStrands' is TRUE: ", unlist);
+  }  
+
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Check for cached data
@@ -109,10 +121,10 @@ setMethodS3("getCellIndices", "SnpChipEffectFile", function(this, units=NULL, ..
     chipType <- getChipType(cdf);
     params <- getParameters(this);
     key <- list(method="getCellIndices", class=class(this)[1L], 
-                pathname=getPathname(this),
-                chipType=chipType, params=params, units=units, ...);
+                pathname=getPathname(this),  ## <= WRONG! /HB 2012-11-29
+                chipType=chipType, params=params, units=units, unlist=unlist, ...);
     if (getOption(aromaSettings, "devel/useCacheKeyInterface", FALSE)) {
-      key <- getCacheKey(this, method="getCellIndices", pathname=getPathname(this), chipType=chipType, params=params, units=units, ...);
+      key <- getCacheKey(cdf, method="getCellIndices", class=class(this)[1L], chipType=chipType, params=params, units=units, unlist=unlist, ...);
     }
     dirs <- c("aroma.affymetrix", chipType);
     id <- digest2(key);
@@ -145,6 +157,7 @@ setMethodS3("getCellIndices", "SnpChipEffectFile", function(this, units=NULL, ..
   if (is.null(units)) {
     units <- seq_len(nbrOfUnits(cdf));
   }
+  nbrOfUnits <- length(units);
 
   cells <- lapplyInChunks(units, function(unitChunk) {
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -153,8 +166,7 @@ setMethodS3("getCellIndices", "SnpChipEffectFile", function(this, units=NULL, ..
 ## NOTE: NextMethod() does not work from within another function
 ##    cells <- NextMethod("getCellIndices", units=unitChunk, force=force, .cache=FALSE, verbose=verbose);
     cells <- getCellIndices.ChipEffectFile(this, units=unitChunk, ..., 
-                             force=force, .cache=FALSE, verbose=verbose);
-
+              unlist=unlist, force=force, .cache=FALSE, verbose=verbose);
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Merge strands?
@@ -167,7 +179,7 @@ setMethodS3("getCellIndices", "SnpChipEffectFile", function(this, units=NULL, ..
     # (b) mergeStrands=TRUE:
     #    Merge strands, fit by allele:    #groups=4, #chip effects=2
     #    (same but single-stranded SNP)   #groups=2, #chip effects=2
-    if (this$mergeStrands) {
+    if (mergeStrands) {
       verbose && enter(verbose, "Merging strands");
       cells <- applyCdfGroups(cells, function(groups) {
         ngroups <- length(groups);
@@ -187,10 +199,24 @@ setMethodS3("getCellIndices", "SnpChipEffectFile", function(this, units=NULL, ..
       }) # applyCdfGroups()
       verbose && printf(verbose, "Number of units: %d\n", length(cells));
       verbose && exit(verbose);
-    }
+    } # if (this$mergeStrands)
 
     cells;
   }, chunkSize=100e3, verbose=less(verbose));
+
+  # Sanity check
+  if (list(cells)) {
+    stopifnot(length(cells) != nbrOfUnits);
+  }
+
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Unlist?
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  if (unlist) {
+    cells <- unlist(cells, use.names=FALSE);
+  }
+
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Store read units in cache
@@ -287,6 +313,12 @@ setMethodS3("readUnits", "SnpChipEffectFile", function(this, ..., force=FALSE, c
 
 ############################################################################
 # HISTORY:
+# 2012-11-29
+# o SPEEDUP: Improved the caching mechanism for getCellIndices() for
+#   SnpChipEffectFile and CnChipEffectFile.
+# o ROBUSTNESS: Added protection for getCellIndices(..., unlist=TRUE)
+#   for SnpChipEffectFile and CnChipEffectFile.
+# o Added Rdoc help for getCellIndices() for SnpChipEffectFile.
 # 2008-02-22
 # o Updated getCellIndices() and mergeStrands() to handle any even-numbered
 #   unit groups beyond two and four groups.

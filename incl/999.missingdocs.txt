@@ -211,16 +211,14 @@
   getCdf.FragmentLengthNormalization getCdf.GcContentNormalization
   getCdf.QualityAssessmentModel getCdf.TransformReport getCdfBin
   getCdfBin.DChipDcpSet getCellDim getCellDim.DChipCdfBinFile
-  getCellIndices getCellIndices.ChipEffectFile
-  getCellIndices.ChipEffectSet getCellIndices.CnChipEffectFile
-  getCellIndices.CnPlm getCellIndices.CnProbeAffinityFile
-  getCellIndices.ExonChipEffectFile
-  getCellIndices.ExonProbeAffinityFile getCellIndices.ExonRmaPlm
-  getCellIndices.FirmaFile getCellIndices.FirmaSet
-  getCellIndices.ProbeAffinityFile getCellIndices.ResidualFile
+  getCellIndices 
+  getCellIndices.ChipEffectSet 
+  getCellIndices.CnPlm
+ getCellIndices.ExonRmaPlm
+ getCellIndices.FirmaSet
   getCellIndices.ResidualSet 
-  getCellIndices.SnpPlm getCellIndices.SnpProbeAffinityFile
-  getCellIndices.WeightsFile getCellIndices.WeightsSet getCellMap
+  getCellIndices.SnpPlm
+ getCellIndices.WeightsSet getCellMap
   getCellMap.FirmaFile getCellMap.ResidualFile getCellMap.WeightsFile
   getCellMapForMainCdf getCellMapForMainCdf.ChipEffectFile
   getCellQuartets getCellQuartets.AffymetrixCdfFile getCellsTo

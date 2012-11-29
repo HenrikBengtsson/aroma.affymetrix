@@ -73,7 +73,6 @@ extends \emph{\link[aroma.core]{CopyNumberDataFile}}\cr
  \tab \code{exportTotalAndFracB} \tab  -\cr
  \tab \code{extractTheta} \tab  -\cr
  \tab \code{extractTotalAndFreqB} \tab  -\cr
- \tab \code{getCellIndices} \tab  -\cr
  \tab \code{hasAlleleBFractions} \tab  -\cr
  \tab \code{hasStrandiness} \tab  -\cr
  \tab \code{mergeStrands} \tab  -\cr

@@ -56,7 +56,7 @@ print(csvList);
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 tags <- sprintf("na%s,%s,%s%s", naVersion, genomeVersion, user, datestamp);
 tags <- c("TEST-ONLY", tags);
-ufl <- AromaUflFile$allocateFromCdf(cdf, tags=tags, nbrOfEnzymes=nbrOfEnzymes);
+ufl <- AromaUflFile$allocateFromCdf(cdf, tags=tags, nbrOfEnzymes=nbrOfEnzymes, overwrite=TRUE);
 print(ufl);
 
 for (kk in seq(along=csvList)) {

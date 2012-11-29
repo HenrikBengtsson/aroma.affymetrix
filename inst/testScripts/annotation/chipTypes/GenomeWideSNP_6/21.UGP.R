@@ -55,7 +55,7 @@ print(csvList);
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 tags <- sprintf("na%s,%s,%s%s", naVersion, genomeVersion, user, datestamp);
 tags <- c("TEST-ONLY", tags);
-ugp <- AromaUgpFile$allocateFromCdf(cdf, tags=tags);
+ugp <- AromaUgpFile$allocateFromCdf(cdf, tags=tags, overwrite=TRUE);
 print(ugp);
 
 

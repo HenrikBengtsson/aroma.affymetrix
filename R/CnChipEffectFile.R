@@ -216,10 +216,6 @@ setMethodS3("getCellIndices", "CnChipEffectFile", function(this, units=NULL, ...
     cells;
   }, chunkSize=100e3, verbose=less(verbose)) # lapplyInChunks()
 
-  # Sanity check
-  if (!unlist) {
-    stopifnot(length(cells) != nbrOfUnits);
-  }
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Unlist?

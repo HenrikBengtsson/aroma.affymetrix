@@ -204,11 +204,6 @@ setMethodS3("getCellIndices", "SnpChipEffectFile", function(this, units=NULL, ..
     cells;
   }, chunkSize=100e3, verbose=less(verbose));
 
-  # Sanity check
-  if (is.list(cells)) {
-    stopifnot(length(cells) != nbrOfUnits);
-  }
-
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Unlist?

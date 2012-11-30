@@ -74,7 +74,7 @@ setMethodS3("setMergeStrands", "SnpChipEffectSet", function(this, status, ...) {
   status <- Arguments$getLogical(status);
 
   # Update all chip-effect files
-  lapply(this, function(ce) {
+  lapply(this, FUN=function(ce) {
     ce$mergeStrands <- status;
   })
 

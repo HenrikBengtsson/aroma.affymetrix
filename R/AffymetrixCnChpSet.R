@@ -387,7 +387,7 @@ setMethodS3("setCdf", "AffymetrixCnChpSet", function(this, cdf, verbose=FALSE, .
 
   # Set the CDF for all CEL files
   verbose && enter(verbose, "Setting CDF for each CEL file");
-  lapply(this, setCdf, cdf, .checkArgs=FALSE, ...);
+  lapply(this, FUN=setCdf, cdf, .checkArgs=FALSE, ...);
   verbose && exit(verbose);
 
   # Have to clear the cache 

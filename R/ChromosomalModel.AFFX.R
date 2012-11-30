@@ -14,7 +14,7 @@ setMethodS3("getListOfGenomeInformations", "ChromosomalModel", function(this, ..
 
   verbose && enter(verbose, "Retrieving genome informations");
   cdfList <- getListOfCdfs(getSetTuple(this), ...);
-  giList <- lapply(cdfList, getGenomeInformation, verbose=less(verbose));
+  giList <- lapply(cdfList, FUN=getGenomeInformation, verbose=less(verbose));
   verbose && exit(verbose);
 
   giList;

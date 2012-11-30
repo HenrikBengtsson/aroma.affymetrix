@@ -338,7 +338,7 @@ setMethodS3("getUnitGroupCellMap", "FirmaFile", function(this, units=NULL, ..., 
 
   unitNames <- names(cells);
 # BUG!  Fix this in ChipEffectFile.R
-#  unitSizes <- unlist(base::lapply(cells, length), use.names=FALSE);
+#  unitSizes <- unlist(base::lapply(cells, FUN=length), use.names=FALSE);
   unitSizes <- unlist(base::lapply(cells, FUN=function(unit){
     length(.subset2(unit,"groups"));
   }), use.names=FALSE);  

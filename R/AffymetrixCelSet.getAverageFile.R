@@ -249,7 +249,7 @@ setMethodS3("getAverageFile", "AffymetrixCelSet", function(this, name=NULL, pref
   verbose && cat(verbose, "Number cells per chunk: ", cellsPerChunk);
 
   # Get the pathnames of all CEL files to average
-  pathnames <- lapply(this, getPathname);
+  pathnames <- lapply(this, FUN=getPathname);
   pathnames <- unlist(pathnames, use.names=FALSE);
   nbrOfArrays <- length(pathnames);
 

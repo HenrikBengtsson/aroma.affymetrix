@@ -243,7 +243,7 @@ setMethodS3("getTimestamps", "AffymetrixCelSet", function(this, ..., force=FALSE
 
   if (force || is.null(ts)) {
     # Get CEL header dates
-    ts <- lapply(this, getTimestamp);
+    ts <- lapply(this, FUN=getTimestamp);
     ts <- do.call("c", args=ts);
     this$.timestamps <- ts;
   }
@@ -257,7 +257,7 @@ setMethodS3("getIdentifier", "AffymetrixCelSet", function(this, ..., force=FALSE
   if (force || is.null(identifier)) {
     identifier <- NextMethod("getIdentifier");
     if (is.null(identifier)) {
-      identifiers <- lapply(this, getIdentifier);
+      identifiers <- lapply(this, FUN=getIdentifier);
       identifier <- digest2(identifiers);
     }
     this$.identifier <- identifier;
@@ -432,7 +432,7 @@ setMethodS3("setCdf", "AffymetrixCelSet", function(this, cdf, verbose=FALSE, ...
 
   # Set the CDF for all CEL files
   verbose && enter(verbose, "Setting CDF for each CEL file");
-  lapply(this, setCdf, cdf, .checkArgs=FALSE, ...);
+  lapply(this, FUN=setCdf, cdf, .checkArgs=FALSE, ...);
   verbose && exit(verbose);
 
   # Have to clear the cache 
@@ -1079,7 +1079,7 @@ setMethodS3("getUnitIntensities", "AffymetrixCelSet", function(this, units=NULL,
   # Read signals
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
   # Get the pathnames of all CEL files
-  pathnames <- unlist(lapply(this, getPathname), use.names=FALSE);
+  pathnames <- unlist(lapply(this, FUN=getPathname), use.names=FALSE);
 
   # Is 'units' a (pre-created) CDF structure?
   if (is.list(units)) {

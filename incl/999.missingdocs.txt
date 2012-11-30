@@ -706,7 +706,7 @@ findTargetDistributionFile
 findTargetDistributionFile.QuantileNormalization
   readGeneAssignments readGeneAssignments.AffymetrixNetAffxCsvFile
 extractExpressionSet
-cat getOption append lapply sapply
+cat getOption append 
 apply colMeans colSums library require
   createExonByTranscriptCdf getGenomeBuild
   getGenomeBuild.AffymetrixNetAffxCsvFile getHeaderAttributes

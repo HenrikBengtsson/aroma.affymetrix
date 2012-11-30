@@ -184,7 +184,7 @@ setMethodS3("getTimestamps", "CnagCfhSet", function(this, ..., force=FALSE) {
 
   if (force || is.null(ts)) {
     # Get CFH header dates
-    ts <- lapply(this, getTimestamp);
+    ts <- lapply(this, FUN=getTimestamp);
     ts <- do.call("c", args=ts);
     this$.timestamps <- ts;
   }
@@ -198,7 +198,7 @@ setMethodS3("getIdentifier", "CnagCfhSet", function(this, ..., force=FALSE) {
   if (force || is.null(identifier)) {
     identifier <- NextMethod("getIdentifier");
     if (is.null(identifier)) {
-      identifiers <- lapply(this, getIdentifier);
+      identifiers <- lapply(this, FUN=getIdentifier);
       identifier <- digest2(identifiers);
     }
     this$.identifier <- identifier;
@@ -289,7 +289,7 @@ setMethodS3("setCdf", "CnagCfhSet", function(this, cdf, verbose=FALSE, ...) {
 
   # Set the CDF for all CFH files
   verbose && enter(verbose, "Setting CDF for each CFH file");
-  lapply(this, setCdf, cdf, ...);
+  lapply(this, FUN=setCdf, cdf, ...);
   verbose && exit(verbose);
 
   # Have to clear the cache 
@@ -948,7 +948,7 @@ setMethodS3("getAverageFile", "CnagCfhSet", function(this, name=NULL, prefix="av
   verbose && cat(verbose, "Number cells per chunk: ", cellsPerChunk);
 
   # Get the pathnames of all CFH files to average
-  pathnames <- lapply(this, getPathname);
+  pathnames <- lapply(this, FUN=getPathname);
   pathnames <- unlist(pathnames, use.names=FALSE);
   nbrOfArrays <- length(pathnames);
 

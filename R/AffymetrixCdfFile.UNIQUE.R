@@ -426,9 +426,9 @@ setMethodS3("createUniqueCdf", "AffymetrixCdfFile", function(this, chipType=getC
     }
     
     # Precalculate
-    srcUnits <- base::lapply(srcUnits, function(unit) {
+    srcUnits <- base::lapply(srcUnits, FUN=function(unit) {
       groups <- .subset2(unit, "groups");
-      groups <- base::lapply(groups, function(group) {
+      groups <- base::lapply(groups, FUN=function(group) {
 		nThisGroup <- length(.subset2(group,"pbase"));
         #group[fields] <- base::lapply(.subset(group, fields), FUN=.subset, fIdxs);
         #group$natoms <- nThisGroup

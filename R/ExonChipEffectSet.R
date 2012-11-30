@@ -69,7 +69,7 @@ setMethodS3("setMergeGroups", "ExonChipEffectSet", function(this, status, ...) {
   status <- Arguments$getLogical(status);
 
   # Update all chip-effect files
-  lapply(this, function(ce) {
+  lapply(this, FUN=function(ce) {
     ce$mergeGroups <- status;
   })
 
@@ -80,7 +80,7 @@ setMethodS3("getFirstCellPerUnitIndices", "ExonChipEffectSet", function(this, ..
 
   cdf <- getCdf(this);
   idx <- getFirstCellIndices(cdf, ...);
-  idx <- base::lapply(base::lapply(idx, .subset2, 1), .subset2, 1);
+  idx <- base::lapply(base::lapply(idx, FUN=.subset2, 1), FUN=.subset2, 1);
   idx <- unlist(idx, use.names=FALSE);
   idx;
 }, protected=TRUE)

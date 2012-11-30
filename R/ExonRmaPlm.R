@@ -67,7 +67,7 @@ cdfMergeGroups <- function(groups, ...) {
   nbrOfFields <- length(.subset2(groups,1));
   newGroup <- vector("list", nbrOfFields);
   for (ff in seq_len(nbrOfFields)) {
-    newGroup[[ff]] <- unlist(base::lapply(groups, .subset2, ff), use.names=FALSE);
+    newGroup[[ff]] <- unlist(base::lapply(groups, FUN=.subset2, ff), use.names=FALSE);
   }
   names(newGroup) <- names(.subset2(groups,1));
   return(list(newGroup));

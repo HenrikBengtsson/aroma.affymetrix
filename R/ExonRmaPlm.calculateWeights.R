@@ -6,7 +6,7 @@ setMethodS3("calculateWeights", "ExonRmaPlm", function(this, units=NULL, ram=NUL
   resFcn <- function(unit, mergeGroups) {
     nbrOfGroups <- length(unit);
     if (mergeGroups) {
-      y <- do.call("rbind", base::lapply(unit, .subset2, "eps"));
+      y <- do.call("rbind", base::lapply(unit, FUN=.subset2, "eps"));
       y <- log2(y);
       madMerged <- 1.4826 * median(abs(y));
     }

@@ -422,9 +422,9 @@ setMethodS3("createMonocellCdf", "AffymetrixCdfFile", function(this, chipType=ge
     # with element "groups". /KS
 
     # Precalculate
-    srcUnits <- base::lapply(srcUnits, function(unit) {
+    srcUnits <- base::lapply(srcUnits, FUN=function(unit) {
       groups <- .subset2(unit, "groups");
-      groups <- base::lapply(groups, function(group) {
+      groups <- base::lapply(groups, FUN=function(group) {
         group[fields] <- base::lapply(.subset(group, fields), FUN=.subset, fIdxs);
         group$natoms <- nbrOfCellsPerField;
         group$ncellsperatom <- as.integer(1);

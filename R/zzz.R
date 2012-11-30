@@ -13,7 +13,7 @@
 
 # R.filesets:
 append <- R.filesets::append;
-sapply <- R.filesets::sapply;
+##sapply <- R.filesets::sapply;
 
 # aroma.core:
 apply <- aroma.core::apply;

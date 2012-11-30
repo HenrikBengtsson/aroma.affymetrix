@@ -84,8 +84,8 @@ setMethodS3("calculateWeights", "ProbeLevelModel", function(this, units=NULL, ra
 
       verbose && enter(verbose, sprintf("Array #%d ('%s') of %d", ii, getName(wf), length(ds)));
 
-      data <- base::lapply(weightsList, function(unit) {
-        base::lapply(unit, function(group) {
+      data <- base::lapply(weightsList, FUN=function(unit) {
+        base::lapply(unit, FUN=function(group) {
           nrow <- nrow(group); 
           list(
             intensities=2^group[,ii], 

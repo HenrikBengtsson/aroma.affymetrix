@@ -528,7 +528,7 @@ setMethodS3("getWeights", "QualityAssessmentModel", function(this, path=NULL, na
 
     
     weightsList <- lapply(head, FUN=resFcn);
-    weightsList <- lapply(weightsList, .subset2, 1);
+    weightsList <- lapply(weightsList, FUN=.subset2, 1);
 
     # update output files
     cdf <- getCdf(ds);
@@ -544,7 +544,7 @@ setMethodS3("getWeights", "QualityAssessmentModel", function(this, path=NULL, na
         createCel(pathname[kk], header=celHeader, verbose=less(verbose));
       }
 
-      data <- lapply(weightsList, function(x){
+      data <- lapply(weightsList, FUN=function(x){
         nrow <- nrow(x); 
         list(list(
           intensities=2^x[,kk], 

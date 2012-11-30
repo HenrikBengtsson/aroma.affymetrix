@@ -1371,8 +1371,6 @@
 \alias{cat}
 \alias{getOption}
 \alias{append}
-\alias{lapply}
-\alias{sapply}
 \alias{apply}
 \alias{colMeans}
 \alias{colSums}

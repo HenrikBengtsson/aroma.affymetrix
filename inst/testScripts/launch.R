@@ -17,7 +17,8 @@ library("R.utils");
 
 cat("==========================================================\n");
 cat("BEGIN OF SESSION:\n");
-# Override default settings with command line arguments  
+
+cat("Command line arguments:\n");
 args <- commandArgs(asValues=TRUE, excludeReserved=TRUE, excludeEnvVars=TRUE);
 print(args);
 
@@ -35,14 +36,14 @@ print(.libPaths());
 
 print(sessionInfo());
 
-print(gc());
-
 cat("Memory statistics:\n");
-printf("Current memory usage: %g MB\n", memory.size(max=FALSE));
-printf("Maximum memory usage: %g MB\n", memory.size(max=TRUE));
-printf("Maximum memory limit: %g MB\n", memory.size(max=NA));
+print(gc());
+if (.Platform$OS.type == "windows") {
+  printf("Current memory usage: %g MB\n", memory.size(max=FALSE));
+  printf("Maximum memory usage: %g MB\n", memory.size(max=TRUE));
+  printf("Maximum memory limit: %g MB\n", memory.size(max=NA));
+}
 cat("==========================================================\n");
-
 
 
 # Load aroma.affymetrix (in a fault-tolerant way)
@@ -76,6 +77,7 @@ source(pathname);
 
 do.call(launchTestGroups, args);
 
+
 cat("==========================================================\n");
 cat("END OF SESSION:\n");
 # Override default settings with command line arguments  
@@ -96,12 +98,13 @@ print(.libPaths());
 
 print(sessionInfo());
 
-print(gc());
-
 cat("Memory statistics:\n");
-printf("Current memory usage: %g MB\n", memory.size(max=FALSE));
-printf("Maximum memory usage: %g MB\n", memory.size(max=TRUE));
-printf("Maximum memory limit: %g MB\n", memory.size(max=NA));
+print(gc());
+if (.Platform$OS.type == "windows") {
+  printf("Current memory usage: %g MB\n", memory.size(max=FALSE));
+  printf("Maximum memory usage: %g MB\n", memory.size(max=TRUE));
+  printf("Maximum memory limit: %g MB\n", memory.size(max=NA));
+}
 cat("==========================================================\n");
 
 

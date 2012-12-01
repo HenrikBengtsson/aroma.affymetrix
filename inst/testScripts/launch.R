@@ -15,11 +15,35 @@
 ############################################################################
 library("R.utils");
 
+cat("==========================================================\n");
+cat("BEGIN OF SESSION:\n");
 # Override default settings with command line arguments  
 args <- commandArgs(asValues=TRUE, excludeReserved=TRUE, excludeEnvVars=TRUE);
 print(args);
 
 printf("Hostname: %s\n", System$getHostname());
+printf("Username: %s\n", System$getUsername());
+printf("Current directory: %s\n", getwd());
+
+cat("R system environment variables:\n");
+sysenv <- c("R_LIBS", "R_LIBS_USER", "R_LIBS_SITE");
+sysenv <- sapply(sysenv, FUN=Sys.getenv, USE.NAMES=TRUE, simplify=FALSE);
+str(sysenv);
+
+cat(".libPaths():\n");
+print(.libPaths());
+
+print(sessionInfo());
+
+print(gc());
+
+cat("Memory statistics:\n");
+printf("Current memory usage: %g MB\n", memory.size(max=FALSE));
+printf("Maximum memory usage: %g MB\n", memory.size(max=TRUE));
+printf("Maximum memory limit: %g MB\n", memory.size(max=NA));
+cat("==========================================================\n");
+
+
 
 # Load aroma.affymetrix (in a fault-tolerant way)
 kk <- 1L;
@@ -31,8 +55,6 @@ while (kk < 10L) {
   }, error = function(ex) { 
     print(traceback());
     print(ex);
-    cat(".libPaths():\n");
-    print(.libPaths());
     # Sleep for a while and try again
     Sys.sleep(10);
     FALSE;
@@ -54,8 +76,39 @@ source(pathname);
 
 do.call(launchTestGroups, args);
 
+cat("==========================================================\n");
+cat("END OF SESSION:\n");
+# Override default settings with command line arguments  
+args <- commandArgs(asValues=TRUE, excludeReserved=TRUE, excludeEnvVars=TRUE);
+print(args);
+
+printf("Hostname: %s\n", System$getHostname());
+printf("Username: %s\n", System$getUsername());
+printf("Current directory: %s\n", getwd());
+
+cat("R system environment variables:\n");
+sysenv <- c("R_LIBS", "R_LIBS_USER", "R_LIBS_SITE");
+sysenv <- sapply(sysenv, FUN=Sys.getenv, USE.NAMES=TRUE, simplify=FALSE);
+str(sysenv);
+
+cat(".libPaths():\n");
+print(.libPaths());
+
+print(sessionInfo());
+
+print(gc());
+
+cat("Memory statistics:\n");
+printf("Current memory usage: %g MB\n", memory.size(max=FALSE));
+printf("Maximum memory usage: %g MB\n", memory.size(max=TRUE));
+printf("Maximum memory limit: %g MB\n", memory.size(max=NA));
+cat("==========================================================\n");
+
+
 ############################################################################
 # HISTORY:
+# 2012-11-30
+# o Now outputting session information useful for debugging.
 # 2012-11-21
 # o Now using R.cache root path specific to the aroma tests.
 # 2012-10-19

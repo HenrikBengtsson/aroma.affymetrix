@@ -1,6 +1,12 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 2.7.5 [2012-11-30]
+o BUG FIX/ROBUSTNESS: convertToUnique() for AffymetrixCelSet would
+  return all CEL files found in the output directory, not just the ones
+  corresponding to the input set, and possibly in a different order.
+
+
 Version: 2.7.4 [2012-11-29]
 o DOCUMENTATION: Added help pages to more methods.
 o ROBUSTNESS: updateUnits() for ResidualSet did not update the

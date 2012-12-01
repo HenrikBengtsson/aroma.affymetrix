@@ -18,15 +18,17 @@ setMethodS3("convertToUnique", "AffymetrixCelSet", function(this, ..., tags="UNQ
   # Already unique?
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   cdf <- getCdf(this);
+
+  # Already done?
   if (isUniqueCdf(cdf)) {
     verbose && cat(verbose, "Already based on a unique CDF");
     verbose && exit(verbose);
     return(invisible(this));
-  } else {
-    verbose && enter(verbose, "Getting unique CDF");
-    cdfUnique <- getUniqueCdf(cdf)
-    verbose && exit(verbose);
   }
+
+  verbose && enter(verbose, "Getting unique CDF");
+  cdfUnique <- getUniqueCdf(cdf);
+  verbose && exit(verbose);
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Getting output directory
@@ -54,6 +56,10 @@ setMethodS3("convertToUnique", "AffymetrixCelSet", function(this, ..., tags="UNQ
   outputPath <- Arguments$getWritablePath(outputPath);
   verbose && cat(verbose, "Output Path: ", outputPath);
 
+
+  # Expected output set
+  fullnames <- getFullNames(this);
+
   
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Already done?
@@ -64,13 +70,16 @@ setMethodS3("convertToUnique", "AffymetrixCelSet", function(this, ..., tags="UNQ
     # HB: Don't think argument 'checkChipType' makes a difference if
     #     argument 'cdf' is given.
     res <- AffymetrixCelSet$byName(fullname, cdf=cdfUnique, 
-                                   checkChipType=FALSE, verbose=verbose);
+                           checkChipType=FALSE, verbose=less(verbose, 10));
   }, error = function(ex) {});
  
   if (inherits(res, "AffymetrixCelSet")) {
-    srcFullnames <- getFullNames(this);
-    fullnames <- getFullNames(res);
-    missing <- setdiff(srcFullnames, fullnames);
+    # Extract samples in the same order as they appear in the input
+    # data set, and if more were found, drop those.
+    res <- extract(res, fullnames, onMissing="drop");
+
+    # Is output set complete?
+    missing <- setdiff(fullnames, getFullNames(res));
     if (length(missing) == 0) {
       if (!force) {
         verbose && cat(verbose, "Detected existing output dataset. Skipping.");
@@ -182,6 +191,11 @@ setMethodS3("convertToUnique", "AffymetrixCelSet", function(this, ..., tags="UNQ
 
   res <- AffymetrixCelSet$byName(fullname, cdf=cdfUnique,
                                       checkChipType=FALSE, verbose=verbose);
+
+  # Extract samples in the same order as they appear in the input
+  # data set, and if more were found, drop those.
+  res <- extract(res, fullnames, onMissing="error");
+
   verbose && exit(verbose);
   
   invisible(res);
@@ -190,6 +204,10 @@ setMethodS3("convertToUnique", "AffymetrixCelSet", function(this, ..., tags="UNQ
 
 ############################################################################
 # HISTORY:
+# 2012-11-30 [HB]
+# o BUG FIX/ROBUSTNESS: convertToUnique() for AffymetrixCelSet would
+#   return all CEL files found in the output directory, not just the ones
+#   corresponding to the input set, and possibly in a different order.
 # 2011-03-28 [HB]
 # o Now convertToUnique() for AffymetrixCelSet skips already processed
 #   files in partially processed data sets.  Previously it would give 

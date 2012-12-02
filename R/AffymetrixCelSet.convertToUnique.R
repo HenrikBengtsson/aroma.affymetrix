@@ -76,7 +76,11 @@ setMethodS3("convertToUnique", "AffymetrixCelSet", function(this, ..., tags="UNQ
   if (inherits(res, "AffymetrixCelSet")) {
     # Extract samples in the same order as they appear in the input
     # data set, and if more were found, drop those.
-    res <- extract(res, fullnames, onMissing="drop");
+    # WORKAROUND/TO BE REMOVED: R.utils (<= 1.19.0) will give an error
+    # with extract() if length(fullnames) > length(res). /HB 2012-12-01
+    if (length(res) >= length(fullnames)) {
+      res <- extract(res, fullnames, onMissing="drop");
+    }
 
     # Is output set complete?
     missing <- setdiff(fullnames, getFullNames(res));

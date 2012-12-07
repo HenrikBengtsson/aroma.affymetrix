@@ -121,7 +121,7 @@ setMethodS3("getSubsetToUpdate", "ScaleNormalization", function(this, ..., verbo
   ds <- getInputDataSet(this);
   if (inherits(ds, "ChipEffectSet")) {
     verbose && enter(verbose, "Identifying possible cells in ", class(ds)[1]);
-    df <- getFile(ds, 1);
+    df <- getOneFile(ds);
     # Cannot use 'unlist=TRUE' next, because restructuring might occur.
     possibleCells <- getCellIndices(df, verbose=less(verbose));
     possibleCells <- unlist(possibleCells, use.names=FALSE);
@@ -229,7 +229,7 @@ setMethodS3("getSubsetToAvg", "ScaleNormalization", function(this, ..., verbose=
   ds <- getInputDataSet(this);
   if (inherits(ds, "ChipEffectSet")) {
     verbose && enter(verbose, "Identifying possible cells in ", class(ds)[1]);
-    df <- getFile(ds, 1);
+    df <- getOneFile(ds);
     # Cannot use 'unlist=TRUE' next, because restructuring might occur.
     possibleCells <- getCellIndices(df, verbose=less(verbose));
     possibleCells <- unlist(possibleCells, use.names=FALSE);

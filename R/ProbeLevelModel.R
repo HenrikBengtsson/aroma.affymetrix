@@ -115,7 +115,7 @@ setMethodS3("getProbeAffinityFile", "ProbeLevelModel", function(this, ..., .clas
     throw("Cannot create probe-affinity file. There are no CEL files in the data set.");
 
   # Create probe-affinity file from CEL file template
-  df <- getFile(ds, 1);
+  df <- getOneFile(ds, mustExist=TRUE);
   paf <- createFrom(df, filename="probeAffinities.CEL", path=getPath(this), 
                                           methods="create", clear=TRUE, ...);
 

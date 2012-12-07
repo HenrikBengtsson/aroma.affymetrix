@@ -455,7 +455,7 @@ setMethodS3("process", "MatNormalization", function(this, ..., ram=NULL, force=F
   verbose && enter(verbose, "Normalizing ", nbrOfArrays, " arrays");
   verbose && enter(verbose, "Path: ", outputPath);
 
-  df <- getFile(ds, 1);
+  df <- getOneFile(ds);
   nbrOfCells <- nbrOfCells(df);
   
   xtx <- 0;

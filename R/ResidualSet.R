@@ -54,7 +54,7 @@ setMethodS3("as.character", "ResidualSet", function(x, ...) {
 
 
 setMethodS3("getParameters", "ResidualSet", function(this, ...) {
-  rf <- getFile(this, 1L);
+  rf <- getOneFile(this);
   getParameters(rf, ...);
 }, protected=TRUE)
 
@@ -127,7 +127,7 @@ setMethodS3("getCellIndices", "ResidualSet", function(this, ...) {
   # Use the first residual file to get the CDF structure.
   # Note: Ideally we want to define a special CDF class doing this
   # instead of letting the data file do this. /HB 2006-12-18
-  rf <- getFile(this, 1);
+  rf <- getOneFile(this);
   getCellIndices(rf, ...);
 })
 
@@ -159,7 +159,7 @@ setMethodS3("readUnits", "ResidualSet", function(this, units=NULL, cdf=NULL, ...
 
   # Get first residual file and use that to decode the read structure
   # This takes some time for a large number of units /HB 2006-10-04
-  rf <- getFile(this, 1);
+  rf <- getOneFile(this);
   res <- decode(rf, res, verbose=less(verbose));
 
   verbose && exit(verbose);

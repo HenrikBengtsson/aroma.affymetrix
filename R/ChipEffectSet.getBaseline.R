@@ -80,7 +80,7 @@ setMethodS3("getBaseline", "ChipEffectSet", function(this, force=FALSE, verbose=
 
 
   # Get a template CEL file
-  df <- getFile(this, 1);
+  df <- getOneFile(this);
 
   if (isFile(pathname)) {
     verbose && enter(verbose, "Loading existing data file");

@@ -13,7 +13,7 @@ setMethodS3("getCdfBin", "DChipDcpSet", function(this, force=FALSE, ...) {
       throw("Cannot infer full chip type. Failed to locate a CDF.bin file.");
     }
 
-    df <- getFile(this, 1);
+    df <- getOneFile(this);
     nbrOfUnits <- nbrOfUnits(df);
     for (pp in seq_along(pathnames)) {
       pathname <- pathnames[pp];

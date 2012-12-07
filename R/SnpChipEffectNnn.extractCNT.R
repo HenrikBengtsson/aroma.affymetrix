@@ -5,9 +5,9 @@ setMethodS3("extractCNT", "SnpChipEffectFile", function(this, reference, units=N
   cdf <- getCdf(this);
   # Argument 'reference':
   if (inherits(this, "SnpChipEffectSet")) {
-    className <- class(getFile(this,1))[1];
+    className <- class(getOneFile(this))[1L];
   } else {
-    className <- class(this)[1];
+    className <- class(this)[1L];
   }
   reference <- Arguments$getInstanceOf(reference, className);
 

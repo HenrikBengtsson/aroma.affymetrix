@@ -56,7 +56,7 @@ setConstructorS3("ProbeLevelTransform3", function(dataSet=NULL, ..., unitsToFit=
       }
       extraTags <- c(extraTags, unitsToUpdate=unitsToUpdate);
     } else {
-      df <- getFile(dataSet, 1);
+      df <- getOneFile(dataSet);
       nbrOfCells <- nbrOfCells(df);
       unitsToUpdate <- Arguments$getIndices(unitsToUpdate, max=nbrOfCells);
       unitsToUpdate <- unique(unitsToUpdate);
@@ -77,7 +77,7 @@ setConstructorS3("ProbeLevelTransform3", function(dataSet=NULL, ..., unitsToFit=
       }
       extraTags <- c(extraTags, unitsToFit=unitsToFit);
     } else {
-      df <- getFile(dataSet, 1);
+      df <- getOneFile(dataSet);
       nbrOfCells <- nbrOfCells(df);
       unitsToFit <- Arguments$getIndices(unitsToFit, max=nbrOfCells);
       unitsToFit <- unique(unitsToFit);
@@ -233,7 +233,7 @@ setMethodS3("getCellsToInternal", "ProbeLevelTransform3", function(this, units, 
   # whole restructuring to the CDF with a more intuitive API.
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (inherits(dataSet, "ChipEffectSet")) {
-    df <- getFile(dataSet, 1);
+    df <- getOneFile(dataSet);
 
     # Cannot use 'unlist=TRUE' next, because restructuring might occur.
     possibleCells <- getCellIndices(df, verbose=less(verbose));

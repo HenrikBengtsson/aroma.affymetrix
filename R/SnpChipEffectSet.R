@@ -50,9 +50,9 @@ setMethodS3("getChipEffectFileClass", "SnpChipEffectSet", function(static, ...) 
 }, static=TRUE, private=TRUE)
 
 setMethodS3("getMergeStrands", "SnpChipEffectSet", function(this, ...) {
-  if (length(this) == 0)
+  if (length(this) == 0L)
     return(FALSE);
-  ce <- getFile(this, 1);
+  ce <- getOneFile(this);
   ce$mergeStrands;
 })
 
@@ -97,17 +97,17 @@ setMethodS3("inferParameters", "SnpChipEffectSet", function(this, ..., verbose=F
   cdf <- getCdf(this);
   cdfPathname <- getPathname(cdf);
   nbrOfUnits <- readCdfHeader(cdfPathname)$nunits;
-  allUnits <- 1:nbrOfUnits;
+  allUnits <- seq_len(nbrOfUnits);
 
-  ce <- getFile(this, 1);
+  ce <- getOneFile(this, mustExist=TRUE);
   cePathname <- getPathname(ce);
 
   verbose && cat(verbose, "Pathname: ", cePathname);
 
   mergeStrands <- NA;
-  while(length(allUnits) > 0) {
+  while(length(allUnits) > 0L) {
     verbose && cat(verbose, "Units left: ", length(allUnits));
-    uu <- 1:min(10e3,length(allUnits));
+    uu <- seq_len(min(10e3,length(allUnits)));
     units <- allUnits[uu];
     allUnits <- allUnits[-uu];
     rm(uu);
@@ -116,9 +116,9 @@ setMethodS3("inferParameters", "SnpChipEffectSet", function(this, ..., verbose=F
     unitSizes <- readCdfGroupNames(cdfPathname, units=units);
     names(unitSizes) <- NULL;
     unitSizes <- sapply(unitSizes, FUN=length);
-    units <- units[unitSizes == 4];
+    units <- units[unitSizes == 4L];
     rm(unitSizes);
-    if (length(units) > 0) {
+    if (length(units) > 0L) {
       verbose && cat(verbose, "Scanning units:");
       verbose && str(verbose, units);
       # Infer parameters from 'intensities'
@@ -127,7 +127,7 @@ setMethodS3("inferParameters", "SnpChipEffectSet", function(this, ..., verbose=F
       rm(units);
   
       # Put quartets by columns
-      values <- matrix(unlist(values, use.names=FALSE), nrow=4);
+      values <- matrix(unlist(values, use.names=FALSE), nrow=4L);
       
       # Keep only estimated units without NAs
       csums <- colSums(values);
@@ -135,9 +135,9 @@ setMethodS3("inferParameters", "SnpChipEffectSet", function(this, ..., verbose=F
       rm(csums);
       verbose && cat(verbose, "Values quartets:");
       verbose && print(verbose, values[,seq_len(min(ncol(values),6)),drop=FALSE]);
-      if (ncol(values) > 0) {
+      if (ncol(values) > 0L) {
         t <- rowMeans(values);
-        if (length(t) > 0) {
+        if (length(t) > 0L) {
           isZero <- isZero(t);
           if (!all(isZero)) {
             mergeStrands <- isZero[3] && isZero[4];

@@ -748,7 +748,7 @@ setMethodS3("calculateConfidenceScores", "CrlmmModel", function(this, ..., force
 
   nbrOfArrays <- length(callSet);
   verbose && cat(verbose, "Number of arrays: ", nbrOfArrays);
-  cf <- getFile(callSet,1);
+  cf <- getOneFile(callSet);
   nbrOfUnits <- nbrOfUnits(cf);
   verbose && cat(verbose, "Number of units: ", nbrOfUnits);
 

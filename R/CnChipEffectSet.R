@@ -58,9 +58,9 @@ setMethodS3("getChipEffectFileClass", "CnChipEffectSet", function(static, ...) {
 
 
 setMethodS3("getCombineAlleles", "CnChipEffectSet", function(this, ...) {
-  if (length(this) == 0)
+  if (length(this) == 0L)
     return(FALSE);
-  ce <- getFile(this, 1);
+  ce <- getOneFile(this);
   ce$combineAlleles;
 })
 
@@ -68,10 +68,10 @@ setMethodS3("getCombineAlleles", "CnChipEffectSet", function(this, ...) {
 
 
 setMethodS3("setCombineAlleles", "CnChipEffectSet", function(this, status, ...) {
-  if (length(this) == 0)
+  if (length(this) == 0L)
     return(FALSE);
 
-  ce <- getFile(this, 1);
+  ce <- getOneFile(this);
   oldStatus <- ce$combineAlleles;
 
   if (identical(status, "byFirstFile")) {
@@ -105,9 +105,9 @@ setMethodS3("inferParameters", "CnChipEffectSet", function(this, ..., verbose=FA
   cdf <- getCdf(this);
   cdfPathname <- getPathname(cdf);
   nbrOfUnits <- readCdfHeader(cdfPathname)$nunits;
-  allUnits <- 1:nbrOfUnits;
+  allUnits <- seq_len(nbrOfUnits);
 
-  ce <- getFile(this, 1);
+  ce <- getOneFile(this);
   cePathname <- getPathname(ce);
 
   verbose && cat(verbose, "Pathname: ", cePathname);
@@ -115,7 +115,7 @@ setMethodS3("inferParameters", "CnChipEffectSet", function(this, ..., verbose=FA
   mergeStrands <- combineAlleles <- NA;
   while(length(allUnits) > 0) {
     verbose && cat(verbose, "Units left: ", length(allUnits));
-    uu <- 1:min(10e3,length(allUnits));
+    uu <- seq_len(min(10e3,length(allUnits)));
     units <- allUnits[uu];
     allUnits <- allUnits[-uu];
     rm(uu);

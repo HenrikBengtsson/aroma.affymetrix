@@ -78,7 +78,7 @@ setMethodS3("getCellIndices", "FirmaSet", function(this, ...) {
   # Use the first file to get the CDF structure.
   # Note: Ideally we want to define a special CDF class doing this
   # instead of letting the data file do this. /HB 2006-12-18
-  ff <- getFile(this, 1);
+  ff <- getOneFile(this);
   getCellIndices(ff, ...);
 })
 
@@ -110,7 +110,7 @@ setMethodS3("readUnits", "FirmaSet", function(this, units=NULL, cdf=NULL, ..., v
 
   # Get first file and use that to decode the read structure
   # This takes some time for a large number of units /HB 2006-10-04
-  ff <- getFile(this, 1);
+  ff <- getOneFile(this);
   res <- decode(ff, res, verbose=less(verbose));
 
   verbose && exit(verbose);
@@ -120,7 +120,7 @@ setMethodS3("readUnits", "FirmaSet", function(this, units=NULL, cdf=NULL, ..., v
 
 setMethodS3("findUnitsTodo", "FirmaSet", function(this, ...) {
   # Look into the last file since that is updated last
-  ff <- getFile(this, 1);
+  ff <- getOneFile(this);
   findUnitsTodo(ff, ...);
 })
 

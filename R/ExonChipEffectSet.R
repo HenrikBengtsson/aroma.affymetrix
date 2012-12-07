@@ -50,9 +50,9 @@ setMethodS3("getChipEffectFileClass", "ExonChipEffectSet", function(static, ...)
 }, static=TRUE, private=TRUE)
 
 setMethodS3("getMergeGroups", "ExonChipEffectSet", function(this, ...) {
-  if (length(this) == 0)
+  if (length(this) == 0L)
     return(FALSE);
-  ce <- getFile(this, 1);
+  ce <- getOneFile(this);
   ce$mergeGroups;
 })
 

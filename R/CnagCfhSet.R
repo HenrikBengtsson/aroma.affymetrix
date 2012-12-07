@@ -421,12 +421,6 @@ setMethodS3("byPath", "CnagCfhSet", function(static, path="rawData/", pattern="[
     verbose && enter(verbose, "Updating the CDF for all files");
     verbose && cat(verbose, "Chip type: ", chipType);
     cdf <- AffymetrixCdfFile$byChipType(chipType);
-    cf <- getFile(this, 1);
-  #  if (nbrOfCells(cdf) != nbrOfCells(cf)) {
-  #    cdf <- getCdf(cf);
-  #    chipType <- getChipType(cdf);
-  #    verbose && cat(verbose, "Chip type: ", chipType);
-  #  }
     setCdf(this, cdf, .checkArgs=FALSE);
     verbose && exit(verbose);
   
@@ -435,7 +429,7 @@ setMethodS3("byPath", "CnagCfhSet", function(static, path="rawData/", pattern="[
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
     verbose && enter(verbose, "Scanning for and applying sample annotation files");
     sas <- SampleAnnotationSet$loadAll(verbose=less(verbose));
-    if (length(sas) == 0) {
+    if (length(sas) == 0L) {
       verbose && cat(verbose, "No sample annotation files found.");
     } else {
       verbose && print(verbose, sas);

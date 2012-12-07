@@ -74,7 +74,7 @@ setMethodS3("getSubsetToUpdate", "QuantileNormalization", function(this, ..., ve
   ds <- getInputDataSet(this);
   if (inherits(ds, "ChipEffectSet")) {
     verbose && enter(verbose, "Identifying possible cells in ", class(ds)[1]);
-    df <- getFile(ds, 1);
+    df <- getOneFile(ds);
     possibleCells <- getCellIndices(df, verbose=less(verbose));
     possibleCells <- unlist(possibleCells, use.names=FALSE);
     possibleCells <- sort(possibleCells);
@@ -132,7 +132,7 @@ setMethodS3("getSubsetToAvg", "QuantileNormalization", function(this, ..., verbo
   ds <- getInputDataSet(this);
   if (inherits(ds, "ChipEffectSet")) {
     verbose && enter(verbose, "Identifying possible cells in ", class(ds)[1]);
-    df <- getFile(ds, 1);
+    df <- getOneFile(ds);
     possibleCells <- getCellIndices(df, verbose=less(verbose));
     possibleCells <- unlist(possibleCells, use.names=FALSE);
     possibleCells <- sort(possibleCells);

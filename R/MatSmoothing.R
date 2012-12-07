@@ -593,7 +593,7 @@ setMethodS3("process", "MatSmoothing", function(this, ..., units=NULL, force=FAL
 
     # Create CEL file to store results, if missing
     verbose && enter(verbose, "Creating CEL file for results, if missing");
-    df <- getFile(ds, 1);
+    df <- getOneFile(ds);
     createFrom(df, filename=pathnameT, path=NULL, verbose=less(verbose));
     verbose && exit(verbose);
     

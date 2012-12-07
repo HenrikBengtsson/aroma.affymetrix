@@ -310,13 +310,11 @@ setMethodS3("getPlatform", "AffymetrixCelSet", function(this, ...) {
 
 
 setMethodS3("getUnitNamesFile", "AffymetrixCelSet", function(this, ...) {
-  aFile <- getFile(this, 1);
-  getUnitNamesFile(aFile, ...);
+  getUnitNamesFile(getOneFile(this), ...);
 })
 
 setMethodS3("getUnitTypesFile", "AffymetrixCelSet", function(this, ...) {
-  aFile <- getFile(this, 1);
-  getUnitTypesFile(aFile, ...);
+  getUnitTypesFile(getOneFile(this), ...);
 })
 
 
@@ -350,8 +348,7 @@ setMethodS3("getUnitTypesFile", "AffymetrixCelSet", function(this, ...) {
 # @keyword IO
 #*/###########################################################################
 setMethodS3("getCdf", "AffymetrixCelSet", function(this, ...) {
-  aFile <- getFile(this, 1);
-  getCdf(aFile, ...);
+  getCdf(getOneFile(this), ...);
 })
 
 
@@ -396,8 +393,8 @@ setMethodS3("setCdf", "AffymetrixCelSet", function(this, cdf, verbose=FALSE, ...
     cdf <- Arguments$getInstanceOf(cdf, "AffymetrixCdfFile");
   
     # Assure that the CDF is compatible with the CEL file
-    if (length(this) > 0) {
-      cf <- getFile(this, 1);
+    if (length(this) > 0L) {
+      cf <- getOneFile(this);
       if (nbrOfCells(cdf) != nbrOfCells(cf)) {
         throw("Cannot set CDF. The specified CDF structure ('", getChipType(cdf), "') is not compatible with the chip type ('", getChipType(cf), "') of the CEL file. The number of cells do not match: ", nbrOfCells(cdf), " != ", nbrOfCells(cf));
       }
@@ -743,7 +740,7 @@ setMethodS3("byPath", "AffymetrixCelSet", function(static, path, cdf=NULL, patte
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
     if (is.null(cdf)) {
       verbose && enter(verbose, "Retrieving the CDF for chip type '", chipType, "' inferred from path");
-      cf <- getFile(set, 1);
+      cf <- getOneFile(set);
       nbrOfCells <- nbrOfCells(cf);
       cdf <- AffymetrixCdfFile$byChipType(chipType, nbrOfCells=nbrOfCells);
       verbose && exit(verbose);
@@ -1231,8 +1228,7 @@ setMethodS3("applyToUnitIntensities", "AffymetrixCelSet", function(this, units=N
 
 
 setMethodS3("getUnitGroupCellMap", "AffymetrixCelSet", function(this, ...) {
-  ce <- getFile(this, 1);
-  getUnitGroupCellMap(ce, ...);
+  getUnitGroupCellMap(getOneFile(this), ...);
 })
 
 

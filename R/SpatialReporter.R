@@ -80,9 +80,9 @@ setMethodS3("setReference", "SpatialReporter", function(this, refFile, ...) {
     refFile <- Arguments$getInstanceOf(refFile, "AffymetrixCelFile");
 
     ds <- getDataSet(this);
-    df <- getFile(ds, 1);
+    df <- getOneFile(ds);
 
-    if (!is.element(class(refFile)[1], class(df))) {
+    if (!is.element(class(refFile)[1L], class(df))) {
       throw("Cannot set reference. Argument 'refFile' is not of a class compatible with the data set: ", class(refFile)[1]);
     } 
   }

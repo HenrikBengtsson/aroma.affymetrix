@@ -54,7 +54,7 @@ setMethodS3("as.character", "WeightsSet", function(x, ...) {
 
 
 setMethodS3("getParameters", "WeightsSet", function(this, ...) {
-  rf <- getFile(this, 1L);
+  rf <- getOneFile(this);
   getParameters(rf, ...);
 }, protected=TRUE)
 
@@ -107,7 +107,7 @@ setMethodS3("getCellIndices", "WeightsSet", function(this, ...) {
   # Use the first weights file to get the CDF structure.
   # Note: Ideally we want to define a special CDF class doing this
   # instead of letting the data file do this. /HB 2006-12-18
-  wf <- getFile(this, 1);
+  wf <- getOneFile(this);
   getCellIndices(wf, ...);
 })
 
@@ -139,7 +139,7 @@ setMethodS3("readUnits", "WeightsSet", function(this, units=NULL, cdf=NULL, ...,
 
   # Get first weights file and use that to decode the read structure
   # This takes some time for a large number of units /HB 2006-10-04
-  wf <- getFile(this, 1);
+  wf <- getOneFile(this);
   res <- decode(wf, res, verbose=less(verbose));
 
   verbose && exit(verbose);

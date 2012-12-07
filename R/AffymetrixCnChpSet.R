@@ -192,7 +192,7 @@ setMethodS3("byPath", "AffymetrixCnChpSet", function(static, path, pattern="[.](
   
       verbose && enter(verbose, "Check compatibility with 1st CEL file");
       verbose && cat(verbose, "Chip type: ", chipType);
-      cf <- getFile(set, 1);
+      cf <- getOneFile(set);
       if (nbrOfCells(cdf) != nbrOfCells(cf)) {
         cdf <- getCdf(cf);
         chipType <- getChipType(cdf);
@@ -361,8 +361,7 @@ setMethodS3("extractLogRatios", "AffymetrixCnChpSet", function(this, units=NULL,
 
 
 setMethodS3("getCdf", "AffymetrixCnChpSet", function(this, ...) {
-  aFile <- getFile(this, 1L);
-  getCdf(aFile, ...);
+  getCdf(getOneFile(this), ...);
 })
 
  

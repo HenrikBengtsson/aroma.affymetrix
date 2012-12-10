@@ -426,15 +426,19 @@ setMethodS3("getTimestamp", "AffymetrixCelFile", function(this, format="%m/%d/%y
 
     # Fallback, in case a early-access chiptype string (or none) is used
     # in the DAT header.
-    if (length(header) == 0) {
+    if (length(header) == 0L) {
       pattern <- " (.*).1sq ";
       header <- grep(pattern, headerDAT, value=TRUE);
     }
 
-    # Extract the date timestamp
-    pattern <- ".*([01][0-9]/[0-3][0-9]/[0-9][0-9] [0-2][0-9]:[0-5][0-9]:[0-5][0-9]).*";
+    hasTimestamp <- FALSE;
+    if (length(header) == 1L) {
+      # Extract the date timestamp
+      pattern <- ".*([01][0-9]/[0-3][0-9]/[0-9][0-9] [0-2][0-9]:[0-5][0-9]:[0-5][0-9]).*";
 
-    hasTimestamp <- (regexpr(pattern, header) != -1);
+      hasTimestamp <- (regexpr(pattern, header) != -1L);
+    }
+
     if (hasTimestamp) {
       timestamp <- gsub(pattern, "\\1", header);
   
@@ -916,6 +920,9 @@ setMethodS3("getRectangle", "AffymetrixCelFile", function(this, ...) {
 
 ############################################################################
 # HISTORY:
+# 2012-12-10
+# o BUG FIX: getTimestamp() for AffymetrixCelFile would throw an error
+#   if the CEL file header did not have a timestamp.
 # 2012-11-20
 # o CLEANUP: Deprecated "[" and "[[", because they should be used to
 #   subset files and not units.

@@ -1,6 +1,13 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 2.7.7 [2012-12-10]
+o BUG FIX: getTimestamp() for AffymetrixCelFile would throw an error
+  if the CEL file header did not have a timestamp.  Thanks to 
+  Guido Hooiveld (Netherlands Nutrigenomics Centre/Wageningen UR)
+  for reporting on this.
+
+
 Version: 2.7.6 [2012-12-06]
 o ROBUSTNESS: Utilizing new getOneFile() internally. 
 

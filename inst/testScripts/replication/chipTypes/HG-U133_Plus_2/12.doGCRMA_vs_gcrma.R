@@ -69,14 +69,14 @@ theta <- theta[o,];
 rho <- diag(cor(theta, theta0));
 print(rho);
 print(range(rho));
-stopifnot(all(rho > 0.99995));
+stopifnot(all(rho > 0.9999));
 
 # (b) Assert differences
 e <- (theta - theta0);
 print(summary(e));
 stopifnot(mean(as.vector(e^2)) < 0.001);
 stopifnot(sd(as.vector(e^2)) < 0.003);
-stopifnot(quantile(abs(e), 0.99) < 0.10);
+stopifnot(quantile(abs(e), 0.99) < 0.11);
 stopifnot(max(abs(e)) < 0.30);
 
 # (c) Visual comparison

@@ -13,6 +13,7 @@
 \alias{writeCdf.AffyGenePDInfo}
 \alias{writeCdf,AffyGenePDInfo-method}
 
+ \alias{writeCdf.PDInfoList}
 
  \title{Generates an Affymetrix CDF file from a Platform Design (PD) package}
 
@@ -21,16 +22,15 @@
    Platform Design (PD) packages are also known as "pdInfo" packages.
  }
 
- \usage{\method{writeCdf}{AffyGenePDInfo}(this, tags=NULL, path=NULL, useTranscriptCluster=FALSE, overwrite=FALSE, verbose=TRUE, ...)}
+ \usage{\method{writeCdf}{AffyGenePDInfo}(this, tags=c("*"), unitsBy=c("transcript", "exon"), namesBy=c("fsetid", "id"), path=NULL, overwrite=FALSE, verbose=TRUE, ...)}
 
  \arguments{
   \item{tags}{An optional \code{\link[base]{character}} \code{\link[base]{vector}} of tags to be added to the CDF
     filename.}
+  \item{unitsBy}{A \code{\link[base]{character}} string specifying how to group units.}
   \item{path}{The output path where the CDF file is written.
     If \code{\link[base]{NULL}} (default), then it is written to the corresponding
     \code{annotationData/chipTypes/<chipType>/} directory.}
-  \item{useTranscriptCluster}{If \code{\link[base:logical]{TRUE}}, units are defined by the transcript
-     cluster IDs rather than the probeset IDs.}
   \item{overwrite}{If \code{\link[base:logical]{TRUE}}, an existing CDF is overwritten, otherwise
     an exception is thrown.}
   \item{verbose}{A \code{\link[base]{logical}} or \code{\link[R.utils]{Verbose}}.}
@@ -55,13 +55,13 @@
    In order to workaround these limitations, certain CDF entries
    are set to predefined/hardwired values.
    The 'pbase' and 'tbase' entries of the generated CDF file is
-   hardwired to "T" and "A", respectively.  Likewise, the 'groupdirection'
-   entry is hardwired to "sense".
+   hardwired to "T" and "A", respectively.
+   Likewise, the 'groupdirection' entry is hardwired to "sense".
  }
 
  \author{
-   Henrik Bengtsson, adopted from \code{pdInfo2Cdf()} written by
-   Samuel Wuest and Mark Robinson.
+   Henrik Bengtsson and Guido Hooiveld adopted from \code{pdInfo2Cdf()}
+   written by Samuel Wuest and Mark Robinson.
  }
 
 

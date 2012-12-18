@@ -1631,6 +1631,23 @@ setMethodS3("validate", "AffymetrixCdfFile", function(this, ...) {
 
   
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Check for units with zero unit groups
+  #
+  # Examples: 
+  # o HTHGU133A_Hs_ENTREZG.cdf (v 12.0.0):
+  #    Error: Detected 1 unit(s) (i.e. 11973) with zero unit groups: ...
+  #   because it's CDF header claims to have 11,973 units, whereas there
+  #   are only 11,972.  See also thread '[customcdf] ENTREZG, AUGUSTUST
+  #   for pig species is updated' on May 8, 2012 [http://goo.gl/Xg1pp]
+  #
+  # Examples:
+  # o HTHGU133A_Hs_ENTREZG.cdf (v 12.0.0) [as above]
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  ns <- nbrOfGroupsPerUnit(this);
+  assertUnits(ns == 0L, "%d unit(s) (i.e. %s) with zero unit groups: %s");
+
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Check for empty unit names
   #
   # Examples: 
@@ -1639,18 +1656,13 @@ setMethodS3("validate", "AffymetrixCdfFile", function(this, ...) {
   #   because it's CDF header claims to have 11,973 units, whereas there
   #   are only 11,972.  See also thread '[customcdf] ENTREZG, AUGUSTUST
   #   for pig species is updated' on May 8, 2012 [http://goo.gl/Xg1pp]
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  unitNames <- getUnitNames(this);
-  assertUnits(nchar(unitNames) == 0L, "%d unit(s) (i.e. %s) with empty unit names: %s");
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Check for units with zero unit groups
   #
   # Examples:
   # o HTHGU133A_Hs_ENTREZG.cdf (v 12.0.0) [as above]
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  ns <- nbrOfGroupsPerUnit(this);
-  assertUnits(ns == 0L, "%d unit(s) (i.e. %s) with zero unit groups: %s");
+  unitNames <- getUnitNames(this);
+  assertUnits(((ns == 0L) & (nchar(unitNames) == 0L)), "%d unit(s) (i.e. %s) with zero unit groups and empty unit names: %s");
+
 
   invisible(this);
 }, protected=TRUE)
@@ -1658,6 +1670,9 @@ setMethodS3("validate", "AffymetrixCdfFile", function(this, ...) {
 
 ############################################################################
 # HISTORY:
+# 2012-12-16
+# o Now validate() for AffymetrixCdfFile accepts empty unit names as
+#   long as the unit is not empty.
 # 2012-10-18
 # o Added validate() for AffymetrixCdfFile, which validate a CDF for
 #   the most "common" errors, to help troubleshooting.  Note that the

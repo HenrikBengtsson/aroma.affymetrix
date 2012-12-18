@@ -2,6 +2,7 @@
 # @set "class=AffyGenePDInfo"
 # @RdocMethod writeCdf
 # @alias writeCdf.PDInfoList
+# @alias writeCdf.DBPDInfo
 #
 # @title "Generates an Affymetrix CDF file from a Platform Design (PD) package"
 #
@@ -289,6 +290,7 @@ setMethodS3("writeCdf", "AffyGenePDInfo", function(this, tags=c("*"), unitsBy=c(
 
 
 
+
 setMethodS3("writeCdf", "PDInfoList", function(ffs, pathname, overwrite=FALSE, ..., verbose=TRUE) {
   require("affxparser") || throw("Package not loaded: affxparser");
 
@@ -397,6 +399,12 @@ setMethodS3("writeCdf", "PDInfoList", function(ffs, pathname, overwrite=FALSE, .
   invisible(pathname);
 }, protected=TRUE) # writeCdf() for PDInfoList
 
+
+
+
+setMethodS3("writeCdf", "DBPDInfo", function(this, tags=c("*"), unitsBy=c("transcript", "exon"), namesBy=c("fsetid", "id"), path=NULL, overwrite=FALSE, verbose=TRUE, ...) {
+  throw(sprintf("writeCdf() for '%s' not implemented: %s", class(this)[1L], annotation(this)));
+})
 
 
 ############################################################################

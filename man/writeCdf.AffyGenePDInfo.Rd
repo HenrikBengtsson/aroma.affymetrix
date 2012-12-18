@@ -14,6 +14,7 @@
 \alias{writeCdf,AffyGenePDInfo-method}
 
  \alias{writeCdf.PDInfoList}
+ \alias{writeCdf.DBPDInfo}
 
  \title{Generates an Affymetrix CDF file from a Platform Design (PD) package}
 

@@ -3,9 +3,12 @@ Package: aroma.affymetrix
 
 Version: 2.7.8 [2012-12-18]
 o ROBUSTNESS: Added argument 'unitsBy' (and 'namesBy') to writeCdf() 
-  for AffyGenePDInfo, where 'unitsBy' defaults to "transcript".  Now
-  writeCdf() drops any duplicated probe entries.  Thanks Guido Hooiveld
-  (Wageningen University, Netherlands) for suggestions and tests.
+  for AffyGenePDInfo, where 'unitsBy' defaults to "transcript".  It
+  now also drops any duplicated probe entries.  Furthermore, calling
+  writeCdf() for other classes of DBPDInfo objects will now give a
+  more informative error message that those classes are yet not
+  supported.  Thanks Guido Hooiveld (Wageningen University, Netherlands)
+  for suggestions and tests.
 o Now validate() for AffymetrixCdfFile accepts empty unit names as
   long as the unit is not empty.
 o BUG FIX: writeCdf(..., useTranscriptCluster=FALSE) for AffyGenePDInfo

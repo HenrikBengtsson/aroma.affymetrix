@@ -1,15 +1,22 @@
 invisible({
-# buildScripts/
-file.rename("inst/bu", "inst/buildScripts")
-
-# testScripts/
-file.rename("inst/te/ad", "inst/t/addons")
-file.rename("inst/te/ar/sy/ch", "inst/t/ar/sy/chipTypes")
-file.rename("inst/te/ar/sy", "inst/t/ar/system")
-file.rename("inst/te/ar", "inst/t/archive")
-file.rename("inst/te/co", "inst/t/complete")
-file.rename("inst/te/sy/ch", "inst/t/system/chipTypes")
-file.rename("inst/te/sy", "inst/t/system")
-file.rename("inst/te", "inst/testScripts")
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Expand shortend inst/ pathnames (that were too long for tar)
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Search-replace patterns
+map <- c(
+  "_BC_" = "BackgroundCorrection",
+  "_CE_" = "ChromosomeExplorer",
+  "_GCN_" = "GcContentNormalization",
+  "_SN_" = "SmoothNormalization",
+  "_DAR_" = "downloadAnnotationData"
+);
+for (kk in seq_along(map)) {
+  pattern <- names(map)[kk];
+  pathnames <- list.files("inst", pattern=pattern, full.names=TRUE, recursive=TRUE);
+  if (length(pathnames) > 0L) {
+    pathnamesD <- gsub(pattern, map[kk], pathnames);
+    file.rename(pathnames, pathnamesD);
+  }
+}
 })
 

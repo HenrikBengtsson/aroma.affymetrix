@@ -11,6 +11,8 @@ o ROBUSTNESS: Added argument 'unitsBy' (and 'namesBy') to writeCdf()
   for suggestions and tests.
 o Now validate() for AffymetrixCdfFile accepts empty unit names as
   long as the unit is not empty.
+o ROBUSTNESS: Now all internal pathnames are shorter than 100 characters,
+  which is the upper limit that 'tar' supports.
 o BUG FIX: writeCdf(..., useTranscriptCluster=FALSE) for AffyGenePDInfo
   could generate empty unit names files for units with 'fsetid' <= 9999.
 

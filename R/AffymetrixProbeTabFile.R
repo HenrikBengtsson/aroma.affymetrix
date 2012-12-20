@@ -650,20 +650,20 @@ setMethodS3("readSequenceDataFrame", "AffymetrixProbeTabFile", function(this, ..
   # Reading data
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   verbose && enter(verbose, "Reading (x,y,sequence) data");
-  colClassPatterns <- c("^probeXPos$"="integer", "^probeYPos$"="integer", 
+  colClasses <- c("^probeXPos$"="integer", "^probeYPos$"="integer", 
                                             "^probeSequence$"="character");
-  verbose && cat(verbose, "colClassPatterns:");
-  verbose && print(verbose, colClassPatterns);
+  verbose && cat(verbose, "colClasses:");
+  verbose && print(verbose, colClasses);
 
   # Test read
-  data <- readDataFrame(this, colClassPatterns=colClassPatterns, rows=1:10,
+  data <- readDataFrame(this, colClasses=colClasses, rows=1:10,
                                                verbose=less(verbose, 20));
   verbose && cat(verbose, "First 10 data rows (parsed):");
   verbose && print(verbose, data);
   verbose && str(verbose, data);
   rm(data);
 
-  data <- readDataFrame(this, colClassPatterns=colClassPatterns, rows=rows,
+  data <- readDataFrame(this, colClasses=colClasses, rows=rows,
                                                verbose=less(verbose, 20));
   verbose && printf(verbose, "Loaded %d probe entries", nrow(data));
   verbose && str(verbose, data);

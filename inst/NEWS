@@ -1,9 +1,13 @@
 Package: aroma.affymetrix
 =========================
 
-Version: 2.7.9 [2012-12-19]
-o ROBUSTNESS: Now all internal pathnames are shorter than 100 characters,
-  which is the upper limit that 'tar' supports.
+Version: 2.7.9 [2012-12-20]
+o Bumped up package dependencies.
+o Utilizing new startupMessage() of R.oo.
+o Now using argument 'colClasses' (was 'colClassPatterns')
+  for all readDataFrame():s and elsewhere.
+o ROBUSTNESS: Now all internal pathnames are shorter than 100
+  characters, which is the upper limit that 'tar' supports.
 
 
 Version: 2.7.8 [2012-12-18]

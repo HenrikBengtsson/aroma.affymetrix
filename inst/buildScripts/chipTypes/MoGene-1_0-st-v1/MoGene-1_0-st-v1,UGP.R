@@ -69,9 +69,9 @@ print(ugp);
 
 # Read unit names
 
-colClassPatterns <- c("*"="NULL", "probesetId"="character", "seqname"="character", "(start|stop)"="character");
+colClasses <- c("*"="NULL", "probesetId"="character", "seqname"="character", "(start|stop)"="character");
 verbose && enter(verbose, "Read annotation data for all units");
-data <- readDataFrame(csv, colClassPatterns=colClassPatterns);
+data <- readDataFrame(csv, colClasses=colClasses);
 # Coerce to integers
 data$start <- as.integer(data$start);
 data$stop <- as.integer(data$stop);

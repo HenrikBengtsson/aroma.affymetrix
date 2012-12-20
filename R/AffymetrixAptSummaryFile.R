@@ -24,8 +24,8 @@ setMethodS3("nbrOfArrays", "AffymetrixAptSummaryFile", function(this, ...) {
   length(getArrayNames(this, ...));
 })
 
-setMethodS3("getReadArguments", "AffymetrixAptSummaryFile", function(this, fileHeader=NULL, colClassPatterns=c("*"="double", "probeset_id"="character"), ..., verbose=FALSE) {
-  args <- NextMethod("getReadArguments", colClassPatterns=colClassPatterns, verbose=verbose);
+setMethodS3("getReadArguments", "AffymetrixAptSummaryFile", function(this, fileHeader=NULL, colClasses=c("*"="double", "probeset_id"="character"), ..., verbose=FALSE) {
+  args <- NextMethod("getReadArguments", colClasses=colClasses, verbose=verbose);
   args$quote <- "";
   args$na.strings <- "";
   
@@ -43,7 +43,7 @@ setMethodS3("getProbesetIds", "AffymetrixAptSummaryFile", function(this, force=F
 })
 
 setMethodS3("readProbesetIds", "AffymetrixAptSummaryFile", function(this, ...) {
-  data <- readDataFrame(this, colClassPatterns=c("probeset_id"="character"), ...);
+  data <- readDataFrame(this, colClasses=c("probeset_id"="character"), ...);
   data <- data[,1,drop=TRUE];
   data;
 }, protected=TRUE)
@@ -54,10 +54,10 @@ setMethodS3("readArrays", "AffymetrixAptSummaryFile", function(this, patterns, .
   patterns <- Arguments$getCharacters(patterns);
   patterns <- unique(patterns);
   
-  colClassPatterns <- rep("double", length(patterns));
-  names(colClassPatterns) <- patterns;
+  colClasses <- rep("double", length(patterns));
+  names(colClasses) <- patterns;
   
-  data <- readDataFrame(this, colClassPatterns=colClassPatterns, ...);
+  data <- readDataFrame(this, colClasses=colClasses, ...);
   data <- as.matrix(data);
   attr(data, "quantificationScale") <- getQuantificationScale(this);
   

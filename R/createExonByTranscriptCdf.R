@@ -280,12 +280,12 @@ setMethodS3("createExonByTranscriptCdf", "AffymetrixCdfFile", function(cdf, csv,
 
   subsetByPattern <- storage.mode(within);
   names(subsetByPattern) <- subsetBy;
-  colClassPatterns <- c("(probesetId|transcriptClusterId)"="character", subsetByPattern);
+  colClasses <- c("(probesetId|transcriptClusterId)"="character", subsetByPattern);
   verbose && cat(verbose, "Column class patterns:");
-  verbose && print(verbose, colClassPatterns);
+  verbose && print(verbose, colClasses);
 
   # Read CSV data
-  psData <- readDataFrame(csv, colClassPatterns=colClassPatterns, ...);
+  psData <- readDataFrame(csv, colClasses=colClasses, ...);
 
   verbose && exit(verbose);
 

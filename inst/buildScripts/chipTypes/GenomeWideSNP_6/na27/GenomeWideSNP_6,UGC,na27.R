@@ -18,9 +18,9 @@ csvList <- list(
   AffymetrixNetAffxCsvFile$byChipType("GenomeWideSNP_6", tags=".na27.1")
 );
 
-colClassPattern <- c("^(probeSetID|%GC)$"="character");
+colClasses <- c("^(probeSetID|%GC)$"="character");
 for (csv in csvList) {
-  data <- readDataFrame(csv, colClassPattern=colClassPattern);
+  data <- readDataFrame(csv, colClasses=colClasses);
   units <- indexOf(cdf, names=data$probeSetID);
   ugc[units,1] <- as.double(data[["%GC"]]);
 }

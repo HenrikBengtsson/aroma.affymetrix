@@ -39,7 +39,7 @@ setMethodS3("getProbeSequenceData", "AffymetrixCdfFile", function(this, paths=NU
 
     # Reading the first unit name
     data <- readDataFrame(ptf, 
-                   colClassPatterns=c("^(unitName|probeSetID)$"="character"), 
+                   colClasses=c("^(unitName|probeSetID)$"="character"), 
                                           rows=1, verbose=less(verbose, 50));
     verbose && cat(verbose, "Number of records read: ", nrow(data));
     verbose && cat(verbose, "Data read:");

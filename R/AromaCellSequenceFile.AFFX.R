@@ -114,7 +114,7 @@ setMethodS3("importFromAffymetrixProbeTabFile", "AromaCellSequenceFile", functio
   verbose && cat(verbose, "Rows:");
   verbose && str(verbose, rows);
 
-  colClassPatterns <- c("probe(X|Y)Pos"="integer", "probeSequence"="character", "targetStrandedness"="character");
+  colClasses <- c("probe(X|Y)Pos"="integer", "probeSequence"="character", "targetStrandedness"="character");
 
   count <- 0;
   CHUNK.SIZE <- as.integer(ram*1.5e6);
@@ -127,7 +127,7 @@ setMethodS3("importFromAffymetrixProbeTabFile", "AromaCellSequenceFile", functio
 
     rowsChunk <- rows[idxs];
     verbose && printf(verbose, "Row: %d-%d\n", min(rowsChunk), max(rowsChunk));
-    df <- readDataFrame(srcFile, colClassPatterns=colClassPatterns, 
+    df <- readDataFrame(srcFile, colClasses=colClasses, 
                         rows=rowsChunk, ..., verbose=less(verbose, 25));
     if (nrow(df) == 0)
       break;

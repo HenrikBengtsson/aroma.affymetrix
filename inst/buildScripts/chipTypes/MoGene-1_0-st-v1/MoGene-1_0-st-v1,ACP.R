@@ -64,9 +64,9 @@ print(acp);
 
 # Read unit names
 
-colClassPatterns <- c("*"="NULL", "probeID"="integer", "seqname"="character", "(start|stop)"="integer");
+colClasses <- c("*"="NULL", "probeID"="integer", "seqname"="character", "(start|stop)"="integer");
 verbose && enter(verbose, "Read annotation data for all units");
-data <- readDataFrame(ptb, colClassPatterns=colClassPatterns);
+data <- readDataFrame(ptb, colClasses=colClasses);
 verbose && str(verbose, data);
 verbose && exit(verbose);
 

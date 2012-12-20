@@ -81,13 +81,13 @@ setMethodS3("importFromAffymetrixTabularFile", "AromaUfcFile", function(this, at
   verbose && cat(verbose, "Pathname: ", getPathname(atf));
 
   verbose && enter(verbose, "Reading data");
-  colClassPatterns <- c("probesetId"="character", "^.*iFragType"="character");
+  colClasses <- c("probesetId"="character", "^.*iFragType"="character");
   verbose && cat(verbose, "Column patterns:");
-  verbose && print(verbose, colClassPatterns);
+  verbose && print(verbose, colClasses);
 
   t <- system.time({
     # Read annotation data
-    data0 <- readDataFrame(atf, colClassPatterns=colClassPatterns);
+    data0 <- readDataFrame(atf, colClasses=colClasses);
   });
 
   verbose && printf(verbose, "Reading time: %.1fs\n", t[3]);

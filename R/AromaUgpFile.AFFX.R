@@ -161,7 +161,7 @@ setMethodS3("importFromAffymetrixNetAffxCsvFile", "AromaUgpFile", function(this,
 
 
 
-setMethodS3("importFromAffymetrixTabularFile", "AromaUgpFile", function(this, src, colClassPatterns=c("*"="NULL", "^probeSetID$"="character", "^chromosome$"="character", "^(physicalPosition|position)$"="character"), ...) {
+setMethodS3("importFromAffymetrixTabularFile", "AromaUgpFile", function(this, src, colClasses=c("*"="NULL", "^probeSetID$"="character", "^chromosome$"="character", "^(physicalPosition|position)$"="character"), ...) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -169,7 +169,7 @@ setMethodS3("importFromAffymetrixTabularFile", "AromaUgpFile", function(this, sr
   src <- Arguments$getInstanceOf(src, "AffymetrixTabularFile");
 
   units <- importFromGenericTabularFile(this, src=src, 
-            colClassPatterns=colClassPatterns, camelCaseNames=TRUE, ...);
+            colClasses=colClasses, camelCaseNames=TRUE, ...);
 
   invisible(units);
 }, protected=TRUE);

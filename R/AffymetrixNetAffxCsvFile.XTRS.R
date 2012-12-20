@@ -40,9 +40,9 @@ setMethodS3("readGeneAssignments", "AffymetrixNetAffxCsvFile", function(this, ..
   # Read data
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   verbose && enter(verbose, "Reading annotation data");
-  colClassPatterns <- c("*"="NULL", "(transcriptClusterId|probesetId|geneAssignment)"="character");
-  colClassPatterns <- c("*"="NULL", "(transcriptClusterId|probesetId|unigene)"="character");
-  map <- readDataFrame(this, colClassPatterns=colClassPatterns, ...);
+  colClasses <- c("*"="NULL", "(transcriptClusterId|probesetId|geneAssignment)"="character");
+  colClasses <- c("*"="NULL", "(transcriptClusterId|probesetId|unigene)"="character");
+  map <- readDataFrame(this, colClasses=colClasses, ...);
   verbose && cat(verbose, "Number of entries : ", nrow(map));
   verbose && cat(verbose, "Number of unique probesetIds: ", length(unique(map$probesetId)));
   verbose && cat(verbose, "Number of unique transcriptClusterIds: ", length(unique(map$transcriptClusterId)));

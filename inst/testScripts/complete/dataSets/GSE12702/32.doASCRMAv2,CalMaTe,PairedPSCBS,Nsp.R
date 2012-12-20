@@ -50,7 +50,7 @@ setColumnNameTranslator(db, function(names, ...) {
   names <- gsub("fullname", "replacement", names);
   names;
 });
-df <- readDataFrame(db, colClassPatterns=c("*"="character"));
+df <- readDataFrame(db, colClasses=c("*"="character"));
 setFullNamesTranslator(dsC, df);
 
 # Identify unique sample names

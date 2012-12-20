@@ -91,9 +91,9 @@ csUt <- extract(csU, sampleNames);
 
 
 # Read MAT signals
-colClassPatterns <- c("Chr"="character", "Pos"="integer", rep("numeric", times=length(sampleNames)));
-names(colClassPatterns)[-(1:2)] <- sampleNames;
-data <- readDataFrame(tsv, colClassPatterns=colClassPatterns, nrow=435000);
+colClasses <- c("Chr"="character", "Pos"="integer", rep("numeric", times=length(sampleNames)));
+names(colClasses)[-(1:2)] <- sampleNames;
+data <- readDataFrame(tsv, colClasses=colClasses, nrow=435000);
 data <- subset(data, (Chr == "chr1" & Pos %in% pos));
 
 # Order as (pos,yN)

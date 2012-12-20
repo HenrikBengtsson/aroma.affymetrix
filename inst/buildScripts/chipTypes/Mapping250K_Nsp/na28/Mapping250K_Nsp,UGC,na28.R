@@ -16,8 +16,8 @@ print(ugc);
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 csv <- AffymetrixNetAffxCsvFile$byChipType(chipType, tags=".na28");
 
-colClassPattern <- c("^(probeSetID|%GC)$"="character");
-data <- readDataFrame(csv, colClassPattern=colClassPattern);
+colClasses <- c("^(probeSetID|%GC)$"="character");
+data <- readDataFrame(csv, colClasses=colClasses);
 units <- indexOf(cdf, names=data$probeSetID);
 stopifnot(all(is.finite(units)));
 values <- as.double(data[["%GC"]]);

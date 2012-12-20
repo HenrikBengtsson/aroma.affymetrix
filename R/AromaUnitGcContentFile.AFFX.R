@@ -34,7 +34,7 @@ setMethodS3("importFromAffymetrixNetAffxCsvFile", "AromaUnitGcContentFile", func
   cdf <- getCdf(this);
 
   # Read data
-  data <- readDataFrame(csv, colClassPattern=c("^(probeSetID|%GC)$"="character")); 
+  data <- readDataFrame(csv, colClasses=c("^(probeSetID|%GC)$"="character")); 
   unitNames <- data[,1];
   verbose && str(verbose, unitNames);
   values <- as.double(data[,2]);

@@ -21,7 +21,7 @@ setMethodS3("findByChipType", "AffymetrixNetAffxCsvFile", function(static, chipT
 
 
 
-setMethodS3("readUnitNames", "AffymetrixNetAffxCsvFile", function(this, colClassPatterns=c("*"="NULL", "^probe[sS]etI[dD]$"="character"), con=NULL, ..., verbose=FALSE) {
+setMethodS3("readUnitNames", "AffymetrixNetAffxCsvFile", function(this, colClasses=c("*"="NULL", "^probe[sS]etI[dD]$"="character"), con=NULL, ..., verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -34,7 +34,7 @@ setMethodS3("readUnitNames", "AffymetrixNetAffxCsvFile", function(this, colClass
 
   verbose && enter(verbose, "Reading unitName from file");
 
-  data <- readDataFrame(this, colClassPatterns=colClassPatterns, ..., verbose=less(verbose));
+  data <- readDataFrame(this, colClasses=colClasses, ..., verbose=less(verbose));
 
   data <- data[[1]];
   attr(data, "importNames") <- colnames(data);
@@ -57,7 +57,7 @@ setMethodS3("getUnitNames", "AffymetrixNetAffxCsvFile", function(this, ..., forc
 
 
 
-setMethodS3("readDataUnitChromosomePosition", "AffymetrixNetAffxCsvFile", function(this, colClassPatterns=c("*"="NULL", "^probe[sS]etI[dD]$"="character", "^chromosome$"="character", "^(physicalPosition|chromosomeStart|probeStartPosition)$"="character"), con=NULL, ..., verbose=FALSE) {
+setMethodS3("readDataUnitChromosomePosition", "AffymetrixNetAffxCsvFile", function(this, colClasses=c("*"="NULL", "^probe[sS]etI[dD]$"="character", "^chromosome$"="character", "^(physicalPosition|chromosomeStart|probeStartPosition)$"="character"), con=NULL, ..., verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -70,7 +70,7 @@ setMethodS3("readDataUnitChromosomePosition", "AffymetrixNetAffxCsvFile", functi
 
   verbose && enter(verbose, "Reading (unitName, fragmentLength) from file");
 
-  data <- readDataFrame(this, colClassPatterns=colClassPatterns, ..., verbose=less(verbose));
+  data <- readDataFrame(this, colClasses=colClasses, ..., verbose=less(verbose));
 
   # Convert chromosome strings to integers
   cc <- grep("^chr", colnames(data))[1];
@@ -110,7 +110,7 @@ setMethodS3("readDataUnitChromosomePosition", "AffymetrixNetAffxCsvFile", functi
 
 
 
-setMethodS3("readDataUnitFragmentLength", "AffymetrixNetAffxCsvFile", function(this, colClassPatterns=c("*"="NULL", "^probe[sS]etI[dD]$"="character", "^fragment.*Length.*"="character"), enzymes=1, con=NULL, ..., verbose=FALSE) {
+setMethodS3("readDataUnitFragmentLength", "AffymetrixNetAffxCsvFile", function(this, colClasses=c("*"="NULL", "^probe[sS]etI[dD]$"="character", "^fragment.*Length.*"="character"), enzymes=1, con=NULL, ..., verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -135,7 +135,7 @@ setMethodS3("readDataUnitFragmentLength", "AffymetrixNetAffxCsvFile", function(t
 
   verbose && enter(verbose, "Reading (unitName, fragmentLength+) from file");
 
-  data <- readDataFrame(this, colClassPatterns=colClassPatterns, ..., verbose=less(verbose));
+  data <- readDataFrame(this, colClasses=colClasses, ..., verbose=less(verbose));
 
   # Extract fragment lengths
   verbose && enter(verbose, "Extracting fragment lengths from ([enzyme], lengths, start, stop)");

@@ -1,1 +1,2 @@
-${R_HOME}/bin/Rscript incl/configure.R
+# /usr/bin/env sh
+${R_HOME}/bin/Rscript --vanilla incl/configure.R

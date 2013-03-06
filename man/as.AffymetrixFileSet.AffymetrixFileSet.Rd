@@ -9,9 +9,7 @@
 \name{as.AffymetrixFileSet.AffymetrixFileSet}
 \alias{as.AffymetrixFileSet.AffymetrixFileSet}
 \alias{AffymetrixFileSet.as.AffymetrixFileSet}
-\alias{as.AffymetrixFileSet.AffymetrixFileSet}
 \alias{as.AffymetrixFileSet,AffymetrixFileSet-method}
-
 \alias{as.AffymetrixFileSet.list}
 \alias{as.AffymetrixFileSet.default}
 
@@ -21,7 +19,9 @@
   Coerce an object to an AffymetrixFileSet object.
 }
 
-\usage{\method{as.AffymetrixFileSet}{AffymetrixFileSet}(object, ...)}
+\usage{
+\method{as.AffymetrixFileSet}{AffymetrixFileSet}(object, ...)
+}
 
 \arguments{
  \item{...}{Other arguments passed to \code{\link[base]{list.files}}().}

@@ -9,9 +9,7 @@
 \name{getFitUnitGroupFunction.AffinePlm}
 \alias{getFitUnitGroupFunction.AffinePlm}
 \alias{AffinePlm.getFitUnitGroupFunction}
-\alias{getFitUnitGroupFunction.AffinePlm}
 \alias{getFitUnitGroupFunction,AffinePlm-method}
-
 
 \title{Gets the low-level function that fits the PLM}
 
@@ -19,7 +17,9 @@
  Gets the low-level function that fits the PLM.
 }
 
-\usage{\method{getFitUnitGroupFunction}{AffinePlm}(this, ...)}
+\usage{
+\method{getFitUnitGroupFunction}{AffinePlm}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}

@@ -6,12 +6,11 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{fromFile.AffymetrixPgfFile}
+\name{AffymetrixPgfFile$fromFile}
+\alias{AffymetrixPgfFile$fromFile}
 \alias{fromFile.AffymetrixPgfFile}
 \alias{AffymetrixPgfFile.fromFile}
-\alias{fromFile.AffymetrixPgfFile}
 \alias{fromFile,AffymetrixPgfFile-method}
-
 
 \title{Defines an AffymetrixPgfFile object from a PGF file}
 
@@ -19,8 +18,13 @@
  Defines an AffymetrixPgfFile object from a PGF file.
 }
 
-\synopsis{fromFile.AffymetrixPgfFile(static, filename, path=NULL, ...)}
-\usage{AffymetrixPgfFile$fromFile(filename, path=NULL, ...)}
+\usage{
+## Static method (use this):
+## AffymetrixPgfFile$fromFile(filename, path=NULL, ...)
+
+## Don't use the below:
+\method{fromFile}{AffymetrixPgfFile}(static, filename, path=NULL, ...)
+}
 
 \arguments{
  \item{filename}{The filename of to the file.}

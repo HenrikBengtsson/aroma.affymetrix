@@ -9,9 +9,7 @@
 \name{getFitUnitGroupFunction.RmaPlm}
 \alias{getFitUnitGroupFunction.RmaPlm}
 \alias{RmaPlm.getFitUnitGroupFunction}
-\alias{getFitUnitGroupFunction.RmaPlm}
 \alias{getFitUnitGroupFunction,RmaPlm-method}
-
 
 \title{Gets the low-level function that fits the PLM}
 
@@ -19,7 +17,9 @@
  Gets the low-level function that fits the PLM.
 }
 
-\usage{\method{getFitUnitGroupFunction}{RmaPlm}(this, ..., verbose=FALSE)}
+\usage{
+\method{getFitUnitGroupFunction}{RmaPlm}(this, ..., verbose=FALSE)
+}
 
 \arguments{
   \item{...}{Not used.}

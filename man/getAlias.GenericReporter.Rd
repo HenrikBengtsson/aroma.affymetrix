@@ -9,9 +9,7 @@
 \name{getAlias.GenericReporter}
 \alias{getAlias.GenericReporter}
 \alias{GenericReporter.getAlias}
-\alias{getAlias.GenericReporter}
 \alias{getAlias,GenericReporter-method}
-
 
 \title{Gets the alias of the report}
 
@@ -19,7 +17,9 @@
   Gets the alias of the report.
 }
 
-\usage{\method{getAlias}{GenericReporter}(this, ...)}
+\usage{
+\method{getAlias}{GenericReporter}(this, ...)
+}
 
 \arguments{
  \item{...}{Not used.}

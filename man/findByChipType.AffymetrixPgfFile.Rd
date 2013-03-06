@@ -6,12 +6,11 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{findByChipType.AffymetrixPgfFile}
+\name{AffymetrixPgfFile$findByChipType}
+\alias{AffymetrixPgfFile$findByChipType}
 \alias{findByChipType.AffymetrixPgfFile}
 \alias{AffymetrixPgfFile.findByChipType}
-\alias{findByChipType.AffymetrixPgfFile}
 \alias{findByChipType,AffymetrixPgfFile-method}
-
 
 \title{Locates a PGF file from its chip type}
 
@@ -19,8 +18,13 @@
  Locates a PGF file from its chip type.
 }
 
-\synopsis{findByChipType.AffymetrixPgfFile(static, chipType, tags=NULL, pattern=NULL, ...)}
-\usage{AffymetrixPgfFile$findByChipType(chipType, tags=NULL, pattern=NULL, ...)}
+\usage{
+## Static method (use this):
+## AffymetrixPgfFile$findByChipType(chipType, tags=NULL, pattern=NULL, ...)
+
+## Don't use the below:
+\method{findByChipType}{AffymetrixPgfFile}(static, chipType, tags=NULL, pattern=NULL, ...)
+}
 
 \arguments{
  \item{chipType}{A \code{\link[base]{character}} string.}

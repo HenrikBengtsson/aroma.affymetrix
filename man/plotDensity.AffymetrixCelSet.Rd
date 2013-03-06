@@ -10,9 +10,7 @@
 \name{plotDensity.AffymetrixCelSet}
 \alias{plotDensity.AffymetrixCelSet}
 \alias{AffymetrixCelSet.plotDensity}
-\alias{plotDensity.AffymetrixCelSet}
 \alias{plotDensity,AffymetrixCelSet-method}
-
 
 \title{Plots the densities of all samples}
 
@@ -20,7 +18,9 @@
  Plots the densities of all samples.
 }
 
-\usage{\method{plotDensity}{AffymetrixCelSet}(this, subset=NULL, types=NULL, ..., col=seq_along(this), lty=NULL, lwd=NULL, annotate=TRUE, add=FALSE, verbose=FALSE)}
+\usage{
+\method{plotDensity}{AffymetrixCelSet}(this, subset=NULL, types=NULL, ..., col=seq_along(this), lty=NULL, lwd=NULL, annotate=TRUE, add=FALSE, verbose=FALSE)
+}
 
 \arguments{
   \item{subset}{The subset of probes to considered \emph{before} any

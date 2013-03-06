@@ -7,12 +7,11 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-\name{importFromDChip.AffymetrixCelSet}
+\name{AffymetrixCelSet$importFromDChip}
+\alias{AffymetrixCelSet$importFromDChip}
 \alias{importFromDChip.AffymetrixCelSet}
 \alias{AffymetrixCelSet.importFromDChip}
-\alias{importFromDChip.AffymetrixCelSet}
 \alias{importFromDChip,AffymetrixCelSet-method}
-
 
 \title{Imports dChip-exported CEL files}
 
@@ -26,8 +25,13 @@
  Mapping 500K arrays.
 }
 
-\synopsis{importFromDChip.AffymetrixCelSet(static, path, name=NULL, tags="dChip", rootPath="probeData", rotateBack=NA, ..., skip=TRUE, verbose=FALSE)}
-\usage{AffymetrixCelSet$importFromDChip(path, name=NULL, tags="dChip", rootPath="probeData", rotateBack=NA, ..., skip=TRUE, verbose=FALSE)}
+\usage{
+## Static method (use this):
+## AffymetrixCelSet$importFromDChip(path, name=NULL, tags="dChip", rootPath="probeData", rotateBack=NA, ..., skip=TRUE, verbose=FALSE)
+
+## Don't use the below:
+\method{importFromDChip}{AffymetrixCelSet}(static, path, name=NULL, tags="dChip", rootPath="probeData", rotateBack=NA, ..., skip=TRUE, verbose=FALSE)
+}
 
 \arguments{
   \item{path}{The path to all dChip-exported CEL files.}

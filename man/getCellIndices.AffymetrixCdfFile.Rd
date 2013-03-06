@@ -9,9 +9,7 @@
 \name{getCellIndices.AffymetrixCdfFile}
 \alias{getCellIndices.AffymetrixCdfFile}
 \alias{AffymetrixCdfFile.getCellIndices}
-\alias{getCellIndices.AffymetrixCdfFile}
 \alias{getCellIndices,AffymetrixCdfFile-method}
-
 
 \title{Gets the cell indices unit by unit}
 
@@ -19,7 +17,9 @@
  Gets the cell indices unit by unit of all or a subset of the units.
 }
 
-\usage{\method{getCellIndices}{AffymetrixCdfFile}(this, units=NULL, ..., useNames=TRUE, unlist=FALSE, force=FALSE, cache=TRUE, verbose=FALSE)}
+\usage{
+\method{getCellIndices}{AffymetrixCdfFile}(this, units=NULL, ..., useNames=TRUE, unlist=FALSE, force=FALSE, cache=TRUE, verbose=FALSE)
+}
 
 \arguments{
   \item{units}{The units of interest. If \code{\link[base]{NULL}}, all units are considered.}

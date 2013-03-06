@@ -10,9 +10,7 @@
 \name{createUniqueCdf.AffymetrixCdfFile}
 \alias{createUniqueCdf.AffymetrixCdfFile}
 \alias{AffymetrixCdfFile.createUniqueCdf}
-\alias{createUniqueCdf.AffymetrixCdfFile}
 \alias{createUniqueCdf,AffymetrixCdfFile-method}
-
 \alias{AffymetrixCdfFile.createUnique}
 \alias{createUnique.AffymetrixCdfFile}
 \alias{createUnique,AffymetrixCdfFile-method}
@@ -28,7 +26,9 @@
  (essentially copying the multimapping probes).
 }
 
-\usage{\method{createUniqueCdf}{AffymetrixCdfFile}(this, chipType=getChipType(this), tags="unique", path=NULL, units=NULL, ..., ram=NULL, verbose=TRUE)}
+\usage{
+\method{createUniqueCdf}{AffymetrixCdfFile}(this, chipType=getChipType(this), tags="unique", path=NULL, units=NULL, ..., ram=NULL, verbose=TRUE)
+}
 
 \arguments{
   \item{chipType}{The chip type of the new CDF.}

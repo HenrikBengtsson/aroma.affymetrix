@@ -6,12 +6,11 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{fromFile.CnagCfhFile}
+\name{CnagCfhFile$fromFile}
+\alias{CnagCfhFile$fromFile}
 \alias{fromFile.CnagCfhFile}
 \alias{CnagCfhFile.fromFile}
-\alias{fromFile.CnagCfhFile}
 \alias{fromFile,CnagCfhFile-method}
-
 
 \title{Defines an CnagCfhFile object from a CFH file}
 
@@ -19,8 +18,13 @@
  Defines an CnagCfhFile object from a CFH file.
 }
 
-\synopsis{fromFile.CnagCfhFile(static, filename, path=NULL, ..., verbose=FALSE, .checkArgs=TRUE)}
-\usage{CnagCfhFile$fromFile(filename, path=NULL, ..., verbose=FALSE, .checkArgs=TRUE)}
+\usage{
+## Static method (use this):
+## CnagCfhFile$fromFile(filename, path=NULL, ..., verbose=FALSE, .checkArgs=TRUE)
+
+## Don't use the below:
+\method{fromFile}{CnagCfhFile}(static, filename, path=NULL, ..., verbose=FALSE, .checkArgs=TRUE)
+}
 
 \arguments{
  \item{filename}{The filename of to the file.}

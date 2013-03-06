@@ -9,9 +9,7 @@
 \name{getCellIndices.ProbeAffinityFile}
 \alias{getCellIndices.ProbeAffinityFile}
 \alias{ProbeAffinityFile.getCellIndices}
-\alias{getCellIndices.ProbeAffinityFile}
 \alias{getCellIndices,ProbeAffinityFile-method}
-
 
 \title{Retrieves tree list of cell indices for a set of units}
 
@@ -19,7 +17,9 @@
   Retrieves tree list of cell indices for a set of units from the associated CDF.
 }
 
-\usage{\method{getCellIndices}{ProbeAffinityFile}(this, ..., verbose=FALSE)}
+\usage{
+\method{getCellIndices}{ProbeAffinityFile}(this, ..., verbose=FALSE)
+}
 
 \arguments{
  \item{...}{Additional arguments passed to \code{getCellIndices()}

@@ -9,9 +9,7 @@
 \name{getInputDataSet.TransformReport}
 \alias{getInputDataSet.TransformReport}
 \alias{TransformReport.getInputDataSet}
-\alias{getInputDataSet.TransformReport}
 \alias{getInputDataSet,TransformReport-method}
-
 
 \title{Gets the source data set}
 
@@ -19,7 +17,9 @@
  Gets the source data set that is to be (or has been) transformed.
 }
 
-\usage{\method{getInputDataSet}{TransformReport}(this, ...)}
+\usage{
+\method{getInputDataSet}{TransformReport}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}

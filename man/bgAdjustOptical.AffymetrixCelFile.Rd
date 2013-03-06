@@ -10,9 +10,7 @@
 \name{bgAdjustOptical.AffymetrixCelFile}
 \alias{bgAdjustOptical.AffymetrixCelFile}
 \alias{AffymetrixCelFile.bgAdjustOptical}
-\alias{bgAdjustOptical.AffymetrixCelFile}
 \alias{bgAdjustOptical,AffymetrixCelFile-method}
-
 
 \title{Applies optical background correction to a CEL file}
 
@@ -22,7 +20,9 @@
 Adapted from \code{\link[gcrma]{bg.adjust.optical}} in the \pkg{gcrma} package.
 }
 
-\usage{\method{bgAdjustOptical}{AffymetrixCelFile}(this, path, minimum=1, subsetToUpdate=NULL, typesToUpdate=NULL, overwrite=FALSE, skip=!overwrite, verbose=FALSE, ..., .deprecated=TRUE)}
+\usage{
+\method{bgAdjustOptical}{AffymetrixCelFile}(this, path, minimum=1, subsetToUpdate=NULL, typesToUpdate=NULL, overwrite=FALSE, skip=!overwrite, verbose=FALSE, ..., .deprecated=TRUE)
+}
 
 \arguments{
   \item{path}{The location to save the adjusted data files.}

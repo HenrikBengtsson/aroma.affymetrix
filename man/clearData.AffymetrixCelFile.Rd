@@ -6,12 +6,11 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{clearData.AffymetrixCelFile}
+\name{AffymetrixCelFile$clearData}
+\alias{AffymetrixCelFile$clearData}
 \alias{clearData.AffymetrixCelFile}
 \alias{AffymetrixCelFile.clearData}
-\alias{clearData.AffymetrixCelFile}
 \alias{clearData,AffymetrixCelFile-method}
-
 
 \title{Clears all or a subset of the fields in a CEL file}
 
@@ -19,8 +18,13 @@
  Clears all or a subset of the fields in a CEL file.
 }
 
-\synopsis{clearData.AffymetrixCelFile(this, fields=c("intensities", "stdvs", "pixels"), value=0, ..., .forSure=FALSE, verbose=TRUE)}
-\usage{AffymetrixCelFile$clearData(fields=c("intensities", "stdvs", "pixels"), value=0, ..., .forSure=FALSE, verbose=TRUE)}
+\usage{
+## Static method (use this):
+## AffymetrixCelFile$clearData(fields=c("intensities", "stdvs", "pixels"), value=0, ..., .forSure=FALSE, verbose=TRUE)
+
+## Don't use the below:
+\method{clearData}{AffymetrixCelFile}(this, fields=c("intensities", "stdvs", "pixels"), value=0, ..., .forSure=FALSE, verbose=TRUE)
+}
 
 \arguments{
   \item{fields}{A \code{\link[base]{character}} \code{\link[base]{vector}} of fields to be cleared.}

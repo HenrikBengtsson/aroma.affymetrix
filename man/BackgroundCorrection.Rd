@@ -41,7 +41,9 @@ extends \emph{\link[aroma.affymetrix]{ProbeLevelTransform}}\cr
 
 }
 
-\usage{BackgroundCorrection(..., subsetToUpdate=NULL, typesToUpdate=NULL)}
+\usage{
+BackgroundCorrection(..., subsetToUpdate=NULL, typesToUpdate=NULL)
+}
 
 \arguments{
   \item{...}{Arguments passed to the constructor of
@@ -71,7 +73,7 @@ as.character, getAsteriskTags, getExpectedOutputFiles, getExpectedOutputFullname
 getParameters, getParametersAsString, getParameterSets
 
  \bold{Methods inherited from Object}:\cr
-asThis, $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save
+$, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save, asThis
 
 
 }

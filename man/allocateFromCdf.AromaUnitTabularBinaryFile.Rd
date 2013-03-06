@@ -7,12 +7,11 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-\name{allocateFromCdf.AromaUnitTabularBinaryFile}
+\name{AromaUnitTabularBinaryFile$allocateFromCdf}
+\alias{AromaUnitTabularBinaryFile$allocateFromCdf}
 \alias{allocateFromCdf.AromaUnitTabularBinaryFile}
 \alias{AromaUnitTabularBinaryFile.allocateFromCdf}
-\alias{allocateFromCdf.AromaUnitTabularBinaryFile}
 \alias{allocateFromCdf,AromaUnitTabularBinaryFile-method}
-
 
 \title{Creates an AromaUnitTabularBinaryFile mapping to a given CDF}
 
@@ -20,8 +19,13 @@
  Creates an AromaUnitTabularBinaryFile mapping to a given CDF.
 }
 
-\synopsis{allocateFromCdf.AromaUnitTabularBinaryFile(static, cdf, ...)}
-\usage{AromaUnitTabularBinaryFile$allocateFromCdf(cdf, ...)}
+\usage{
+## Static method (use this):
+## AromaUnitTabularBinaryFile$allocateFromCdf(cdf, ...)
+
+## Don't use the below:
+\method{allocateFromCdf}{AromaUnitTabularBinaryFile}(static, cdf, ...)
+}
 
 \arguments{
   \item{cdf}{The \code{\link{AffymetrixCdfFile}} used as a template and from

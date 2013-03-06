@@ -9,9 +9,7 @@
 \name{setAlias.GenericReporter}
 \alias{setAlias.GenericReporter}
 \alias{GenericReporter.setAlias}
-\alias{setAlias.GenericReporter}
 \alias{setAlias,GenericReporter-method}
-
 
 \title{Sets the alias of the report}
 
@@ -21,7 +19,9 @@
   default.
 }
 
-\usage{\method{setAlias}{GenericReporter}(this, alias=NULL, ...)}
+\usage{
+\method{setAlias}{GenericReporter}(this, alias=NULL, ...)
+}
 
 \arguments{
  \item{alias}{A \code{\link[base]{character}} string for the new alias of the report.

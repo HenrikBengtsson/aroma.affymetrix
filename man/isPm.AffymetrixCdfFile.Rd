@@ -9,9 +9,7 @@
 \name{isPm.AffymetrixCdfFile}
 \alias{isPm.AffymetrixCdfFile}
 \alias{AffymetrixCdfFile.isPm}
-\alias{isPm.AffymetrixCdfFile}
 \alias{isPm,AffymetrixCdfFile-method}
-
 
 \title{Checks which cells (probes) are PMs and not}
 
@@ -19,7 +17,9 @@
  Checks which cells (probes) are PMs and not.
 }
 
-\usage{\method{isPm}{AffymetrixCdfFile}(this, units=NULL, force=FALSE, cache=TRUE, ..., verbose=FALSE)}
+\usage{
+\method{isPm}{AffymetrixCdfFile}(this, units=NULL, force=FALSE, cache=TRUE, ..., verbose=FALSE)
+}
 
 \arguments{
   \item{units}{The units to be read. If \code{\link[base]{NULL}}, all units are read.}

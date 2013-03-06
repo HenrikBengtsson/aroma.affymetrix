@@ -9,9 +9,7 @@
 \name{getAverageFile.CnagCfhSet}
 \alias{getAverageFile.CnagCfhSet}
 \alias{CnagCfhSet.getAverageFile}
-\alias{getAverageFile.CnagCfhSet}
 \alias{getAverageFile,CnagCfhSet-method}
-
 
 \title{Calculates the mean and the standard deviation of the cell signal (intensity, standard deviation etc.) across the CFH set}
 
@@ -19,7 +17,9 @@
   Calculates the mean and the standard deviation of the cell signal (intensity, standard deviation etc.) across the CFH set.
 }
 
-\usage{\method{getAverageFile}{CnagCfhSet}(this, name=NULL, prefix="average", indices="remaining", field=c("intensities", "stdvs"), mean=c("median", "mean"), sd=c("mad", "sd"), na.rm=TRUE, g=NULL, h=NULL, ..., cellsPerChunk=moreCells * 10^7/length(this), moreCells=1, force=FALSE, verbose=FALSE)}
+\usage{
+\method{getAverageFile}{CnagCfhSet}(this, name=NULL, prefix="average", indices="remaining", field=c("intensities", "stdvs"), mean=c("median", "mean"), sd=c("mad", "sd"), na.rm=TRUE, g=NULL, h=NULL, ..., cellsPerChunk=moreCells * 10^7/length(this), moreCells=1, force=FALSE, verbose=FALSE)
+}
 
 \arguments{
  \item{name}{The label of the calculated parameters.

@@ -41,7 +41,9 @@ extends \emph{\link[aroma.affymetrix]{ChipEffectTransform}}\cr
   GC-content effects on copy-number chip-effect estimates.
  }
 
- \usage{AdditiveCovariatesNormalization(dataSet=NULL, ..., target=NULL, subsetToFit="-XY", shift=0, onMissing=c("median", "ignore"))}
+ \usage{
+AdditiveCovariatesNormalization(dataSet=NULL, ..., target=NULL, subsetToFit="-XY", shift=0, onMissing=c("median", "ignore"))
+}
 
  \arguments{
    \item{dataSet}{A \code{\link{SnpChipEffectSet}}.}
@@ -78,7 +80,7 @@ as.character, getAsteriskTags, getExpectedOutputFiles, getExpectedOutputFullname
 getParameters, getParametersAsString, getParameterSets
 
  \bold{Methods inherited from Object}:\cr
-asThis, $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save
+$, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save, asThis
 
 
  }

@@ -1,6 +1,11 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 2.8.1 [2013-03-05]
+o DOCUMENTATION: Updated the help usage section for all static methods.
+o Bumped up package dependencies.
+
+
 Version: 2.8.0 [2012-12-21]
 o No updates.
 o Bumped version for CRAN submission.

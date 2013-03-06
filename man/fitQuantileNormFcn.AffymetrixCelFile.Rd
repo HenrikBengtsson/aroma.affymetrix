@@ -10,9 +10,7 @@
 \name{fitQuantileNormFcn.AffymetrixCelFile}
 \alias{fitQuantileNormFcn.AffymetrixCelFile}
 \alias{AffymetrixCelFile.fitQuantileNormFcn}
-\alias{fitQuantileNormFcn.AffymetrixCelFile}
 \alias{fitQuantileNormFcn,AffymetrixCelFile-method}
-
 
 \title{Fits quantile normalization functions for the arrays in the data set}
 
@@ -20,7 +18,9 @@
  Fits quantile normalization functions for the arrays in the data set.
 }
 
-\usage{\method{fitQuantileNormFcn}{AffymetrixCelFile}(this, yTarget, subset=NULL, ..., spar=NULL, nknots=1024, verbose=FALSE)}
+\usage{
+\method{fitQuantileNormFcn}{AffymetrixCelFile}(this, yTarget, subset=NULL, ..., spar=NULL, nknots=1024, verbose=FALSE)
+}
 
 \arguments{
   \item{yTarget}{The target probe signals.}

@@ -46,7 +46,9 @@ extends \emph{\link[aroma.affymetrix]{AbstractProbeSequenceNormalization}}\cr
   A, C, G, and T:s and the match scores according to MAT [1].
  }
 
- \usage{MatNormalization(..., unitsToFit=NULL, model=c("lm"), nbrOfBins=200)}
+ \usage{
+MatNormalization(..., unitsToFit=NULL, model=c("lm"), nbrOfBins=200)
+}
 
  \arguments{
    \item{...}{Arguments passed to the constructor of
@@ -84,7 +86,7 @@ as.character, getAsteriskTags, getExpectedOutputFiles, getExpectedOutputFullname
 getParameters, getParametersAsString, getParameterSets
 
  \bold{Methods inherited from Object}:\cr
-asThis, $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save
+$, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save, asThis
 
 
  }

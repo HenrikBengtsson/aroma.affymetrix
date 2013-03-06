@@ -42,7 +42,9 @@ extends \emph{\link[aroma.affymetrix]{BackgroundCorrection}}\cr
  This class represents "optical" background adjustment.
 }
 
-\usage{OpticalBackgroundCorrection(..., minimum=1)}
+\usage{
+OpticalBackgroundCorrection(..., minimum=1)
+}
 
 \arguments{
   \item{...}{Arguments passed to the constructor of
@@ -73,7 +75,7 @@ as.character, getAsteriskTags, getExpectedOutputFiles, getExpectedOutputFullname
 getParameters, getParametersAsString, getParameterSets
 
  \bold{Methods inherited from Object}:\cr
-asThis, $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save
+$, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save, asThis
 
 
 }

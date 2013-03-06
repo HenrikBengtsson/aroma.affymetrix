@@ -9,9 +9,7 @@
  \name{fit.FirmaModel}
 \alias{fit.FirmaModel}
 \alias{FirmaModel.fit}
-\alias{fit.FirmaModel}
 \alias{fit,FirmaModel-method}
-
 
  \title{Estimates the model parameters}
 
@@ -19,7 +17,9 @@
   Estimates the model parameters for all or a subset of the units.
  }
 
- \usage{\method{fit}{FirmaModel}(this, units="remaining", ..., ram=NULL, force=FALSE, verbose=FALSE)}
+ \usage{
+\method{fit}{FirmaModel}(this, units="remaining", ..., ram=NULL, force=FALSE, verbose=FALSE)
+}
 
  \arguments{
    \item{units}{The units to be fitted.

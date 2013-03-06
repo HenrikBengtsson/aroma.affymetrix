@@ -9,9 +9,7 @@
 \name{findUnitsTodo.UnitModel}
 \alias{findUnitsTodo.UnitModel}
 \alias{UnitModel.findUnitsTodo}
-\alias{findUnitsTodo.UnitModel}
 \alias{findUnitsTodo,UnitModel-method}
-
 
 \title{Identifies non-fitted units}
 
@@ -19,7 +17,9 @@
  Identifies non-fitted units.
 }
 
-\usage{\method{findUnitsTodo}{UnitModel}(...)}
+\usage{
+\method{findUnitsTodo}{UnitModel}(...)
+}
 
 \arguments{
   \item{...}{Arguments specific to any subclass.}

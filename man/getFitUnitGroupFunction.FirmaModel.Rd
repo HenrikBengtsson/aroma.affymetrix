@@ -9,9 +9,7 @@
 \name{getFitUnitGroupFunction.FirmaModel}
 \alias{getFitUnitGroupFunction.FirmaModel}
 \alias{FirmaModel.getFitUnitGroupFunction}
-\alias{getFitUnitGroupFunction.FirmaModel}
 \alias{getFitUnitGroupFunction,FirmaModel-method}
-
 
 \title{Static method to get the low-level function that fits the PLM}
 
@@ -19,7 +17,9 @@
  Static method to get the low-level function that fits the PLM.
 }
 
-\usage{\method{getFitUnitGroupFunction}{FirmaModel}(this, ...)}
+\usage{
+\method{getFitUnitGroupFunction}{FirmaModel}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}

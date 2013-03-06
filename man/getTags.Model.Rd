@@ -9,9 +9,7 @@
 \name{getTags.Model}
 \alias{getTags.Model}
 \alias{Model.getTags}
-\alias{getTags.Model}
 \alias{getTags,Model-method}
-
 
 \title{Gets the tags of the output data set}
 
@@ -20,7 +18,9 @@
  by an additional set of tags added by the model.
 }
 
-\usage{\method{getTags}{Model}(this, collapse=NULL, ...)}
+\usage{
+\method{getTags}{Model}(this, collapse=NULL, ...)
+}
 
 \arguments{
  \item{collapse}{A \code{\link[base]{character}} string used to concatenate the tags.

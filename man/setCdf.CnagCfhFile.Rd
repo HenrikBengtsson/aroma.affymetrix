@@ -9,9 +9,7 @@
 \name{setCdf.CnagCfhFile}
 \alias{setCdf.CnagCfhFile}
 \alias{CnagCfhFile.setCdf}
-\alias{setCdf.CnagCfhFile}
 \alias{setCdf,CnagCfhFile-method}
-
 
 \title{Sets the CDF structure for this CEL file}
 
@@ -19,7 +17,9 @@
  Sets the CDF structure for this CEL file.
 }
 
-\usage{\method{setCdf}{CnagCfhFile}(this, cdf, ..., .checkArgs=TRUE)}
+\usage{
+\method{setCdf}{CnagCfhFile}(this, cdf, ..., .checkArgs=TRUE)
+}
 
 \arguments{
   \item{cdf}{An \code{\link{AffymetrixCdfFile}} object.}

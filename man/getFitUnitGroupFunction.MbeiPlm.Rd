@@ -9,9 +9,7 @@
 \name{getFitUnitGroupFunction.MbeiPlm}
 \alias{getFitUnitGroupFunction.MbeiPlm}
 \alias{MbeiPlm.getFitUnitGroupFunction}
-\alias{getFitUnitGroupFunction.MbeiPlm}
 \alias{getFitUnitGroupFunction,MbeiPlm-method}
-
 
 \title{Gets the low-level function that fits the PLM}
 
@@ -19,7 +17,9 @@
  Gets the low-level function that fits the PLM.
 }
 
-\usage{\method{getFitUnitGroupFunction}{MbeiPlm}(this, ...)}
+\usage{
+\method{getFitUnitGroupFunction}{MbeiPlm}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}

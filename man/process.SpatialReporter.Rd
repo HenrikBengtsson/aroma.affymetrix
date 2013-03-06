@@ -9,9 +9,7 @@
 \name{process.SpatialReporter}
 \alias{process.SpatialReporter}
 \alias{SpatialReporter.process}
-\alias{process.SpatialReporter}
 \alias{process,SpatialReporter-method}
-
 
 \title{Generates image files, scripts and dynamic pages for the explorer}
 
@@ -19,7 +17,9 @@
  Generates image files, scripts and dynamic pages for the explorer.
 }
 
-\usage{\method{process}{SpatialReporter}(this, ..., verbose=FALSE)}
+\usage{
+\method{process}{SpatialReporter}(this, ..., verbose=FALSE)
+}
 
 \arguments{
   \item{...}{Not used.}

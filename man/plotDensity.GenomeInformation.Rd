@@ -9,9 +9,7 @@
 \name{plotDensity.GenomeInformation}
 \alias{plotDensity.GenomeInformation}
 \alias{GenomeInformation.plotDensity}
-\alias{plotDensity.GenomeInformation}
 \alias{plotDensity,GenomeInformation-method}
-
 
 \title{Plots the density of SNPs for a given chromosome}
 
@@ -19,7 +17,9 @@
   Plots the density of SNPs for a given chromosome.
 }
 
-\usage{\method{plotDensity}{GenomeInformation}(this, chromosome, ..., adjust=1/20, xlab=NULL, main=NULL, annotate=TRUE)}
+\usage{
+\method{plotDensity}{GenomeInformation}(this, chromosome, ..., adjust=1/20, xlab=NULL, main=NULL, annotate=TRUE)
+}
 
 \arguments{
  \item{chromosome}{The chromsome to be displayed.}

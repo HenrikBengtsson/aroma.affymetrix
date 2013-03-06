@@ -10,9 +10,7 @@
 \name{extractExpressionSet.ChipEffectSet}
 \alias{extractExpressionSet.ChipEffectSet}
 \alias{ChipEffectSet.extractExpressionSet}
-\alias{extractExpressionSet.ChipEffectSet}
 \alias{extractExpressionSet,ChipEffectSet-method}
-
 
 \title{Extracts an in-memory ExpressionSet object}
 
@@ -22,7 +20,9 @@
  be reflected in the original chip-effect set.
 }
 
-\usage{\method{extractExpressionSet}{ChipEffectSet}(this, ..., logBase=2, verbose=FALSE)}
+\usage{
+\method{extractExpressionSet}{ChipEffectSet}(this, ..., logBase=2, verbose=FALSE)
+}
 
 \arguments{
   \item{...}{Optional argument passed to \code{\link[aroma.affymetrix:extractMatrix.ChipEffectSet]{*extractMatrix}()}.}

@@ -39,7 +39,9 @@ extends \emph{\link[aroma.affymetrix]{Transform}}\cr
   estimates obtained from probe-level modelling.
  }
 
- \usage{ChipEffectTransform(dataSet=NULL, ...)}
+ \usage{
+ChipEffectTransform(dataSet=NULL, ...)
+}
 
  \arguments{
    \item{dataSet}{The input data set as an \code{\link{ChipEffectSet}}.}
@@ -61,7 +63,7 @@ as.character, getAsteriskTags, getExpectedOutputFiles, getExpectedOutputFullname
 getParameters, getParametersAsString, getParameterSets
 
  \bold{Methods inherited from Object}:\cr
-asThis, $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save
+$, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save, asThis
 
 
  }

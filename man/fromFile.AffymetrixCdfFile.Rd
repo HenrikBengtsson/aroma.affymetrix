@@ -6,12 +6,11 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{fromFile.AffymetrixCdfFile}
+\name{AffymetrixCdfFile$fromFile}
+\alias{AffymetrixCdfFile$fromFile}
 \alias{fromFile.AffymetrixCdfFile}
 \alias{AffymetrixCdfFile.fromFile}
-\alias{fromFile.AffymetrixCdfFile}
 \alias{fromFile,AffymetrixCdfFile-method}
-
 
 \title{Defines an AffymetrixCdfFile object from a CDF file}
 
@@ -19,8 +18,13 @@
  Defines an AffymetrixCdfFile object from a CDF file.
 }
 
-\synopsis{fromFile.AffymetrixCdfFile(static, filename, path=NULL, ...)}
-\usage{AffymetrixCdfFile$fromFile(filename, path=NULL, ...)}
+\usage{
+## Static method (use this):
+## AffymetrixCdfFile$fromFile(filename, path=NULL, ...)
+
+## Don't use the below:
+\method{fromFile}{AffymetrixCdfFile}(static, filename, path=NULL, ...)
+}
 
 \arguments{
  \item{filename}{The filename of to the file.}

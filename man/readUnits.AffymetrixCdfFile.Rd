@@ -9,9 +9,7 @@
 \name{readUnits.AffymetrixCdfFile}
 \alias{readUnits.AffymetrixCdfFile}
 \alias{AffymetrixCdfFile.readUnits}
-\alias{readUnits.AffymetrixCdfFile}
 \alias{readUnits,AffymetrixCdfFile-method}
-
 
 \title{Reads CDF data unit by unit}
 
@@ -19,7 +17,9 @@
  Reads CDF data unit by unit for all or a subset of units (probeset).
 }
 
-\usage{\method{readUnits}{AffymetrixCdfFile}(this, units=NULL, ..., verbose=FALSE)}
+\usage{
+\method{readUnits}{AffymetrixCdfFile}(this, units=NULL, ..., verbose=FALSE)
+}
 
 \arguments{
   \item{units}{The units to be read. If \code{\link[base]{NULL}}, all units are read.}

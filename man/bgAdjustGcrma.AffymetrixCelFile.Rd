@@ -9,9 +9,7 @@
 \name{bgAdjustGcrma.AffymetrixCelFile}
 \alias{bgAdjustGcrma.AffymetrixCelFile}
 \alias{AffymetrixCelFile.bgAdjustGcrma}
-\alias{bgAdjustGcrma.AffymetrixCelFile}
 \alias{bgAdjustGcrma,AffymetrixCelFile-method}
-
 
 \title{Applies probe sequence based background correction to a CEL file}
 
@@ -21,7 +19,9 @@
  Adapted from \code{\link[gcrma]{bg.adjust.gcrma}} in the \pkg{gcrma} package.
 }
 
-\usage{\method{bgAdjustGcrma}{AffymetrixCelFile}(this, path, type=c("fullmodel", "affinities"), indicesNegativeControl=NULL, affinities=NULL, gsbAdjust=TRUE, parametersGsb=NULL, k=ifelse(fast, 6, 0.5), rho=0.7, stretch=ifelse(fast, 1.15, 1), fast=TRUE, overwrite=FALSE, skip=!overwrite, ..., verbose=FALSE, .deprecated=TRUE)}
+\usage{
+\method{bgAdjustGcrma}{AffymetrixCelFile}(this, path, type=c("fullmodel", "affinities"), indicesNegativeControl=NULL, affinities=NULL, gsbAdjust=TRUE, parametersGsb=NULL, k=ifelse(fast, 6, 0.5), rho=0.7, stretch=ifelse(fast, 1.15, 1), fast=TRUE, overwrite=FALSE, skip=!overwrite, ..., verbose=FALSE, .deprecated=TRUE)
+}
 
 \arguments{
   \item{path}{The path where to save the adjusted data files.}

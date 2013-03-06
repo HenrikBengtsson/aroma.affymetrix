@@ -9,9 +9,7 @@
 \name{getCellIndices.CnChipEffectFile}
 \alias{getCellIndices.CnChipEffectFile}
 \alias{CnChipEffectFile.getCellIndices}
-\alias{getCellIndices.CnChipEffectFile}
 \alias{getCellIndices,CnChipEffectFile-method}
-
 
 \title{Retrieves tree list of cell indices for a set of units}
 
@@ -19,7 +17,9 @@
   Retrieves tree list of cell indices for a set of units.
 }
 
-\usage{\method{getCellIndices}{CnChipEffectFile}(this, units=NULL, ..., unlist=FALSE, force=FALSE, .cache=TRUE, verbose=FALSE)}
+\usage{
+\method{getCellIndices}{CnChipEffectFile}(this, units=NULL, ..., unlist=FALSE, force=FALSE, .cache=TRUE, verbose=FALSE)
+}
 
 \arguments{
  \item{units}{Unit indices to be retrieved.

@@ -9,9 +9,7 @@
 \name{getHeader.AffymetrixCdfFile}
 \alias{getHeader.AffymetrixCdfFile}
 \alias{AffymetrixCdfFile.getHeader}
-\alias{getHeader.AffymetrixCdfFile}
 \alias{getHeader,AffymetrixCdfFile-method}
-
 
 \title{Gets the header of the CDF file}
 
@@ -19,7 +17,9 @@
  Gets the header of the CDF file.
 }
 
-\usage{\method{getHeader}{AffymetrixCdfFile}(this, ...)}
+\usage{
+\method{getHeader}{AffymetrixCdfFile}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}

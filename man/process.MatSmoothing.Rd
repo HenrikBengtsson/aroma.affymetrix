@@ -9,9 +9,7 @@
 \name{process.MatSmoothing}
 \alias{process.MatSmoothing}
 \alias{MatSmoothing.process}
-\alias{process.MatSmoothing}
 \alias{process,MatSmoothing-method}
-
 
 \title{Processes the data set}
 
@@ -19,7 +17,9 @@
  Processes the data set.
 }
 
-\usage{\method{process}{MatSmoothing}(this, ..., units=NULL, force=FALSE, verbose=FALSE)}
+\usage{
+\method{process}{MatSmoothing}(this, ..., units=NULL, force=FALSE, verbose=FALSE)
+}
 
 \arguments{
   \item{...}{Not used.}

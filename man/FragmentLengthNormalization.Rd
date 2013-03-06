@@ -41,7 +41,9 @@ extends \emph{\link[aroma.affymetrix]{ChipEffectTransform}}\cr
   fragment length effects on copy-number chip-effect estimates.
  }
 
- \usage{FragmentLengthNormalization(dataSet=NULL, ..., target=targetFunctions, subsetToFit="-XY", lengthRange=NULL, onMissing=c("median", "ignore"), shift=0, targetFunctions=NULL)}
+ \usage{
+FragmentLengthNormalization(dataSet=NULL, ..., target=targetFunctions, subsetToFit="-XY", lengthRange=NULL, onMissing=c("median", "ignore"), shift=0, targetFunctions=NULL)
+}
 
  \arguments{
    \item{dataSet}{A \code{\link{SnpChipEffectSet}}.}
@@ -84,7 +86,7 @@ as.character, getAsteriskTags, getExpectedOutputFiles, getExpectedOutputFullname
 getParameters, getParametersAsString, getParameterSets
 
  \bold{Methods inherited from Object}:\cr
-asThis, $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save
+$, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save, asThis
 
 
  }

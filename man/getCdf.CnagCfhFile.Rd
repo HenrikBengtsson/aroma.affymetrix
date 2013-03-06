@@ -9,9 +9,7 @@
 \name{getCdf.CnagCfhFile}
 \alias{getCdf.CnagCfhFile}
 \alias{CnagCfhFile.getCdf}
-\alias{getCdf.CnagCfhFile}
 \alias{getCdf,CnagCfhFile-method}
-
 
 \title{Gets the CDF structure for this CEL file}
 
@@ -19,7 +17,9 @@
  Gets the CDF structure for this CEL file.
 }
 
-\usage{\method{getCdf}{CnagCfhFile}(this, ...)}
+\usage{
+\method{getCdf}{CnagCfhFile}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}

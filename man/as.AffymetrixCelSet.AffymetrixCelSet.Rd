@@ -9,9 +9,7 @@
 \name{as.AffymetrixCelSet.AffymetrixCelSet}
 \alias{as.AffymetrixCelSet.AffymetrixCelSet}
 \alias{AffymetrixCelSet.as.AffymetrixCelSet}
-\alias{as.AffymetrixCelSet.AffymetrixCelSet}
 \alias{as.AffymetrixCelSet,AffymetrixCelSet-method}
-
 \alias{as.AffymetrixCelSet.list}
 \alias{as.AffymetrixCelSet.default}
 
@@ -21,7 +19,9 @@
   Coerce an object to an AffymetrixCelSet object.
 }
 
-\usage{\method{as.AffymetrixCelSet}{AffymetrixCelSet}(object, ...)}
+\usage{
+\method{as.AffymetrixCelSet}{AffymetrixCelSet}(object, ...)
+}
 
 \arguments{
  \item{...}{Other arguments passed to \code{\link[base]{list.files}}().}

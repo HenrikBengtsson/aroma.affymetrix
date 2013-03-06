@@ -40,7 +40,9 @@ extends \emph{\link[aroma.affymetrix]{UnitModel}}\cr
   allele estimates.
  }
 
- \usage{AlleleSummation(dataSet=NULL, ignoreNAs=TRUE, ...)}
+ \usage{
+AlleleSummation(dataSet=NULL, ignoreNAs=TRUE, ...)
+}
 
  \arguments{
    \item{dataSet}{A \code{\link{SnpChipEffectSet}}.}
@@ -68,7 +70,7 @@ as.character, fit, getAlias, getAsteriskTags, getDataSet, getFullName, getName, 
 getParameters, getParametersAsString, getParameterSets
 
  \bold{Methods inherited from Object}:\cr
-asThis, $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save
+$, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save, asThis
 
 
  }

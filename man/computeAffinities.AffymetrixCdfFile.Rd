@@ -10,9 +10,7 @@
 \name{computeAffinities.AffymetrixCdfFile}
 \alias{computeAffinities.AffymetrixCdfFile}
 \alias{AffymetrixCdfFile.computeAffinities}
-\alias{computeAffinities.AffymetrixCdfFile}
 \alias{computeAffinities,AffymetrixCdfFile-method}
-
 
 \title{Calculates probe affinities from sequence}
 
@@ -25,7 +23,9 @@ a particular CDF, and matches sequence to probe index in order to assign
 an affinity to each probe.
 }
 
-\usage{\method{computeAffinities}{AffymetrixCdfFile}(this, safe=TRUE, force=FALSE, verbose=FALSE, ...)}
+\usage{
+\method{computeAffinities}{AffymetrixCdfFile}(this, safe=TRUE, force=FALSE, verbose=FALSE, ...)
+}
 
 \arguments{
   \item{safe}{A \code{\link[base]{logical}} argument passed to \code{getProbeSequenceData()}.}

@@ -10,9 +10,7 @@
 \name{plotDensity.AffymetrixCelFile}
 \alias{plotDensity.AffymetrixCelFile}
 \alias{AffymetrixCelFile.plotDensity}
-\alias{plotDensity.AffymetrixCelFile}
 \alias{plotDensity,AffymetrixCelFile-method}
-
 
 \title{Plots the density of the probe signals on the array}
 
@@ -20,7 +18,9 @@
  Plots the density of the probe signals on the array.
 }
 
-\usage{\method{plotDensity}{AffymetrixCelFile}(this, subset=NULL, types=NULL, ..., xlim=c(0, 16), xlab=NULL, ylab="density (integrates to one)", log=TRUE, annotate=TRUE, verbose=FALSE)}
+\usage{
+\method{plotDensity}{AffymetrixCelFile}(this, subset=NULL, types=NULL, ..., xlim=c(0, 16), xlab=NULL, ylab="density (integrates to one)", log=TRUE, annotate=TRUE, verbose=FALSE)
+}
 
 \arguments{
   \item{subset}{The subset of probes to considered \emph{before} any

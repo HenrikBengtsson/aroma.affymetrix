@@ -43,7 +43,9 @@ extends \emph{\link[aroma.affymetrix]{ProbeLevelModel}}\cr
   Analysis (RMA) method described in Irizarry et al (2003).
  }
 
- \usage{RmaPlm(..., flavor=c("affyPLM", "oligo"))}
+ \usage{
+RmaPlm(..., flavor=c("affyPLM", "oligo"))
+}
 
  \arguments{
    \item{...}{Arguments passed to \code{\link{ProbeLevelModel}}.}
@@ -73,7 +75,7 @@ as.character, fit, getAlias, getAsteriskTags, getDataSet, getFullName, getName, 
 getParameters, getParametersAsString, getParameterSets
 
  \bold{Methods inherited from Object}:\cr
-asThis, $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save
+$, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save, asThis
 
 
  }

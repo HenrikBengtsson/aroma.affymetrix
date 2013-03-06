@@ -42,7 +42,9 @@ extends \emph{\link[aroma.affymetrix]{ProbeLevelTransform}}\cr
   for fitting and/or updating the signals.
  }
 
- \usage{ProbeLevelTransform3(dataSet=NULL, ..., unitsToFit="-XY", typesToFit=typesToUpdate, unitsToUpdate=NULL, typesToUpdate="pm", shift=0)}
+ \usage{
+ProbeLevelTransform3(dataSet=NULL, ..., unitsToFit="-XY", typesToFit=typesToUpdate, unitsToUpdate=NULL, typesToUpdate="pm", shift=0)
+}
 
  \arguments{
    \item{dataSet}{A \code{\link{AffymetrixCelSet}}.}
@@ -75,7 +77,7 @@ as.character, getAsteriskTags, getExpectedOutputFiles, getExpectedOutputFullname
 getParameters, getParametersAsString, getParameterSets
 
  \bold{Methods inherited from Object}:\cr
-asThis, $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save
+$, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save, asThis
 
 
  }

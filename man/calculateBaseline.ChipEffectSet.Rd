@@ -10,9 +10,7 @@
 \name{calculateBaseline.ChipEffectSet}
 \alias{calculateBaseline.ChipEffectSet}
 \alias{ChipEffectSet.calculateBaseline}
-\alias{calculateBaseline.ChipEffectSet}
 \alias{calculateBaseline,ChipEffectSet-method}
-
 
 \title{Estimates the baseline signal chromosome by chromosome}
 
@@ -20,7 +18,9 @@
  Estimates the baseline signal chromosome by chromosome.
 }
 
-\usage{\method{calculateBaseline}{ChipEffectSet}(this, chromosomes=NULL, ploidy=2, defaultPloidy=NA, all=FALSE, force=FALSE, verbose=FALSE, ...)}
+\usage{
+\method{calculateBaseline}{ChipEffectSet}(this, chromosomes=NULL, ploidy=2, defaultPloidy=NA, all=FALSE, force=FALSE, verbose=FALSE, ...)
+}
 
 \arguments{
   \item{chromosomes}{An \code{\link[base]{integer}} \code{\link[base]{vector}} specifying for which chromsosomes

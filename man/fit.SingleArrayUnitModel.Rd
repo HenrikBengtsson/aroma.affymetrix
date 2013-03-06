@@ -10,9 +10,7 @@
  \name{fit.SingleArrayUnitModel}
 \alias{fit.SingleArrayUnitModel}
 \alias{SingleArrayUnitModel.fit}
-\alias{fit.SingleArrayUnitModel}
 \alias{fit,SingleArrayUnitModel-method}
-
 
  \title{Estimates the model parameters}
 
@@ -20,7 +18,9 @@
   Estimates the model parameters for all or a subset of the units.
  }
 
- \usage{\method{fit}{SingleArrayUnitModel}(this, arrays=NULL, units="remaining", ..., force=FALSE, verbose=FALSE)}
+ \usage{
+\method{fit}{SingleArrayUnitModel}(this, arrays=NULL, units="remaining", ..., force=FALSE, verbose=FALSE)
+}
 
  \arguments{
    \item{arrays}{The arrays to be fitted.

@@ -10,9 +10,7 @@
 \name{createFrom.AffymetrixCelFile}
 \alias{createFrom.AffymetrixCelFile}
 \alias{AffymetrixCelFile.createFrom}
-\alias{createFrom.AffymetrixCelFile}
 \alias{createFrom,AffymetrixCelFile-method}
-
 
 \title{Creates a CEL file using another as a template}
 
@@ -20,7 +18,9 @@
  Creates a CEL file using another as a template.
 }
 
-\usage{\method{createFrom}{AffymetrixCelFile}(this, filename, path=NULL, overwrite=FALSE, skip=!overwrite, version=c("4", "3"), methods=c("copy", "create"), clear=FALSE, defValue=0, ..., verbose=FALSE)}
+\usage{
+\method{createFrom}{AffymetrixCelFile}(this, filename, path=NULL, overwrite=FALSE, skip=!overwrite, version=c("4", "3"), methods=c("copy", "create"), clear=FALSE, defValue=0, ..., verbose=FALSE)
+}
 
 \arguments{
  \item{filename, path}{The filename and path of to the CEL

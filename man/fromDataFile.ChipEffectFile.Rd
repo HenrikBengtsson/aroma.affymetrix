@@ -7,12 +7,11 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-\name{fromDataFile.ChipEffectFile}
+\name{ChipEffectFile$fromDataFile}
+\alias{ChipEffectFile$fromDataFile}
 \alias{fromDataFile.ChipEffectFile}
 \alias{ChipEffectFile.fromDataFile}
-\alias{fromDataFile.ChipEffectFile}
 \alias{fromDataFile,ChipEffectFile-method}
-
 
 \title{Retrive an existing CEL file, or create from CDF template if missing}
 
@@ -20,8 +19,13 @@
  Retrive an existing CEL file, or create from CDF template if missing.
 }
 
-\synopsis{fromDataFile.ChipEffectFile(static, df=NULL, filename=sprintf("\%s,chipEffects.CEL", getFullName(df)), path, name=getName(df), cdf=NULL, ..., verbose=FALSE)}
-\usage{ChipEffectFile$fromDataFile(df=NULL, filename=sprintf("\%s,chipEffects.CEL", getFullName(df)), path, name=getName(df), cdf=NULL, ..., verbose=FALSE)}
+\usage{
+## Static method (use this):
+## ChipEffectFile$fromDataFile(df=NULL, filename=sprintf("\%s,chipEffects.CEL", getFullName(df)), path, name=getName(df), cdf=NULL, ..., verbose=FALSE)
+
+## Don't use the below:
+\method{fromDataFile}{ChipEffectFile}(static, df=NULL, filename=sprintf("\%s,chipEffects.CEL", getFullName(df)), path, name=getName(df), cdf=NULL, ..., verbose=FALSE)
+}
 
 \arguments{
   \item{static}{}

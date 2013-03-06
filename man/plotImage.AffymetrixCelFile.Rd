@@ -9,9 +9,7 @@
 \name{plotImage.AffymetrixCelFile}
 \alias{plotImage.AffymetrixCelFile}
 \alias{AffymetrixCelFile.plotImage}
-\alias{plotImage.AffymetrixCelFile}
 \alias{plotImage,AffymetrixCelFile-method}
-
 
 \title{Displays a spatial plot of a CEL file}
 
@@ -19,7 +17,9 @@
  Displays a spatial plot of a CEL file.
 }
 
-\usage{\method{plotImage}{AffymetrixCelFile}(this, ...)}
+\usage{
+\method{plotImage}{AffymetrixCelFile}(this, ...)
+}
 
 \arguments{
   \item{...}{Arguments passed to \code{\link[aroma.affymetrix:getImage.AffymetrixCelFile]{*getImage}()}.}

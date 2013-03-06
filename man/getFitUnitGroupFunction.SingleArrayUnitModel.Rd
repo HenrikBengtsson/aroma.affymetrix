@@ -6,12 +6,11 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{getFitUnitGroupFunction.SingleArrayUnitModel}
+\name{SingleArrayUnitModel$getFitUnitGroupFunction}
+\alias{SingleArrayUnitModel$getFitUnitGroupFunction}
 \alias{getFitUnitGroupFunction.SingleArrayUnitModel}
 \alias{SingleArrayUnitModel.getFitUnitGroupFunction}
-\alias{getFitUnitGroupFunction.SingleArrayUnitModel}
 \alias{getFitUnitGroupFunction,SingleArrayUnitModel-method}
-
 
 \title{Static method to get the low-level function that fits the PLM}
 
@@ -22,8 +21,13 @@
  is the number of probes.
 }
 
-\synopsis{getFitUnitGroupFunction.SingleArrayUnitModel(...)}
-\usage{SingleArrayUnitModel$getFitUnitGroupFunction()}
+\usage{
+## Static method (use this):
+## SingleArrayUnitModel$getFitUnitGroupFunction()
+
+## Don't use the below:
+\method{getFitUnitGroupFunction}{SingleArrayUnitModel}(...)
+}
 
 \arguments{
   \item{...}{Not used.}

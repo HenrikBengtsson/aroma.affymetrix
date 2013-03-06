@@ -9,9 +9,7 @@
 \name{bgAdjustRma.AffymetrixCelFile}
 \alias{bgAdjustRma.AffymetrixCelFile}
 \alias{AffymetrixCelFile.bgAdjustRma}
-\alias{bgAdjustRma.AffymetrixCelFile}
 \alias{bgAdjustRma,AffymetrixCelFile-method}
-
 
 \title{Applies normExp background correction to a CEL file}
 
@@ -21,7 +19,9 @@
  Calls \code{\link[affy]{bg.adjust}} from the \pkg{affy} package.
 }
 
-\usage{\method{bgAdjustRma}{AffymetrixCelFile}(this, path, pmonly=TRUE, addJitter=FALSE, jitterSd=0.2, overwrite=FALSE, skip=!overwrite, ..., verbose=FALSE, .deprecated=TRUE)}
+\usage{
+\method{bgAdjustRma}{AffymetrixCelFile}(this, path, pmonly=TRUE, addJitter=FALSE, jitterSd=0.2, overwrite=FALSE, skip=!overwrite, ..., verbose=FALSE, .deprecated=TRUE)
+}
 
 \arguments{
   \item{path}{The path where to save the adjusted data files.}

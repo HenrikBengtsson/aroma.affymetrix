@@ -9,9 +9,7 @@
 \name{byChipType.DChipSnpInformation}
 \alias{byChipType.DChipSnpInformation}
 \alias{DChipSnpInformation.byChipType}
-\alias{byChipType.DChipSnpInformation}
 \alias{byChipType,DChipSnpInformation-method}
-
 
 \title{Defines a DChipSnpInformation object by chip type}
 
@@ -19,7 +17,9 @@
  Defines a DChipSnpInformation object by chip type.
 }
 
-\usage{\method{byChipType}{DChipSnpInformation}(static, chipType, version=NULL, ...)}
+\usage{
+\method{byChipType}{DChipSnpInformation}(static, chipType, version=NULL, ...)
+}
 
 \arguments{
  \item{chipType}{A \code{\link[base]{character}} string.}

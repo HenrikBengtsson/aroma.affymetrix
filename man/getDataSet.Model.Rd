@@ -9,9 +9,7 @@
 \name{getDataSet.Model}
 \alias{getDataSet.Model}
 \alias{Model.getDataSet}
-\alias{getDataSet.Model}
 \alias{getDataSet,Model-method}
-
 
 \title{Gets the input data set for this model}
 
@@ -19,7 +17,9 @@
   Gets the input data set for this model.
 }
 
-\usage{\method{getDataSet}{Model}(this, ...)}
+\usage{
+\method{getDataSet}{Model}(this, ...)
+}
 
 \arguments{
  \item{...}{Not used.}

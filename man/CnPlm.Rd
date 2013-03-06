@@ -35,7 +35,9 @@ extends \link[aroma.affymetrix]{SnpPlm}\cr
   copy-number analysis.
  }
 
- \usage{CnPlm(...)}
+ \usage{
+CnPlm(...)
+}
 
  \arguments{
    \item{...}{Arguments passed to \code{\link{SnpPlm}}.}

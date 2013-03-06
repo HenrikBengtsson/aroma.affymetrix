@@ -9,9 +9,7 @@
 \name{process.UnitTypeScaleNormalization}
 \alias{process.UnitTypeScaleNormalization}
 \alias{UnitTypeScaleNormalization.process}
-\alias{process.UnitTypeScaleNormalization}
 \alias{process,UnitTypeScaleNormalization-method}
-
 
 \title{Normalizes the data set}
 
@@ -19,7 +17,9 @@
  Normalizes the data set.
 }
 
-\usage{\method{process}{UnitTypeScaleNormalization}(this, ..., skip=FALSE, force=FALSE, verbose=FALSE)}
+\usage{
+\method{process}{UnitTypeScaleNormalization}(this, ..., skip=FALSE, force=FALSE, verbose=FALSE)
+}
 
 \arguments{
   \item{...}{Not used.}

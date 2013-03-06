@@ -9,9 +9,7 @@
 \name{getPath.Model}
 \alias{getPath.Model}
 \alias{Model.getPath}
-\alias{getPath.Model}
 \alias{getPath,Model-method}
-
 
 \title{Gets the path of this model}
 
@@ -20,7 +18,9 @@
  The directory is created, if missing.
 }
 
-\usage{\method{getPath}{Model}(this, ...)}
+\usage{
+\method{getPath}{Model}(this, ...)
+}
 
 \arguments{
  \item{...}{Not used.}

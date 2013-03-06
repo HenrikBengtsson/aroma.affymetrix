@@ -9,9 +9,7 @@
 \name{calculateResidualSet.FirmaModel}
 \alias{calculateResidualSet.FirmaModel}
 \alias{FirmaModel.calculateResidualSet}
-\alias{calculateResidualSet.FirmaModel}
 \alias{calculateResidualSet,FirmaModel-method}
-
 \alias{FirmaModel.calculateResiduals}
 \alias{calculateResiduals.FirmaModel}
 \alias{calculateResiduals,FirmaModel-method}
@@ -23,7 +21,9 @@
  Gets the set of residuals corresponding to the PLM.
 }
 
-\usage{\method{calculateResidualSet}{FirmaModel}(this, ...)}
+\usage{
+\method{calculateResidualSet}{FirmaModel}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}

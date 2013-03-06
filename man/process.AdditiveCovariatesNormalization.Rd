@@ -9,9 +9,7 @@
 \name{process.AdditiveCovariatesNormalization}
 \alias{process.AdditiveCovariatesNormalization}
 \alias{AdditiveCovariatesNormalization.process}
-\alias{process.AdditiveCovariatesNormalization}
 \alias{process,AdditiveCovariatesNormalization-method}
-
 
 \title{Normalizes the data set}
 
@@ -19,7 +17,9 @@
  Normalizes the data set.
 }
 
-\usage{\method{process}{AdditiveCovariatesNormalization}(this, ..., force=FALSE, verbose=FALSE)}
+\usage{
+\method{process}{AdditiveCovariatesNormalization}(this, ..., force=FALSE, verbose=FALSE)
+}
 
 \arguments{
   \item{...}{Additional arguments passed to

@@ -9,9 +9,7 @@
 \name{getName.TransformReport}
 \alias{getName.TransformReport}
 \alias{TransformReport.getName}
-\alias{getName.TransformReport}
 \alias{getName,TransformReport-method}
-
 
 \title{Gets the name of the output data set}
 
@@ -19,7 +17,9 @@
  Gets the name of the output data set, which is the same as the input data set.
 }
 
-\usage{\method{getName}{TransformReport}(this, ...)}
+\usage{
+\method{getName}{TransformReport}(this, ...)
+}
 
 \arguments{
  \item{...}{Not used.}

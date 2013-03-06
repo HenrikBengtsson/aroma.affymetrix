@@ -9,9 +9,7 @@
 \name{getXAM.ChipEffectSet}
 \alias{getXAM.ChipEffectSet}
 \alias{ChipEffectSet.getXAM}
-\alias{getXAM.ChipEffectSet}
 \alias{getXAM,ChipEffectSet-method}
-
 
 \title{Gets the physical position, log-intensities and log-ratios of chip effects for two arrays}
 
@@ -19,7 +17,9 @@
  Gets the physical position, log-intensities and log-ratios of chip effects for two arrays of units on a certain chromosome.
 }
 
-\usage{\method{getXAM}{ChipEffectSet}(this, other, chromosome, units=NULL, ..., verbose=FALSE)}
+\usage{
+\method{getXAM}{ChipEffectSet}(this, other, chromosome, units=NULL, ..., verbose=FALSE)
+}
 
 \arguments{
   \item{other}{The second \code{\link{ChipEffectFile}} object used as the

@@ -9,9 +9,7 @@
 \name{getIntensities.AffymetrixCelSet}
 \alias{getIntensities.AffymetrixCelSet}
 \alias{AffymetrixCelSet.getIntensities}
-\alias{getIntensities.AffymetrixCelSet}
 \alias{getIntensities,AffymetrixCelSet-method}
-
 
 \title{Gets cell intensities from a set of cells and a set of arrays}
 
@@ -19,7 +17,9 @@
   Gets cell intensities from a set of cells and a set of arrays.
 }
 
-\usage{\method{getIntensities}{AffymetrixCelSet}(this, ...)}
+\usage{
+\method{getIntensities}{AffymetrixCelSet}(this, ...)
+}
 
 \arguments{
  \item{...}{Passed to \code{\link[aroma.affymetrix:getData.AffymetrixCelSet]{*getData}()}.}

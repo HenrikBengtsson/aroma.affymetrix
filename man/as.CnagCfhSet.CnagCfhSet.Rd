@@ -9,9 +9,7 @@
 \name{as.CnagCfhSet.CnagCfhSet}
 \alias{as.CnagCfhSet.CnagCfhSet}
 \alias{CnagCfhSet.as.CnagCfhSet}
-\alias{as.CnagCfhSet.CnagCfhSet}
 \alias{as.CnagCfhSet,CnagCfhSet-method}
-
 \alias{as.CnagCfhSet.list}
 \alias{as.CnagCfhSet.default}
 
@@ -21,7 +19,9 @@
   Coerce an object to an CnagCfhSet object.
 }
 
-\usage{\method{as.CnagCfhSet}{CnagCfhSet}(object, ...)}
+\usage{
+\method{as.CnagCfhSet}{CnagCfhSet}(object, ...)
+}
 
 \arguments{
  \item{...}{Other arguments passed to \code{\link[base]{list.files}}().}

@@ -9,9 +9,7 @@
 \name{fit.Model}
 \alias{fit.Model}
 \alias{Model.fit}
-\alias{fit.Model}
 \alias{fit,Model-method}
-
 
 \title{Estimates the model parameters}
 
@@ -19,7 +17,9 @@
  Estimates the model parameters.
 }
 
-\usage{\method{fit}{Model}(...)}
+\usage{
+\method{fit}{Model}(...)
+}
 
 \arguments{
   \item{...}{Arguments specific to any subclass.}

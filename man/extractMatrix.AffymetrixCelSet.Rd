@@ -10,9 +10,7 @@
 \name{extractMatrix.AffymetrixCelSet}
 \alias{extractMatrix.AffymetrixCelSet}
 \alias{AffymetrixCelSet.extractMatrix}
-\alias{extractMatrix.AffymetrixCelSet}
 \alias{extractMatrix,AffymetrixCelSet-method}
-
 
 \title{Extract data as a matrix for a set of arrays}
 
@@ -20,7 +18,9 @@
  Extract data as a matrix for a set of arrays.
 }
 
-\usage{\method{extractMatrix}{AffymetrixCelSet}(this, cells=NULL, ..., field=c("intensities", "stdvs", "pixels"), drop=FALSE, verbose=FALSE)}
+\usage{
+\method{extractMatrix}{AffymetrixCelSet}(this, cells=NULL, ..., field=c("intensities", "stdvs", "pixels"), drop=FALSE, verbose=FALSE)
+}
 
 \arguments{
   \item{cells}{(The subset of cells to be matched.

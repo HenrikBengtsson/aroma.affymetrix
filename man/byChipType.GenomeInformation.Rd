@@ -6,12 +6,11 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{byChipType.GenomeInformation}
+\name{GenomeInformation$byChipType}
+\alias{GenomeInformation$byChipType}
 \alias{byChipType.GenomeInformation}
 \alias{GenomeInformation.byChipType}
-\alias{byChipType.GenomeInformation}
 \alias{byChipType,GenomeInformation-method}
-
 
 \title{Static method to define a genome information set by chip type}
 
@@ -19,8 +18,13 @@
   Static method to define a genome information set by chip type.
 }
 
-\synopsis{byChipType.GenomeInformation(...)}
-\usage{GenomeInformation$byChipType()}
+\usage{
+## Static method (use this):
+## GenomeInformation$byChipType()
+
+## Don't use the below:
+\method{byChipType}{GenomeInformation}(...)
+}
 
 \arguments{
  \item{...}{Not used.}

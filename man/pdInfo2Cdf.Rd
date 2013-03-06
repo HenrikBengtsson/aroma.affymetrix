@@ -24,7 +24,9 @@
    for the \code{AffyGenePDInfo} class.}
  }
 
- \usage{pdInfo2Cdf(pdpkg, celfile, overwrite=FALSE, verbose=TRUE, ...)}
+ \usage{
+pdInfo2Cdf(pdpkg, celfile, overwrite=FALSE, verbose=TRUE, ...)
+}
 
  \arguments{
   \item{pdpkg}{A \code{\link[base]{character}} string for an existing PD package.}

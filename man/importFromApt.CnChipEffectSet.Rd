@@ -7,12 +7,11 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-\name{importFromApt.CnChipEffectSet}
+\name{CnChipEffectSet$importFromApt}
+\alias{CnChipEffectSet$importFromApt}
 \alias{importFromApt.CnChipEffectSet}
 \alias{CnChipEffectSet.importFromApt}
-\alias{importFromApt.CnChipEffectSet}
 \alias{importFromApt,CnChipEffectSet-method}
-
 
 \title{Imports copy-number estimates from an APT summary file}
 
@@ -21,8 +20,13 @@
  Currently only total copy-number estimates can be imported.
 }
 
-\synopsis{importFromApt.CnChipEffectSet(static, filename, path=NULL, combineAlleles=TRUE, cdf, ..., skip=TRUE, verbose=FALSE)}
-\usage{CnChipEffectSet$importFromApt(filename, path=NULL, combineAlleles=TRUE, cdf, ..., skip=TRUE, verbose=FALSE)}
+\usage{
+## Static method (use this):
+## CnChipEffectSet$importFromApt(filename, path=NULL, combineAlleles=TRUE, cdf, ..., skip=TRUE, verbose=FALSE)
+
+## Don't use the below:
+\method{importFromApt}{CnChipEffectSet}(static, filename, path=NULL, combineAlleles=TRUE, cdf, ..., skip=TRUE, verbose=FALSE)
+}
 
 \arguments{
   \item{filename}{The filename of the APT summary file.}

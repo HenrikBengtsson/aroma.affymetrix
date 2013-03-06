@@ -9,9 +9,7 @@
 \name{smoothScatterMvsA.AffymetrixCelFile}
 \alias{smoothScatterMvsA.AffymetrixCelFile}
 \alias{AffymetrixCelFile.smoothScatterMvsA}
-\alias{smoothScatterMvsA.AffymetrixCelFile}
 \alias{smoothScatterMvsA,AffymetrixCelFile-method}
-
 
 \title{Plots log-ratio versus log-intensity in a smooth scatter plot}
 
@@ -19,7 +17,9 @@
  Plots log-ratio versus log-intensity in a smooth scatter plot.
 }
 
-\usage{\method{smoothScatterMvsA}{AffymetrixCelFile}(this, reference, indices=NULL, pch=176, xlim=c(0, 16), ylim=c(-1, 1) * diff(xlim), xlab=expression(A == 1/2 \%*\% log[2](y[1] * y[2])), ylab=expression(M == log[2](y[1]/y[2])), ..., annotate=TRUE)}
+\usage{
+\method{smoothScatterMvsA}{AffymetrixCelFile}(this, reference, indices=NULL, pch=176, xlim=c(0, 16), ylim=c(-1, 1) * diff(xlim), xlab=expression(A == 1/2 \%*\% log[2](y[1] * y[2])), ylab=expression(M == log[2](y[1]/y[2])), ..., annotate=TRUE)
+}
 
 \arguments{
   \item{reference}{The reference channel, i.e. the denominator in the

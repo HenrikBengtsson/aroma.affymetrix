@@ -9,9 +9,7 @@
 \name{getUnitIntensities.AffymetrixCelSet}
 \alias{getUnitIntensities.AffymetrixCelSet}
 \alias{AffymetrixCelSet.getUnitIntensities}
-\alias{getUnitIntensities.AffymetrixCelSet}
 \alias{getUnitIntensities,AffymetrixCelSet-method}
-
 
 \title{Gets cell signals for a subset of units and a subset of arrays}
 
@@ -19,7 +17,9 @@
   Gets cell signals for a subset of units and a subset of arrays.
 }
 
-\usage{\method{getUnitIntensities}{AffymetrixCelSet}(this, units=NULL, ..., force=FALSE, cache=!is.null(units), verbose=FALSE)}
+\usage{
+\method{getUnitIntensities}{AffymetrixCelSet}(this, units=NULL, ..., force=FALSE, cache=!is.null(units), verbose=FALSE)
+}
 
 \arguments{
  \item{units}{An \code{\link[base]{integer}} index \code{\link[base]{vector}} specifying units to be read.

@@ -9,9 +9,7 @@
 \name{getChipType.CnagCfhFile}
 \alias{getChipType.CnagCfhFile}
 \alias{CnagCfhFile.getChipType}
-\alias{getChipType.CnagCfhFile}
 \alias{getChipType,CnagCfhFile-method}
-
 
 \title{Gets the chip type for this CEL file}
 
@@ -19,7 +17,9 @@
  Gets the chip type for this CEL file \emph{according} to the \code{\link{AffymetrixCdfFile}} object.
 }
 
-\usage{\method{getChipType}{CnagCfhFile}(this, ...)}
+\usage{
+\method{getChipType}{CnagCfhFile}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}

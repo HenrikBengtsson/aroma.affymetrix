@@ -9,8 +9,6 @@
 
  \name{plotBoxplotStats.list}
 \alias{plotBoxplotStats.list}
-\alias{plotBoxplotStats.list}
-
 
  \title{Plots a (merged or non-merged) list of boxplot.stats() elements}
 
@@ -18,7 +16,9 @@
   Plots a (merged or non-merged) list of boxplot.stats() elements.
  }
 
- \usage{\method{plotBoxplotStats}{list}(stats, ylim=NULL, outline=FALSE, las=2, ...)}
+ \usage{
+\method{plotBoxplotStats}{list}(stats, ylim=NULL, outline=FALSE, las=2, ...)
+}
 
  \arguments{
    \item{stats}{A (merged or non-merged) \code{\link[base]{list}} of

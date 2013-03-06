@@ -10,9 +10,7 @@
  \name{averageQuantile.AffymetrixCelSet}
 \alias{averageQuantile.AffymetrixCelSet}
 \alias{AffymetrixCelSet.averageQuantile}
-\alias{averageQuantile.AffymetrixCelSet}
 \alias{averageQuantile,AffymetrixCelSet-method}
-
 
  \title{Calculates the average empirical distribution across all samples}
 
@@ -20,7 +18,9 @@
   Calculates the average empirical distribution across all samples.
  }
 
- \usage{\method{averageQuantile}{AffymetrixCelSet}(this, probes=NULL, excludeCells=NULL, ..., verbose=FALSE)}
+ \usage{
+\method{averageQuantile}{AffymetrixCelSet}(this, probes=NULL, excludeCells=NULL, ..., verbose=FALSE)
+}
 
  \arguments{
    \item{probes}{An optional \code{\link[base]{numeric}} \code{\link[base]{vector}} specifying what subset of

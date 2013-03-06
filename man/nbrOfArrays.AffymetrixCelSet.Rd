@@ -9,9 +9,7 @@
 \name{nbrOfArrays.AffymetrixCelSet}
 \alias{nbrOfArrays.AffymetrixCelSet}
 \alias{AffymetrixCelSet.nbrOfArrays}
-\alias{nbrOfArrays.AffymetrixCelSet}
 \alias{nbrOfArrays,AffymetrixCelSet-method}
-
 
 \title{Gets the number of arrays in the file set}
 
@@ -20,7 +18,9 @@
   This is just a wrapper for \code{length()}.
 }
 
-\usage{\method{nbrOfArrays}{AffymetrixCelSet}(this, ...)}
+\usage{
+\method{nbrOfArrays}{AffymetrixCelSet}(this, ...)
+}
 
 \arguments{
  \item{...}{Not used.}

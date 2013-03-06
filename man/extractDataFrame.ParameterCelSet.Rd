@@ -9,9 +9,7 @@
 \name{extractDataFrame.ParameterCelSet}
 \alias{extractDataFrame.ParameterCelSet}
 \alias{ParameterCelSet.extractDataFrame}
-\alias{extractDataFrame.ParameterCelSet}
 \alias{extractDataFrame,ParameterCelSet-method}
-
 
 \title{Extract data as a data.frame for a set of arrays}
 
@@ -19,7 +17,9 @@
  Extract data as a data.frame for a set of arrays.
 }
 
-\usage{\method{extractDataFrame}{ParameterCelSet}(this, addNames=FALSE, addUgcMap=TRUE, ..., drop=FALSE, verbose=FALSE)}
+\usage{
+\method{extractDataFrame}{ParameterCelSet}(this, addNames=FALSE, addUgcMap=TRUE, ..., drop=FALSE, verbose=FALSE)
+}
 
 \arguments{
   \item{...}{Arguments passed to \code{\link[aroma.affymetrix:extractMatrix.ParameterCelSet]{*extractMatrix}()}.}

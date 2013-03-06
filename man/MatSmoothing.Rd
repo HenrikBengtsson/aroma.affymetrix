@@ -40,7 +40,9 @@ extends \emph{\link[aroma.affymetrix]{ProbeLevelTransform}}\cr
  This class represents a function for smoothing data with a trimmed mean.
 }
 
-\usage{MatSmoothing(..., design=NULL, probeWindow=300, nProbes=10, meanTrim=0.1)}
+\usage{
+MatSmoothing(..., design=NULL, probeWindow=300, nProbes=10, meanTrim=0.1)
+}
 
 \arguments{
   \item{...}{Arguments passed to \code{\link{ProbeLevelTransform}}.}
@@ -71,7 +73,7 @@ as.character, getAsteriskTags, getExpectedOutputFiles, getExpectedOutputFullname
 getParameters, getParametersAsString, getParameterSets
 
  \bold{Methods inherited from Object}:\cr
-asThis, $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save
+$, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save, asThis
 
 
 }

@@ -10,9 +10,7 @@
 \name{getAlleleProbePairs3.AffymetrixCdfFile}
 \alias{getAlleleProbePairs3.AffymetrixCdfFile}
 \alias{AffymetrixCdfFile.getAlleleProbePairs3}
-\alias{getAlleleProbePairs3.AffymetrixCdfFile}
 \alias{getAlleleProbePairs3,AffymetrixCdfFile-method}
-
 
 \title{Gets the indices of probepairs with the same pair of SNP nucleotides}
 
@@ -23,7 +21,9 @@
   together with all probepairs with nucleotides (T,A) reversed.
 }
 
-\usage{\method{getAlleleProbePairs3}{AffymetrixCdfFile}(this, units=NULL, ignoreOrder=TRUE, force=FALSE, ..., verbose=FALSE)}
+\usage{
+\method{getAlleleProbePairs3}{AffymetrixCdfFile}(this, units=NULL, ignoreOrder=TRUE, force=FALSE, ..., verbose=FALSE)
+}
 
 \arguments{
  \item{verbose}{A \code{\link[base]{logical}} or a \code{\link[R.utils]{Verbose}} object.}

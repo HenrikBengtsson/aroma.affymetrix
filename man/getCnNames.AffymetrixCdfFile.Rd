@@ -9,9 +9,7 @@
 \name{getCnNames.AffymetrixCdfFile}
 \alias{getCnNames.AffymetrixCdfFile}
 \alias{AffymetrixCdfFile.getCnNames}
-\alias{getCnNames.AffymetrixCdfFile}
 \alias{getCnNames,AffymetrixCdfFile-method}
-
 
 \title{Gets the names of the CN units}
 
@@ -19,7 +17,9 @@
   Gets the names of the CN units.
 }
 
-\usage{\method{getCnNames}{AffymetrixCdfFile}(this, ...)}
+\usage{
+\method{getCnNames}{AffymetrixCdfFile}(this, ...)
+}
 
 \arguments{
  \item{...}{Not used.}

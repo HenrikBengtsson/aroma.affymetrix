@@ -9,9 +9,7 @@
 \name{as.character.AffymetrixCelSet}
 \alias{as.character.AffymetrixCelSet}
 \alias{AffymetrixCelSet.as.character}
-\alias{as.character.AffymetrixCelSet}
 \alias{as.character,AffymetrixCelSet-method}
-
 
 \title{Returns a short string describing the Affymetrix CEL set}
 
@@ -19,7 +17,9 @@
  Returns a short string describing the Affymetrix CEL set.
 }
 
-\usage{\method{as.character}{AffymetrixCelSet}(x, ...)}
+\usage{
+\method{as.character}{AffymetrixCelSet}(x, ...)
+}
 
 \arguments{
   \item{...}{Not used.}

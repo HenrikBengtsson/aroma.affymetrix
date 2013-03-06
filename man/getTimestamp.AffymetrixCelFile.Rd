@@ -9,9 +9,7 @@
 \name{getTimestamp.AffymetrixCelFile}
 \alias{getTimestamp.AffymetrixCelFile}
 \alias{AffymetrixCelFile.getTimestamp}
-\alias{getTimestamp.AffymetrixCelFile}
 \alias{getTimestamp,AffymetrixCelFile-method}
-
 
 \title{Gets the timestamp in the CEL header}
 
@@ -19,7 +17,9 @@
  Gets the timestamp in the CEL header.
 }
 
-\usage{\method{getTimestamp}{AffymetrixCelFile}(this, format="\%m/\%d/\%y \%H:\%M:\%S", ...)}
+\usage{
+\method{getTimestamp}{AffymetrixCelFile}(this, format="\%m/\%d/\%y \%H:\%M:\%S", ...)
+}
 
 \arguments{
   \item{format}{The default format string for parsing the time stamp.}

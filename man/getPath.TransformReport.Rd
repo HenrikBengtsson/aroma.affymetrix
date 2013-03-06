@@ -9,9 +9,7 @@
 \name{getPath.TransformReport}
 \alias{getPath.TransformReport}
 \alias{TransformReport.getPath}
-\alias{getPath.TransformReport}
 \alias{getPath,TransformReport-method}
-
 
 \title{Gets the path of the output data set}
 
@@ -20,7 +18,9 @@
  If non-existing, then the directory is created.
 }
 
-\usage{\method{getPath}{TransformReport}(this, ...)}
+\usage{
+\method{getPath}{TransformReport}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}

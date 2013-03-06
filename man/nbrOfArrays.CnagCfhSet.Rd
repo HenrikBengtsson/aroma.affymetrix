@@ -9,9 +9,7 @@
 \name{nbrOfArrays.CnagCfhSet}
 \alias{nbrOfArrays.CnagCfhSet}
 \alias{CnagCfhSet.nbrOfArrays}
-\alias{nbrOfArrays.CnagCfhSet}
 \alias{nbrOfArrays,CnagCfhSet-method}
-
 
 \title{Gets the number of arrays in the file set}
 
@@ -20,7 +18,9 @@
   This is just a wrapper for \code{length()}.
 }
 
-\usage{\method{nbrOfArrays}{CnagCfhSet}(this, ...)}
+\usage{
+\method{nbrOfArrays}{CnagCfhSet}(this, ...)
+}
 
 \arguments{
  \item{...}{Not used.}

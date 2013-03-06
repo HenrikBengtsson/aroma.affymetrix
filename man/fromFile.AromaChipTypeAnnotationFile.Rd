@@ -6,12 +6,11 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{fromFile.AromaChipTypeAnnotationFile}
+\name{AromaChipTypeAnnotationFile$fromFile}
+\alias{AromaChipTypeAnnotationFile$fromFile}
 \alias{fromFile.AromaChipTypeAnnotationFile}
 \alias{AromaChipTypeAnnotationFile.fromFile}
-\alias{fromFile.AromaChipTypeAnnotationFile}
 \alias{fromFile,AromaChipTypeAnnotationFile-method}
-
 
 \title{Sets up an AromaChipTypeAnnotationFile}
 
@@ -19,8 +18,13 @@
  Sets up an AromaChipTypeAnnotationFile.
 }
 
-\synopsis{fromFile.AromaChipTypeAnnotationFile(static, filename, path=NULL, ...)}
-\usage{AromaChipTypeAnnotationFile$fromFile(filename, path=NULL, ...)}
+\usage{
+## Static method (use this):
+## AromaChipTypeAnnotationFile$fromFile(filename, path=NULL, ...)
+
+## Don't use the below:
+\method{fromFile}{AromaChipTypeAnnotationFile}(static, filename, path=NULL, ...)
+}
 
 \arguments{
  \item{filename}{The filename of to the file.}

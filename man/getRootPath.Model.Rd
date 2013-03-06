@@ -9,9 +9,7 @@
 \name{getRootPath.Model}
 \alias{getRootPath.Model}
 \alias{Model.getRootPath}
-\alias{getRootPath.Model}
 \alias{getRootPath,Model-method}
-
 
 \title{Gets the root path of this model}
 
@@ -21,7 +19,9 @@
  name of the model class, e.g. \code{"modelUnit"}.
 }
 
-\usage{\method{getRootPath}{Model}(this, ...)}
+\usage{
+\method{getRootPath}{Model}(this, ...)
+}
 
 \arguments{
  \item{...}{Not used.}

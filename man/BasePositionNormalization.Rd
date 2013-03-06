@@ -48,7 +48,9 @@ extends \emph{\link[aroma.affymetrix]{LinearModelProbeSequenceNormalization}}\cr
   A, C, G, and T:s in the probe sequences.
  }
 
- \usage{BasePositionNormalization(..., model=c("smooth.spline"), df=5)}
+ \usage{
+BasePositionNormalization(..., model=c("smooth.spline"), df=5)
+}
 
  \arguments{
    \item{...}{Arguments passed to the constructor of
@@ -85,7 +87,7 @@ as.character, getAsteriskTags, getExpectedOutputFiles, getExpectedOutputFullname
 getParameters, getParametersAsString, getParameterSets
 
  \bold{Methods inherited from Object}:\cr
-asThis, $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save
+$, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save, asThis
 
 
  }

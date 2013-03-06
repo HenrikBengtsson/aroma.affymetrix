@@ -9,9 +9,7 @@
 \name{process.ReseqCrosstalkCalibration}
 \alias{process.ReseqCrosstalkCalibration}
 \alias{ReseqCrosstalkCalibration.process}
-\alias{process.ReseqCrosstalkCalibration}
 \alias{process,ReseqCrosstalkCalibration-method}
-
 
 \title{Calibrates the data set}
 
@@ -19,7 +17,9 @@
  Calibrates the data set.
 }
 
-\usage{\method{process}{ReseqCrosstalkCalibration}(this, ..., force=FALSE, verbose=FALSE)}
+\usage{
+\method{process}{ReseqCrosstalkCalibration}(this, ..., force=FALSE, verbose=FALSE)
+}
 
 \arguments{
   \item{...}{Not used.}

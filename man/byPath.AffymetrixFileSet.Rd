@@ -6,12 +6,11 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{byPath.AffymetrixFileSet}
+\name{AffymetrixFileSet$byPath}
+\alias{AffymetrixFileSet$byPath}
 \alias{byPath.AffymetrixFileSet}
 \alias{AffymetrixFileSet.byPath}
-\alias{byPath.AffymetrixFileSet}
 \alias{byPath,AffymetrixFileSet-method}
-
 
 \title{Defines an AffymetrixFileSet object by searching for Affymetrix files}
 
@@ -19,8 +18,13 @@
   Defines an AffymetrixFileSet object by searching for Affymetrix files.
 }
 
-\synopsis{byPath.AffymetrixFileSet(static, ..., fileClass="AffymetrixFile")}
-\usage{AffymetrixFileSet$byPath(..., fileClass="AffymetrixFile")}
+\usage{
+## Static method (use this):
+## AffymetrixFileSet$byPath(..., fileClass="AffymetrixFile")
+
+## Don't use the below:
+\method{byPath}{AffymetrixFileSet}(static, ..., fileClass="AffymetrixFile")
+}
 
 \arguments{
  \item{...}{Additional arguments passed to the constructor of the static

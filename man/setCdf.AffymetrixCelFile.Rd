@@ -9,9 +9,7 @@
 \name{setCdf.AffymetrixCelFile}
 \alias{setCdf.AffymetrixCelFile}
 \alias{AffymetrixCelFile.setCdf}
-\alias{setCdf.AffymetrixCelFile}
 \alias{setCdf,AffymetrixCelFile-method}
-
 
 \title{Sets the CDF structure for this CEL file}
 
@@ -19,7 +17,9 @@
  Sets the CDF structure for this CEL file.
 }
 
-\usage{\method{setCdf}{AffymetrixCelFile}(this, cdf, ..., .checkArgs=TRUE)}
+\usage{
+\method{setCdf}{AffymetrixCelFile}(this, cdf, ..., .checkArgs=TRUE)
+}
 
 \arguments{
   \item{cdf}{An \code{\link{AffymetrixCdfFile}} object.}

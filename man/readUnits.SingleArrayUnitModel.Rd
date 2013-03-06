@@ -9,9 +9,7 @@
 \name{readUnits.SingleArrayUnitModel}
 \alias{readUnits.SingleArrayUnitModel}
 \alias{SingleArrayUnitModel.readUnits}
-\alias{readUnits.SingleArrayUnitModel}
 \alias{readUnits,SingleArrayUnitModel-method}
-
 
 \title{Reads data unit by unit}
 
@@ -20,7 +18,9 @@
  specially structured for this PLM.
 }
 
-\usage{\method{readUnits}{SingleArrayUnitModel}(this, array, units=NULL, ..., verbose=FALSE)}
+\usage{
+\method{readUnits}{SingleArrayUnitModel}(this, array, units=NULL, ..., verbose=FALSE)
+}
 
 \arguments{
   \item{units}{The units to be read. If \code{\link[base]{NULL}}, all units are read.}

@@ -9,9 +9,7 @@
 \name{readRawData.AffymetrixCelFile}
 \alias{readRawData.AffymetrixCelFile}
 \alias{AffymetrixCelFile.readRawData}
-\alias{readRawData.AffymetrixCelFile}
 \alias{readRawData,AffymetrixCelFile-method}
-
 \alias{AffymetrixCelFile.getData}
 \alias{getData.AffymetrixCelFile}
 \alias{getData,AffymetrixCelFile-method}
@@ -23,7 +21,9 @@
  Gets all or a subset of the fields in a CEL file for all or a subset of the cells.
 }
 
-\usage{\method{readRawData}{AffymetrixCelFile}(this, indices=NULL, fields=c("xy", "intensities", "stdvs", "pixels"), ..., drop=FALSE, verbose=FALSE)}
+\usage{
+\method{readRawData}{AffymetrixCelFile}(this, indices=NULL, fields=c("xy", "intensities", "stdvs", "pixels"), ..., drop=FALSE, verbose=FALSE)
+}
 
 \arguments{
   \item{indices}{A \code{\link[base]{numeric}} \code{\link[base]{vector}} of cell indices.  If \code{\link[base]{NULL}}, all cells

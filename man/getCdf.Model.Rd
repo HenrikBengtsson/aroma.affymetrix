@@ -9,9 +9,7 @@
 \name{getCdf.Model}
 \alias{getCdf.Model}
 \alias{Model.getCdf}
-\alias{getCdf.Model}
 \alias{getCdf,Model-method}
-
 
 \title{Gets the CDF structure for this model}
 
@@ -19,7 +17,9 @@
  Gets the CDF structure for this model.
 }
 
-\usage{\method{getCdf}{Model}(this, ...)}
+\usage{
+\method{getCdf}{Model}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}

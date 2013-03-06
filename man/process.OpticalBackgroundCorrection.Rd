@@ -9,9 +9,7 @@
 \name{process.OpticalBackgroundCorrection}
 \alias{process.OpticalBackgroundCorrection}
 \alias{OpticalBackgroundCorrection.process}
-\alias{process.OpticalBackgroundCorrection}
 \alias{process,OpticalBackgroundCorrection-method}
-
 
 \title{Performs background correction}
 
@@ -19,7 +17,9 @@
  Performs background correction.
 }
 
-\usage{\method{process}{OpticalBackgroundCorrection}(this, ..., force=FALSE, verbose=FALSE)}
+\usage{
+\method{process}{OpticalBackgroundCorrection}(this, ..., force=FALSE, verbose=FALSE)
+}
 
 \arguments{
   \item{...}{Not used.}

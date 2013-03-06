@@ -33,7 +33,9 @@ extends \link[R.oo]{Interface}\cr
   \code{\link{ProbeLevelModel}}s specific to SNP arrays.
  }
 
- \usage{SnpPlm(...)}
+ \usage{
+SnpPlm(...)
+}
 
  \arguments{
    \item{...}{Not used.}

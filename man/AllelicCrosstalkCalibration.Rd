@@ -44,7 +44,9 @@ extends \emph{\link[aroma.affymetrix]{ProbeLevelTransform}}\cr
   affect the model fitting and are unaffected.
  }
 
- \usage{AllelicCrosstalkCalibration(dataSet=NULL, ..., model=c("asis", "auto", "CRMA", "CRMAv2"), rescaleBy=c("auto", "groups", "all", "none"), targetAvg=c(2200, 2200), subsetToAvg="-XY", mergeShifts=TRUE, B=1, flavor=c("sfit", "expectile"), alpha=c(0.1, 0.075, 0.05, 0.03, 0.01), q=2, Q=98, lambda=2, pairBy=c("CDF", "sequence"))}
+ \usage{
+AllelicCrosstalkCalibration(dataSet=NULL, ..., model=c("asis", "auto", "CRMA", "CRMAv2"), rescaleBy=c("auto", "groups", "all", "none"), targetAvg=c(2200, 2200), subsetToAvg="-XY", mergeShifts=TRUE, B=1, flavor=c("sfit", "expectile"), alpha=c(0.1, 0.075, 0.05, 0.03, 0.01), q=2, Q=98, lambda=2, pairBy=c("CDF", "sequence"))
+}
 
  \arguments{
    \item{dataSet}{An \code{\link{AffymetrixCelSet}}.}
@@ -125,7 +127,7 @@ as.character, getAsteriskTags, getExpectedOutputFiles, getExpectedOutputFullname
 getParameters, getParametersAsString, getParameterSets
 
  \bold{Methods inherited from Object}:\cr
-asThis, $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save
+$, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save, asThis
 
 
  }

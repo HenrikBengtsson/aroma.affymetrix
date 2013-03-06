@@ -10,9 +10,7 @@
 \name{extractAffyBatch.AffymetrixCelSet}
 \alias{extractAffyBatch.AffymetrixCelSet}
 \alias{AffymetrixCelSet.extractAffyBatch}
-\alias{extractAffyBatch.AffymetrixCelSet}
 \alias{extractAffyBatch,AffymetrixCelSet-method}
-
 
 \title{Extracts an in-memory AffyBatch object from the CEL set}
 
@@ -22,7 +20,9 @@
  be reflected in the original CEL set.
 }
 
-\usage{\method{extractAffyBatch}{AffymetrixCelSet}(this, ..., verbose=FALSE)}
+\usage{
+\method{extractAffyBatch}{AffymetrixCelSet}(this, ..., verbose=FALSE)
+}
 
 \arguments{
   \item{...}{Argument passed to \code{ReadAffy()}

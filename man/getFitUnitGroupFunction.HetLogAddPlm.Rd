@@ -9,9 +9,7 @@
 \name{getFitUnitGroupFunction.HetLogAddPlm}
 \alias{getFitUnitGroupFunction.HetLogAddPlm}
 \alias{HetLogAddPlm.getFitUnitGroupFunction}
-\alias{getFitUnitGroupFunction.HetLogAddPlm}
 \alias{getFitUnitGroupFunction,HetLogAddPlm-method}
-
 
 \title{Gets the low-level function that fits the PLM}
 
@@ -19,7 +17,9 @@
  Gets the low-level function that fits the PLM.
 }
 
-\usage{\method{getFitUnitGroupFunction}{HetLogAddPlm}(this, ..., verbose=FALSE)}
+\usage{
+\method{getFitUnitGroupFunction}{HetLogAddPlm}(this, ..., verbose=FALSE)
+}
 
 \arguments{
   \item{...}{Not used.}

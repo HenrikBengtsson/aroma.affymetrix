@@ -7,12 +7,11 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-\name{importFromDChip.CnChipEffectSet}
+\name{CnChipEffectSet$importFromDChip}
+\alias{CnChipEffectSet$importFromDChip}
 \alias{importFromDChip.CnChipEffectSet}
 \alias{CnChipEffectSet.importFromDChip}
-\alias{importFromDChip.CnChipEffectSet}
 \alias{importFromDChip,CnChipEffectSet-method}
-
 
 \title{Imports copy-number estimates from a dChip result file}
 
@@ -22,8 +21,13 @@
  if dChip fitted the PLM with allele A and allele B combined.
 }
 
-\synopsis{importFromDChip.CnChipEffectSet(static, filename, path=NULL, combineAlleles=TRUE, cdf, ..., skip=TRUE, verbose=FALSE)}
-\usage{CnChipEffectSet$importFromDChip(filename, path=NULL, combineAlleles=TRUE, cdf, ..., skip=TRUE, verbose=FALSE)}
+\usage{
+## Static method (use this):
+## CnChipEffectSet$importFromDChip(filename, path=NULL, combineAlleles=TRUE, cdf, ..., skip=TRUE, verbose=FALSE)
+
+## Don't use the below:
+\method{importFromDChip}{CnChipEffectSet}(static, filename, path=NULL, combineAlleles=TRUE, cdf, ..., skip=TRUE, verbose=FALSE)
+}
 
 \arguments{
   \item{filename}{The filename of the dChip result file.}

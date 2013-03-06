@@ -9,9 +9,7 @@
 \name{getUnitGroupCellMap.ChipEffectFile}
 \alias{getUnitGroupCellMap.ChipEffectFile}
 \alias{ChipEffectFile.getUnitGroupCellMap}
-\alias{getUnitGroupCellMap.ChipEffectFile}
 \alias{getUnitGroupCellMap,ChipEffectFile-method}
-
 \alias{ChipEffectFile.getCellMap}
 \alias{getCellMap.ChipEffectFile}
 \alias{getCellMap,ChipEffectFile-method}
@@ -23,7 +21,9 @@
  Gets a (unit, group, cell) index map.
 }
 
-\usage{\method{getUnitGroupCellMap}{ChipEffectFile}(this, units=NULL, force=FALSE, ..., verbose=FALSE)}
+\usage{
+\method{getUnitGroupCellMap}{ChipEffectFile}(this, units=NULL, force=FALSE, ..., verbose=FALSE)
+}
 
 \arguments{
   \item{units}{The units for which the map should be returned.

@@ -9,9 +9,7 @@
 \name{getCellIndices.SnpChipEffectFile}
 \alias{getCellIndices.SnpChipEffectFile}
 \alias{SnpChipEffectFile.getCellIndices}
-\alias{getCellIndices.SnpChipEffectFile}
 \alias{getCellIndices,SnpChipEffectFile-method}
-
 
 \title{Retrieves tree list of cell indices for a set of units}
 
@@ -19,7 +17,9 @@
   Retrieves tree list of cell indices for a set of units.
 }
 
-\usage{\method{getCellIndices}{SnpChipEffectFile}(this, units=NULL, ..., unlist=FALSE, force=FALSE, .cache=TRUE, verbose=FALSE)}
+\usage{
+\method{getCellIndices}{SnpChipEffectFile}(this, units=NULL, ..., unlist=FALSE, force=FALSE, .cache=TRUE, verbose=FALSE)
+}
 
 \arguments{
  \item{units}{Unit indices to be retrieved.

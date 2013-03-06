@@ -9,9 +9,7 @@
 \name{getHeader.CnagCfhFile}
 \alias{getHeader.CnagCfhFile}
 \alias{CnagCfhFile.getHeader}
-\alias{getHeader.CnagCfhFile}
 \alias{getHeader,CnagCfhFile-method}
-
 
 \title{Gets the header of the CEL file}
 
@@ -19,7 +17,9 @@
  Gets the header of the CEL file.
 }
 
-\usage{\method{getHeader}{CnagCfhFile}(this, ...)}
+\usage{
+\method{getHeader}{CnagCfhFile}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}

@@ -9,9 +9,7 @@
 \name{setRestructor.AffymetrixCdfFile}
 \alias{setRestructor.AffymetrixCdfFile}
 \alias{AffymetrixCdfFile.setRestructor}
-\alias{setRestructor.AffymetrixCdfFile}
 \alias{setRestructor,AffymetrixCdfFile-method}
-
 
 \title{Specifies a function through which}
 
@@ -19,7 +17,9 @@
  Specifies a function through which of all or a subset of the units.
 }
 
-\usage{\method{setRestructor}{AffymetrixCdfFile}(this, fcn=NULL, ...)}
+\usage{
+\method{setRestructor}{AffymetrixCdfFile}(this, fcn=NULL, ...)
+}
 
 \arguments{
   \item{units}{The units of interest. If \code{\link[base]{NULL}}, all units are considered.}

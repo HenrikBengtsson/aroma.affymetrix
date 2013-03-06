@@ -35,7 +35,9 @@ extends \link[aroma.core]{ParametersInterface}\cr
   to a data set.
  }
 
- \usage{Model(dataSet=NULL, tags="*", ...)}
+ \usage{
+Model(dataSet=NULL, tags="*", ...)
+}
 
  \arguments{
    \item{dataSet}{The data set to which this model should be fitted.}
@@ -62,7 +64,7 @@ extends \link[aroma.core]{ParametersInterface}\cr
 getParameters, getParametersAsString, getParameterSets
 
  \bold{Methods inherited from Object}:\cr
-asThis, $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save
+$, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save, asThis
 
 
  }

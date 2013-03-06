@@ -10,9 +10,7 @@
 \name{fit.SmoothMultiarrayModel}
 \alias{fit.SmoothMultiarrayModel}
 \alias{SmoothMultiarrayModel.fit}
-\alias{fit.SmoothMultiarrayModel}
 \alias{fit,SmoothMultiarrayModel-method}
-
 
 \title{Fits the model for one chromosome across samples}
 
@@ -20,7 +18,9 @@
  Fits the model for one chromosome across samples.
 }
 
-\usage{\method{fit}{SmoothMultiarrayModel}(this, chromosome, force=FALSE, ..., verbose=FALSE)}
+\usage{
+\method{fit}{SmoothMultiarrayModel}(this, chromosome, force=FALSE, ..., verbose=FALSE)
+}
 
 \arguments{
   \item{data}{A \code{\link[base]{data.frame}} with columns \code{M} (log-ratio) and

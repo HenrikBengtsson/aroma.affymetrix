@@ -9,9 +9,7 @@
 \name{getPositions.GenomeInformation}
 \alias{getPositions.GenomeInformation}
 \alias{GenomeInformation.getPositions}
-\alias{getPositions.GenomeInformation}
 \alias{getPositions,GenomeInformation-method}
-
 
 \title{Gets the physical positions for a set of units}
 
@@ -19,7 +17,9 @@
   Gets the physical positions for a set of units.
 }
 
-\usage{\method{getPositions}{GenomeInformation}(this, ..., na.rm=FALSE)}
+\usage{
+\method{getPositions}{GenomeInformation}(this, ..., na.rm=FALSE)
+}
 
 \arguments{
  \item{...}{Arguments passed to \code{\link[aroma.affymetrix:getData.GenomeInformation]{*getData}()}.}

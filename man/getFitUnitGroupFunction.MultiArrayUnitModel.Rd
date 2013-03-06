@@ -6,12 +6,11 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{getFitUnitGroupFunction.MultiArrayUnitModel}
+\name{MultiArrayUnitModel$getFitUnitGroupFunction}
+\alias{MultiArrayUnitModel$getFitUnitGroupFunction}
 \alias{getFitUnitGroupFunction.MultiArrayUnitModel}
 \alias{MultiArrayUnitModel.getFitUnitGroupFunction}
-\alias{getFitUnitGroupFunction.MultiArrayUnitModel}
 \alias{getFitUnitGroupFunction,MultiArrayUnitModel-method}
-
 
 \title{Static method to get the low-level function that fits the PLM}
 
@@ -21,8 +20,13 @@
  a \code{\link[base]{function}} that accepts an IxK \code{\link[base]{matrix}}.
 }
 
-\synopsis{getFitUnitGroupFunction.MultiArrayUnitModel(...)}
-\usage{MultiArrayUnitModel$getFitUnitGroupFunction()}
+\usage{
+## Static method (use this):
+## MultiArrayUnitModel$getFitUnitGroupFunction()
+
+## Don't use the below:
+\method{getFitUnitGroupFunction}{MultiArrayUnitModel}(...)
+}
 
 \arguments{
   \item{...}{Not used.}

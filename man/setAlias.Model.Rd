@@ -9,9 +9,7 @@
 \name{setAlias.Model}
 \alias{setAlias.Model}
 \alias{Model.setAlias}
-\alias{setAlias.Model}
 \alias{setAlias,Model-method}
-
 
 \title{Sets the name alias for the model}
 
@@ -19,7 +17,9 @@
  Sets the name alias for the model, if set.
 }
 
-\usage{\method{setAlias}{Model}(this, alias=NULL, ...)}
+\usage{
+\method{setAlias}{Model}(this, alias=NULL, ...)
+}
 
 \arguments{
  \item{alias}{A \code{\link[base]{character}} string, or \code{\link[base]{NULL}}.}

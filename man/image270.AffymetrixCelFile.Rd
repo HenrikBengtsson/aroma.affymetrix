@@ -9,9 +9,7 @@
 \name{image270.AffymetrixCelFile}
 \alias{image270.AffymetrixCelFile}
 \alias{AffymetrixCelFile.image270}
-\alias{image270.AffymetrixCelFile}
 \alias{image270,AffymetrixCelFile-method}
-
 
 \title{Displays all or a subset of the data spatially}
 
@@ -19,7 +17,9 @@
  Displays all or a subset of the data spatially.
 }
 
-\usage{\method{image270}{AffymetrixCelFile}(this, xrange=c(0, Inf), yrange=c(0, Inf), takeLog=TRUE, interleaved=FALSE, ..., field=c("intensities", "stdvs", "pixels"), col=gray.colors(256), main=getName(this))}
+\usage{
+\method{image270}{AffymetrixCelFile}(this, xrange=c(0, Inf), yrange=c(0, Inf), takeLog=TRUE, interleaved=FALSE, ..., field=c("intensities", "stdvs", "pixels"), col=gray.colors(256), main=getName(this))
+}
 
 \arguments{
   \item{xrange}{A \code{\link[base]{numeric}} \code{\link[base]{vector}} of length two giving the left and right

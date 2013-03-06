@@ -9,9 +9,7 @@
 \name{findUnitsTodo.ProbeLevelModel}
 \alias{findUnitsTodo.ProbeLevelModel}
 \alias{ProbeLevelModel.findUnitsTodo}
-\alias{findUnitsTodo.ProbeLevelModel}
 \alias{findUnitsTodo,ProbeLevelModel-method}
-
 
 \title{Identifies non-fitted units}
 
@@ -19,7 +17,9 @@
  Identifies non-fitted units.
 }
 
-\usage{\method{findUnitsTodo}{ProbeLevelModel}(this, verbose=FALSE, ...)}
+\usage{
+\method{findUnitsTodo}{ProbeLevelModel}(this, verbose=FALSE, ...)
+}
 
 \arguments{
   \item{verbose}{A \code{\link[base]{logical}} or a \code{\link[R.utils]{Verbose}}.}

@@ -10,9 +10,7 @@
  \name{createExonByTranscriptCdf.AffymetrixCdfFile}
 \alias{createExonByTranscriptCdf.AffymetrixCdfFile}
 \alias{AffymetrixCdfFile.createExonByTranscriptCdf}
-\alias{createExonByTranscriptCdf.AffymetrixCdfFile}
 \alias{createExonByTranscriptCdf,AffymetrixCdfFile-method}
-
 
  \title{Creates an exon-by-transcript CDF}
 
@@ -21,7 +19,9 @@
   and transcript-exon mapping of a NetAffx probeset annotation data file.
  }
 
- \usage{\method{createExonByTranscriptCdf}{AffymetrixCdfFile}(cdf, csv, tags=c("*"), path=getPath(cdf), type=c("all", "core", "extended", "full", "main", "control", "cds"), subsetBy=NULL, within=NULL, ..., overwrite=FALSE, verbose=FALSE)}
+ \usage{
+\method{createExonByTranscriptCdf}{AffymetrixCdfFile}(cdf, csv, tags=c("*"), path=getPath(cdf), type=c("all", "core", "extended", "full", "main", "control", "cds"), subsetBy=NULL, within=NULL, ..., overwrite=FALSE, verbose=FALSE)
+}
 
  \arguments{
   \item{cdf}{An \code{\link[aroma.affymetrix]{AffymetrixCdfFile}} specifying

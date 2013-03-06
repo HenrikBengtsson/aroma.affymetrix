@@ -9,9 +9,7 @@
 \name{getUnitIndices.GenomeInformation}
 \alias{getUnitIndices.GenomeInformation}
 \alias{GenomeInformation.getUnitIndices}
-\alias{getUnitIndices.GenomeInformation}
 \alias{getUnitIndices,GenomeInformation-method}
-
 
 \title{Gets unit indices ordered along the chromosome}
 
@@ -19,7 +17,9 @@
   Gets unit indices ordered along the chromosome.
 }
 
-\usage{\method{getUnitIndices}{GenomeInformation}(this, ..., na.rm=TRUE)}
+\usage{
+\method{getUnitIndices}{GenomeInformation}(this, ..., na.rm=TRUE)
+}
 
 \arguments{
  \item{...}{Arguments passed to \code{\link[aroma.affymetrix:getData.GenomeInformation]{*getData}()}.}

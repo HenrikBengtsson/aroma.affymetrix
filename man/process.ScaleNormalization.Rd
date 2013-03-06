@@ -9,9 +9,7 @@
 \name{process.ScaleNormalization}
 \alias{process.ScaleNormalization}
 \alias{ScaleNormalization.process}
-\alias{process.ScaleNormalization}
 \alias{process,ScaleNormalization-method}
-
 
 \title{Normalizes the data set}
 
@@ -19,7 +17,9 @@
  Normalizes the data set.
 }
 
-\usage{\method{process}{ScaleNormalization}(this, ..., skip=FALSE, force=FALSE, verbose=FALSE)}
+\usage{
+\method{process}{ScaleNormalization}(this, ..., skip=FALSE, force=FALSE, verbose=FALSE)
+}
 
 \arguments{
   \item{...}{Not used.}

@@ -9,9 +9,7 @@
 \name{process.AllelicCrosstalkCalibration}
 \alias{process.AllelicCrosstalkCalibration}
 \alias{AllelicCrosstalkCalibration.process}
-\alias{process.AllelicCrosstalkCalibration}
 \alias{process,AllelicCrosstalkCalibration-method}
-
 
 \title{Calibrates the data set}
 
@@ -19,7 +17,9 @@
  Calibrates the data set.
 }
 
-\usage{\method{process}{AllelicCrosstalkCalibration}(this, ..., force=FALSE, verbose=FALSE)}
+\usage{
+\method{process}{AllelicCrosstalkCalibration}(this, ..., force=FALSE, verbose=FALSE)
+}
 
 \arguments{
   \item{...}{Not used.}

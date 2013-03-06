@@ -9,9 +9,7 @@
 \name{process.BackgroundCorrection}
 \alias{process.BackgroundCorrection}
 \alias{BackgroundCorrection.process}
-\alias{process.BackgroundCorrection}
 \alias{process,BackgroundCorrection-method}
-
 
 \title{Processes the data set}
 
@@ -19,7 +17,9 @@
  Processes the data set.
 }
 
-\usage{\method{process}{BackgroundCorrection}(...)}
+\usage{
+\method{process}{BackgroundCorrection}(...)
+}
 
 \arguments{
   \item{...}{Not used.}

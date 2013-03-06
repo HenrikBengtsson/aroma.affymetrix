@@ -9,9 +9,7 @@
 \name{getChipType.AffymetrixCelSet}
 \alias{getChipType.AffymetrixCelSet}
 \alias{AffymetrixCelSet.getChipType}
-\alias{getChipType.AffymetrixCelSet}
 \alias{getChipType,AffymetrixCelSet-method}
-
 
 \title{Gets the chip type for this CEL set}
 
@@ -20,7 +18,9 @@
  The chip type is inferred from the current CDF.
 }
 
-\usage{\method{getChipType}{AffymetrixCelSet}(this, ...)}
+\usage{
+\method{getChipType}{AffymetrixCelSet}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}

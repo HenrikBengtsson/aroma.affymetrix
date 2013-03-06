@@ -9,9 +9,7 @@
 \name{as.character.CnagCfhSet}
 \alias{as.character.CnagCfhSet}
 \alias{CnagCfhSet.as.character}
-\alias{as.character.CnagCfhSet}
 \alias{as.character,CnagCfhSet-method}
-
 
 \title{Returns a short string describing the CNAG CFH set}
 
@@ -19,7 +17,9 @@
  Returns a short string describing the CNAG CFH set.
 }
 
-\usage{\method{as.character}{CnagCfhSet}(x, ...)}
+\usage{
+\method{as.character}{CnagCfhSet}(x, ...)
+}
 
 \arguments{
   \item{...}{Not used.}

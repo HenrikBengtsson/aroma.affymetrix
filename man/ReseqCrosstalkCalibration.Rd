@@ -42,7 +42,9 @@ extends \emph{\link[aroma.affymetrix]{ProbeLevelTransform}}\cr
   (A, C, G, T) are orthogonal.
  }
 
- \usage{ReseqCrosstalkCalibration(dataSet=NULL, ..., targetAvg=2200, subsetToAvg=NULL, mergeGroups=FALSE, flavor=c("sfit", "expectile"), alpha=c(0.1, 0.075, 0.05, 0.03, 0.01), q=2, Q=98)}
+ \usage{
+ReseqCrosstalkCalibration(dataSet=NULL, ..., targetAvg=2200, subsetToAvg=NULL, mergeGroups=FALSE, flavor=c("sfit", "expectile"), alpha=c(0.1, 0.075, 0.05, 0.03, 0.01), q=2, Q=98)
+}
 
  \arguments{
    \item{dataSet}{An \code{\link{AffymetrixCelSet}}.}
@@ -80,7 +82,7 @@ as.character, getAsteriskTags, getExpectedOutputFiles, getExpectedOutputFullname
 getParameters, getParametersAsString, getParameterSets
 
  \bold{Methods inherited from Object}:\cr
-asThis, $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save
+$, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save, asThis
 
 
  }

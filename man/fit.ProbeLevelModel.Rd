@@ -10,9 +10,7 @@
  \name{fit.ProbeLevelModel}
 \alias{fit.ProbeLevelModel}
 \alias{ProbeLevelModel.fit}
-\alias{fit.ProbeLevelModel}
 \alias{fit,ProbeLevelModel-method}
-
 
  \title{Estimates the model parameters}
 
@@ -20,7 +18,9 @@
   Estimates the model parameters for all or a subset of the units.
  }
 
- \usage{\method{fit}{ProbeLevelModel}(this, units="remaining", ..., force=FALSE, ram=NULL, verbose=FALSE)}
+ \usage{
+\method{fit}{ProbeLevelModel}(this, units="remaining", ..., force=FALSE, ram=NULL, verbose=FALSE)
+}
 
  \arguments{
    \item{units}{The units to be fitted.

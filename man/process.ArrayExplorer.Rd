@@ -9,9 +9,7 @@
 \name{process.ArrayExplorer}
 \alias{process.ArrayExplorer}
 \alias{ArrayExplorer.process}
-\alias{process.ArrayExplorer}
 \alias{process,ArrayExplorer-method}
-
 
 \title{Generates image files, scripts and dynamic pages for the explorer}
 
@@ -19,7 +17,9 @@
  Generates image files, scripts and dynamic pages for the explorer.
 }
 
-\usage{\method{process}{ArrayExplorer}(this, arrays=NULL, ..., verbose=FALSE)}
+\usage{
+\method{process}{ArrayExplorer}(this, arrays=NULL, ..., verbose=FALSE)
+}
 
 \arguments{
   \item{arrays}{An optional \code{\link[base]{vector}} of arrays to be processed.

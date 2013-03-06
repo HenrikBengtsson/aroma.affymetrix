@@ -9,9 +9,7 @@
 \name{process.MatNormalization}
 \alias{process.MatNormalization}
 \alias{MatNormalization.process}
-\alias{process.MatNormalization}
 \alias{process,MatNormalization-method}
-
 
 \title{Normalizes the data set}
 
@@ -19,7 +17,9 @@
  Normalizes the data set.
 }
 
-\usage{\method{process}{MatNormalization}(this, ..., ram=NULL, force=FALSE, verbose=FALSE)}
+\usage{
+\method{process}{MatNormalization}(this, ..., ram=NULL, force=FALSE, verbose=FALSE)
+}
 
 \arguments{
   \item{...}{Not used.}

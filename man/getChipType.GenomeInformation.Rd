@@ -10,9 +10,7 @@
 \name{getChipType.GenomeInformation}
 \alias{getChipType.GenomeInformation}
 \alias{GenomeInformation.getChipType}
-\alias{getChipType.GenomeInformation}
 \alias{getChipType,GenomeInformation-method}
-
 
 \title{Gets the chip type of this genome information set}
 
@@ -20,7 +18,9 @@
   Gets the chip type of this genome information set.
 }
 
-\usage{\method{getChipType}{GenomeInformation}(this, ...)}
+\usage{
+\method{getChipType}{GenomeInformation}(this, ...)
+}
 
 \arguments{
  \item{...}{Not used.}

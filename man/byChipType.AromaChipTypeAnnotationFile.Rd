@@ -6,12 +6,11 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{byChipType.AromaChipTypeAnnotationFile}
+\name{AromaChipTypeAnnotationFile$byChipType}
+\alias{AromaChipTypeAnnotationFile$byChipType}
 \alias{byChipType.AromaChipTypeAnnotationFile}
 \alias{AromaChipTypeAnnotationFile.byChipType}
-\alias{byChipType.AromaChipTypeAnnotationFile}
 \alias{byChipType,AromaChipTypeAnnotationFile-method}
-
 \alias{AromaChipTypeAnnotationFile.byName}
 \alias{byName.AromaChipTypeAnnotationFile}
 \alias{byName,AromaChipTypeAnnotationFile-method}
@@ -23,8 +22,13 @@
  Defines an AromaChipTypeAnnotationFile object by chip type.
 }
 
-\synopsis{byChipType.AromaChipTypeAnnotationFile(static, chipType, tags=NULL, ..., verbose=FALSE)}
-\usage{AromaChipTypeAnnotationFile$byChipType(chipType, tags=NULL, ..., verbose=FALSE)}
+\usage{
+## Static method (use this):
+## AromaChipTypeAnnotationFile$byChipType(chipType, tags=NULL, ..., verbose=FALSE)
+
+## Don't use the below:
+\method{byChipType}{AromaChipTypeAnnotationFile}(static, chipType, tags=NULL, ..., verbose=FALSE)
+}
 
 \arguments{
  \item{chipType}{A \code{\link[base]{character}} string.}

@@ -10,9 +10,7 @@
 \name{getOutputDataSet.Transform}
 \alias{getOutputDataSet.Transform}
 \alias{Transform.getOutputDataSet}
-\alias{getOutputDataSet.Transform}
 \alias{getOutputDataSet,Transform-method}
-
 
 \title{Gets the transformed data set}
 
@@ -20,7 +18,9 @@
  Gets the transformed data set, if processed.
 }
 
-\usage{\method{getOutputDataSet}{Transform}(this, ..., verbose=FALSE)}
+\usage{
+\method{getOutputDataSet}{Transform}(this, ..., verbose=FALSE)
+}
 
 \arguments{
   \item{...}{Not used.}

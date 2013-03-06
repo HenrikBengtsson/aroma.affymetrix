@@ -9,9 +9,7 @@
 \name{getCellIndices.FirmaFile}
 \alias{getCellIndices.FirmaFile}
 \alias{FirmaFile.getCellIndices}
-\alias{getCellIndices.FirmaFile}
 \alias{getCellIndices,FirmaFile-method}
-
 
 \title{Retrieves tree list of cell indices for a set of units}
 
@@ -19,7 +17,9 @@
   Retrieves tree list of cell indices for a set of units from the associated CDF.
 }
 
-\usage{\method{getCellIndices}{FirmaFile}(this, ..., .cache=TRUE)}
+\usage{
+\method{getCellIndices}{FirmaFile}(this, ..., .cache=TRUE)
+}
 
 \arguments{
  \item{...}{Additional arguments passed to \code{getCellIndices()}

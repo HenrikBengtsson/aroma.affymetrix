@@ -9,9 +9,7 @@
 \name{getAlias.Model}
 \alias{getAlias.Model}
 \alias{Model.getAlias}
-\alias{getAlias.Model}
 \alias{getAlias,Model-method}
-
 
 \title{Gets the name alias for the model}
 
@@ -19,7 +17,9 @@
  Gets the name alias for the model, if set.
 }
 
-\usage{\method{getAlias}{Model}(this, ...)}
+\usage{
+\method{getAlias}{Model}(this, ...)
+}
 
 \arguments{
  \item{...}{Not used.}

@@ -37,7 +37,9 @@ extends \emph{\link[aroma.affymetrix]{Model}}\cr
   a model that is applied to each unit separately.
  }
 
- \usage{UnitModel(dataSet=NULL, probeModel=c("pm", "mm", "pm-mm", "min1(pm-mm)", "pm+mm"), shift=0, ...)}
+ \usage{
+UnitModel(dataSet=NULL, probeModel=c("pm", "mm", "pm-mm", "min1(pm-mm)", "pm+mm"), shift=0, ...)
+}
 
  \arguments{
    \item{dataSet}{An \code{\link{AffymetrixCelSet}} to which this model should
@@ -63,7 +65,7 @@ as.character, fit, getAlias, getAsteriskTags, getDataSet, getFullName, getName, 
 getParameters, getParametersAsString, getParameterSets
 
  \bold{Methods inherited from Object}:\cr
-asThis, $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save
+$, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save, asThis
 
 
  }

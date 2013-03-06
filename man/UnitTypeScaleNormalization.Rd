@@ -43,7 +43,9 @@ extends \emph{\link[aroma.affymetrix]{ProbeLevelTransform3}}\cr
   probe signals such that each unit type gets the same average.
  }
 
- \usage{UnitTypeScaleNormalization(..., targetAvg=4400)}
+ \usage{
+UnitTypeScaleNormalization(..., targetAvg=4400)
+}
 
  \arguments{
    \item{...}{Arguments passed to the constructor of
@@ -74,7 +76,7 @@ as.character, getAsteriskTags, getExpectedOutputFiles, getExpectedOutputFullname
 getParameters, getParametersAsString, getParameterSets
 
  \bold{Methods inherited from Object}:\cr
-asThis, $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save
+$, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save, asThis
 
 
  }

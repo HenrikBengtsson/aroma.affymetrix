@@ -32,7 +32,9 @@ extends \emph{\link[aroma.affymetrix]{GenericReporter}}\cr
 
  }
 
- \usage{AffymetrixFileSetReporter(set=NULL, ..., .setClass="AffymetrixFileSet")}
+ \usage{
+AffymetrixFileSetReporter(set=NULL, ..., .setClass="AffymetrixFileSet")
+}
 
  \arguments{
    \item{set}{An \code{\link{AffymetrixFileSet}} object.}
@@ -52,7 +54,7 @@ extends \emph{\link[aroma.affymetrix]{GenericReporter}}\cr
 as.character, getAlias, getAsteriskTags, getFullName, getInputName, getInputTags, getMainPath, getName, getPath, getReportSet, getRootPath, getTags, process, setAlias, setup
 
  \bold{Methods inherited from Object}:\cr
-asThis, $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save
+$, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save, asThis
 
 
  }

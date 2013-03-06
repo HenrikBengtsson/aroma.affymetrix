@@ -32,7 +32,9 @@ extends \emph{\link[aroma.core]{Explorer}}\cr
 
  }
 
- \usage{ArrayExplorer(csTuple=NULL, ...)}
+ \usage{
+ArrayExplorer(csTuple=NULL, ...)
+}
 
  \arguments{
    \item{csTuple}{An \code{\link{AffymetrixCelSet}} object.}
@@ -57,7 +59,7 @@ extends \emph{\link[aroma.core]{Explorer}}\cr
 addIncludes, addIndexFile, as.character, display, getAlias, getArraysOfInput, getAsteriskTags, getFullName, getIncludePath, getMainPath, getName, getNameOfInput, getNames, getParallelSafe, getPath, getReportPathPattern, getRootPath, getSampleLayerPrefix, getSubname, getTags, getTagsOfInput, getTemplatePath, getVersion, nbrOfArrays, process, setAlias, setArrays, setParallelSafe, setReportPathPattern, setSubname, setup, splitByReportPathPattern, updateSetupExplorerFile
 
  \bold{Methods inherited from Object}:\cr
-asThis, $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save
+$, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save, asThis
 
 
  }

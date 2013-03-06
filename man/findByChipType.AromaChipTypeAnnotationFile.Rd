@@ -9,9 +9,7 @@
 \name{findByChipType.AromaChipTypeAnnotationFile}
 \alias{findByChipType.AromaChipTypeAnnotationFile}
 \alias{AromaChipTypeAnnotationFile.findByChipType}
-\alias{findByChipType.AromaChipTypeAnnotationFile}
 \alias{findByChipType,AromaChipTypeAnnotationFile-method}
-
 
 \title{Locates an annotation file by its chip type}
 
@@ -19,7 +17,9 @@
  Locates an annotation file by its chip type.
 }
 
-\usage{\method{findByChipType}{AromaChipTypeAnnotationFile}(...)}
+\usage{
+\method{findByChipType}{AromaChipTypeAnnotationFile}(...)
+}
 
 \arguments{
  \item{chipType}{A \code{\link[base]{character}} string.}

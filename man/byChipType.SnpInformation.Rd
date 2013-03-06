@@ -9,9 +9,7 @@
 \name{byChipType.SnpInformation}
 \alias{byChipType.SnpInformation}
 \alias{SnpInformation.byChipType}
-\alias{byChipType.SnpInformation}
 \alias{byChipType,SnpInformation-method}
-
 
 \title{Static method to define a genome information set by chip type}
 
@@ -19,7 +17,9 @@
   Static method to define a genome information set by chip type.
 }
 
-\usage{\method{byChipType}{SnpInformation}(...)}
+\usage{
+\method{byChipType}{SnpInformation}(...)
+}
 
 \arguments{
  \item{...}{Not used.}

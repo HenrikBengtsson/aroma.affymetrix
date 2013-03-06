@@ -30,7 +30,9 @@ extends \link[R.oo]{Object}\cr
 
  }
 
- \usage{TransformReport(inSet=NULL, outSet=NULL, ...)}
+ \usage{
+TransformReport(inSet=NULL, outSet=NULL, ...)
+}
 
  \arguments{
    \item{inSet}{The input data set as an \code{\link{AffymetrixCelSet}}.}
@@ -61,7 +63,7 @@ extends \link[R.oo]{Object}\cr
 
 
  \bold{Methods inherited from Object}:\cr
-asThis, $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save
+$, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save, asThis
 
 
  }

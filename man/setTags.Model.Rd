@@ -9,9 +9,7 @@
 \name{setTags.Model}
 \alias{setTags.Model}
 \alias{Model.setTags}
-\alias{setTags.Model}
 \alias{setTags,Model-method}
-
 
 \title{Sets the tags to be appended}
 
@@ -19,7 +17,9 @@
  Sets the tags to be appended to the tags of the input data set.
 }
 
-\usage{\method{setTags}{Model}(this, tags=NULL, ...)}
+\usage{
+\method{setTags}{Model}(this, tags=NULL, ...)
+}
 
 \arguments{
  \item{tags}{A \code{\link[base]{character}} \code{\link[base]{vector}} of tags.

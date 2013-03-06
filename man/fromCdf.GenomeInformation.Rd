@@ -6,12 +6,11 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{fromCdf.GenomeInformation}
+\name{GenomeInformation$fromCdf}
+\alias{GenomeInformation$fromCdf}
 \alias{fromCdf.GenomeInformation}
 \alias{GenomeInformation.fromCdf}
-\alias{fromCdf.GenomeInformation}
 \alias{fromCdf,GenomeInformation-method}
-
 
 \title{Static method to define a genome information set from a CDF}
 
@@ -19,8 +18,13 @@
   Static method to define a genome information set from a CDF.
 }
 
-\synopsis{fromCdf.GenomeInformation(static, cdf, ...)}
-\usage{GenomeInformation$fromCdf(cdf, ...)}
+\usage{
+## Static method (use this):
+## GenomeInformation$fromCdf(cdf, ...)
+
+## Don't use the below:
+\method{fromCdf}{GenomeInformation}(static, cdf, ...)
+}
 
 \arguments{
  \item{cdf}{An \code{\link{AffymetrixCdfFile}}.}

@@ -9,9 +9,7 @@
 \name{getCellIndices.WeightsFile}
 \alias{getCellIndices.WeightsFile}
 \alias{WeightsFile.getCellIndices}
-\alias{getCellIndices.WeightsFile}
 \alias{getCellIndices,WeightsFile-method}
-
 
 \title{Retrieves tree list of cell indices for a set of units}
 
@@ -19,7 +17,9 @@
   Retrieves tree list of cell indices for a set of units from the associated CDF.
 }
 
-\usage{\method{getCellIndices}{WeightsFile}(this, ..., .cache=TRUE)}
+\usage{
+\method{getCellIndices}{WeightsFile}(this, ..., .cache=TRUE)
+}
 
 \arguments{
  \item{...}{Additional arguments passed to \code{getCellIndices()}

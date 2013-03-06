@@ -6,12 +6,11 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{fromFile.AffymetrixCelFile}
+\name{AffymetrixCelFile$fromFile}
+\alias{AffymetrixCelFile$fromFile}
 \alias{fromFile.AffymetrixCelFile}
 \alias{AffymetrixCelFile.fromFile}
-\alias{fromFile.AffymetrixCelFile}
 \alias{fromFile,AffymetrixCelFile-method}
-
 
 \title{Defines an AffymetrixCelFile object from a CEL file}
 
@@ -19,8 +18,13 @@
  Defines an AffymetrixCelFile object from a CEL file.
 }
 
-\synopsis{fromFile.AffymetrixCelFile(static, filename, path=NULL, ..., verbose=FALSE, .checkArgs=TRUE)}
-\usage{AffymetrixCelFile$fromFile(filename, path=NULL, ..., verbose=FALSE, .checkArgs=TRUE)}
+\usage{
+## Static method (use this):
+## AffymetrixCelFile$fromFile(filename, path=NULL, ..., verbose=FALSE, .checkArgs=TRUE)
+
+## Don't use the below:
+\method{fromFile}{AffymetrixCelFile}(static, filename, path=NULL, ..., verbose=FALSE, .checkArgs=TRUE)
+}
 
 \arguments{
  \item{filename}{The filename of to the file.}

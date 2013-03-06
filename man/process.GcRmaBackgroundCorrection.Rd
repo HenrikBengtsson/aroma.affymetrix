@@ -9,9 +9,7 @@
 \name{process.GcRmaBackgroundCorrection}
 \alias{process.GcRmaBackgroundCorrection}
 \alias{GcRmaBackgroundCorrection.process}
-\alias{process.GcRmaBackgroundCorrection}
 \alias{process,GcRmaBackgroundCorrection-method}
-
 
 \title{Performs background correction}
 
@@ -19,7 +17,9 @@
  Performs background correction.
 }
 
-\usage{\method{process}{GcRmaBackgroundCorrection}(this, ..., force=FALSE, verbose=FALSE)}
+\usage{
+\method{process}{GcRmaBackgroundCorrection}(this, ..., force=FALSE, verbose=FALSE)
+}
 
 \arguments{
   \item{...}{Not used.}

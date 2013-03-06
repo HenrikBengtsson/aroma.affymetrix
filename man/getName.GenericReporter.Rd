@@ -9,9 +9,7 @@
 \name{getName.GenericReporter}
 \alias{getName.GenericReporter}
 \alias{GenericReporter.getName}
-\alias{getName.GenericReporter}
 \alias{getName,GenericReporter-method}
-
 
 \title{Gets the name of the explorer}
 
@@ -19,7 +17,9 @@
  Gets the name of the explorer.
 }
 
-\usage{\method{getName}{GenericReporter}(this, ...)}
+\usage{
+\method{getName}{GenericReporter}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}

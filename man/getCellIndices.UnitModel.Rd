@@ -9,9 +9,7 @@
 \name{getCellIndices.UnitModel}
 \alias{getCellIndices.UnitModel}
 \alias{UnitModel.getCellIndices}
-\alias{getCellIndices.UnitModel}
 \alias{getCellIndices,UnitModel-method}
-
 
 \title{Gets the cell indices unit by unit}
 
@@ -19,7 +17,9 @@
  Gets the cell indices unit by unit for all or a subset of units (probesets).
 }
 
-\usage{\method{getCellIndices}{UnitModel}(this, ..., verbose=FALSE)}
+\usage{
+\method{getCellIndices}{UnitModel}(this, ..., verbose=FALSE)
+}
 
 \arguments{
   \item{...}{Additional arguments passed to \code{getCellIndices()}

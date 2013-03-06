@@ -9,9 +9,7 @@
 \name{process.FragmentLengthNormalization}
 \alias{process.FragmentLengthNormalization}
 \alias{FragmentLengthNormalization.process}
-\alias{process.FragmentLengthNormalization}
 \alias{process,FragmentLengthNormalization-method}
-
 
 \title{Normalizes the data set}
 
@@ -19,7 +17,9 @@
  Normalizes the data set.
 }
 
-\usage{\method{process}{FragmentLengthNormalization}(this, ..., force=FALSE, verbose=FALSE)}
+\usage{
+\method{process}{FragmentLengthNormalization}(this, ..., force=FALSE, verbose=FALSE)
+}
 
 \arguments{
   \item{...}{Additional arguments passed to

@@ -9,9 +9,7 @@
 \name{process.LimmaBackgroundCorrection}
 \alias{process.LimmaBackgroundCorrection}
 \alias{LimmaBackgroundCorrection.process}
-\alias{process.LimmaBackgroundCorrection}
 \alias{process,LimmaBackgroundCorrection-method}
-
 
 \title{Performs background correction}
 
@@ -19,7 +17,9 @@
  Performs background correction.
 }
 
-\usage{\method{process}{LimmaBackgroundCorrection}(this, ..., force=FALSE, verbose=FALSE)}
+\usage{
+\method{process}{LimmaBackgroundCorrection}(this, ..., force=FALSE, verbose=FALSE)
+}
 
 \arguments{
   \item{...}{Not used.}

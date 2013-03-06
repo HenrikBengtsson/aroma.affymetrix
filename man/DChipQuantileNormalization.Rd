@@ -43,7 +43,9 @@ extends \link[aroma.affymetrix]{QuantileNormalization}\cr
   using smooth-splines.
  }
 
- \usage{DChipQuantileNormalization(..., robust=FALSE)}
+ \usage{
+DChipQuantileNormalization(..., robust=FALSE)
+}
 
  \arguments{
    \item{...}{Arguments passed to the constructor of
@@ -75,7 +77,7 @@ as.character, getAsteriskTags, getExpectedOutputFiles, getExpectedOutputFullname
 getParameters, getParametersAsString, getParameterSets
 
  \bold{Methods inherited from Object}:\cr
-asThis, $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save
+$, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save, asThis
 
 
  }

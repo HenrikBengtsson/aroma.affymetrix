@@ -9,9 +9,7 @@
 \name{getFitUnitGroupFunction.ExonRmaPlm}
 \alias{getFitUnitGroupFunction.ExonRmaPlm}
 \alias{ExonRmaPlm.getFitUnitGroupFunction}
-\alias{getFitUnitGroupFunction.ExonRmaPlm}
 \alias{getFitUnitGroupFunction,ExonRmaPlm-method}
-
 
 \title{Gets the low-level function that fits the Exon PLM}
 
@@ -19,7 +17,9 @@
  Gets the low-level function that fits the Exon PLM.
 }
 
-\usage{\method{getFitUnitGroupFunction}{ExonRmaPlm}(this, ..., verbose=FALSE)}
+\usage{
+\method{getFitUnitGroupFunction}{ExonRmaPlm}(this, ..., verbose=FALSE)
+}
 
 \arguments{
   \item{...}{Not used.}

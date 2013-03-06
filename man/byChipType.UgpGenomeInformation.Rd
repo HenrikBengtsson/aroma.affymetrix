@@ -6,12 +6,11 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{byChipType.UgpGenomeInformation}
+\name{UgpGenomeInformation$byChipType}
+\alias{UgpGenomeInformation$byChipType}
 \alias{byChipType.UgpGenomeInformation}
 \alias{UgpGenomeInformation.byChipType}
-\alias{byChipType.UgpGenomeInformation}
 \alias{byChipType,UgpGenomeInformation-method}
-
 
 \title{Defines a UgpGenomeInformation object by chip type}
 
@@ -19,8 +18,13 @@
  Defines a UgpGenomeInformation object by chip type.
 }
 
-\synopsis{byChipType.UgpGenomeInformation(static, chipType, tags=NULL, ..., nbrOfUnits=NULL, verbose=FALSE)}
-\usage{UgpGenomeInformation$byChipType(chipType, tags=NULL, ..., nbrOfUnits=NULL, verbose=FALSE)}
+\usage{
+## Static method (use this):
+## UgpGenomeInformation$byChipType(chipType, tags=NULL, ..., nbrOfUnits=NULL, verbose=FALSE)
+
+## Don't use the below:
+\method{byChipType}{UgpGenomeInformation}(static, chipType, tags=NULL, ..., nbrOfUnits=NULL, verbose=FALSE)
+}
 
 \arguments{
  \item{chipType}{A \code{\link[base]{character}} string.}

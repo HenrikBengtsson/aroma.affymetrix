@@ -9,9 +9,7 @@
 \name{getChipEffectSet.AlleleSummation}
 \alias{getChipEffectSet.AlleleSummation}
 \alias{AlleleSummation.getChipEffectSet}
-\alias{getChipEffectSet.AlleleSummation}
 \alias{getChipEffectSet,AlleleSummation-method}
-
 
 \title{Gets the set of chip effects for this model}
 
@@ -20,7 +18,9 @@
  There is one chip-effect file per array.
 }
 
-\usage{\method{getChipEffectSet}{AlleleSummation}(this, ..., verbose=FALSE)}
+\usage{
+\method{getChipEffectSet}{AlleleSummation}(this, ..., verbose=FALSE)
+}
 
 \arguments{
   \item{...}{Not used.}

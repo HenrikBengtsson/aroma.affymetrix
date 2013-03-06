@@ -10,9 +10,7 @@
  \name{writeCdf.AffyGenePDInfo}
 \alias{writeCdf.AffyGenePDInfo}
 \alias{AffyGenePDInfo.writeCdf}
-\alias{writeCdf.AffyGenePDInfo}
 \alias{writeCdf,AffyGenePDInfo-method}
-
  \alias{writeCdf.PDInfoList}
  \alias{writeCdf.DBPDInfo}
 
@@ -23,7 +21,9 @@
    Platform Design (PD) packages are also known as "pdInfo" packages.
  }
 
- \usage{\method{writeCdf}{AffyGenePDInfo}(this, tags=c("*"), unitsBy=c("transcript", "exon"), namesBy=c("fsetid", "id"), path=NULL, overwrite=FALSE, verbose=TRUE, ...)}
+ \usage{
+\method{writeCdf}{AffyGenePDInfo}(this, tags=c("*"), unitsBy=c("transcript", "exon"), namesBy=c("fsetid", "id"), path=NULL, overwrite=FALSE, verbose=TRUE, ...)
+}
 
  \arguments{
   \item{tags}{An optional \code{\link[base]{character}} \code{\link[base]{vector}} of tags to be added to the CDF

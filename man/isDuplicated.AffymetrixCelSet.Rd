@@ -9,9 +9,7 @@
 \name{isDuplicated.AffymetrixCelSet}
 \alias{isDuplicated.AffymetrixCelSet}
 \alias{AffymetrixCelSet.isDuplicated}
-\alias{isDuplicated.AffymetrixCelSet}
 \alias{isDuplicated,AffymetrixCelSet-method}
-
 
 \title{Identifies duplicated CEL files}
 
@@ -19,7 +17,9 @@
   Identifies duplicated CEL files by comparing the timestamps in the CEL headers.
 }
 
-\usage{\method{isDuplicated}{AffymetrixCelSet}(this, ..., verbose=FALSE)}
+\usage{
+\method{isDuplicated}{AffymetrixCelSet}(this, ..., verbose=FALSE)
+}
 
 \arguments{
  \item{...}{Not used.}

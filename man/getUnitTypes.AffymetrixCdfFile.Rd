@@ -9,9 +9,7 @@
 \name{getUnitTypes.AffymetrixCdfFile}
 \alias{getUnitTypes.AffymetrixCdfFile}
 \alias{AffymetrixCdfFile.getUnitTypes}
-\alias{getUnitTypes.AffymetrixCdfFile}
 \alias{getUnitTypes,AffymetrixCdfFile-method}
-
 
 \title{Gets the types of a set of units}
 
@@ -19,7 +17,9 @@
  Gets the types of a set of units.
 }
 
-\usage{\method{getUnitTypes}{AffymetrixCdfFile}(this, units=NULL, ..., force=FALSE, .cache=TRUE, verbose=FALSE)}
+\usage{
+\method{getUnitTypes}{AffymetrixCdfFile}(this, units=NULL, ..., force=FALSE, .cache=TRUE, verbose=FALSE)
+}
 
 \arguments{
   \item{units}{The units of interest. If \code{\link[base]{NULL}}, all units are considered.}

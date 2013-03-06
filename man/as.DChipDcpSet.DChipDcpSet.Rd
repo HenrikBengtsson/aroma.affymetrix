@@ -9,9 +9,7 @@
 \name{as.DChipDcpSet.DChipDcpSet}
 \alias{as.DChipDcpSet.DChipDcpSet}
 \alias{DChipDcpSet.as.DChipDcpSet}
-\alias{as.DChipDcpSet.DChipDcpSet}
 \alias{as.DChipDcpSet,DChipDcpSet-method}
-
 \alias{as.DChipDcpSet.list}
 \alias{as.DChipDcpSet.default}
 
@@ -21,7 +19,9 @@
   Coerce an object to an DChipDcpSet object.
 }
 
-\usage{\method{as.DChipDcpSet}{DChipDcpSet}(object, ...)}
+\usage{
+\method{as.DChipDcpSet}{DChipDcpSet}(object, ...)
+}
 
 \arguments{
  \item{...}{Other arguments passed to \code{\link[base]{list.files}}().}

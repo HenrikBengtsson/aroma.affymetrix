@@ -9,9 +9,7 @@
 \name{getData.SnpInformation}
 \alias{getData.SnpInformation}
 \alias{SnpInformation.getData}
-\alias{getData.SnpInformation}
 \alias{getData,SnpInformation-method}
-
 
 \title{Gets all or a subset of the genome information data}
 
@@ -19,7 +17,9 @@
   Gets all or a subset of the genome information data.
 }
 
-\usage{\method{getData}{SnpInformation}(this, units=NULL, fields=c("fragmentLength", "start", "stop"), orderBy=NULL, ..., force=FALSE, verbose=FALSE)}
+\usage{
+\method{getData}{SnpInformation}(this, units=NULL, fields=c("fragmentLength", "start", "stop"), orderBy=NULL, ..., force=FALSE, verbose=FALSE)
+}
 
 \arguments{
  \item{units}{The units for which the data should be returned.}

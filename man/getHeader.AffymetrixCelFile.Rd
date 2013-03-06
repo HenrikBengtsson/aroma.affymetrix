@@ -9,9 +9,7 @@
 \name{getHeader.AffymetrixCelFile}
 \alias{getHeader.AffymetrixCelFile}
 \alias{AffymetrixCelFile.getHeader}
-\alias{getHeader.AffymetrixCelFile}
 \alias{getHeader,AffymetrixCelFile-method}
-
 
 \title{Gets the header of the CEL file}
 
@@ -19,7 +17,9 @@
  Gets the header of the CEL file.
 }
 
-\usage{\method{getHeader}{AffymetrixCelFile}(this, ...)}
+\usage{
+\method{getHeader}{AffymetrixCelFile}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}

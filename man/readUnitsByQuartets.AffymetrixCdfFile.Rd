@@ -9,9 +9,7 @@
 \name{readUnitsByQuartets.AffymetrixCdfFile}
 \alias{readUnitsByQuartets.AffymetrixCdfFile}
 \alias{AffymetrixCdfFile.readUnitsByQuartets}
-\alias{readUnitsByQuartets.AffymetrixCdfFile}
 \alias{readUnitsByQuartets,AffymetrixCdfFile-method}
-
 
 \title{Gets the cell quartets for each base position}
 
@@ -19,7 +17,9 @@
   Gets the cell quartets for each base position.
 }
 
-\usage{\method{readUnitsByQuartets}{AffymetrixCdfFile}(this, units=NULL, ..., verbose=FALSE)}
+\usage{
+\method{readUnitsByQuartets}{AffymetrixCdfFile}(this, units=NULL, ..., verbose=FALSE)
+}
 
 \arguments{
  \item{units}{Subset of units to be queried. If \code{\link[base]{NULL}}, all units are used.}

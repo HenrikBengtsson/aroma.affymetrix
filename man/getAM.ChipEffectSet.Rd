@@ -10,9 +10,7 @@
 \name{getAM.ChipEffectSet}
 \alias{getAM.ChipEffectSet}
 \alias{ChipEffectSet.getAM}
-\alias{getAM.ChipEffectSet}
 \alias{getAM,ChipEffectSet-method}
-
 
 \title{Gets the log-intensities and log-ratios of chip effects of the set relative to a reference chip effect file}
 
@@ -20,7 +18,9 @@
  Gets the log-intensities and log-ratios of chip effects of the set relative to a reference chip effect file.
 }
 
-\usage{\method{getAM}{ChipEffectSet}(this, other, units=NULL, ..., verbose=FALSE)}
+\usage{
+\method{getAM}{ChipEffectSet}(this, other, units=NULL, ..., verbose=FALSE)
+}
 
 \arguments{
   \item{other}{The second \code{\link{ChipEffectFile}} object used as the

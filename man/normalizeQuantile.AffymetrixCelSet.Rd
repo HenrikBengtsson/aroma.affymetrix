@@ -10,9 +10,7 @@
 \name{normalizeQuantile.AffymetrixCelSet}
 \alias{normalizeQuantile.AffymetrixCelSet}
 \alias{AffymetrixCelSet.normalizeQuantile}
-\alias{normalizeQuantile.AffymetrixCelSet}
 \alias{normalizeQuantile,AffymetrixCelSet-method}
-
 
 \title{Normalizes samples to have the same empirical distribution}
 
@@ -20,7 +18,9 @@
  Normalizes samples to have the same empirical distribution.
 }
 
-\usage{\method{normalizeQuantile}{AffymetrixCelSet}(this, path=NULL, name="normQuantile", subsetToUpdate=NULL, typesToUpdate=NULL, xTarget=NULL, subsetToAvg=subsetToUpdate, typesToAvg=typesToUpdate, ..., verbose=FALSE)}
+\usage{
+\method{normalizeQuantile}{AffymetrixCelSet}(this, path=NULL, name="normQuantile", subsetToUpdate=NULL, typesToUpdate=NULL, xTarget=NULL, subsetToAvg=subsetToUpdate, typesToAvg=typesToUpdate, ..., verbose=FALSE)
+}
 
 \arguments{
   \item{path}{The path where to save the normalized data files.

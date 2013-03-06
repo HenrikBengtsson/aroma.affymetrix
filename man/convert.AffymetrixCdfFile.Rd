@@ -9,9 +9,7 @@
 \name{convert.AffymetrixCdfFile}
 \alias{convert.AffymetrixCdfFile}
 \alias{AffymetrixCdfFile.convert}
-\alias{convert.AffymetrixCdfFile}
 \alias{convert,AffymetrixCdfFile-method}
-
 
 \title{Converts a CDF into the same CDF but with another format}
 
@@ -19,7 +17,9 @@
  Converts a CDF into the same CDF but with another format.
 }
 
-\usage{\method{convert}{AffymetrixCdfFile}(this, chipType=getChipType(this), suffix=NULL, sep="-", path="cdf", ..., verbose=FALSE)}
+\usage{
+\method{convert}{AffymetrixCdfFile}(this, chipType=getChipType(this), suffix=NULL, sep="-", path="cdf", ..., verbose=FALSE)
+}
 
 \arguments{
   \item{chipType}{The chip type of the new CDF.}

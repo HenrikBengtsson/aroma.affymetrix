@@ -9,9 +9,7 @@
 \name{as.character.DChipDcpSet}
 \alias{as.character.DChipDcpSet}
 \alias{DChipDcpSet.as.character}
-\alias{as.character.DChipDcpSet}
 \alias{as.character,DChipDcpSet-method}
-
 
 \title{Returns a short string describing the DChip CHP set}
 
@@ -19,7 +17,9 @@
  Returns a short string describing the DChip CHP set.
 }
 
-\usage{\method{as.character}{DChipDcpSet}(x, ...)}
+\usage{
+\method{as.character}{DChipDcpSet}(x, ...)
+}
 
 \arguments{
   \item{...}{Not used.}

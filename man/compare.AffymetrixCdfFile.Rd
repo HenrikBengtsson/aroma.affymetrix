@@ -9,9 +9,7 @@
 \name{compare.AffymetrixCdfFile}
 \alias{compare.AffymetrixCdfFile}
 \alias{AffymetrixCdfFile.compare}
-\alias{compare.AffymetrixCdfFile}
 \alias{compare,AffymetrixCdfFile-method}
-
 
 \title{Checks if two AffymetrixCdfFile objects are equal}
 
@@ -19,7 +17,9 @@
  Checks if two AffymetrixCdfFile objects are equal.
 }
 
-\usage{\method{compare}{AffymetrixCdfFile}(this, other, ...)}
+\usage{
+\method{compare}{AffymetrixCdfFile}(this, other, ...)
+}
 
 \arguments{
   \item{other}{The other \code{\link{AffymetrixCdfFile}} object to be compared to.}

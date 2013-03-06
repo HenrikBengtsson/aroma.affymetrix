@@ -43,7 +43,9 @@ extends \emph{\link[aroma.affymetrix]{UnitModel}}\cr
   Thus, if the signals in one array changes the model has to be refitted.
  }
 
- \usage{MultiArrayUnitModel(..., listOfPriors=NULL)}
+ \usage{
+MultiArrayUnitModel(..., listOfPriors=NULL)
+}
 
  \arguments{
    \item{...}{Arguments passed to \code{\link{UnitModel}}.}
@@ -69,7 +71,7 @@ as.character, fit, getAlias, getAsteriskTags, getDataSet, getFullName, getName, 
 getParameters, getParametersAsString, getParameterSets
 
  \bold{Methods inherited from Object}:\cr
-asThis, $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save
+$, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save, asThis
 
 
  }

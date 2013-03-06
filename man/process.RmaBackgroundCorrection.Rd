@@ -9,9 +9,7 @@
 \name{process.RmaBackgroundCorrection}
 \alias{process.RmaBackgroundCorrection}
 \alias{RmaBackgroundCorrection.process}
-\alias{process.RmaBackgroundCorrection}
 \alias{process,RmaBackgroundCorrection-method}
-
 
 \title{Performs background correction}
 
@@ -19,7 +17,9 @@
  Performs background correction.
 }
 
-\usage{\method{process}{RmaBackgroundCorrection}(this, ..., force=FALSE, verbose=FALSE)}
+\usage{
+\method{process}{RmaBackgroundCorrection}(this, ..., force=FALSE, verbose=FALSE)
+}
 
 \arguments{
   \item{...}{Not used.}

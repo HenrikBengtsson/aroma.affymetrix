@@ -9,9 +9,7 @@
 \name{verify.SnpInformation}
 \alias{verify.SnpInformation}
 \alias{SnpInformation.verify}
-\alias{verify.SnpInformation}
 \alias{verify,SnpInformation-method}
-
 
 \title{Verifies the correctness of the underlying file}
 
@@ -19,7 +17,9 @@
   Verifies the correctness of the underlying file.
 }
 
-\usage{\method{verify}{SnpInformation}(this, ...)}
+\usage{
+\method{verify}{SnpInformation}(this, ...)
+}
 
 \arguments{
  \item{...}{Not used.}

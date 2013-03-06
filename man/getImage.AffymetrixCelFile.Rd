@@ -9,9 +9,7 @@
 \name{getImage.AffymetrixCelFile}
 \alias{getImage.AffymetrixCelFile}
 \alias{AffymetrixCelFile.getImage}
-\alias{getImage.AffymetrixCelFile}
 \alias{getImage,AffymetrixCelFile-method}
-
 
 \title{Creates an RGB Image object from a CEL file}
 
@@ -19,7 +17,9 @@
  Creates an RGB Image object from a CEL file.
 }
 
-\usage{\method{getImage}{AffymetrixCelFile}(this, other=NULL, transforms=list(sqrt), xrange=c(0, Inf), yrange=xrange, zrange=c(0, sqrt(2^16)), field=c("intensities", "stdvs", "pixels"), zoom=1, ..., readRectFcn=NULL, verbose=FALSE)}
+\usage{
+\method{getImage}{AffymetrixCelFile}(this, other=NULL, transforms=list(sqrt), xrange=c(0, Inf), yrange=xrange, zrange=c(0, sqrt(2^16)), field=c("intensities", "stdvs", "pixels"), zoom=1, ..., readRectFcn=NULL, verbose=FALSE)
+}
 
 \arguments{
   \item{other}{An optional \code{\link{AffymetrixCelFile}} of the same chip type,

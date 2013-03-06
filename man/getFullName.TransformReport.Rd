@@ -9,9 +9,7 @@
 \name{getFullName.TransformReport}
 \alias{getFullName.TransformReport}
 \alias{TransformReport.getFullName}
-\alias{getFullName.TransformReport}
 \alias{getFullName,TransformReport-method}
-
 
 \title{Gets the full name of the output data set}
 
@@ -19,7 +17,9 @@
  Gets the full name of the output data set, which is the name with comma separated tags.
 }
 
-\usage{\method{getFullName}{TransformReport}(this, ...)}
+\usage{
+\method{getFullName}{TransformReport}(this, ...)
+}
 
 \arguments{
  \item{...}{Not used.}

@@ -9,9 +9,7 @@
 \name{findUnitsTodo.FirmaModel}
 \alias{findUnitsTodo.FirmaModel}
 \alias{FirmaModel.findUnitsTodo}
-\alias{findUnitsTodo.FirmaModel}
 \alias{findUnitsTodo,FirmaModel-method}
-
 
 \title{Identifies non-fitted units}
 
@@ -19,7 +17,9 @@
  Identifies non-fitted units.
 }
 
-\usage{\method{findUnitsTodo}{FirmaModel}(this, ...)}
+\usage{
+\method{findUnitsTodo}{FirmaModel}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}

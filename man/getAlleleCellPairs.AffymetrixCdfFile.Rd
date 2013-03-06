@@ -10,9 +10,7 @@
 \name{getAlleleCellPairs.AffymetrixCdfFile}
 \alias{getAlleleCellPairs.AffymetrixCdfFile}
 \alias{AffymetrixCdfFile.getAlleleCellPairs}
-\alias{getAlleleCellPairs.AffymetrixCdfFile}
 \alias{getAlleleCellPairs,AffymetrixCdfFile-method}
-
 
 \title{Gets the cell indices of allele pairs}
 
@@ -21,7 +19,9 @@
   in units of type "genotyping" with 2 or 4 unit groups.
 }
 
-\usage{\method{getAlleleCellPairs}{AffymetrixCdfFile}(this, units=NULL, stratifyBy=c("pm", "pmmm", "mm"), force=FALSE, ..., verbose=FALSE)}
+\usage{
+\method{getAlleleCellPairs}{AffymetrixCdfFile}(this, units=NULL, stratifyBy=c("pm", "pmmm", "mm"), force=FALSE, ..., verbose=FALSE)
+}
 
 \arguments{
  \item{units}{A \code{\link[base]{integer}} \code{\link[base]{vector}} of units to query.

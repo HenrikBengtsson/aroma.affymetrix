@@ -43,7 +43,9 @@ extends \link[aroma.affymetrix]{ChipEffectGroupMerge}\cr
   unit by unit.
  }
 
- \usage{SnpChipEffectGroupMerge(..., mergeStrands=FALSE, mean=c("arithmetic", "geometric"))}
+ \usage{
+SnpChipEffectGroupMerge(..., mergeStrands=FALSE, mean=c("arithmetic", "geometric"))
+}
 
  \arguments{
    \item{...}{Arguments passed to the constructor of
@@ -76,7 +78,7 @@ as.character, getAsteriskTags, getExpectedOutputFiles, getExpectedOutputFullname
 getParameters, getParametersAsString, getParameterSets
 
  \bold{Methods inherited from Object}:\cr
-asThis, $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save
+$, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save, asThis
 
 
  }

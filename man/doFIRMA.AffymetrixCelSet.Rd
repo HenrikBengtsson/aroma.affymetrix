@@ -10,9 +10,7 @@
  \name{doFIRMA.AffymetrixCelSet}
 \alias{doFIRMA.AffymetrixCelSet}
 \alias{AffymetrixCelSet.doFIRMA}
-\alias{doFIRMA.AffymetrixCelSet}
 \alias{doFIRMA,AffymetrixCelSet-method}
-
  \alias{doFIRMA.character}
  \alias{doFIRMA}
 
@@ -22,7 +20,9 @@
   Finding Isoforms using Robust Multichip Analysis (FIRMA) based on [1].
  }
 
- \usage{\method{doFIRMA}{AffymetrixCelSet}(csR, ..., flavor=c("v1b", "v1a"), drop=TRUE, verbose=FALSE)}
+ \usage{
+\method{doFIRMA}{AffymetrixCelSet}(csR, ..., flavor=c("v1b", "v1a"), drop=TRUE, verbose=FALSE)
+}
 
  \arguments{
   \item{csR}{...}

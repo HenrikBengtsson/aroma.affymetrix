@@ -9,9 +9,7 @@
 \name{getFitUnitGroupFunction.AvgPlm}
 \alias{getFitUnitGroupFunction.AvgPlm}
 \alias{AvgPlm.getFitUnitGroupFunction}
-\alias{getFitUnitGroupFunction.AvgPlm}
 \alias{getFitUnitGroupFunction,AvgPlm-method}
-
 
 \title{Gets the low-level function that fits the PLM}
 
@@ -19,7 +17,9 @@
  Gets the low-level function that fits the PLM.
 }
 
-\usage{\method{getFitUnitGroupFunction}{AvgPlm}(this, ...)}
+\usage{
+\method{getFitUnitGroupFunction}{AvgPlm}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}

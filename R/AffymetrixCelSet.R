@@ -416,14 +416,14 @@ setMethodS3("setCdf", "AffymetrixCelSet", function(this, cdf, verbose=FALSE, ...
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # ASCII CDFs are only allowed if explicited accepted in the rules.
   # To change, do:
-  #  setSetting(aroma.affymetrix, "rules$allowAsciiCdfs", TRUE)
+  #  setOption(aroma.affymetrix, "rules$allowAsciiCdfs", TRUE)
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   allowAsciiCdfs <- getOption(aromaSettings, "rules/allowAsciiCdfs", FALSE);
   if (!allowAsciiCdfs) {
     # ASCII CDF are *not* allowed
     ff <- getFileFormat(cdf);
     if (regexpr("ASCII", ff) != -1) {
-      throw("Cannot set CDF for data set. The given CDF is in ASCII format, which is protected against by default. It is much faster and more memory efficient to work with binary CDF files. Use affxparser::convertCdf() to convert a CDF into another format.  Use setSetting(aroma.affymetrix, \"rules$allowAsciiCdfs\", TRUE) to allow ASCII CDFs. For more details, see the online help pages. Details on the CDF file: ", getPathname(cdf), " [", ff, "].");
+      throw("Cannot set CDF for data set. The given CDF is in ASCII format, which is protected against by default. It is much faster and more memory efficient and *highly* recommended to work with binary CDF files. Use affxparser::convertCdf() to convert a CDF into another format.  For advanced users (who truly know what they are doing) it is indeed possible to use ASCII CDFs (see website for details). Details on the CDF file: ", getPathname(cdf), " [", ff, "].");
     }
   }
 
@@ -1234,6 +1234,10 @@ setMethodS3("getUnitGroupCellMap", "AffymetrixCelSet", function(this, ...) {
 
 ############################################################################
 # HISTORY:
+# 2013-03-22
+# o Obscufated the error message on ASCII CDFs on how to change settings
+#   to allow the processing of such, because it shouldn't be easy to
+#   do that.
 # 2012-11-28
 # o CLARIFICATION: Now the cache path used by byPath() for AffymetrixCelSet
 #   includes "dataSets" and <staticClassName>.

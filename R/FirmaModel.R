@@ -10,8 +10,8 @@
 #  splicing model.
 #
 # }
-# 
-# @synopsis 
+#
+# @synopsis
 #
 # \arguments{
 #   \item{rmaPlm}{An @RmaPlm object.}
@@ -21,9 +21,9 @@
 # }
 #
 # \section{Fields and Methods}{
-#  @allmethods "public"  
+#  @allmethods "public"
 # }
-# 
+#
 # \author{Ken Simpson (ksimpson[at]wehi.edu.au).}
 #
 #*/###########################################################################
@@ -223,22 +223,22 @@ setMethodS3("getFirmaSet", "FirmaModel", function(this, ..., verbose=FALSE) {
     return(fs);
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Create files 
+  # Create files
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Let the parameter object know about the CDF structure, because we 
+  # Let the parameter object know about the CDF structure, because we
   # might use a modified version of the one in the CEL header.
   ds <- getDataSet(this);
   if (length(ds) == 0)
     throw("Cannot create FIRMA results file. The CEL set is empty.");
-  
+
   verbose && enter(verbose, "Getting FIRMA results set from data set");
   # Inherit the (monocell) CDF
   cdf <- getCdf(ds);
-  cdfMono <- getMonocellCdf(cdf); 
+  cdfMono <- getMonocellCdf(cdf);
 
   # Gets the Class object
   clazz <- getFileSetClass(this);
-  fs <- clazz$fromDataSet(dataSet=ds, path=getPath(this), cdf=cdfMono, 
+  fs <- clazz$fromDataSet(dataSet=ds, path=getPath(this), cdf=cdfMono,
          pattern=",FIRMAscores[.](c|C)(e|E)(l|L)$", verbose=less(verbose));
   verbose && exit(verbose);
 
@@ -381,7 +381,7 @@ setMethodS3("getFitUnitGroupFunction", "FirmaModel", function(this, ...) {
 setMethodS3("getFitUnitFunction", "FirmaModel", function(this, ...) {
 
   fitfcn <- getFitUnitGroupFunction(this, ...);
-  
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Function to fit all groups (exons) within a unit
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -439,7 +439,7 @@ setMethodS3("getFitUnitFunction", "FirmaModel", function(this, ...) {
 # @author
 #
 # \seealso{
-#   Internally this methods calls the same method for the 
+#   Internally this methods calls the same method for the
 #   @see "ChipEffectSet" class.
 #   @seeclass
 # }
@@ -476,7 +476,7 @@ setMethodS3("findUnitsTodo", "FirmaModel", function(this, ...) {
 # }
 #
 # \value{
-#  Returns an @integer @vector of indices of the units fitted, 
+#  Returns an @integer @vector of indices of the units fitted,
 #  or @NULL if no units was (had to be) fitted.
 # }
 #
@@ -486,11 +486,11 @@ setMethodS3("findUnitsTodo", "FirmaModel", function(this, ...) {
 #  The non-array specific parameter estimates together with standard deviation
 #  estimates and convergence information are stored in one file.
 #
-#  The parameter estimates specific to each array, typically "chip effects", 
+#  The parameter estimates specific to each array, typically "chip effects",
 #  are stored in array specific files.
 #
 #   Data set specific estimates [L = number of probes]:
-#    phi [L doubles] (probe affinities), sd(phi) [L doubles], 
+#    phi [L doubles] (probe affinities), sd(phi) [L doubles],
 #    isOutlier(phi) [L logicals]
 #
 #   Algorithm-specific results:
@@ -499,13 +499,13 @@ setMethodS3("findUnitsTodo", "FirmaModel", function(this, ...) {
 #    sd(eps) - [1 double] estimated standard deviation of the error term
 #
 #   Array-specific estimates [K = nbr of arrays]:
-#    theta [K doubles] (chip effects), sd(theta) [K doubles], 
+#    theta [K doubles] (chip effects), sd(theta) [K doubles],
 #    isOutlier(theta) [K logicals]
-#   
+#
 #   For each array and each unit group, we store:
 #     1 theta, 1 sd(theta), 1 isOutlier(theta), i.e. (float, float, bit)
 #   => For each array and each unit (with \eqn{G_j} groups), we store:
-#     \eqn{G_j} theta, \eqn{G_j} sd(theta), \eqn{G_j} isOutlier(theta), 
+#     \eqn{G_j} theta, \eqn{G_j} sd(theta), \eqn{G_j} isOutlier(theta),
 #   i.e. \eqn{G_j}*(float, float, bit).
 #   For optimal access we store all thetas first, then all sd(theta) and the
 #   all isOutlier(theta).
@@ -531,7 +531,7 @@ setMethodS3("fit", "FirmaModel", function(this, units="remaining", ..., ram=NULL
   if (this$operateOn == "weights") {
     ws <- calculateWeights(this, verbose = verbose)
   } else {
-    ws <- calculateResiduals(this, verbose = verbose)
+    ws <- calculateResidualSet(this, verbose = verbose)
   }
   nbrOfArrays <- length(ds);
 
@@ -758,7 +758,7 @@ setMethodS3("fit", "FirmaModel", function(this, units="remaining", ..., ram=NULL
 # o Now the fit functions utilizes the 'matrixStats' package.
 # o CLEANUP: Dropped unused expressions from the fit functions.
 # 2008-05-31
-# o Removed an obsolete debug print() statement. 
+# o Removed an obsolete debug print() statement.
 # 2008-04-09 [HB]
 # o Added calculateResidualSet() and made calculateResiduals() call it.
 # 2008-02-28 [HB]
@@ -771,14 +771,14 @@ setMethodS3("fit", "FirmaModel", function(this, units="remaining", ..., ram=NULL
 #   chip-effect CEL set.  In other words, if the CDF is overridden for
 #   the input data set, it will also be overridden (with the corresponding
 #   monocell CDF) in the chip-effect set.  Before the monocell CDF was
-#   always inferred from the CEL header, if the CEL file existed. 
+#   always inferred from the CEL header, if the CEL file existed.
 # 2007-12-07 [HB]
 # o UPDATE: Renamed the "root" directory of FirmaModel to firmaData/
 #   (formely modelFirmaModel/).
 # o BUG FIX: Tags from the input data set of FirmaModel were lost.
 # o Added getAsteriskTag().
 # 2007-07-01 [HB]
-# o Added 'cache=FALSE' to findUnitsTodo() in fit() so that the results are 
+# o Added 'cache=FALSE' to findUnitsTodo() in fit() so that the results are
 #   not stored in memory for every file.
 # o Now clearCache() clears the private field '.fs'.
 # o Added more code to fit() to better clean up the memory.

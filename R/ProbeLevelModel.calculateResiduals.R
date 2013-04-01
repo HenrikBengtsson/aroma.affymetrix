@@ -56,7 +56,7 @@ setMethodS3("calculateResidualSet", "ProbeLevelModel", function(this, units=NULL
 
   cdfData <- NULL;
   chipType <- getChipType(cdf);
-  key <- list(method="calculateResiduals", class=class(this)[1], 
+  key <- list(method="calculateResidualSet", class=class(this)[1],
               chipType=chipType, params=getParameters(this),
               units=units);
   dirs <- c("aroma.affymetrix", chipType);
@@ -72,7 +72,7 @@ setMethodS3("calculateResidualSet", "ProbeLevelModel", function(this, units=NULL
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Identifying (unitGroupSizes, cells, ceCells)
     #
-    # Note: This will take several minutes, but results will be save to 
+    # Note: This will take several minutes, but results will be save to
     # file cache, so it is basically only done once.
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     units0 <- units;
@@ -176,7 +176,7 @@ setMethodS3("calculateResidualSet", "ProbeLevelModel", function(this, units=NULL
   o <- o$ix;
   # WAS: oinv <- .Internal(qsort(o, TRUE))$ix;
   oinv <- qsort(o)$ix;
-  
+
   # Garbage collect
   gc <- gc();
   verbose && print(verbose, gc);
@@ -219,9 +219,9 @@ setMethodS3("calculateResidualSet", "ProbeLevelModel", function(this, units=NULL
       verbose && exit(verbose);
     }
 
-    # Assert that there is the correct number of signals 
+    # Assert that there is the correct number of signals
     if (length(y) != length(phi)) {
-      throw("Internal error: 'y' and 'phi' differ in lengths: ", 
+      throw("Internal error: 'y' and 'phi' differ in lengths: ",
                                            length(y), " != ", length(phi));
     }
 
@@ -232,16 +232,16 @@ setMethodS3("calculateResidualSet", "ProbeLevelModel", function(this, units=NULL
 
     # Assert that there is the correct number of (expanded) chip effects
     if (length(theta) != length(phi)) {
-      throw("Internal error: 'theta' and 'phi' differ in lengths: ", 
+      throw("Internal error: 'theta' and 'phi' differ in lengths: ",
                                        length(theta), " != ", length(phi));
     }
 
     verbose && enter(verbose, "Calculating residuals");
     yhat <- phi * theta;
 
-    # Assert that there is the correct number of "predicted" signals 
+    # Assert that there is the correct number of "predicted" signals
     if (length(yhat) != length(y)) {
-      throw("Internal error: 'yhat' and 'y' differ in lengths: ", 
+      throw("Internal error: 'yhat' and 'y' differ in lengths: ",
                                            length(yhat), " != ", length(y));
     }
 
@@ -250,7 +250,7 @@ setMethodS3("calculateResidualSet", "ProbeLevelModel", function(this, units=NULL
 
     # Assert that there is the correct number of residuals
     if (length(eps) != length(y)) {
-      throw("Internal error: 'eps' and 'y' differ in lengths: ", 
+      throw("Internal error: 'eps' and 'y' differ in lengths: ",
                                            length(eps), " != ", length(y));
     }
 
@@ -267,7 +267,7 @@ setMethodS3("calculateResidualSet", "ProbeLevelModel", function(this, units=NULL
     tryCatch({
       # Create CEL file to store results, if missing
       verbose && enter(verbose, "Creating empty CEL file for results, if missing");
-      createFrom(df, filename=pathname, path=NULL, 
+      createFrom(df, filename=pathname, path=NULL,
                      methods="create", clear=TRUE, verbose=less(verbose));
       verbose && exit(verbose);
 
@@ -307,7 +307,7 @@ setMethodS3("calculateResidualSet", "ProbeLevelModel", function(this, units=NULL
   # Inherit the CDF from the input data set.
   cdf <- getCdf(ds);
   rs <- ResidualSet$byPath(path, cdf=cdf, ...);
-  
+
   verbose && exit(verbose);
 
   invisible(rs);
@@ -333,29 +333,29 @@ setMethodS3("getCalculateResidualsFunction", "ProbeLevelModel", function(static,
 #   argument of fromFiles() in AffymetrixCelSet.
 # 2007-08-17
 # o Now calculateResidualSet() of ProbeLevelModel only loads probe-affinity
-#   estimates if needed, i.e. if residuals are already calculated this 
+#   estimates if needed, i.e. if residuals are already calculated this
 #   function will return faster now.
 # o MEMORY OPTIMIZATION: calculateResidualSet() of ProbeLevelModel does
 #   part of the work in chunks.
 # 2007-08-09
-# o calculateResidualSet() of ProbeLevelModel now creates CEL files with 
+# o calculateResidualSet() of ProbeLevelModel now creates CEL files with
 #   upper-case filename extension "*.CEL", not "*.cel".  The reason for this
-#   is that some software don't recognize lower case filename extensions :(  
+#   is that some software don't recognize lower case filename extensions :(
 # 2007-04-12
-# o BUG FIX: There was a if (TRUE) {} statement in calculateResidualSet() 
+# o BUG FIX: There was a if (TRUE) {} statement in calculateResidualSet()
 #   that was supposed to be if (!fource) {} in the release version.
 # 2007-03-15
 # o Renamed calculateResiduals() to calculateResidualSet().
 # o BUG FIX: calculateResiduals() of ProbeLevelModel would give non-zero
-#   residuals for cells not fitted by the PLM. 
+#   residuals for cells not fitted by the PLM.
 # 2007-03-14
 # o Optimized memory usage in calculateResiduals() further.
 # 2007-03-06
-# o Now calculateResiduals(), for which chip effects where allele A and B 
+# o Now calculateResiduals(), for which chip effects where allele A and B
 #   have been combined, gives an error, explaining that the feature is
 #   still to be implemented.
 # 2007-02-16
-# o BUG FIX: Already calculated residuals would be recalculated and 
+# o BUG FIX: Already calculated residuals would be recalculated and
 #   end up as an empty file.
 # 2007-02-14 HB + KS
 # o Now residuals can be calculated differently for different PLM classes.

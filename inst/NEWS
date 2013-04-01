@@ -1,6 +1,13 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 2.8.3 [2013-04-01]
+o Force creation of a generic process(), because depending on the
+  version of R.rsp at the time of the build, process() may be missing
+  or not.
+o Bumped up package dependencies.
+
+
 Version: 2.8.2 [2013-03-22]
 o Obscufated the error message on ASCII CDFs on how to change settings
   to allow the processing of such, because it shouldn't be easy to

@@ -15,7 +15,7 @@ setMethodS3("calculateWeights", "ExonRmaPlm", function(this, units=NULL, ram=NUL
       y <- log2(y);
       mad <- 1.4826 * median(abs(y));
       if (mad==0) {
-        return(matrix(data=1, nrow=nrow(y), ncol=ncol(y)));        
+        return(matrix(data=1, nrow=nrow(y), ncol=ncol(y)));
       }
       if (mergeGroups) {
         return(matrix(MASS::psi.huber(y/madMerged), ncol=ncol(y)));
@@ -25,7 +25,7 @@ setMethodS3("calculateWeights", "ExonRmaPlm", function(this, units=NULL, ram=NUL
     })
     res;
   } # resFcn()
-  
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -39,7 +39,7 @@ setMethodS3("calculateWeights", "ExonRmaPlm", function(this, units=NULL, ram=NUL
     on.exit(popState(verbose));
   }
 
-  rs <- calculateResiduals(this, verbose=verbose);
+  rs <- calculateResidualSet(this, verbose=verbose);
   ws <- getWeightsSet(this, verbose=verbose);
   nbrOfArrays <- length(rs);
 
@@ -65,12 +65,12 @@ setMethodS3("calculateWeights", "ExonRmaPlm", function(this, units=NULL, ram=NUL
   } else {
     unitsToDo <- findUnitsTodo(ws, units=units);
   }
-  
+
   verbose && printf(verbose, "Number of units: %d\n", nbrOfUnits);
 
   unitsPerChunk <- ram * 100000/length(getDataSet(this));
   unitsPerChunk <- Arguments$getInteger(unitsPerChunk, range=c(1,Inf));
-  
+
   nbrOfChunks <- ceiling(nbrOfUnits / unitsPerChunk);
   verbose && printf(verbose, "Number of chunks: %d (%d units/chunk)\n",
                     nbrOfChunks, unitsPerChunk);
@@ -93,11 +93,11 @@ setMethodS3("calculateWeights", "ExonRmaPlm", function(this, units=NULL, ram=NUL
     verbose && enter(verbose, "Calculating weights");
     weightsList <- base::lapply(residualsList, FUN=resFcn, mergeGroups=this$mergeGroups);
     verbose && exit(verbose);
-    
+
     verbose && enter(verbose, "Storing weights");
 
     cdf <- getCellIndices(getCdf(ds), units=units, stratifyBy="pm", ...);
-    
+
     for (ii in seq_along(ds)) {
       wf <- getFile(ws, ii);
 
@@ -105,20 +105,20 @@ setMethodS3("calculateWeights", "ExonRmaPlm", function(this, units=NULL, ram=NUL
 
       data <- base::lapply(weightsList, function(unit) {
         base::lapply(unit, function(group) {
-          nrow <- nrow(group); 
+          nrow <- nrow(group);
           list(
-            intensities=2^group[,ii], 
-            stdvs=rep(1, times=nrow), 
+            intensities=2^group[,ii],
+            stdvs=rep(1, times=nrow),
             pixels=rep(1, times=nrow)
           );
         });
       });
-      
+
       updateCelUnits(getPathname(wf), cdf=cdf, data=data);
 
       verbose && exit(verbose);
     } # for (ii ...)
-    
+
     verbose && exit(verbose);
 
     unitsToDo <- unitsToDo[-head];
@@ -130,7 +130,7 @@ setMethodS3("calculateWeights", "ExonRmaPlm", function(this, units=NULL, ram=NUL
   # Garbage collect
   gc <- gc();
   verbose && print(verbose, gc);
-  
+
   verbose && exit(verbose);
 
   invisible(ws);
@@ -141,7 +141,7 @@ setMethodS3("calculateWeights", "ExonRmaPlm", function(this, units=NULL, ram=NUL
 # HISTORY:
 # 2011-03-01 [HB]
 # o Harmonized the verbose output.
-# 2007-02-15 
+# 2007-02-15
 # o Based on ProbeLevelModel.calculateResiduals
 #   and QualityAssessmentModel.getWeights
 ##########################################################################

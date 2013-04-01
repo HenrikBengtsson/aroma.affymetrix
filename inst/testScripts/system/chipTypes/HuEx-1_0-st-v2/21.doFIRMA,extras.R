@@ -47,12 +47,12 @@ fit(plmList$noMerge, verbose=verbose);
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # PLM residuals (also calculated by FIRMA)
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-resList <- lapply(plmList, FUN=calculateResiduals, verbose=verbose);
+resList <- lapply(plmList, FUN=calculateResidualSet, verbose=verbose);
 print(resList);
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # PLM weights
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-weightList <- lapply(plmList, FUN=calculateWeights, verbose=verbose);
+weightList <- lapply(plmList, FUN=calculateWeightSet, verbose=verbose);
 print(weightList);

@@ -3,6 +3,11 @@
 
 writeCdf <- appendVarArgs(writeCdf);
 
+# Force a generic process(), because R.rsp has one now and it
+# may prevent one from being created/used here, depending
+# on the R.rsp version.
+setGenericS3("process", overwrite=TRUE);
+
 
 ############################################################################
 # HISTORY:
@@ -16,9 +21,9 @@ writeCdf <- appendVarArgs(writeCdf);
 # o Added appendVarArgs(boxplot.stats) so that one can pass argument
 #   'show.names' to bxp() via plotRle().
 # 2007-02-27 [HB]
-# o BUG FIX: Removed explicit reference to 'base' etc again. The reason is 
-#   that if a previous package already modified, say, write(), to become a 
-#   generic function, that was overwritten again when this package was 
+# o BUG FIX: Removed explicit reference to 'base' etc again. The reason is
+#   that if a previous package already modified, say, write(), to become a
+#   generic function, that was overwritten again when this package was
 #   loaded.
 # 2007-02-23 [KS]
 # o Make explicit reference to 'base' - this is safer, in case of colMeans()

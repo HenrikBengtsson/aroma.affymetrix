@@ -7,7 +7,7 @@
 # who do not have one, we explicitly have specify the following.
 # /HB 2011-07-27
 # R.utils:
-##cat <- R.utils::cat; 
+##cat <- R.utils::cat;
 ##getOption <- R.utils::getOption;
 ##lapply <- R.utils::lapply;
 
@@ -26,12 +26,12 @@ require <- aroma.core::require;
 
 ##.First.lib <- function(libname, pkgname) {
 .onAttach <- function(libname, pkgname) {
-##   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+##   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 ##   # Loading/installing affxparser
-##   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+##   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 ##   # Load 'affxparser'
 ##   res <- require("affxparser");
-## 
+##
 ##   # Not installed?
 ##   if (!res) {
 ##     if (interactive()) {
@@ -51,8 +51,9 @@ require <- aroma.core::require;
 
   pkg <- AromaAffymetrix(pkgname);
   assign(pkgname, pkg, pos=getPosition(pkg));
-  startupMessage(pkg);
 
   # Setup package
   .setupAromaAffymetrix(pkg);
+
+  startupMessage(pkg);
 }

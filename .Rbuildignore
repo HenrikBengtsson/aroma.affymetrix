@@ -1,0 +1,4 @@
+^Makefile$
+^incl
+^inst/doc/[.].*[.]rsp$
+.HIDE

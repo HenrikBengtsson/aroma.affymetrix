@@ -6,7 +6,7 @@
 # \description{
 #  @classhierarchy
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
@@ -19,8 +19,7 @@
 #  @allmethods "public"
 # }
 #
-# @author
-#
+# @author "HB"
 #*/###########################################################################
 setConstructorS3("HetLogAddSnpPlm", function(..., mergeStrands=FALSE) {
   extend(HetLogAddPlm(...), c("HetLogAddSnpPlm", uses(SnpPlm())),
@@ -38,10 +37,10 @@ setMethodS3("getAsteriskTags", "HetLogAddSnpPlm", function(this, collapse=NULL, 
     tags <- c(tags, "+-");
 
   # Collapse
-  tags <- paste(tags, collapse=collapse); 
+  tags <- paste(tags, collapse=collapse);
 
   tags;
-}, protected=TRUE) 
+}, protected=TRUE)
 
 
 

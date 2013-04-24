@@ -8,7 +8,7 @@
 #
 #  This class represents estimates of probe affinities in SNP probe-level models.
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
@@ -21,8 +21,7 @@
 #  @allmethods "public"
 # }
 #
-# @author
-# 
+# @author "HB"
 #*/###########################################################################
 setConstructorS3("SnpProbeAffinityFile", function(..., mergeStrands=FALSE) {
   this <- extend(ProbeAffinityFile(...), "SnpProbeAffinityFile",
@@ -59,8 +58,6 @@ setConstructorS3("SnpProbeAffinityFile", function(..., mergeStrands=FALSE) {
 #   If argument \code{unlist=TRUE} is passed, an @integer @vector is returned.
 # }
 #
-# @author
-#
 # \seealso{
 #   @seeclass
 # }
@@ -75,7 +72,7 @@ setMethodS3("getCellIndices", "SnpProbeAffinityFile", function(this, ..., unlist
   mergeStrands <- this$mergeStrands;
   if (unlist && mergeStrands) {
     throw("Unsupported request: Argument 'unlist' have to be TRUE when parameter 'mergeStrands' is TRUE: ", unlist);
-  } 
+  }
 
   cells <- NextMethod("getCellIndices");
 

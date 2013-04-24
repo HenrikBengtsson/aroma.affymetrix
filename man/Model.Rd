@@ -6,15 +6,15 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
- \name{Model}
+\name{Model}
 \docType{class}
 \alias{Model}
 
 
- \title{The Model class}
+\title{The Model class}
 
- \description{
-  Package:  aroma.affymetrix \cr
+\description{
+ Package:  aroma.affymetrix \cr
 \bold{Class Model}\cr
 
 \code{\link[R.oo]{Object}}\cr
@@ -31,23 +31,23 @@ extends \link[aroma.core]{ParametersInterface}\cr
 
 
 
-  This class is abstract and represents a generic model that applies
-  to a data set.
- }
+ This class is abstract and represents a generic model that applies
+ to a data set.
+}
 
- \usage{
+\usage{
 Model(dataSet=NULL, tags="*", ...)
 }
 
- \arguments{
-   \item{dataSet}{The data set to which this model should be fitted.}
-   \item{tags}{A \code{\link[base]{character}} \code{\link[base]{vector}} of tags to be appended to the tags of
-      the input data set.}
-   \item{...}{Not used.}
- }
+\arguments{
+  \item{dataSet}{The data set to which this model should be fitted.}
+  \item{tags}{A \code{\link[base]{character}} \code{\link[base]{vector}} of tags to be appended to the tags of
+     the input data set.}
+  \item{...}{Not used.}
+}
 
- \section{Fields and Methods}{
-  \bold{Methods:}\cr
+\section{Fields and Methods}{
+ \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{\link[aroma.affymetrix:fit.Model]{fit}} \tab Estimates the model parameters.\cr
  \tab \code{getAsteriskTags} \tab  -\cr
@@ -61,13 +61,13 @@ Model(dataSet=NULL, tags="*", ...)
 
 
  \bold{Methods inherited from ParametersInterface}:\cr
-getParameters, getParametersAsString, getParameterSets
+getParameterSets, getParameters, getParametersAsString
 
  \bold{Methods inherited from Object}:\cr
 $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save, asThis
 
 
- }
+}
 
- \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 \keyword{classes}

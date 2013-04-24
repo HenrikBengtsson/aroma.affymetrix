@@ -32,8 +32,6 @@
  chip type file found.  If no one was found, \code{\link[base]{NULL}} is returned.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
-
 \seealso{
   \code{\link[aroma.affymetrix:byChipType.AromaChipTypeAnnotationFile]{*byChipType}()}.
   For more information see \code{\link{AromaChipTypeAnnotationFile}}.

@@ -8,17 +8,17 @@
 #
 #  This abstract class represents a unit model that fits one model per unit
 #  based on signals for all arrays in the data set.
-#  The nature of a multi-array unit model is that all arrays must be 
+#  The nature of a multi-array unit model is that all arrays must be
 #  available at the time of the fit and the estimated parameters will
-#  depend on the data from all arrays.  
+#  depend on the data from all arrays.
 #  Thus, if the signals in one array changes the model has to be refitted.
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
 #   \item{...}{Arguments passed to @see "UnitModel".}
-#   \item{listOfPriors}{A @list of priors to be used when fitting 
+#   \item{listOfPriors}{A @list of priors to be used when fitting
 #    the model.}
 # }
 #
@@ -26,7 +26,7 @@
 #  @allmethods "public"
 # }
 #
-# @author
+# @author "HB"
 #*/###########################################################################
 setConstructorS3("MultiArrayUnitModel", function(..., listOfPriors=NULL) {
   this <- extend(UnitModel(...), "MultiArrayUnitModel");
@@ -76,8 +76,6 @@ setMethodS3("validate", "MultiArrayUnitModel", function(this, ...) {
 # \value{
 #  Returns a @function.
 # }
-#
-# @author
 #
 # \seealso{
 #   @seeclass
@@ -145,7 +143,7 @@ setMethodS3("getFitUnitFunction", "MultiArrayUnitModel", function(this, ...) {
 # @title "Reads data unit by unit"
 #
 # \description{
-#  @get "title" for all or a subset of units (probeset) 
+#  @get "title" for all or a subset of units (probeset)
 #  specially structured for this PLM.
 # }
 #
@@ -153,18 +151,16 @@ setMethodS3("getFitUnitFunction", "MultiArrayUnitModel", function(this, ...) {
 #
 # \arguments{
 #   \item{units}{The units to be read. If @NULL, all units are read.}
-#   \item{...}{Arguments passed to \code{getCellIndices()} of the 
+#   \item{...}{Arguments passed to \code{getCellIndices()} of the
 #     @see "AffymetrixCdfFile" class (if \code{cdf} was not specified),
-#     but also to the \code{readUnits()} method of the 
+#     but also to the \code{readUnits()} method of the
 #     @see "AffymetrixCelSet" class.}
 # }
 #
 # \value{
-#  Returns the @list structure that \code{readUnits()} of 
+#  Returns the @list structure that \code{readUnits()} of
 #  @see "AffymetrixCelSet" returns.
 # }
-#
-# @author
 #
 # \seealso{
 #   @seeclass

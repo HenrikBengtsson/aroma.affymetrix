@@ -7,18 +7,18 @@
 #  @classhierarchy
 #
 #  This class represents a normalization method that corrects for systematic
-#  effects between loci of different equivalent classes of pairs of 
+#  effects between loci of different equivalent classes of pairs of
 #  sequences that are recognized by the restriction enzymes that cut the
-#  DNA studies.  
+#  DNA studies.
 # }
-# 
-# @synopsis 
+#
+# @synopsis
 #
 # \arguments{
 #   \item{dataSet}{A @see "CnChipEffectSet".}
-#   \item{...}{Additional arguments passed to the constructor of 
+#   \item{...}{Additional arguments passed to the constructor of
 #     @see "ChipEffectTransform".}
-#   \item{targetAvgs}{An optional list of @functions.  
+#   \item{targetAvgs}{An optional list of @functions.
 #     For each enzyme there is one target averages to which all arrays
 #     should be normalized to.}
 #   \item{subsetToFit}{The units from which the normalization curve should
@@ -26,22 +26,22 @@
 # }
 #
 # \section{Fields and Methods}{
-#  @allmethods "public"  
+#  @allmethods "public"
 # }
-# 
+#
 # \section{Requirements}{
 #   This class requires an UFC (Unit Fragment Class) annotation file.
 # }
 #
 # \section{Acknowledgments}{
-#   The idea of normalization signals stratified on enzyme 
-#   recognition sequences is credited to Jim Veitch and 
+#   The idea of normalization signals stratified on enzyme
+#   recognition sequences is credited to Jim Veitch and
 #   Ben Bolstad at Affymetrix Inc. (2008) who have designed
-#   a similar method for copy number estimation in the 
+#   a similar method for copy number estimation in the
 #   Affymetrix' Genotype Console v2.
 # }
 #
-# @author
+# @author "HB"
 #*/###########################################################################
 setConstructorS3("FragmentEquivalentClassNormalization", function(dataSet=NULL, ..., targetAvgs=NULL, subsetToFit="-XY") {
   extraTags <- NULL;
@@ -67,7 +67,7 @@ setConstructorS3("FragmentEquivalentClassNormalization", function(dataSet=NULL, 
     if (!is.list(targetAvgs)) {
       throw("Argument 'targetAvgs' is not a list: ", class(targetAvgs)[1]);
     }
-    
+
     # Validate each element
     for (kk in seq_along(targetAvgs)) {
     }
@@ -89,7 +89,7 @@ setConstructorS3("FragmentEquivalentClassNormalization", function(dataSet=NULL, 
   }
 
 
-  extend(ChipEffectTransform(dataSet, ...), "FragmentEquivalentClassNormalization", 
+  extend(ChipEffectTransform(dataSet, ...), "FragmentEquivalentClassNormalization",
     .subsetToFit = subsetToFit,
     .extraTags = extraTags,
     .targetAvgs = targetAvgs,
@@ -274,7 +274,7 @@ setMethodS3("getSubsetToFit", "FragmentEquivalentClassNormalization", function(t
         # Get the genome information (throws an exception if missing)
         gi <- getGenomeInformation(cdf);
         verbose && print(verbose, gi);
-  
+
         # Identify units to be excluded
         if (subsetToFit == "-X") {
           subset <- getUnitsOnChromosomes(gi, 23, .checkArgs=FALSE);
@@ -283,13 +283,13 @@ setMethodS3("getSubsetToFit", "FragmentEquivalentClassNormalization", function(t
         } else if (subsetToFit == "-XY") {
           subset <- getUnitsOnChromosomes(gi, 23:24, .checkArgs=FALSE);
         }
-  
+
         verbose && cat(verbose, "Units to exclude: ");
         verbose && str(verbose, subset);
-  
+
         # The units to keep
         subset <- setdiff(1:nbrOfUnits(cdf), subset);
-  
+
         verbose && cat(verbose, "Units to include: ");
         verbose && str(verbose, subset);
 
@@ -372,7 +372,7 @@ setMethodS3("getExclusiveUnitSubsets", "FragmentEquivalentClassNormalization", f
     verbose && cat(verbose, "Unique equivalent classes:");
     verbose && str(verbose, sort(unique(as.vector(ufe))));
 
-    # 
+    #
     verbose && enter(verbose, "Identifying sets");
     hasUfe <- is.finite(ufe);
     nbrOfEnzymes <- ncol(ufe);
@@ -400,18 +400,18 @@ setMethodS3("getExclusiveUnitSubsets", "FragmentEquivalentClassNormalization", f
 
       classes <- sort(unique(data));
       nbrOfEqClasses <- length(classes);
-      verbose && cat(verbose, "Number of equivalent classes (in data): ", 
+      verbose && cat(verbose, "Number of equivalent classes (in data): ",
                                                          nbrOfEqClasses);
 
       sets <- vector("list", nbrOfEqClasses);
       names(sets) <- sprintf("0x%02x", classes);
       for (cc in seq_len(nbrOfEqClasses)) {
-        verbose && enter(verbose, "Equivalent class #", cc, 
+        verbose && enter(verbose, "Equivalent class #", cc,
                                   " ('", names(sets)[cc], "')");
         subset <- which(data == classes[cc]);
         sets[[cc]] <- list(
-          name   = names(sets)[cc], 
-          class  = classes[cc], 
+          name   = names(sets)[cc],
+          class  = classes[cc],
           subset = subset
         );
         rm(subset);
@@ -558,7 +558,7 @@ setMethodS3("getTargetAverages", "FragmentEquivalentClassNormalization", functio
 
     # Read signals
     units <- getSubsetToFit(this, verbose=less(verbose, 5));
-    y <- getDataFlat(cef, units=units, fields="theta", 
+    y <- getDataFlat(cef, units=units, fields="theta",
                                verbose=less(verbose, 5))[,"theta"];
     rm(cef); # Not needed anymore
 
@@ -759,7 +759,7 @@ setMethodS3("normalizeOneArrayVector", "FragmentEquivalentClassNormalization", f
 #
 # \arguments{
 #   \item{...}{Not used.}
-#   \item{force}{If @TRUE, data already normalized is re-normalized, 
+#   \item{force}{If @TRUE, data already normalized is re-normalized,
 #       otherwise not.}
 #   \item{verbose}{See @see "R.utils::Verbose".}
 # }
@@ -767,8 +767,6 @@ setMethodS3("normalizeOneArrayVector", "FragmentEquivalentClassNormalization", f
 # \value{
 #  Returns a @double @vector.
 # }
-#
-# @author
 #
 # \seealso{
 #   @seeclass
@@ -829,7 +827,7 @@ setMethodS3("process", "FragmentEquivalentClassNormalization", function(this, ..
   # Get (and create) the output path
   path <- getPath(this);
 
-  
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Normalize each array
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -872,7 +870,7 @@ setMethodS3("process", "FragmentEquivalentClassNormalization", function(this, ..
     if (is.null(ufe)) {
       verbose && enter(verbose, "Reading fragment equivalent classes");
       ufc <- getAromaUfcFile(this);
-      ufe <- getOrderedFragmentPairs(ufc, units=subsetToUpdate, 
+      ufe <- getOrderedFragmentPairs(ufc, units=subsetToUpdate,
                                                 verbose=less(verbose));
       rm(ufc);
       verbose && exit(verbose);
@@ -883,7 +881,7 @@ setMethodS3("process", "FragmentEquivalentClassNormalization", function(this, ..
     y <- data[,"theta"];
     verbose && str(verbose, y);
     verbose && exit(verbose);
-  
+
     verbose && enter(verbose, "Normalizing signals");
     yN <- normalizeOneArrayVector(this, y=y, ufe=ufe, ..., verbose=less(verbose));
     rm(y);
@@ -893,7 +891,7 @@ setMethodS3("process", "FragmentEquivalentClassNormalization", function(this, ..
     # Garbage collect
     gc <- gc();
     verbose && print(verbose, gc);
-  
+
     # Create CEL file to store results, if missing
     verbose && enter(verbose, "Creating CEL file for results, if missing");
     ceN <- createFrom(ce, filename=pathname, path=NULL, verbose=less(verbose));
@@ -928,18 +926,18 @@ setMethodS3("process", "FragmentEquivalentClassNormalization", function(this, ..
   outputSet <- getOutputDataSet(this, verbose=less(verbose,5));
 
   verbose && exit(verbose);
-  
+
   outputSet;
 })
 
 ############################################################################
 # HISTORY:
 # 2008-09-19
-# o BUG FIX: process() of FragmentEquivalentClassNormalization did not 
-#   return a data set for which the sample attributes has been updated 
+# o BUG FIX: process() of FragmentEquivalentClassNormalization did not
+#   return a data set for which the sample attributes has been updated
 #   according to optional sample annotation files (SAFs).
 # o MEMORY OPTIMIZATION: process() no longer records each normalized array.
-# o CLEANUP: process() no longer sets (unused) .outputSet field. 
+# o CLEANUP: process() no longer sets (unused) .outputSet field.
 # 2008-07-20
 # o Updated the following methods to preallocate matrixes with the correct
 #   data type to avoid coercing later: normalizeOneArrayVector().

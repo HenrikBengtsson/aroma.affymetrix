@@ -9,7 +9,7 @@
 #  This class represents the log-additive model part of the Robust Multichip
 #  Analysis (RMA) method described in Irizarry et al (2003).
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
@@ -28,20 +28,20 @@
 #
 #    \deqn{log_2(y_{ik}) = \beta_i + \alpha_k + \varepsilon_{ik}}
 #
-#   where \eqn{\beta_i} are the chip effects for arrays \eqn{i=1,...,I}, 
+#   where \eqn{\beta_i} are the chip effects for arrays \eqn{i=1,...,I},
 #   and \eqn{\alpha_k} are the probe affinities for probes \eqn{k=1,...,K}.
 #   The \eqn{\varepsilon_{ik}} are zero-mean noise with equal variance.
 #   The model is constrained such that \eqn{\sum_k{\alpha_k} = 0}.
 #
 #   Note that all PLM classes must return parameters on the intensity scale.
-#   For this class that means that \eqn{\theta_i = 2^\beta_i} and 
+#   For this class that means that \eqn{\theta_i = 2^\beta_i} and
 #   \eqn{\phi_k = 2^\alpha_k} are returned.
 # }
 #
 # \section{Different flavors of model fitting}{
-#   There are a few differ algorithms available for fitting the same 
+#   There are a few differ algorithms available for fitting the same
 #   probe-level model.  The default and recommended method
-#   (\code{flavor="affyPLM"}) uses the implementation in the 
+#   (\code{flavor="affyPLM"}) uses the implementation in the
 #   \pkg{preprocessCore} package which fits the model parameters robustly
 #   using an M-estimator (the method used to be in \pkg{affyPLM}).
 #
@@ -54,10 +54,10 @@
 #   estimates, we can neither rescale them.
 # }
 #
-# @author
+# @author "HB, KS"
 #
 # \references{
-#  Irizarry et al. \emph{Summaries of Affymetrix GeneChip probe level data}. 
+#  Irizarry et al. \emph{Summaries of Affymetrix GeneChip probe level data}.
 #  NAR, 2003, 31, e15.\cr
 # }
 #*/###########################################################################
@@ -87,7 +87,7 @@ setMethodS3("getAsteriskTags", "RmaPlm", function(this, collapse=NULL, ...) {
     tags <- c(tags, this$.flavor);
 
   # Collapse
-  tags <- paste(tags, collapse=collapse); 
+  tags <- paste(tags, collapse=collapse);
 
   tags;
 }, protected=TRUE)
@@ -152,15 +152,15 @@ setMethodS3("getProbeAffinityFile", "RmaPlm", function(this, ...) {
     outliers <- as.logical(1-sign(pixels));
 
     list(
-      phi=intensities, 
-      sdPhi=stdvs, 
+      phi=intensities,
+      sdPhi=stdvs,
       phiOutliers=outliers
     );
   })
 
   paf;
 }, private=TRUE)
-  
+
 
 
 setMethodS3("getRlmFitFunctions", "RmaPlm", function(static, withPriors=FALSE, ..., verbose=FALSE) {
@@ -200,12 +200,12 @@ setMethodS3("getRlmFitFunctions", "RmaPlm", function(static, withPriors=FALSE, .
       fcnList <- list(
         wrlm = function(y, phi, psiCode, psiK, w, scale=NULL) {
           # From preprocessCore::rcModelPLM()
-          .Call("R_rlm_rma_given_probe_effects", 
+          .Call("R_rlm_rma_given_probe_effects",
                 y, phi, psiCode, psiK, w, scale, PACKAGE=PACKAGE);
         },
         rlm = function(y, phi, psiCode, psiK, w, scale=NULL) {
           # From preprocessCore::rcModelPLM()
-          .Call("R_rlm_rma_given_probe_effects", 
+          .Call("R_rlm_rma_given_probe_effects",
                 y, phi, psiCode, psiK, scale, PACKAGE=PACKAGE);
         }
       );
@@ -215,12 +215,12 @@ setMethodS3("getRlmFitFunctions", "RmaPlm", function(static, withPriors=FALSE, .
       fcnList <- list(
         wrlm = function(y, psiCode, psiK, w, scale=NULL) {
           # From preprocessCore::rcModelPLM()
-          .Call("R_wrlm_rma_default_model", 
+          .Call("R_wrlm_rma_default_model",
                 y, psiCode, psiK, w, scale, PACKAGE=PACKAGE);
         },
         rlm = function(y, psiCode, psiK, w, scale=NULL) {
           # From preprocessCore::rcModelPLM()
-          .Call("R_rlm_rma_default_model", 
+          .Call("R_rlm_rma_default_model",
                 y, psiCode, psiK, scale, PACKAGE=PACKAGE);
         }
       );
@@ -262,7 +262,7 @@ setMethodS3("getRlmFitFunctions", "RmaPlm", function(static, withPriors=FALSE, .
 # }
 #
 # \author{
-#   Henrik Bengtsson and Ken Simpson (WEHI) utilizing Ben Bolstad's 
+#   Henrik Bengtsson and Ken Simpson (WEHI) utilizing Ben Bolstad's
 #   \pkg{preprocessCore} package.
 # }
 #
@@ -285,10 +285,10 @@ setMethodS3("getFitUnitGroupFunction", "RmaPlm", function(this, ..., verbose=FAL
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Thresholds for skipping/using median polish
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  skipThreshold <- getOption(aromaSettings, 
+  skipThreshold <- getOption(aromaSettings,
                                  "models/RmaPlm/skipThreshold", c(Inf, Inf));
 
-  medianPolishThreshold <- getOption(aromaSettings, 
+  medianPolishThreshold <- getOption(aromaSettings,
                          "models/RmaPlm/medianPolishThreshold", c(Inf, Inf));
 
   flavor <- this$.flavor;
@@ -296,7 +296,7 @@ setMethodS3("getFitUnitGroupFunction", "RmaPlm", function(this, ..., verbose=FAL
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # rmaModelAffyPlm()
-  # Author: Henrik Bengtsson, UC Berkeley. 
+  # Author: Henrik Bengtsson, UC Berkeley.
   # Requires: affyPLM() by Ben Bolstad.
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   rmaModelAffyPlm <- function(y, priors=NULL, ..., psiCode=0, psiK=1.345){
@@ -308,9 +308,9 @@ setMethodS3("getFitUnitGroupFunction", "RmaPlm", function(this, ..., verbose=FAL
       nbrOfArrays <- length(getDataSet(this));
       return(list(theta=rep(NA, nbrOfArrays),
                   sdTheta=rep(NA, nbrOfArrays),
-                  thetaOutliers=rep(NA, nbrOfArrays), 
-                  phi=c(), 
-                  sdPhi=c(), 
+                  thetaOutliers=rep(NA, nbrOfArrays),
+                  phi=c(),
+                  sdPhi=c(),
                   phiOutliers=c()
                  )
             );
@@ -318,7 +318,7 @@ setMethodS3("getFitUnitGroupFunction", "RmaPlm", function(this, ..., verbose=FAL
 
     if (length(dim) != 2) {
       str(y);
-      stop("Argument 'y' must have two dimensions: ", 
+      stop("Argument 'y' must have two dimensions: ",
                                                 paste(dim, collapse="x"));
     }
 
@@ -332,7 +332,7 @@ setMethodS3("getFitUnitGroupFunction", "RmaPlm", function(this, ..., verbose=FAL
       naValue <- as.double(NA);
       return(list(theta=rep(naValue, times=I),
                   sdTheta=rep(naValue, times=I),
-                  thetaOutliers=rep(naValue, times=I), 
+                  thetaOutliers=rep(naValue, times=I),
                   phi=rep(naValue, times=K),
                   sdPhi=rep(naValue, times=K),
                   phiOutliers=rep(naValue, times=K)
@@ -364,9 +364,9 @@ setMethodS3("getFitUnitGroupFunction", "RmaPlm", function(this, ..., verbose=FAL
           if (any(badCells)) {
             return(list(theta=rep(NA, I),
                         sdTheta=rep(NA, I),
-                        thetaOutliers=rep(NA, I), 
-                        phi=rep(NA, K), 
-                        sdPhi=rep(NA, K), 
+                        thetaOutliers=rep(NA, I),
+                        phi=rep(NA, K),
+                        sdPhi=rep(NA, K),
                         phiOutliers=rep(NA, K)
                        )
                   );
@@ -389,9 +389,9 @@ setMethodS3("getFitUnitGroupFunction", "RmaPlm", function(this, ..., verbose=FAL
           if (nrow(y) == 0) {
             return(list(theta=rep(NA, I),
                         sdTheta=rep(NA, I),
-                        thetaOutliers=rep(NA, I), 
-                        phi=rep(NA, K0), 
-                        sdPhi=rep(NA, K0), 
+                        thetaOutliers=rep(NA, I),
+                        phi=rep(NA, K0),
+                        sdPhi=rep(NA, K0),
                         phiOutliers=rep(NA, K0)
                        )
                   );
@@ -430,7 +430,7 @@ setMethodS3("getFitUnitGroupFunction", "RmaPlm", function(this, ..., verbose=FAL
       if (K > medianPolishThreshold[1] && I > medianPolishThreshold[2] && !hasNAs) {
         mp <- medpolish(y, trace.iter=FALSE);
         fit <- list(
-          Estimates = c(mp$overall+mp$col, mp$row), 
+          Estimates = c(mp$overall+mp$col, mp$row),
           StdErrors = rep(0, length(c(mp$row, mp$col)))
         );
       } else {
@@ -466,7 +466,7 @@ setMethodS3("getFitUnitGroupFunction", "RmaPlm", function(this, ..., verbose=FAL
     # such that prod(phi) = 1.
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    # A fit function must return: theta, sdTheta, thetaOutliers, 
+    # A fit function must return: theta, sdTheta, thetaOutliers,
     # phi, sdPhi, phiOutliers.
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     if (is.null(se)) {
@@ -490,11 +490,11 @@ setMethodS3("getFitUnitGroupFunction", "RmaPlm", function(this, ..., verbose=FAL
         phi0 <- rep(naValue, times=K0);
         phi0[okCells] <- phi;
         phi <- phi0;
-  
+
         sdPhi0 <- rep(naValue, times=K0);
         sdPhi0[okCells] <- sdPhi;
         sdPhi <- sdPhi0;
-  
+
         K <- K0;
       }
     }
@@ -503,7 +503,7 @@ setMethodS3("getFitUnitGroupFunction", "RmaPlm", function(this, ..., verbose=FAL
     phiOutliers <- rep(FALSE, times=K);
 
     # Return data on the intensity scale
-    list(theta=theta, sdTheta=sdTheta, thetaOutliers=thetaOutliers, 
+    list(theta=theta, sdTheta=sdTheta, thetaOutliers=thetaOutliers,
          phi=phi, sdPhi=sdPhi, phiOutliers=phiOutliers);
   } # rmaModelAffyPlm()
   attr(rmaModelAffyPlm, "name") <- "rmaModelAffyPlm";
@@ -524,11 +524,11 @@ setMethodS3("getFitUnitGroupFunction", "RmaPlm", function(this, ..., verbose=FAL
     verbose && cat(verbose, pkg, " version: ", ver);
     if (compareVersion(ver, "1.7.19") >= 0) {
       # HB 2009-05-09:
-      # The API of the native function rma_c_complete_copy() 
-      # has been updated yet again, but the good thing, 
+      # The API of the native function rma_c_complete_copy()
+      # has been updated yet again, but the good thing,
       # there is now a basicRMA() wrapper function.
       fitRma <- function(y, unitNames, nbrOfUnits, ...) {
-        oligo::basicRMA(y, pnVec=unitNames, background=FALSE, 
+        oligo::basicRMA(y, pnVec=unitNames, background=FALSE,
                                             normalize=FALSE, verbose=FALSE);
       } # fitRma()
     } else {
@@ -548,7 +548,7 @@ setMethodS3("getFitUnitGroupFunction", "RmaPlm", function(this, ..., verbose=FAL
     dim <- dim(y);
     if (length(dim) != 2) {
       str(y);
-      stop("Argument 'y' must have two dimensions: ", 
+      stop("Argument 'y' must have two dimensions: ",
                                                 paste(dim, collapse="x"));
     }
 
@@ -561,7 +561,7 @@ setMethodS3("getFitUnitGroupFunction", "RmaPlm", function(this, ..., verbose=FAL
 
       return(list(theta=rep(NA, I),
                   sdTheta=rep(NA, I),
-                  thetaOutliers=rep(NA, I), 
+                  thetaOutliers=rep(NA, I),
                   phi=rep(NA, K),
                   sdPhi=rep(NA, K),
                   phiOutliers=rep(NA, K)
@@ -584,7 +584,7 @@ setMethodS3("getFitUnitGroupFunction", "RmaPlm", function(this, ..., verbose=FAL
 
     # Probe affinities
     alpha <- rep(0, K);  # Not returned by fitRma()!
-      
+
     # Estimates on the intensity scale
     theta <- 2^beta;
     phi <- 2^alpha;
@@ -593,7 +593,7 @@ setMethodS3("getFitUnitGroupFunction", "RmaPlm", function(this, ..., verbose=FAL
     # such that prod(phi) = 1.
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    # A fit function must return: theta, sdTheta, thetaOutliers, 
+    # A fit function must return: theta, sdTheta, thetaOutliers,
     # phi, sdPhi, phiOutliers.
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     sdTheta <- rep(1, I);
@@ -602,7 +602,7 @@ setMethodS3("getFitUnitGroupFunction", "RmaPlm", function(this, ..., verbose=FAL
     phiOutliers <- rep(FALSE, K);
 
     # Return data on the intensity scale
-    list(theta=theta, sdTheta=sdTheta, thetaOutliers=thetaOutliers, 
+    list(theta=theta, sdTheta=sdTheta, thetaOutliers=thetaOutliers,
          phi=phi, sdPhi=sdPhi, phiOutliers=phiOutliers);
   } # rmaModelOligo()
   attr(rmaModelOligo, "name") <- "rmaModelOligo";
@@ -698,7 +698,7 @@ setMethodS3("getCalculateResidualsFunction", "RmaPlm", function(static, ...) {
 ############################################################################
 # HISTORY:
 # 2012-09-05
-# o Now getRlmFitFunctions() of RmaPlm no longer generates a warning 
+# o Now getRlmFitFunctions() of RmaPlm no longer generates a warning
 #   in R CMD check about external .Call():s.
 # 2012-09-01
 # o BUG FIX: getFitUnitGroupFunction() for RmaPlm would throw exception
@@ -707,7 +707,7 @@ setMethodS3("getCalculateResidualsFunction", "RmaPlm", function(static, ...) {
 #   gives a more informative error.
 # 2012-08-21
 # o CLEANUP: Dropped support for obsolete RmaPlm(..., flavor="affyPLMold").
-# o CLEANUP: Now RmaPlm(..., flavor="oligo") no longer supports 
+# o CLEANUP: Now RmaPlm(..., flavor="oligo") no longer supports
 #   oligo (< 1.7.19), which can be considered obsolete version by now.
 # o CLEANUP: getRlmFitFunctions() no longer falls back to affyPLM, which
 #   was really only needed back in 2007.
@@ -726,7 +726,7 @@ setMethodS3("getCalculateResidualsFunction", "RmaPlm", function(static, ...) {
 #   to handle prior parameters as well.
 # 2008-12-04
 # o BUG FIX: flavor='oligo' stopped working awhile ago. Changed the call to
-#   'fitRma()' to the native C code as given by 
+#   'fitRma()' to the native C code as given by
 #   'selectMethod("rma", "FeatureSet")'.
 # 2008-07-13
 # o BUG FIX: plm$treatNAsAs=="NA" returned an incorrect number of probe
@@ -746,21 +746,21 @@ setMethodS3("getCalculateResidualsFunction", "RmaPlm", function(static, ...) {
 # o Renamed the variables such that index I is for samples and K is for
 #   probes, as in the paper.
 # 2007-09-15
-# o Now the RmaPlm fit function detects cases where a probe get weight zero 
+# o Now the RmaPlm fit function detects cases where a probe get weight zero
 #   for all arrays. In such (rare) cases, parameter estimates equals NAs.
 # 2007-04-15
-# o Added first support for weights in fit function.  This requires 
+# o Added first support for weights in fit function.  This requires
 #   affyPLM v1.11.14.  Thanks Ben Bolstad for this.
 # 2007-02-14
 # o Added getCalculateResidualsFunction().
 # 2006-12-12
-# o Confirmed that flavor="oligo" replicates the estimates of the oligo 
+# o Confirmed that flavor="oligo" replicates the estimates of the oligo
 #   package perfectly.
 # o Added argument 'flavor' to constructor to make it possible to specify
-#   what model fitting algorithm to be used.  If other than the default 
+#   what model fitting algorithm to be used.  If other than the default
 #   flavor, a tag is added to indicate what flavor is used.
 # 2006-11-02
-# o Added SE estimates in RmaPlm from Ben's new code. Works with 
+# o Added SE estimates in RmaPlm from Ben's new code. Works with
 #   affyPLM v1.11.6 or newer. /KS
 # 2006-09-26
 # o Added code to use either of the two RMA fit functions.

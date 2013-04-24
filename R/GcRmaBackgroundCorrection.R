@@ -20,7 +20,7 @@
 #       If @NULL and \code{type == "affinities"}, then all non-PM probes
 #       are used as the negative controls.}
 #   \item{affinities}{A @numeric @vector of probe affinities, usually as
-#       calculated by \code{computeAffinities()} of the 
+#       calculated by \code{computeAffinities()} of the
 #       @see "AffymetrixCdfFile" class.}
 #   \item{type}{Type (flavor) of background correction, which can
 #       be either \code{"fullmodel"} (uses MMs; requires that the chip type
@@ -37,12 +37,12 @@
 #  @allmethods "public"
 # }
 #
-# \author{Ken Simpson (ksimpson[at]wehi.edu.au).}
+# @author "KS, HB"
 #*/###########################################################################
 setConstructorS3("GcRmaBackgroundCorrection", function(..., indicesNegativeControl=NULL, affinities=NULL, type=c("fullmodel", "affinities"), opticalAdjust=TRUE, gsbAdjust=TRUE, gsbParameters=NULL) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'indicesNegativeControl':
   if (!is.null(indicesNegativeControl)) {
     indicesNegativeControl <- Arguments$getIndices(indicesNegativeControl);
@@ -153,8 +153,6 @@ setMethodS3("calculateAffinities", "GcRmaBackgroundCorrection", function(this, .
 #  Returns the output data set.
 # }
 #
-# @author
-#
 # \seealso{
 #   @seeclass
 # }
@@ -209,7 +207,7 @@ setMethodS3("process", "GcRmaBackgroundCorrection", function(this, ..., force=FA
   args <- c(list(ds, path=outputPath, verbose=verbose, overwrite=force), params, .deprecated=FALSE);
 
   do.call("bgAdjustGcrma", args=args);
-  
+
   # Garbage collect
   gc <- gc();
   verbose && print(verbose, gc);
@@ -235,7 +233,7 @@ setMethodS3("process", "GcRmaBackgroundCorrection", function(this, ..., force=FA
 #   it uses Affymetrix probe-tab files.
 # 2010-09-26
 # o Added explicit descriptions to the arguments list of the Rdocs.
-# o ROBUSTNESS: Added more validation of the arguments passed to 
+# o ROBUSTNESS: Added more validation of the arguments passed to
 #   the GcRmaBackgroundCorrection constructor.
 # 2007-08-24
 # o BUG FIX: Forgot to pass argument '.deprecated=FALSE' to bgAdjustGcrma()
@@ -243,4 +241,3 @@ setMethodS3("process", "GcRmaBackgroundCorrection", function(this, ..., force=FA
 # 2007-03-21
 # o Created.
 ############################################################################
-

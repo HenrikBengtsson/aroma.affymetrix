@@ -6,7 +6,7 @@
 # \description{
 #  @classhierarchy
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
@@ -18,8 +18,8 @@
 #  @allmethods "public"
 # }
 #
-# @author
-# 
+# @author "HB"
+#
 #*/###########################################################################
 setConstructorS3("AffymetrixCelSetReporter", function(..., .setClass="AffymetrixCelSet") {
   extend(AffymetrixFileSetReporter(..., .setClass=.setClass), "AffymetrixCelSetReporter"
@@ -65,8 +65,6 @@ setMethodS3("as.character", "AffymetrixCelSetReporter", function(x, ...) {
 #  Returns a @see "AffymetrixCelSet".
 # }
 #
-# @author
-#
 # \seealso{
 #   @seeclass
 # }
@@ -90,7 +88,7 @@ setMethodS3("getChipType", "AffymetrixCelSetReporter", function(this, ...) {
 setMethodS3("getPath", "AffymetrixCelSetReporter", function(this, ...) {
   mainPath <- getMainPath(this);
 
-  # Chip type    
+  # Chip type
   chipType <- getChipType(this);
 
   # Get report set

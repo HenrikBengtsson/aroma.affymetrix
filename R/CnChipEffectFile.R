@@ -9,12 +9,12 @@
 #  This class represents estimates of chip effects in a copy-number probe-level
 #  models.
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
 #   \item{...}{Arguments passed to @see "SnpChipEffectFile".}
-#   \item{combineAlleles}{A @logical indicating if the signals from allele A 
+#   \item{combineAlleles}{A @logical indicating if the signals from allele A
 #     and allele B are combined or not.}
 # }
 #
@@ -22,8 +22,8 @@
 #  @allmethods "public"
 # }
 #
-# @author
-# 
+# @author "HB"
+#
 # \seealso{
 #   An object of this class is typically part of a @see "CnChipEffectSet".
 # }
@@ -87,8 +87,6 @@ setMethodS3("getParameters", "CnChipEffectFile", function(this, ...) {
 #   If argument \code{unlist=TRUE} is passed, an @integer @vector is returned.
 # }
 #
-# @author
-#
 # \seealso{
 #   @seeclass
 # }
@@ -133,7 +131,7 @@ setMethodS3("getCellIndices", "CnChipEffectFile", function(this, units=NULL, ...
   if (!force || .cache) {
     chipType <- getChipType(getCdf(this));
     params <- getParameters(this);
-    key <- list(method="getCellIndices", class=class(this)[1L], 
+    key <- list(method="getCellIndices", class=class(this)[1L],
                 chipType=chipType, params=params, units=units, unlist=unlist, ...);
     if (getOption(aromaSettings, "devel/useCacheKeyInterface", FALSE)) {
       key <- getCacheKey(cdf, method="getCellIndices", class=class(this)[1L], chipType=chipType, params=params, units=units, unlist=unlist, ...);
@@ -155,7 +153,7 @@ setMethodS3("getCellIndices", "CnChipEffectFile", function(this, units=NULL, ...
     }
     if (!is.null(res)) {
       size <- object.size(res);
-      verbose && printf(verbose, "Returning value cached %s: %.1fMB\n", 
+      verbose && printf(verbose, "Returning value cached %s: %.1fMB\n",
                                                    where, size/1024^2);
       verbose && exit(verbose);
       return(res);
@@ -176,7 +174,7 @@ setMethodS3("getCellIndices", "CnChipEffectFile", function(this, units=NULL, ...
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 ## NOTE: NextMethod() does not work from within another function
 ##    cells <- NextMethod("getCellIndices", units=unitChunk, force=force, .cache=FALSE, verbose=verbose);
-    cells <- getCellIndices.SnpChipEffectFile(this, units=unitChunk, ..., 
+    cells <- getCellIndices.SnpChipEffectFile(this, units=unitChunk, ...,
               unlist=unlist, force=force, .cache=FALSE, verbose=verbose);
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -232,7 +230,7 @@ setMethodS3("getCellIndices", "CnChipEffectFile", function(this, units=NULL, ...
     # In-memory or on-file cache?
     size <- object.size(cells);
       verbose && printf(verbose, "Object size: %.1fMB\n", size/1024^2);
-    if (size < 10e6) { 
+    if (size < 10e6) {
       # In-memory cache for objects < 10Mb.
       this$.cellIndices <- list();
       this$.cellIndices[[id]] <- cells;
@@ -333,7 +331,7 @@ setMethodS3("getNumberOfFilesAveraged", "CnChipEffectFile", function(this, ..., 
   verbose && str(verbose, cells);
 
   verbose && enter(verbose, "Reading data");
-  data <- readCel(pathname, indices=cells, readIntensities=FALSE, 
+  data <- readCel(pathname, indices=cells, readIntensities=FALSE,
                   readPixels=TRUE);
   verbose && exit(verbose);
 
@@ -362,7 +360,7 @@ setMethodS3("getNumberOfFilesAveraged", "CnChipEffectFile", function(this, ..., 
 # o BUG FIX: getCellIndices() of CnChipEffectFile would return an error
 #   if 'units==NULL'.
 # 2007-03-01
-# o BUG FIX: getCellIndices() would give "Error in fcn(.subset2(unit, 
+# o BUG FIX: getCellIndices() would give "Error in fcn(.subset2(unit,
 #   "groups"), ...) : object "odds" not found" for units with other than
 #   1, 2, or 4 groups.
 # 2007-01-20

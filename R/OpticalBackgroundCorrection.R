@@ -21,7 +21,7 @@
 #  @allmethods "public"
 # }
 #
-# \author{Ken Simpson (ksimpson[at]wehi.edu.au).}
+# @author "KS"
 #*/###########################################################################
 setConstructorS3("OpticalBackgroundCorrection", function(..., minimum=1) {
   extend(BackgroundCorrection(..., typesToUpdate="pmmm"),
@@ -68,8 +68,6 @@ setMethodS3("getParameters", "OpticalBackgroundCorrection", function(this, ...) 
 #  Returns the output data set.
 # }
 #
-# @author
-#
 # \seealso{
 #   @seeclass
 # }
@@ -90,7 +88,7 @@ setMethodS3("process", "OpticalBackgroundCorrection", function(this, ..., force=
     outputDataSet <- getOutputDataSet(this);
     return(outputDataSet);
   }
-  
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Setup
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -10,31 +10,29 @@
 #  effects in the probe intensities due to differences in the number of
 #  A, C, G, and T:s and the match scores according to MAT [1].
 # }
-# 
-# @synopsis 
+#
+# @synopsis
 #
 # \arguments{
-#   \item{...}{Arguments passed to the constructor of 
+#   \item{...}{Arguments passed to the constructor of
 #     @see "AbstractProbeSequenceNormalization".}
 #   \item{unitsToFit}{The units from which the normalization curve should
 #     be estimated.  If @NULL, all are considered.}
-#   \item{model}{A @character string specifying the model used to fit 
+#   \item{model}{A @character string specifying the model used to fit
 #     the base-count effects.}
 #   \item{nbrOfBins}{The number of bins to use for the variance smoothing step.}
 # }
 #
 # \section{Fields and Methods}{
-#  @allmethods "public"  
+#  @allmethods "public"
 # }
-# 
+#
 # \section{Requirements}{
 #   This class requires that an aroma probe sequence file and aroma
 #   match scores file is available for the chip type.
 # }
-# 
-# \author{
-#   Mark Robinson, WEHI.
-# }
+#
+# @author "MR"
 #
 # \references{
 #   [1] Johnson WE, Li W, Meyer CA, Gottardo R, Carroll JS, Brown M, Liu XS.
@@ -143,28 +141,28 @@ setMethodS3("getDesignMatrix", "MatNormalization", function(this, cells=NULL, mo
   # Locate AromaCellMatchScoreFile holding match scores
   apm <- getAromaCellMatchScoreFile(this, verbose=less(verbose, 5));
   verbose && exit(verbose);
-  
+
   verbose && enter(verbose, "Reading sequence matrix");
   sm <- readSequenceMatrix(aps, cells=cells, verbose=verbose);
   verbose && exit(verbose);
   verbose && enter(verbose, "Reading match scores");
   ms <- readColumns(apm, rows=cells, verbose=verbose);
   verbose && exit(verbose);
-  
+
   verbose && enter(verbose, "Constructing design matrix");
   nT <- rowSums(sm == "T");
   G <- (sm == "G")+0;
   A <- (sm == "A")+0;
   C <- (sm == "C")+0;
   designMatrix <- cbind(nT, A, C, G, rowSums(A)^2, rowSums(C)^2, rowSums(G)^2, nT^2, log(as.integer(ms[,1])));
-  
+
   # Garbage collect
   rm(nT,G,A,C,ms,sm);
   gc <- gc();
   verbose && print(verbose, gc);
-  
+
   verbose && str(verbose, designMatrix);
-  verbose && cat(verbose, "object.size(designMatrix): ", 
+  verbose && cat(verbose, "object.size(designMatrix): ",
                                              object.size(designMatrix));
   verbose && exit(verbose);
 
@@ -207,7 +205,7 @@ setMethodS3("fitOne", "MatNormalization", function(this, df, ram=NULL, ..., verb
   verbose && str(verbose, cellsToFit);
   verbose && exit(verbose);
 
-  # this code adopted from Dave Fourniers 17/08/2007 post to r-help 
+  # this code adopted from Dave Fourniers 17/08/2007 post to r-help
   # mailing list entitled "[R] Linear models over large datasets"
 
   # Calculate the number of cells to process per chunk. It should:
@@ -222,7 +220,7 @@ setMethodS3("fitOne", "MatNormalization", function(this, df, ram=NULL, ..., verb
 
   nbrOfChunks <- ceiling(nbrOfCells / cellsPerChunk);
   verbose && cat(verbose, "Number cells per chunk: ", cellsPerChunk);
-  
+
   verbose && enter(verbose, "Reading signals to fit");
   y <- extractMatrix(df, cells=cellsToFit, verbose=less(verbose, 10));
   verbose && exit(verbose);
@@ -232,14 +230,14 @@ setMethodS3("fitOne", "MatNormalization", function(this, df, ram=NULL, ..., verb
   verbose && cat(verbose, "Target log2 probe signals:");
   verbose && str(verbose, y);
   verbose && exit(verbose);
- 
+
   start <- 0L;
   xtx <- xty <- 0;
 
   chunk <- 1L;
   while (start < nbrOfCells) {
     verbose && enter(verbose, sprintf("Chunk #%d of %d", chunk, nbrOfChunks));
-  
+
     verbose && enter(verbose, "Working on indices over range");
     from <- start + 1L;
     to <- min(start+cellsPerChunk, nbrOfCells);
@@ -263,7 +261,7 @@ setMethodS3("fitOne", "MatNormalization", function(this, df, ram=NULL, ..., verb
     chunk <- chunk + 1L;
     verbose && exit(verbose);
   } # while (...)
-  
+
   verbose && enter(verbose, "Solving normal equations");
   #fit <- list(xtx=xtx, xty=xty) #,beta=solve(xtx, xty))
   verbose && exit(verbose);
@@ -296,12 +294,12 @@ setMethodS3("predictOne", "MatNormalization", function(this, fit, ram=NULL, ...,
   # Locate AromaCellMatchScoreFile holding match scores
   apm <- getAromaCellMatchScoreFile(this, verbose=less(verbose, 5));
   verbose && exit(verbose);
-  
+
   verbose && enter(verbose, "Allocating mu vector");
   mu <- double(nbrOfCells(aps));
   verbose && str(verbose, mu);
   verbose && exit(verbose);
-  
+
   verbose && enter(verbose, "Reading 'non-missing' cells to predict");
   cellsToPredict <- which( !(isMissing(aps) | isMissing(apm)) );
   nbrOfCells <- length(cellsToPredict);
@@ -323,7 +321,7 @@ setMethodS3("predictOne", "MatNormalization", function(this, fit, ram=NULL, ...,
   verbose && cat(verbose, "Number cells per chunk: ", cellsPerChunk);
 
   start <- 0L;
-     
+
   chunk <- 1L;
   while (start < nbrOfCells) {
     verbose && enter(verbose, sprintf("Chunk #%d of %d", chunk, nbrOfChunks));
@@ -350,10 +348,10 @@ setMethodS3("predictOne", "MatNormalization", function(this, fit, ram=NULL, ...,
     chunk <- chunk + 1L;
     verbose && exit(verbose);
   } # while (...)
-  
+
   rm(X,indSubset);
   gc <- gc();
-  
+
   #nbrOfBins <- this$.nbrOfBins
   #q <- quantile(mu[cellsToPredict],prob=(0:nbrOfBins)/nbrOfBins)
   #cuts<-cut(mu[cellsToPredict],breaks=q,labels=1:(length(q)-1))  # define
@@ -381,7 +379,7 @@ setMethodS3("predictOne", "MatNormalization", function(this, fit, ram=NULL, ...,
 #
 # \arguments{
 #   \item{...}{Not used.}
-#   \item{force}{If @TRUE, data already normalized is re-normalized, 
+#   \item{force}{If @TRUE, data already normalized is re-normalized,
 #       otherwise not.}
 #   \item{verbose}{See @see "R.utils::Verbose".}
 # }
@@ -389,8 +387,6 @@ setMethodS3("predictOne", "MatNormalization", function(this, fit, ram=NULL, ...,
 # \value{
 #  Returns a @double @vector.
 # }
-#
-# @author
 #
 # \seealso{
 #   @seeclass
@@ -447,7 +443,7 @@ setMethodS3("process", "MatNormalization", function(this, ..., ram=NULL, force=F
   verbose && str(verbose, cellsToFit);
   verbose && exit(verbose);
 
-  
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Normalize all arrays simultaneously
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -457,7 +453,7 @@ setMethodS3("process", "MatNormalization", function(this, ..., ram=NULL, force=F
 
   df <- getOneFile(ds);
   nbrOfCells <- nbrOfCells(df);
-  
+
   xtx <- 0;
   xtyList <- as.list(double(nbrOfArrays));
 
@@ -473,11 +469,11 @@ setMethodS3("process", "MatNormalization", function(this, ..., ram=NULL, force=F
   ## In aroma.affymetrix v1.9.4 and before, the number of cells processed
   ## per chunk increase with the total number of cells. /HB 2011-02-15
   ## cellsPerChunk <- ceiling(nbrOfCells/numChunks) + 1;
-  
+
   nbrOfChunks <- ceiling(nbrOfCells / cellsPerChunk);
   verbose && cat(verbose, "Number cells per chunk: ", cellsPerChunk);
 
-  idxs <- 1:nbrOfCells; 
+  idxs <- 1:nbrOfCells;
   head <- 1:cellsPerChunk;
   count <- 1L;
   while (length(idxs) > 0) {
@@ -489,7 +485,7 @@ setMethodS3("process", "MatNormalization", function(this, ..., ram=NULL, force=F
 
     verbose && cat(verbose, "Cells: ");
     verbose && str(verbose, cellsToFit[cc]);
- 
+
     verbose && enter(verbose, "Reading design matrix");
     X <- getDesignMatrix(this, cells=cellsToFit[cc], verbose=verbose);
     verbose && exit(verbose);
@@ -501,7 +497,7 @@ setMethodS3("process", "MatNormalization", function(this, ..., ram=NULL, force=F
     verbose && enter(verbose, "Calculating cross product X'y for each array");
     for (ii in seq_len(nbrOfArrays)) {
       df <- getFile(ds, ii);
-      verbose && enter(verbose, sprintf("Array #%d ('%s') of %d", 
+      verbose && enter(verbose, sprintf("Array #%d ('%s') of %d",
                                           ii, getName(df), nbrOfArrays));
 
       y <- extractMatrix(df, cells=cellsToFit[cc], verbose=verbose);
@@ -519,7 +515,7 @@ setMethodS3("process", "MatNormalization", function(this, ..., ram=NULL, force=F
     rm(X);
 
     # Next chunk
-    idxs <- idxs[-head]; 
+    idxs <- idxs[-head];
     count <- count + 1L;
 
     verbose && exit(verbose);
@@ -540,17 +536,17 @@ setMethodS3("process", "MatNormalization", function(this, ..., ram=NULL, force=F
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   for (ii in seq_len(nbrOfArrays)) {
     df <- getFile(ds, ii);
-    verbose && enter(verbose, sprintf("Array #%d ('%s') of %d", 
+    verbose && enter(verbose, sprintf("Array #%d ('%s') of %d",
                                               ii, getName(df), nbrOfArrays));
 
     fullname <- getFullName(df);
 
-    # Store model fit 
+    # Store model fit
     verbose && enter(verbose, "Saving model fit");
     # Store fit and parameters (in case someone are interested in looking
     # at them later; no promises of backward compatibility though).
     filename <- sprintf("%s,fit.RData", fullname);
-    fitPathname <- Arguments$getWritablePathname(filename, 
+    fitPathname <- Arguments$getWritablePathname(filename,
                                                     path=outputPath, ...);
     saveObject(fits[[ii]], file=fitPathname);
     verbose && str(verbose, fits[[ii]], level=-50);
@@ -579,7 +575,7 @@ setMethodS3("process", "MatNormalization", function(this, ..., ram=NULL, force=F
   ## In aroma.affymetrix v1.9.4 and before, the number of cells processed
   ## per chunk increase with the total number of cells. /HB 2011-02-15
   ## cellsPerChunk <- ceiling(nbrOfCells/numChunks) + 1;
-  
+
   nbrOfChunks <- ceiling(nbrOfCells / cellsPerChunk);
   verbose && cat(verbose, "Number cells per chunk: ", cellsPerChunk);
 
@@ -587,7 +583,7 @@ setMethodS3("process", "MatNormalization", function(this, ..., ram=NULL, force=F
   xtx <- 0;
   mu <- vector("list", length=nbrOfArrays);
 
-  count <- 1L;  
+  count <- 1L;
   while (start < nbrOfCells) {
     verbose && enter(verbose, sprintf("Fitting chunk #%d of %d", count, nbrOfChunks));
 
@@ -615,7 +611,7 @@ setMethodS3("process", "MatNormalization", function(this, ..., ram=NULL, force=F
     verbose && enter(verbose, "Processing ", nbrOfArrays, " arrays");
     for (ii in seq_len(nbrOfArrays)) {
       df <- getFile(ds, ii);
-      verbose && enter(verbose, sprintf("Array #%d ('%s') of %d", 
+      verbose && enter(verbose, sprintf("Array #%d ('%s') of %d",
                                               ii, getName(df), nbrOfArrays));
 
       mu <- X %*% fits[[ii]]$beta;
@@ -711,7 +707,7 @@ setMethodS3("process", "MatNormalization", function(this, ..., ram=NULL, force=F
   outputDataSet <- getOutputDataSet(this, force=TRUE);
 
   verbose && exit(verbose);
-  
+
   invisible(outputDataSet);
 })
 

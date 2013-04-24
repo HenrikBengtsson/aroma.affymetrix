@@ -30,7 +30,7 @@
   cells read, and \eqn{K} is the number of arrays in the data set.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{AffymetrixCelSet}}.

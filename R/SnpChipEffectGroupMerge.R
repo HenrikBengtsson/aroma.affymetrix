@@ -9,8 +9,8 @@
 #  This class represents a method that merges SNP chip effects across groups
 #  unit by unit.
 # }
-# 
-# @synopsis 
+#
+# @synopsis
 #
 # \arguments{
 #   \item{...}{Arguments passed to the constructor of
@@ -21,17 +21,17 @@
 # }
 #
 # \section{Fields and Methods}{
-#  @allmethods "public"  
+#  @allmethods "public"
 # }
-# 
-# @author
+#
+# @author "HB"
 #
 # @keyword "internal"
 #*/###########################################################################
 setConstructorS3("SnpChipEffectGroupMerge", function(..., mergeStrands=FALSE, mean=c("arithmetic", "geometric")) {
   # Argument 'mean':
   mean <- match.arg(mean);
-  
+
   extend(ChipEffectGroupMerge(...), "SnpChipEffectGroupMerge",
     mergeStrands = mergeStrands,
     .mean = mean
@@ -79,7 +79,7 @@ setMethodS3("getMergeFunction", "SnpChipEffectGroupMerge", function(this, ...) {
       }
     }
   }
-  
+
   fcn;
 })
 

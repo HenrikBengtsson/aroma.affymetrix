@@ -1,3 +1,4 @@
+# @author "HB"
 setMethodS3("extractSnpFeatureSet", "AffymetrixCelSet", function(this, ..., verbose=FALSE) {
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
@@ -19,4 +20,4 @@ setMethodS3("extractSnpFeatureSet", "AffymetrixCelSet", function(this, ..., verb
 # HISTORY:
 # 2009-10-16
 # o Created.
-############################################################################ 
+############################################################################

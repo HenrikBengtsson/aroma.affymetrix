@@ -6,15 +6,15 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
- \name{AffineCnPlm}
+\name{AffineCnPlm}
 \docType{class}
 \alias{AffineCnPlm}
 
 
- \title{The AffineCnPlm class}
+\title{The AffineCnPlm class}
 
- \description{
-  Package:  aroma.affymetrix \cr
+\description{
+ Package:  aroma.affymetrix \cr
 \bold{Class AffineCnPlm}\cr
 
 \code{\link[R.oo]{Object}}\cr
@@ -46,20 +46,20 @@ public abstract static class \bold{AffineCnPlm}\cr
 extends \link[aroma.affymetrix]{CnPlm}\cr
 
 
- }
+}
 
- \usage{
+\usage{
 AffineCnPlm(..., combineAlleles=FALSE)
 }
 
- \arguments{
-   \item{...}{Arguments passed to \code{\link{AffineSnpPlm}}.}
-   \item{combineAlleles}{If \code{\link[base:logical]{FALSE}}, allele A and allele B are treated
-      seperately, otherwise together.}
- }
+\arguments{
+  \item{...}{Arguments passed to \code{\link{AffineSnpPlm}}.}
+  \item{combineAlleles}{If \code{\link[base:logical]{FALSE}}, allele A and allele B are treated
+     seperately, otherwise together.}
+}
 
- \section{Fields and Methods}{
-  \bold{Methods:}\cr
+\section{Fields and Methods}{
+ \bold{Methods:}\cr
 \emph{No methods defined}.
 
 
@@ -88,13 +88,13 @@ findUnitsTodo, getAsteriskTags, getFitSingleCellUnitFunction, getParameters
 as.character, fit, getAlias, getAsteriskTags, getDataSet, getFullName, getName, getParameterSet, getPath, getRootPath, getTags, setAlias, setTags
 
  \bold{Methods inherited from ParametersInterface}:\cr
-getParameters, getParametersAsString, getParameterSets
+getParameterSets, getParameters, getParametersAsString
 
  \bold{Methods inherited from Object}:\cr
 $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save, asThis
 
 
- }
+}
 
- \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 \keyword{classes}

@@ -39,7 +39,7 @@
  \emph{Note: The rows are ordered according to chromosomal position.}
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[aroma.affymetrix:getAM.ChipEffectSet]{*getAM}()}.

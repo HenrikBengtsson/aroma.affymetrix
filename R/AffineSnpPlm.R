@@ -6,7 +6,7 @@
 # \description{
 #  @classhierarchy
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
@@ -19,8 +19,7 @@
 #  @allmethods "public"
 # }
 #
-# @author
-#
+# @author "HB"
 #*/###########################################################################
 setConstructorS3("AffineSnpPlm", function(..., mergeStrands=FALSE) {
   extend(AffinePlm(...), c("AffineSnpPlm", uses(SnpPlm())),
@@ -39,10 +38,10 @@ setMethodS3("getAsteriskTags", "AffineSnpPlm", function(this, collapse=NULL, ...
     tags <- c(tags, "+-");
 
   # Collapse
-  tags <- paste(tags, collapse=collapse); 
+  tags <- paste(tags, collapse=collapse);
 
   tags;
-}, protected=TRUE) 
+}, protected=TRUE)
 
 
 ############################################################################

@@ -29,8 +29,6 @@
  Returns an \code{\link{AffymetrixCdfFile}} object.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
-
 \seealso{
   \code{\link[aroma.affymetrix:setCdf.CnagCfhSet]{*setCdf}()}.
   For more information see \code{\link{CnagCfhSet}}.

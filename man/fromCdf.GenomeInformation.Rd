@@ -35,8 +35,6 @@
   Returns a \code{\link{GenomeInformation}} object.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
-
 \seealso{
   \code{\link[aroma.affymetrix:byChipType.GenomeInformation]{*byChipType}()}.
   For more information see \code{\link{GenomeInformation}}.

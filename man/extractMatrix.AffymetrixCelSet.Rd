@@ -39,7 +39,7 @@
  The rows are ordered according to \code{cells} argument.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson, Mark Robinson}
 
 \seealso{
   For more information see \code{\link{AffymetrixCelSet}}.

@@ -30,7 +30,7 @@
 #  Returns the normalized @see "AffymetrixCelFile" object.
 # }
 #
-# @author
+# @author "HB, KS"
 #
 # \seealso{
 #   @see "aroma.light::normalizeQuantile.numeric"
@@ -39,7 +39,7 @@
 #*/###########################################################################
 setMethodS3("normalizeQuantile", "AffymetrixCelFile", function(this, path=file.path("normQuantile", getChipType(this)), xTarget, subsetToUpdate=NULL, typesToUpdate=NULL, ..., overwrite=FALSE, skip=!overwrite, verbose=FALSE) {
   # Load aroma.light::normalizeQuantile()
-  require("aroma.light") || throw("Package aroma.light not loaded."); 
+  require("aroma.light") || throw("Package aroma.light not loaded.");
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
@@ -55,7 +55,7 @@ setMethodS3("normalizeQuantile", "AffymetrixCelFile", function(this, path=file.p
   nbrOfCells <- nbrOfCells(cdf);
 
   # Argument 'subsetToUpdate':
-  getFraction <- (length(subsetToUpdate) == 1) && 
+  getFraction <- (length(subsetToUpdate) == 1) &&
                                (subsetToUpdate >= 0) && (subsetToUpdate < 1);
   if (!getFraction) {
     subsetToUpdate <- Arguments$getIndices(subsetToUpdate, max=nbrOfCells);
@@ -74,7 +74,7 @@ setMethodS3("normalizeQuantile", "AffymetrixCelFile", function(this, path=file.p
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   filename <- basename(getPathname(this));
   filename <- gsub("[.]cel$", ".CEL", filename);  # Only output upper case!
-  pathname <- Arguments$getWritablePathname(filename, path=path, 
+  pathname <- Arguments$getWritablePathname(filename, path=path,
                                          mustNotExist=(!overwrite && !skip));
   pathname <- AffymetrixFile$renameToUpperCaseExt(pathname);
 
@@ -96,7 +96,7 @@ setMethodS3("normalizeQuantile", "AffymetrixCelFile", function(this, path=file.p
   # Identify the subset of probes to be updated?
   if (getFraction || !is.null(typesToUpdate)) {
     verbose && enter(verbose, "Identifying probes to be updated");
-    subsetToUpdate <- identifyCells(cdf, indices=subsetToUpdate, 
+    subsetToUpdate <- identifyCells(cdf, indices=subsetToUpdate,
                                 types=typesToUpdate, verbose=less(verbose));
     verbose && exit(verbose);
   }
@@ -162,7 +162,7 @@ setMethodS3("normalizeQuantile", "AffymetrixCelFile", function(this, path=file.p
 # o BUG FIX:  fitQuantileNormFcn() returned a function that when called with
 #   x values forcing extrapolation, error "Error in Recall(object, xrange) :
 #   couldn't find function "predict.smooth.spline.fit" would be thrown.
-#   This is because you cannot do predict(sp$fit, ...) but only 
+#   This is because you cannot do predict(sp$fit, ...) but only
 #   predict(sp, ...).  Why I don't really know; probably about namespaces.
 # 2006-03-18
 # o Added argument 'subset' to fitQuantileNormFcn().

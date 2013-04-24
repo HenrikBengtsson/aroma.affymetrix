@@ -39,7 +39,7 @@
  first two columns, and remaining data in the following columns.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[aroma.affymetrix:plotMvsA.AffymetrixCelFile]{*plotMvsA}()}.

@@ -1,5 +1,6 @@
+# @author "HB"
 setConstructorS3("AffymetrixTabularFile", function(...) {
-  extend(TabularTextFile(...), c("AffymetrixTabularFile", 
+  extend(TabularTextFile(...), c("AffymetrixTabularFile",
               uses("AromaPlatformInterface"), uses("FileCacheKeyInterface"))
   );
 })
@@ -50,7 +51,7 @@ setMethodS3("byChipType", "AffymetrixTabularFile", function(static, chipType, ta
 # 2008-04-25
 # o Now byChipType() passes '...' to the constructor, e.g. 'verbose'.
 # 2007-09-16
-# o Now AffymetrixTabularFile reports the translated/cleaned up column 
+# o Now AffymetrixTabularFile reports the translated/cleaned up column
 #   names.  Column names on the file can be retrieved from getHeader().
 # o Now colnames() returns column names in camelCase.
 # 2007-09-14

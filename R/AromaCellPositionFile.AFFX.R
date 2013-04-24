@@ -1,3 +1,4 @@
+# @author "MR, HB"
 setMethodS3("allocateFromCdf", "AromaCellPositionFile", function(static, cdf, path=NULL, tags="*", ...) {
   # Argument 'cdf':
   cdf <- Arguments$getInstanceOf(cdf, "AffymetrixCdfFile");
@@ -25,7 +26,7 @@ setMethodS3("allocateFromCdf", "AromaCellPositionFile", function(static, cdf, pa
   fullname <- paste(c(chipType, tags), collapse=",");
   ext <- getFilenameExtension(static);
   filename <- sprintf("%s.%s", fullname, ext);
-  allocate(static, filename=filename, path=path, nbrOfCells=nbrOfCells, 
+  allocate(static, filename=filename, path=path, nbrOfCells=nbrOfCells,
       platform=platform, chipType=chipType, ...);
 }, static=TRUE)
 

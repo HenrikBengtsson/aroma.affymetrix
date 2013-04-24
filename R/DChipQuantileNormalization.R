@@ -6,21 +6,21 @@
 # \description{
 #  @classhierarchy
 #
-#  This class represents a special @see "QuantileNormalization" 
+#  This class represents a special @see "QuantileNormalization"
 #  using smooth-splines.
 # }
-# 
-# @synopsis 
+#
+# @synopsis
 #
 # \arguments{
-#   \item{...}{Arguments passed to the constructor of 
+#   \item{...}{Arguments passed to the constructor of
 #       @see "QuantileNormalization".}
-#   \item{robust}{If @TRUE, the normalization function is estimated 
+#   \item{robust}{If @TRUE, the normalization function is estimated
 #       robustly, otherwise not.}
 # }
 #
 # \section{Fields and Methods}{
-#  @allmethods "public"  
+#  @allmethods "public"
 # }
 #
 # \details{
@@ -29,12 +29,12 @@
 # }
 #
 # \references{
-#   [1] H. Bengtsson, R. Irizarry, B. Carvalho, & T.P. Speed. 
-#       Estimation and assessment of raw copy numbers at the single 
-#       locus level, Bioinformatics, 2008. 
+#   [1] H. Bengtsson, R. Irizarry, B. Carvalho, & T.P. Speed.
+#       Estimation and assessment of raw copy numbers at the single
+#       locus level, Bioinformatics, 2008.
 # }
-# 
-# @author
+#
+# @author "HB"
 #*/###########################################################################
 setConstructorS3("DChipQuantileNormalization", function(..., robust=FALSE) {
   # Arguments 'robust':
@@ -54,7 +54,7 @@ setMethodS3("as.character", "DChipQuantileNormalization", function(x, ...) {
   s <- NextMethod("as.character");
   nExcl <- length(getExclCells(this));
   n <- nbrOfCells(getCdf(getInputDataSet(this)));
-  s <- c(s, sprintf("Number of cells excluded (when fitting): %d (%.1f%%)", 
+  s <- c(s, sprintf("Number of cells excluded (when fitting): %d (%.1f%%)",
                                                          nExcl, 100*nExcl/n));
   class(s) <- "GenericSummary";
   s;
@@ -135,9 +135,9 @@ setMethodS3("excludeChrXFromFit", "DChipQuantileNormalization", function(this, .
 # @synopsis
 #
 # \arguments{
-#   \item{...}{Arguments passed to 
+#   \item{...}{Arguments passed to
 #       @see "aroma.light::normalizeQuantileSpline.numeric".}
-#   \item{force}{If @TRUE, data already normalized is re-normalized, 
+#   \item{force}{If @TRUE, data already normalized is re-normalized,
 #       otherwise not.}
 #   \item{verbose}{See @see "R.utils::Verbose".}
 # }
@@ -145,8 +145,6 @@ setMethodS3("excludeChrXFromFit", "DChipQuantileNormalization", function(this, .
 # \value{
 #  Returns a @double @vector.
 # }
-#
-# @author
 #
 # \seealso{
 #   @seeclass
@@ -211,7 +209,7 @@ setMethodS3("process", "DChipQuantileNormalization", function(this, ..., force=F
   verbose && str(verbose, params$typesToUpdate);
   verbose && cat(verbose, "subsetToUpdate: ");
   verbose && str(verbose, params$subsetToUpdate);
-  subsetToUpdate <- identifyCells(cdf, indices=params$subsetToUpdate, 
+  subsetToUpdate <- identifyCells(cdf, indices=params$subsetToUpdate,
                          types=params$typesToUpdate, verbose=less(verbose));
   verbose && str(verbose, subsetToUpdate);
 
@@ -230,7 +228,7 @@ setMethodS3("process", "DChipQuantileNormalization", function(this, ..., force=F
 
     # Standardize weights to sum to one.
     w <- w / sum(w, na.rm=TRUE);
-    verbose && printf(verbose, "Cell weights (sum = %.2f):\n", 
+    verbose && printf(verbose, "Cell weights (sum = %.2f):\n",
                                                      sum(w, na.rm=TRUE));
     verbose && summary(verbose, w);
     verbose && exit(verbose);
@@ -260,7 +258,7 @@ setMethodS3("process", "DChipQuantileNormalization", function(this, ..., force=F
     filename <- gsub("[.]cel$", ".CEL", filename);  # Only output upper case!
     pathname <- Arguments$getWritablePathname(filename, path=outputPath);
     pathname <- AffymetrixFile$renameToUpperCaseExt(pathname);
-  
+
     # Already normalized?
     if (isFile(pathname) && skip) {
       verbose && cat(verbose, "Normalized data file already exists: ",
@@ -270,7 +268,7 @@ setMethodS3("process", "DChipQuantileNormalization", function(this, ..., force=F
       verbose && exit(verbose);
       next;
     }
-  
+
     # Get all probe signals
     verbose && enter(verbose, "Reading probe intensities");
     x <- getData(df, indices=subsetToUpdate, fields="intensities",
@@ -281,11 +279,11 @@ setMethodS3("process", "DChipQuantileNormalization", function(this, ..., force=F
     # Garbage collect
     gc <- gc();
     verbose && print(verbose, gc);
-  
+
     # TO DO: Add function to "expand" 'xTarget' if of different length
     # than 'x' and 'w'.  /HB 2007-04-11, 2008-02-23
 
-    x <- normalizeQuantileSpline(x, w=w, xTarget=xTarget, 
+    x <- normalizeQuantileSpline(x, w=w, xTarget=xTarget,
                                        sortTarget=FALSE, robust=robust, ...);
 
     # Garbage collect
@@ -315,13 +313,13 @@ setMethodS3("process", "DChipQuantileNormalization", function(this, ..., force=F
 
     # Return new normalized data file object
     dataFiles[[kk]] <- fromFile(df, pathname);
-    
+
     verbose && exit(verbose);
   } # for (kk ...)
   verbose && exit(verbose);
 
   # Not needed anymore
-  rm(w); 
+  rm(w);
 
   # Garbage collection
   gc <- gc();
@@ -335,7 +333,7 @@ setMethodS3("process", "DChipQuantileNormalization", function(this, ..., force=F
   this$outputDataSet <- outputDataSet;
 
   verbose && exit(verbose);
-  
+
   outputDataSet;
 })
 

@@ -1,3 +1,4 @@
+# @author "HB"
 setConstructorS3("AromaPipeline", function(dataSet=NULL, ..., .class=NULL) {
   # Argument 'dataSet':
   if (!is.null(dataSet)) {

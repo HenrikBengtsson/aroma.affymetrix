@@ -9,7 +9,7 @@
 #  This class represents weights calculated from residuals of
 #  probe-level models.
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
@@ -21,8 +21,8 @@
 #  @allmethods "public"
 # }
 #
-# @author
-# 
+# @author "HB, KS"
+#
 # \seealso{
 #   An object of this class is typically obtained through the
 #   \code{getWeightsSet()} method for the @see "ProbeLevelModel" class.
@@ -44,16 +44,16 @@ setConstructorS3("WeightsFile", function(..., probeModel=c("pm")) {
   setEncodeFunction(this, function(groupData, ...) {
     wts <- .subset2(groupData, "wts");
     wtsStdvs <- .subset2(groupData, "wtsStdvs");
-  
+
     res <- list();
     if (!is.null(wts))
       res$intensities <- wts;
     if (!is.null(wtsStdvs))
       res$stdvs <- wtsStdvs;
-  
+
     res;
   })
-  
+
   setDecodeFunction(this, function(groupData, ...) {
     res <- list();
     if (!is.null(groupData$intensities))
@@ -116,18 +116,18 @@ setMethodS3("fromDataFile", "WeightsFile", function(static, df=NULL, filename=sp
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Backward compatibility patch for now. Before residual files
-  # only carried on the sample name, but not the tags. If such a 
-  # file is detected, it is renamed. 
+  # only carried on the sample name, but not the tags. If such a
+  # file is detected, it is renamed.
   # This should be removed in future versions. /HB 2007-01-10
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   verbose && cat(verbose, "Pathname: ", pathname);
   res <- createFrom(df, filename=pathname, methods="create", clear=TRUE, ...);
 
-  # Don't forget to return a ResidualFile object  
+  # Don't forget to return a ResidualFile object
   res <- fromFile(static, filename=pathname, verbose=less(verbose));
   # Inherit the CDF?
-  if (!is.null(cdf)) 
-    setCdf(res, cdf); 
+  if (!is.null(cdf))
+    setCdf(res, cdf);
   verbose && print(verbose, res);
 
   res;
@@ -141,7 +141,7 @@ setMethodS3("readUnits", "WeightsFile", function(this, units=NULL, cdf=NULL, ...
 
 
   # Check for cached data
-  key <- list(method="readUnits", class=class(this)[1], 
+  key <- list(method="readUnits", class=class(this)[1],
               pathname=getPathname(this),
               cdf=cdf, units=units, ...);
   if (getOption(aromaSettings, "devel/useCacheKeyInterface", FALSE)) {
@@ -198,8 +198,6 @@ setMethodS3("readUnits", "WeightsFile", function(this, units=NULL, cdf=NULL, ...
 #   If argument \code{unlist=TRUE} is passed, an @integer @vector is returned.
 # }
 #
-# @author
-#
 # \seealso{
 #   @seeclass
 # }
@@ -238,7 +236,7 @@ setMethodS3("findUnitsTodo", "WeightsFile", function(this, units=NULL, ..., forc
     # Look up chip-type and parameter specific but data set independent data
     cdf <- getCdf(this);
     chipType <- getChipType(cdf);
-    key <- list(method="findUnitsTodo", class=class(this)[1], 
+    key <- list(method="findUnitsTodo", class=class(this)[1],
                 chipType=chipType, params=getParameters(this));
     dirs <- c("aroma.affymetrix", chipType);
     if (!force) {
@@ -250,11 +248,11 @@ setMethodS3("findUnitsTodo", "WeightsFile", function(this, units=NULL, ..., forc
 
   if (is.null(idxs)) {
     verbose && enter(verbose, "Identifying CDF units");
-  
+
     verbose && enter(verbose, "Reading CDF cell indices");
     idxs <- getCellIndices(this, units=units, verbose=less(verbose));
     verbose && exit(verbose);
-  
+
     verbose && enter(verbose, "Extracting first cell in the first block for each unit");
     idxs <- applyCdfGroups(idxs, function(groups) {
       # == groups[[1]]$indices[1];
@@ -275,7 +273,7 @@ setMethodS3("findUnitsTodo", "WeightsFile", function(this, units=NULL, ..., forc
 
   # Read one cell from each unit
   verbose && enter(verbose, "Reading data for these ", length(idxs), " cells");
-  value <- readCel(getPathname(this), indices=idxs, readIntensities=FALSE, 
+  value <- readCel(getPathname(this), indices=idxs, readIntensities=FALSE,
                    readStdvs=TRUE, readPixels=FALSE)$stdvs;
   verbose && exit(verbose);
 
@@ -342,7 +340,7 @@ setMethodS3("getUnitGroupCellMap", "WeightsFile", function(this, units=NULL, ...
   unitSizes <- unlist(base::lapply(cells, FUN=length), use.names=FALSE);
   cells <- unlist(cells, use.names=FALSE);
   verbose && exit(verbose);
-  
+
   verbose && enter(verbose, "Creating return data frame");
   uUnitSizes <- unique(unitSizes);
   if (is.null(units)) {
@@ -431,7 +429,7 @@ setMethodS3("updateDataFlat", "WeightsFile", function(this, data, ..., verbose=F
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'data':
-  names <- colnames(data);  
+  names <- colnames(data);
   namesStr <- paste(names, collapse=", ");
   if (!"cell" %in% names)
     throw("Argument 'data' must contain a column 'cell': ", namesStr);
@@ -496,12 +494,12 @@ setMethodS3("writeImage", "WeightsFile", function(this, ..., tags=c("*", "log2",
 # 2007-08-09
 # o WeightFile$fromDataFile() now creates CEL files with upper-case
 #   filename extension "*.CEL", not "*.cel".  The reason for this is that
-#   some software don't recognize lower case filename extensions :(   
+#   some software don't recognize lower case filename extensions :(
 # 2007-04-12
 # o BUG FIX: fromDataFile() of ResidualFile returned an AffymetrixCelFile
 #   but not a ResidualFile.  This caused getResidualSet() of ProbeLevelModel
 #   to return a ResidualSet containing AffymetrixCelFile:s.  The same
-#   bug was found for the WeightFile class.  This problem was reported on 
+#   bug was found for the WeightFile class.  This problem was reported on
 #   the mailing list on 2007-04-06.
 # 2007-02-15
 # o Created from ResidualFile.R.

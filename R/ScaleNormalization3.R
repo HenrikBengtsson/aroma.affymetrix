@@ -6,31 +6,31 @@
 # \description{
 #  @classhierarchy
 #
-#  This class represents a normalization function that transforms the 
+#  This class represents a normalization function that transforms the
 #  probe-level signals towards the same scale.
 # }
-# 
-# @synopsis 
+#
+# @synopsis
 #
 # \arguments{
-#   \item{...}{Arguments passed to the constructor of 
-#     @see "ProbeLevelTransform3".} 
+#   \item{...}{Arguments passed to the constructor of
+#     @see "ProbeLevelTransform3".}
 #   \item{targetAvg}{A @numeric value.}
 # }
 #
 # \section{Fields and Methods}{
-#  @allmethods "public"  
+#  @allmethods "public"
 # }
-# 
-# @author
+#
+# @author "HB"
 #*/###########################################################################
 setConstructorS3("ScaleNormalization3", function(..., targetAvg=4400) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   targetAvg <- Arguments$getDouble(targetAvg, range=c(1,Inf));
 
-  extend(ProbeLevelTransform3(...), "ScaleNormalization3", 
+  extend(ProbeLevelTransform3(...), "ScaleNormalization3",
     .targetAvg = targetAvg
   )
 })
@@ -66,10 +66,10 @@ setMethodS3("fitOne", "ScaleNormalization3", function(this, df, ..., verbose=FAL
   if (verbose) {
     pushState(verbose);
     on.exit(popState(verbose));
-  } 
+  }
 
   verbose && enter(verbose, "Fitting normalization function for one array");
-  verbose && cat(verbose, "Full name: ", getFullName(df)); 
+  verbose && cat(verbose, "Full name: ", getFullName(df));
 
   verbose && enter(verbose, "Getting algorithm parameters");
   params <- getParameters(this, expand=TRUE);
@@ -121,10 +121,10 @@ setMethodS3("getNormalizeSignalsOne", "ScaleNormalization3", function(this, df, 
   if (verbose) {
     pushState(verbose);
     on.exit(popState(verbose));
-  } 
+  }
 
   verbose && enter(verbose, "Normalizing one array according to model fit");
-  verbose && cat(verbose, "Full name: ", getFullName(df)); 
+  verbose && cat(verbose, "Full name: ", getFullName(df));
 
   verbose && enter(verbose, "Getting algorithm parameters");
   params <- getParameters(this, expand=TRUE);
@@ -179,7 +179,7 @@ setMethodS3("getNormalizeSignalsOne", "ScaleNormalization3", function(this, df, 
 #
 # \arguments{
 #   \item{...}{Not used.}
-#   \item{force}{If @TRUE, data already normalized is re-normalized, 
+#   \item{force}{If @TRUE, data already normalized is re-normalized,
 #       otherwise not.}
 #   \item{verbose}{See @see "R.utils::Verbose".}
 # }
@@ -187,8 +187,6 @@ setMethodS3("getNormalizeSignalsOne", "ScaleNormalization3", function(this, df, 
 # \value{
 #  Returns a @double @vector.
 # }
-#
-# @author
 #
 # \seealso{
 #   @seeclass
@@ -250,7 +248,7 @@ setMethodS3("process", "ScaleNormalization3", function(this, ..., skip=FALSE, fo
     filename <- gsub("[.]cel$", ".CEL", filename);  # Only output upper case!
     pathname <- Arguments$getWritablePathname(filename, path=outputPath);
     pathname <- AffymetrixFile$renameToUpperCaseExt(pathname);
-  
+
     # Already normalized?
     if (isFile(pathname) && skip) {
       verbose && cat(verbose, "Normalized data file already exists: ",
@@ -258,7 +256,7 @@ setMethodS3("process", "ScaleNormalization3", function(this, ..., skip=FALSE, fo
       verbose && exit(verbose);
       next;
     }
-  
+
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Fit model
@@ -273,7 +271,7 @@ setMethodS3("process", "ScaleNormalization3", function(this, ..., skip=FALSE, fo
     # Normalize data
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     verbose && enter(verbose, "Normalizing for fitted effects");
-    yN <- getNormalizeSignalsOne(this, df=df, fit=fit, 
+    yN <- getNormalizeSignalsOne(this, df=df, fit=fit,
                                                   verbose=less(verbose));
     verbose && str(verbose, yN);
     verbose && exit(verbose);
@@ -283,7 +281,7 @@ setMethodS3("process", "ScaleNormalization3", function(this, ..., skip=FALSE, fo
     # Store normalized data
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     verbose && enter(verbose, "Writing normalized data");
-    writeSignals(this, pathname=pathname, cells=params$cellsToUpdate, 
+    writeSignals(this, pathname=pathname, cells=params$cellsToUpdate,
                  intensities=yN, templateFile=df, verbose=less(verbose));
     rm(yN);
     verbose && exit(verbose);
@@ -306,7 +304,7 @@ setMethodS3("process", "ScaleNormalization3", function(this, ..., skip=FALSE, fo
   this$outputDataSet <- outputDataSet;
 
   verbose && exit(verbose);
-  
+
   outputDataSet;
 })
 

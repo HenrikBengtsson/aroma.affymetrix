@@ -1,8 +1,9 @@
+# @author "HB"
 setConstructorS3("AffymetrixCnChpFile", function(..., cdf=NULL) {
   this <- extend(AffymetrixFile(...), "AffymetrixCnChpFile",
     "cached:.header" = NULL,
     "cached:.unitReadMap" = NULL,
-    .cdf = NULL 
+    .cdf = NULL
   );
 
   if (!is.null(cdf))
@@ -18,19 +19,19 @@ setConstructorS3("AffymetrixCnChpFile", function(..., cdf=NULL) {
     # Parse attributes (all subclasses must call this in the constructor).
     setAttributesByTags(this);
   }
- 
+
   this;
 })
 
 setMethodS3("as.character", "AffymetrixCnChpFile", function(x, ...) {
   # To please R CMD check
-  this <- x; 
+  this <- x;
 
   s <- NextMethod("as.character");
   class <- class(s);
   s <- c(s, sprintf("File format: %s", getFileFormat(this)));
   s <- c(s, sprintf("Chip type: %s", getChipType(getCdf(this))));
-  s <- c(s, sprintf("Timestamp: %s", as.character(getTimestamp(this)))); 
+  s <- c(s, sprintf("Timestamp: %s", as.character(getTimestamp(this))));
   s <- c(s, sprintf("Unit read map: %s", capture.output(str(getUnitReadMap(this)))));
   class(s) <- class;
   s;
@@ -73,7 +74,7 @@ setMethodS3("getFileFormat", "AffymetrixCnChpFile", function(this, ...) {
   naValue <- as.character(NA);
   return(naValue);
 })
- 
+
 
 
 
@@ -110,7 +111,7 @@ setMethodS3("fromFile", "AffymetrixCnChpFile", function(static, filename, path=N
 setMethodS3("getChipType", "AffymetrixCnChpFile", function(this, ...) {
   getChipType(getCdf(this));
 }, private=TRUE)
- 
+
 
 setMethodS3("getUnitNamesFile", "AffymetrixCnChpFile", function(this, ...) {
   getCdf(this, ...);
@@ -133,27 +134,27 @@ setMethodS3("getCdf", "AffymetrixCnChpFile", function(this, ...) {
     this$.cdf <- cdf;
   }
   cdf;
-}) 
+})
 
 
 setMethodS3("setCdf", "AffymetrixCnChpFile", function(this, cdf, ..., .checkArgs=TRUE) {
   if (.checkArgs) {
     # Argument 'cdf':
     cdf <- Arguments$getInstanceOf(cdf, "AffymetrixCdfFile");
-  
+
 #    # Assure that the CDF is compatible with the CNCHP file
 #    if (nbrOfCells(cdf) != nbrOfCells(this)) {
 #      throw("Cannot set CDF. The specified CDF structure is not compatible with the CEL file. The number of cells do not match: ", nbrOfCells(cdf), " != ", nbrOfCells(this));
 #    }
   }
 
-  # Have to clear the cache 
+  # Have to clear the cache
   clearCache(this);
 
   this$.cdf <- cdf;
 
   invisible(this);
-}) 
+})
 
 
 setMethodS3("getHeader", "AffymetrixCnChpFile", function(this, ...) {
@@ -171,7 +172,7 @@ setMethodS3("getHeader", "AffymetrixCnChpFile", function(this, ...) {
 
 setMethodS3("getTimestamp", "AffymetrixCnChpFile", function(this, format="%a %b %d %H:%M:%S * %Y", ...) {
   # Argument 'format':
-  format <- Arguments$getCharacter(format, length=c(1,1)); 
+  format <- Arguments$getCharacter(format, length=c(1,1));
 
   # Look up the chip type in the header
   params <- getHeader(this)$dataHeader$parameters;
@@ -195,11 +196,11 @@ setMethodS3("getTimestamp", "AffymetrixCnChpFile", function(this, format="%a %b 
   # If no valid timestamp was found, return NA.
   if (length(as.character(res)) == 0) {
     res <- as.POSIXct(NA);
-  } 
+  }
 
   # Keep the non-parsed timetstamp etc for debugging.
   attr(res, "text") <- timestamp;
-  attr(res, "params") <- params; 
+  attr(res, "params") <- params;
 
   res;
 }, protected=TRUE)
@@ -219,7 +220,7 @@ setMethodS3("setUnitReadMap", "AffymetrixCnChpFile", function(this, readMap=NULL
   if (verbose) {
     pushState(verbose);
     on.exit(popState(verbose));
-  } 
+  }
 
 
   verbose && enter(verbose, "Setting unit read map");
@@ -235,7 +236,7 @@ setMethodS3("setUnitReadMap", "AffymetrixCnChpFile", function(this, readMap=NULL
     unitNames <- getUnitNames(unf);
     verbose && cat(verbose, "Unit names (CDF):");
     verbose && str(verbose, unitNames);
-    readMap <- match(unitNames, unitNamesOnFile);	
+    readMap <- match(unitNames, unitNamesOnFile);
   }
 
   verbose && cat(verbose, "readMap:");
@@ -266,7 +267,7 @@ setMethodS3("readRawData", "AffymetrixCnChpFile", function(this, fields=c("Probe
   if (verbose) {
     pushState(verbose);
     on.exit(popState(verbose));
-  } 
+  }
 
 
   verbose && enter(verbose, "Getting raw data from CNCHP file");
@@ -308,7 +309,7 @@ setMethodS3("readRawData", "AffymetrixCnChpFile", function(this, fields=c("Probe
   verbose && exit(verbose);
 
   verbose && exit(verbose);
- 
+
   res;
 }, protected=TRUE) # readRawData()
 
@@ -334,7 +335,7 @@ setMethodS3("getData", "AffymetrixCnChpFile", function(this, units=NULL, fields=
   if (verbose) {
     pushState(verbose);
     on.exit(popState(verbose));
-  } 
+  }
 
 
   verbose && enter(verbose, "Getting data from CNCHP file");
@@ -344,7 +345,7 @@ setMethodS3("getData", "AffymetrixCnChpFile", function(this, units=NULL, fields=
   verbose && cat(verbose, "Units: ", capture.output(str(units)));
 
   # Check for cached results
-  key <- list(method="getData", class="AffymetrixCnChpFile", 
+  key <- list(method="getData", class="AffymetrixCnChpFile",
               header=unlist(getHeader(this)), fields=fields, units=units);
   if (getOption(aromaSettings, "devel/useCacheKeyInterface", FALSE)) {
     key <- getCacheKey(this, method="getData", header=unlist(getHeader(this)), fields=fields, units=units);
@@ -390,7 +391,7 @@ setMethodS3("getData", "AffymetrixCnChpFile", function(this, units=NULL, fields=
   verbose && exit(verbose);
 
   verbose && exit(verbose);
- 
+
   res;
 }) # getData()
 
@@ -398,7 +399,7 @@ setMethodS3("getData", "AffymetrixCnChpFile", function(this, units=NULL, fields=
 setMethodS3("extractLogRatios", "AffymetrixCnChpFile", function(this, units=NULL, ..., drop=FALSE, verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'units':
 
   # Argument 'verbose':

@@ -41,7 +41,7 @@
   The cache can be cleared by calling \code{gc(cdf)}.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{AffymetrixCdfFile}}.

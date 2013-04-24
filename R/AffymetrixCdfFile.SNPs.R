@@ -18,7 +18,7 @@
 #   Returns @TRUE if the chip type refers to a SNP array, otherwise @FALSE.
 # }
 #
-# @author
+# @author "HB"
 #
 # \seealso{
 #   @seeclass
@@ -35,6 +35,9 @@ setMethodS3("isSnpChip", "AffymetrixCdfFile", function(this, ...) {
     return(TRUE);
 
   if (regexpr("^GenomeWideSNP_.*$", chipType) != -1)
+    return(TRUE);
+
+  if (regexpr("^Cyto.*Array$", chipType) != -1)
     return(TRUE);
 
   # Then, check for genotype units
@@ -65,7 +68,7 @@ setMethodS3("isSnpChip", "AffymetrixCdfFile", function(this, ...) {
 #   Returns a @character @vector.
 # }
 #
-# @author
+# @author "HB"
 #
 # \seealso{
 #   @seemethod "getCnNames".
@@ -103,7 +106,7 @@ setMethodS3("getSnpNames", "AffymetrixCdfFile", function(this, ...) {
 #   Returns a @character @vector.
 # }
 #
-# @author
+# @author "HB"
 #
 # \seealso{
 #   @seemethod "getSnpNames".
@@ -141,7 +144,7 @@ setMethodS3("getCnNames", "AffymetrixCdfFile", function(this, ...) {
 #   Returns an @integer.
 # }
 #
-# @author
+# @author "HB"
 #
 # \seealso{
 #   Internally, @seemethod "getSnpNames" is used to identify SNPs.
@@ -157,8 +160,10 @@ setMethodS3("nbrOfSnps", "AffymetrixCdfFile", function(this, ...) {
 
 ############################################################################
 # HISTORY:
+# 2013-04-23
+# o SPEEDUP: Added ^Cyto.*Array$ to isSnpChip() for AffymetrixCdfFile.
 # 2008-05-10
-# o ROBUSTNESS: Added backward compatibility for cases when the cached 
+# o ROBUSTNESS: Added backward compatibility for cases when the cached
 #   results has sets$nonSNPs as a list.
 # 2008-03-26
 # o CLEAN UP: getAlleleProbePairs() of AffymetrixCdfFile would print *all*
@@ -202,18 +207,18 @@ setMethodS3("nbrOfSnps", "AffymetrixCdfFile", function(this, ...) {
 # 2006-03-24
 # o Added references to DM articles and Affymetrix manuals.
 # o Further speed up by improve rearrangement of CDF structure. Now a Hind
-#   chip takes about 11-13 minutes instead.  11 minutes compared with 
+#   chip takes about 11-13 minutes instead.  11 minutes compared with
 #   35 hours is 190 times faster.
 # o After several speed improvements (also in affxparser), estimation of DM
 #   rank scores now takes about 15-18 minutes for the 100K Hind chip.
 #   The first draft took 30-35 hours(!) and yesterday 60-80 minutes.  Note,
-#   the first draft was not "stupid" code; there is always room for 
+#   the first draft was not "stupid" code; there is always room for
 #   improvement.
 # o Defined a local colSums() in getDmRankScores() specialized for matrices.
 #   The overhead of the default colSums() is about 50%.
 # 2006-03-23
 # o Moved all SNP related methods into the new class AffymetrixSnpCelFile.
-# o Added getRelativeAlleleSignals().  Note, it was designed to be used 
+# o Added getRelativeAlleleSignals().  Note, it was designed to be used
 #   with the 10K SNP chips.  These are designed so that there are equal
 #   number of forward and reverse quartets with matching offsets in both
 #   strands.  This is not the case for the 100K chips and above.

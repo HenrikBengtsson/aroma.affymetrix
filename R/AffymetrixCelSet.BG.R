@@ -21,9 +21,7 @@
 #   This method is not constant in memory! /HB 2007-03-26
 # }
 #
-# \author{
-#   Ken Simpson (ksimpson[at]wehi.edu.au).
-# }
+# @author "KS"
 #*/###########################################################################
 setMethodS3("calculateParametersGsb", "AffymetrixCelSet", function(this, nbrOfPms=25000, affinities=NULL, ..., verbose=FALSE) {
   if (is.null(affinities)) {
@@ -50,7 +48,7 @@ setMethodS3("calculateParametersGsb", "AffymetrixCelSet", function(this, nbrOfPm
 
 
   cdf <- getCdf(this);
-  
+
   verbose && enter(verbose, "Extracting PM indices");
   cells <- getCellIndices(cdf, useNames=FALSE, unlist=TRUE, verbose=less(verbose,2));
   pmCells <- cells[isPm(cdf, cache=FALSE)];
@@ -68,7 +66,7 @@ setMethodS3("calculateParametersGsb", "AffymetrixCelSet", function(this, nbrOfPm
   pmCells.random <- sample(pmCells, size=nbrOfPms);
   pmCells.random <- sort(pmCells.random);
   rm(pmCells);   # Not needed anymore
-  
+
   # Garbage collect
   gc <- gc();
   verbose && print(verbose, gc);
@@ -87,7 +85,7 @@ setMethodS3("calculateParametersGsb", "AffymetrixCelSet", function(this, nbrOfPm
     # Cells to be read for this array
     idxs <- which(iarray == ii);
     cells <- pmCells.random[idxs];
-    pm.random2[idxs] <- readCel(pathnames[ii], indices=cells, 
+    pm.random2[idxs] <- readCel(pathnames[ii], indices=cells,
                        readIntensities=TRUE, readStdvs=FALSE)$intensities;
     rm(idxs, cells);
     verbose && exit(verbose);
@@ -119,7 +117,7 @@ setMethodS3("calculateParametersGsb", "AffymetrixCelSet", function(this, nbrOfPm
   verbose && exit(verbose);
 
   verbose && exit(verbose);
-  
+
   fit1$coef;
 }, private=TRUE)
 
@@ -170,9 +168,7 @@ setMethodS3("calculateParametersGsb", "AffymetrixCelSet", function(this, nbrOfPm
 #  Returns the background adjusted @see "AffymetrixCelFile" object.
 # }
 #
-# \author{
-#   Ken Simpson (ksimpson[at]wehi.edu.au).
-# }
+# @author "KS"
 #
 # \seealso{
 #  @see "gcrma::bg.adjust.gcrma"
@@ -227,7 +223,7 @@ setMethodS3("bgAdjustGcrma", "AffymetrixCelSet", function(this, path, affinities
     this <- dsOBG;
   }
 
-  
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # estimate specific binding (GSB, in gcrma terminology)
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -238,7 +234,7 @@ setMethodS3("bgAdjustGcrma", "AffymetrixCelSet", function(this, path, affinities
     verbose && print(verbose, parametersGsb);
     verbose && exit(verbose);
   }
-  
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # NSB correction for each array
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -278,7 +274,7 @@ setMethodS3("bgAdjustGcrma", "AffymetrixCelSet", function(this, path, affinities
 # o Now using index 'ii' for arrays everywhere.
 # o CLEANUP: bgAdjustOptical(), bgAdjustRma() and bgAdjustGcrma() no
 #   longer accepts argument 'path' to be NULL.
-# o CLEANUP: bgAdjustGcrma() for AffymetrixCelSet no longer reads 
+# o CLEANUP: bgAdjustGcrma() for AffymetrixCelSet no longer reads
 #   and write probe affinity files in the deprecated APD format.
 # 2012-10-21 [HB]
 # o CLEANUP: Dropped unneeded mkdirs(), because they were all preceeded
@@ -293,7 +289,7 @@ setMethodS3("bgAdjustGcrma", "AffymetrixCelSet", function(this, path, affinities
 #   include the full chip type.  It would also give an error if no tags
 #   where specified.
 # 2009-03-29 [MR]
-# o Made slight modifications for bgAdjustGcRma() to work with the 
+# o Made slight modifications for bgAdjustGcRma() to work with the
 #   newer Gene 1.0 ST arrays.
 # 2007-09-06
 # o Made calculateParametersGsb() more memory efficient, because it's using
@@ -306,7 +302,7 @@ setMethodS3("bgAdjustGcrma", "AffymetrixCelSet", function(this, path, affinities
 #   about 95% of the object, or 250MB of RAM.
 # o TO DO: Store GCRMA affinities under annotationData/ and not use the
 #   data set paths. /HB
-# o Tried to make calculateParametersGsb() constant in memory. Before it 
+# o Tried to make calculateParametersGsb() constant in memory. Before it
 #   read all data for all arrays and then subsampled! /HB
 # o BUG FIX: Argument 'minimum' was not used but forced to equal 1.
 # 2007-03-22

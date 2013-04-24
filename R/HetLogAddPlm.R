@@ -10,7 +10,7 @@
 #  in Irizarry et al (2003), except that the errors may have different
 #  variances for different probes.
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
@@ -21,7 +21,7 @@
 #  @allmethods "public"
 # }
 #
-# @author
+# @author "HB"
 #
 # \seealso{
 #  @see "RmaPlm".
@@ -38,7 +38,7 @@ setMethodS3("getAsteriskTags", "HetLogAddPlm", function(this, collapse=NULL, ...
   tags[1] <- "HLA";
 
   # Collapse
-  tags <- paste(tags, collapse=collapse); 
+  tags <- paste(tags, collapse=collapse);
 
   tags;
 }, protected=TRUE)
@@ -66,7 +66,7 @@ setMethodS3("getAsteriskTags", "HetLogAddPlm", function(this, collapse=NULL, ...
 # }
 #
 # \author{
-#   Henrik Bengtsson and Ken Simpson (WEHI) utilizing Ben Bolstad's 
+#   Henrik Bengtsson and Ken Simpson (WEHI) utilizing Ben Bolstad's
 #   \pkg{preprocessCore} package.
 # }
 #

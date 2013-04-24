@@ -15,7 +15,7 @@
 #     filtering by probe type is applied.
 #     If a @vector of @doubles, the cell indices.
 #     If a scalar @double in [0,1], the fraction of cells, which can
-#     be used to speed up the plotting if approximate densities are 
+#     be used to speed up the plotting if approximate densities are
 #     acceptable.
 #     if @NULL, all cells are considered.
 #   }
@@ -25,7 +25,7 @@
 #              @see "aroma.light::plotDensity.numeric".}
 #   \item{xlim}{The range on the x axis.}
 #   \item{xlab,ylab}{The labels on the x and the y axes.}
-#   \item{log}{If @TRUE, the density of the log (base 2) values are 
+#   \item{log}{If @TRUE, the density of the log (base 2) values are
 #      used, otherwise the non-logged values.}
 #   \item{verbose}{A @logical or a @see "R.utils::Verbose" object.}
 # }
@@ -34,7 +34,7 @@
 #  Returns nothing.
 # }
 #
-# @author
+# @author "HB"
 #
 # \seealso{
 #   @seeclass
@@ -43,9 +43,9 @@
 setMethodS3("plotDensity", "AffymetrixCelFile", function(this, subset=NULL, types=NULL, ..., xlim=c(0,16), xlab=NULL, ylab="density (integrates to one)", log=TRUE, annotate=TRUE, verbose=FALSE) {
   require("aroma.light") || throw("Package not loaded: aroma.light");
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'subset':
 
   # Argument 'xlab':
@@ -67,14 +67,14 @@ setMethodS3("plotDensity", "AffymetrixCelFile", function(this, subset=NULL, type
   cdf <- getCdf(this);
   verbose && enter(verbose, "Identifying subset of probes");
   suppressWarnings({
-    subset <- identifyCells(cdf, indices=subset, types=types, 
+    subset <- identifyCells(cdf, indices=subset, types=types,
                                                     verbose=less(verbose));
   })
   verbose && exit(verbose);
-  
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Plot density
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   verbose && enter(verbose, "Plotting the density");
   verbose && cat(verbose, "Array: ", getName(this));
   suppressWarnings({
@@ -102,9 +102,9 @@ setMethodS3("plotDensity", "AffymetrixCelFile", function(this, subset=NULL, type
 
 
 setMethodS3("getAm", "AffymetrixCelFile", function(this, reference, indices=NULL, ..., zeros=FALSE) {
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Arguments 'reference':
   reference <- Arguments$getInstanceOf(reference, "AffymetrixCelFile");
 
@@ -116,26 +116,26 @@ setMethodS3("getAm", "AffymetrixCelFile", function(this, reference, indices=NULL
   }
 
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Further validation
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Check if the two CEL files are compatible
   if (nbrOfCells != nbrOfCells(reference)) {
-    throw("This and the 'reference' CEL file have different number of cells: ", 
+    throw("This and the 'reference' CEL file have different number of cells: ",
                                    nbrOfCells, " != ", nbrOfCells(reference));
   }
 
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Get signals
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Get the signals for this channel
   y1 <- getData(this, indices=indices, fields="intensities")[,1];
 
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Offset signals?
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   offset <- this$offset;
   if (is.null(offset))
     offset <- 0;
@@ -143,9 +143,9 @@ setMethodS3("getAm", "AffymetrixCelFile", function(this, reference, indices=NULL
     cat("Offset: ", offset, "\n", sep="");
 
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Remove signals that are zero?
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (!zeros) {
     keep <- which(y1 != 0);
     y1 <- y1[keep];
@@ -156,9 +156,9 @@ setMethodS3("getAm", "AffymetrixCelFile", function(this, reference, indices=NULL
   y1 <- log(y1, base=2);
 
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Get reference signals
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (length(y1) == 0) {
     y2 <- y1;
   } else {
@@ -173,9 +173,9 @@ setMethodS3("getAm", "AffymetrixCelFile", function(this, reference, indices=NULL
     y2 <- log(y2, base=2);
   }
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Return (A,M)
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   am <- matrix(c((y1+y2)/2, y1-y2), ncol=2);
   colnames(am) <- c("A", "M");
 
@@ -213,7 +213,7 @@ setMethodS3("annotateMvsA", "AffymetrixCelFile", function(this, reference, ..., 
 #   \item{pch}{The plot symbol.}
 #   \item{xlim,ylim}{The range of the x and the y axes.}
 #   \item{xlab,ylab}{The labels on the x and the y axes.}
-#   \item{...}{Additional arguments passed to @see "graphics::plot".} 
+#   \item{...}{Additional arguments passed to @see "graphics::plot".}
 #   \item{annotate}{If @TRUE, the plot is annotated with information about
 #     the data plotted, otherwise not.}
 # }
@@ -223,7 +223,7 @@ setMethodS3("annotateMvsA", "AffymetrixCelFile", function(this, reference, ..., 
 #  first two columns.
 # }
 #
-# @author
+# @author "HB"
 #
 # \seealso{
 #   @seemethod "smoothScatterMvsA".
@@ -262,7 +262,7 @@ setMethodS3("plotMvsA", "AffymetrixCelFile", function(this, reference, indices=N
 #   \item{pch}{The plot symbol.}
 #   \item{xlim,ylim}{The range of the x and the y axes.}
 #   \item{xlab,ylab}{The labels on the x and the y axes.}
-#   \item{...}{Additional arguments passed to @see "graphics::plot".} 
+#   \item{...}{Additional arguments passed to @see "graphics::plot".}
 #   \item{annotate}{If @TRUE, the plot is annotated with information about
 #     the data plotted, otherwise not.}
 # }
@@ -272,7 +272,7 @@ setMethodS3("plotMvsA", "AffymetrixCelFile", function(this, reference, indices=N
 #  first two columns.
 # }
 #
-# @author
+# @author "HB"
 #
 # \seealso{
 #   @seemethod "plotMvsA".
@@ -313,7 +313,7 @@ setMethodS3("smoothScatterMvsA", "AffymetrixCelFile", function(this, reference, 
 #   \item{pch}{The plot symbol.}
 #   \item{xlim,ylim}{The range of the x and the y axes.}
 #   \item{xlab,ylab}{The labels on the x and the y axes.}
-#   \item{...}{Additional arguments passed to @see "graphics::plot".} 
+#   \item{...}{Additional arguments passed to @see "graphics::plot".}
 #   \item{annotate}{If @TRUE, the plot is annotated with information about
 #     the data plotted, otherwise not.}
 # }
@@ -323,7 +323,7 @@ setMethodS3("smoothScatterMvsA", "AffymetrixCelFile", function(this, reference, 
 #  first two columns, and remaining data in the following columns.
 # }
 #
-# @author
+# @author "HB"
 #
 # \seealso{
 #   @seemethod "plotMvsA".
@@ -408,7 +408,7 @@ setMethodS3("highlight", "AffymetrixCelFile", function(this, indices=NULL, ...) 
 #  Returns the (270-degrees rotated) data @matrix.
 # }
 #
-# @author
+# @author "HB"
 #
 # \seealso{
 #   @seemethod "updateUnits".
@@ -429,7 +429,7 @@ setMethodS3("image270", "AffymetrixCelFile", function(this, xrange=c(0,Inf), yra
   field <- match.arg(field);
 
   suppressWarnings({
-    y <- readRawDataRectangle(this, xrange=xrange, yrange=yrange, 
+    y <- readRawDataRectangle(this, xrange=xrange, yrange=yrange,
                                               fields=field, ..., drop=TRUE);
   })
 
@@ -440,18 +440,18 @@ setMethodS3("image270", "AffymetrixCelFile", function(this, xrange=c(0,Inf), yra
     idxEven <- which((1:nr) %% 2 == 0);
     y[idxEven-1,] <- y[idxEven,];
   }
-  
+
   suppressWarnings({
     if (takeLog) {
       image(log2(rotate270(y)), col=col, ..., axes=FALSE, main=main);
     } else {
       image(rotate270(y), col=col, ..., axes=FALSE, main=main);
-    }      
+    }
   })
 
-  if (is.null(xrange) || xrange[2] == Inf) 
+  if (is.null(xrange) || xrange[2] == Inf)
     xrange <- c(0,ncol(y)-1);
-  if (is.null(yrange) || yrange[2] == Inf) 
+  if (is.null(yrange) || yrange[2] == Inf)
     yrange <- c(0,nrow(y)-1);
 
   cdf <- getCdf(this);
@@ -486,15 +486,15 @@ setMethodS3("image270", "AffymetrixCelFile", function(this, xrange=c(0,Inf), yra
 #      that is used for calculating the ratio (non-logged).  Note, to get
 #      the log-ratios, the \code{log}() function has to be specified as
 #      the first transform in the @list of \code{transformations}.}
-#   \item{xrange, yrange}{@vectors of length two specifying the 
+#   \item{xrange, yrange}{@vectors of length two specifying the
 #      (x0,x1) and (y0,y1) regions to be extracted.  If @NULL, the
 #      complete regions is used.}
 #   \item{field}{One of the CEL file fields, i.e. \code{"intensities"},
 #      \code{stdvs}, or \code{pixels}.}
-#   \item{zoom}{A @numeric scale factor in (0,+Inf) for resizing the 
+#   \item{zoom}{A @numeric scale factor in (0,+Inf) for resizing the
 #     imaging. If \code{1}, no resizing is done.}
 #   \item{palette}{An optional @vector of color code.}
-#   \item{...}{Additional arguments passed to 
+#   \item{...}{Additional arguments passed to
 #      @seemethod "readRawDataRectangle" and more function.}
 #   \item{readRectFcn}{A @function taking arguments 'xrange' and 'yrange',
 #     or @NULL for the default read function.}
@@ -507,7 +507,7 @@ setMethodS3("image270", "AffymetrixCelFile", function(this, xrange=c(0,Inf), yra
 #   \code{TrueColor}.
 # }
 #
-# \author{Ken Simpson (ksimpson[at]wehi.edu.au).}
+# @author "KS, HB"
 #
 # \seealso{
 #   @seeclass
@@ -516,12 +516,12 @@ setMethodS3("image270", "AffymetrixCelFile", function(this, xrange=c(0,Inf), yra
 # @keyword IO
 #*/###########################################################################
 setMethodS3("getImage", "AffymetrixCelFile", function(this, other=NULL, transforms=list(sqrt), xrange=c(0,Inf), yrange=xrange, zrange=c(0,sqrt(2^16)), field=c("intensities", "stdvs", "pixels"), zoom=1, ..., readRectFcn=NULL, verbose=FALSE) {
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local functions
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   readRectangleByField <- function(this, other=NULL, xrange, yrange, ...) {
     suppressWarnings({
-      y <- readRawDataRectangle(this, xrange=xrange, yrange=yrange, 
+      y <- readRawDataRectangle(this, xrange=xrange, yrange=yrange,
                                                fields=field, ..., drop=TRUE);
     });
 
@@ -529,7 +529,7 @@ setMethodS3("getImage", "AffymetrixCelFile", function(this, other=NULL, transfor
     } else {
       if (inherits(other, "AffymetrixCelFile")) {
         suppressWarnings({
-          yR <- readRawDataRectangle(other, xrange=xrange, yrange=yrange, 
+          yR <- readRawDataRectangle(other, xrange=xrange, yrange=yrange,
                                                fields=field, ..., drop=TRUE);
         });
       } else {
@@ -543,9 +543,9 @@ setMethodS3("getImage", "AffymetrixCelFile", function(this, other=NULL, transfor
   } # readRectangleByField()
 
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'other':
   if (!is.null(other)) {
     if (inherits(other, "AffymetrixCelFile")) {
@@ -559,10 +559,10 @@ setMethodS3("getImage", "AffymetrixCelFile", function(this, other=NULL, transfor
       throw("Argument 'other' is of an unknown class: ", other);
     }
   }
-  
+
   # Argument 'field':
   field <- match.arg(field);
-  
+
   # Argument 'zoom':
   zoom <- Arguments$getDouble(zoom, range=c(0,Inf));
 
@@ -577,9 +577,9 @@ setMethodS3("getImage", "AffymetrixCelFile", function(this, other=NULL, transfor
   verbose <- Arguments$getVerbose(verbose);
 
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Read data
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   verbose && enter(verbose, "Getting CEL image");
 
   verbose && enter(verbose, "Reading CEL image");
@@ -590,7 +590,7 @@ setMethodS3("getImage", "AffymetrixCelFile", function(this, other=NULL, transfor
   verbose && exit(verbose);
 
   verbose && enter(verbose, "Creating Image");
-  img <- getImage(y, transforms=transforms, scale=zoom, lim=zrange, ..., 
+  img <- getImage(y, transforms=transforms, scale=zoom, lim=zrange, ...,
                                                    verbose=less(verbose, 1));
   verbose && print(verbose, img);
   verbose && exit(verbose);
@@ -624,7 +624,7 @@ setMethodS3("getImage", "AffymetrixCelFile", function(this, other=NULL, transfor
 #   Returns (invisibly) the image displayed.
 # }
 #
-# \author{Ken Simpson (ksimpson[at]wehi.edu.au).}
+# @author "KS, HB"
 #
 # \seealso{
 #   @seeclass
@@ -684,7 +684,7 @@ setMethodS3("plotImage", "AffymetrixCelFile", function(this, ...) {
 #   writeImage(df, tags="rainbow", palette=rainbow(256), xrange=c(0,200))
 # }}
 #
-# \author{Ken Simpson (ksimpson[at]wehi.edu.au).}
+# @author "KS, HB"
 #
 # \seealso{
 #   @seeclass
@@ -722,7 +722,7 @@ setMethodS3("writeImage", "AffymetrixCelFile", function(this, filename=NULL, ful
 
   # Argument 'tags':
   tags <- Arguments$getCharacters(tags);
-  
+
   # Argument 'filename':
 
   # Argument 'verbose':
@@ -747,7 +747,7 @@ setMethodS3("writeImage", "AffymetrixCelFile", function(this, filename=NULL, ful
     filename <- sprintf("%s.%s", fullname, imgFormat);
   }
   pathname <- Arguments$getWritablePathname(filename, path=path);
-  verbose && cat(verbose, "Pathname: ", pathname);  
+  verbose && cat(verbose, "Pathname: ", pathname);
 
   if (!skip || !isFile(pathname)) {
     verbose && enter(verbose, "Getting image");
@@ -756,7 +756,7 @@ setMethodS3("writeImage", "AffymetrixCelFile", function(this, filename=NULL, ful
     verbose && cat(verbose, "Image object:");
     verbose && print(verbose, img);
     verbose && exit(verbose);
-  
+
     verbose && enter(verbose, "Writing image");
     writeImage(img, file=pathname);
     verbose && exit(verbose);
@@ -777,13 +777,13 @@ setMethodS3("writeImage", "AffymetrixCelFile", function(this, filename=NULL, ful
 #   sample name aliases.
 # 2011-01-30
 # o CLEAN UP: getImage(), plotImage() and writeImage() for AffymetrixCelFile
-#   no longer depend explicitly on EBImage but instead calls aroma.core's 
+#   no longer depend explicitly on EBImage but instead calls aroma.core's
 #   getImage(), display(), and writeImage(), respectively.  The latter
 #   methods depend on EBimage for now.
 # 2009-09-04
 # o Now smoothScatter() is loaded via aroma.core.
 # 2009-09-17
-# o Now argument 'subset' of plotDensity() of AffymetrixCelFile defaults 
+# o Now argument 'subset' of plotDensity() of AffymetrixCelFile defaults
 #   to NULL (all probes).  Before it was 1/2 (a fraction).
 # 2008-03-14
 # o Added argument 'readRectFcn' to getImage() allowing one to read data
@@ -809,7 +809,7 @@ setMethodS3("writeImage", "AffymetrixCelFile", function(this, filename=NULL, ful
 # 2007-02-16
 # o Increased the threshold to detect empty rows/columns in getImage().
 # 2007-02-06
-# o Now writeImage() writes image files to 
+# o Now writeImage() writes image files to
 #   <rootPath>/<dataSet>/<tags>/<chipType>/<set>/.
 # 2007-02-03
 # o plotDensity() now make sure aroma.light is loaded.
@@ -828,7 +828,7 @@ setMethodS3("writeImage", "AffymetrixCelFile", function(this, filename=NULL, ful
 # o Renamed calcMvsA() to getAm().
 # 2006-09-15
 # o Added more Rdoc comments.
-# o Readded plotDensity(). 
+# o Readded plotDensity().
 # o Added stextSize() to annotate with "n=1034".
 # 2006-08-27
 # o Added plotMvsX() and plotMvsPosition().

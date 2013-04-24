@@ -23,7 +23,7 @@
 #  Returns a named @list.
 # }
 #
-# @author
+# @author "HB"
 #
 # \seealso{
 #   @seeclass
@@ -140,7 +140,7 @@ setMethodS3("groupUnitsByDimension", "AffymetrixCdfFile", function(this, units=N
     rm(keep, idxsUU, unitsUU, resUU);
 
     verbose && exit(verbose);
-  } # for (uu ...) 
+  } # for (uu ...)
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -155,7 +155,7 @@ setMethodS3("groupUnitsByDimension", "AffymetrixCdfFile", function(this, units=N
 
   # (b) Check units in subelements
   setsT <- lapply(res, FUN=function(x) x$sets);
-  unitsT <- lapply(setsT, FUN=function(x) { 
+  unitsT <- lapply(setsT, FUN=function(x) {
     lapply(x, FUN=function(y) y$units)
   });
   unitsT <- unlist(unitsT, use.names=FALSE);

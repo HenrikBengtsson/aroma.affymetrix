@@ -9,8 +9,8 @@
 #  A AffymetrixCnChpSet object represents a set of AffymetrixCnChpFile:s
 #  with \emph{identical} chip types.
 # }
-# 
-# @synopsis 
+#
+# @synopsis
 #
 # \arguments{
 #   \item{files}{A @list of @see "AffymetrixCnChpFile":s.}
@@ -18,14 +18,14 @@
 # }
 #
 # \section{Fields and Methods}{
-#  @allmethods "public"  
+#  @allmethods "public"
 # }
-# 
+#
 # \seealso{
 #   @see "AffymetrixCnChpFile".
 # }
 #
-# @author
+# @author "HB"
 #*/###########################################################################
 setConstructorS3("AffymetrixCnChpSet", function(files=NULL, ...) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -68,8 +68,6 @@ setConstructorS3("AffymetrixCnChpSet", function(files=NULL, ...) {
 # \value{
 #  Returns a @character string.
 # }
-#
-# @author
 #
 # \seealso{
 #   @seeclass
@@ -145,7 +143,7 @@ setMethodS3("byName", "AffymetrixCnChpSet", function(static, name, tags=NULL, ch
 setMethodS3("byPath", "AffymetrixCnChpSet", function(static, path, pattern="[.](cnchp|CNCHP)$", cdf=NULL, checkChipType=is.null(cdf), ..., fileClass="AffymetrixCnChpFile", verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'path':
   path <- Arguments$getReadablePath(path, mustExist=TRUE);
 
@@ -156,40 +154,40 @@ setMethodS3("byPath", "AffymetrixCnChpSet", function(static, path, pattern="[.](
     on.exit(popState(verbose));
   }
 
-  
+
   verbose && enter(verbose, "Defining ", class(static)[1], " from files");
 
   # Call the "next" method
   # WORKAROUND: For unknown reasons it is not possible to specify
   # 'path=path' below, because it is already passed implicitly by
   # NextMethod() and if done, then argument 'recursive' to byPath() for
-  # GenericDataFileSet will also be assign the value of 'path', e.g. 
+  # GenericDataFileSet will also be assign the value of 'path', e.g.
   # try byPath(AffymetrixCelSet(), "path/to/").  This seems to be related
-  # to R-devel thread 'Do *not* pass '...' to NextMethod() - it'll do it 
-  # for you; missing documentation, a bug or just me?' on Oct 16, 2012. 
+  # to R-devel thread 'Do *not* pass '...' to NextMethod() - it'll do it
+  # for you; missing documentation, a bug or just me?' on Oct 16, 2012.
   ##  set <- NextMethod("byPath", path=path, pattern=pattern, fileClass=fileClass, verbose=less(verbose));
   set <- NextMethod("byPath", pattern=pattern, fileClass=fileClass, verbose=less(verbose));
 
   verbose && cat(verbose, "Retrieved files: ", length(set));
 
   if (length(set) > 0) {
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Scan all CHP files for possible chip types
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Chip type according to the directory structure
     path <- getPath(set);
     chipType <- basename(path);
-    verbose && cat(verbose, 
+    verbose && cat(verbose,
                    "The chip type according to the path is: ", chipType);
-  
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Use the same CDF object for all CEL files.
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     if (is.null(cdf)) {
       verbose && enter(verbose, "Retrieving the CDF for chip type '", chipType, "' inferred from path");
       cdf <- AffymetrixCdfFile$byChipType(chipType);
       verbose && exit(verbose);
-  
+
       verbose && enter(verbose, "Check compatibility with 1st CEL file");
       verbose && cat(verbose, "Chip type: ", chipType);
       cf <- getOneFile(set);
@@ -200,14 +198,14 @@ setMethodS3("byPath", "AffymetrixCnChpSet", function(static, path, pattern="[.](
       }
       verbose && exit(verbose);
     } else {
-      verbose && cat(verbose, "Using prespecified CDF: ", 
+      verbose && cat(verbose, "Using prespecified CDF: ",
                      getChipType(cdf, fullname=TRUE));
     }
   }
 
   verbose && enter(verbose, "Updating the CDF for all files");
   setCdf(set, cdf);
-  verbose && exit(verbose); 
+  verbose && exit(verbose);
 
   # Let the new CEL set update itself
   update2(set, verbose=less(verbose, 1));
@@ -240,8 +238,6 @@ setMethodS3("byPath", "AffymetrixCnChpSet", function(static, path, pattern="[.](
 #   Returns an @integer.
 # }
 #
-# @author
-#
 # \seealso{
 #   @seeclass
 # }
@@ -273,8 +269,6 @@ setMethodS3("nbrOfArrays", "AffymetrixCnChpSet", function(this, ...) {
 #   Returns an @see "AffymetrixCnChpSet" object.
 # }
 #
-# @author
-#
 # \seealso{
 #   @seeclass
 # }
@@ -296,7 +290,7 @@ setMethodS3("as.AffymetrixCnChpSet", "default", function(object, ...) {
 setMethodS3("extractLogRatios", "AffymetrixCnChpSet", function(this, units=NULL, ..., drop=FALSE, verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'units':
 
   # Argument 'verbose':
@@ -307,9 +301,9 @@ setMethodS3("extractLogRatios", "AffymetrixCnChpSet", function(this, units=NULL,
   }
 
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Extract log ratios
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   readMap <- NULL;
   data <- NULL;
   nbrOfArrays <- length(this);
@@ -364,7 +358,7 @@ setMethodS3("getCdf", "AffymetrixCnChpSet", function(this, ...) {
   getCdf(getOneFile(this), ...);
 })
 
- 
+
 setMethodS3("setCdf", "AffymetrixCnChpSet", function(this, cdf, verbose=FALSE, ..., .checkArgs=TRUE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
@@ -389,7 +383,7 @@ setMethodS3("setCdf", "AffymetrixCnChpSet", function(this, cdf, verbose=FALSE, .
   lapply(this, FUN=setCdf, cdf, .checkArgs=FALSE, ...);
   verbose && exit(verbose);
 
-  # Have to clear the cache 
+  # Have to clear the cache
   verbose && enter(verbose, "Clearing data-set cache");
   clearCache(this);
   verbose && exit(verbose);
@@ -398,14 +392,14 @@ setMethodS3("setCdf", "AffymetrixCnChpSet", function(this, cdf, verbose=FALSE, .
 
   invisible(this);
 })
- 
+
 
 ############################################################################
 # HISTORY:
 # 2011-02-24
 # o Expanded the searched root paths to be chpData(|,.*)/
 # 2009-08-12
-# o Now findByName() of AffymetrixCnChpSet utilizes ditto of 
+# o Now findByName() of AffymetrixCnChpSet utilizes ditto of
 #   AffymetrixCelSet, because its code was identical to the latter.
 # 2008-08-22
 # o Created.

@@ -14,7 +14,7 @@
 # \arguments{
 #   \item{...}{Arguments passed to @see "ProbeLevelTransform".}
 #   \item{design}{A design @matrix.}
-#   \item{probeWindow}{Bandwidth to use.  Effectively the width is 
+#   \item{probeWindow}{Bandwidth to use.  Effectively the width is
 #      2*probeWindow since it looks probeWindow bases in either direction.}
 #   \item{nProbes}{The minimum number of probes to calculate a MAT score for.}
 #   \item{meanTrim}{The amount of trimming of the mean in [0,0.5].}
@@ -24,7 +24,7 @@
 #  @allmethods "public"
 # }
 #
-# \author{Mark Robinson (mrobinson[at]wehi.edu.au).}
+# @author "MR, HB"
 #*/###########################################################################
 setConstructorS3("MatSmoothing", function(..., design=NULL, probeWindow=300, nProbes=10, meanTrim=0.1) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -86,7 +86,7 @@ setConstructorS3("MatSmoothing", function(..., design=NULL, probeWindow=300, nPr
     }
     outputNames <- Arguments$getCharacters(outputNames);
     if (any(duplicated(outputNames))) {
-      throw("Argument 'design' contains duplicated column names: ", 
+      throw("Argument 'design' contains duplicated column names: ",
              paste(outputNames[duplicated(outputNames)]), collapse=", ");
     }
 
@@ -188,8 +188,6 @@ setMethodS3("getExpectedOutputFullnames", "MatSmoothing", function(this, ..., ve
 #  Returns a @double @vector.
 # }
 #
-# @author
-#
 # \seealso{
 #   @seeclass
 # }
@@ -201,13 +199,13 @@ setMethodS3("process", "MatSmoothing", function(this, ..., units=NULL, force=FAL
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local functions
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # internal function to do trimmed mean smoothing 
+  # internal function to do trimmed mean smoothing
   calcSmoothed <- function(posVector, dataMatrix, probeWindow, nProbes, meanTrim) {
     nc <- ncol(dataMatrix);
     posM <- matrix(posVector, nrow=length(posVector), ncol=nc);
     o <- order(posM);  # calculate ordering
 
-    smoothedScore <- gsmoothr::tmeanC(posM[o], dataMatrix[o], 
+    smoothedScore <- gsmoothr::tmeanC(posM[o], dataMatrix[o],
            probeWindow=probeWindow, nProbes=nProbes*nc, trim=meanTrim);
     subsetInd <- seq(from=1, to=length(o), by=nc);
     return(smoothedScore[subsetInd]);
@@ -218,7 +216,7 @@ setMethodS3("process", "MatSmoothing", function(this, ..., units=NULL, force=FAL
   # then replicating the negative half of the distribution.
   calcNullDist0 <- function(ch, ps, x) {
     MIN <- -999999
-    #inds <- 
+    #inds <-
     y <- rep(MIN,length(x))
     n <- length(ch)
     indices <- split(seq_len(n), ch)
@@ -235,7 +233,7 @@ setMethodS3("process", "MatSmoothing", function(this, ..., units=NULL, force=FAL
           y[count] <- x[ ind[jj] ]
           #inds[count] <- ind[jj]
           pos <- pp
-        }  
+        }
       } # for (jj ...)
     } # for (ii ...)
     y <- y[y > MIN]
@@ -387,10 +385,10 @@ setMethodS3("process", "MatSmoothing", function(this, ..., units=NULL, force=FAL
 
   # Get (and create) the output path
   outputPath <- getPath(this);
-  
+
   # Get cdf
   cdf <- getCdf(ds);
-  
+
   # Get which units to fit
   if (is.null(units)) {
     units <- seq_len(nbrOfUnits(cdf));
@@ -408,12 +406,12 @@ setMethodS3("process", "MatSmoothing", function(this, ..., units=NULL, force=FAL
   nProbes <- params$nProbes;
   meanTrim <- params$meanTrim;
   rm(params);
-  
-  
+
+
   # ------------------------------------------------------
-  # get CEL indices for units 
+  # get CEL indices for units
   # ------------------------------------------------------
-  # Sanity check to validate that each group for tiling array 
+  # Sanity check to validate that each group for tiling array
   # has this 1 element
   nbrGroupsPerUnit <- nbrOfGroupsPerUnit(cdf);
   stopifnot(all(nbrGroupsPerUnit == 1));
@@ -423,7 +421,7 @@ setMethodS3("process", "MatSmoothing", function(this, ..., units=NULL, force=FAL
   unitNames <- names(cdfCellsList);
   names(cdfCellsList) <- NULL;
   verbose && exit(verbose);
-  
+
   cellsList <- lapply(cdfCellsList, FUN=function(unit) {
     unit$groups[[1]]$indices;
   });
@@ -445,14 +443,14 @@ setMethodS3("process", "MatSmoothing", function(this, ..., units=NULL, force=FAL
   verbose && enter(verbose, "Preloading genomic positions for all cells");
   acpData <- acp[,1:2,drop=FALSE];
   verbose && exit(verbose);
-  
+
   # --------------------------------------------------------
   # loop through the number of columns in design matrix
   # calculate smoothed score for each combination of samples
   # --------------------------------------------------------
   for (ii in seq_len(ncol(design))) {
     fullname <- fullnamesOut[ii];
-    verbose && enter(verbose, sprintf("Result file #%d ('%s') of %d", 
+    verbose && enter(verbose, sprintf("Result file #%d ('%s') of %d",
                                                   ii, fullname, ncol(design)));
 
     filename <- sprintf("%s.CEL", fullname);
@@ -472,14 +470,14 @@ setMethodS3("process", "MatSmoothing", function(this, ..., units=NULL, force=FAL
 
     matScoreNeg <- matScorePos <- outputList <- vector("list", nbrOfUnits);
     names(outputList) <- unitNames;
-  
+
     sampsKeep <- which(design[,ii] != 0);
 
     # Sanity check (already done in the setup checks, but a 2nd backup)
     stopifnot(length(sampsKeep) > 0);
 
     posOrNeg <- design[sampsKeep,ii];
-      
+
     verbose && enter(verbose, "Reading probe data for the samples needed");
     dsII <- extract(ds, sampsKeep);
     # Reuse the above cdfIndices structure...
@@ -488,11 +486,11 @@ setMethodS3("process", "MatSmoothing", function(this, ..., units=NULL, force=FAL
     ## dataList <- readUnits(dsII, units=units, stratifyBy="pm", verbose=verbose);
     rm(dsII);
     verbose && exit(verbose);
-    
+
     dataList <- base::lapply(dataList, FUN=function(u) {
       matrix(log2(u[[1]]$intensities), ncol=length(sampsKeep))
     });
-    
+
     verbose && enter(verbose, "Computing trimmed means for all units");
 
     # ------------------------------------------------------
@@ -503,13 +501,13 @@ setMethodS3("process", "MatSmoothing", function(this, ..., units=NULL, force=FAL
       if (is.null(outputList[[jj]])) {
         zeroes <- rep(0, times=nRows[jj]);
         matScorePos[[jj]] <- zeroes;
-        matScoreNeg[[jj]] <- zeroes; 
+        matScoreNeg[[jj]] <- zeroes;
         outputList[[jj]] <- zeroes;
       }
       if (jj %% 1000 == 0) {
         verbose && cat(verbose, sprintf("Completed %d out of %d units...", jj, nbrOfUnits));
       }
-           
+
       # loop through all columns in matrix
       sampPos <- which(posOrNeg > 0);
       sampNeg <- which(posOrNeg < 0);
@@ -538,7 +536,7 @@ setMethodS3("process", "MatSmoothing", function(this, ..., units=NULL, force=FAL
     # MAT scores can be vectorized already here
     matScorePos <- unlist(matScorePos, use.names=FALSE);
     matScoreNeg <- unlist(matScoreNeg, use.names=FALSE);
-    
+
     # calculate null distributions for scale factors
     if (length(sampNeg) > 0) {
       verbose && enter(verbose, "Calculating scale factor via null distributions");
@@ -556,7 +554,7 @@ setMethodS3("process", "MatSmoothing", function(this, ..., units=NULL, force=FAL
       rm(chr, pos, nullX);
       verbose && str(verbose, nullDists);
       verbose && exit(verbose);
-      
+
       scaleFactor <- nullDists$sd["pos"] / nullDists$sd["neg"];
       verbose && printf(verbose, "Scale factor: %.4g\n", scaleFactor);
       # Sanity check
@@ -568,9 +566,9 @@ setMethodS3("process", "MatSmoothing", function(this, ..., units=NULL, force=FAL
     } # if (length(sampNeg) > 0)
 
 
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Calculate MAT scores
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     verbose && enter(verbose, "Calculating MAT scores (on intensity scale)");
     matScores <- matScorePos - scaleFactor*matScoreNeg;
     rm(matScoreNeg, matScorePos);
@@ -583,9 +581,9 @@ setMethodS3("process", "MatSmoothing", function(this, ..., units=NULL, force=FAL
     # Sanity check
     stopifnot(length(matScores) == length(allInds));
 
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Storing results
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     verbose && enter(verbose, "Storing results");
 
     # Always validate the output file just before writing
@@ -596,10 +594,10 @@ setMethodS3("process", "MatSmoothing", function(this, ..., units=NULL, force=FAL
     df <- getOneFile(ds);
     createFrom(df, filename=pathnameT, path=NULL, verbose=less(verbose));
     verbose && exit(verbose);
-    
+
     verbose && enter(verbose, "Updating data file");
     verbose2 <- isVisible(verbose, -50);
-    updateCel(pathnameT, indices=allInds, intensities=matScores, 
+    updateCel(pathnameT, indices=allInds, intensities=matScores,
                                                         verbose=verbose2);
     verbose && exit(verbose);
 
@@ -610,9 +608,9 @@ setMethodS3("process", "MatSmoothing", function(this, ..., units=NULL, force=FAL
     verbose && exit(verbose);
 
 
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Next column in design matrix
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Memory cleanup
     rm(matScores);
 
@@ -625,14 +623,14 @@ setMethodS3("process", "MatSmoothing", function(this, ..., units=NULL, force=FAL
 
   # Clean up
   rm(cellsList, allInds, acpData);
-  
+
   outputDataSet <- getOutputDataSet(this, force=TRUE);
 
   # Sanity check
   stopifnot(length(outputDataSet) == ncol(design));
 
   verbose && exit(verbose);
-  
+
   invisible(outputDataSet);
 })
 
@@ -641,7 +639,7 @@ setMethodS3("process", "MatSmoothing", function(this, ..., units=NULL, force=FAL
 # HISTORY:
 # 2012-09-02 [HB]
 # o ROBUSTNESS: Added sanity check that process() for MatSmoothing returns
-#   a dataset with the same number of arrays as number of columns in 
+#   a dataset with the same number of arrays as number of columns in
 #   the design matrix.
 # 2009-06-28 [HB]
 # o BUG FIX: Added missing getExpectedOutputFullnames() for MatSmoothing.
@@ -650,14 +648,14 @@ setMethodS3("process", "MatSmoothing", function(this, ..., units=NULL, force=FAL
 # o SPEED UP: Replaces two calcNullDist() calls with one calcNullDists()
 #   call, which again is twice as fast.
 # o SPEED UP: Made calcNullDist() twice as fast.
-# o BUG FIX: calcNullDist() used the cell index instead of the cell 
+# o BUG FIX: calcNullDist() used the cell index instead of the cell
 #   position for the first cell.
 # 2009-05-27 [MR]
 # o Added sanity check for CDF file that all units have exactly 1 group
 # o Added 'stratifyBy="pm"' to the call to readUnits() and getCellIndices()
 #   since the smoothing is only to be done on PM probes
 # 2009-05-25 [HB]
-# o Added getExpectedOutputFiles() special to MatSmoothing. Removed 
+# o Added getExpectedOutputFiles() special to MatSmoothing. Removed
 #   isDone().
 # 2009-05-23 [HB]
 # o Added getOutputFiles() to MatSmoothing to work with new AromaTransform.
@@ -667,7 +665,7 @@ setMethodS3("process", "MatSmoothing", function(this, ..., units=NULL, force=FAL
 #   due to processing interrupts.
 # 2009-03-20 [MR]
 # o Corrected the checking of isDone() for MatSmoothing objects.
-# o If MatSmoothing has already been run, it returns the 
+# o If MatSmoothing has already been run, it returns the
 #   AffymetrixCelSet object.
 # 2009-01-13 [HB]
 # o MEMORY CLEANUP: Cleaning out more "done" variables and earlier.

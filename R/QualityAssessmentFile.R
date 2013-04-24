@@ -1,4 +1,3 @@
-
 ###########################################################################/**
 # @RdocClass QualityAssessmentFile
 #
@@ -9,7 +8,7 @@
 #
 #  This class represents probe-level QC information (residuals, weights, etc.)
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
@@ -20,8 +19,8 @@
 #  @allmethods "public"
 # }
 #
-# \author{Ken Simpson (ksimpson[at]wehi.edu.au).}
-# 
+# @author "KS"
+#
 # \seealso{
 #   An object of this class is typically part of a @see "QualityAssessmentSet".
 # }
@@ -49,10 +48,10 @@ setMethodS3("findUnitsTodo", "QualityAssessmentFile", function(this, units=NULL,
   if (is.null(units)) {
     units <- seq_len(nbrOfUnits(getCdf(this)));
   }
-  
+
   # Read 'pixels' from each unit
   verbose && enter(verbose, "Reading data for these ", length(units), " units");
-  value <- readCelUnits(getPathname(this), units=units, readIntensities=FALSE, 
+  value <- readCelUnits(getPathname(this), units=units, readIntensities=FALSE,
                         readStdvs=FALSE, readPixels=TRUE, dropArrayDim=TRUE);
   verbose && exit(verbose);
 

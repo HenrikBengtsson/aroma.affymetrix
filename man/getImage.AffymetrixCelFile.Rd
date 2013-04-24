@@ -47,7 +47,7 @@
   \code{TrueColor}.
 }
 
-\author{Ken Simpson (ksimpson[at]wehi.edu.au).}
+\author{Ken Simpson, Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{AffymetrixCelFile}}.

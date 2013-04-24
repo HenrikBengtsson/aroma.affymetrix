@@ -9,11 +9,11 @@
 #  This class represents the Chromosomal Smoothing Robust Multichip Analysis
 #  method.
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
-#   \item{...}{Arguments passed to the constructor of 
+#   \item{...}{Arguments passed to the constructor of
 #              @see "SmoothMultiarrayModel".}
 # }
 #
@@ -21,7 +21,7 @@
 #  @allmethods "public"
 # }
 #
-# @author
+# @author "HB"
 #*/###########################################################################
 setConstructorS3("SmoothRmaModel", function(...) {
   extend(SmoothMultiarrayModel(...), "SmoothRmaModel");

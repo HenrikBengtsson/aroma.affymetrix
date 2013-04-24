@@ -6,23 +6,23 @@
 # \description{
 #  @classhierarchy
 #
-#  This class represents a calibration function that transforms the 
-#  probe-level signals such that the signals from the two alleles are 
+#  This class represents a calibration function that transforms the
+#  probe-level signals such that the signals from the two alleles are
 #  orthogonal.
-#  The method fits and calibrates PM signals only.  MM signals will not 
+#  The method fits and calibrates PM signals only.  MM signals will not
 #  affect the model fitting and are unaffected.
 # }
-# 
-# @synopsis 
+#
+# @synopsis
 #
 # \arguments{
 #   \item{dataSet}{An @see "AffymetrixCelSet".}
-#   \item{...}{Arguments passed to the constructor of 
+#   \item{...}{Arguments passed to the constructor of
 #     @see "ProbeLevelTransform".}
 #   \item{model}{A @character string for quickly specifying default
 #     parameter settings.}
 #   \item{rescaleBy}{A @character string specifying what sets of cells
-#     should be rescaled towards a target average, if any.  
+#     should be rescaled towards a target average, if any.
 #     Default is to rescale all cells together.
 #     If \code{"none"}, no rescaling is done.}
 #   \item{targetAvg}{The signal(s) that either the average of the sum
@@ -32,7 +32,7 @@
 #   \item{subsetToAvg}{The indices of the cells (taken as the intersect of
 #     existing indices) used to calculate average in order to rescale to
 #     the target average. If @NULL, all probes are considered.}
-#   \item{mergeShifts}{If @TRUE, the shift of the probe sequence 
+#   \item{mergeShifts}{If @TRUE, the shift of the probe sequence
 #     relative to the SNP position is ignored, otherwise not.}
 #   \item{B}{An @integer specifying by how many nucleotides the allelic
 #     groups should be stratified by. If zero, all SNPs are put in one
@@ -44,11 +44,11 @@
 #     are identified.}
 # }
 #
-# \section{What probe signals are updated?}{ 
+# \section{What probe signals are updated?}{
 #   Calibration for crosstalk between allele signals applies by definition
 #   only SNP units.
 #   Furthermore, it is only SNP units with two or four unit groups that
-#   are calibrated.  For instance, in at least on custom SNP CDFs we 
+#   are calibrated.  For instance, in at least on custom SNP CDFs we
 #   know of, there is a small number of SNP units that have six groups.
 #   \emph{Currently these units are not calibrated (at all).}
 #   It is only PM probes that will be calibrated.
@@ -63,11 +63,11 @@
 # }
 #
 # \section{Important about rescaling towards target average}{
-#   Rescaling each allele-pair group (e.g. AC, AG, AT, CG, CT, GC) 
-#   towards a target average (\code{rescaleBy="groups"}) 
-#   \emph{must not} be used for multi-enzyme chip types, 
-#   e.g. GenomeWideSNP\_6.  
-#   If still done, due to confounded effects of non-perfect enzyme 
+#   Rescaling each allele-pair group (e.g. AC, AG, AT, CG, CT, GC)
+#   towards a target average (\code{rescaleBy="groups"})
+#   \emph{must not} be used for multi-enzyme chip types,
+#   e.g. GenomeWideSNP\_6.
+#   If still done, due to confounded effects of non-perfect enzyme
 #   mixtures etc, there will be a significant bias between raw CNs
 #   for SNPs and CN probes.
 #   Instead, for such chip types \emph{all probe signales} should be
@@ -75,10 +75,10 @@
 # }
 #
 # \section{Fields and Methods}{
-#  @allmethods "public"  
+#  @allmethods "public"
 # }
 #
-# @author
+# @author "HB"
 #*/###########################################################################
 setConstructorS3("AllelicCrosstalkCalibration", function(dataSet=NULL, ..., model=c("asis", "auto", "CRMA", "CRMAv2"), rescaleBy=c("auto", "groups", "all", "none"), targetAvg=c(2200, 2200), subsetToAvg="-XY", mergeShifts=TRUE, B=1, flavor=c("sfit", "expectile"), alpha=c(0.1, 0.075, 0.05, 0.03, 0.01), q=2, Q=98, lambda=2, pairBy=c("CDF", "sequence")) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -153,7 +153,7 @@ setConstructorS3("AllelicCrosstalkCalibration", function(dataSet=NULL, ..., mode
         }
       }
     }
-  
+
     if (rescaleBy == "all") {
       targetAvg <- targetAvg[1];
       extraTags <- c(extraTags, rescaleBy="ra");  # rescale all together
@@ -163,7 +163,7 @@ setConstructorS3("AllelicCrosstalkCalibration", function(dataSet=NULL, ..., mode
     } else if (rescaleBy == "none") {
       extraTags <- c(extraTags, rescaleBy="rn");  # rescale nothing
     }
-  
+
     # Argument 'targetAvg':
     if (!is.null(targetAvg)) {
       targetAvg <- Arguments$getDoubles(targetAvg, range=c(0, Inf));
@@ -171,7 +171,7 @@ setConstructorS3("AllelicCrosstalkCalibration", function(dataSet=NULL, ..., mode
         throw("Argument 'targetAvg' must be of length one or two: ", length(targetAvg));
       }
     }
-  
+
     # Argument 'subsetToAvg':
     if (is.null(subsetToAvg)) {
     } else if (is.character(subsetToAvg)) {
@@ -213,7 +213,7 @@ setConstructorS3("AllelicCrosstalkCalibration", function(dataSet=NULL, ..., mode
     alpha <- alpha[length(alpha)];
     algorithmParameters <- list(alpha=alpha, lambda=lambda);
   }
-  
+
 
   extend(ProbeLevelTransform(dataSet=dataSet, ...), "AllelicCrosstalkCalibration",
     "cached:.setsOfProbes" = NULL,
@@ -285,11 +285,11 @@ setMethodS3("getSubsetToAvg", "AllelicCrosstalkCalibration", function(this, ...,
       if (is.null(subset)) {
         dataSet <- getInputDataSet(this);
         cdf <- getCdf(dataSet);
-  
+
         # Get the genome information (throws an exception if missing)
         gi <- getGenomeInformation(cdf);
         verbose && print(verbose, gi);
-  
+
         # Identify units to be excluded
         if (subsetToAvg == "-X") {
           subset <- getUnitsOnChromosomes(gi, 23, .checkArgs=FALSE);
@@ -298,19 +298,19 @@ setMethodS3("getSubsetToAvg", "AllelicCrosstalkCalibration", function(this, ...,
         } else if (subsetToAvg == "-XY") {
           subset <- getUnitsOnChromosomes(gi, 23:24, .checkArgs=FALSE);
         }
-  
+
         verbose && cat(verbose, "Units to exclude: ");
         verbose && str(verbose, subset);
 
         # Identify the cell indices for these units
-        subset <- getCellIndices(cdf, units=subset, 
+        subset <- getCellIndices(cdf, units=subset,
                                  useNames=FALSE, unlist=TRUE);
         verbose && cat(verbose, "Cells to exclude: ");
         verbose && str(verbose, subset);
-  
+
         # The cells to keep
         subset <- setdiff(1:nbrOfCells(cdf), subset);
-  
+
         verbose && cat(verbose, "Cells to include: ");
         verbose && str(verbose, subset);
 
@@ -374,7 +374,7 @@ setMethodS3("rescaleByAll", "AllelicCrosstalkCalibration", function(this, yAll, 
   if (nt != 1) {
     throw("In order rescale towards a global target average ('rescaleBy' == \"all\"), argument 'targetAvg' must be a scalar: ", paste(targetAvg, collapse=","));
   }
- 
+
   if (verbose) {
     enter(verbose, "Rescaling toward target average");
     printf(verbose, "Rescale by: %s\n", params$rescaleBy);
@@ -409,7 +409,7 @@ setMethodS3("rescaleByAll", "AllelicCrosstalkCalibration", function(this, yAll, 
     yAvg <- yAvg0;
     verbose && printf(verbose, "yAvg (100%%): %.2f\n", yAvg);
   }
-    
+
   if (!is.finite(yAvg)) {
     throw("Cannot rescale to target average. Signal average is non-finite: ", yAvg);
   }
@@ -479,7 +479,7 @@ setMethodS3("rescaleByGroups", "AllelicCrosstalkCalibration", function(this, yAl
     for (kk in seq_len(nbrOfPairs)) {
       name <- basepairs[kk];
       verbose && enter(verbose, sprintf("Allele-pair group #%d ('%s') of %d", kk, name, nbrOfPairs));
-  
+
       # Get data pairs
       idxAB <- setsOfProbes$snps[[name]];
       idxAB <- matrix(idxAB, ncol=2, byrow=FALSE);
@@ -488,12 +488,12 @@ setMethodS3("rescaleByGroups", "AllelicCrosstalkCalibration", function(this, yAl
       y <- yAll[idxAB[,1]]+yAll[idxAB[,2]];
       n <- length(y);
       n0 <- n;
-    
+
       # Calculate current average
       yAvg <- median(y, na.rm=TRUE);
       yAvg0 <- yAvg;
       rm(y);
-    
+
       if (!is.null(params$subsetToAvg)) {
         keep <- matrix((idxAB %in% params$subsetToAvg), ncol=2, byrow=FALSE);
         keep <- (keep[,1] & keep[,2]);
@@ -503,29 +503,29 @@ setMethodS3("rescaleByGroups", "AllelicCrosstalkCalibration", function(this, yAl
         # Sum y=yA+yB
         y <- yAll[idxAB[,1]]+yAll[idxAB[,2]];
         n <- length(y);
-    
+
         if (n == 0) {
           throw("Cannot rescale to target average. After taking the intersect of the subset of cells to be used, there are no cells left.");
         }
-    
+
         yAvg <- median(y, na.rm=TRUE);
         rm(y);
-    
+
         verbose && printf(verbose, "yAvg (using %d/%.1f%% summed pairs): %.2f of %.2f (%.1f%%)\n", n, 100*n/n0, yAvg, yAvg0, 100*yAvg/yAvg0);
       } else {
         verbose && printf(verbose, "yAvg (100%%): %.2f\n", yAvg);
       }
-    
+
       if (!is.finite(yAvg))
         throw("Cannot rescale to target average. Signal average is non-finite: ", yAvg);
-    
+
       # Rescale
       b <- targetAvg/yAvg;
       verbose && printf(verbose, "scale factor: %.2f\n", b);
-    
+
       idxAB <- setsOfProbes$snps[[name]];
       yAll[idxAB] <- b*yAll[idxAB];
-  
+
       rm(idx);
 
       fit$subset$snps[[name]] <- list(b=b);
@@ -541,7 +541,7 @@ setMethodS3("rescaleByGroups", "AllelicCrosstalkCalibration", function(this, yAl
     for (kk in seq_len(nbrOfPairs)) {
       name <- basepairs[kk];
       verbose && enter(verbose, sprintf("Allele-pair group #%d ('%s') of %d", kk, name, nbrOfPairs));
-  
+
       # Get data pairs
       idxAB <- setsOfProbes$snps[[name]];
       idxAB <- matrix(idxAB, ncol=2, byrow=FALSE);
@@ -555,40 +555,40 @@ setMethodS3("rescaleByGroups", "AllelicCrosstalkCalibration", function(this, yAl
         y <- yAll[idx];
         n <- length(y);
         n0 <- n;
-    
+
         # Calculate current average
         yAvg <- median(y, na.rm=TRUE);
         yAvg0 <- yAvg;
         rm(y);
-    
+
         if (!is.null(params$subsetToAvg)) {
           idx <- idxAB[,cc];
           idx <- intersect(idx, params$subsetToAvg);
           y <- yAll[idx];
           n <- length(y);
-    
+
           if (n == 0) {
             throw("Cannot rescale to target average. After taking the intersect of the subset of cells to be used, there are no cells left.");
           }
-    
+
           yAvg <- median(y, na.rm=TRUE);
           rm(y);
-    
+
           verbose && printf(verbose, "yAvg (using %d/%.1f%% pairs): %.2f of %.2f (%.1f%%)\n", n, 100*n/n0, yAvg, yAvg0, 100*yAvg/yAvg0);
         } else {
           verbose && printf(verbose, "yAvg (100%%): %.2f\n", yAvg);
         }
-    
-        if (!is.finite(yAvg)) 
+
+        if (!is.finite(yAvg))
           throw("Cannot rescale to target average. Signal average is non-finite: ", yAvg);
-    
+
         # Rescale
         b[cc] <- targetAvg[cc]/yAvg;
         verbose && printf(verbose, "scale factor: %.2f\n", b[cc]);
-    
+
         idx <- idxAB[,cc];
         yAll[idx] <- b[cc]*yAll[idx];
-  
+
         rm(idx);
       } # for (cc ...)
 
@@ -613,7 +613,7 @@ setMethodS3("rescaleByGroups", "AllelicCrosstalkCalibration", function(this, yAl
   if (n > 0) {
     yAvg <- median(y, na.rm=TRUE);
     rm(y);
-    if (!is.finite(yAvg)) 
+    if (!is.finite(yAvg))
       throw("Cannot rescale to target average. Signal average is non-finite: ", yAvg);
 
     # Rescale (to half of the allele target averages)
@@ -668,7 +668,7 @@ setMethodS3("rescaleByGroups", "AllelicCrosstalkCalibration", function(this, yAl
 #
 # \arguments{
 #   \item{...}{Not used.}
-#   \item{force}{If @TRUE, data already calibrated is re-calibrated, 
+#   \item{force}{If @TRUE, data already calibrated is re-calibrated,
 #       otherwise not.}
 #   \item{verbose}{See @see "R.utils::Verbose".}
 # }
@@ -676,8 +676,6 @@ setMethodS3("rescaleByGroups", "AllelicCrosstalkCalibration", function(this, yAl
 # \value{
 #  Returns a @double @vector.
 # }
-#
-# @author
 #
 # \seealso{
 #   @seeclass
@@ -750,7 +748,7 @@ setMethodS3("process", "AllelicCrosstalkCalibration", function(this, ..., force=
 
   for (kk in seq_len(nbrOfArrays)) {
     df <- getFile(ds, kk);
-    verbose && enter(verbose, sprintf("Array #%d ('%s') of %d", 
+    verbose && enter(verbose, sprintf("Array #%d ('%s') of %d",
                                               kk, getName(df), nbrOfArrays));
 
     fullname <- getFullName(df);
@@ -823,7 +821,7 @@ setMethodS3("process", "AllelicCrosstalkCalibration", function(this, ..., force=
           verbose & cat(verbose, "Model parameters:");
           verbose & str(verbose, list(alpha=alpha, lambda=lambda));
           verbose & cat(verbose, "Number of data points: ", nrow(y));
-          fit <- fitGenotypeCone(y, flavor=flavor, alpha=alpha, 
+          fit <- fitGenotypeCone(y, flavor=flavor, alpha=alpha,
                                         lambda=lambda, verbose=verboseL);
         }
         verbose && print(verbose, fit, level=-5);
@@ -894,7 +892,7 @@ setMethodS3("process", "AllelicCrosstalkCalibration", function(this, ..., force=
           yC <- y;
         }
         yAll[idx] <- yC;
-  	  
+
 #        callHooks(sprintf("%s.onUpdated", hookName), df=df, y=y, basepair=basepair, fit=fits[[name]], yC=yC,...);
         rm(idx, y, yC);
         gc <- gc();
@@ -918,7 +916,7 @@ setMethodS3("process", "AllelicCrosstalkCalibration", function(this, ..., force=
         verbose && exit(verbose);
       }
       rm(cells);
-      
+
       # Not needed anymore
       rm(fits);
 
@@ -930,7 +928,7 @@ setMethodS3("process", "AllelicCrosstalkCalibration", function(this, ..., force=
       # Rescaling toward target average?
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       if (!is.null(params$targetAvg)) {
-        yAll <- rescale(this, yAll=yAll, params=params, 
+        yAll <- rescale(this, yAll=yAll, params=params,
                            setsOfProbes=setsOfProbes, verbose=less(verbose));
         fit <- attr(yAll, "fit");
         fit$params <- NULL;
@@ -946,7 +944,7 @@ setMethodS3("process", "AllelicCrosstalkCalibration", function(this, ..., force=
 
 
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-      # Store model fit 
+      # Store model fit
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       # Store fit and parameters (in case someone are interested in looking
       # at them later; no promises of backward compatibility though).
@@ -966,7 +964,7 @@ setMethodS3("process", "AllelicCrosstalkCalibration", function(this, ..., force=
       # Storing data
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       verbose && enter(verbose, "Storing calibrated data");
-    
+
       # Create CEL file to store results, if missing
       verbose && enter(verbose, "Creating CEL file for results, if missing");
       createFrom(df, filename=pathname, path=NULL, verbose=less(verbose));
@@ -981,7 +979,7 @@ setMethodS3("process", "AllelicCrosstalkCalibration", function(this, ..., force=
       verbose && print(verbose, gc);
       verbose && exit(verbose);
     } # if (!force && isFile(pathname))
- 
+
 
     # Assert validity of the calibrated data file
     dfC <- newInstance(df, pathname);
@@ -1008,7 +1006,7 @@ setMethodS3("process", "AllelicCrosstalkCalibration", function(this, ..., force=
   outputDataSet <- getOutputDataSet(this, force=TRUE);
 
   verbose && exit(verbose);
-  
+
   invisible(outputDataSet);
 })
 
@@ -1017,12 +1015,12 @@ setMethodS3("process", "AllelicCrosstalkCalibration", function(this, ..., force=
 
 setMethodS3("plotBasepair", "AllelicCrosstalkCalibration", function(this, array, basepairs=NULL, what=c("before", "after"), ..., plotFcn=NULL, xlim=c(-500,65535), ylim=xlim, linesFcn=NULL, lwd=4, lcol="red", scale=1, force=FALSE, verbose=FALSE) {
   linesAllelicCrosstalk <- function(a, B, max=1e5, ...) {
-    bA <- B[1,2]/B[1,1]; 
-    bB <- B[2,1]/B[2,2]; 
+    bA <- B[1,2]/B[1,1];
+    bB <- B[2,1]/B[2,2];
     lines(x=a[1]+c(0,1)*max, y=a[2]+c(0,1)*max*bA, ...);
     lines(x=a[1]+c(0,1)*max*bB, y=a[2]+c(0,1)*max, ...);
   } # linesAllelicCrosstalk()
- 
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -1059,7 +1057,7 @@ setMethodS3("plotBasepair", "AllelicCrosstalkCalibration", function(this, array,
   # Argument 'basepair':
   knownBasepairs <- names(setsOfProbes$snps);
   if (is.null(basepairs)) {
-    basepairs <- knownBasepairs; 
+    basepairs <- knownBasepairs;
   } else {
     if (!all(basepairs %in% knownBasepairs)) {
       throw("Argument 'basepairs' refers one or several unknown basepairs: ", paste(basepairs, collapse=", "));
@@ -1101,7 +1099,7 @@ setMethodS3("plotBasepair", "AllelicCrosstalkCalibration", function(this, array,
     modelFit <- loadObject(pathname);
     missing <- basepairs[!(basepairs %in% names(modelFit$accFits))];
     if (length(missing) > 0) {
-      throw("Loaded model fit does not contain estimates for some basepairs: ", 
+      throw("Loaded model fit does not contain estimates for some basepairs: ",
                                                 paste(missing, collapse=", "));
     }
   }
@@ -1225,14 +1223,14 @@ setMethodS3("getDataPairs", "AllelicCrosstalkCalibration", function(this, array,
 #   for a constructor function.  The allele pairs are inferred from the
 #   CDF (by default).
 # 2010-02-15
-# o MEMORY OPTIMIZATION: Now process() of AllelicCrosstalkCalibration 
+# o MEMORY OPTIMIZATION: Now process() of AllelicCrosstalkCalibration
 #   clears the in-memory cache when finished.
 # 2009-09-04
 # o Now smoothScatter() is loaded via aroma.core.
 # 2008-12-17
 # o process() had a nested for loop with the same iteration variable 'kk'
 #   was used for in the inner and the outer loop.  I was surprised to find
-#   that this worked and is valid in R, cf. help(for).  However, for 
+#   that this worked and is valid in R, cf. help(for).  However, for
 #   readability I've changed it to use to 'kk' and 'pp'.
 # 2008-12-10
 # o BUG FIX: Now process() avoids sets of pairs with too few probe pairs.
@@ -1241,7 +1239,7 @@ setMethodS3("getDataPairs", "AllelicCrosstalkCalibration", function(this, array,
 # 2008-11-28
 # o Added argument 'model' for quick specification of default parameter
 #   settings according to the CRMA or CRMA v2 model.
-# o Added argument 'pairBy' to specify how the allele probe pairs are 
+# o Added argument 'pairBy' to specify how the allele probe pairs are
 #   identified.  Historically we inferred this from the CDF, but it is
 #   safer and more generic to do this from the probe sequences, which then
 #   requires an ACS cell-sequence annotation file.
@@ -1249,7 +1247,7 @@ setMethodS3("getDataPairs", "AllelicCrosstalkCalibration", function(this, array,
 # o BUG FIX: The allele pairs identified was not correct for GWS arrays.
 # o Updated AllelicCrosstalkCalibration to support flavor 'expectile' too.
 # 2008-08-30
-# o Added argument 'mergeShifts=TRUE' and 'B=1'.  Currently B=0 and B=1 
+# o Added argument 'mergeShifts=TRUE' and 'B=1'.  Currently B=0 and B=1
 #   is supported.
 # 2008-08-29
 # o Added protected getSetsOfProbes().  By overriding this method, other
@@ -1257,12 +1255,12 @@ setMethodS3("getDataPairs", "AllelicCrosstalkCalibration", function(this, array,
 #   user specified function generating the sets.
 # 2008-08-04
 # o Added support to fit the genotype "cone" using the 'expectile' package
-#   instead of the 'sfit' package. This is controlled by the 'flavor' 
+#   instead of the 'sfit' package. This is controlled by the 'flavor'
 #   argument of the constructor.
 # 2008-07-14
 # o Now explicitly using matrix(..., byrow=FALSE).
 # 2008-05-30
-# o BUG FIX: The constructor of AllelicCrosstalkCalibration used 
+# o BUG FIX: The constructor of AllelicCrosstalkCalibration used
 #   non-defined variable 'verbose'.
 # 2008-02-21
 # o Now SNPs and CN probes are infered from getUnitTypes(cdf) and no longer
@@ -1274,7 +1272,7 @@ setMethodS3("getDataPairs", "AllelicCrosstalkCalibration", function(this, array,
 # o BUG FIX: The AllelicCrosstalkCalibration introduced in previous version
 #   was broken for 10K (maybe 100K and 500K as well).
 # o Now 'subsetToAvg' of AllelicCrosstalkCalibration accepts '-XY' (and
-#   '-X' and '-Y') for automatic look up of all units and exclude those 
+#   '-X' and '-Y') for automatic look up of all units and exclude those
 #   that are on ChrX and ChrY.  Note, '-XY' will work on all chip types,
 #   also older ones for which there are no ChrY units.
 # o The new constructor argument 'rescaleBy' now sets a "subtag", e.g.
@@ -1290,7 +1288,7 @@ setMethodS3("getDataPairs", "AllelicCrosstalkCalibration", function(this, array,
 # 2007-09-09
 # o Added alpha version of plotBasepair() to AllelicCrosstalkCalibration.
 # 2007-09-08
-# o Now AllelicCrosstalkCalibration corrects also non-SNP PM cells by 
+# o Now AllelicCrosstalkCalibration corrects also non-SNP PM cells by
 #   substracting a global offset and rescaling towards target average.
 #   The global offset is calculated as the weighted average of all
 #   allelic offsets.  This is the simplest way to incorporate a calibration
@@ -1300,7 +1298,7 @@ setMethodS3("getDataPairs", "AllelicCrosstalkCalibration", function(this, array,
 #   for all cells, which got some overhead.  Hopefully the simpler version
 #   is good enough.
 # 2007-09-05
-# o Now the rescaling can be done either on (yA,yB) separately or on 
+# o Now the rescaling can be done either on (yA,yB) separately or on
 #   y=yA+yB.  If targetAvg has two values the former, otherwise the latter.
 # o Now AllelicCrosstalkCalibration recognizes argument 'subsetToAvg'.
 # o Now process() stores the crosstalk settings and estimated parameters
@@ -1324,8 +1322,8 @@ setMethodS3("getDataPairs", "AllelicCrosstalkCalibration", function(this, array,
 # o Now this pre-processor output results to probeData/.
 # o Renamed from AllelicCrosstalkCalibrator.
 # 2006-11-18
-# o Removed version and subversion tags, and related functions. 
-#   Now getTags() returns the tags of the input data set plus any tags 
+# o Removed version and subversion tags, and related functions.
+#   Now getTags() returns the tags of the input data set plus any tags
 #   of this instance.
 # 2006-11-02
 # o Created from QuantileNormalizer.R.

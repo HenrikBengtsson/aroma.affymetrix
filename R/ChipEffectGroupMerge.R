@@ -9,21 +9,21 @@
 #  This class represents a method that merges chip effects across groups
 #  unit by unit.
 # }
-# 
-# @synopsis 
+#
+# @synopsis
 #
 # \arguments{
 #   \item{dataSet}{A @see "ChipEffectSet".}
 #   \item{fcn}{A @function used to "merge" groups.}
-#   \item{...}{Additional arguments passed to the constructor of 
+#   \item{...}{Additional arguments passed to the constructor of
 #     @see "ChipEffectTransform".}
 # }
 #
 # \section{Fields and Methods}{
-#  @allmethods "public"  
+#  @allmethods "public"
 # }
-# 
-# @author
+#
+# @author "HB"
 #
 # @keyword "internal"
 #*/###########################################################################
@@ -41,7 +41,7 @@ setConstructorS3("ChipEffectGroupMerge", function(dataSet=NULL, fcn=NULL, ...) {
   )
 
   setMergeFunction(this, fcn);
-  
+
   this;
 })
 
@@ -110,7 +110,7 @@ setMethodS3("getCdf", "ChipEffectGroupMerge", function(this, ...) {
 #
 # \arguments{
 #   \item{...}{Not used.}
-#   \item{force}{If @TRUE, data already normalized is re-normalized, 
+#   \item{force}{If @TRUE, data already normalized is re-normalized,
 #       otherwise not.}
 #   \item{verbose}{See @see "R.utils::Verbose".}
 # }
@@ -118,8 +118,6 @@ setMethodS3("getCdf", "ChipEffectGroupMerge", function(this, ...) {
 # \value{
 #  Returns a @double @vector.
 # }
-#
-# @author
 #
 # \seealso{
 #   @seeclass
@@ -172,7 +170,7 @@ setMethodS3("process", "ChipEffectGroupMerge", function(this, ..., force=FALSE, 
   fields <- c("theta", "sdTheta");
 
   overwrite <- force;
-  
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Process each array
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -185,7 +183,7 @@ setMethodS3("process", "ChipEffectGroupMerge", function(this, ..., force=FALSE, 
     ce <- getFile(ces, kk);
     verbose && enter(verbose, sprintf("Array #%d of %d ('%s')", kk, nbrOfArrays, getName(ce)));
 #    verbose && print(verbose, ce);
-    
+
     filename <- getFilename(ce);
     pathname <- filePath(path, filename);
     if (!force && isFile(pathname)) {
@@ -235,7 +233,7 @@ setMethodS3("process", "ChipEffectGroupMerge", function(this, ..., force=FALSE, 
       # Get the subset of the data for such units
       idxs <- which(data[,"unit"] %in% unitsS);
       rm(unitsS);
-      
+
       for (field in fields) {
         # Extract signals as a matrix where each column is one unit
         y <- data[idxs, field];
@@ -243,8 +241,8 @@ setMethodS3("process", "ChipEffectGroupMerge", function(this, ..., force=FALSE, 
         verbose && str(verbose, y);
         y <- mergeFcn(y);
         verbose && str(verbose, y);
-  
-        # Update data table 
+
+        # Update data table
         data[idxs, field] <- as.vector(y);
 
         # Not needed anymore
@@ -253,7 +251,7 @@ setMethodS3("process", "ChipEffectGroupMerge", function(this, ..., force=FALSE, 
 
       # Not needed anymore
       rm(idxs);
-      
+
       verbose && exit(verbose);
     } # for (size in ...)
       # Not needed anymore
@@ -267,7 +265,7 @@ setMethodS3("process", "ChipEffectGroupMerge", function(this, ..., force=FALSE, 
     tryCatch({
       # Create CEL file to store results, if missing
       verbose && enter(verbose, "Creating CEL file for results, if missing");
-      ceOut <- createFrom(ce, filename=pathname, path=NULL, 
+      ceOut <- createFrom(ce, filename=pathname, path=NULL,
                       methods="create", clear=TRUE, verbose=less(verbose));
       verbose && exit(verbose);
 
@@ -286,7 +284,7 @@ setMethodS3("process", "ChipEffectGroupMerge", function(this, ..., force=FALSE, 
 
     # Not needed anymore
     rm(ce, data);
-    
+
     # CDF inheritance
     setCdf(ceOut, cdf);
 
@@ -306,7 +304,7 @@ setMethodS3("process", "ChipEffectGroupMerge", function(this, ..., force=FALSE, 
   this$outputSet <- outputSet;
 
   verbose && exit(verbose);
-  
+
   outputSet;
 })
 

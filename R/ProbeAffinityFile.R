@@ -8,7 +8,7 @@
 #
 #  This class represents estimates of probe affinities in probe-level models.
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
@@ -20,8 +20,8 @@
 #  @allmethods "public"
 # }
 #
-# @author
-# 
+# @author "HB"
+#
 # \seealso{
 #   An object of this class is typically obtained through the
 #   \code{getProbeAffinityFile()} method for the @see "ProbeLevelModel" class.
@@ -83,8 +83,6 @@ setMethodS3("getParameters", "ProbeAffinityFile", function(this, ...) {
 #   If argument \code{unlist=TRUE} is passed, an @integer @vector is returned.
 # }
 #
-# @author
-#
 # \seealso{
 #   @seeclass
 # }
@@ -110,7 +108,7 @@ setMethodS3("getCellIndices", "ProbeAffinityFile", function(this, ..., verbose=F
 
   cdf <- getCdf(this);
 
-  res <- getCellIndices(cdf, ..., stratifyBy=stratifyBy, 
+  res <- getCellIndices(cdf, ..., stratifyBy=stratifyBy,
                                              verbose=less(verbose, 5));
   verbose && exit(verbose);
 
@@ -180,6 +178,6 @@ setMethodS3("updateUnits", "ProbeAffinityFile", function(this, units=NULL, cdf=N
 # o Added findUnitsTodo().
 # o Added getFirstCellIndices(). Since reading all cell indices can take
 #   a while it is cached in memory, but also on file (in case we restart).
-# o Created from LiWongProbeAffinityFile.  The RMA version is almost 
+# o Created from LiWongProbeAffinityFile.  The RMA version is almost
 #   identical so I made this a superclass of both.
 ############################################################################

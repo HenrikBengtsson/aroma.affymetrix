@@ -6,15 +6,15 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
- \name{LinearModelProbeSequenceNormalization}
+\name{LinearModelProbeSequenceNormalization}
 \docType{class}
 \alias{LinearModelProbeSequenceNormalization}
 
 
- \title{The LinearModelProbeSequenceNormalization class}
+\title{The LinearModelProbeSequenceNormalization class}
 
- \description{
-  Package:  aroma.affymetrix \cr
+\description{
+ Package:  aroma.affymetrix \cr
 \bold{Class LinearModelProbeSequenceNormalization}\cr
 
 \code{\link[R.oo]{Object}}\cr
@@ -41,22 +41,22 @@ extends \emph{\link[aroma.affymetrix]{AbstractProbeSequenceNormalization}}\cr
 
 
 
-  This abstract class represents a normalization method that corrects
-  for systematic effects in the probe intensities due to probe-sequence
-  dependent effects that can be modelled using a linear model.
- }
+ This abstract class represents a normalization method that corrects
+ for systematic effects in the probe intensities due to probe-sequence
+ dependent effects that can be modelled using a linear model.
+}
 
- \usage{
+\usage{
 LinearModelProbeSequenceNormalization(...)
 }
 
- \arguments{
-   \item{...}{Arguments passed to the constructor of
-     \code{\link{AbstractProbeSequenceNormalization}}.}
- }
+\arguments{
+  \item{...}{Arguments passed to the constructor of
+    \code{\link{AbstractProbeSequenceNormalization}}.}
+}
 
- \section{Fields and Methods}{
-  \bold{Methods:}\cr
+\section{Fields and Methods}{
+ \bold{Methods:}\cr
 \emph{No methods defined}.
 
 
@@ -76,28 +76,28 @@ getOutputDataSet, getOutputFiles
 as.character, getAsteriskTags, getExpectedOutputFiles, getExpectedOutputFullnames, getFullName, getInputDataSet, getName, getOutputDataSet, getOutputDataSet0, getOutputFiles, getPath, getRootPath, getTags, isDone, process, setTags
 
  \bold{Methods inherited from ParametersInterface}:\cr
-getParameters, getParametersAsString, getParameterSets
+getParameterSets, getParameters, getParametersAsString
 
  \bold{Methods inherited from Object}:\cr
 $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save, asThis
 
 
- }
+}
 
- \section{Requirements}{
-   This class requires that an aroma probe sequence file is available
-   for the chip type.
- }
+\section{Requirements}{
+  This class requires that an aroma probe sequence file is available
+  for the chip type.
+}
 
- \section{Memory usage}{
-  The model fitting methods of this class are bounded in memory.
-  This is done by first building up the normal equations incrementally
-  in chunks of cells.  The generation of normal equations is otherwise
-  the step that consumes the most memory.
-  When the normal equations are available, the \code{\link[base]{solve}}()
-  method is used to solve the equations.  Note that this algorithm is
-  still exact.
- }
+\section{Memory usage}{
+ The model fitting methods of this class are bounded in memory.
+ This is done by first building up the normal equations incrementally
+ in chunks of cells.  The generation of normal equations is otherwise
+ the step that consumes the most memory.
+ When the normal equations are available, the \code{\link[base]{solve}}()
+ method is used to solve the equations.  Note that this algorithm is
+ still exact.
+}
 
- \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 \keyword{classes}

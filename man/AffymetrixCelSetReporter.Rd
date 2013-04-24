@@ -6,15 +6,15 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
- \name{AffymetrixCelSetReporter}
+\name{AffymetrixCelSetReporter}
 \docType{class}
 \alias{AffymetrixCelSetReporter}
 
 
- \title{The AffymetrixCelSetReporter class}
+\title{The AffymetrixCelSetReporter class}
 
- \description{
-  Package:  aroma.affymetrix \cr
+\description{
+ Package:  aroma.affymetrix \cr
 \bold{Class AffymetrixCelSetReporter}\cr
 
 \code{\link[R.oo]{Object}}\cr
@@ -32,19 +32,19 @@ public abstract static class \bold{AffymetrixCelSetReporter}\cr
 extends \emph{\link[aroma.affymetrix]{AffymetrixFileSetReporter}}\cr
 
 
- }
+}
 
- \usage{
+\usage{
 AffymetrixCelSetReporter(..., .setClass="AffymetrixCelSet")
 }
 
- \arguments{
-   \item{...}{Arguments passed to \code{\link{AffymetrixFileSetReporter}}.}
-   \item{.setClass}{The name of the class of the input set.}
- }
+\arguments{
+  \item{...}{Arguments passed to \code{\link{AffymetrixFileSetReporter}}.}
+  \item{.setClass}{The name of the class of the input set.}
+}
 
- \section{Fields and Methods}{
-  \bold{Methods:}\cr
+\section{Fields and Methods}{
+ \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{\link[aroma.affymetrix:getDataSet.AffymetrixCelSetReporter]{getDataSet}} \tab Gets the data set.\cr
 }
@@ -60,7 +60,7 @@ as.character, getAlias, getAsteriskTags, getFullName, getInputName, getInputTags
 $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save, asThis
 
 
- }
+}
 
- \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 \keyword{classes}

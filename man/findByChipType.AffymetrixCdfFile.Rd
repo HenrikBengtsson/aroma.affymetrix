@@ -40,8 +40,6 @@
  If non CDF with requested chip type was found, \code{\link[base]{NULL}} is returned.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
-
 \seealso{
   For more information see \code{\link{AffymetrixCdfFile}}.
 }

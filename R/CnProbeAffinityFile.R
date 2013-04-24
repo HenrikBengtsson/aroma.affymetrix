@@ -8,12 +8,12 @@
 #
 #  This class represents estimates of probe affinities in SNP probe-level models.
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
 #   \item{...}{Arguments passed to @see "SnpProbeAffinityFile".}
-#   \item{combineAlleles}{If @FALSE, allele A and allele B are treated 
+#   \item{combineAlleles}{If @FALSE, allele A and allele B are treated
 #      seperately, otherwise together.}
 # }
 #
@@ -21,8 +21,7 @@
 #  @allmethods "public"
 # }
 #
-# @author
-# 
+# @author "HB"
 #*/###########################################################################
 setConstructorS3("CnProbeAffinityFile", function(..., combineAlleles=FALSE) {
   this <- extend(SnpProbeAffinityFile(...), "CnProbeAffinityFile",
@@ -57,8 +56,6 @@ setConstructorS3("CnProbeAffinityFile", function(..., combineAlleles=FALSE) {
 #   Returns a @list structure, where each element corresponds to a unit.
 #   If argument \code{unlist=TRUE} is passed, an @integer @vector is returned.
 # }
-#
-# @author
 #
 # \seealso{
 #   @seeclass

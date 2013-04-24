@@ -23,12 +23,11 @@
 #  @allmethods "public"
 # }
 #
-# \author{Henrik Bengtsson}
+# @author "HB"
 #
 # \seealso{
 #   Internally, @see "limma::backgroundCorrect" is used.
 # }
-#
 #*/###########################################################################
 setConstructorS3("NormExpBackgroundCorrection", function(..., method=c("rma", "saddle", "mle")) {
   # Argument 'method':

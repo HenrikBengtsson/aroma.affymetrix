@@ -31,7 +31,7 @@
 #   }
 # }
 #
-# @author
+# @author "HB"
 #
 # \seealso{
 #   @seeclass
@@ -307,7 +307,7 @@ setMethodS3("getAlleleProbePairs3", "AffymetrixCdfFile", function(this, units=NU
   if (length(units) == 0) {
     cells <- NULL;
   } else {
-    cells <- getCellIndices(this, units=units, useNames=FALSE, unlist=TRUE, 
+    cells <- getCellIndices(this, units=units, useNames=FALSE, unlist=TRUE,
                                                           verbose=verbose);
   }
   rm(units);
@@ -346,7 +346,7 @@ setMethodS3("getAlleleProbePairs3", "AffymetrixCdfFile", function(this, units=NU
 # 2008-08-31
 # o Created getAlleleProbePairs3().
 # 2008-05-10
-# o ROBUSTNESS: Added backward compatibility for cases when the cached 
+# o ROBUSTNESS: Added backward compatibility for cases when the cached
 #   results has sets$nonSNPs as a list.
 # 2008-03-26
 # o CLEAN UP: getAlleleProbePairs() of AffymetrixCdfFile would print *all*
@@ -390,18 +390,18 @@ setMethodS3("getAlleleProbePairs3", "AffymetrixCdfFile", function(this, units=NU
 # 2006-03-24
 # o Added references to DM articles and Affymetrix manuals.
 # o Further speed up by improve rearrangement of CDF structure. Now a Hind
-#   chip takes about 11-13 minutes instead.  11 minutes compared with 
+#   chip takes about 11-13 minutes instead.  11 minutes compared with
 #   35 hours is 190 times faster.
 # o After several speed improvements (also in affxparser), estimation of DM
 #   rank scores now takes about 15-18 minutes for the 100K Hind chip.
 #   The first draft took 30-35 hours(!) and yesterday 60-80 minutes.  Note,
-#   the first draft was not "stupid" code; there is always room for 
+#   the first draft was not "stupid" code; there is always room for
 #   improvement.
 # o Defined a local colSums() in getDmRankScores() specialized for matrices.
 #   The overhead of the default colSums() is about 50%.
 # 2006-03-23
 # o Moved all SNP related methods into the new class AffymetrixSnpCelFile.
-# o Added getRelativeAlleleSignals().  Note, it was designed to be used 
+# o Added getRelativeAlleleSignals().  Note, it was designed to be used
 #   with the 10K SNP chips.  These are designed so that there are equal
 #   number of forward and reverse quartets with matching offsets in both
 #   strands.  This is not the case for the 100K chips and above.

@@ -13,7 +13,7 @@ setMethodS3("getOutputFiles", "Transform", function(this, pattern=NULL, ...) {
   }
 
   NextMethod("getOutputFiles", pattern=pattern);
-}, protected=TRUE) 
+}, protected=TRUE)
 
 
 
@@ -39,8 +39,6 @@ setMethodS3("getOutputFiles", "Transform", function(this, pattern=NULL, ...) {
 #  Returns an @see "aroma.core::AromaMicroarrayDataSet" or @NULL.
 # }
 #
-# @author
-#
 # \seealso{
 #   @seeclass
 # }
@@ -62,7 +60,7 @@ setMethodS3("getOutputDataSet", "Transform", function(this, ..., verbose=FALSE) 
   # Inherit the CDF from the input data set.
   ds <- getInputDataSet(this);
   cdf <- getCdf(ds);
-  args <- list(generic="getOutputDataSet", this, ..., 
+  args <- list(generic="getOutputDataSet", this, ...,
                cdf=cdf, checkChipType=FALSE);
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -76,7 +74,7 @@ setMethodS3("getOutputDataSet", "Transform", function(this, ..., verbose=FALSE) 
   if (inherits(ds, "CnChipEffectSet"))
     args$combineAlleles <- ds$combineAlleles;
   if (inherits(ds, "SnpChipEffectSet"))
-    args$mergeStrands <- ds$mergeStrands; 
+    args$mergeStrands <- ds$mergeStrands;
 
   verbose && cat(verbose, "Calling NextMethod:");
   verbose && str(verbose, args);
@@ -100,7 +98,7 @@ setMethodS3("getOutputDataSet", "Transform", function(this, ..., verbose=FALSE) 
 # 2012-10-14
 # o CLEANUP: Removed obsolete getOutputDataSetOLD20090509() for Transform.
 # 2009-05-23
-# o Now getOutputDataSet() of Transform may return NULL if the output 
+# o Now getOutputDataSet() of Transform may return NULL if the output
 #   data set is empty. Before it gave an error say update2() is not
 #   applicable.
 # 2009-05-09
@@ -114,7 +112,7 @@ setMethodS3("getOutputDataSet", "Transform", function(this, ..., verbose=FALSE) 
 # o Removed some dependencies to CDFs.
 # 2007-12-08
 # o getOutputDataSet() of Transform was updated to utilize the new 'cdf'
-#   argument in static fromFiles() of AffymetrixCelSet.  This way the 
+#   argument in static fromFiles() of AffymetrixCelSet.  This way the
 #   default is not queried (in case it does not exist).
 # 2007-09-18
 # o Now getOutputDataSet() of Transform carry down certain arguments from
@@ -131,7 +129,7 @@ setMethodS3("getOutputDataSet", "Transform", function(this, ..., verbose=FALSE) 
 # o BUG FIX: When getOutputDataSet() retrieved the output data set, the chip
 #   type of the CEL files would be validated against the path name, also when
 #   then CDF of the input set was overriden.  Now the output data set is
-#   setup using 'checkChipType=FALSE'.  Thanks Mark Robinson for 
+#   setup using 'checkChipType=FALSE'.  Thanks Mark Robinson for
 #   troubleshooting this.
 # 2007-03-24
 # o BUG FIX: getPath() created the root path before trying to expand

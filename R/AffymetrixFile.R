@@ -9,10 +9,10 @@
 #  An AffymetrixFile object represents a single Affymetrix file,
 #  e.g. an Affymetrix CEL file or an Affymetrix CDF file.
 #  Note that this class is abstract and can not be instanciated, but
-#  instead you have to use one of the subclasses or the generic 
+#  instead you have to use one of the subclasses or the generic
 #  \code{fromFile()} method.
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
@@ -22,8 +22,8 @@
 # \section{Fields and Methods}{
 #  @allmethods "public"
 # }
-# 
-# @author
+#
+# @author "HB"
 #
 # \seealso{
 #   An object of this class is typically part of an @see "AffymetrixFileSet".
@@ -43,7 +43,7 @@ setConstructorS3("AffymetrixFile", function(...) {
 # 2008-05-09
 # o Added getPlatform().
 # 2007-09-16
-# o Removed obsolete copyFile() from AffymetrixFile.  Use copyTo() of 
+# o Removed obsolete copyFile() from AffymetrixFile.  Use copyTo() of
 #   GenericDataFile instead.
 # 2007-09-14
 # O Now AffymetrixFile inherits from GenericDataFile.
@@ -58,8 +58,8 @@ setConstructorS3("AffymetrixFile", function(...) {
 # o Added setAttributesByTags(), which now also tries to coerce values.
 # o Added support for (in-memory) attributes.
 # 2007-02-07
-# o Added getChecksum(), writeChecksum(), readChecksum(), and 
-#   compareChecksum() and validateChecksum(). I did this because I noticed 
+# o Added getChecksum(), writeChecksum(), readChecksum(), and
+#   compareChecksum() and validateChecksum(). I did this because I noticed
 #   by chance that some of my CEL files transferred via an external HDD got
 #   corrupt probe signals.
 # 2007-01-14
@@ -71,7 +71,7 @@ setConstructorS3("AffymetrixFile", function(...) {
 # 2006-09-15
 # o Added stextSize().
 # 2006-08-27
-# o Added stextLabel() and stextLabels(). stext is for "side text", cf. 
+# o Added stextLabel() and stextLabels(). stext is for "side text", cf.
 #   mtext for "margin text". stext() is slightly more convenient than mtext
 #   when it comes to different font sizes.
 # o Added copyTo().

@@ -20,14 +20,14 @@
 # }
 #
 # \value{
-#  Returns an Jx2xK @array where J is the number of units, and K is 
+#  Returns an Jx2xK @array where J is the number of units, and K is
 #  the number of arrays (arrays are always the last dimension).
 #  The names of the columns are A (log-intensities) and M (log-ratios).
 #  The names of the rows are the unit indices (as indexed by the CDF).
 #  The rows are ordered according to \code{units} arguments.
 # }
 #
-# @author
+# @author "HB"
 #
 # \seealso{
 #   @seeclass
@@ -84,7 +84,7 @@ setMethodS3("getAM", "ChipEffectSet", function(this, other, units=NULL, ..., ver
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (!is.null(other)) {
     verbose && enter(verbose, "Retrieving other thetas");
-  
+
     # Workaround for now (just in case). /HB 2006-09-26 TODO
     if (inherits(other, "SnpChipEffectFile")) {
       other$mergeStrands <- this$mergeStrands;
@@ -156,7 +156,7 @@ setMethodS3("getAM", "ChipEffectSet", function(this, other, units=NULL, ..., ver
 # @synopsis
 #
 # \arguments{
-#   \item{other}{The second @see "ChipEffectFile" object used as the 
+#   \item{other}{The second @see "ChipEffectFile" object used as the
 #     reference.}
 #   \item{chromosome}{(The chromosome for which results should be returned.}
 #   \item{units}{(The subset of units to be matched.
@@ -166,14 +166,14 @@ setMethodS3("getAM", "ChipEffectSet", function(this, other, units=NULL, ..., ver
 # }
 #
 # \value{
-#  Returns a Nx3 matrix where N is the number of units returned.  
-#  The names of the columns are X (physical position in a given chromosome), 
+#  Returns a Nx3 matrix where N is the number of units returned.
+#  The names of the columns are X (physical position in a given chromosome),
 #  A (log-intensities) and M (log-ratios).
 #  The names of the rows are the unit indices (as indexed by the CDF).
 #  \emph{Note: The rows are ordered according to chromosomal position.}
 # }
 #
-# @author
+# @author "HB"
 #
 # \seealso{
 #   @seemethod "getAM".
@@ -228,7 +228,7 @@ setMethodS3("getXAM", "ChipEffectSet", function(this, other, chromosome, units=N
 
   # Get the unit indices for all unit groups
   units <- as.integer(rownames(am));
-  
+
   # Get the positions of all unit groups
   x <- getPositions(gi, units=units);
   verbose && exit(verbose);

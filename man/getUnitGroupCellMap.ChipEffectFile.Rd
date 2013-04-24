@@ -48,8 +48,6 @@
    6  105     4  340
 }}
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
-
 \seealso{
   For more information see \code{\link{ChipEffectFile}}.
 }

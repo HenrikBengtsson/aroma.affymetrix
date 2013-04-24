@@ -6,7 +6,7 @@
 # \description{
 #  @classhierarchy
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
@@ -18,8 +18,8 @@
 #  @allmethods "public"
 # }
 #
-# @author
-# 
+# @author "HB"
+#
 #*/###########################################################################
 setConstructorS3("ArrayExplorer", function(csTuple=NULL, ...) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -70,7 +70,7 @@ setMethodS3("getListOfReporters", "ArrayExplorer", function(this, ...) {
     # No need to add the tags, because they are now automatically inferred from
     # the input set.  This is done by the new AffymetrixFileSetReporter superclass
     # of SpatialReporter.  /HB 2008-03-29
-#    tags <- getTags(this);  
+#    tags <- getTags(this);
     setTuple <- getSetTuple(this);
     csList <- getSets(setTuple);
     reporters <- lapply(csList, FUN=function(cs) {
@@ -122,8 +122,6 @@ setMethodS3("getAsteriskTags", "ArrayExplorer", function(this, ...) {
 # \value{
 #  Returns a @see "AffymetrixCelSet".
 # }
-#
-# @author
 #
 # \seealso{
 #   @seeclass
@@ -183,7 +181,7 @@ setMethodS3("getArraysOfInput", "ArrayExplorer", function(this, ...) {
 # @synopsis
 #
 # \arguments{
-#   \item{arrays}{A @character (or @integer) @vector of arrays to be 
+#   \item{arrays}{A @character (or @integer) @vector of arrays to be
 #      considered. If @NULL, all arrays of the data set are considered.}
 #   \item{...}{Not used.}
 # }
@@ -191,8 +189,6 @@ setMethodS3("getArraysOfInput", "ArrayExplorer", function(this, ...) {
 # \value{
 #  Returns a @character @vector.
 # }
-#
-# @author
 #
 # \seealso{
 #   @seeclass
@@ -257,7 +253,7 @@ setMethodS3("updateSetupExplorerFile", "ArrayExplorer", function(this, ...) {
 # @synopsis
 #
 # \arguments{
-#   \item{arrays}{An optional @vector of arrays to be processed. 
+#   \item{arrays}{An optional @vector of arrays to be processed.
 #      If @NULL, all arrays are considered.}
 #   \item{...}{Not used.}
 #   \item{verbose}{A @logical or @see "R.utils::Verbose".}
@@ -266,8 +262,6 @@ setMethodS3("updateSetupExplorerFile", "ArrayExplorer", function(this, ...) {
 # \value{
 #  Returns nothing.
 # }
-#
-# @author
 #
 # \seealso{
 #   @seeclass
@@ -290,7 +284,7 @@ setMethodS3("process", "ArrayExplorer", function(this, arrays=NULL, ..., verbose
     on.exit(popState(verbose));
   }
 
-  
+
   verbose && enter(verbose, "Generating ", class(this)[1], " report");
 
   # Setup HTML, CSS, Javascript files first
@@ -343,8 +337,8 @@ setMethodS3("process", "ArrayExplorer", function(this, arrays=NULL, ..., verbose
 # o BUG FIX: The ArrayExplorer would generate image files to a directory under
 #   reports/<dataSet>/<tags>,<tags>/..., i.e. the tags where replicated.  This
 #   is a bug introduced in the latest release.
-#   Details: No need to add the tags, because they are now automatically 
-#   inferred from the input set.  This is done by the new 
+#   Details: No need to add the tags, because they are now automatically
+#   inferred from the input set.  This is done by the new
 #   AffymetrixFileSetReporter superclass of SpatialReporter.
 # 2007-08-09
 # o Renamed updateSampleFile() to updateOnLoadJS().
@@ -359,7 +353,7 @@ setMethodS3("process", "ArrayExplorer", function(this, arrays=NULL, ..., verbose
 # o Now ChromosomeExplorer extends Explorer.
 # o BUG FIX: setArrays() called indexOfArrays() instead of indexOf().
 # 2007-02-28
-# o BUG FIX: setColorMaps() gave "Error in addColorMap.ArrayExplorer(this, 
+# o BUG FIX: setColorMaps() gave "Error in addColorMap.ArrayExplorer(this,
 #   colorMap, ...) : object "nbrOfColors" not found".
 # 2007-02-08
 # o Created from ChromosomeExplorer.R.

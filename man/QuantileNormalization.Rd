@@ -6,15 +6,15 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
- \name{QuantileNormalization}
+\name{QuantileNormalization}
 \docType{class}
 \alias{QuantileNormalization}
 
 
- \title{The QuantileNormalization class}
+\title{The QuantileNormalization class}
 
- \description{
-  Package:  aroma.affymetrix \cr
+\description{
+ Package:  aroma.affymetrix \cr
 \bold{Class QuantileNormalization}\cr
 
 \code{\link[R.oo]{Object}}\cr
@@ -37,35 +37,35 @@ extends \emph{\link[aroma.affymetrix]{ProbeLevelTransform}}\cr
 
 
 
-  This class represents a normalization function that transforms the
-  probe-level signals towards the same empirical distribution.
- }
+ This class represents a normalization function that transforms the
+ probe-level signals towards the same empirical distribution.
+}
 
- \usage{
+\usage{
 QuantileNormalization(..., subsetToUpdate=NULL, typesToUpdate=NULL, targetDistribution=NULL, subsetToAvg=subsetToUpdate, typesToAvg=typesToUpdate)
 }
 
- \arguments{
-   \item{...}{Arguments passed to the constructor of
-     \code{\link{ProbeLevelTransform}}.}
-   \item{subsetToUpdate}{The probes to be updated.
-     If \code{\link[base]{NULL}}, all probes are updated.}
-   \item{typesToUpdate}{Types of probes to be updated.}
-   \item{targetDistribution}{A \code{\link[base]{numeric}} \code{\link[base]{vector}}.  The empirical
-     distribution to which all arrays should be normalized to.}
-   \item{subsetToAvg}{The probes to calculate average empirical
-     distribution over.  If a single \code{\link[base]{numeric}} in (0,1), then this
-     fraction of all probes will be used.
-     If \code{\link[base]{NULL}}, all probes are considered.}
-   \item{typesToAvg}{Types of probes to be used when calculating the
-     average empirical distribution.
-     If \code{"pm"} and \code{"mm"} only perfect-match and mismatch
-     probes are used, respectively. If \code{"pmmm"} both types are used.
-   }
- }
+\arguments{
+  \item{...}{Arguments passed to the constructor of
+    \code{\link{ProbeLevelTransform}}.}
+  \item{subsetToUpdate}{The probes to be updated.
+    If \code{\link[base]{NULL}}, all probes are updated.}
+  \item{typesToUpdate}{Types of probes to be updated.}
+  \item{targetDistribution}{A \code{\link[base]{numeric}} \code{\link[base]{vector}}.  The empirical
+    distribution to which all arrays should be normalized to.}
+  \item{subsetToAvg}{The probes to calculate average empirical
+    distribution over.  If a single \code{\link[base]{numeric}} in (0,1), then this
+    fraction of all probes will be used.
+    If \code{\link[base]{NULL}}, all probes are considered.}
+  \item{typesToAvg}{Types of probes to be used when calculating the
+    average empirical distribution.
+    If \code{"pm"} and \code{"mm"} only perfect-match and mismatch
+    probes are used, respectively. If \code{"pmmm"} both types are used.
+  }
+}
 
- \section{Fields and Methods}{
-  \bold{Methods:}\cr
+\section{Fields and Methods}{
+ \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{\link[aroma.affymetrix:process.QuantileNormalization]{process}} \tab Normalizes the data set.\cr
 }
@@ -81,16 +81,16 @@ getOutputDataSet, getOutputFiles
 as.character, getAsteriskTags, getExpectedOutputFiles, getExpectedOutputFullnames, getFullName, getInputDataSet, getName, getOutputDataSet, getOutputDataSet0, getOutputFiles, getPath, getRootPath, getTags, isDone, process, setTags
 
  \bold{Methods inherited from ParametersInterface}:\cr
-getParameters, getParametersAsString, getParameterSets
+getParameterSets, getParameters, getParametersAsString
 
  \bold{Methods inherited from Object}:\cr
 $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save, asThis
 
 
- }
+}
 
- \examples{\dontrun{
-   for (zzz in 0) {
+\examples{\dontrun{
+  for (zzz in 0) {
 
 # Setup verbose output
 verbose <- Arguments$getVerbose(-2)
@@ -117,7 +117,7 @@ print(dsQN)
 } # for (zzz in 0)
 rm(zzz)
 
- }}
+}}
 
- \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 \keyword{classes}

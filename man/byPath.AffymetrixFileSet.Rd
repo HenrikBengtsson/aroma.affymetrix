@@ -45,8 +45,6 @@
   scanned we do not want such files to be interpreted as data.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
-
 \seealso{
   For more information see \code{\link{AffymetrixFileSet}}.
 }

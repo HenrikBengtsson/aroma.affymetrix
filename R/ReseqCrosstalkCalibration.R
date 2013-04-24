@@ -6,16 +6,16 @@
 # \description{
 #  @classhierarchy
 #
-#  This class represents a calibration function that transforms the 
-#  probe-level signals such that the signals from the four nucleotides 
+#  This class represents a calibration function that transforms the
+#  probe-level signals such that the signals from the four nucleotides
 #  (A, C, G, T) are orthogonal.
 # }
-# 
-# @synopsis 
+#
+# @synopsis
 #
 # \arguments{
 #   \item{dataSet}{An @see "AffymetrixCelSet".}
-#   \item{...}{Arguments passed to the constructor of 
+#   \item{...}{Arguments passed to the constructor of
 #     @see "ProbeLevelTransform".}
 #   \item{targetAvg}{The signal(s) that the average of the sum of the
 #     probe quartets should have after calibration.}
@@ -24,16 +24,16 @@
 #     the target average. If @NULL, all probes are considered.}
 #   \item{mergeGroups}{A @logical ...}
 #   \item{flavor}{A @character string specifying what algorithm is used
-#     to fit the crosstalk calibration.} 
+#     to fit the crosstalk calibration.}
 #   \item{alpha, q, Q}{Additional arguments passed to
 #    \code{fitMultiDimensionalCone()}.}
 # }
 #
 # \section{Fields and Methods}{
-#  @allmethods "public"  
+#  @allmethods "public"
 # }
-# 
-# @author
+#
+# @author "HB"
 #*/###########################################################################
 setConstructorS3("ReseqCrosstalkCalibration", function(dataSet=NULL, ..., targetAvg=2200, subsetToAvg=NULL, mergeGroups=FALSE, flavor=c("sfit", "expectile"), alpha=c(0.1, 0.075, 0.05, 0.03, 0.01), q=2, Q=98) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -51,7 +51,7 @@ setConstructorS3("ReseqCrosstalkCalibration", function(dataSet=NULL, ..., target
     if (!is.null(targetAvg)) {
       targetAvg <- Arguments$getDouble(targetAvg, range=c(0, Inf));
     }
-  
+
     # Argument 'subsetToAvg':
     if (is.null(subsetToAvg)) {
     } else if (is.character(subsetToAvg)) {
@@ -74,7 +74,7 @@ setConstructorS3("ReseqCrosstalkCalibration", function(dataSet=NULL, ..., target
 
   # Argument 'flavor':
   flavor <- match.arg(flavor);
-  
+
 
   extend(ProbeLevelTransform(dataSet=dataSet, ...), "ReseqCrosstalkCalibration",
     "cached.setsOfProbes" = NULL,
@@ -137,11 +137,11 @@ setMethodS3("getSubsetToAvg", "ReseqCrosstalkCalibration", function(this, ..., v
       if (is.null(subset)) {
         dataSet <- getInputDataSet(this);
         cdf <- getCdf(dataSet);
-  
+
         # Get the genome information (throws an exception if missing)
         gi <- getGenomeInformation(cdf);
         verbose && print(verbose, gi);
-  
+
         # Identify units to be excluded
         if (subsetToAvg == "-X") {
           subset <- getUnitsOnChromosomes(gi, 23, .checkArgs=FALSE);
@@ -150,19 +150,19 @@ setMethodS3("getSubsetToAvg", "ReseqCrosstalkCalibration", function(this, ..., v
         } else if (subsetToAvg == "-XY") {
           subset <- getUnitsOnChromosomes(gi, 23:24, .checkArgs=FALSE);
         }
-  
+
         verbose && cat(verbose, "Units to exclude: ");
         verbose && str(verbose, subset);
 
         # Identify the cell indices for these units
-        subset <- getCellIndices(cdf, units=subset, 
+        subset <- getCellIndices(cdf, units=subset,
                                  useNames=FALSE, unlist=TRUE);
         verbose && cat(verbose, "Cells to exclude: ");
         verbose && str(verbose, subset);
-  
+
         # The cells to keep
         subset <- setdiff(1:nbrOfCells(cdf), subset);
-  
+
         verbose && cat(verbose, "Cells to include: ");
         verbose && str(verbose, subset);
 
@@ -223,7 +223,7 @@ setMethodS3("rescaleByAll", "ReseqCrosstalkCalibration", function(this, yAll, pa
   if (nt != 1) {
     throw("In order rescale towards a global target average ('rescaleBy' == \"all\"), argument 'targetAvg' must be a scalar: ", paste(targetAvg, collapse=","));
   }
- 
+
   if (verbose) {
     enter(verbose, "Rescaling toward target average");
     cat(verbose, "Target average: ", targetAvg);
@@ -257,7 +257,7 @@ setMethodS3("rescaleByAll", "ReseqCrosstalkCalibration", function(this, yAll, pa
     yAvg <- yAvg0;
     verbose && printf(verbose, "yAvg (100%%): %.2f\n", yAvg);
   }
-    
+
   if (!is.finite(yAvg)) {
     throw("Cannot rescale to target average. Signal average is non-finite: ", yAvg);
   }
@@ -343,7 +343,7 @@ setMethodS3("fitOne", "ReseqCrosstalkCalibration", function(this, yAll, ..., ver
 
   for (uu in seq_len(nbrOfUnits)) {
     keyUU <- names(cellQuartets)[uu];
-    verbose && enter(verbose, sprintf("Unit #%d ('%s') of %d", 
+    verbose && enter(verbose, sprintf("Unit #%d ('%s') of %d",
                                            uu, keyUU, nbrOfUnits));
     cellsUU <- cellQuartets[[uu]];
     nbrOfGroups <- length(cellsUU);
@@ -354,7 +354,7 @@ setMethodS3("fitOne", "ReseqCrosstalkCalibration", function(this, yAll, ..., ver
 
     for (gg in seq_len(nbrOfGroups)) {
       keyGG <- names(cellsUU)[gg];
-      verbose && enter(verbose, sprintf("Group #%d ('%s') of %d", 
+      verbose && enter(verbose, sprintf("Group #%d ('%s') of %d",
                                 gg, keyGG, nbrOfGroups));
       cellsGG <- cellsUU[[gg]];
 
@@ -365,7 +365,7 @@ setMethodS3("fitOne", "ReseqCrosstalkCalibration", function(this, yAll, ..., ver
       # Fitting crosstalk model
       y <- t(y);
       fitGG <- fitMultiDimensionalCone(y, flavor=params$flavor,
-                      alpha=params$alpha, q=params$q, Q=params$Q, 
+                      alpha=params$alpha, q=params$q, Q=params$Q,
                                                    verbose=verboseL);
 
       fitsUU[[gg]] <- fitGG;
@@ -416,7 +416,7 @@ setMethodS3("calibrateOne", "ReseqCrosstalkCalibration", function(this, yAll, fi
 
   for (uu in seq_len(nbrOfUnits)) {
     keyUU <- names(cellQuartets)[uu];
-    verbose && enter(verbose, sprintf("Unit #%d ('%s') of %d", 
+    verbose && enter(verbose, sprintf("Unit #%d ('%s') of %d",
                                            uu, keyUU, nbrOfUnits));
     cellsUU <- cellQuartets[[uu]];
     fitsUU <- fits[[uu]];
@@ -427,7 +427,7 @@ setMethodS3("calibrateOne", "ReseqCrosstalkCalibration", function(this, yAll, fi
     names(rescaleFitsUU) <- names(fitsUU);
     for (gg in seq_len(nbrOfGroups)) {
       keyGG <- names(cellsUU)[gg];
-      verbose && enter(verbose, sprintf("Group #%d ('%s') of %d", 
+      verbose && enter(verbose, sprintf("Group #%d ('%s') of %d",
                                            gg, keyGG, nbrOfGroups));
       cellsGG <- cellsUU[[gg]];
       fitGG <- fitsUU[[gg]];
@@ -493,7 +493,7 @@ setMethodS3("calibrateOne", "ReseqCrosstalkCalibration", function(this, yAll, fi
 #
 # \arguments{
 #   \item{...}{Not used.}
-#   \item{force}{If @TRUE, data already calibrated is re-calibrated, 
+#   \item{force}{If @TRUE, data already calibrated is re-calibrated,
 #       otherwise not.}
 #   \item{verbose}{See @see "R.utils::Verbose".}
 # }
@@ -501,8 +501,6 @@ setMethodS3("calibrateOne", "ReseqCrosstalkCalibration", function(this, yAll, fi
 # \value{
 #  Returns a @double @vector.
 # }
-#
-# @author
 #
 # \seealso{
 #   @seeclass
@@ -574,7 +572,7 @@ setMethodS3("process", "ReseqCrosstalkCalibration", function(this, ..., force=FA
   verbose && cat(verbose, "Path: ", outputPath);
   for (kk in seq_len(nbrOfArrays)) {
     df <- getFile(ds, kk);
-    verbose && enter(verbose, sprintf("Array #%d ('%s') of %d", 
+    verbose && enter(verbose, sprintf("Array #%d ('%s') of %d",
                                               kk, getName(df), nbrOfArrays));
 
     fullname <- getFullName(df);
@@ -606,7 +604,7 @@ setMethodS3("process", "ReseqCrosstalkCalibration", function(this, ..., force=FA
       yAll <- getData(df, fields="intensities", ...)$intensities;
       verbose && str(verbose, yAll);
       verbose && exit(verbose);
-    
+
       modelFit <- list(
         paramsShort=paramsShort
       );
@@ -631,7 +629,7 @@ setMethodS3("process", "ReseqCrosstalkCalibration", function(this, ..., force=FA
       modelFit$rescaleFits <- attr(yAll, "rescaleFits");
 
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-      # Store model fit 
+      # Store model fit
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       # Store fit and parameters (in case someone are interested in looking
       # at them later; no promises of backward compatibility though).
@@ -647,7 +645,7 @@ setMethodS3("process", "ReseqCrosstalkCalibration", function(this, ..., force=FA
       # Storing data
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       verbose && enter(verbose, "Storing calibrated data");
-    
+
       # Create CEL file to store results, if missing
       verbose && enter(verbose, "Creating CEL file for results, if missing");
       createFrom(df, filename=pathname, path=NULL, verbose=less(verbose));
@@ -681,7 +679,7 @@ setMethodS3("process", "ReseqCrosstalkCalibration", function(this, ..., force=FA
   outputDataSet <- getOutputDataSet(this, force=TRUE);
 
   verbose && exit(verbose);
-  
+
   invisible(outputDataSet);
 }) # process()
 
@@ -693,7 +691,7 @@ setMethodS3("process", "ReseqCrosstalkCalibration", function(this, ..., force=FA
 # HISTORY:
 # 2008-08-29
 # o Created fitOne() and calibrateOne().
-# o Added option 'mergeGroups=FALSE'.  
+# o Added option 'mergeGroups=FALSE'.
 # o Updated according to new getCellQuartets() of AffymetrixCdfFile.
 # 2008-08-10
 # o Created from AllelicCrosstalkCalibration.R.

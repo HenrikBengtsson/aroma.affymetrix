@@ -8,7 +8,7 @@
 #
 #  A CnagCfhFile object represents a single CNAG CFH file.
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
@@ -19,8 +19,8 @@
 # \section{Fields and Methods}{
 #  @allmethods "public"
 # }
-# 
-# @author
+#
+# @author "HB"
 #
 # \seealso{
 #   An object of this class is typically part of an @see "CnagCfhSet".
@@ -106,12 +106,10 @@ setMethodS3("getIdentifier", "CnagCfhFile", function(this, ..., force=FALSE) {
 # }
 #
 # \value{
-#  Returns an @see "CnagCfhFile" object.  
+#  Returns an @see "CnagCfhFile" object.
 #  If the file is not found or if it is of the wrong file format, an
 #  error is thrown.
 # }
-#
-# @author
 #
 # \seealso{
 #   @seeclass
@@ -176,8 +174,6 @@ setMethodS3("fromFile", "CnagCfhFile", function(static, filename, path=NULL, ...
 #  Returns an @see "AffymetrixCdfFile" object.
 # }
 #
-# @author
-#
 # \seealso{
 #   @seemethod "setCdf".
 #   @seeclass
@@ -216,8 +212,6 @@ setMethodS3("getCdf", "CnagCfhFile", function(this, ...) {
 #  Returns nothing.
 # }
 #
-# @author
-#
 # \seealso{
 #   @seemethod "getCdf".
 #   @seeclass
@@ -229,7 +223,7 @@ setMethodS3("setCdf", "CnagCfhFile", function(this, cdf, ..., .checkArgs=TRUE) {
   if (.checkArgs) {
     # Argument 'cdf':
     cdf <- Arguments$getInstanceOf(cdf, "AffymetrixCdfFile");
-  
+
     # Assure that the CDF is compatible with the CEL file
 #    if (nbrOfCells(cdf) != nbrOfCells(this)) {
 #      throw("Cannot set CDF. The specified CDF structure ('", getChipType(cdf), "') is not compatible with the chip type ('", getChipType(this), "') of the CEL file. The number of cells do not match: ", nbrOfCells(cdf), " != ", nbrOfCells(this));
@@ -241,7 +235,7 @@ setMethodS3("setCdf", "CnagCfhFile", function(this, cdf, ..., .checkArgs=TRUE) {
 #      return(invisible(this));
   }
 
-  # Have to clear the cache 
+  # Have to clear the cache
   clearCache(this);
 
   this$.cdf <- cdf;
@@ -269,8 +263,6 @@ setMethodS3("setCdf", "CnagCfhFile", function(this, cdf, ..., .checkArgs=TRUE) {
 # \value{
 #  Returns a @list structure as returned by @see "affxparser::readCelHeader".
 # }
-#
-# @author
 #
 # \seealso{
 #   @seeclass
@@ -345,8 +337,6 @@ setMethodS3("nbrOfCells", "CnagCfhFile", function(this, ...) {
 #  Returns a @character string.
 # }
 #
-# @author
-#
 # \seealso{
 #   @seeclass
 # }
@@ -374,7 +364,7 @@ setMethodS3("getChipType", "CnagCfhFile", function(this, ...) {
 #   \item{units}{The units to be read. If @NULL, all units are read.}
 #   \item{cdf}{An alternative CDF structure to be used.  This overrides
 #     the \code{units} arguments.}
-#   \item{...}{Arguments passed to \code{getUnits()} of the 
+#   \item{...}{Arguments passed to \code{getUnits()} of the
 #     @see "AffymetrixCdfFile" class (if \code{cdf} was not specified),
 #     but also to the @see "affxparser::readCelUnits" methods.}
 # }
@@ -386,8 +376,6 @@ setMethodS3("getChipType", "CnagCfhFile", function(this, ...) {
 # \section{Caching}{
 #   CEL data is neither cached in memory nor on file by this method.
 # }
-#
-# @author
 #
 # \seealso{
 #   @seeclass
@@ -424,14 +412,14 @@ setMethodS3("readUnits", "CnagCfhFile", function(this, units=NULL, ..., verbose=
     # Subset of SNPs to read
     map <- map[,idxs,drop=FALSE];
   }
-  
+
   # Read from file
   pathname <- getPathname(this);
   raw <- readBin(pathname, what=raw(), n=nbrOfBytes);
 
   # Bytes 1:8 contains (thetaA,thetaB) as floats
   map <- map[1:8,,drop=FALSE];
-  theta <- readBin(raw[map], what=double(), size=4, endian="little", 
+  theta <- readBin(raw[map], what=double(), size=4, endian="little",
                                                            n=2*ncol(map));
   theta <- matrix(theta, ncol=2, byrow=TRUE);
 
@@ -445,7 +433,7 @@ setMethodS3("readUnits", "CnagCfhFile", function(this, units=NULL, ..., verbose=
   }
 
   colnames(theta) <- c("A", "B");
-  
+
   theta;
 }, private=TRUE)
 

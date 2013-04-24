@@ -30,8 +30,6 @@
  Returns \code{\link[base:logical]{TRUE}} if the two objects are equal, otherwise \code{\link[base:logical]{FALSE}}.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
-
 \seealso{
   For more information see \code{\link{AffymetrixCdfFile}}.
 }

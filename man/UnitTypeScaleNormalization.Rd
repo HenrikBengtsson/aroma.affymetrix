@@ -6,15 +6,15 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
- \name{UnitTypeScaleNormalization}
+\name{UnitTypeScaleNormalization}
 \docType{class}
 \alias{UnitTypeScaleNormalization}
 
 
- \title{The UnitTypeScaleNormalization class}
+\title{The UnitTypeScaleNormalization class}
 
- \description{
-  Package:  aroma.affymetrix \cr
+\description{
+ Package:  aroma.affymetrix \cr
 \bold{Class UnitTypeScaleNormalization}\cr
 
 \code{\link[R.oo]{Object}}\cr
@@ -39,22 +39,22 @@ extends \emph{\link[aroma.affymetrix]{ProbeLevelTransform3}}\cr
 
 
 
-  This class represents a normalization function that transforms the
-  probe signals such that each unit type gets the same average.
- }
+ This class represents a normalization function that transforms the
+ probe signals such that each unit type gets the same average.
+}
 
- \usage{
+\usage{
 UnitTypeScaleNormalization(..., targetAvg=4400)
 }
 
- \arguments{
-   \item{...}{Arguments passed to the constructor of
-     \code{\link{ProbeLevelTransform3}}.}
-   \item{targetAvg}{A \code{\link[base]{numeric}} value.}
- }
+\arguments{
+  \item{...}{Arguments passed to the constructor of
+    \code{\link{ProbeLevelTransform3}}.}
+  \item{targetAvg}{A \code{\link[base]{numeric}} value.}
+}
 
- \section{Fields and Methods}{
-  \bold{Methods:}\cr
+\section{Fields and Methods}{
+ \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{\link[aroma.affymetrix:process.UnitTypeScaleNormalization]{process}} \tab Normalizes the data set.\cr
 }
@@ -73,13 +73,13 @@ getOutputDataSet, getOutputFiles
 as.character, getAsteriskTags, getExpectedOutputFiles, getExpectedOutputFullnames, getFullName, getInputDataSet, getName, getOutputDataSet, getOutputDataSet0, getOutputFiles, getPath, getRootPath, getTags, isDone, process, setTags
 
  \bold{Methods inherited from ParametersInterface}:\cr
-getParameters, getParametersAsString, getParameterSets
+getParameterSets, getParameters, getParametersAsString
 
  \bold{Methods inherited from Object}:\cr
 $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save, asThis
 
 
- }
+}
 
- \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 \keyword{classes}

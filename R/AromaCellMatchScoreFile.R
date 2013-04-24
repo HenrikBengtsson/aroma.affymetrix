@@ -1,5 +1,5 @@
 # @RdocClass "AromaCellMatchScoreFile"
-# 
+#
 # @title "A binary file holding match scores for each cell (probe/feature)"
 #
 # \description{
@@ -12,11 +12,11 @@
 #   Note that this class does \emph{not} assume a rectangular chip layout.
 #   In other words, there is no concept of mapping a \emph{spatial}
 #   location on the array to a cell index and vice versa.
-#   The reason for this to be able to use this class also for 
+#   The reason for this to be able to use this class also for
 #   non-rectangular chip types.
 # }
 #
-# @author
+# @author "MR"
 
 setConstructorS3("AromaCellMatchScoreFile", function(...) {
   extend(AromaCellTabularBinaryFile(...), "AromaCellMatchScoreFile");
@@ -64,10 +64,10 @@ setMethodS3("byChipType", "AromaCellMatchScoreFile", function(static, chipType, 
 
 
   verbose && enter(verbose, "Locating ", class(static)[1])
-  pathname <- findByChipType(static, chipType=chipType, tags=tags, 
+  pathname <- findByChipType(static, chipType=chipType, tags=tags,
                                                  firstOnly=TRUE, ...);
   if (is.null(pathname)) {
-      throw("Could not locate a file for this chip type: ", 
+      throw("Could not locate a file for this chip type: ",
                              paste(c(chipType, tags), collapse = ","));
   }
   verbose && cat(verbose, "Located file: ", pathname);
@@ -90,9 +90,9 @@ setMethodS3("byChipType", "AromaCellMatchScoreFile", function(static, chipType, 
 
 
 setMethodS3("readMatchScores", "AromaCellMatchScoreFile", function(this, cells=NULL, drop=FALSE, ..., verbose=FALSE) {
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'cells':
   nbrOfCells <- nbrOfCells(this);
   if (!is.null(cells)) {
@@ -125,9 +125,9 @@ setMethodS3("readMatchScores", "AromaCellMatchScoreFile", function(this, cells=N
 
 
 setMethodS3("updateMatchScores", "AromaCellMatchScoreFile", function(this, cells=NULL, scores, ..., verbose=FALSE) {
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'cells':
   nbrOfCells <- nbrOfCells(this);
   if (!is.null(cells)) {
@@ -135,9 +135,9 @@ setMethodS3("updateMatchScores", "AromaCellMatchScoreFile", function(this, cells
     nbrOfCells <- length(cells);
   }
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Optimize
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Remove duplicated 'cells'
   keep <- which(!duplicated(cells));
   cells <- cells[keep];
@@ -185,7 +185,7 @@ setMethodS3("allocate", "AromaCellMatchScoreFile", function(static, ..., nbrOfCe
       createdOn=format(Sys.time(), "%Y%m%d %H:%M:%S", usetz=TRUE),
       platform=platform,
       chipType=chipType
-    ), 
+    ),
     footer
   );
 

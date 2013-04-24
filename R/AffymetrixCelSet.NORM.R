@@ -11,7 +11,7 @@
 # @synopsis
 #
 # \arguments{
-#   \item{path}{The path where to save the normalized data files. 
+#   \item{path}{The path where to save the normalized data files.
 #     If @NULL, a default name is used.}
 #   \item{name}{The name of the normalized data set, which will also be
 #     part of the default path.}
@@ -22,11 +22,11 @@
 #     to which all arrays should be normalized to.}
 #   \item{subsetToAvg}{The probes to calculate average empirical
 #     distribution over.  If a single @numeric in (0,1), then this
-#     fraction of all probes will be used.  
+#     fraction of all probes will be used.
 #     If @NULL, all probes are considered.}
-#   \item{typesToAvg}{Types of probes to be used when calculating the 
-#     average empirical distribution.  
-#     If \code{"pm"} and \code{"mm"} only perfect-match and mismatch 
+#   \item{typesToAvg}{Types of probes to be used when calculating the
+#     average empirical distribution.
+#     If \code{"pm"} and \code{"mm"} only perfect-match and mismatch
 #     probes are used, respectively. If \code{"pmmm"} both types are used.
 #   }
 #   \item{...}{Additional arguments passed to \code{normalizeQuantile()}.}
@@ -37,7 +37,7 @@
 #  Returns a @double @vector.
 # }
 #
-# @author
+# @author "HB"
 #
 # \seealso{
 #   @see "aroma.light::normalizeQuantileRank.numeric"
@@ -54,7 +54,7 @@ setMethodS3("normalizeQuantile", "AffymetrixCelSet", function(this, path=NULL, n
   if (is.null(path)) {
     # Path structure: /normQuantile/<data set name>/chip_data/<chip type>/
     path <- file.path(name, getName(this), "chip_data", getChipType(cdf));
-  } 
+  }
   if (!is.null(path)) {
     # Verify this path (and create if missing)
     path <- Arguments$getWritablePath(path);
@@ -81,7 +81,7 @@ setMethodS3("normalizeQuantile", "AffymetrixCelSet", function(this, path=NULL, n
   # Identify the subset of probes to be updated
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   verbose && enter(verbose, "Identifying the probes to be updated");
-  subsetToUpdate <- identifyCells(cdf, indices=subsetToUpdate, 
+  subsetToUpdate <- identifyCells(cdf, indices=subsetToUpdate,
                                                      types=typesToUpdate);
   verbose && exit(verbose);
 
@@ -130,7 +130,7 @@ setMethodS3("normalizeQuantile", "AffymetrixCelSet", function(this, path=NULL, n
 #
 # \arguments{
 #   \item{probes}{An optional @numeric @vector specifying what subset of
-#      probes to be used to calculate the empirical distribution. 
+#      probes to be used to calculate the empirical distribution.
 #      If @NULL, all probes are used.}
 #   \item{...}{Not used.}
 #   \item{verbose}{See @see "R.utils::Verbose".}
@@ -139,24 +139,24 @@ setMethodS3("normalizeQuantile", "AffymetrixCelSet", function(this, path=NULL, n
 # \value{
 #  Returns a @double @vector of length N.
 # }
-# 
+#
 # \section{Missing values}{
-#   If @NAs are detected in a sample, these are excluded and the 
-#   \code{approx()} function (@see "stats::approx") is used to "expand" 
-#   the @vector of the remaining values so that the sorted @vector 
+#   If @NAs are detected in a sample, these are excluded and the
+#   \code{approx()} function (@see "stats::approx") is used to "expand"
+#   the @vector of the remaining values so that the sorted @vector
 #   (still) have length N.
 # }
 #
 # \details{
-#   This methods implements Step A2-A3 in the algorithm for quantile 
+#   This methods implements Step A2-A3 in the algorithm for quantile
 #   normalization proposed by Bengtsson et al. (2008).
 # }
 #
-# @author
+# @author "HB"
 #
 # \references{
-#   [1] H. Bengtsson, R. Irizarry, B. Carvalho, & T.P. Speed. 
-#       Estimation and assessment of raw copy numbers at the single 
+#   [1] H. Bengtsson, R. Irizarry, B. Carvalho, & T.P. Speed.
+#       Estimation and assessment of raw copy numbers at the single
 #       locus level, Bioinformatics, 2008.
 # }
 #
@@ -172,7 +172,7 @@ setMethodS3("averageQuantile", "AffymetrixCelSet", function(this, probes=NULL, e
   cdf <- getCdf(this);
 
   # Argument 'probes':
-  probes <- identifyCells(cdf, indices=probes);  # TODO! 
+  probes <- identifyCells(cdf, indices=probes);  # TODO!
   # "TODO" since when? ;) /HB 2007-04-11
 
   # Argument 'verbose':
@@ -200,7 +200,7 @@ setMethodS3("averageQuantile", "AffymetrixCelSet", function(this, probes=NULL, e
 
   verbose && enter(verbose, "Calculating the average empircal distribution across ", nbrOfChannels, " arrays");
 
-  verbose && printf(verbose, "Number of probes: %d (%.1f%%)\n", 
+  verbose && printf(verbose, "Number of probes: %d (%.1f%%)\n",
                    nbrOfObservations, 100*nbrOfObservations/nbrOfCells(cdf));
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -215,7 +215,7 @@ setMethodS3("averageQuantile", "AffymetrixCelSet", function(this, probes=NULL, e
     Xcc <- as.vector(Xcc$intensities);
 #    verbose && str(verbose, Xcc);
 
-    # Exclude cells? 
+    # Exclude cells?
     if (!is.null(excludeCells))
       Xcc[excludeCells] <- NA;
 
@@ -236,7 +236,7 @@ setMethodS3("averageQuantile", "AffymetrixCelSet", function(this, probes=NULL, e
     # Has NAs?
     nbrOfNAs <- (nbrOfObservations - nobs);
     if(nbrOfNAs > 0) {
-      verbose && printf(verbose, "Detected %d NAs (%.2f%%),\n", 
+      verbose && printf(verbose, "Detected %d NAs (%.2f%%),\n",
                            nbrOfNAs, 100*nbrOfNAs/nbrOfObservations);
       tt <- !is.na(Xcc);  # TODO?!? /HB 2006-07-22
       rm(Xcc, tt);
@@ -275,9 +275,9 @@ setMethodS3("averageQuantile", "AffymetrixCelSet", function(this, probes=NULL, e
 
 
 setMethodS3("transformAffine", "AffymetrixCelSet", function(this, outPath=file.path("transformed", getChipType(getCdf(this))), offset=0, scale=1, subsetToUpdate=NULL, typesToUpdate=NULL, ..., verbose=FALSE) {
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'outPath':
   outPath <- Arguments$getReadablePathname(outPath, mustExist=FALSE);
 
@@ -291,25 +291,25 @@ setMethodS3("transformAffine", "AffymetrixCelSet", function(this, outPath=file.p
   scale <- Arguments$getDouble(scale, range=c(0,Inf));
 
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Identify the subset of probes to be updated
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   verbose && enter(verbose, "Identifying the probes to be updated");
   cdf <- getCdf(this);
-  subsetToUpdate <- identifyCells(cdf, indices=subsetToUpdate, 
+  subsetToUpdate <- identifyCells(cdf, indices=subsetToUpdate,
                                                      types=typesToUpdate);
   verbose && exit(verbose);
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Normalize each array
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   verbose && enter(verbose, "Transforming ", length(subsetToUpdate),
                                " probes on ", length(this), " arrays");
   dataFiles <- list();
   for (kk in seq_along(this)) {
     df <- getFile(this, kk);
     verbose && enter(verbose, "Array #", kk, " (", getName(df), ")");
-    dataFiles[[kk]] <- transformAffine(df, outPath=outPath, 
+    dataFiles[[kk]] <- transformAffine(df, outPath=outPath,
                   offset=offset, scale=scale, subsetToUpdate=subsetToUpdate,
                                                 ..., verbose=less(verbose));
     verbose && exit(verbose);
@@ -337,7 +337,7 @@ setMethodS3("transformAffine", "AffymetrixCelSet", function(this, outPath=file.p
 # o Recreated from old AffymetrixDataSet.NORM.R.
 # 2006-07-27
 # o Added transformAffine().
-# o BUG FIX: The 'outPath' argument of normalizeQuantile() in the 
+# o BUG FIX: The 'outPath' argument of normalizeQuantile() in the
 #   AffymetrixDataSet class was not recognized.
 # 2006-05-15
 # o Extracted from AffymetrixDataSet.R.

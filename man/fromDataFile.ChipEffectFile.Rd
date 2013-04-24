@@ -43,7 +43,7 @@
  Returns a \code{\link{ChipEffectFile}}.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{allocateFromCdf()} of \code{\link{AffymetrixCelFile}}.

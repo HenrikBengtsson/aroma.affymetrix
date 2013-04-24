@@ -24,7 +24,7 @@
 # }
 #
 # \value{
-#  Returns an @integer @vector of indices of the units fitted, 
+#  Returns an @integer @vector of indices of the units fitted,
 #  or @NULL if no units was (had to be) fitted.
 # }
 #
@@ -34,11 +34,11 @@
 #  The non-array specific parameter estimates together with standard deviation
 #  estimates and convergence information are stored in one file.
 #
-#  The parameter estimates specific to each array, typically "chip effects", 
+#  The parameter estimates specific to each array, typically "chip effects",
 #  are stored in array specific files.
 #
 #   Data set specific estimates [L = number of probes]:
-#    phi [L doubles] (probe affinities), sd(phi) [L doubles], 
+#    phi [L doubles] (probe affinities), sd(phi) [L doubles],
 #    isOutlier(phi) [L logicals]
 #
 #   Algorithm-specific results:
@@ -47,13 +47,13 @@
 #    sd(eps) - [1 double] estimated standard deviation of the error term
 #
 #   Array-specific estimates [K = nbr of arrays]:
-#    theta [K doubles] (chip effects), sd(theta) [K doubles], 
+#    theta [K doubles] (chip effects), sd(theta) [K doubles],
 #    isOutlier(theta) [K logicals]
-#   
+#
 #   For each array and each unit group, we store:
 #     1 theta, 1 sd(theta), 1 isOutlier(theta), i.e. (float, float, bit)
 #   => For each array and each unit (with \eqn{G_j} groups), we store:
-#     \eqn{G_j} theta, \eqn{G_j} sd(theta), \eqn{G_j} isOutlier(theta), 
+#     \eqn{G_j} theta, \eqn{G_j} sd(theta), \eqn{G_j} isOutlier(theta),
 #   i.e. \eqn{G_j}*(float, float, bit).
 #   For optimal access we store all thetas first, then all sd(theta) and the
 #   all isOutlier(theta).
@@ -62,7 +62,7 @@
 #   AffymetrixCdfFile class.
 # }
 #
-# @author
+# @author "HB"
 #
 # \seealso{
 #   @seeclass
@@ -159,13 +159,13 @@ setMethodS3("fit", "ProbeLevelModel", function(this, units="remaining", ..., for
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Fit all units that with single-cell unit groups using special
-  # fit function, if available. This can speed up the fitting 
+  # fit function, if available. This can speed up the fitting
   # substantially.
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 ##   fitSingleCellUnit <- getFitSingleCellUnitFunction(this);
 ##   if (!is.null(fitSingleCellUnit)) {
 ##     verbose && enter(verbose, "Fitting single-cell units");
-## 
+##
 ##     verbose && enter(verbose, "Identifying single-cell units");
 ##     counts <- nbrOfCellsPerUnit(cdf, units=units, verbose=less(verbose, 5));
 ##     verbose && print(verbose, table(verbose));
@@ -173,7 +173,7 @@ setMethodS3("fit", "ProbeLevelModel", function(this, units="remaining", ..., for
 ##     rm(counts);
 ##     verbose && str(verbose, singleCellUnits);
 ##     verbose && exit(verbose);
-## 
+##
 ##     # Nothing to do?
 ##     if (length(singleCellUnits) > 0) {
 ##       verbose && enter(verbose, "Identifying CDF cell indices");
@@ -183,24 +183,24 @@ setMethodS3("fit", "ProbeLevelModel", function(this, units="remaining", ..., for
 ##       stopifnot(length(cells) == length(singleCellUnits));
 ##       verbose && exit(verbose);
 ##       verbose && exit(verbose);
-## 
+##
 ##       verbose && enter(verbose, "Reading signals");
 ##       verbose && exit(verbose);
 ##       rm(cells);
-## 
+##
 ##       verbose && enter(verbose, "Fitting units");
 ##       verbose && exit(verbose);
-## 
+##
 ##       verbose && enter(verbose, "Storing estimates");
 ##       verbose && exit(verbose);
-## 
+##
 ##       # Update remaining units to do
 ## ##      units <- setdiff(units, singleCellUnits);
 ##       nbrOfUnits <- length(units);
 ##     }
-## 
+##
 ##     verbose && exit(verbose);
-## 
+##
 ##     # Nothing more to do?
 ##     if (nbrOfUnits == 0)
 ##       return(NULL);
@@ -312,7 +312,7 @@ setMethodS3("fit", "ProbeLevelModel", function(this, units="remaining", ..., for
     names(large) <- sapply(dims$nbrOfCellsPerGroup[isLarge], FUN=paste, collapse="+");
     dimChunks <- large;
 
-    # Additional small sets, if any    
+    # Additional small sets, if any
     small <- lapply(sets[!isLarge], FUN=function(x) x$units);
     small <- unlist(small, use.names=FALSE);
     if (length(small) > 0) {
@@ -343,18 +343,18 @@ setMethodS3("fit", "ProbeLevelModel", function(this, units="remaining", ..., for
     # Fit the model in chunks
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     verbose && enter(verbose, "Calculating number of units to fit per chunk");
-  
+
     verbose && cat(verbose, "RAM scale factor: ", ram);
-  
+
     bytesPerChunk <- 100e6;       # 100Mb
     verbose && cat(verbose, "Bytes per chunk: ", bytesPerChunk);
-  
+
     bytesPerUnitAndArray <- 500;  # Just a rough number; good enough?
     verbose && cat(verbose, "Bytes per unit and array: ", bytesPerUnitAndArray);
-  
+
     bytesPerUnit <- nbrOfArrays * bytesPerUnitAndArray;
     verbose && cat(verbose, "Bytes per unit: ", bytesPerUnit);
-  
+
     unitsPerChunk <- ram * bytesPerChunk / bytesPerUnit;
     unitsPerChunk <- as.integer(max(unitsPerChunk,1));
     verbose && cat(verbose, "Number of units per chunk: ", unitsPerChunk);
@@ -364,7 +364,7 @@ setMethodS3("fit", "ProbeLevelModel", function(this, units="remaining", ..., for
 
     idxs <- 1:nbrOfUnitsKK;
     head <- 1:unitsPerChunk;
-  
+
     verbose && exit(verbose);
 
 
@@ -376,13 +376,13 @@ setMethodS3("fit", "ProbeLevelModel", function(this, units="remaining", ..., for
     count <- 1;
     while (length(idxs) > 0) {
       tTotal <- processTime();
-  
+
       verbose && enter(verbose, sprintf("Fitting chunk #%d of %d of '%s' units (code=%d) with %s", count, nbrOfChunks, unitTypeLabel, unitType, dimDescription));
       if (length(idxs) < unitsPerChunk) {
         head <- 1:length(idxs);
       }
       uu <- idxs[head];
-  
+
       unitsChunk <- unitsKK[uu];
       verbose && printf(verbose, "Unit type: '%s' (code=%d)\n", unitTypeLabel, unitType);
       verbose && cat(verbose, "Unit dimension: ", dimDescription);
@@ -392,15 +392,15 @@ setMethodS3("fit", "ProbeLevelModel", function(this, units="remaining", ..., for
 
       # Sanitcy check
       stopifnot(length(idxs) > 0);
-  
+
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       # Get the CEL intensities by units
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       tRead <- processTime();
-      y <- readUnits(this, units=unitsChunk, ..., force=force, cache=FALSE, 
+      y <- readUnits(this, units=unitsChunk, ..., force=force, cache=FALSE,
                                                       verbose=less(verbose));
       timers$read <- timers$read + (processTime() - tRead);
-  
+
 ##    # It is not possible to do the below sanity check, because
 ##    # readUnits() may have merged groups etc in a way we cannot
 ##    # know.  /HB 2012-01-11
@@ -411,22 +411,22 @@ setMethodS3("fit", "ProbeLevelModel", function(this, units="remaining", ..., for
 ##          throw("Internal error: The read units does not have ", nbrOfGroups, " groups: ", length(y[[1]]));
 ##        }
 ##      }
-     
+
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       # Read prior parameter estimates
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       if (hasPriors) {
-        priors <- readPriorsByUnits(this, units=unitsChunk, ..., force=force, 
+        priors <- readPriorsByUnits(this, units=unitsChunk, ..., force=force,
                                          cache=FALSE, verbose=less(verbose));
         timers$read <- timers$read + (processTime() - tRead);
       }
-  
+
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       # Fit the model
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       verbose && enter(verbose, "Fitting probe-level model");
       tFit <- processTime();
-  
+
       if (hasPriors) {
         verbose && cat(verbose, "Calling fitUnit() via mapply() with prior parameter estimates");
         fit <- base::mapply(y, priors=priors, FUN=fitUnit, SIMPLIFY=FALSE);
@@ -439,13 +439,13 @@ setMethodS3("fit", "ProbeLevelModel", function(this, units="remaining", ..., for
       y <- NULL; # Not needed anymore (to minimize memory usage)
       verbose && str(verbose, fit[1]);
       verbose && exit(verbose);
-  
+
       # Garbage collection
       tGc <- processTime();
       gc <- gc();
       timers$gc <- timers$gc + (processTime() - tGc);
       verbose && print(verbose, gc);
-  
+
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       # Store probe affinities
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -454,8 +454,8 @@ setMethodS3("fit", "ProbeLevelModel", function(this, units="remaining", ..., for
       updateUnits(paf, units=unitsChunk, data=fit, verbose=less(verbose));
       timers$writePaf <- timers$writePaf + (processTime() - tWritePaf);
       verbose && exit(verbose);
-  
-  
+
+
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       # Store chip effects
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -464,28 +464,28 @@ setMethodS3("fit", "ProbeLevelModel", function(this, units="remaining", ..., for
       updateUnits(ces, units=unitsChunk, data=fit, verbose=less(verbose));
       timers$writeCes <- timers$writeCes + (processTime() - tWriteCes);
       verbose && exit(verbose);
-  
+
       fit <- NULL; # Not needed anymore
-  
+
       # Next chunk
       idxs <- idxs[-head];
       count <- count + 1;
-  
+
       # Garbage collection
       tGc <- processTime();
       gc <- gc();
       verbose && print(verbose, gc);
       timers$gc <- timers$gc + (processTime() - tGc);
-  
+
       timers$total <- timers$total + (processTime() - tTotal);
-  
+
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       # ETA
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       if (verbose) {
         # Clarifies itself once in a while (in case running two in parallel).
         verbose && print(verbose, this);
-  
+
         # Fraction left
         fLeft <- length(idxs) / nbrOfUnits;
         # Time this far
@@ -501,7 +501,7 @@ setMethodS3("fit", "ProbeLevelModel", function(this, units="remaining", ..., for
         eta <- Sys.time() + t;
         printf(verbose, "ETA for unit type '%s': %s\n", unitTypeLabel, format(eta, "%Y%m%d %H:%M:%S"));
       }
-  
+
       verbose && exit(verbose);
     } # while(length(idxs) > 0)  # For each chunk of units...
 
@@ -585,9 +585,9 @@ setMethodS3("fit", "ProbeLevelModel", function(this, units="remaining", ..., for
 # o Now the tag for the 'probeModel' is set in getAsteriskTag().
 # o Added argument 'shift' to ProbeLevelModel.
 # 2007-08-09
-# o getProbeAffinityFile() of ProbeLevelModel now creates CEL files with 
+# o getProbeAffinityFile() of ProbeLevelModel now creates CEL files with
 #   upper-case filename extension "*.CEL", not "*.cel".  The reason for this
-#   is that some software don't recognize lower case filename extensions :(  
+#   is that some software don't recognize lower case filename extensions :(
 # 2007-04-12
 # o Added 'force' argument to getResidualSet().
 # 2007-04-02
@@ -600,10 +600,10 @@ setMethodS3("fit", "ProbeLevelModel", function(this, units="remaining", ..., for
 # o Memory optimization: Further memory optimization by clearing the
 #   cache of the 'cs', the 'paf', and the 'ces', before fitting.
 # 2007-02-22
-# o Added getChipEffectSet() and getProbeAffinityFile() to replace 
+# o Added getChipEffectSet() and getProbeAffinityFile() to replace
 #   getChipEffects() and getProbeAffinites() in some future version.
 # 2007-02-09
-# o Added an additional garbage collection after fitting the PLM, but 
+# o Added an additional garbage collection after fitting the PLM, but
 #   before storing parameter estimates.
 # 2007-01-06
 # o Now gc() memory information is outputted after each chunk.
@@ -614,7 +614,7 @@ setMethodS3("fit", "ProbeLevelModel", function(this, units="remaining", ..., for
 # o Now ProbeLevelModel inherits directly from UnitModel.
 # 2007-01-03
 # o "Protected" several methods to simplify the interface for end users.
-# o Added support from "PM-MM" probe models in addition to the default 
+# o Added support from "PM-MM" probe models in addition to the default
 #   "PM only" model.
 # 2006-09-26
 # o Fixed the timers for fit(). They only worked so and so before and only
@@ -622,7 +622,7 @@ setMethodS3("fit", "ProbeLevelModel", function(this, units="remaining", ..., for
 # 2006-09-14
 # o Added detailed timing information to the verbose output of fit().
 # 2006-09-11
-# o Added argument ProbeLevelModel(..., standardize=TRUE) to make the 
+# o Added argument ProbeLevelModel(..., standardize=TRUE) to make the
 #   results from different PLMs be on the same scale.
 # 2006-09-10
 # o Added findUnitsTodo().

@@ -7,13 +7,13 @@
 #  @classhierarchy
 #
 #  An AffymetrixPgfFile object represents a generic Affymetrix Probe Group
-#  File (PGF). 
+#  File (PGF).
 #  A PGF file "provides information about what probes are contained
 #  within a probeset and information about the nature of the probes
-#  necessary for analysis. The current PGF file format (version 1) 
+#  necessary for analysis. The current PGF file format (version 1)
 #  is only specified for expression style probesets." [1]
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
@@ -25,13 +25,13 @@
 # }
 #
 # \section{Fields and Methods}{
-#  @allmethods "public"  
+#  @allmethods "public"
 # }
-# 
-# @author
+#
+# @author "HB"
 #*/###########################################################################
 setConstructorS3("AffymetrixPgfFile", function(...) {
-  this <- extend(AromaChipTypeAnnotationFile(...), c("AffymetrixPgfFile", 
+  this <- extend(AromaChipTypeAnnotationFile(...), c("AffymetrixPgfFile",
             uses("UnitNamesFile", "UnitTypesFile", "AromaPlatformInterface")),
     "cached:.header" = NULL,
     "cached:.data" = NULL
@@ -97,8 +97,6 @@ setMethodS3("as.character", "AffymetrixPgfFile", function(x, ...) {
 #  error is thrown.
 # }
 #
-# @author
-#
 # \seealso{
 #   @seeclass
 # }
@@ -108,7 +106,7 @@ setMethodS3("as.character", "AffymetrixPgfFile", function(x, ...) {
 #*/###########################################################################
 setMethodS3("fromFile", "AffymetrixPgfFile", function(static, filename, path=NULL, ...) {
   # Arguments 'filename' and 'path':
-  pathname <- Arguments$getReadablePathname(filename, path=path, 
+  pathname <- Arguments$getReadablePathname(filename, path=path,
                                                               mustExist=TRUE);
 
   # Assert that it is a PGF file
@@ -146,8 +144,6 @@ setMethodS3("getDefaultExtension", "AffymetrixPgfFile", function(static, ...) {
 #  Returns a pathname as a @character string to the first PGF file found.
 #  If non PGF with requested chip type was found, @NULL is returned.
 # }
-#
-# @author
 #
 # \seealso{
 #   @seeclass
@@ -199,7 +195,7 @@ setMethodS3("findByChipType", "AffymetrixPgfFile", function(static, chipType, ta
   if (is.null(pathname)) {
     # Search for a Windows shortcut
     args <- list(
-      chipType=chipType, 
+      chipType=chipType,
       pattern=sprintf("^%s%s[.]lnk$", fullname, extPattern),
       ...
     );
@@ -236,8 +232,6 @@ setMethodS3("findByChipType", "AffymetrixPgfFile", function(static, chipType, ta
 # \value{
 #  Returns a @list structure as returned by @see "affxparser::readPgfHeader".
 # }
-#
-# @author
 #
 # \seealso{
 #   @seeclass
@@ -317,7 +311,7 @@ setMethodS3("readRawData", "AffymetrixPgfFile", function(this, ...) {
     pathname <- getPathname(this);
     env <- readPgfEnv(pathname, ...);
     env$header <- NULL;
-  
+
     keys <- ls(envir=env);
     fields <- grep("^probeset", keys, value=TRUE);
     data <- mget(fields, envir=env);
@@ -325,7 +319,7 @@ setMethodS3("readRawData", "AffymetrixPgfFile", function(this, ...) {
     data$type <- as.factor(data$type);
     unitData <- as.data.frame(data, stringsAsFactors=FALSE);
     for (ff in fields) rm(list=ff, envir=env);
-  
+
     keys <- ls(envir=env);
     fields <- grep("^probe", keys, value=TRUE);
     data <- mget(fields, envir=env);
@@ -333,14 +327,14 @@ setMethodS3("readRawData", "AffymetrixPgfFile", function(this, ...) {
     data$type <- as.factor(data$type);
     cellData <- as.data.frame(data, stringsAsFactors=FALSE);
     for (ff in fields) rm(list=ff, envir=env);
-  
+
     keys <- ls(envir=env);
     fields <- grep("^atom", keys, value=TRUE);
     data <- mget(fields, envir=env);
     names(data) <- toCamelCase(gsub("^atom", "", names(data)));
     atomData <- as.data.frame(data, stringsAsFactors=FALSE);
     for (ff in fields) rm(list=ff, envir=env);
-  
+
     rawData <- list(unitData=unitData, cellData=cellData, atomData=atomData);
     this$.rawData <- rawData;
   }
@@ -374,8 +368,6 @@ setMethodS3("readRawData", "AffymetrixPgfFile", function(this, ...) {
 #   Once read from file, this information is cached in memory for efficiency.
 #   The cache can be cleared by calling \code{gc(pgf)}.
 # }
-#
-# @author
 #
 # \seealso{
 #   @seeclass

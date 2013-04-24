@@ -1,3 +1,4 @@
+# @author "MR"
 setMethodS3("importFromBpMap", "AromaCellMatchScoreFile", function(this, srcPathname, rows=NULL, ..., verbose=TRUE) {
   # Argument 'srcPathname':
   srcPathname <- Arguments$getReadablePathname(srcPathname);
@@ -19,9 +20,9 @@ setMethodS3("importFromBpMap", "AromaCellMatchScoreFile", function(this, srcPath
   verbose && cat(verbose, "Pathname: ", srcPathname);
   bps <- readBpmap(srcPathname, readMatchScore=TRUE);
   verbose && exit(verbose);
- 
+
   verbose && enter(verbose, "Saving scores to ACM file");
-  verbose && cat(verbose, "Pathname: ", getPathname(this)); 
+  verbose && cat(verbose, "Pathname: ", getPathname(this));
 
   for(kk in seq_len(length(bps))) {
     bp <- bps[[kk]];
@@ -48,4 +49,4 @@ setMethodS3("importFromBpMap", "AromaCellMatchScoreFile", function(this, srcPath
 # HISTORY:
 # 2008-10-xx [MR]
 # o Created.
-############################################################################ 
+############################################################################

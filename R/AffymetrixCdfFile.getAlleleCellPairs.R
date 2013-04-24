@@ -14,7 +14,7 @@
 # \arguments{
 #  \item{units}{A @integer @vector of units to query.
 #    If @NULL, all units are considered.}
-#  \item{stratifyBy}{A @character string specifying what type of probes 
+#  \item{stratifyBy}{A @character string specifying what type of probes
 #    to return.}
 #  \item{...}{Not used.}
 #  \item{verbose}{A @logical or a @see "R.utils::Verbose" object.}
@@ -25,7 +25,7 @@
 #   a (PMA, PMB) probe pair.
 # }
 #
-# @author
+# @author "HB"
 #
 # \seealso{
 #   @seeclass
@@ -63,7 +63,7 @@ setMethodS3("getAlleleCellPairs", "AffymetrixCdfFile", function(this, units=NULL
   # Check for cached results?
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   chipType <- getChipType(this);
-  key <- list(method="getAlleleCellPairs", class=class(this)[1], 
+  key <- list(method="getAlleleCellPairs", class=class(this)[1],
                     chipType=chipType, units=units, stratifyBy=stratifyBy);
   if (getOption(aromaSettings, "devel/useCacheKeyInterface", FALSE)) {
     key <- getCacheKey(this, method="getAlleleCellPairs", chipType=chipType, units=units, stratifyBy=stratifyBy);
@@ -108,8 +108,8 @@ setMethodS3("getAlleleCellPairs", "AffymetrixCdfFile", function(this, units=NULL
 
   keep <- which(is.element(unitSizes, c(2,4)));
   units <- units[keep];
-  rm(unitSizes, keep); 
- 
+  rm(unitSizes, keep);
+
   nbrOfUnits <- length(units);
   verbose && cat(verbose, "Number of SNP units to query: ", nbrOfUnits);
 
@@ -126,7 +126,7 @@ setMethodS3("getAlleleCellPairs", "AffymetrixCdfFile", function(this, units=NULL
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   verbose && enter(verbose, "Reading cell indices");
   verbose && cat(verbose, "Stratify by: ", stratifyBy);
-  cells <- getCellIndices(this, units=units, stratifyBy=stratifyBy, 
+  cells <- getCellIndices(this, units=units, stratifyBy=stratifyBy,
                                           useNames=FALSE, verbose=verbose);
   rm(units);
 

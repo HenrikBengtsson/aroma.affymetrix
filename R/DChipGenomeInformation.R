@@ -9,7 +9,7 @@
 #  This class represents dChip genome information files, which typically
 #  contains information about chromosomal locations of the units.
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
@@ -17,16 +17,16 @@
 # }
 #
 # \section{Fields and Methods}{
-#  @allmethods "public"  
+#  @allmethods "public"
 # }
-# 
+#
 # \details{
-#   The dChip genome information files for various chip types can be 
+#   The dChip genome information files for various chip types can be
 #   downloaded from \url{http://www.dchip.org/}.  Put each file in a
 #   directory named identically as the corresponding chip type under the
-#   \emph{annotations/} directory, e.g.  
+#   \emph{annotations/} directory, e.g.
 #   \emph{annotations/Mapping50K\_Hind240/50k hind genome info AfAm
-#   june 05 hg17.xls}.  
+#   june 05 hg17.xls}.
 #   Note that dChip changes the filename and file format slightly between
 #   chip types, but currently the @seemethod "byChipType" basically searches
 #   for files with names consisting of \code{"genome info"} or
@@ -34,7 +34,7 @@
 #   is no need to rename the files in order for this class to recognize them.
 # }
 #
-# @author
+# @author "HB"
 #*/###########################################################################
 setConstructorS3("DChipGenomeInformation", function(...) {
   this <- extend(GenomeInformation(...), "DChipGenomeInformation");
@@ -52,7 +52,7 @@ setMethodS3("findByChipType", "DChipGenomeInformation", function(static, chipTyp
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Search in annotationData/chipTypes/<chipType>/
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  pattern <- sprintf("^.*( |_)genome( |_)info(| |_).*%s[.](txt|xls)$", 
+  pattern <- sprintf("^.*( |_)genome( |_)info(| |_).*%s[.](txt|xls)$",
                                                                version);
   pathname <- findAnnotationDataByChipType(chipType, pattern);
 
@@ -100,11 +100,9 @@ setMethodS3("findByChipType", "DChipGenomeInformation", function(static, chipTyp
 # }
 #
 # \value{
-#  Returns an @see "DChipGenomeInformation" object.  
+#  Returns an @see "DChipGenomeInformation" object.
 #  If no file was not found, an error is thrown.
 # }
-#
-# @author
 #
 # \seealso{
 #   @seeclass
@@ -149,7 +147,7 @@ setMethodS3("verify", "DChipGenomeInformation", function(this, ...) {
   tryCatch({
     df <- readDataFrame(this, nrow=10);
   }, error = function(ex) {
-    throw("File format error of the dChip genome information file (", 
+    throw("File format error of the dChip genome information file (",
                                  ex$message, "): ", getPathname(this));
   })
   invisible(TRUE);
@@ -178,7 +176,7 @@ setMethodS3("readDataFrame", "DChipGenomeInformation", function(this, units=NULL
     # Locate the CDF
     cdf <- AffymetrixCdfFile$byChipType(chipType);
     units <- Arguments$getIndices(units, max=nbrOfUnits(cdf));
-  }  
+  }
 
   # Try to read with the designated read function.
   res <- NULL;
@@ -234,8 +232,8 @@ setMethodS3("readDataFrame", "DChipGenomeInformation", function(this, units=NULL
 
 setMethodS3("readGenomeWideSNP", "DChipGenomeInformation", function(this, ..., exclude=c("^Strand$", "^dbSNP RS ID$")) {
   colClasses <- c(
-    "^Probe Set ID$"="character", 
-    "^Chromosome$"="character",	
+    "^Probe Set ID$"="character",
+    "^Chromosome$"="character",
     "^Physical Position$"="integer",
     "^Strand$"="character",
     "^dbSNP RS ID$"="character",
@@ -247,9 +245,9 @@ setMethodS3("readGenomeWideSNP", "DChipGenomeInformation", function(this, ..., e
 
 setMethodS3("read250KHg17", "DChipGenomeInformation", function(this, ..., exclude=c("Expr1002", "Allele A", "dbSNP RS ID")) {
   colClasses <- c(
-    "Probe Set ID"="character", 
-    "Chromosome"="character",	
-    "Expr1002"="integer",	
+    "Probe Set ID"="character",
+    "Chromosome"="character",
+    "Expr1002"="integer",
     "Physical Position"="integer",
     "Allele A"="character",
     "dbSNP RS ID"="character"
@@ -260,8 +258,8 @@ setMethodS3("read250KHg17", "DChipGenomeInformation", function(this, ..., exclud
 
 setMethodS3("read50KHg17", "DChipGenomeInformation", function(this, ..., exclude=c("Genetic Map", "Strand", "Allele A", "dbSNP RS ID", "Freq AfAm", "heterrate")) {
   colClasses <- c(
-    "Probe Set ID"="character", 
-    "Chromosome"="character",	
+    "Probe Set ID"="character",
+    "Chromosome"="character",
     "Physical Position"="integer",
     "Genetic Map"="",               # Often empty?!
     "Strand"="character",
@@ -277,15 +275,15 @@ setMethodS3("read50KHg17", "DChipGenomeInformation", function(this, ..., exclude
 
 setMethodS3("readMouse430KenHardwired", "DChipGenomeInformation", function(this, ...) {
   colClasses <- c(
-    "Probe Set"="character", 
-    "chromosome"="character",	
+    "Probe Set"="character",
+    "chromosome"="character",
     "Physical Position"="integer",
     "End"="integer",
     "Strand"="character",
     "Cytoband"="character"
   );
 
-  tableData <- readTableInternal(this, pathname=getPathname(this), 
+  tableData <- readTableInternal(this, pathname=getPathname(this),
                                                 colClasses=colClasses, ...);
 
   # ad hoc fix: remove "chr" from chromosome
@@ -295,17 +293,19 @@ setMethodS3("readMouse430KenHardwired", "DChipGenomeInformation", function(this,
   tableData;
 }, private=TRUE)
 
+
+# @author "KS"
 setMethodS3("readMouse430", "DChipGenomeInformation", function(this, ...) {
   colClasses <- c(
-    "Probe Set"="character", 
-    "chromosome"="character",	
+    "Probe Set"="character",
+    "chromosome"="character",
     "Start"="integer",
     "End"="integer",
     "Strand"="character",
     "Cytoband"="character"
   );
 
-  tableData <- readTableInternal(this, pathname=getPathname(this), 
+  tableData <- readTableInternal(this, pathname=getPathname(this),
                                                 colClasses=colClasses, ...);
   colnames <- colnames(tableData);
   colnames <- gsub("^Start", "Physical Position", colnames);
@@ -339,7 +339,7 @@ setMethodS3("readMouse430", "DChipGenomeInformation", function(this, ...) {
 # 2007-01-22
 # o Rename argument 'path' to 'rootPath' and added argument 'pattern' to
 #   method fromChipType().
-# o Made fromChipType() identify genome information files more robustly, 
+# o Made fromChipType() identify genome information files more robustly,
 #   e.g. the exact chip type does not have to be part of the prefix.
 #   Indeed, it now accepts the default dChip filenames for the 10K, the
 #   50K and the 250K SNP chips.
@@ -353,4 +353,4 @@ setMethodS3("readMouse430", "DChipGenomeInformation", function(this, ...) {
 # o Added support for skipping header in readSampleInformationFile().
 # 2005-10-31
 # o Created.
-############################################################################  
+############################################################################

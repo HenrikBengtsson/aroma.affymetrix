@@ -10,7 +10,7 @@
 #  contains information on nucleotide sequences and fragment lengths
 #  of the units.
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
@@ -18,16 +18,16 @@
 # }
 #
 # \section{Fields and Methods}{
-#  @allmethods "public"  
+#  @allmethods "public"
 # }
-# 
+#
 # \details{
-#   The dChip SNP information files for various chip types can be 
+#   The dChip SNP information files for various chip types can be
 #   downloaded from \url{http://www.dchip.org/}.  Put each file in a
 #   directory named identically as the corresponding chip type under the
-#   \emph{annotations/} directory, e.g.  
+#   \emph{annotations/} directory, e.g.
 #   \emph{annotations/Mapping50K\_Hind240/50k hind snp info AfAm
-#   june 05 hg17.xls}.  
+#   june 05 hg17.xls}.
 #   Note that dChip changes the filename and file format slightly between
 #   chip types, but currently the @seemethod "byChipType" basically searches
 #   for files with names consisting of \code{"snp info"} or
@@ -35,7 +35,7 @@
 #   is no need to rename the files in order for this class to recognize them.
 # }
 #
-# @author
+# @author "HB"
 #*/###########################################################################
 setConstructorS3("DChipSnpInformation", function(...) {
   this <- extend(SnpInformation(...), "DChipSnpInformation");
@@ -98,18 +98,16 @@ setMethodS3("findByChipType", "DChipSnpInformation", function(static, chipType, 
 #    the annotation directory.}
 #  \item{version}{An optional @character string specifying the version
 #    string, if more than one version is available.}
-#  \item{pattern}{An optional filename pattern used to locate the 
+#  \item{pattern}{An optional filename pattern used to locate the
 #    dChip genome file.  If @NULL, a default pattern is used.}
 #  \item{...}{Not used.}
 #  \item{verbose}{See @see "R.utils::Verbose".}
 # }
 #
 # \value{
-#  Returns an @see "DChipSnpInformation" object.  
+#  Returns an @see "DChipSnpInformation" object.
 #  If no file was not found, an error is thrown.
 # }
-#
-# @author
 #
 # \seealso{
 #   @seeclass
@@ -155,7 +153,7 @@ setMethodS3("verify", "DChipSnpInformation", function(this, ...) {
   tryCatch({
     df <- readDataFrame(this, nrow=10);
   }, error = function(ex) {
-    throw("File format error of the dChip SNP information file (", 
+    throw("File format error of the dChip SNP information file (",
                                  ex$message, "): ", getPathname(this));
   })
   invisible(TRUE);
@@ -208,12 +206,12 @@ setMethodS3("readDataFrame", "DChipSnpInformation", function(this, ...) {
 setMethodS3("read250K", "DChipSnpInformation", function(this, ..., exclude=c("dbSNP RS ID", "Flank", "FreqAsia", "FreqAfAm", "FreqCauc")) {
   # Example with TABs replaced by semicolons:
   # Probe Set ID;dbSNP RS ID;Flank;Fragment Length Start Stop;FreqAsia;FreqAfAm;FreqCauc
-  # SNP_A-1780520;rs16994928;ggatagtgttgacctc[A/G]agtacaggtttcaaaa;496 // 47873735 // 47874230;0.0 ;0.11;0.0 
+  # SNP_A-1780520;rs16994928;ggatagtgttgacctc[A/G]agtacaggtttcaaaa;496 // 47873735 // 47874230;0.0 ;0.11;0.0
   colClasses <- c(
-    "Probe Set ID"="character", 
+    "Probe Set ID"="character",
     "dbSNP RS ID"="character",
-    "Flank"="character",	
-    "Fragment Length Start Stop"="character",	
+    "Flank"="character",
+    "Fragment Length Start Stop"="character",
     "FreqAsia"="double",
     "FreqAfAm"="double",
     "FreqCauc"="double"
@@ -223,10 +221,10 @@ setMethodS3("read250K", "DChipSnpInformation", function(this, ..., exclude=c("db
 
 setMethodS3("read50K", "DChipSnpInformation", function(this, ..., exclude=c("dbSNP RS ID", "Flank", "FreqAsian", "FreqAfAm", "FreqCauc")) {
   colClasses <- c(
-    "Probe Set ID"="character", 
+    "Probe Set ID"="character",
     "dbSNP RS ID"="character",
-    "Flank"="character",	
-    "Fragment Length Start Stop"="character",	
+    "Flank"="character",
+    "Fragment Length Start Stop"="character",
     "FreqAsian"="double",
     "FreqAfAm"="double",
     "FreqCauc"="double"
@@ -236,10 +234,10 @@ setMethodS3("read50K", "DChipSnpInformation", function(this, ..., exclude=c("dbS
 
 setMethodS3("read10K", "DChipSnpInformation", function(this, ..., exclude=c("dbSNP RS ID", "Flank", "Freq Asian", "Freq AfAm", "Freq Cauc"), fill=TRUE) {
   colClasses <- c(
-    "Probe Set ID"="character", 
+    "Probe Set ID"="character",
     "dbSNP RS ID"="character",
-    "Flank"="character",	
-    "Fragment Length Start Stop"="character",	
+    "Flank"="character",
+    "Fragment Length Start Stop"="character",
     "Freq Asian"="double",
     "Freq AfAm"="double",
     "Freq Cauc"="double"
@@ -261,4 +259,4 @@ setMethodS3("read10K", "DChipSnpInformation", function(this, ..., exclude=c("dbS
 #   file for 10K chips have the same format as the one for the 100K chips.
 # 2006-09-17
 # o Created from DChipGenomeInformation.R.
-############################################################################  
+############################################################################

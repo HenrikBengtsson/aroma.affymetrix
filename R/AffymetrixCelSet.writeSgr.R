@@ -1,4 +1,8 @@
-
+# @author "HB"
+#
+# \references{
+#   [1] http://wiki.transvar.org/confluence/display/igbman/File+Formats
+# }
 setMethodS3("writeSgr", "AffymetrixCelSet", function(this, units=NULL, ..., tags=getTags(this), verbose=FALSE, fileExtension="sgr", fileSep="\t", nbrOfFigures=3) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
@@ -9,33 +13,33 @@ setMethodS3("writeSgr", "AffymetrixCelSet", function(this, units=NULL, ..., tags
     pushState(verbose);
     on.exit(popState(verbose));
   }
-  
+
   chrText <- paste(c(1:22, "X", "Y", "M"), sep="");
   names(chrText) <- 1:25;
-  
+
   nbrOfArrays <- length(this);
   cdf <- getCdf(this);
 
-  
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Read indices
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   verbose && enter(verbose, "Reading indices");
   indices <- getCellIndices(cdf, units=units, stratifyBy="pm");
   indices <- unlist(indices, use.names=FALSE);
   verbose && exit(verbose);
 
-  
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Read probe genomic location
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   verbose && enter(verbose, "Gathering probe genomic locations");
   acp <- AromaCellPositionFile$byChipType(getChipType(cdf));
-  
+
   ch <- paste("chr", chrText[ as.character(acp[indices,1,drop=TRUE]) ], sep="");
   pos <- acp[indices,2,drop=TRUE];
   verbose && exit(verbose);
-  
+
   for (ii in seq_len(nbrOfArrays)) {
     cf <- getFile(this, ii);
     sampleName <- getName(cf);

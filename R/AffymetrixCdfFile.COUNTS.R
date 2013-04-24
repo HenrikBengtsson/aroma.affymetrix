@@ -39,7 +39,7 @@ setMethodS3("nbrOfQcUnits", "AffymetrixCdfFile", function(this, ...) {
 #   The cache can be cleared by calling \code{gc(cdf)}.
 # }
 #
-# @author
+# @author "HB"
 #
 # \seealso{
 #   @seeclass
@@ -64,7 +64,7 @@ setMethodS3("nbrOfGroupsPerUnit", "AffymetrixCdfFile", function(this, units=NULL
   if (force || is.null(sizes)) {
     # Check in file cache
     chipType <- getChipType(this);
-    key <- list(method="nbrOfGroupsPerUnit", class=class(this)[1], 
+    key <- list(method="nbrOfGroupsPerUnit", class=class(this)[1],
                 chipType=chipType);
     if (getOption(aromaSettings, "devel/useCacheKeyInterface", FALSE)) {
       key <- getCacheKey(this, method="nbrOfGroupsPerUnit", chipType=chipType);
@@ -76,7 +76,7 @@ setMethodS3("nbrOfGroupsPerUnit", "AffymetrixCdfFile", function(this, units=NULL
       sizes <- loadCache(key=key, dirs=dirs);
     }
 
-    if (is.null(sizes)) {    
+    if (is.null(sizes)) {
       verbose && enter(verbose, "Reading number of groups for *all* units");
       sizes <- readCdfGroupNames(getPathname(this));
       sizes <- restruct(this, sizes, verbose=less(verbose, 5));
@@ -188,14 +188,14 @@ setMethodS3("nbrOfCellsPerUnit", "AffymetrixCdfFile", function(this, units=NULL,
 
   if (is.null(counts)) {
     verbose && enter(verbose, "Getting number of cells per unit group");
-    counts <- nbrOfCellsPerUnitGroup(this, units=NULL, useNames=useNames, 
+    counts <- nbrOfCellsPerUnitGroup(this, units=NULL, useNames=useNames,
                                            ..., verbose=less(verbose, 1));
 
     verbose && enter(verbose, "Summing per unit");
     # Sum per unit
     counts <- sapply(counts, FUN=sum);
     verbose && exit(verbose);
-  
+
     verbose && exit(verbose);
 
     saveCache(counts, key=key, dirs=dirs);
@@ -208,7 +208,7 @@ setMethodS3("nbrOfCellsPerUnit", "AffymetrixCdfFile", function(this, units=NULL,
 
   verbose && exit(verbose);
 
-  counts;  
+  counts;
 }, private=TRUE)
 
 
@@ -223,7 +223,7 @@ setMethodS3("nbrOfCellsPerUnit", "AffymetrixCdfFile", function(this, units=NULL,
 # o BUG FIX: getUnitTypes() of AffymetrixCdfFile did not return a
 #   name map for the unit types if a subset was units was selected.
 # 2008-08-09
-# o BUG FIX: getUnitTypes() of AffymetrixCdfFile would not return the 
+# o BUG FIX: getUnitTypes() of AffymetrixCdfFile would not return the
 #   correct integer for binary CDFs.  Now it uses readCdf() instead of
 #   readCdfUnits() of affxparser.
 # 2008-07-26
@@ -257,7 +257,7 @@ setMethodS3("nbrOfCellsPerUnit", "AffymetrixCdfFile", function(this, units=NULL,
 #   file objects are compatible with the CDF.  At least for UGP & UFL files.
 # 2007-12-08
 # o Added setGenomeInformation() & setSnpInformation() to AffymetrixCdfFile.
-# o Now construct AffymetrixCdfFile$fromName("HuEx-1_0-st-v2", tags="core") 
+# o Now construct AffymetrixCdfFile$fromName("HuEx-1_0-st-v2", tags="core")
 #   can be used to locate 'HuEx-1_0-st-v2,core.CDF'.
 # 2007-09-10
 # o Now getGenomeInformation() of AffymetrixCdfFile recognizes UGP files
@@ -298,7 +298,7 @@ setMethodS3("nbrOfCellsPerUnit", "AffymetrixCdfFile", function(this, units=NULL,
 # 2007-01-16
 # o Now all cache keys contains method name, class name, and chip type.
 # 2007-01-10
-# o Reordered internally in createMonoCell() preparing for code to read 
+# o Reordered internally in createMonoCell() preparing for code to read
 #   *and* write monocell CDFs in chunks.  It should not be too hard.
 #   We need to update affxparser with writeCdfHeader(), writeCdfQcUnits()
 #   and writeCdfUnits(), and are basically already in there, but as
@@ -336,7 +336,7 @@ setMethodS3("nbrOfCellsPerUnit", "AffymetrixCdfFile", function(this, units=NULL,
 # o BUG FIX: createMonoCell() where resetting the cell indices for each
 #   chunk.
 # o Simple benchmarking of createMonoCell(): IBM Thinkpad A31 1.8GHz 1GB:
-#   Mapping50K_Hind to mono cells CDF takes ~13 mins.  Again, it is 
+#   Mapping50K_Hind to mono cells CDF takes ~13 mins.  Again, it is
 #   writeCdf() that is slow.  KH is working on improving this.
 # 2006-09-08
 # o Added equals() to compare to CDF object.

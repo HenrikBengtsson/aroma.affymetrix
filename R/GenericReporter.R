@@ -6,7 +6,7 @@
 # \description{
 #  @classhierarchy
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
@@ -18,8 +18,7 @@
 #  @allmethods "public"
 # }
 #
-# @author
-# 
+# @author "HB"
 #*/###########################################################################
 setConstructorS3("GenericReporter", function(tags="*", ...) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -29,7 +28,7 @@ setConstructorS3("GenericReporter", function(tags="*", ...) {
   if (!is.null(tags)) {
     tags <- Arguments$getTags(tags, collapse=NULL);
   }
- 
+
 
   extend(Object(), "GenericReporter",
     .alias = NULL,
@@ -73,8 +72,6 @@ setMethodS3("as.character", "GenericReporter", function(x, ...) {
 #   Returns a @character, or @NULL if no alias is set.
 # }
 #
-# @author
-#
 # \seealso{
 #   @seemethod "setAlias".
 #   @seemethod "getName".
@@ -94,7 +91,7 @@ setMethodS3("getAlias", "GenericReporter", function(this, ...) {
 #
 # \description{
 #   @get "title".
-#   If specified, the alias overrides the report name, which is used by 
+#   If specified, the alias overrides the report name, which is used by
 #   default.
 # }
 #
@@ -110,8 +107,6 @@ setMethodS3("getAlias", "GenericReporter", function(this, ...) {
 # \value{
 #   Returns nothing.
 # }
-#
-# @author
 #
 # \seealso{
 #   @seemethod "getAlias".
@@ -157,8 +152,6 @@ setMethodS3("setAlias", "GenericReporter", function(this, alias=NULL, ...) {
 #  If a name alias has not been set explicitly, the input name will be used.
 # }
 #
-# @author
-#
 # \seealso{
 #   @seeclass
 # }
@@ -192,8 +185,6 @@ setMethodS3("getName", "GenericReporter", function(this, ...) {
 # \value{
 #  Returns a @character @vector.
 # }
-#
-# @author
 #
 # \seealso{
 #   @seeclass
@@ -305,8 +296,6 @@ setMethodS3("setup", "GenericReporter", abstract=TRUE);
 # \value{
 #  Returns nothing.
 # }
-#
-# @author
 #
 # \seealso{
 #   @seeclass

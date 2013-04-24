@@ -29,8 +29,6 @@
  Returns a \code{\link[base]{list}} structure as returned by \code{\link[affxparser]{readCelHeader}}.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
-
 \seealso{
   For more information see \code{\link{CnagCfhFile}}.
 }

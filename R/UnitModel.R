@@ -9,7 +9,7 @@
 #  This class is abstract and represents a generic unit model, i.e.
 #  a model that is applied to each unit separately.
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
@@ -26,8 +26,7 @@
 #  @allmethods "public"
 # }
 #
-# @author
-#
+# @author "HB"
 #*/###########################################################################
 setConstructorS3("UnitModel", function(dataSet=NULL, probeModel=c("pm", "mm", "pm-mm", "min1(pm-mm)", "pm+mm"), shift=0, ...) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -42,7 +41,7 @@ setConstructorS3("UnitModel", function(dataSet=NULL, probeModel=c("pm", "mm", "p
   probeModel <- match.arg(probeModel);
 
   # Argument 'shift':
-  shift <- Arguments$getDouble(shift, disallow=c("NA", "NaN", "Inf")); 
+  shift <- Arguments$getDouble(shift, disallow=c("NA", "NaN", "Inf"));
 
 
   extend(Model(dataSet=dataSet, ...), "UnitModel",
@@ -91,13 +90,13 @@ setMethodS3("getAsteriskTags", "UnitModel", function(this, collapse=NULL, ...) {
 # @title "Gets the cell indices unit by unit"
 #
 # \description{
-#  @get "title" for all or a subset of units (probesets). 
+#  @get "title" for all or a subset of units (probesets).
 # }
 #
 # @synopsis
 #
 # \arguments{
-#   \item{...}{Additional arguments passed to \code{getCellIndices()} 
+#   \item{...}{Additional arguments passed to \code{getCellIndices()}
 #     of the @see "AffymetrixCdfFile" of the input data set.}
 #   \item{verbose}{See @see "R.utils::Verbose".}
 # }
@@ -105,8 +104,6 @@ setMethodS3("getAsteriskTags", "UnitModel", function(this, collapse=NULL, ...) {
 # \value{
 #  Returns the @list structure consisting of CDF cell indices.
 # }
-#
-# @author
 #
 # \seealso{
 #   @seeclass
@@ -124,10 +121,10 @@ setMethodS3("getCellIndices", "UnitModel", function(this, ..., verbose=FALSE) {
     pushState(verbose);
     on.exit(popState(verbose));
   }
- 
+
 
   # Identify the type of probes to read
-  stratifyBy <- switch(this$probeModel, "pm"="pm", "mm"="mm", 
+  stratifyBy <- switch(this$probeModel, "pm"="pm", "mm"="mm",
                        "pm-mm"="pmmm", "min1(pm-mm)"="pmmm", "pm+mm"="pmmm");
 
   # Get the CDF cell indices
@@ -136,10 +133,10 @@ setMethodS3("getCellIndices", "UnitModel", function(this, ..., verbose=FALSE) {
 
   verbose && enter(verbose, "Identifying CDF cell indices");
   verbose && cat(verbose, "Stratify by: ", stratifyBy);
-  cells <- getCellIndices(cdf, ..., stratifyBy=stratifyBy, 
+  cells <- getCellIndices(cdf, ..., stratifyBy=stratifyBy,
                                                       verbose=less(verbose));
   verbose && exit(verbose);
-  
+
   cells;
 }, private=TRUE)
 
@@ -164,8 +161,6 @@ setMethodS3("getCellIndices", "UnitModel", function(this, ..., verbose=FALSE) {
 # \value{
 #  Returns an @integer @vector of unit indices.
 # }
-#
-# @author
 #
 # \seealso{
 #   @seeclass
@@ -200,7 +195,7 @@ setMethodS3("getFitSingleCellUnitFunction", "UnitModel", function(this, ...) {
 # o Started to modify methods of this class to work similar to the
 #   QuantileNormalizer and AllelicCrosstalkCalibrator classes.
 # 2006-09-14
-# o Not cloning the data set anymore.  Each model is responsible for 
+# o Not cloning the data set anymore.  Each model is responsible for
 #   tranforming the data structure their way.  The advantage with this
 #   approach is that we can cache read data in the data set object.
 # 2006-08-28

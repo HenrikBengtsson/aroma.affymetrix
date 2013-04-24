@@ -6,15 +6,15 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
- \name{AffymetrixCelFile}
+\name{AffymetrixCelFile}
 \docType{class}
 \alias{AffymetrixCelFile}
 
 
- \title{The AffymetrixCelFile class}
+\title{The AffymetrixCelFile class}
 
- \description{
-  Package:  aroma.affymetrix \cr
+\description{
+ Package:  aroma.affymetrix \cr
 \bold{Class AffymetrixCelFile}\cr
 
 \code{\link[R.oo]{Object}}\cr
@@ -43,25 +43,25 @@ extends \emph{\link[aroma.affymetrix]{AffymetrixFile}}\cr
 
 
 
-  An AffymetrixCelFile object represents a single Affymetrix CEL file.
- }
+ An AffymetrixCelFile object represents a single Affymetrix CEL file.
+}
 
- \usage{
+\usage{
 AffymetrixCelFile(..., cdf=NULL)
 }
 
- \arguments{
-   \item{...}{Arguments passed to \code{\link[aroma.core]{AromaMicroarrayDataFile}}.}
-   \item{cdf}{An optional \code{\link{AffymetrixCdfFile}} making it possible to
-     override the default CDF file as specified by the CEL file header.
-     The requirement is that its number of cells must match that of
-     the CEL file.
-     If \code{\link[base]{NULL}}, the CDF structure is inferred from the the chip type
-     as specified in the CEL file header.}
- }
+\arguments{
+  \item{...}{Arguments passed to \code{\link[aroma.core]{AromaMicroarrayDataFile}}.}
+  \item{cdf}{An optional \code{\link{AffymetrixCdfFile}} making it possible to
+    override the default CDF file as specified by the CEL file header.
+    The requirement is that its number of cells must match that of
+    the CEL file.
+    If \code{\link[base]{NULL}}, the CDF structure is inferred from the the chip type
+    as specified in the CEL file header.}
+}
 
- \section{Fields and Methods}{
-  \bold{Methods:}\cr
+\section{Fields and Methods}{
+ \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{extractMatrix} \tab  -\cr
  \tab \code{getAm} \tab  -\cr
@@ -86,7 +86,7 @@ AffymetrixCelFile(..., cdf=NULL)
 getAromaPlatform, getAromaUgpFile, getPlatform, getUnitAnnotationDataFile, getUnitNamesFile, getUnitTypesFile, isCompatibleWith
 
  \bold{Methods inherited from AromaMicroarrayDataFile}:\cr
-getAttributeXY, getChipType, getPlatform, getPloidy, getXAM, hasAttributeXY, isAverageFile, setAttributesByTags, setAttributeXY
+getAttributeXY, getChipType, getPlatform, getPloidy, getXAM, hasAttributeXY, isAverageFile, setAttributeXY, setAttributesByTags
 
  \bold{Methods inherited from FileCacheKeyInterface}:\cr
 getCacheKey
@@ -95,29 +95,29 @@ getCacheKey
 getCacheKey
 
  \bold{Methods inherited from GenericDataFile}:\cr
-as.character, clone, compareChecksum, copyTo, equals, fromFile, getAttribute, getAttributes, getChecksum, getCreatedOn, getDefaultFullName, getExtension, getExtensionPattern, getFilename, getFilenameExtension, getFileSize, getFileType, getLastAccessedOn, getLastModifiedOn, getOutputExtension, getPath, getPathname, gunzip, gzip, hasBeenModified, isFile, isGzipped, readChecksum, renameTo, renameToUpperCaseExt, setAttribute, setAttributes, setAttributesBy, setAttributesByTags, setExtensionPattern, testAttributes, validate, validateChecksum, writeChecksum, getParentName
+as.character, clone, compareChecksum, copyTo, equals, fromFile, getAttribute, getAttributes, getChecksum, getCreatedOn, getDefaultFullName, getExtension, getExtensionPattern, getFileSize, getFileType, getFilename, getFilenameExtension, getLastAccessedOn, getLastModifiedOn, getOutputExtension, getPath, getPathname, gunzip, gzip, hasBeenModified, isFile, isGzipped, readChecksum, renameTo, renameToUpperCaseExt, setAttribute, setAttributes, setAttributesBy, setAttributesByTags, setExtensionPattern, testAttributes, validate, validateChecksum, writeChecksum, getParentName
 
  \bold{Methods inherited from FullNameInterface}:\cr
-appendFullNameTranslator, appendFullNameTranslatorBycharacter, appendFullNameTranslatorBydata.frame, appendFullNameTranslatorByfunction, appendFullNameTranslatorBylist, appendFullNameTranslatorByNULL, appendFullNameTranslatorByTabularTextFile, appendFullNameTranslatorByTabularTextFileSet, clearFullNameTranslator, clearListOfFullNameTranslators, getDefaultFullName, getFullName, getFullNameTranslator, getListOfFullNameTranslators, getName, getTags, hasTag, hasTags, resetFullName, setFullName, setFullNameTranslator, setListOfFullNameTranslators, setName, setTags, updateFullName
+appendFullNameTranslator, appendFullNameTranslatorByNULL, appendFullNameTranslatorByTabularTextFile, appendFullNameTranslatorByTabularTextFileSet, appendFullNameTranslatorBycharacter, appendFullNameTranslatorBydata.frame, appendFullNameTranslatorByfunction, appendFullNameTranslatorBylist, clearFullNameTranslator, clearListOfFullNameTranslators, getDefaultFullName, getFullName, getFullNameTranslator, getListOfFullNameTranslators, getName, getTags, hasTag, hasTags, resetFullName, setFullName, setFullNameTranslator, setListOfFullNameTranslators, setName, setTags, updateFullName
 
  \bold{Methods inherited from Object}:\cr
 $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save, asThis
 
 
- }
+}
 
- \section{For developers}{
-   If you subclass this class, please make sure to query the
-   \code{\link{AffymetrixCdfFile}} object (see \code{\link[aroma.affymetrix:getCdf.AffymetrixCelFile]{*getCdf}()}) whenever
-   querying CDF information.  Do not use the CDF file inferred from the
-   chip type in CEL header, unless you really want it to be hardwired that
-   way, otherwise you will break to possibility to override the CDF
-   structure.
- }
+\section{For developers}{
+  If you subclass this class, please make sure to query the
+  \code{\link{AffymetrixCdfFile}} object (see \code{\link[aroma.affymetrix:getCdf.AffymetrixCelFile]{*getCdf}()}) whenever
+  querying CDF information.  Do not use the CDF file inferred from the
+  chip type in CEL header, unless you really want it to be hardwired that
+  way, otherwise you will break to possibility to override the CDF
+  structure.
+}
 
- \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
- \seealso{
-   An object of this class is typically part of an \code{\link{AffymetrixCelSet}}.
- }
+\seealso{
+  An object of this class is typically part of an \code{\link{AffymetrixCelSet}}.
+}
 \keyword{classes}

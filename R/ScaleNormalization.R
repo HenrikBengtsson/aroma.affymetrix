@@ -6,15 +6,15 @@
 # \description{
 #  @classhierarchy
 #
-#  This class represents a normalization function that transforms the 
+#  This class represents a normalization function that transforms the
 #  probe-level signals towards the same scale.
 # }
-# 
-# @synopsis 
+#
+# @synopsis
 #
 # \arguments{
 #   \item{dataSet}{@see "AffymetrixCelSet" to be normalized.}
-#   \item{...}{Arguments passed to the constructor of 
+#   \item{...}{Arguments passed to the constructor of
 #     @see "ProbeLevelTransform".}
 #   \item{targetAvg}{A @numeric value.}
 #   \item{subsetToUpdate}{The probes to be updated.
@@ -22,32 +22,32 @@
 #   \item{typesToUpdate}{Types of probes to be updated.}
 #   \item{subsetToAvg}{The probes to calculate average signal over.
 #     If a single @numeric in (0,1), then this
-#     fraction of all probes will be used.  
+#     fraction of all probes will be used.
 #     If @NULL, all probes are considered.}
-#   \item{typesToAvg}{Types of probes to be used when calculating the 
-#     average signal.  
-#     If \code{"pm"} and \code{"mm"} only perfect-match and mismatch 
+#   \item{typesToAvg}{Types of probes to be used when calculating the
+#     average signal.
+#     If \code{"pm"} and \code{"mm"} only perfect-match and mismatch
 #     probes are used, respectively. If \code{"pmmm"} both types are used.
 #   }
 #   \item{shift}{Optional amount of shift if data before fitting/normalizing.}
 # }
 #
 # \section{Fields and Methods}{
-#  @allmethods "public"  
+#  @allmethods "public"
 # }
-# 
-# @author
+#
+# @author "HB"
 #*/###########################################################################
 setConstructorS3("ScaleNormalization", function(dataSet=NULL, ..., targetAvg=4400, subsetToUpdate=NULL, typesToUpdate=NULL, subsetToAvg="-XY", typesToAvg=typesToUpdate, shift=0) {
   extraTags <- NULL;
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (!is.null(dataSet)) {
     # Argument 'targetAvg':
     targetAvg <- Arguments$getDouble(targetAvg, range=c(1,Inf));
-  
+
     # Argument 'subsetToAvg':
     if (is.null(subsetToAvg)) {
     } else if (is.character(subsetToAvg)) {
@@ -61,13 +61,13 @@ setConstructorS3("ScaleNormalization", function(dataSet=NULL, ..., targetAvg=440
       subsetToAvg <- Arguments$getIndices(subsetToAvg, max=nbrOfUnits(cdf));
       subsetToAvg <- unique(subsetToAvg);
       subsetToAvg <- sort(subsetToAvg);
-    } 
-  
+    }
+
     # Argument 'shift':
-    shift <- Arguments$getDouble(shift, disallow=c("NA", "NaN", "Inf")); 
+    shift <- Arguments$getDouble(shift, disallow=c("NA", "NaN", "Inf"));
   }
 
-  extend(ProbeLevelTransform(dataSet=dataSet, ...), "ScaleNormalization", 
+  extend(ProbeLevelTransform(dataSet=dataSet, ...), "ScaleNormalization",
     .subsetToUpdate = subsetToUpdate,
     .typesToUpdate = typesToUpdate,
     .targetAvg = targetAvg,
@@ -96,7 +96,7 @@ setMethodS3("getAsteriskTags", "ScaleNormalization", function(this, collapse=NUL
 
   tags;
 }, protected=TRUE)
- 
+
 
 
 setMethodS3("getSubsetToUpdate", "ScaleNormalization", function(this, ..., verbose=FALSE) {
@@ -191,7 +191,7 @@ setMethodS3("getSubsetToAvg", "ScaleNormalization", function(this, ..., verbose=
         gi <- getGenomeInformation(cdf);
         # Get the genome information (throws an exception if missing)
         verbose && print(verbose, gi);
-  
+
         # Identify units to be excluded
         if (subsetToAvg == "-X") {
           units <- getUnitsOnChromosomes(gi, 23, .checkArgs=FALSE);
@@ -200,13 +200,13 @@ setMethodS3("getSubsetToAvg", "ScaleNormalization", function(this, ..., verbose=
         } else if (subsetToAvg == "-XY") {
           units <- getUnitsOnChromosomes(gi, 23:24, .checkArgs=FALSE);
         }
-  
+
         verbose && cat(verbose, "Units to exclude: ");
         verbose && str(verbose, units);
-  
+
         # The units to keep
         units <- setdiff(1:nbrOfUnits(cdf), units);
-  
+
         verbose && cat(verbose, "Units to include: ");
         verbose && str(verbose, units);
 
@@ -299,7 +299,7 @@ setMethodS3("getParameters", "ScaleNormalization", function(this, ...) {
 #
 # \arguments{
 #   \item{...}{Not used.}
-#   \item{force}{If @TRUE, data already normalized is re-normalized, 
+#   \item{force}{If @TRUE, data already normalized is re-normalized,
 #       otherwise not.}
 #   \item{verbose}{See @see "R.utils::Verbose".}
 # }
@@ -307,8 +307,6 @@ setMethodS3("getParameters", "ScaleNormalization", function(this, ...) {
 # \value{
 #  Returns a @double @vector.
 # }
-#
-# @author
 #
 # \seealso{
 #   @seeclass
@@ -380,7 +378,7 @@ setMethodS3("process", "ScaleNormalization", function(this, ..., skip=FALSE, for
     filename <- gsub("[.]cel$", ".CEL", filename);  # Only output upper case!
     pathname <- Arguments$getWritablePathname(filename, path=outputPath);
     pathname <- AffymetrixFile$renameToUpperCaseExt(pathname);
-  
+
     # Already normalized?
     if (isFile(pathname) && skip) {
       verbose && cat(verbose, "Normalized data file already exists: ",
@@ -388,11 +386,11 @@ setMethodS3("process", "ScaleNormalization", function(this, ..., skip=FALSE, for
       verbose && exit(verbose);
       next;
     }
-  
+
     # Get probe signals for the fit
     verbose && enter(verbose, "Reading probe intensities for fitting");
 ##    data <- getDataFlat(ce, units=map, fields="theta", verbose=less(verbose));
-    x <- getData(df, fields="intensities", indices=subsetToAvg, 
+    x <- getData(df, fields="intensities", indices=subsetToAvg,
                                  verbose=less(verbose,2))$intensities;
     verbose && str(verbose, x);
     verbose && exit(verbose);
@@ -424,7 +422,7 @@ setMethodS3("process", "ScaleNormalization", function(this, ..., skip=FALSE, for
     # Get probe signals to be updated
     verbose && enter(verbose, "Getting signals");
 ##    data <- getDataFlat(ce, units=map, fields="theta", verbose=less(verbose));
-    x <- getData(df, fields="intensities", indices=subsetToUpdate, 
+    x <- getData(df, fields="intensities", indices=subsetToUpdate,
                                     verbose=less(verbose,2))$intensities;
     verbose && str(verbose, x);
     verbose && exit(verbose);
@@ -477,7 +475,7 @@ setMethodS3("process", "ScaleNormalization", function(this, ..., skip=FALSE, for
   this$outputDataSet <- outputDataSet;
 
   verbose && exit(verbose);
-  
+
   outputDataSet;
 })
 

@@ -6,15 +6,15 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
- \name{ProbeLevelTransform3}
+\name{ProbeLevelTransform3}
 \docType{class}
 \alias{ProbeLevelTransform3}
 
 
- \title{The ProbeLevelTransform3 class}
+\title{The ProbeLevelTransform3 class}
 
- \description{
-  Package:  aroma.affymetrix \cr
+\description{
+ Package:  aroma.affymetrix \cr
 \bold{Class ProbeLevelTransform3}\cr
 
 \code{\link[R.oo]{Object}}\cr
@@ -37,30 +37,30 @@ extends \emph{\link[aroma.affymetrix]{ProbeLevelTransform}}\cr
 
 
 
-  This abstract class is specialized from \code{\link{ProbeLevelTransform}} and
-  provides methods to identify subsets and types of probes that are used
-  for fitting and/or updating the signals.
- }
+ This abstract class is specialized from \code{\link{ProbeLevelTransform}} and
+ provides methods to identify subsets and types of probes that are used
+ for fitting and/or updating the signals.
+}
 
- \usage{
+\usage{
 ProbeLevelTransform3(dataSet=NULL, ..., unitsToFit="-XY", typesToFit=typesToUpdate, unitsToUpdate=NULL, typesToUpdate="pm", shift=0)
 }
 
- \arguments{
-   \item{dataSet}{A \code{\link{AffymetrixCelSet}}.}
-   \item{...}{Arguments passed to the constructor of
-     \code{\link{ProbeLevelTransform}}.}
-   \item{unitsToFit}{The units from which the normalization curve should
-     be estimated.  If \code{\link[base]{NULL}}, all are considered.}
-   \item{typesToFit}{Types of probes to be used when fitting the model.}
-   \item{unitsToUpdate}{The units to be updated.
-     If \code{\link[base]{NULL}}, all are considered.}
-   \item{typesToUpdate}{Types of probes to be updated.}
-   \item{shift}{An optional amount to shift data before fitting and updating.}
- }
+\arguments{
+  \item{dataSet}{A \code{\link{AffymetrixCelSet}}.}
+  \item{...}{Arguments passed to the constructor of
+    \code{\link{ProbeLevelTransform}}.}
+  \item{unitsToFit}{The units from which the normalization curve should
+    be estimated.  If \code{\link[base]{NULL}}, all are considered.}
+  \item{typesToFit}{Types of probes to be used when fitting the model.}
+  \item{unitsToUpdate}{The units to be updated.
+    If \code{\link[base]{NULL}}, all are considered.}
+  \item{typesToUpdate}{Types of probes to be updated.}
+  \item{shift}{An optional amount to shift data before fitting and updating.}
+}
 
- \section{Fields and Methods}{
-  \bold{Methods:}\cr
+\section{Fields and Methods}{
+ \bold{Methods:}\cr
 \emph{No methods defined}.
 
 
@@ -74,13 +74,13 @@ getOutputDataSet, getOutputFiles
 as.character, getAsteriskTags, getExpectedOutputFiles, getExpectedOutputFullnames, getFullName, getInputDataSet, getName, getOutputDataSet, getOutputDataSet0, getOutputFiles, getPath, getRootPath, getTags, isDone, process, setTags
 
  \bold{Methods inherited from ParametersInterface}:\cr
-getParameters, getParametersAsString, getParameterSets
+getParameterSets, getParameters, getParametersAsString
 
  \bold{Methods inherited from Object}:\cr
 $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save, asThis
 
 
- }
+}
 
- \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 \keyword{classes}

@@ -6,7 +6,7 @@
 # \description{
 #  @classhierarchy
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
@@ -19,8 +19,8 @@
 #  @allmethods "public"
 # }
 #
-# @author
-# 
+# @author "HB"
+#
 #*/###########################################################################
 setConstructorS3("AffymetrixFileSetReporter", function(set=NULL, ..., .setClass="AffymetrixFileSet") {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

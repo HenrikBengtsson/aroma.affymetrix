@@ -10,12 +10,12 @@
 #  provides methods to identify subsets and types of probes that are used
 #  for fitting and/or updating the signals.
 # }
-# 
-# @synopsis 
+#
+# @synopsis
 #
 # \arguments{
 #   \item{dataSet}{A @see "AffymetrixCelSet".}
-#   \item{...}{Arguments passed to the constructor of 
+#   \item{...}{Arguments passed to the constructor of
 #     @see "ProbeLevelTransform".}
 #   \item{unitsToFit}{The units from which the normalization curve should
 #     be estimated.  If @NULL, all are considered.}
@@ -27,10 +27,10 @@
 # }
 #
 # \section{Fields and Methods}{
-#  @allmethods "public"  
+#  @allmethods "public"
 # }
-# 
-# @author
+#
+# @author "HB"
 #*/###########################################################################
 setConstructorS3("ProbeLevelTransform3", function(dataSet=NULL, ..., unitsToFit="-XY", typesToFit=typesToUpdate, unitsToUpdate=NULL, typesToUpdate="pm", shift=0) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -86,7 +86,7 @@ setConstructorS3("ProbeLevelTransform3", function(dataSet=NULL, ..., unitsToFit=
   }
 
   # Argument 'shift':
-  shift <- Arguments$getDouble(shift, disallow=c("NA", "NaN", "Inf")); 
+  shift <- Arguments$getDouble(shift, disallow=c("NA", "NaN", "Inf"));
 
 
   extend(ProbeLevelTransform(dataSet=dataSet, ...), "ProbeLevelTransform3",
@@ -112,7 +112,7 @@ setMethodS3("getAsteriskTags", "ProbeLevelTransform3", function(this, collapse=N
   shift <- as.integer(round(this$shift));
   if (shift != 0) {
     tags <- c(tags, sprintf("%+d", shift));
-  } 
+  }
 
   # Collapse?
   tags <- paste(tags, collapse=collapse);
@@ -195,7 +195,7 @@ setMethodS3("getCellsToInternal", "ProbeLevelTransform3", function(this, units, 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Check cached results
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  key <- list(method="getCellsToInternal", class=class(this)[1], 
+  key <- list(method="getCellsToInternal", class=class(this)[1],
     chipType=chipType, units=units, stratifyBy=stratifyBy,
     extractKey=extractKey
   );
@@ -211,7 +211,7 @@ setMethodS3("getCellsToInternal", "ProbeLevelTransform3", function(this, units, 
   # Get the cell indices for the requested units
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Get the subset of cells according to the CDF
-  cells <- getSubsetOfCellIndices(cdf, units=units, stratifyBy=stratifyBy, 
+  cells <- getSubsetOfCellIndices(cdf, units=units, stratifyBy=stratifyBy,
                                                  verbose=less(verbose, 5));
   verbose && cat(verbose, "Cells: ");
   verbose && str(verbose, cells);
@@ -369,7 +369,7 @@ setMethodS3("writeSignals", "ProbeLevelTransform3", function(this, pathname, cel
   if (verbose) {
     pushState(verbose);
     on.exit(popState(verbose));
-  } 
+  }
 
 
   verbose && enter(verbose, "Writing probe signals");
@@ -398,10 +398,10 @@ setMethodS3("writeSignals", "ProbeLevelTransform3", function(this, pathname, cel
 ############################################################################
 # HISTORY:
 # 2008-07-25
-# o Added protected writeSignals(), which write signals to a CEL file, 
+# o Added protected writeSignals(), which write signals to a CEL file,
 #   which is created from a template CEL file, if missing.  This method
 #   cen then later be designed to be atomic.
-# o Now getSubsetTo() also handles ChipEffectSet, which might use 
+# o Now getSubsetTo() also handles ChipEffectSet, which might use
 #   so called "restructors".
 # 2008-07-20
 # o Extracted from BaseCountNormalization.R.

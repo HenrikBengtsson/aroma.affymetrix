@@ -6,12 +6,12 @@
 # \description{
 #  @classhierarchy
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
 #   \item{...}{Arguments passed to @see "RmaSnpPlm".}
-#   \item{combineAlleles}{If @FALSE, allele A and allele B are treated 
+#   \item{combineAlleles}{If @FALSE, allele A and allele B are treated
 #      seperately, otherwise together.}
 # }
 #
@@ -23,8 +23,7 @@
 #   TO DO.
 # }
 #
-# @author
-#
+# @author "HB"
 #*/###########################################################################
 setConstructorS3("RmaCnPlm", function(..., combineAlleles=FALSE) {
   extend(RmaSnpPlm(...), c("RmaCnPlm", uses(CnPlm())),
@@ -45,7 +44,7 @@ setMethodS3("getAsteriskTags", "RmaCnPlm", function(this, collapse=NULL, ...) {
   tags <- paste(tags, collapse=collapse);
 
   tags;
-}, protected=TRUE) 
+}, protected=TRUE)
 
 
 ############################################################################

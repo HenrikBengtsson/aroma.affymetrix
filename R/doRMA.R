@@ -1,10 +1,11 @@
 #  doRMA() runs in bounded memory and replicates the results of
 #  fitPLM() in the affyPLM package with great precision.
-
+#
+# @author "HB"
 setMethodS3("doRMA", "AffymetrixCelSet", function(csR, arrays=NULL, ..., uniquePlm=FALSE, drop=TRUE, ram=NULL, verbose=FALSE) {
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'csR':
   className <- "AffymetrixCelSet";
   if (!inherits(csR, className)) {

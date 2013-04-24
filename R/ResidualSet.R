@@ -8,7 +8,7 @@
 #
 #  This class represents probe-level residuals from probe-level models.
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
@@ -20,8 +20,8 @@
 #  @allmethods "public"
 # }
 #
-# @author
-# 
+# @author "KS, HB"
+#
 # \seealso{
 #   An object of this class is typically obtained through the
 #   \code{getResidualSet()} method for the @see "ProbeLevelModel" class.
@@ -90,7 +90,7 @@ setMethodS3("fromDataSet", "ResidualSet", function(static, dataSet, path, fullna
 
   # Get the ResidualFile class specific for this set
   clazz <- getResidualFileClass(static);
-  
+
   verbose && cat(verbose, "ResidualFile class: ", getName(clazz));
 
   verbose && enter(verbose, "Retrieving probe-level residuals from data set");
@@ -98,11 +98,11 @@ setMethodS3("fromDataSet", "ResidualSet", function(static, dataSet, path, fullna
   verbose && cat(verbose, "Data set: ", fullname);
   for (kk in seq_along(dataSet)) {
     df <- getFile(dataSet, kk);
-    verbose && enter(verbose, 
+    verbose && enter(verbose,
                            sprintf("Retrieving residual file #%d of %d (%s)",
                                                kk, length(rs), getName(df)));
     verbose && cat(verbose, "Data file class: ", class(df)[1]);
-    rf <- clazz$fromDataFile(df, path=path, name=fullname, cdf=cdf, ..., 
+    rf <- clazz$fromDataFile(df, path=path, name=fullname, cdf=cdf, ...,
                                                        verbose=less(verbose));
     verbose && cat(verbose, "Residual file class: ", class(rf)[1]);
     # Assert correctness
@@ -169,7 +169,7 @@ setMethodS3("readUnits", "ResidualSet", function(this, units=NULL, cdf=NULL, ...
 
 
 setMethodS3("updateUnits", "ResidualSet", function(this, units=NULL, cdf=NULL, data, ..., verbose=FALSE) {
-  # Argument 'verbose': 
+  # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
 
   verbose && enter(verbose, "Updating residual files");
@@ -198,7 +198,7 @@ setMethodS3("updateUnits", "ResidualSet", function(this, units=NULL, cdf=NULL, d
   verbose <- less(verbose);
   names <- getNames(this);
   for (ii in arrays) {
-    verbose && enter(verbose, sprintf("Array #%d of %d: %s", 
+    verbose && enter(verbose, sprintf("Array #%d of %d: %s",
                                        ii, nbrOfArrays, names[ii]));
     rf <- getFile(this, ii);
 

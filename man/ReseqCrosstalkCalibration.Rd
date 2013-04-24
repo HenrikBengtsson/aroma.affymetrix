@@ -6,15 +6,15 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
- \name{ReseqCrosstalkCalibration}
+\name{ReseqCrosstalkCalibration}
 \docType{class}
 \alias{ReseqCrosstalkCalibration}
 
 
- \title{The ReseqCrosstalkCalibration class}
+\title{The ReseqCrosstalkCalibration class}
 
- \description{
-  Package:  aroma.affymetrix \cr
+\description{
+ Package:  aroma.affymetrix \cr
 \bold{Class ReseqCrosstalkCalibration}\cr
 
 \code{\link[R.oo]{Object}}\cr
@@ -37,33 +37,33 @@ extends \emph{\link[aroma.affymetrix]{ProbeLevelTransform}}\cr
 
 
 
-  This class represents a calibration function that transforms the
-  probe-level signals such that the signals from the four nucleotides
-  (A, C, G, T) are orthogonal.
- }
+ This class represents a calibration function that transforms the
+ probe-level signals such that the signals from the four nucleotides
+ (A, C, G, T) are orthogonal.
+}
 
- \usage{
+\usage{
 ReseqCrosstalkCalibration(dataSet=NULL, ..., targetAvg=2200, subsetToAvg=NULL, mergeGroups=FALSE, flavor=c("sfit", "expectile"), alpha=c(0.1, 0.075, 0.05, 0.03, 0.01), q=2, Q=98)
 }
 
- \arguments{
-   \item{dataSet}{An \code{\link{AffymetrixCelSet}}.}
-   \item{...}{Arguments passed to the constructor of
-     \code{\link{ProbeLevelTransform}}.}
-   \item{targetAvg}{The signal(s) that the average of the sum of the
-     probe quartets should have after calibration.}
-   \item{subsetToAvg}{The indices of the cells (taken as the intersect of
-     existing indices) used to calculate average in order to rescale to
-     the target average. If \code{\link[base]{NULL}}, all probes are considered.}
-   \item{mergeGroups}{A \code{\link[base]{logical}} ...}
-   \item{flavor}{A \code{\link[base]{character}} string specifying what algorithm is used
-     to fit the crosstalk calibration.}
-   \item{alpha, q, Q}{Additional arguments passed to
-    \code{fitMultiDimensionalCone()}.}
- }
+\arguments{
+  \item{dataSet}{An \code{\link{AffymetrixCelSet}}.}
+  \item{...}{Arguments passed to the constructor of
+    \code{\link{ProbeLevelTransform}}.}
+  \item{targetAvg}{The signal(s) that the average of the sum of the
+    probe quartets should have after calibration.}
+  \item{subsetToAvg}{The indices of the cells (taken as the intersect of
+    existing indices) used to calculate average in order to rescale to
+    the target average. If \code{\link[base]{NULL}}, all probes are considered.}
+  \item{mergeGroups}{A \code{\link[base]{logical}} ...}
+  \item{flavor}{A \code{\link[base]{character}} string specifying what algorithm is used
+    to fit the crosstalk calibration.}
+  \item{alpha, q, Q}{Additional arguments passed to
+   \code{fitMultiDimensionalCone()}.}
+}
 
- \section{Fields and Methods}{
-  \bold{Methods:}\cr
+\section{Fields and Methods}{
+ \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{\link[aroma.affymetrix:process.ReseqCrosstalkCalibration]{process}} \tab Calibrates the data set.\cr
 }
@@ -79,13 +79,13 @@ getOutputDataSet, getOutputFiles
 as.character, getAsteriskTags, getExpectedOutputFiles, getExpectedOutputFullnames, getFullName, getInputDataSet, getName, getOutputDataSet, getOutputDataSet0, getOutputFiles, getPath, getRootPath, getTags, isDone, process, setTags
 
  \bold{Methods inherited from ParametersInterface}:\cr
-getParameters, getParametersAsString, getParameterSets
+getParameterSets, getParameters, getParametersAsString
 
  \bold{Methods inherited from Object}:\cr
 $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save, asThis
 
 
- }
+}
 
- \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 \keyword{classes}

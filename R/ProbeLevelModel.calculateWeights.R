@@ -1,4 +1,4 @@
-
+# @author "KS, HB"
 setMethodS3("calculateWeights", "ProbeLevelModel", function(this, units=NULL, ram=NULL, force=FALSE, ..., verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local functions
@@ -8,12 +8,12 @@ setMethodS3("calculateWeights", "ProbeLevelModel", function(this, units=NULL, ra
     res <- base::lapply(1:nbrOfGroups, FUN=function(gg) {
       y <- .subset2(.subset2(unit, gg), "eps");
       y <- log2(y);
-      mad <- 1.4826 * median(abs(y));      
+      mad <- 1.4826 * median(abs(y));
       matrix(MASS::psi.huber(y/mad), ncol=ncol(y));
     })
     res;
   } # resFcn()
-  
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -50,7 +50,7 @@ setMethodS3("calculateWeights", "ProbeLevelModel", function(this, units=NULL, ra
   verbose && printf(verbose, "Number of units: %d\n", nbrOfUnits);
 
   unitsToDo <- findUnitsTodo(ws);
-  
+
   unitsPerChunk <- ram * 100000/length(getDataSet(this));
   unitsPerChunk <- Arguments$getInteger(unitsPerChunk, range=c(1,Inf));
   nbrOfChunks <- ceiling(nbrOfUnits / unitsPerChunk);
@@ -74,11 +74,11 @@ setMethodS3("calculateWeights", "ProbeLevelModel", function(this, units=NULL, ra
     verbose && enter(verbose, "Calculating weights");
     weightsList <- base::lapply(residualsList, FUN=resFcn);
     verbose && exit(verbose);
-    
+
     verbose && enter(verbose, "Storing weights");
 
     cdf <- getCellIndices(getCdf(ds), units=units, stratifyBy="pm", ...);
-    
+
     for (ii in seq_along(ds)) {
       wf <- getFile(ws, ii);
 
@@ -86,20 +86,20 @@ setMethodS3("calculateWeights", "ProbeLevelModel", function(this, units=NULL, ra
 
       data <- base::lapply(weightsList, FUN=function(unit) {
         base::lapply(unit, FUN=function(group) {
-          nrow <- nrow(group); 
+          nrow <- nrow(group);
           list(
-            intensities=2^group[,ii], 
-            stdvs=rep(1, times=nrow), 
+            intensities=2^group[,ii],
+            stdvs=rep(1, times=nrow),
             pixels=rep(1, times=nrow)
           );
         });
       });
-      
+
       updateCelUnits(getPathname(wf), cdf=cdf, data=data);
 
       verbose && exit(verbose);
     } # for (ii ...)
-    
+
     verbose && exit(verbose);
 
     unitsToDo <- unitsToDo[-head];
@@ -114,11 +114,11 @@ setMethodS3("calculateWeights", "ProbeLevelModel", function(this, units=NULL, ra
   if (exists("weightsList")) {
     rm(weightsList);
   }
-  
+
   # Garbage collect
   gc <- gc();
   verbose && print(verbose, gc);
-  
+
   verbose && exit(verbose);
 
   invisible(ws);
@@ -129,7 +129,7 @@ setMethodS3("calculateWeights", "ProbeLevelModel", function(this, units=NULL, ra
 # HISTORY:
 # 2011-03-01 [HB]
 # o Harmonized the verbose output.
-# 2007-02-15 
+# 2007-02-15
 # o Based on ProbeLevelModel.calculateResiduals
 #   and QualityAssessmentModel.getWeights
 ##########################################################################

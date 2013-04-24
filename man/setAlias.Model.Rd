@@ -30,8 +30,6 @@
  Returns nothing.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
-
 \seealso{
   \code{\link[aroma.affymetrix:getAlias.Model]{*getAlias}()}
   For more information see \code{\link{Model}}.

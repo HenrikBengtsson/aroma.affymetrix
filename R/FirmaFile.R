@@ -8,7 +8,7 @@
 #
 #  This class represents scores calculated by the FIRMA algorithm.
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
@@ -19,8 +19,8 @@
 #  @allmethods "public"
 # }
 #
-# \author{Ken Simpson (ksimpson[at]wehi.edu.au).}
-# 
+# @author "KS, HB"
+#
 # \seealso{
 #   An object of this class is typically part of a @see "FirmaSet".
 # }
@@ -57,15 +57,15 @@ setMethodS3("findUnitsTodo", "FirmaFile", function(this, units=NULL, ..., force=
   }
 
   verbose && exit(verbose);
-  
+
   # Read pixels from each unit
   verbose && enter(verbose, "Reading data for these ", length(units), " units");
-#  value <- readCelUnits(getPathname(this), units=units, readIntensities=FALSE, 
+#  value <- readCelUnits(getPathname(this), units=units, readIntensities=FALSE,
 #                        readStdvs=FALSE, readPixels=TRUE, dropArrayDim=TRUE);
 
-  value <- readUnits(this, units=units, readIntensities=FALSE, 
+  value <- readUnits(this, units=units, readIntensities=FALSE,
                         readStdvs=FALSE, readPixels=TRUE, force=force);
-  
+
   # Identify units for which all pixels == 0.
 
   allZeroPixels <- sapply(value, function(x) {all(x[[1]][[1]]==0)}, USE.NAMES=FALSE);
@@ -189,8 +189,6 @@ setMethodS3("readUnits", "FirmaFile", function(this, units=NULL, cdf=NULL,
 #   If argument \code{unlist=TRUE} is passed, an @integer @vector is returned.
 # }
 #
-# @author
-#
 # \seealso{
 #   @seeclass
 # }
@@ -285,7 +283,7 @@ setMethodS3("fromDataFile", "FirmaFile", function(static, df=NULL, filename=spri
   res <- newInstance(static, pathname);
   # Inherit the CDF?
   if (!is.null(cdf))
-    setCdf(res, cdf); 
+    setCdf(res, cdf);
   verbose && exit(verbose);
 
   res;
@@ -341,7 +339,7 @@ setMethodS3("getUnitGroupCellMap", "FirmaFile", function(this, units=NULL, ..., 
 #  unitSizes <- unlist(base::lapply(cells, FUN=length), use.names=FALSE);
   unitSizes <- unlist(base::lapply(cells, FUN=function(unit){
     length(.subset2(unit,"groups"));
-  }), use.names=FALSE);  
+  }), use.names=FALSE);
   cells <- unlist(cells, use.names=FALSE);
   verbose && exit(verbose);
 
@@ -354,7 +352,7 @@ setMethodS3("getUnitGroupCellMap", "FirmaFile", function(this, units=NULL, ..., 
 
 # BUG!  Fix this in ChipEffectFile.R
 #  units <- rep(units, each=unitSizes);
-  units <- rep(units, unitSizes);  
+  units <- rep(units, unitSizes);
 
   # The following is too slow:
   #  groups <- sapply(unitSizes, FUN=function(n) seq_len(n));
@@ -469,7 +467,7 @@ setMethodS3("extractMatrix", "FirmaFile", function (this, ..., field=c("intensit
 ############################################################################
 # HISTORY:
 # 2012-10-14
-# o CLEANUP: createParamCdf() for FirmaFile no longer support 
+# o CLEANUP: createParamCdf() for FirmaFile no longer support
 #   '<chipType>-monocell' filenames.  If detected, an informative
 #   error is thrown.
 # 2010-05-12
@@ -494,7 +492,7 @@ setMethodS3("extractMatrix", "FirmaFile", function (this, ..., field=c("intensit
 # 2007-08-09
 # o FirmaFile$fromDataFile() now creates CEL files with upper-case
 #   filename extension "*.CEL", not "*.cel".  The reason for this is that
-#   some software don't recognize lower case filename extensions :(  
+#   some software don't recognize lower case filename extensions :(
 # 2007-02-09
 # o Created (based on ChipEffectFile.R).
 ############################################################################

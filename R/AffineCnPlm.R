@@ -6,12 +6,12 @@
 # \description{
 #  @classhierarchy
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
 #   \item{...}{Arguments passed to @see "AffineSnpPlm".}
-#   \item{combineAlleles}{If @FALSE, allele A and allele B are treated 
+#   \item{combineAlleles}{If @FALSE, allele A and allele B are treated
 #      seperately, otherwise together.}
 # }
 #
@@ -19,7 +19,7 @@
 #  @allmethods "public"
 # }
 #
-# @author
+# @author "HB"
 #*/###########################################################################
 setConstructorS3("AffineCnPlm", function(..., combineAlleles=FALSE) {
   extend(AffineSnpPlm(...), c("AffineCnPlm", uses(CnPlm())),
@@ -37,10 +37,10 @@ setMethodS3("getAsteriskTags", "AffineCnPlm", function(this, collapse=NULL, ...)
     tags <- c(tags, "A+B");
 
   # Collapse?
-  tags <- paste(tags, collapse=collapse); 
+  tags <- paste(tags, collapse=collapse);
 
   tags;
-}, protected=TRUE) 
+}, protected=TRUE)
 
 
 

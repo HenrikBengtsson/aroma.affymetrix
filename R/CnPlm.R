@@ -6,10 +6,10 @@
 # \description{
 #  @classhierarchy
 #
-#  This suport class represents a @see "SnpPlm" specially designed for 
+#  This suport class represents a @see "SnpPlm" specially designed for
 #  copy-number analysis.
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
@@ -21,20 +21,20 @@
 # }
 #
 # \details{
-#   Models implementing this copy-number PLM, provides either 
-#   allele-specific or total copy-number estimates.  
+#   Models implementing this copy-number PLM, provides either
+#   allele-specific or total copy-number estimates.
 #   For allele-specific CNs the underlying @see "SnpPlm" model is fitted as
 #   is, i.e. for each allele seperately with or without the strands first
 #   being merged.
 #
-#   For total CNs the probe signals for the two alleles are combined 
-#   (=summed; not averaged) on the intensity scale before fitting 
-#   underlying @see "SnpPlm" model, again with or without the strands 
+#   For total CNs the probe signals for the two alleles are combined
+#   (=summed; not averaged) on the intensity scale before fitting
+#   underlying @see "SnpPlm" model, again with or without the strands
 #   first being merged.
 # }
 #
 # \section{Requirements}{
-#   Classes inheriting from this @see "R.oo::Interface" must provide the 
+#   Classes inheriting from this @see "R.oo::Interface" must provide the
 #   following fields, in addition to the ones according to @see "SnpPlm":
 #   \itemize{
 #    \item{combineAlleles}{A @logical indicating if total or allele-specific
@@ -42,7 +42,7 @@
 #   }
 # }
 #
-# @author
+# @author "HB"
 #*/###########################################################################
 setConstructorS3("CnPlm", function(...) {
   extend(SnpPlm(...), "CnPlm");
@@ -61,7 +61,7 @@ setMethodS3("getCellIndices", "CnPlm", function(this, ...) {
 
   # If combining alleles, still return all groups as is.
   # The summing is taken care of by the fitUnit() function.
-  
+
   cells;
 })
 
@@ -86,7 +86,7 @@ setMethodS3("getFitUnitFunction", "CnPlm", function(this, ...) {
   if (this$combineAlleles) {
     # Get the fit function for a single set of intensities
     fitfcn <- getFitUnitGroupFunction(this, ...);
-  
+
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Create the one for all blocks in a unit
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -112,7 +112,7 @@ setMethodS3("getFitUnitFunction", "CnPlm", function(this, ...) {
           y1 <- y1[1,,] - y1[2,,];  # PM-MM
           y2 <- y2[1,,] - y2[2,,];  # PM-MM
           list(
-            fitfcn(y1), 
+            fitfcn(y1),
             fitfcn(y2)
           );
         } else if (ngroups == 6) {
@@ -129,7 +129,7 @@ setMethodS3("getFitUnitFunction", "CnPlm", function(this, ...) {
           y2 <- y2[1,,] - y2[2,,];  # PM-MM
           y3 <- y3[1,,] - y3[2,,];  # PM-MM
           list(
-            fitfcn(y1), 
+            fitfcn(y1),
             fitfcn(y2),
             fitfcn(y3)
           );
@@ -167,7 +167,7 @@ setMethodS3("getFitUnitFunction", "CnPlm", function(this, ...) {
           y1[y1 < 1] <- 1;          # min1(PM-MM)=min(PM-MM,1)
           y2[y2 < 1] <- 1;          # min1(PM-MM)=min(PM-MM,1)
           list(
-            fitfcn(y1), 
+            fitfcn(y1),
             fitfcn(y2)
           );
         } else if (ngroups == 6) {
@@ -187,7 +187,7 @@ setMethodS3("getFitUnitFunction", "CnPlm", function(this, ...) {
           y2[y2 < 1] <- 1;          # min1(PM-MM)=min(PM-MM,1)
           y3[y3 < 1] <- 1;          # min1(PM-MM)=min(PM-MM,1)
           list(
-            fitfcn(y1), 
+            fitfcn(y1),
             fitfcn(y2),
             fitfcn(y3)
           );
@@ -223,7 +223,7 @@ setMethodS3("getFitUnitFunction", "CnPlm", function(this, ...) {
           y1 <- y1[1,,] + y1[2,,];  # PM+MM
           y2 <- y2[1,,] + y2[2,,];  # PM+MM
           list(
-            fitfcn(y1), 
+            fitfcn(y1),
             fitfcn(y2)
           );
         } else if (ngroups == 6) {
@@ -240,7 +240,7 @@ setMethodS3("getFitUnitFunction", "CnPlm", function(this, ...) {
           y2 <- y2[1,,] + y2[2,,];  # PM+MM
           y3 <- y3[1,,] + y3[2,,];  # PM+MM
           list(
-            fitfcn(y1), 
+            fitfcn(y1),
             fitfcn(y2),
             fitfcn(y3)
           );
@@ -286,7 +286,7 @@ setMethodS3("getFitUnitFunction", "CnPlm", function(this, ...) {
           y2 <- yA2 + yB2;
           y3 <- yA3 + yB3;
           list(
-            fitfcn(y1), 
+            fitfcn(y1),
             fitfcn(y2),
             fitfcn(y3)
           );
@@ -359,7 +359,7 @@ setMethodS3("setCombineAlleles", "CnPlm", function(this, status, ...) {
 # 2007-03-28
 # o BUG FIX: getFitUnitFunction() of CnPlm did not handle probe
 #   model "min1(pm-mm)".
-# o BUG FIX: getFitUnitFunction() of CnPlm was broken for PM-MM probe 
+# o BUG FIX: getFitUnitFunction() of CnPlm was broken for PM-MM probe
 #   models for single group units, e.g. AFFX units, resulting in an error
 #   "Argument 'y' must have two dimensions: 3".
 # 2006-12-10

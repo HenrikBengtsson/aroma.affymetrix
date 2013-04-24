@@ -31,9 +31,7 @@
 #  Returns the background adjusted @see "AffymetrixCelFile" object.
 # }
 #
-# \author{
-#   Ken Simpson (ksimpson[at]wehi.edu.au).
-# }
+# @author "KS, HB"
 #*/###########################################################################
 setMethodS3("bgAdjustOptical", "AffymetrixCelFile", function(this, path, minimum=1, subsetToUpdate=NULL, typesToUpdate=NULL, overwrite=FALSE, skip=!overwrite, verbose=FALSE, ..., .deprecated=TRUE) {
   if (.deprecated) {
@@ -63,7 +61,7 @@ setMethodS3("bgAdjustOptical", "AffymetrixCelFile", function(this, path, minimum
   if (!getFraction) {
     subsetToUpdate <- Arguments$getIndices(subsetToUpdate, max=nbrOfCells);
   }
-  
+
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
 
@@ -105,7 +103,7 @@ setMethodS3("bgAdjustOptical", "AffymetrixCelFile", function(this, path, minimum
   arrayMinimum <- min(x[subsetToUpdate], na.rm=TRUE);
   verbose && printf(verbose, "Array minimum: %.2f\n", arrayMinimum);
   xdiff <- (arrayMinimum - minimum);
-  verbose && printf(verbose, "Correction: -(%.2f-%.2f) = %+.2f\n", 
+  verbose && printf(verbose, "Correction: -(%.2f-%.2f) = %+.2f\n",
                                          arrayMinimum, minimum, -xdiff);
   x[subsetToUpdate] <- x[subsetToUpdate] - xdiff;
   rm(subsetToUpdate);
@@ -156,7 +154,7 @@ setMethodS3("bgAdjustOptical", "AffymetrixCelFile", function(this, path, minimum
 #       If @NULL and \code{type == "affinities"}, then MMs are used as
 #       the negative controls.}
 #   \item{affinities}{A @numeric @vector of probe affinities, usually as
-#       calculated by \code{computeAffinities()} of the 
+#       calculated by \code{computeAffinities()} of the
 #       @see "AffymetrixCdfFile" class.}
 #   \item{gsbAdjust}{If @TRUE, adjustment for specific binding is done,
 #       otherwise not.}
@@ -179,9 +177,7 @@ setMethodS3("bgAdjustOptical", "AffymetrixCelFile", function(this, path, minimum
 #  Returns the background adjusted @see "AffymetrixCelFile" object.
 # }
 #
-# \author{
-#   Ken Simpson (ksimpson[at]wehi.edu.au) and Mark Robinson.
-# }
+# @author "KS, MR, HB"
 #
 # \seealso{
 #  @see "gcrma::bg.adjust.gcrma"
@@ -234,7 +230,7 @@ setMethodS3("bgAdjustGcrma", "AffymetrixCelFile", function(this, path, type=c("f
 
   # Argument 'fast':
   fast <- Arguments$getLogical(fast);
-  
+
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
 
@@ -246,7 +242,7 @@ setMethodS3("bgAdjustGcrma", "AffymetrixCelFile", function(this, path, type=c("f
   filename <- gsub("[.]cel$", ".CEL", filename);  # Only output upper case!
   pathname <- Arguments$getWritablePathname(filename, path=path,
                                          mustNotExist=(!overwrite && !skip));
-  
+
   cdf <- getCdf(this);
 
   # Already corrected?
@@ -258,12 +254,12 @@ setMethodS3("bgAdjustGcrma", "AffymetrixCelFile", function(this, path, type=c("f
     return(res);
   }
 
-  
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Reading probe signals
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   verbose && enter(verbose, "Retrieving PM and MM signals and affinities");
- 
+
   chipType <- getChipType(this);
   key <- list(method="bgAdjustGcrma", class=class(this)[1], chipType=chipType, source="gcrma");
   dirs <- c("aroma.affymetrix", chipType);
@@ -279,7 +275,7 @@ setMethodS3("bgAdjustGcrma", "AffymetrixCelFile", function(this, path, type=c("f
   mmCells <- indices[!isPm(cdf)];
   verbose && cat(verbose, "Number of PM probes: ", length(pmCells));
   verbose && cat(verbose, "Number of MM probes: ", length(mmCells));
-  
+
   # PM & MM signals
   pm <- getData(this, indices=pmCells)$intensities;
   verbose && cat(verbose, "PM signals:");
@@ -320,7 +316,7 @@ setMethodS3("bgAdjustGcrma", "AffymetrixCelFile", function(this, path, type=c("f
     stopifnot(length(ncs) == length(anc));
     verbose && exit(verbose);
   }
-  
+
   # adjust background - use original GCRMA functions to avoid errors from
   # re-coding
   if (type == "fullmodel") {
@@ -342,7 +338,7 @@ setMethodS3("bgAdjustGcrma", "AffymetrixCelFile", function(this, path, type=c("f
       anc <- amm;
       nomm <- FALSE;  # However...
       # AD HOC: If there are equal number of PMs and MMs, then we assume they
-      # are matched, and we will allow gcrma::bg.adjust.affinities() to subset 
+      # are matched, and we will allow gcrma::bg.adjust.affinities() to subset
       # also MMs using 'index.affinities', otherwise not.  See its code:
       #  if (!nomm)
       #    parameters <- bg.parameters.ns(ncs[index.affinities], anc, apm)
@@ -405,7 +401,7 @@ setMethodS3("bgAdjustGcrma", "AffymetrixCelFile", function(this, path, type=c("f
       throw(sprintf("Cannot perform GCRMA background (type=\"affinities\") correction: The number (%d) of negative control is too small.", length(ncs)));
     }
 
-    pm <- gcrma::bg.adjust.affinities(pms=pm, ncs=ncs, apm=apm, anc=anc, 
+    pm <- gcrma::bg.adjust.affinities(pms=pm, ncs=ncs, apm=apm, anc=anc,
           index.affinities=seq_len(length(pm)), k=k, fast=fast, nomm=nomm);
 
     verbose && exit(verbose);
@@ -421,7 +417,7 @@ setMethodS3("bgAdjustGcrma", "AffymetrixCelFile", function(this, path, type=c("f
   if (gsbAdjust && !is.null(parametersGsb)) {
     verbose && enter(verbose, "Adjusting for specific binding")
          #> GSB.adj
-         #function (Yin, subset, aff, fit1, k = k) 
+         #function (Yin, subset, aff, fit1, k = k)
          #{
          #    y0 = Yin[subset]
          #    y0.adj = k + 2^(-fit1[2] * (aff - mean(aff))) * (y0 - k)
@@ -446,8 +442,8 @@ setMethodS3("bgAdjustGcrma", "AffymetrixCelFile", function(this, path, type=c("f
     pm <- exp(mu + stretch * (log(pm) - mu));
     verbose && exit(verbose);
   }
-    
-  
+
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Store the adjusted PM signals
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -502,9 +498,7 @@ setMethodS3("bgAdjustGcrma", "AffymetrixCelFile", function(this, path, type=c("f
 #  Returns the background adjusted @see "AffymetrixCelFile" object.
 # }
 #
-# \author{
-#   Ken Simpson (ksimpson[at]wehi.edu.au).
-# }
+# @author "KS, HB"
 #
 # \seealso{
 #  @see "affy::bg.adjust"
@@ -533,8 +527,8 @@ setMethodS3("bgAdjustRma", "AffymetrixCelFile", function(this, path, pmonly=TRUE
     throw("Cannot background correct data file. Argument 'path' refers to the same path as the path of the data file to be normalized: ", path);
   }
 
-  
-  
+
+
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
 
@@ -545,10 +539,10 @@ setMethodS3("bgAdjustRma", "AffymetrixCelFile", function(this, path, pmonly=TRUE
   filename <- gsub("[.]cel$", ".CEL", filename);  # Only output upper case!
   pathname <- Arguments$getWritablePathname(filename, path=path,
                                             mustNotExist=(!overwrite && !skip));
-  
+
   cdf <- getCdf(this);
   setCdf(this, cdf);
-  
+
   # Already corrected?
   if (isFile(pathname) && skip) {
     verbose && cat(verbose, "Background-adjusted data file already exists: ", pathname);
@@ -561,9 +555,9 @@ setMethodS3("bgAdjustRma", "AffymetrixCelFile", function(this, path, pmonly=TRUE
   if (pmonly) {
     verbose && cat(verbose, "Adjusting PM signals only");
   }
-  
+
   verbose && enter(verbose, "Obtaining signals");
-  
+
   if (pmonly) {
     chipType <- getChipType(this);
     key <- list(method="bgAdjustRma", class=class(this)[1], chipType=chipType);
@@ -577,14 +571,14 @@ setMethodS3("bgAdjustRma", "AffymetrixCelFile", function(this, path, pmonly=TRUE
   } else {
     pmCells <- NULL;
   }
-  
+
   pm <- getData(this, indices=pmCells, "intensities")$intensities;
   if (addJitter) {
     set.seed(6022007);
     pm <- pm + rnorm(length(pm), mean=0, sd=jitterSd);
   }
   clearCache(this);
-  
+
   verbose && exit(verbose);
 
   # adjust background - use original affy functions to avoid errors from
@@ -592,7 +586,7 @@ setMethodS3("bgAdjustRma", "AffymetrixCelFile", function(this, path, pmonly=TRUE
   verbose && enter(verbose, "Applying normal+exponential signal model");
   pm <- bg.adjust(pm);  # From package 'affy' (without a namespace)
   verbose && exit(verbose);
-  
+
   # update the PM
 
   # Write adjusted data to file
@@ -629,7 +623,7 @@ setMethodS3("bgAdjustRma", "AffymetrixCelFile", function(this, path, pmonly=TRUE
 ############################################################################
 # HISTORY:
 # 2012-11-20
-# o CLEANUP: Removed obsolete code from internal bgAdjustOptical() that 
+# o CLEANUP: Removed obsolete code from internal bgAdjustOptical() that
 #   was never reached and that loaded affinities via obsolete APD files.
 # 2011-03-26
 # o ROBUSTNESS: Now internal bgAdjustGcrma(..., type="affinities") for
@@ -637,7 +631,7 @@ setMethodS3("bgAdjustRma", "AffymetrixCelFile", function(this, path, pmonly=TRUE
 #   are too few negative controls.
 # 2010-10-02
 # o We now use nomm=TRUE for all cases for type="affinities".  See code
-#   for explanation.  This also solves the problems of using for instance 
+#   for explanation.  This also solves the problems of using for instance
 #   chip type MoEx-1_0-st-v1.
 # 2010-09-29
 # o ROBUSTNESS: Now bgAdjustGcrma(..., affinities=NULL) is deprecated and
@@ -648,7 +642,7 @@ setMethodS3("bgAdjustRma", "AffymetrixCelFile", function(this, path, pmonly=TRUE
 # o BUG FIX: fixed discrepancy b/w aroma.affymetrix's gene specific binding
 # adjustment and gcrma's GSB.adj
 # 2009-03-29 [MR]
-# o Made slight modifications for bgAdjustGcRma() to work with the 
+# o Made slight modifications for bgAdjustGcRma() to work with the
 #   newer Gene 1.0 ST arrays.
 # 2007-12-08
 # o Now bgAdjustRma() no longer assumes 'affy' is loaded.
@@ -657,7 +651,7 @@ setMethodS3("bgAdjustRma", "AffymetrixCelFile", function(this, path, pmonly=TRUE
 # 2007-03-26
 # o Added verbose output about estimated background.
 # 2007-03-23
-# o Replaced all usage of copyCel() with createFrom().  This allow us to 
+# o Replaced all usage of copyCel() with createFrom().  This allow us to
 #   later update createFrom() to create CEL files of different versions.
 # 2007-03-22
 # o rename gsbParameters to parametersGsb to avoid clash of arguments

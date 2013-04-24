@@ -9,8 +9,8 @@
 #  This abstract class represents a transform that transforms chip-effect
 #  estimates obtained from probe-level modelling.
 # }
-# 
-# @synopsis 
+#
+# @synopsis
 #
 # \arguments{
 #   \item{dataSet}{The input data set as an @see "ChipEffectSet".}
@@ -18,14 +18,14 @@
 # }
 #
 # \section{Fields and Methods}{
-#  @allmethods "public"  
+#  @allmethods "public"
 # }
-# 
+#
 # \details{
 #   Subclasses must implement the \code{process()} method.
 # }
 #
-# @author
+# @author "HB"
 #*/###########################################################################
 setConstructorS3("ChipEffectTransform", function(dataSet=NULL, ...) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

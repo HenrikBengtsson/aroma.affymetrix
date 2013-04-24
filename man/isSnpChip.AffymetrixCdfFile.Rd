@@ -30,7 +30,7 @@
   Returns \code{\link[base:logical]{TRUE}} if the chip type refers to a SNP array, otherwise \code{\link[base:logical]{FALSE}}.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{AffymetrixCdfFile}}.

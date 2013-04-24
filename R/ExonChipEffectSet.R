@@ -8,7 +8,7 @@
 #
 #  This class represents estimates of chip effects in the probe-level models.
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
@@ -22,8 +22,7 @@
 #  @allmethods "public"
 # }
 #
-# @author
-# 
+# @author "KS, HB"
 #*/###########################################################################
 setConstructorS3("ExonChipEffectSet", function(..., mergeGroups=TRUE) {
   this <- extend(ChipEffectSet(...), "ExonChipEffectSet");

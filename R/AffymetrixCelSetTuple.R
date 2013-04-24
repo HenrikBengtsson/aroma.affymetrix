@@ -6,11 +6,11 @@
 # \description{
 #  @classhierarchy
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
-#   \item{...}{Arguments passed to the constructor of 
+#   \item{...}{Arguments passed to the constructor of
 #      @see "aroma.core::AromaMicroarrayDataSetTuple".}
 #   \item{.setClass}{The name of the class of the input set.}
 # }
@@ -19,13 +19,13 @@
 #  @allmethods "public"
 # }
 #
-# @author
-# 
+# @author "HB"
+#
 #*/###########################################################################
 setConstructorS3("AffymetrixCelSetTuple", function(..., .setClass="AffymetrixCelSet") {
-  extend(AromaMicroarrayDataSetTuple(..., .setClass=.setClass), 
+  extend(AromaMicroarrayDataSetTuple(..., .setClass=.setClass),
                                                      "AffymetrixCelSetTuple");
-}) 
+})
 
 
 
@@ -33,7 +33,7 @@ setConstructorS3("AffymetrixCelSetTuple", function(..., .setClass="AffymetrixCel
 setMethodS3("byPath", "AffymetrixCelSetTuple", function(static, path, ..., verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'path':
   path <- Arguments$getReadablePath(path, mustExist=TRUE);
 
@@ -123,12 +123,12 @@ setMethodS3("getListOfUnitTypesFiles", "AffymetrixCelSetTuple", function(this, .
 # 2008-05-16
 # o Extract all platform-generic methods to AromaMicroarrayDataSetTuple,
 #   which is in aroma.core.
-# o Now getFullName() getTableOfArrays(), getArrays(), indexOfArrays(), 
-#   getArrayTuple(), and asMatrixOfFiles() passes down '...' (for the 
+# o Now getFullName() getTableOfArrays(), getArrays(), indexOfArrays(),
+#   getArrayTuple(), and asMatrixOfFiles() passes down '...' (for the
 #   purpose passing down argument 'translate').
 # o Now getFullNames() passes down 'translate'.
 # 2008-03-29
-# o getTableOfArrays() of AromaMicroarrayDataSetTuple returned the incorrect 
+# o getTableOfArrays() of AromaMicroarrayDataSetTuple returned the incorrect
 #   array indices for the 2nd chip type if different arrays in the two sets.
 # 2008-03-11
 # o Renamed getTuple() to getArrayTuple().

@@ -32,22 +32,22 @@
 # \details{
 #  All estimates are stored to file.
 #
-#  The parameter estimates specific to each array, 
-#  typically "chip effects", 
+#  The parameter estimates specific to each array,
+#  typically "chip effects",
 #  are stored in array specific files.
 #
 #   Array-specific estimates [K = nbr of arrays]:
-#    theta [K doubles] (chip effects), sd(theta) [K doubles], 
+#    theta [K doubles] (chip effects), sd(theta) [K doubles],
 #    isOutlier(theta) [K logicals]
-#   
+#
 #   For each array and each unit group, we store:
 #     1 theta, 1 sd(theta), 1 isOutlier(theta), i.e. (float, float, bit)
 #   => For each array and each unit (with \eqn{G_j} groups), we store:
-#     \eqn{G_j} theta, \eqn{G_j} sd(theta), \eqn{G_j} isOutlier(theta), 
+#     \eqn{G_j} theta, \eqn{G_j} sd(theta), \eqn{G_j} isOutlier(theta),
 #   i.e. \eqn{G_j}*(float, float, bit).
 # }
 #
-# @author
+# @author "HB"
 #
 # \seealso{
 #   @seeclass
@@ -158,7 +158,7 @@ setMethodS3("fitOneArray", "SingleArrayUnitModel", function(this, array="remaini
   verbose && str(verbose, units);
 
   tRead <- processTime();
-  y <- readUnits(this, array=array, units=units, ..., force=force, 
+  y <- readUnits(this, array=array, units=units, ..., force=force,
                                      cache=FALSE, verbose=less(verbose));
   timers$read <- timers$read + (processTime() - tRead);
 
@@ -229,7 +229,7 @@ setMethodS3("fit", "SingleArrayUnitModel", function(this, arrays=NULL, units="re
     fitOneArray(this, array=array, units=units, verbose=verbose);
 
     verbose && exit(verbose);
-  } # for (aa ...)  
+  } # for (aa ...)
 
 
   invisible(units);

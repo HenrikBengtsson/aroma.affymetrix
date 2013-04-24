@@ -34,8 +34,6 @@
  If some units are non existing, an error is thrown.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
-
 \seealso{
   For more information see \code{\link{AffymetrixCdfFile}}.
 }

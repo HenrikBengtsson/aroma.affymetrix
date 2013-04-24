@@ -8,13 +8,13 @@
 #
 #  An AffymetrixCelFile object represents a single Affymetrix CEL file.
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
 #   \item{...}{Arguments passed to @see "aroma.core::AromaMicroarrayDataFile".}
 #   \item{cdf}{An optional @see "AffymetrixCdfFile" making it possible to
-#     override the default CDF file as specified by the CEL file header.  
+#     override the default CDF file as specified by the CEL file header.
 #     The requirement is that its number of cells must match that of
 #     the CEL file.
 #     If @NULL, the CDF structure is inferred from the the chip type
@@ -24,17 +24,17 @@
 # \section{Fields and Methods}{
 #  @allmethods "public"
 # }
-# 
+#
 # \section{For developers}{
 #   If you subclass this class, please make sure to query the
 #   @see "AffymetrixCdfFile" object (see @seemethod "getCdf") whenever
 #   querying CDF information.  Do not use the CDF file inferred from the
 #   chip type in CEL header, unless you really want it to be hardwired that
-#   way, otherwise you will break to possibility to override the CDF 
+#   way, otherwise you will break to possibility to override the CDF
 #   structure.
 # }
 #
-# @author
+# @author "HB"
 #
 # \seealso{
 #   An object of this class is typically part of an @see "AffymetrixCelSet".
@@ -127,8 +127,8 @@ setMethodS3("getIdentifier", "AffymetrixCelFile", function(this, ..., force=FALS
   if (force || is.null(identifier)) {
     # Get header
     hdr <- getHeader(this);
-    
-    # AD HOC fix for backward compatibility.  
+
+    # AD HOC fix for backward compatibility.
     # Ideally we should not create an identifier based
     # on the pathname. /HB 2011-02-24
     pathname <- hdr$filename;
@@ -171,12 +171,12 @@ setMethodS3("getIdentifier", "AffymetrixCelFile", function(this, ..., force=FALS
 # }
 #
 # \value{
-#  Returns an @see "AffymetrixCelFile" object.  
+#  Returns an @see "AffymetrixCelFile" object.
 #  If the file is not found or if it is of the wrong file format, an
 #  error is thrown.
 # }
 #
-# @author
+# @author "HB"
 #
 # \seealso{
 #   @seeclass
@@ -236,7 +236,7 @@ setMethodS3("fromFile", "AffymetrixCelFile", function(static, filename, path=NUL
 #  Returns an @see "AffymetrixCdfFile" object.
 # }
 #
-# @author
+# @author "HB"
 #
 # \seealso{
 #   @seemethod "setCdf".
@@ -288,7 +288,7 @@ setMethodS3("getUnitTypesFile", "AffymetrixCelFile", function(this, ...) {
 #  Returns nothing.
 # }
 #
-# @author
+# @author "HB"
 #
 # \seealso{
 #   @seemethod "getCdf".
@@ -301,7 +301,7 @@ setMethodS3("setCdf", "AffymetrixCelFile", function(this, cdf, ..., .checkArgs=T
   if (.checkArgs) {
     # Argument 'cdf':
     cdf <- Arguments$getInstanceOf(cdf, "AffymetrixCdfFile");
-  
+
     # Assure that the CDF is compatible with the CEL file
     if (nbrOfCells(cdf) != nbrOfCells(this)) {
       throw("Cannot set CDF. The specified CDF structure ('", getChipType(cdf), "') is not compatible with the chip type ('", getChipType(this), "') of the CEL file. The number of cells do not match: ", nbrOfCells(cdf), " != ", nbrOfCells(this));
@@ -313,7 +313,7 @@ setMethodS3("setCdf", "AffymetrixCelFile", function(this, cdf, ..., .checkArgs=T
 #      return(invisible(this));
   }
 
-  # Have to clear the cache 
+  # Have to clear the cache
   clearCache(this);
 
   this$.cdf <- cdf;
@@ -342,7 +342,7 @@ setMethodS3("setCdf", "AffymetrixCelFile", function(this, cdf, ..., .checkArgs=T
 #  Returns a @list structure as returned by @see "affxparser::readCelHeader".
 # }
 #
-# @author
+# @author "HB"
 #
 # \seealso{
 #   @seeclass
@@ -399,12 +399,12 @@ setMethodS3("getHeaderV3", "AffymetrixCelFile", function(this, ...) {
 # }
 #
 # \value{
-#  Returns a \code{POSIXct} object.  
-#  The parsed string containing the timestamp is returned as 
+#  Returns a \code{POSIXct} object.
+#  The parsed string containing the timestamp is returned as
 #  attribute \code{text}.
 # }
 #
-# @author
+# @author "HB"
 #
 # \seealso{
 #   Internally, @see "base::strptime" is used to parse the time stamp.
@@ -441,10 +441,10 @@ setMethodS3("getTimestamp", "AffymetrixCelFile", function(this, format="%m/%d/%y
 
     if (hasTimestamp) {
       timestamp <- gsub(pattern, "\\1", header);
-  
+
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       # Alternative:
-      # Could use a pattern, but if a different timestamp than the American is 
+      # Could use a pattern, but if a different timestamp than the American is
       # used, this wont work.  Instead assume a fixed location.
       # From the DAT header specification (Affymetrix Data File Formats, April
       # 2006), we know that the date and the timestamp is 18 characters long.
@@ -457,20 +457,20 @@ setMethodS3("getTimestamp", "AffymetrixCelFile", function(this, format="%m/%d/%y
     ##   # ...however, the files we have start at the next position. /HB 2006-12-01
     ##   pos <- pos + 1;
     ##   timestamp <- substring(header, first=pos, last=pos+nTimestamp-1);
-    
+
       timestamp <- trim(timestamp); # Unnecessary?
-    
+
       # Parse the identified timestamp into POSIXct
       res <- strptime(timestamp, format=format, ...);
     } else {
       res <- NULL;
     }
-  
+
     # If no valid timestamp was found, return NA.
     if (length(as.character(res)) == 0) {
       res <- as.POSIXct(NA);
     }
-  
+
     # Keep the non-parsed timetstamp etc for debugging.
     attr(res, "text") <- timestamp;
     attr(res, "header") <- header;
@@ -504,14 +504,14 @@ setMethodS3("getTimestamp", "AffymetrixCelFile", function(this, format="%m/%d/%y
     }
 
     # Extract the timestamp
-    res <- getTimestampFromDatHeader(headerDAT, chipType=chipType); 
+    res <- getTimestampFromDatHeader(headerDAT, chipType=chipType);
   } else if (fileFormat %in% c(3,4)) {
     # Get the DAT header
     header <- getHeaderV3(this);
     headerDAT <- header$DatHeader;
 
     # Extract the timestamp
-    res <- getTimestampFromDatHeader(headerDAT, chipType=chipType); 
+    res <- getTimestampFromDatHeader(headerDAT, chipType=chipType);
   } else {
     res <- as.POSIXct(NA);
   }
@@ -545,7 +545,7 @@ setMethodS3("nbrOfCells", "AffymetrixCelFile", function(this, ...) {
 #  Returns a @character string.
 # }
 #
-# @author
+# @author "HB"
 #
 # \seealso{
 #   @seeclass
@@ -580,7 +580,7 @@ setMethodS3("getPlatform", "AffymetrixCelFile", function(this, ...) {
 #   \item{units}{The units to be read. If @NULL, all units are read.}
 #   \item{cdf}{An alternative CDF structure to be used.  This overrides
 #     the \code{units} arguments.}
-#   \item{...}{Arguments passed to \code{getUnits()} of the 
+#   \item{...}{Arguments passed to \code{getUnits()} of the
 #     @see "AffymetrixCdfFile" class (if \code{cdf} was not specified),
 #     but also to the @see "affxparser::readCelUnits" methods.}
 # }
@@ -593,7 +593,7 @@ setMethodS3("getPlatform", "AffymetrixCelFile", function(this, ...) {
 #   CEL data is neither cached in memory nor on file by this method.
 # }
 #
-# @author
+# @author "HB"
 #
 # \seealso{
 #   @seemethod "updateUnits".
@@ -613,7 +613,7 @@ setMethodS3("readUnits", "AffymetrixCelFile", function(this, units=NULL, cdf=NUL
     suppressWarnings({
       cdf <- readUnits(getCdf(this), units=units, stratifyBy=stratifyBy);
     });
-  } 
+  }
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Retrieve data
@@ -639,7 +639,7 @@ setMethodS3("readUnits", "AffymetrixCelFile", function(this, units=NULL, cdf=NUL
 # @synopsis
 #
 # \arguments{
-#   \item{data}{A @list structure consisting of grouped data similar to 
+#   \item{data}{A @list structure consisting of grouped data similar to
 #      what @seemethod "readUnits" returns.}
 #   \item{...}{Not used.}
 # }
@@ -648,7 +648,7 @@ setMethodS3("readUnits", "AffymetrixCelFile", function(this, units=NULL, cdf=NUL
 #  Returns the @list structure that @see "affxparser::updateCelUnits" returns.
 # }
 #
-# @author
+# @author "HB"
 #
 # \seealso{
 #   @seemethod "updateUnits".
@@ -690,7 +690,7 @@ setMethodS3("updateUnits", "AffymetrixCelFile", function(this, data, ...) {
 #  Returns (invisibly) the names of the fields cleared.
 # }
 #
-# @author
+# @author "HB"
 #
 # \seealso{
 #   @seeclass
@@ -725,7 +725,7 @@ setMethodS3("clearData", "AffymetrixCelFile", function(this, fields=c("intensiti
   pathname <- getPathname(this);
   pathname <- Arguments$getWritablePathname(pathname);
 
-  verbose && cat(verbose, "Fields to be cleared: ", 
+  verbose && cat(verbose, "Fields to be cleared: ",
                                              paste(fields, collapse=", "));
   bfr <- rep(value, length.out=nbrOfCells(this));
   intensities <- stdvs <- pixels <- NULL;
@@ -762,7 +762,7 @@ setMethodS3("clearData", "AffymetrixCelFile", function(this, fields=c("intensiti
 #     are considered.}
 #   \item{fields}{Names of fields to be retrieved.}
 #   \item{...}{Additional arguments passed to @see "affxparser::readCel".}
-#   \item{drop}{If @TRUE and a single field is returned, then data is 
+#   \item{drop}{If @TRUE and a single field is returned, then data is
 #     returned as a @vector, otherwise as a @data.frame.}
 #   \item{verbose}{A @logical or @see "R.utils::Verbose".}
 # }
@@ -775,7 +775,7 @@ setMethodS3("clearData", "AffymetrixCelFile", function(this, fields=c("intensiti
 #   Neither in-memory nor on-file caching is done by this method.
 # }
 #
-# @author
+# @author "HB"
 #
 # \seealso{
 #   @seeclass
@@ -814,7 +814,7 @@ setMethodS3("readRawData", "AffymetrixCelFile", function(this, indices=NULL, fie
     # A work around...
     indices <- 1;
   }
-    
+
   # Workaround for readCel() not handling NA indices
   if (!is.null(indices)) {
     nas <- which(is.na(indices));
@@ -828,14 +828,14 @@ setMethodS3("readRawData", "AffymetrixCelFile", function(this, indices=NULL, fie
   cVerbose <- -(as.numeric(verbose) + 50);
   pathname <- getPathname(this);
   args <- list(
-    filename=pathname, 
-    indices=indices, 
-    readHeader=FALSE, 
-    readIntensities=is.element("intensities", fields), 
-    readStdvs=is.element("stdvs", fields), 
-    readPixels=is.element("pixels", fields), 
-    readXY=is.element("xy", fields), 
-    readOutliers=FALSE, 
+    filename=pathname,
+    indices=indices,
+    readHeader=FALSE,
+    readIntensities=is.element("intensities", fields),
+    readStdvs=is.element("stdvs", fields),
+    readPixels=is.element("pixels", fields),
+    readXY=is.element("xy", fields),
+    readOutliers=FALSE,
     readMasked=FALSE,
     ...,
     verbose=cVerbose
@@ -939,15 +939,15 @@ setMethodS3("getRectangle", "AffymetrixCelFile", function(this, ...) {
 # 2011-02-24
 # o BACKWARD COMPATILITY: getIdentifier() for AffymetrixCelFile generates
 #   a checksum id based on the CEL file header among other things.  Part
-#   of this header information is the relative pathname of the CEL file, 
+#   of this header information is the relative pathname of the CEL file,
 #   which means that the identifier will be different depending on which
 #   directory it lives in.  Ideally we'll exclude the pathname from this.
 #   However, in the meanwhile we simply drop any tags from the root path
 #   such that it is compatible with earlier version of aroma.*.
 # 2011-02-22
-# o ROBUSTNESS: getTimestamp() for AffymetrixCelFile no longer assumes 
-#   that the file's DAT header contains a timestamp and tries to translate.  
-#   Instead it first tests for the timestamp pattern, and returns NA 
+# o ROBUSTNESS: getTimestamp() for AffymetrixCelFile no longer assumes
+#   that the file's DAT header contains a timestamp and tries to translate.
+#   Instead it first tests for the timestamp pattern, and returns NA
 #   if not found.
 # 2009-07-08
 # o Added getUnitTypesFile() for AffymetrixCelFile.
@@ -971,7 +971,7 @@ setMethodS3("getRectangle", "AffymetrixCelFile", function(this, ...) {
 # o Now readRawData(), formely known as getData(), handle NA indices and
 #   drops the dimension if only one field and argument drop=TRUE.
 # 2008-03-05
-# o Now setCdf() also reports on the two incompatible chip types involved 
+# o Now setCdf() also reports on the two incompatible chip types involved
 #   if trying to set a CDF that is not compatible with a CEL file.
 # 2008-02-21
 # o Updated getTimestamp() to also support Calvin files containing only
@@ -1002,16 +1002,16 @@ setMethodS3("getRectangle", "AffymetrixCelFile", function(this, ...) {
 # o BUG FIX: getTimestamp() assumed a fix location in the CEL v3 header,
 #   but that did not work for dChip exported CEL files.  Now, a US date
 #   pattern is assumed and searched for.
-# 2007-01-12 /KS
+# 2007-01-12 [KS]
 # o Moved image270() and writeSpatial() to AffymetrixCelFile.PLOT.R.
-# 2006-12-18 /KS
+# 2006-12-18 [KS]
 # o Add "takeLog" argument (logical) to image270.  If true, take the log2
 #   before plotting.  Can be more informative than natural scale.
 # 2006-12-14
 # o Removed getSampleName() which gives the same as getName().
 # 2006-12-11
 # o Now the timestamp is also reported for singel CEL files.
-# o BUG FIX: getHeaderV3() would throw an error if there was an empty V3 
+# o BUG FIX: getHeaderV3() would throw an error if there was an empty V3
 #   header fields.  This was the reason why getTimestamp() gave an error
 #   on some 100K chips.
 # 2006-12-01
@@ -1030,16 +1030,16 @@ setMethodS3("getRectangle", "AffymetrixCelFile", function(this, ...) {
 #   for use in the Object class.
 # 2006-08-27
 # o Added nbrOfCells() because it is so common.
-# o Added createFrom() which utilizes new functions copyFile() and 
-#   clearData(). It is also no longer static. This is more generic and 
-#   cleaner.  The new clearData() does also not require the CDF file 
+# o Added createFrom() which utilizes new functions copyFile() and
+#   clearData(). It is also no longer static. This is more generic and
+#   cleaner.  The new clearData() does also not require the CDF file
 #   (in case that should be missing).
 # 2006-08-25
 # o Renamed getIntensities() to getFields() which returns a data frame.
 # o Added image270() and writeSpatial().
 # o Added methods "[" and "[[" mapped to readUnits().
 # 2006-08-24
-# o Added the option to specify an 'cdf' object, making it possible to 
+# o Added the option to specify an 'cdf' object, making it possible to
 #   override the default CDF file according to the CEL header.  It is
 #   important that all methods queries the AffymetrixCdfFile object
 #   from getCdf() and not the one through the CEL header!
@@ -1047,7 +1047,7 @@ setMethodS3("getRectangle", "AffymetrixCelFile", function(this, ...) {
 # 2006-07-21
 # o Added readUnits().
 # 2006-07-05
-# o BUG FIX/WORKAROUND: Currently the affxparser code crash R if the file 
+# o BUG FIX/WORKAROUND: Currently the affxparser code crash R if the file
 #   is not a valid CEL file.  The best we can do now is to test that the
 #   filename has suffix *.CEL.
 # 2006-05-30

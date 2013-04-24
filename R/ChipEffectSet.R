@@ -1,5 +1,5 @@
 ###########################################################################/**
-# @RdocClass ChipEffectSet			
+# @RdocClass ChipEffectSet
 #
 # @title "The ChipEffectSet class"
 #
@@ -8,7 +8,7 @@
 #
 #  This class represents estimates of chip effects in the probe-level models.
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
@@ -20,8 +20,8 @@
 #  @allmethods "public"
 # }
 #
-# @author
-# 
+# @author "HB"
+#
 # \seealso{
 #   An object of this class is typically obtained through the
 #   \code{getChipEffectSet()} method for the @see "ProbeLevelModel" class.
@@ -114,7 +114,7 @@ setMethodS3("fromDataSet", "ChipEffectSet", function(static, dataSet, path, name
     df <- getFile(dataSet, kk);
     verbose && enter(verbose, sprintf("Retrieving chip-effect #%d of %d (%s)",
                                                kk, length(ces), getName(df)));
-    ce <- clazz$fromDataFile(df, path=path, name=name, cdf=cdf, ..., 
+    ce <- clazz$fromDataFile(df, path=path, name=name, cdf=cdf, ...,
                                                        verbose=less(verbose));
     if (is.null(cdf)) {
       verbose && enter(verbose, "Retrieving the CDF for the chip-effect file");
@@ -310,7 +310,7 @@ setMethodS3("extractMatrix", "ChipEffectSet", function(this, ..., field=c("theta
     data <- log2(data);  # ...stored on the intensity scale
 
     # Robust average (on the log scale, but stored on the intensity scale!)
-    avg <- getAverageLog(this, field="intensities", mean="median", 
+    avg <- getAverageLog(this, field="intensities", mean="median",
                                                       verbose=less(verbose,1));
     dataR <- extractMatrix(avg, field="theta", ..., verbose=less(verbose, 1));
     dataR <- log2(as.vector(dataR));
@@ -324,12 +324,12 @@ setMethodS3("extractMatrix", "ChipEffectSet", function(this, ..., field=c("theta
     verbose && enter(verbose, "Extracting standard errors for chip effects and calculates NUSE scores");
     # NUSE - Normalized Unscaled Standard Errors
     # Get standard errors (on the log scale)
-    data <- extractMatrix(this, ..., field="sdTheta", 
+    data <- extractMatrix(this, ..., field="sdTheta",
                                                    verbose=less(verbose, 1));
     data <- log2(data);  # ...stored on the intensity scale
 
     # Robust average (on the log scale, but stored on the intensity scale!)
-    avg <- getAverageLog(this, field="stdvs", mean="median", 
+    avg <- getAverageLog(this, field="stdvs", mean="median",
                                                     verbose=less(verbose, 1));
     dataR <- extractMatrix(avg, field="theta", ..., verbose=less(verbose, 1));
     dataR <- log2(as.vector(dataR));
@@ -391,7 +391,7 @@ setMethodS3("extractMatrix", "ChipEffectSet", function(this, ..., field=c("theta
 # 2007-12-10
 # o Now fromDataSet() of ChipEffectSet accepts argument 'cdf'.
 # 2007-07-01
-# o BUG FIX: getOutputDataSet() of Transform would give "Error in 
+# o BUG FIX: getOutputDataSet() of Transform would give "Error in
 #   fromFiles.AffymetrixCelSet(static, path = path, pattern = pattern,:
 #   formal argument "checkChipType" matched by multiple actual arguments".
 #   This was due to the recent adding of 'checkChipType=FALSE'.  Fixed

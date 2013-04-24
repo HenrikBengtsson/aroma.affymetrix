@@ -7,11 +7,11 @@
 # \description{
 #  @get "title".
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
-#   \item{stats}{A (merged or non-merged) @list of 
+#   \item{stats}{A (merged or non-merged) @list of
 #                                  @see "grDevices::boxplot.stats" elements.}
 #   \item{ylim, outline, las, ...}{Arguments passed to @see "graphics::bxp".}
 # }
@@ -20,10 +20,10 @@
 #   Returns (invisibly) the merged @see "grDevices::boxplot.stats" structure.
 # }
 #
-# @author
+# @author "EP"
 #
 # @keyword internal
-#*/########################################################################### 
+#*/###########################################################################
 setMethodS3("plotBoxplotStats", "list", function(stats, ylim=NULL, outline=FALSE, las=2, ...) {
   bxpStats <- mergeBoxplotStats(stats);
 

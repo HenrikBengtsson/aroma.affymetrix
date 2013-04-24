@@ -16,7 +16,7 @@
 #   \item{filename}{The filename of the CEL file.}
 #   \item{path}{The path to the directory where to find/create the CEL file.}
 #   \item{name}{The name of the array to be stored in the CEL header.}
-#   \item{cdf}{The template @see "AffymetrixCdfFile" used for creating 
+#   \item{cdf}{The template @see "AffymetrixCdfFile" used for creating
 #              a CEL file from scratch.}
 #   \item{...}{Passed to @see "affxparser::createCel".}
 #   \item{verbose}{See @see "R.utils::Verbose".}
@@ -26,7 +26,7 @@
 #  Returns a @see "ChipEffectFile".
 # }
 #
-# @author
+# @author "HB"
 #
 # \seealso{
 #   \code{allocateFromCdf()} of @see "AffymetrixCelFile".
@@ -73,7 +73,7 @@ setMethodS3("fromDataFile", "ChipEffectFile", function(static, df=NULL, filename
     if (is.null(cdf)) {
       cdf <- createParamCdf(static, getCdf(df), verbose=less(verbose));
     }
-  
+
     # Get CDF header
     cdfHeader <- getHeader(cdf);
 
@@ -105,7 +105,7 @@ setMethodS3("fromDataFile", "ChipEffectFile", function(static, df=NULL, filename
     pathname <- popTemporaryFile(pathnameT, verbose=verbose);
 
     verbose && exit(verbose);
-  } 
+  }
 
   verbose && enter(verbose, "Setting up ", class(static)[1]);
   verbose && cat(verbose, "Pathname: ", pathname);

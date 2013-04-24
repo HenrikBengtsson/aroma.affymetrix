@@ -7,12 +7,12 @@
 #  @classhierarchy
 #
 #  This class represents a PLM where the probe intensities are averaged
-#  assuming identical probe affinities.  
-#  For instance, one may assume that replicated probes with identical 
+#  assuming identical probe affinities.
+#  For instance, one may assume that replicated probes with identical
 #  sequences have the same probe affinities, cf. the GenomeWideSNP\_6
 #  chip type.
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
@@ -36,12 +36,12 @@
 # }
 #
 # \section{Different flavors of model fitting}{
-#   The above model can be fitted in two ways, either robustly or 
+#   The above model can be fitted in two ways, either robustly or
 #   non-robustly.
 #   Use argument \code{flavor="mean"} to fit the model non-robustly, i.e.
 #
 #    \deqn{\hat{\theta}_{i} = 1/K \sum_k y_{ik}}.
-#   
+#
 #   Use argument \code{flavor="median"} to fit the model robustly, i.e.
 #
 #    \deqn{\hat{\theta}_{i} = median_k y_{ik}}.
@@ -49,8 +49,7 @@
 #   Missing values are always excluded.
 # }
 #
-# @author
-#
+# @author "HB"
 #*/###########################################################################
 setConstructorS3("AvgPlm", function(..., flavor=c("median", "mean")) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -91,7 +90,7 @@ setMethodS3("getAsteriskTags", "AvgPlm", function(this, collapse=NULL, ...) {
     tags <- paste(tags, this$.flavor, sep=",");
 
   # Collapse
-  tags <- paste(tags, collapse=collapse); 
+  tags <- paste(tags, collapse=collapse);
 
   tags;
 }, protected=TRUE)
@@ -144,15 +143,15 @@ setMethodS3("getProbeAffinityFile", "AvgPlm", function(this, ...) {
     outliers <- as.logical(1-sign(pixels));
 
     list(
-      phi=intensities, 
-      sdPhi=stdvs, 
+      phi=intensities,
+      sdPhi=stdvs,
       phiOutliers=outliers
     );
   })
 
   paf;
 }, private=TRUE)
-  
+
 
 
 ###########################################################################/**
@@ -174,8 +173,6 @@ setMethodS3("getProbeAffinityFile", "AvgPlm", function(this, ...) {
 #  Returns a @function.
 # }
 #
-# @author
-#
 # \seealso{
 #   @seeclass
 # }
@@ -192,7 +189,7 @@ setMethodS3("getFitUnitGroupFunction", "AvgPlm", function(this, ...) {
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # avgModel()
-  # Author: Henrik Bengtsson, UC Berkeley. 
+  # Author: Henrik Bengtsson, UC Berkeley.
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   avgPlmModel <- function(y, ...){
     # Assert right dimensions of 'y'.
@@ -202,9 +199,9 @@ setMethodS3("getFitUnitGroupFunction", "AvgPlm", function(this, ...) {
       nbrOfArrays <- length(getDataSet(this));
       return(list(theta=rep(NA, nbrOfArrays),
                   sdTheta=rep(NA, nbrOfArrays),
-                  thetaOutliers=rep(NA, nbrOfArrays), 
-                  phi=c(), 
-                  sdPhi=c(), 
+                  thetaOutliers=rep(NA, nbrOfArrays),
+                  phi=c(),
+                  sdPhi=c(),
                   phiOutliers=c()
                  )
             );
@@ -212,7 +209,7 @@ setMethodS3("getFitUnitGroupFunction", "AvgPlm", function(this, ...) {
 
     if (length(dim(y)) != 2) {
       str(y);
-      stop("Argument 'y' must have two dimensions: ", 
+      stop("Argument 'y' must have two dimensions: ",
                                                 paste(dim(y), collapse="x"));
     }
 
@@ -249,14 +246,14 @@ setMethodS3("getFitUnitGroupFunction", "AvgPlm", function(this, ...) {
     sdPhi <- rep(1, K);  # Default, we not estimated (should we store NAs?!?)
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    # A fit function must return: theta, sdTheta, thetaOutliers, 
+    # A fit function must return: theta, sdTheta, thetaOutliers,
     # phi, sdPhi, phiOutliers.
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     thetaOutliers <- rep(FALSE, I);
     phiOutliers <- rep(FALSE, K);
 
     # Return data on the intensity scale
-    list(theta=theta, sdTheta=sdTheta, thetaOutliers=thetaOutliers, 
+    list(theta=theta, sdTheta=sdTheta, thetaOutliers=thetaOutliers,
          phi=phi, sdPhi=sdPhi, phiOutliers=phiOutliers);
   } # avgPlmModel()
   attr(avgPlmModel, "name") <- "avgPlmModel";
@@ -314,7 +311,7 @@ setMethodS3("getCalculateResidualsFunction", "AvgPlm", function(static, ...) {
 # 2007-09-12
 # o WORKAROUND: If there is only one probe, the fit function will return
 #   theta=y:s, and sdTheta=0:s.  However, when searching for units to do,
-#   we test (sdTheta <= 0).  The workaround is to store the smallest 
+#   we test (sdTheta <= 0).  The workaround is to store the smallest
 #   float available instead of zero.
 # 2007-09-08
 # o Created from RmaPlm.R.

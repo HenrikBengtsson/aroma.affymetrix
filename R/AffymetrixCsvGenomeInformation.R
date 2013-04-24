@@ -1,3 +1,4 @@
+# @author "HB"
 setConstructorS3("AffymetrixCsvGenomeInformation", function(...) {
   this <- extend(GenomeInformation(...), "AffymetrixCsvGenomeInformation");
   if (!is.null(getPathname(this)))
@@ -39,7 +40,7 @@ setMethodS3("verify", "AffymetrixCsvGenomeInformation", function(this, ...) {
   tryCatch({
     df <- readDataFrame(this, nrow=10);
   }, error = function(ex) {
-    throw("File format error of the Affymetrix CSV annotation file: ", 
+    throw("File format error of the Affymetrix CSV annotation file: ",
                                                   getPathname(this));
   })
   invisible(TRUE);
@@ -65,7 +66,7 @@ setMethodS3("readDataFrame", "AffymetrixCsvGenomeInformation", function(this, ..
 
   verbose && cat(verbose, "Pathname: ", pathname);
 
-  hdr <- scan(pathname, what=character(0), nlines=1, sep=",", 
+  hdr <- scan(pathname, what=character(0), nlines=1, sep=",",
                                            quote="\"", quiet=TRUE);
   nbrOfColumns <- length(hdr);
 
@@ -128,7 +129,7 @@ setMethodS3("readDataFrame", "AffymetrixCsvGenomeInformation", function(this, ..
   df[["physicalPosition"]] <- as.integer(df[["physicalPosition"]]);
 
   verbose && exit(verbose);
-  
+
   df;
 })
 

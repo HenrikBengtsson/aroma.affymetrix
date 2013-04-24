@@ -28,7 +28,7 @@ setMethodS3("getCdf", "AromaUnitTabularBinaryFile", function(this, ..., force=FA
   if (verbose) {
     pushState(verbose);
     on.exit(popState(verbose));
-  } 
+  }
 
   cdf <- this$.cdf;
   if (force || is.null(cdf)) {
@@ -37,25 +37,25 @@ setMethodS3("getCdf", "AromaUnitTabularBinaryFile", function(this, ..., force=FA
       # of a CDF with the longest name *and* that have the same number of units.
       # This is AD HOC! We should really store the full chiptype of the
       # corresponding CDF in the internal file header. /HB 2007-12-10
-  
+
       verbose && enter(verbose, "Searching for a match CDF");
-  
+
       verbose && cat(verbose, "Filename: ", getFilename(this));
       name <- getName(this, ...);
-      tags <- getTags(this, collapse=NULL, ...); 
-  
+      tags <- getTags(this, collapse=NULL, ...);
+
       validator <- function(cdf, ...) {
         (nbrOfUnits(cdf) == nbrOfUnits(this));
       }
-      pathname <- findByCdf2(chipType=name, tags=tags, validator=validator, 
+      pathname <- findByCdf2(chipType=name, tags=tags, validator=validator,
                                                     verbose=less(verbose, 1));
       if (is.null(pathname)) {
-        throw("Failed to locate a CDF for ", class(this)[1], 
+        throw("Failed to locate a CDF for ", class(this)[1],
               " that have ", nbrOfUnits, " units: ", getFullName(this));
       }
-  
+
       cdf <- AffymetrixCdfFile$fromFile(pathname);
-    
+
       verbose && exit(verbose);
     } else {
       chipType <- getChipType(this);
@@ -87,11 +87,11 @@ setMethodS3("getCdf", "AromaUnitTabularBinaryFile", function(this, ..., force=FA
 #   \item{cdf}{The @see "AffymetrixCdfFile" used as a template and from
 #      which the (full) chip type is taken.}
 #   \item{path}{The path where to store the new file.}
-#   \item{tags}{A @character @vector of optional tags appended to 
+#   \item{tags}{A @character @vector of optional tags appended to
 #      the filename.}
 #   \item{footer}{A nested named @list structure of additional attributes
 #      that are saved in the file footer after the mandatory ones.}
-#   \item{...}{Additional arguments passed to \code{allocate()} of 
+#   \item{...}{Additional arguments passed to \code{allocate()} of
 #      @see "aroma.core::AromaTabularBinaryFile".}
 # }
 #
@@ -99,14 +99,14 @@ setMethodS3("getCdf", "AromaUnitTabularBinaryFile", function(this, ..., force=FA
 #  Returns a @see "aroma.core::AromaUnitTabularBinaryFile" object.
 # }
 #
-# @author
+# @author "HB"
 #
 # \seealso{
 #   To update to file footer afterwards, see \code{writeFooter()}.
 # }
 #
 # @keyword IO
-#*/########################################################################### 
+#*/###########################################################################
 setMethodS3("allocateFromCdf", "AromaUnitTabularBinaryFile", function(static, cdf, ...) {
   # Argument 'cdf':
   cdf <- Arguments$getInstanceOf(cdf, "AffymetrixCdfFile");
@@ -167,12 +167,12 @@ setMethodS3("importFromGenomeInformation", "AromaUnitTabularBinaryFile", abstrac
 # 2007-12-10
 # o Currently a AromaUnitTabularBinaryFile (e.g. AromaUgpFile) does not
 #   contain information about the "fullname" chip type, but only the basic
-#   chip-type name, e.g. we cannot infer the full chip-type name from 
+#   chip-type name, e.g. we cannot infer the full chip-type name from
 #   'GenomeWideSNP_5,Full,r2.ugp', but only 'GenomeWideSNP_5'. The fullname
 #   should be the same as the full chip-type name of the CDF used to define
 #   the the unit map, e.g. 'GenomeWideSNP_5,Full.CDF'.
-#   We should add a header (or footer) field in the file format that 
-#   indicates the full chip type.  
+#   We should add a header (or footer) field in the file format that
+#   indicates the full chip type.
 #   However, until that is done, the best we can do is to turn to the ad
 #   hoc solution of scanning for the CDF with the longest matching fullname,
 #   if both 'GenomeWideSNP_5,Full.CDF' and 'GenomeWideSNP_5.CDF' exists,

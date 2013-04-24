@@ -18,13 +18,11 @@
 #  @allmethods "public"
 # }
 #
-# \author{
-#   Ken Simpson (ksimpson[at]wehi.edu.au).
-# }
+# @author "KS, HB"
 #*/###########################################################################
 setConstructorS3("FirmaSet", function(...) {
   extend(ParameterCelSet(...), "FirmaSet",
-    "cached:.firstCells" = NULL 
+    "cached:.firstCells" = NULL
   )
 })
 
@@ -154,7 +152,7 @@ setMethodS3("updateUnits", "FirmaSet", function(this, units=NULL, cdf=NULL, data
   verbose <- less(verbose);
   names <- getNames(this);
   for (ii in arrays) {
-    verbose && enter(verbose, sprintf("Array #%d of %d: %s", 
+    verbose && enter(verbose, sprintf("Array #%d of %d: %s",
                                        ii, nbrOfArrays, names[ii]));
     ff <- getFile(this, ii);
 
@@ -193,7 +191,7 @@ setMethodS3("extractMatrix", "FirmaSet", function (this, ..., field=c("intensiti
   field <- match.arg(field);
 
   NextMethod("extractMatrix", field=field);
-}) 
+})
 
 
 ############################################################################

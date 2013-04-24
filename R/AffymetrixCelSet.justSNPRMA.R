@@ -1,9 +1,11 @@
+# @author "HB"
 setMethodS3("justSNPRMA", "character", function(...) {
   require("oligo") || throw("Package not loaded: oligo");
   oligo::justSNPRMA(...);
 })
 
 
+# @author "HB"
 setMethodS3("justSNPRMA", "AffymetrixCelSet", function(this, ..., normalizeToHapmap=TRUE, normalizeSNPsOnly="auto", returnESet=TRUE, verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
@@ -66,10 +68,10 @@ setMethodS3("justSNPRMA", "AffymetrixCelSet", function(this, ..., normalizeToHap
   if (!isDone(qn)) {
     if (normalizeToHapmap) {
       verbose && enter(verbose, "Loading HapMap reference target quantiles");
-  
+
       pdPkgName <- oligo::cleanPlatformName(chipType);
       verbose && cat(verbose, "Platform Design (PD) package: ", pdPkgName);
-  
+
       # Load target from PD package
       path <- system.file(package=pdPkgName);
       if (path == "") {
@@ -78,7 +80,7 @@ setMethodS3("justSNPRMA", "AffymetrixCelSet", function(this, ..., normalizeToHap
 
       path <- file.path(path, "extdata");
       path <- Arguments$getReadablePath(path);
-  
+
       verbose && enter(verbose, "Loading binary file");
       filename <- sprintf("%sRef.rda", pdPkgName);
       pathname <- Arguments$getReadablePathname(filename, path=path, mustExist=TRUE);
@@ -95,7 +97,7 @@ setMethodS3("justSNPRMA", "AffymetrixCelSet", function(this, ..., normalizeToHap
 
     if (normalizeSNPsOnly) {
       verbose && enter(verbose, "Identifying cells of SNPs for fitting normalization function");
-  
+
       # justSNPRMA() operates only on SNP* units (e.g. CN units ignored).
       # For this reason we here *estimate* the normalization function based
       # on these units only, but for convenience we will apply it to all
@@ -114,7 +116,7 @@ setMethodS3("justSNPRMA", "AffymetrixCelSet", function(this, ..., normalizeToHap
       verbose && str(verbose, cells);
       rm(units);
       verbose && exit(verbose);
-  
+
       qn$.subsetToAvg <- cells;
       rm(cells);
       verbose && exit(verbose);
@@ -148,7 +150,7 @@ setMethodS3("justSNPRMA", "AffymetrixCelSet", function(this, ..., normalizeToHap
       verbose && str(verbose, units);
       verbose && exit(verbose);
     }
-  
+
     verbose && enter(verbose, "Fitting remaining units");
     units <- fit(plm, verbose=verbose);
     verbose && cat(verbose, "Units fitted:");

@@ -9,7 +9,7 @@
 #  A SpatialReporter generates image files of spatial representations of
 #  cell signals for each of the arrays in the input set.
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
@@ -21,8 +21,7 @@
 #  @allmethods "public"
 # }
 #
-# @author
-# 
+# @author "HB"
 #*/###########################################################################
 setConstructorS3("SpatialReporter", function(..., reference=NULL) {
   this <- extend(AffymetrixCelSetReporter(...), "SpatialReporter",
@@ -84,7 +83,7 @@ setMethodS3("setReference", "SpatialReporter", function(this, refFile, ...) {
 
     if (!is.element(class(refFile)[1L], class(df))) {
       throw("Cannot set reference. Argument 'refFile' is not of a class compatible with the data set: ", class(refFile)[1]);
-    } 
+    }
   }
 
   this$.reference <- refFile;
@@ -92,20 +91,20 @@ setMethodS3("setReference", "SpatialReporter", function(this, refFile, ...) {
 
 
 setMethodS3("addColorMap", "SpatialReporter", function(this, colorMap, ...) {
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'colorMap':
   colorMap <- Arguments$getCharacter(colorMap, nchar=c(1,Inf), length=c(1,1));
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Parser argument 'colorMap'
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   parts <- strsplit(colorMap, split=",")[[1]];
   tags <- paste(parts, collapse=",");
   n <- length(parts);
   if (n > 3) {
-    throw("Argument 'colorMap' must not contain more than three parts: ", 
+    throw("Argument 'colorMap' must not contain more than three parts: ",
                                                                    tags);
   }
   if (n == 1) {
@@ -115,9 +114,9 @@ setMethodS3("addColorMap", "SpatialReporter", function(this, colorMap, ...) {
   }
   palette <- parts[n];
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Setup transforms
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (length(transforms) == 0) {
     transforms <- list(sqrt);
   } else {
@@ -132,9 +131,9 @@ setMethodS3("addColorMap", "SpatialReporter", function(this, colorMap, ...) {
   }
 
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Setup palette
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (is.null(palette)) {
     palette <- gray.colors(256);
   } else if (is.character(palette)) {
@@ -151,14 +150,14 @@ setMethodS3("addColorMap", "SpatialReporter", function(this, colorMap, ...) {
     if (!exists(name, mode="function")) {
       name <- sprintf("%s.colors", palette);
       if (!exists(name, mode="function")) {
-        throw("Argument 'colorMap' specifies an unknown palette function ('", 
+        throw("Argument 'colorMap' specifies an unknown palette function ('",
                                                    name, "'): ", colorMap);
       }
     }
     fcn <- get(name, mode="function");
     palette <- fcn(nbrOfColors);
   }
-  
+
   map <- list(list(
     tags = tags,
     transforms = transforms,
@@ -166,12 +165,12 @@ setMethodS3("addColorMap", "SpatialReporter", function(this, colorMap, ...) {
   ));
   names(map) <- map$tags;
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Add color map
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   colorMaps <- this$.colorMaps;
   if (is.null(colorMaps))
-    colorMaps <- list();  
+    colorMaps <- list();
   colorMaps <- c(colorMaps, map);
   this$.colorMaps <- colorMaps;
 })
@@ -223,7 +222,7 @@ setMethodS3("writeImages", "SpatialReporter", function(this, arrays=NULL, aliase
     on.exit(popState(verbose));
   }
 
-  
+
   # Get the path to the image directory
   path <- getPath(this);
 
@@ -246,7 +245,7 @@ setMethodS3("writeImages", "SpatialReporter", function(this, arrays=NULL, aliase
       setAlias(df, aliases[kk]);
     }
 
-    verbose && enter(verbose, sprintf("Array #%d of %d ('%s')", 
+    verbose && enter(verbose, sprintf("Array #%d of %d ('%s')",
                                              kk, nbrOfArrays, getName(df)));
 
     # For each color map...
@@ -256,8 +255,8 @@ setMethodS3("writeImages", "SpatialReporter", function(this, arrays=NULL, aliase
       verbose && enter(verbose, sprintf("Color map #%d ('%s')", ll, tags));
 #      verbose && str(verbose, colorMap$transforms);
 #      verbose && str(verbose, colorMap$palette);
-      writeImage(df, other=refFile, path=path, 
-                 transforms=colorMap$transforms, palette=colorMap$palette, 
+      writeImage(df, other=refFile, path=path,
+                 transforms=colorMap$transforms, palette=colorMap$palette,
                                   tags=tags, ..., verbose=less(verbose, 5));
 #      gc <- gc();
       verbose && exit(verbose);
@@ -289,8 +288,6 @@ setMethodS3("writeImages", "SpatialReporter", function(this, arrays=NULL, aliase
 # \value{
 #  Returns nothing.
 # }
-#
-# @author
 #
 # \seealso{
 #   @seeclass
@@ -338,7 +335,7 @@ setMethodS3("readRawDataRectangle", "SpatialReporter", function(this, array, ...
     y <- transform(y);
   }
 
-  y;  
+  y;
 }, protected=TRUE)
 
 
@@ -378,7 +375,7 @@ setMethodS3("plotMargins", "SpatialReporter", function(this, array, margins=c("r
   yMargins <- calculateMargins(this, array=array, ..., verbose=verbose);
   keep <- is.element(c("rows", "columns"), margins);
   yMargins <- yMargins[keep];
-  
+
   if (is.null(ylim)) {
     ylim <- c(NA, NA);
     for (kk in seq_along(yMargins)) {
@@ -392,7 +389,7 @@ setMethodS3("plotMargins", "SpatialReporter", function(this, array, margins=c("r
 
   xlabs <- margins;
   mains <- paste("Average signal per", substring(margins, 1, nchar(margins)-1));
-  
+
   if (length(yMargins) > 1) {
     layout(matrix(seq_along(yMargins), ncol=1));
   }

@@ -8,7 +8,7 @@
 #
 #  This class represents estimates of residuals in the probe-level models.
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
@@ -20,8 +20,8 @@
 #  @allmethods "public"
 # }
 #
-# @author
-# 
+# @author "KS, HB"
+#
 # \seealso{
 #   An object of this class is typically obtained through the
 #   \code{getResidualSet()} method for the @see "ProbeLevelModel" class.
@@ -43,16 +43,16 @@ setConstructorS3("ResidualFile", function(..., probeModel=c("pm")) {
   setEncodeFunction(this, function(groupData, ...) {
     eps <- .subset2(groupData, "eps");
     epsStdvs <- .subset2(groupData, "epsStdvs");
-  
+
     res <- list();
     if (!is.null(eps))
       res$intensities <- eps;
     if (!is.null(epsStdvs))
       res$stdvs <- epsStdvs;
-  
+
     res;
   })
-  
+
   setDecodeFunction(this, function(groupData, ...) {
     res <- list();
     if (!is.null(groupData$intensities))
@@ -61,7 +61,7 @@ setConstructorS3("ResidualFile", function(..., probeModel=c("pm")) {
       res$epsStdvs <- groupData$stdvs;
     res;
   })
- 
+
 
   # Parse attributes (all subclasses must call this in the constructor).
   if (!is.null(this$.pathname))
@@ -116,19 +116,19 @@ setMethodS3("fromDataFile", "ResidualFile", function(static, df=NULL, filename=s
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Backward compatibility patch for now. Before residual files
-  # only carried on the sample name, but not the tags. If such a 
-  # file is detected, it is renamed. 
+  # only carried on the sample name, but not the tags. If such a
+  # file is detected, it is renamed.
   # This should be removed in future versions. /HB 2007-01-10
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   verbose && cat(verbose, "Pathname: ", pathname);
-  res <- createFrom(df, filename=pathname, methods="create", clear=TRUE, 
+  res <- createFrom(df, filename=pathname, methods="create", clear=TRUE,
                                              ..., verbose=less(verbose));
 
-  # Don't forget to return a ResidualFile object  
+  # Don't forget to return a ResidualFile object
   res <- fromFile(static, filename=pathname, verbose=less(verbose));
   # Inherit the CDF?
-  if (!is.null(cdf)) 
-    setCdf(res, cdf); 
+  if (!is.null(cdf))
+    setCdf(res, cdf);
   verbose && print(verbose, res);
 
   res;
@@ -142,7 +142,7 @@ setMethodS3("readUnits", "ResidualFile", function(this, units=NULL, cdf=NULL, ..
 
 
   # Check for cached data
-  key <- list(method="readUnits", class=class(this)[1], 
+  key <- list(method="readUnits", class=class(this)[1],
               pathname=getPathname(this),
               cdf=cdf, units=units, ...);
   if (getOption(aromaSettings, "devel/useCacheKeyInterface", FALSE)) {
@@ -199,8 +199,6 @@ setMethodS3("readUnits", "ResidualFile", function(this, units=NULL, cdf=NULL, ..
 #   If argument \code{unlist=TRUE} is passed, an @integer @vector is returned.
 # }
 #
-# @author
-#
 # \seealso{
 #   @seeclass
 # }
@@ -239,7 +237,7 @@ setMethodS3("findUnitsTodo", "ResidualFile", function(this, units=NULL, ..., for
     # Look up chip-type and parameter specific but data set independent data
     cdf <- getCdf(this);
     chipType <- getChipType(cdf);
-    key <- list(method="findUnitsTodo", class=class(this)[1], 
+    key <- list(method="findUnitsTodo", class=class(this)[1],
                 chipType=chipType, params=getParameters(this));
     dirs <- c("aroma.affymetrix", chipType);
     if (!force) {
@@ -251,11 +249,11 @@ setMethodS3("findUnitsTodo", "ResidualFile", function(this, units=NULL, ..., for
 
   if (is.null(idxs)) {
     verbose && enter(verbose, "Identifying CDF units");
-  
+
     verbose && enter(verbose, "Reading CDF cell indices");
     idxs <- getCellIndices(this, units=units, verbose=less(verbose));
     verbose && exit(verbose);
-  
+
     verbose && enter(verbose, "Extracting first cell in the first block for each unit");
     idxs <- applyCdfGroups(idxs, function(groups) {
       # == groups[[1]]$indices[1];
@@ -276,7 +274,7 @@ setMethodS3("findUnitsTodo", "ResidualFile", function(this, units=NULL, ..., for
 
   # Read one cell from each unit
   verbose && enter(verbose, "Reading data for these ", length(idxs), " cells");
-  value <- readCel(getPathname(this), indices=idxs, readIntensities=FALSE, 
+  value <- readCel(getPathname(this), indices=idxs, readIntensities=FALSE,
                    readStdvs=TRUE, readPixels=FALSE)$stdvs;
   verbose && exit(verbose);
 
@@ -340,13 +338,13 @@ setMethodS3("getUnitGroupCellMap", "ResidualFile", function(this, units=NULL, ..
 
   # Get the unit names
   unitNames <- names(cells);
-  
+
   # Get the number of groups per unit
   unitSizes <- base::lapply(cells, FUN=function(unit) {
     length(.subset2(unit, "groups"));
   });
   unitSizes <- unlist(unitSizes, use.names=FALSE);
-  
+
   verbose && enter(verbose, "Creating return data frame");
   uUnitSizes <- unique(unitSizes);
   if (is.null(units)) {
@@ -435,7 +433,7 @@ setMethodS3("updateDataFlat", "ResidualFile", function(this, data, ..., verbose=
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'data':
-  names <- colnames(data);  
+  names <- colnames(data);
   namesStr <- paste(names, collapse=", ");
   if (!"cell" %in% names)
     throw("Argument 'data' must contain a column 'cell': ", namesStr);
@@ -498,12 +496,12 @@ setMethodS3("writeImage", "ResidualFile", function(this, ..., tags=c("*", "log2"
 # 2007-08-09
 # o ResidualFile$fromDataFile() now creates CEL files with upper-case
 #   filename extension "*.CEL", not "*.cel".  The reason for this is that
-#   some software don't recognize lower case filename extensions :(  
+#   some software don't recognize lower case filename extensions :(
 # 2007-04-12
 # o BUG FIX: fromDataFile() of ResidualFile returned an AffymetrixCelFile
 #   but not a ResidualFile.  This caused getResidualSet() of ProbeLevelModel
 #   to return a ResidualSet containing AffymetrixCelFile:s.  The same
-#   bug was found for the WeightFile class.  This problem was reported on 
+#   bug was found for the WeightFile class.  This problem was reported on
 #   the mailing list on 2007-04-06.
 # 2007-02-15 /KS
 # o BUG FIX: getCellMap() did not handle units with other than one group.

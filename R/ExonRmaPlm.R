@@ -12,7 +12,7 @@
 #  transcripts (all probes fitted together) or on an individual exon basis
 #  (probes within an exon treated as a group, but exons fitted separately).
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
@@ -29,10 +29,10 @@
 #    @see "RmaPlm".
 # }
 #
-# \author{Ken Simpson (ksimpson[at]wehi.edu.au).}
+# @author "KS, HB, EP"
 #
 # \references{
-#  Irizarry et al. \emph{Summaries of Affymetrix GeneChip probe level data}. 
+#  Irizarry et al. \emph{Summaries of Affymetrix GeneChip probe level data}.
 #  NAR, 2003, 31, e15.\cr
 # }
 #*/###########################################################################
@@ -53,17 +53,17 @@ setMethodS3("getAsteriskTags", "ExonRmaPlm", function(this, collapse=NULL, ...) 
     tags <- c(tags, "merged");
 
   # Collapse?
-  tags <- paste(tags, collapse=collapse); 
+  tags <- paste(tags, collapse=collapse);
 
   tags;
-}, protected=TRUE) 
+}, protected=TRUE)
 
 
 # utility function - keep here for now
 
 cdfMergeGroups <- function(groups, ...) {
   nbrOfGroups <- length(groups);
-  
+
   nbrOfFields <- length(.subset2(groups,1));
   newGroup <- vector("list", nbrOfFields);
   for (ff in seq_len(nbrOfFields)) {
@@ -143,7 +143,7 @@ setMethodS3("getParameters", "ExonRmaPlm", function(this, ...) {
 # }
 #
 # \author{
-#   Henrik Bengtsson and Ken Simpson (WEHI) utilizing Ben Bolstad's 
+#   Henrik Bengtsson and Ken Simpson (WEHI) utilizing Ben Bolstad's
 #   \pkg{preprocessCore} package.
 # }
 #
@@ -166,16 +166,16 @@ setMethodS3("getFitUnitGroupFunction", "ExonRmaPlm", function(this, ..., verbose
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Thresholds for skipping/using median polish
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  skipThreshold <- getOption(aromaSettings, 
+  skipThreshold <- getOption(aromaSettings,
                                  "models/RmaPlm/skipThreshold", c(Inf, Inf));
 
-  medianPolishThreshold <- getOption(aromaSettings, 
+  medianPolishThreshold <- getOption(aromaSettings,
                          "models/RmaPlm/medianPolishThreshold", c(Inf, Inf));
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # rmaModelAffyPlm()
-  # Author: Henrik Bengtsson, UC Berkeley. 
+  # Author: Henrik Bengtsson, UC Berkeley.
   # Requires: affyPLM() by Ben Bolstad.
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   exonRmaModel <- function(y, psiCode=0, psiK=1.345, ...){
@@ -189,15 +189,15 @@ setMethodS3("getFitUnitGroupFunction", "ExonRmaPlm", function(this, ..., verbose
       nbrOfArrays <- length(getDataSet(this));
       return(list(theta=rep(NA, nbrOfArrays),
                   sdTheta=rep(NA, nbrOfArrays),
-                  thetaOutliers=rep(NA, nbrOfArrays), 
-                  phi=c(), 
-                  sdPhi=c(), 
+                  thetaOutliers=rep(NA, nbrOfArrays),
+                  phi=c(),
+                  sdPhi=c(),
                   phiOutliers=c()));
-      
+
     }
 
     if (length(dim) != 2) {
-      stop("Argument 'y' must have two dimensions: ", 
+      stop("Argument 'y' must have two dimensions: ",
                                                 paste(dim, collapse="x"));
     }
 
@@ -210,7 +210,7 @@ setMethodS3("getFitUnitGroupFunction", "ExonRmaPlm", function(this, ..., verbose
 
       return(list(theta=rep(NA, I),
                   sdTheta=rep(NA, I),
-                  thetaOutliers=rep(NA, I), 
+                  thetaOutliers=rep(NA, I),
                   phi=rep(NA, K),
                   sdPhi=rep(NA, K),
                   phiOutliers=rep(NA, K)
@@ -236,7 +236,7 @@ setMethodS3("getFitUnitGroupFunction", "ExonRmaPlm", function(this, ..., verbose
     if (K > medianPolishThreshold[1] && I > medianPolishThreshold[2]) {
       mp <- medpolish(y, trace.iter=FALSE);
       fit <- list(
-        Estimates = c(mp$overall+mp$col, mp$row), 
+        Estimates = c(mp$overall+mp$col, mp$row),
         StdErrors = rep(0, length(c(mp$row, mp$col)))
       );
     } else {
@@ -244,7 +244,7 @@ setMethodS3("getFitUnitGroupFunction", "ExonRmaPlm", function(this, ..., verbose
       fit <- rlm(y, psiCode, psiK)
     }
 
-        
+
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Extract parameters
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -262,7 +262,7 @@ setMethodS3("getFitUnitGroupFunction", "ExonRmaPlm", function(this, ..., verbose
       alpha <- est[(I+1):length(est)];
       alpha[length(alpha)] <- -sum(alpha[1:(length(alpha)-1)]);
     }
-      
+
     # Estimates on the intensity scale
     theta <- 2^beta;
     phi <- 2^alpha;
@@ -271,7 +271,7 @@ setMethodS3("getFitUnitGroupFunction", "ExonRmaPlm", function(this, ..., verbose
     # such that prod(phi) = 1.
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    # A fit function must return: theta, sdTheta, thetaOutliers, 
+    # A fit function must return: theta, sdTheta, thetaOutliers,
     # phi, sdPhi, phiOutliers.
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     if (is.null(se)) {
@@ -287,8 +287,8 @@ setMethodS3("getFitUnitGroupFunction", "ExonRmaPlm", function(this, ..., verbose
     phiOutliers <- rep(FALSE, K);
 
     # Return data on the intensity scale
-    list(theta=theta, sdTheta=sdTheta, thetaOutliers=thetaOutliers, 
-         phi=phi, sdPhi=sdPhi, phiOutliers=phiOutliers);   
+    list(theta=theta, sdTheta=sdTheta, thetaOutliers=thetaOutliers,
+         phi=phi, sdPhi=sdPhi, phiOutliers=phiOutliers);
   } # rmaModelAffyPlm()
   attr(exonRmaModel, "name") <- "exonRmaModel";
 

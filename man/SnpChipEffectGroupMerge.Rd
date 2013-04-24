@@ -6,15 +6,15 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
- \name{SnpChipEffectGroupMerge}
+\name{SnpChipEffectGroupMerge}
 \docType{class}
 \alias{SnpChipEffectGroupMerge}
 
 
- \title{The SnpChipEffectGroupMerge class}
+\title{The SnpChipEffectGroupMerge class}
 
- \description{
-  Package:  aroma.affymetrix \cr
+\description{
+ Package:  aroma.affymetrix \cr
 \bold{Class SnpChipEffectGroupMerge}\cr
 
 \code{\link[R.oo]{Object}}\cr
@@ -39,24 +39,24 @@ extends \link[aroma.affymetrix]{ChipEffectGroupMerge}\cr
 
 
 
-  This class represents a method that merges SNP chip effects across groups
-  unit by unit.
- }
+ This class represents a method that merges SNP chip effects across groups
+ unit by unit.
+}
 
- \usage{
+\usage{
 SnpChipEffectGroupMerge(..., mergeStrands=FALSE, mean=c("arithmetic", "geometric"))
 }
 
- \arguments{
-   \item{...}{Arguments passed to the constructor of
-        \code{\link{ChipEffectGroupMerge}}.}
-   \item{mergeStrands}{If \code{\link[base:logical]{TRUE}}, group strands are merged.}
-   \item{mean}{A \code{\link[base]{character}} string specifying what type of averaging
-        should be applied.}
- }
+\arguments{
+  \item{...}{Arguments passed to the constructor of
+       \code{\link{ChipEffectGroupMerge}}.}
+  \item{mergeStrands}{If \code{\link[base:logical]{TRUE}}, group strands are merged.}
+  \item{mean}{A \code{\link[base]{character}} string specifying what type of averaging
+       should be applied.}
+}
 
- \section{Fields and Methods}{
-  \bold{Methods:}\cr
+\section{Fields and Methods}{
+ \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{getMergeFunction} \tab  -\cr
 }
@@ -75,15 +75,15 @@ getOutputDataSet, getOutputFiles
 as.character, getAsteriskTags, getExpectedOutputFiles, getExpectedOutputFullnames, getFullName, getInputDataSet, getName, getOutputDataSet, getOutputDataSet0, getOutputFiles, getPath, getRootPath, getTags, isDone, process, setTags
 
  \bold{Methods inherited from ParametersInterface}:\cr
-getParameters, getParametersAsString, getParameterSets
+getParameterSets, getParameters, getParametersAsString
 
  \bold{Methods inherited from Object}:\cr
 $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save, asThis
 
 
- }
+}
 
- \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 
 \keyword{classes}

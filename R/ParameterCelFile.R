@@ -8,7 +8,7 @@
 #
 #  A ParameterCelFile object represents parameter estimates.
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
@@ -22,27 +22,27 @@
 # \section{Fields and Methods}{
 #  @allmethods "public"
 # }
-# 
+#
 # \section{File format}{
-#   The idea behind this class is store data fields which by nature have 
+#   The idea behind this class is store data fields which by nature have
 #   one value per probe (per field) in CEL files.  A perfect example is to
 #   store probe-affinity estimates and their standard deviations.  There
 #   is one probe affinity per probe so the structure of a CEL file (and
 #   its coupled CDF file) is well suited to read/write such information.
-#   
-#   Consider a unit group with L probes.  A CEL file stores 
-#   \code{intensities} (L floats), \code{stdvs} (L floats), and 
+#
+#   Consider a unit group with L probes.  A CEL file stores
+#   \code{intensities} (L floats), \code{stdvs} (L floats), and
 #   \code{pixels} (L integers).  Thus, for each probe l=1,...,L, a
 #   (float, float, integer) tuple is stored.  We can use this for any
 #   information we want.  If we want a slightly different structure,
 #   we can choose to encode/decode our structure/information to fit the
-#   structure of the CEL file.  This abstract class provides transparent 
+#   structure of the CEL file.  This abstract class provides transparent
 #   methods for encoding and decoding such information through methods
 #   \code{encodeUnitGroup()} and \code{decodeUnitGroup()}.
 #   By subclassing you can implement different types of data structures.
 # }
 #
-# @author
+# @author "HB"
 #
 # @keyword "IO"
 #*/###########################################################################
@@ -78,7 +78,7 @@ setMethodS3("setDecodeFunction", "ParameterCelFile", function(this, fcn, ...) {
   invisible(this);
 }, private=TRUE)
 
-# There was a lot of overhead for calling functions in the previous 
+# There was a lot of overhead for calling functions in the previous
 # encoding/decoding mechanism where encode() called encodeUnit() for
 # every unit individually. Same for decode() and decodeUnits(). The
 # new mechanism skips the uncodeUnit() and decodeUnit() step.
@@ -131,7 +131,7 @@ setMethodS3("readUnits", "ParameterCelFile", function(this, ..., readStdvs=FALSE
       }
     }
   }
- 
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Retrieve and decoding data
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -166,7 +166,7 @@ setMethodS3("updateUnits", "ParameterCelFile", function(this, data, cdf=NULL, ..
   }
 
   verbose && enter(verbose, "Updating units");
- 
+
   verbose && enter(verbose, "Encoding units");
   data <- encode(this, data);
   verbose && exit(verbose);

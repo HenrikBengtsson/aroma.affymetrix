@@ -17,11 +17,11 @@
 # }
 #
 # \value{
-#   Returns @TRUE if the chip type refers to a resequence array, 
+#   Returns @TRUE if the chip type refers to a resequence array,
 #   otherwise @FALSE.
 # }
 #
-# @author
+# @author "HB"
 #
 # \seealso{
 #   @seeclass
@@ -71,7 +71,7 @@ setMethodS3("isResequenceChip", "AffymetrixCdfFile", function(this, ...) {
 #   Returns a @vector of @factors.
 # }
 #
-# @author
+# @author "HB"
 #
 # \seealso{
 #   @seeclass
@@ -185,7 +185,7 @@ setMethodS3("getCellQuartets", "AffymetrixCdfFile", function(this, units=NULL, m
 
   verbose && enter(verbose, "Getting cell-index matrices");
 
-  key <- list(method="getCellQuartets", class=class(this)[1], 
+  key <- list(method="getCellQuartets", class=class(this)[1],
               units=units, mergeGroups=mergeGroups);
   if (getOption(aromaSettings, "devel/useCacheKeyInterface", FALSE)) {
     key <- getCacheKey(this, method="getCellQuartets", units=units, mergeGroups=mergeGroups);

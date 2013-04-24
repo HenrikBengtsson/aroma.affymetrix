@@ -29,8 +29,6 @@
   Returns a \code{\link[base]{character}}, or \code{\link[base]{NULL}} if no alias is set.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
-
 \seealso{
   \code{\link[aroma.affymetrix:setAlias.GenericReporter]{*setAlias}()}.
   \code{\link[aroma.affymetrix:getName.GenericReporter]{*getName}()}.

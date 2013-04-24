@@ -7,37 +7,37 @@
 #  @classhierarchy
 #
 #  This abstract class represents a normalization method that corrects
-#  for systematic effects in the probe intensities due to probe-sequence 
+#  for systematic effects in the probe intensities due to probe-sequence
 #  dependent effects that can be modelled using a linear model.
 # }
-# 
-# @synopsis 
+#
+# @synopsis
 #
 # \arguments{
-#   \item{...}{Arguments passed to the constructor of 
+#   \item{...}{Arguments passed to the constructor of
 #     @see "AbstractProbeSequenceNormalization".}
 # }
 #
 # \section{Fields and Methods}{
-#  @allmethods "public"  
+#  @allmethods "public"
 # }
-# 
+#
 # \section{Requirements}{
 #   This class requires that an aroma probe sequence file is available
 #   for the chip type.
 # }
 #
 # \section{Memory usage}{
-#  The model fitting methods of this class are bounded in memory.  
+#  The model fitting methods of this class are bounded in memory.
 #  This is done by first building up the normal equations incrementally
 #  in chunks of cells.  The generation of normal equations is otherwise
 #  the step that consumes the most memory.
-#  When the normal equations are available, the @see "base::solve" 
+#  When the normal equations are available, the @see "base::solve"
 #  method is used to solve the equations.  Note that this algorithm is
 #  still exact.
 # }
-# 
-# @author
+#
+# @author "HB"
 #*/###########################################################################
 setConstructorS3("LinearModelProbeSequenceNormalization", function(...) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -140,7 +140,7 @@ setMethodS3("getNormalEquations", "LinearModelProbeSequenceNormalization", funct
   verbose && cat(verbose, "Cells:");
   verbose && str(verbose, cells);
   nbrOfCells <- length(cells);
-  verbose && cat(verbose, "Number of cells: ", nbrOfCells); 
+  verbose && cat(verbose, "Number of cells: ", nbrOfCells);
 
   verbose && cat(verbose, "RAM scale factor: ", ram);
 
@@ -154,42 +154,42 @@ setMethodS3("getNormalEquations", "LinearModelProbeSequenceNormalization", funct
   xtx <- 0;
   xty <- 0;
 
-  idxs <- 1:nbrOfCells; 
+  idxs <- 1:nbrOfCells;
   head <- 1:cellsPerChunk;
-  count <- 1; 
+  count <- 1;
   while (length(idxs) > 0) {
-    verbose && enter(verbose, "Processing chunk #", count, " of ", nbrOfChunks); 
+    verbose && enter(verbose, "Processing chunk #", count, " of ", nbrOfChunks);
     if (length(idxs) < cellsPerChunk) {
       head <- 1:length(idxs);
     }
     cc <- idxs[head];
 
     verbose && cat(verbose, "Cells: ");
-    verbose && str(verbose, cells[cc]); 
- 
+    verbose && str(verbose, cells[cc]);
+
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Getting design matrix for subset
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     verbose && enter(verbose, "Getting design matrix");
     # cache=TRUE => Cache to file.
-    res <- getDesignMatrix(this, cells=cells[cc], cache=TRUE, 
+    res <- getDesignMatrix(this, cells=cells[cc], cache=TRUE,
                                                  verbose=less(verbose, 5));
     X <- res$X;
-  
+
     verbose && cat(verbose, "Design matrix:");
     verbose && str(verbose, X);
-  
+
     B <- res$B;
     verbose && cat(verbose, "Basis vectors:");
     verbose && str(verbose, B);
     map <- res$map;
-  
+
     factors <- res$factors;
     verbose && cat(verbose, "Factors:");
     verbose && str(verbose, factors);
-  
+
     rm(res);
-  
+
     gc <- gc();
     verbose && print(verbose, gc);
 
@@ -199,7 +199,7 @@ setMethodS3("getNormalEquations", "LinearModelProbeSequenceNormalization", funct
     stopifnot(nrow(X) == length(cells[cc]));
     stopifnot(nrow(X) == length(yCC));
     verbose && exit(verbose);
-  
+
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Keep only data points with finite signals
@@ -219,14 +219,14 @@ setMethodS3("getNormalEquations", "LinearModelProbeSequenceNormalization", funct
     # Calculating cross products X'X and X'y
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     verbose && enter(verbose, "Calculating cross product X'X");
-    xtxChunk <- crossprod(X);  
+    xtxChunk <- crossprod(X);
     verbose && str(verbose, xtxChunk);
     xtx <- xtx + xtxChunk;
     rm(xtxChunk);
     verbose && exit(verbose);
 
-  
-    verbose && enter(verbose, "Calculating cross product X'y");   
+
+    verbose && enter(verbose, "Calculating cross product X'y");
     xtyChunk <- crossprod(X, yCC);
     verbose && str(verbose, xtyChunk);
     xty <- xty + xtyChunk;
@@ -234,9 +234,9 @@ setMethodS3("getNormalEquations", "LinearModelProbeSequenceNormalization", funct
     verbose && exit(verbose);
 
     # Clean up
-   
+
     # Next chunk
-    idxs <- idxs[-head]; 
+    idxs <- idxs[-head];
     count <- count + 1;
 
     # Garbage collect
@@ -411,7 +411,7 @@ setMethodS3("predictOne", "LinearModelProbeSequenceNormalization", function(this
   if (is.null(seqs)) {
     # Locate AromaCellSequenceFile holding probe sequences
     acs <- getAromaCellSequenceFile(this, verbose=less(verbose, 5));
-    seqs <- readSequenceMatrix(acs, cells=cells, what="raw", 
+    seqs <- readSequenceMatrix(acs, cells=cells, what="raw",
                                          verbose=less(verbose, 5));
     rm(acs, cells);
     gc <- gc();
@@ -462,7 +462,7 @@ setMethodS3("getSignalTransform", "LinearModelProbeSequenceNormalization", funct
 # 2008-11-29
 # o Extracted from BasePositionNormalization.R.
 # o Now fitOne() takes an argument 'ram' which is passed from process().
-# o The predictOne() method is looping over probe positions, which is 
+# o The predictOne() method is looping over probe positions, which is
 #   fairly memory efficient.  For this reason, we leave it as it.  We
 #   can now fit a GenomeWideSNP_6 array with approx 1GB of RAM (instead
 #   of 5-6GB before)!

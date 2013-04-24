@@ -11,7 +11,7 @@
 #  The nature of a single-array unit model is that each array can be fitted
 #  independently of the others.
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
@@ -22,7 +22,7 @@
 #  @allmethods "public"
 # }
 #
-# @author
+# @author "HB"
 #*/###########################################################################
 setConstructorS3("SingleArrayUnitModel", function(...) {
   extend(UnitModel(...), "SingleArrayUnitModel")
@@ -52,8 +52,6 @@ setConstructorS3("SingleArrayUnitModel", function(...) {
 # \value{
 #  Returns a @function.
 # }
-#
-# @author
 #
 # \seealso{
 #   @seeclass
@@ -120,7 +118,7 @@ setMethodS3("getFitUnitFunction", "SingleArrayUnitModel", function(this, ...) {
 # @title "Reads data unit by unit"
 #
 # \description{
-#  @get "title" for all or a subset of units (probeset) 
+#  @get "title" for all or a subset of units (probeset)
 #  specially structured for this PLM.
 # }
 #
@@ -128,18 +126,16 @@ setMethodS3("getFitUnitFunction", "SingleArrayUnitModel", function(this, ...) {
 #
 # \arguments{
 #   \item{units}{The units to be read. If @NULL, all units are read.}
-#   \item{...}{Arguments passed to \code{getCellIndices()} of the 
+#   \item{...}{Arguments passed to \code{getCellIndices()} of the
 #     @see "AffymetrixCdfFile" class (if \code{cdf} was not specified),
-#     but also to the \code{readUnits()} method of the 
+#     but also to the \code{readUnits()} method of the
 #     @see "AffymetrixCelFile" class.}
 # }
 #
 # \value{
-#  Returns the @list structure that \code{readUnits()} of 
+#  Returns the @list structure that \code{readUnits()} of
 #  @see "AffymetrixCelFile" returns.
 # }
-#
-# @author
 #
 # \seealso{
 #   @seeclass

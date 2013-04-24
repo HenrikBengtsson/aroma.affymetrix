@@ -6,7 +6,7 @@
 # \description{
 #  @classhierarchy
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
@@ -14,10 +14,10 @@
 # }
 #
 # \section{Fields and Methods}{
-#  @allmethods "public"  
+#  @allmethods "public"
 # }
-# 
-# @author
+#
+# @author "HB"
 #*/###########################################################################
 setConstructorS3("SnpInformation", function(...) {
   this <- extend(GenericDataFile(...), c("SnpInformation"
@@ -62,8 +62,6 @@ setMethodS3("as.character", "SnpInformation", function(x, ...) {
 #   thrown.
 # }
 #
-# @author
-#
 # \seealso{
 #   @seeclass
 # }
@@ -92,8 +90,6 @@ setMethodS3("verify", "SnpInformation", function(this, ...) {
 # \value{
 #   Returns a @character string.
 # }
-#
-# @author
 #
 # \seealso{
 #   @seeclass
@@ -138,8 +134,6 @@ setMethodS3("getChipType", "SnpInformation", function(this, ...) {
 #   Returns a @see "SnpInformation" object.
 # }
 #
-# @author
-#
 # \seealso{
 #   @seemethod "byChipType".
 #   @seeclass
@@ -170,8 +164,6 @@ setMethodS3("fromCdf", "SnpInformation", function(static, cdf, ...) {
 # \value{
 #   Returns a @see "SnpInformation" object.
 # }
-#
-# @author
 #
 # \seealso{
 #   @seemethod "fromCdf".
@@ -212,7 +204,7 @@ setMethodS3("isCompatibleWithCdf", "SnpInformation", function(this, cdf, ...) {
 # \arguments{
 #  \item{units}{The units for which the data should be returned.}
 #  \item{fields}{The fields to be returned.}
-#  \item{orderBy}{The fields by which the returned data frame should be 
+#  \item{orderBy}{The fields by which the returned data frame should be
 #      ordered.}
 #  \item{...}{Named arguments used to select a subset of the units to be
 #      returned.  Either a value to be compared to or a @function returning
@@ -223,8 +215,6 @@ setMethodS3("isCompatibleWithCdf", "SnpInformation", function(this, cdf, ...) {
 #   Returns a @data.frame, where the row names correspond to unit indices
 #   as defined by the CDF.
 # }
-#
-# @author
 #
 # \seealso{
 #   @seeclass
@@ -264,7 +254,7 @@ setMethodS3("getData", "SnpInformation", function(this, units=NULL, fields=c("fr
     len <- sapply(lss, FUN=length);
     if (any(len != 3)) {
       ulen <- unique(len);
-      throw("Internal error: Unrecognized length of FLSS: ", 
+      throw("Internal error: Unrecognized length of FLSS: ",
                                            paste(ulen, collapse=", "));
     }
     lss <- unlist(lss, use.names=FALSE);
@@ -360,7 +350,7 @@ setMethodS3("readTableInternal", "SnpInformation", function(this, pathname, colC
   colClasses[names(colClasses) %in% exclude] <- "NULL";
   toRead <- names(colClasses)[colClasses != "NULL"];
   verbose && cat(verbose, "Columns to be read: ", paste(toRead, collapse=", "));
-  
+
   df <- readTable(pathname, colClasses=colClasses, header=TRUE, sep="\t", ..., verbose=less(verbose));
 
   colnames(df) <- toCamelCase(colnames(df));
@@ -411,10 +401,10 @@ setMethodS3("getFragmentStops", "SnpInformation", function(this, enzymes=seq_len
 ############################################################################
 # HISTORY:
 # 2008-04-14
-# o Renamed readData() to readDataFrame() for SnpInformation. 
+# o Renamed readData() to readDataFrame() for SnpInformation.
 # 2007-11-19
 # o Now getFragmentLength/Starts/Stops() of SnpInformation return a matrix
-#   where each column correspond to an enzyme. This is was added because 
+#   where each column correspond to an enzyme. This is was added because
 #   the new SNP chips have two enzymes. Added nbrOfEnzymes().
 # 2007-01-22
 # o BUG FIX: getData() did not support the dChip SNP information file for
@@ -422,4 +412,4 @@ setMethodS3("getFragmentStops", "SnpInformation", function(this, enzymes=seq_len
 #   different format compared with the 100K and the 500K files.
 # 2006-09-17
 # o Created from GenomeInformation.R.
-############################################################################  
+############################################################################

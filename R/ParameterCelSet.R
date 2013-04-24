@@ -8,7 +8,7 @@
 #
 #  A ParameterCelSet object represents a set of @see "ParameterCelFile":s.
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
@@ -18,8 +18,8 @@
 # \section{Fields and Methods}{
 #  @allmethods "public"
 # }
-# 
-# @author
+#
+# @author "HB"
 #
 # @keyword "IO"
 #*/###########################################################################
@@ -57,14 +57,14 @@ setConstructorS3("ParameterCelSet", function(...) {
 # }
 #
 # \value{
-#  Returns an JxK @double @matrix where J is the number of units, 
+#  Returns an JxK @double @matrix where J is the number of units,
 #  and K is the number of arrays.
 #  The names of the columns are the names of the arrays.
 #  No names are set for the rows.
 #  The rows are ordered according to \code{units} arguments.
 # }
 #
-# @author
+# @author "HB"
 #
 # \seealso{
 #   @seemethod "extractDataFrame".
@@ -143,7 +143,7 @@ setMethodS3("extractMatrix", "ParameterCelSet", function(this, units=NULL, ..., 
   for (aa in seq_len(nbrOfArrays)) {
     verbose && printf(verbose, "Array %d,\n", aa);
     cf <- getFile(this, aa);
-    df[,aa] <- getDataFlat(cf, units=ugcMap, fields=field, 
+    df[,aa] <- getDataFlat(cf, units=ugcMap, fields=field,
                                             verbose=less(verbose))[,field];
     if (aa %% gcArrayFrequency == 0) {
       # Garbage collect
@@ -181,7 +181,7 @@ setMethodS3("extractMatrix", "ParameterCelSet", function(this, units=NULL, ..., 
 #
 # \arguments{
 #   \item{...}{Arguments passed to @seemethod "extractMatrix".}
-#   \item{addNames}{If @TRUE, the first two columns contain the 
+#   \item{addNames}{If @TRUE, the first two columns contain the
 #     unit names and the group names according the the CDF, otherwise
 #     those two columns are not included.}
 #   \item{addUgcMap}{If @TRUE, the columns following the unit and
@@ -190,9 +190,9 @@ setMethodS3("extractMatrix", "ParameterCelSet", function(this, units=NULL, ..., 
 # }
 #
 # \value{
-#  Returns a Jx(2+3+K) @data.frame where J is the number of units, 
-#  and K is the number of arrays.  
-#  The first two columns, if \code{addNames=TRUE}, contains the 
+#  Returns a Jx(2+3+K) @data.frame where J is the number of units,
+#  and K is the number of arrays.
+#  The first two columns, if \code{addNames=TRUE}, contains the
 #  unit names and the group names.
 #  The next three columns contains the (unit, group, cell) index map.
 #  The last K columns named by the arrays contain the data for the K arrays.
@@ -200,7 +200,7 @@ setMethodS3("extractMatrix", "ParameterCelSet", function(this, units=NULL, ..., 
 #  The rows are ordered according to \code{units} arguments.
 # }
 #
-# @author
+# @author "HB"
 #
 # \seealso{
 #   @seemethod "extractMatrix".
@@ -220,7 +220,7 @@ setMethodS3("extractDataFrame", "ParameterCelSet", function(this, addNames=FALSE
 
 
   verbose && enter(verbose, "Getting data for the array set");
-  data <- extractMatrix(this, ..., returnUgcMap=TRUE, 
+  data <- extractMatrix(this, ..., returnUgcMap=TRUE,
                                                    verbose=less(verbose, 1));
 
   ugcMap <- attr(data, "unitGroupCellMap");
@@ -247,9 +247,9 @@ setMethodS3("extractDataFrame", "ParameterCelSet", function(this, addNames=FALSE
   if (addNames) {
     verbose && enter(verbose, "Appending unit and group names from CDF");
     cdf <- getCdf(this);
-    verbose && cat(verbose, "CDF chip type: ", 
+    verbose && cat(verbose, "CDF chip type: ",
                                         getChipType(cdf, fullname=TRUE));
-    ugNames <- getUnitGroupNamesFromUgcMap(cdf, ugcMap=ugcMap, 
+    ugNames <- getUnitGroupNamesFromUgcMap(cdf, ugcMap=ugcMap,
                                               verbose=less(verbose, 10));
     rm(cdf, ugcMap);
     verbose && cat(verbose, "(unit, group) names: ");
@@ -285,9 +285,9 @@ setMethodS3("extractDataFrame", "ParameterCelSet", function(this, addNames=FALSE
 # o Updated the following methods to preallocate matrixes with the correct
 #   data type to avoid coercing later: extractMatrix().
 # 2008-07-16
-# o Added argument drop=FALSE to extractDataFrame(). 
+# o Added argument drop=FALSE to extractDataFrame().
 # 2008-07-09
-# o Added argument drop=FALSE to extractMatrix(). 
+# o Added argument drop=FALSE to extractMatrix().
 # 2008-02-28
 # o Now argument 'units' also can be a UnitGroupCellMap.
 # 2008-02-22

@@ -29,8 +29,6 @@
   Returns a \code{\link{SnpInformation}} object.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
-
 \seealso{
   \code{\link[aroma.affymetrix:fromCdf.SnpInformation]{*fromCdf}()}.
   For more information see \code{\link{SnpInformation}}.

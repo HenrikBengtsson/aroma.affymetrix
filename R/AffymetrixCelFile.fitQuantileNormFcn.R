@@ -14,7 +14,7 @@
 #   \item{yTarget}{The target probe signals.}
 #   \item{subset}{An optional @numeric @vector specifying the indices of the
 #      subset of probes to be used to fit the normalization function.}
-#   \item{spar, nknots}{Control parameters passed to 
+#   \item{spar, nknots}{Control parameters passed to
 #      @see "stats::smooth.spline".}
 #   \item{...}{Not used.}
 #   \item{verbose}{See @see "R.utils::Verbose".}
@@ -24,7 +24,7 @@
 #  Returns a normalization @function.
 # }
 #
-# @author
+# @author "HB"
 #
 # \seealso{
 #   @seeclass
@@ -64,7 +64,7 @@ setMethodS3("fitQuantileNormFcn", "AffymetrixCelFile", function(this, yTarget, s
   # Fit normalization function
   verbose && enter(verbose, "Fitting smooth spline");
   ok <- !is.na(yTarget) & !is.na(y);
-  sp <- smooth.spline(x=y[ok], y=yTarget[ok], spar=spar, nknots=nknots, 
+  sp <- smooth.spline(x=y[ok], y=yTarget[ok], spar=spar, nknots=nknots,
                                                           keep.data=FALSE);
   verbose && exit(verbose);
 
@@ -112,7 +112,7 @@ setMethodS3("fitQuantileNormFcn", "AffymetrixCelFile", function(this, yTarget, s
 # o BUG FIX:  fitQuantileNormFcn() returned a function that when called with
 #   x values forcing extrapolation, error "Error in Recall(object, xrange) :
 #   couldn't find function "predict.smooth.spline.fit" would be thrown.
-#   This is because you cannot do predict(sp$fit, ...) but only 
+#   This is because you cannot do predict(sp$fit, ...) but only
 #   predict(sp, ...).  Why I don't really know; probably about namespaces.
 # 2006-03-18
 # o Added argument 'subset' to fitQuantileNormFcn().

@@ -37,9 +37,7 @@
  Returns the background adjusted \code{\link{AffymetrixCelFile}} object.
 }
 
-\author{
-  Ken Simpson (ksimpson[at]wehi.edu.au).
-}
+\author{Ken Simpson, Henrik Bengtsson}
 
 \seealso{
  \code{\link[affy]{bg.adjust}}

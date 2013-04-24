@@ -6,15 +6,15 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
- \name{SpatialReporter}
+\name{SpatialReporter}
 \docType{class}
 \alias{SpatialReporter}
 
 
- \title{The SpatialReporter class}
+\title{The SpatialReporter class}
 
- \description{
-  Package:  aroma.affymetrix \cr
+\description{
+ Package:  aroma.affymetrix \cr
 \bold{Class SpatialReporter}\cr
 
 \code{\link[R.oo]{Object}}\cr
@@ -35,21 +35,21 @@ extends \emph{\link[aroma.affymetrix]{AffymetrixCelSetReporter}}\cr
 
 
 
-  A SpatialReporter generates image files of spatial representations of
-  cell signals for each of the arrays in the input set.
- }
+ A SpatialReporter generates image files of spatial representations of
+ cell signals for each of the arrays in the input set.
+}
 
- \usage{
+\usage{
 SpatialReporter(..., reference=NULL)
 }
 
- \arguments{
-   \item{...}{Arguments passed to \code{\link{AffymetrixCelSetReporter}}.}
-   \item{reference}{An optional reference \code{\link{AffymetrixCelFile}}.}
- }
+\arguments{
+  \item{...}{Arguments passed to \code{\link{AffymetrixCelSetReporter}}.}
+  \item{reference}{An optional reference \code{\link{AffymetrixCelFile}}.}
+}
 
- \section{Fields and Methods}{
-  \bold{Methods:}\cr
+\section{Fields and Methods}{
+ \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{addColorMap} \tab  -\cr
  \tab \code{getColorMaps} \tab  -\cr
@@ -72,7 +72,7 @@ as.character, getAlias, getAsteriskTags, getFullName, getInputName, getInputTags
 $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save, asThis
 
 
- }
+}
 
- \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 \keyword{classes}

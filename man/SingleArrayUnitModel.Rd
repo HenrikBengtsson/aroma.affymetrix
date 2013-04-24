@@ -6,15 +6,15 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
- \name{SingleArrayUnitModel}
+\name{SingleArrayUnitModel}
 \docType{class}
 \alias{SingleArrayUnitModel}
 
 
- \title{The SingleArrayUnitModel class}
+\title{The SingleArrayUnitModel class}
 
- \description{
-  Package:  aroma.affymetrix \cr
+\description{
+ Package:  aroma.affymetrix \cr
 \bold{Class SingleArrayUnitModel}\cr
 
 \code{\link[R.oo]{Object}}\cr
@@ -35,22 +35,22 @@ extends \emph{\link[aroma.affymetrix]{UnitModel}}\cr
 
 
 
-  This abstract class represents a unit model that fits one model per unit
-  based on signals from a single arrays.
-  The nature of a single-array unit model is that each array can be fitted
-  independently of the others.
- }
+ This abstract class represents a unit model that fits one model per unit
+ based on signals from a single arrays.
+ The nature of a single-array unit model is that each array can be fitted
+ independently of the others.
+}
 
- \usage{
+\usage{
 SingleArrayUnitModel(...)
 }
 
- \arguments{
-   \item{...}{Arguments passed to \code{\link{UnitModel}}.}
- }
+\arguments{
+  \item{...}{Arguments passed to \code{\link{UnitModel}}.}
+}
 
- \section{Fields and Methods}{
-  \bold{Methods:}\cr
+\section{Fields and Methods}{
+ \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{\link[aroma.affymetrix:fit.SingleArrayUnitModel]{fit}} \tab Estimates the model parameters.\cr
 }
@@ -63,13 +63,13 @@ findUnitsTodo, getAsteriskTags, getFitSingleCellUnitFunction, getParameters
 as.character, fit, getAlias, getAsteriskTags, getDataSet, getFullName, getName, getParameterSet, getPath, getRootPath, getTags, setAlias, setTags
 
  \bold{Methods inherited from ParametersInterface}:\cr
-getParameters, getParametersAsString, getParameterSets
+getParameterSets, getParameters, getParametersAsString
 
  \bold{Methods inherited from Object}:\cr
 $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save, asThis
 
 
- }
+}
 
- \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 \keyword{classes}

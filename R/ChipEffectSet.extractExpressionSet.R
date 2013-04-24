@@ -24,7 +24,7 @@
 #  Returns an @see "Biobase::ExpressionSet-class" object.
 # }
 #
-# @author
+# @author "HB"
 #
 # \seealso{
 #   @seeclass
@@ -51,13 +51,13 @@ setMethodS3("extractExpressionSet", "ChipEffectSet", function(this, ..., logBase
     on.exit(popState(verbose));
   }
 
-  verbose && enter(verbose, "Extract an ExpressionSet");  
+  verbose && enter(verbose, "Extract an ExpressionSet");
 
   verbose && print(verbose, this);
-  verbose && cat(verbose, "Number of arrays: ", length(this));  
+  verbose && cat(verbose, "Number of arrays: ", length(this));
 
 
-  verbose && enter(verbose, "Reading data");  
+  verbose && enter(verbose, "Reading data");
   Y <- extractMatrix(this, ..., returnUgcMap=TRUE, verbose=less(verbose, 5));
   ugcMap <- attr(Y, "unitGroupCellMap");
   attr(Y, "unitGroupCellMap") <- NULL;

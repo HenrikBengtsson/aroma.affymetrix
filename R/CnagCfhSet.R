@@ -6,11 +6,11 @@
 # \description{
 #  @classhierarchy
 #
-#  An CnagCfhSet object represents a set of CNAG CFH files 
+#  An CnagCfhSet object represents a set of CNAG CFH files
 #  with \emph{identical} chip types.
 # }
-# 
-# @synopsis 
+#
+# @synopsis
 #
 # \arguments{
 #   \item{files}{A @list of @see "CnagCfhFile":s.}
@@ -18,14 +18,14 @@
 # }
 #
 # \section{Fields and Methods}{
-#  @allmethods "public"  
+#  @allmethods "public"
 # }
-# 
+#
 # \seealso{
 #   @see "CnagCfhFile".
 # }
 #
-# @author
+# @author "HB"
 #*/###########################################################################
 setConstructorS3("CnagCfhSet", function(files=NULL, ...) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -133,8 +133,6 @@ setMethodS3("append", "CnagCfhSet", function(this, other, clone=TRUE, ..., verbo
 #  Returns a @character string.
 # }
 #
-# @author
-#
 # \seealso{
 #   @seeclass
 # }
@@ -163,7 +161,7 @@ setMethodS3("as.character", "CnagCfhSet", function(x, ...) {
   # tifferent 'tzone' attributes, e.g. if some files where scanning during
   # daylight savings time and some not, we will get a warning saying:
   # "'tzone' attributes are inconsistent".  By doing the below, we avoid
-  # this warning (which confuses users). 
+  # this warning (which confuses users).
   ts <- sort(ts);
   ts <- ts[c(1,n)];
   ok <- is.finite(ts);
@@ -228,8 +226,6 @@ setMethodS3("getIdentifier", "CnagCfhSet", function(this, ..., force=FALSE) {
 #  Returns an @see "AffymetrixCdfFile" object.
 # }
 #
-# @author
-#
 # \seealso{
 #   @seemethod "setCdf".
 #   @seeclass
@@ -262,8 +258,6 @@ setMethodS3("getCdf", "CnagCfhSet", function(this, ...) {
 #  Returns nothing.
 # }
 #
-# @author
-#
 # \seealso{
 #   @seemethod "getCdf".
 #   @seeclass
@@ -292,7 +286,7 @@ setMethodS3("setCdf", "CnagCfhSet", function(this, cdf, verbose=FALSE, ...) {
   lapply(this, FUN=setCdf, cdf, ...);
   verbose && exit(verbose);
 
-  # Have to clear the cache 
+  # Have to clear the cache
   verbose && enter(verbose, "Clearing data-set cache");
   clearCache(this);
   verbose && exit(verbose);
@@ -333,7 +327,7 @@ setMethodS3("byName", "CnagCfhSet", function(static, name, tags=NULL, chipType, 
 setMethodS3("byPath", "CnagCfhSet", function(static, path="rawData/", pattern="[.](c|C)(f|F)(h|H)$", checkChipType=TRUE, ..., onDuplicates=c("keep", "exclude", "error"), fileClass="CnagCfhFile", verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'onDuplicates':
   onDuplicates <- match.arg(onDuplicates);
 
@@ -344,14 +338,14 @@ setMethodS3("byPath", "CnagCfhSet", function(static, path="rawData/", pattern="[
     on.exit(popState(verbose));
   }
 
-  
+
   verbose && enter(verbose, "Defining ", class(static)[1], " from files");
 
   this <- NextMethod("byPath", path=path, pattern=pattern, fileClass=fileClass, verbose=less(verbose));
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Handle duplicates
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (onDuplicates %in% c("exclude", "error")) {
     dups <- isDuplicated(this);
     ndups <- sum(dups);
@@ -369,17 +363,17 @@ setMethodS3("byPath", "CnagCfhSet", function(static, path="rawData/", pattern="[
       }
     }
   }
- 
+
   if (length(this) > 0) {
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Scan all CFH files for possible chip types
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Chip type according to the directory structure
     path <- getPath(this);
     chipType <- basename(path);
-    verbose && cat(verbose, "The chip type according to the directory is: ", 
+    verbose && cat(verbose, "The chip type according to the directory is: ",
                                                                 chipType);
-  
+
     # Let the directory name specify the chip type?
     if (checkChipType) {
       verbose && enter(verbose, "Scanning CFH set for used chip types");
@@ -391,22 +385,22 @@ setMethodS3("byPath", "CnagCfhSet", function(static, path="rawData/", pattern="[
       verbose && print(verbose, tChipTypes);
       nbrOfChipTypes <- length(tChipTypes);
       verbose && exit(verbose);
-    
+
       if (nbrOfChipTypes > 1) {
-        verbose && cat(verbose, "Detected ", nbrOfChipTypes, 
+        verbose && cat(verbose, "Detected ", nbrOfChipTypes,
                                         " different chip types in CFH set: ",
                                     paste(names(tChipTypes), collapse=", "));
       } else {
-        verbose && cat(verbose, "All CFH files use the same chip type: ", 
+        verbose && cat(verbose, "All CFH files use the same chip type: ",
                                                           names(tChipTypes));
       }
-    
+
       # If chip type is taken from CFH headers and there are more than
       # one chip type in the set, then it is an error.
       if (nbrOfChipTypes > 1) {
         throw("Detected ", nbrOfChipTypes, " different chip types in CFH set. Use argument 'checkChipType=FALSE' to let the directory name of the CFH set specify the chip type instead: ", paste(names(tChipTypes), collapse=", "));
-      } 
-  
+      }
+
       # Validate that the directory name matches the chip type
       if (!identical(names(tChipTypes), chipType)) {
         throw("Invalid name of directory containing CFH files. The name of the directory (", chipType, ") must be the same as the chip type used for the CFH files (", names(tChipTypes), "): ", path);
@@ -414,19 +408,19 @@ setMethodS3("byPath", "CnagCfhSet", function(static, path="rawData/", pattern="[
     } else {
       verbose && cat(verbose, "Since 'checkChipType=FALSE', then the chip type specified by the directory name is used: ", chipType);
     }
-  
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Use the same CDF object for all CFH files.
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     verbose && enter(verbose, "Updating the CDF for all files");
     verbose && cat(verbose, "Chip type: ", chipType);
     cdf <- AffymetrixCdfFile$byChipType(chipType);
     setCdf(this, cdf, .checkArgs=FALSE);
     verbose && exit(verbose);
-  
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Scan for SAF files and apply them
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     verbose && enter(verbose, "Scanning for and applying sample annotation files");
     sas <- SampleAnnotationSet$loadAll(verbose=less(verbose));
     if (length(sas) == 0L) {
@@ -468,8 +462,6 @@ setMethodS3("byPath", "CnagCfhSet", function(static, path="rawData/", pattern="[
 #   Returns an @integer.
 # }
 #
-# @author
-#
 # \seealso{
 #   @seeclass
 # }
@@ -500,8 +492,6 @@ setMethodS3("nbrOfArrays", "CnagCfhSet", function(this, ...) {
 # \value{
 #   Returns an @see "CnagCfhSet" object.
 # }
-#
-# @author
 #
 # \seealso{
 #   @seeclass
@@ -542,8 +532,6 @@ setMethodS3("as.CnagCfhSet", "default", function(object, ...) {
 #   An element with value @TRUE indicates that the corresponding CFH file
 #   has the same time stamp as another preceeding CFH file.
 # }
-#
-# @author
 #
 # \seealso{
 #   Internally @see "base::duplicated" is used to compare timestamps.
@@ -656,16 +644,16 @@ setMethodS3("readUnits", "CnagCfhSet", function(this, units=NULL, ..., force=FAL
     }
   }
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Read signals
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Get the pathnames of all CFH files
   pathnames <- getPathnames(this);
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Read data from file
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-  verbose && enter(verbose, "Calling readCelUnits() for ", 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  verbose && enter(verbose, "Calling readCelUnits() for ",
                                               length(pathnames), " files");
   if (is.list(units)) {
     res <- readCelUnits(pathnames, cdf=units, dropArrayDim=FALSE, ...);
@@ -722,7 +710,7 @@ setMethodS3("readUnits", "CnagCfhSet", function(this, units=NULL, ..., force=FAL
 #    to calculate the standard deviation.}
 #  \item{na.rm}{If @TRUE, @NAs are excluded before, otherwise not.}
 #  \item{...}{Not used.}
-#  \item{cellsPerChunk}{A @integer specifying the total number of cells 
+#  \item{cellsPerChunk}{A @integer specifying the total number of cells
 #    (across arrays) read into memory per chunk.}
 #  \item{moreCells}{A @double scalar indicating if more or less cells
 #    should be used per chunk.}
@@ -747,8 +735,6 @@ setMethodS3("readUnits", "CnagCfhSet", function(this, units=NULL, ..., force=FAL
 #   estimate is stored as "pixels".
 # }
 #
-# @author
-#
 # \seealso{
 #   @seeclass
 # }
@@ -759,7 +745,7 @@ setMethodS3("getAverageFile", "CnagCfhSet", function(this, name=NULL, prefix="av
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'field':
   field <- match.arg(field);
-  
+
   # Argument 'mean':
   if (is.character(mean)) {
     mean <- match.arg(mean);
@@ -787,13 +773,13 @@ setMethodS3("getAverageFile", "CnagCfhSet", function(this, name=NULL, prefix="av
   } else if (is.function(sd)) {
     sdName <- "customSd";
   } else {
-    throw("Argument 'sd' must be either a character or a function: ", 
+    throw("Argument 'sd' must be either a character or a function: ",
                                                            mode(sd));
   }
 
   # Argument 'name':
   if (is.null(name)) {
-    key <- list(method="getAverageFile", class=class(this)[1], 
+    key <- list(method="getAverageFile", class=class(this)[1],
                 arrays=sort(getNames(this)), mean=meanName, sd=sdName);
     # assign mean and sd to an empty environment so that digest() doesn't
     # pick up any "promised" objects from the original environment.
@@ -817,7 +803,7 @@ setMethodS3("getAverageFile", "CnagCfhSet", function(this, name=NULL, prefix="av
   }
 
   if (is.null(indices)) {
-    indices <- 1:nbrOfCells; 
+    indices <- 1:nbrOfCells;
   } else if (identical(indices, "remaining")) {
   } else {
     indices <- Arguments$getIndices(indices, max=nbrOfCells);
@@ -884,14 +870,14 @@ setMethodS3("getAverageFile", "CnagCfhSet", function(this, name=NULL, prefix="av
     } # for (kk ...)
     verbose && cat(verbose, "Located pathname: ", pathname);
 
-    verbose && exit(verbose); 
+    verbose && exit(verbose);
 
     if (isFile(pathname)) {
       verbose && enter(verbose, "Loading existing data file");
       verbose && cat(verbose, "Pathname: ", pathname);
       res <- newInstance(df, pathname);
       verbose && exit(verbose);
-    } else { 
+    } else {
       verbose && enter(verbose, "Creating CFH file to store average signals");
       path <- paths[length(paths)];
 
@@ -915,7 +901,7 @@ setMethodS3("getAverageFile", "CnagCfhSet", function(this, name=NULL, prefix="av
   # Identify which indices to use
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (identical(indices, "remaining")) {
-    pixels <- readCel(pathname, readIntensities=FALSE, readStdvs=FALSE, 
+    pixels <- readCel(pathname, readIntensities=FALSE, readStdvs=FALSE,
                       readPixels=TRUE)$pixels;
     indices <- which(pixels == 0);
     rm(pixels); # Not needed anymore.
@@ -934,7 +920,7 @@ setMethodS3("getAverageFile", "CnagCfhSet", function(this, name=NULL, prefix="av
   # Estimate the mean and standard deviation
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Since we might want to do this robustly, but also because we want to
-  # estimate the standard deviation, for each cell we need all data across 
+  # estimate the standard deviation, for each cell we need all data across
   # arrays at once.  In order to this efficiently, we do this in chunks
   idxs <- 1:nbrOfIndices;
   head <- 1:cellsPerChunk;
@@ -965,8 +951,8 @@ setMethodS3("getAverageFile", "CnagCfhSet", function(this, name=NULL, prefix="av
 #    X <- readCelIntensities(pathnames, indices=indices[ii]);
     readIntensities <- (field == "intensities");
     readStdvs <- (field == "stdvs");
-    # TODO: Ideally, affxparser::readCel() should support 
-    # multiple filenames turning every data fields into a 
+    # TODO: Ideally, affxparser::readCel() should support
+    # multiple filenames turning every data fields into a
     # matrix. /HB 2007-01-07
     naValue <- as.double(NA);
     X <- matrix(naValue, nrow=length(ii), ncol=nbrOfArrays);
@@ -995,7 +981,7 @@ setMethodS3("getAverageFile", "CnagCfhSet", function(this, name=NULL, prefix="av
     if (na.rm)
       n <- base::apply(X, MARGIN=1, FUN=function(x) { sum(!is.na(x)) });
 
-    # Calculate the mean signal    
+    # Calculate the mean signal
     mu <- mean(X, na.rm=na.rm);          # Special mean()!
     # Calculate the standard deviation of the signals
     sigma <- sd(X, mean=mu, na.rm=na.rm);   # Special sd()!
@@ -1028,7 +1014,7 @@ setMethodS3("getAverageFile", "CnagCfhSet", function(this, name=NULL, prefix="av
 
   verbose && exit(verbose);
 
-  res;  
+  res;
 })
 
 
@@ -1063,7 +1049,7 @@ setMethodS3("getDefaultFullName", "CnagCfhSet", function(this, parent=1L, ...) {
 # o CLEANUP: Deprecated "[" and "[[", because they should be used to
 #   subset files and not units.
 # 2011-03-03
-# o GENERALIZATION: Now CnagCfhSet locates sample annotation files and 
+# o GENERALIZATION: Now CnagCfhSet locates sample annotation files and
 #   sets the attributes following the new aroma search convention.
 # 2011-02-28
 # o Now getAverageFile() first tries to locate an existing result file
@@ -1073,7 +1059,7 @@ setMethodS3("getDefaultFullName", "CnagCfhSet", function(this, parent=1L, ...) {
 #   from the output root path (if 'devel/dropRootPathTags' setting is TRUE).
 # o Expanded the searched root paths to be cnagData(|,.*)/.
 # 2009-08-12
-# o Now findByName() of CnagCfhSet utilizes ditto of AffymetrixCelSet, 
+# o Now findByName() of CnagCfhSet utilizes ditto of AffymetrixCelSet,
 #   because its code was identical to the latter.
 # 2008-07-21
 # o Now findByName() assert that the data set name is not empty.

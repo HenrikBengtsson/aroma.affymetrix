@@ -3,11 +3,6 @@
 
 writeCdf <- appendVarArgs(writeCdf);
 
-# Force a generic process(), because R.rsp has one now and it
-# may prevent one from being created/used here, depending
-# on the R.rsp version.
-setGenericS3("process", overwrite=TRUE);
-
 
 ############################################################################
 # HISTORY:

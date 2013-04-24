@@ -51,7 +51,7 @@
   writeImage(df, tags="rainbow", palette=rainbow(256), xrange=c(0,200))
 }}
 
-\author{Ken Simpson (ksimpson[at]wehi.edu.au).}
+\author{Ken Simpson, Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{AffymetrixCelFile}}.

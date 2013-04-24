@@ -6,12 +6,12 @@
 # \description{
 #  @classhierarchy
 # }
-# 
-# @synopsis 
+#
+# @synopsis
 #
 # \arguments{
 #   \item{dataSet}{A @see "CnChipEffectSet".}
-#   \item{...}{Additional arguments passed to the constructor of 
+#   \item{...}{Additional arguments passed to the constructor of
 #     @see "ChipEffectTransform".}
 #   \item{targetFunction}{A @function. The target function to which all arrays
 #     should be normalized to.}
@@ -20,14 +20,14 @@
 # }
 #
 # \section{Fields and Methods}{
-#  @allmethods "public"  
+#  @allmethods "public"
 # }
-# 
+#
 # \section{Requirements}{
 #   This class requires an Aroma unit GC-content (UGC) file.
 # }
 #
-# @author
+# @author "HB"
 #*/###########################################################################
 setConstructorS3("GcContentNormalization", function(dataSet=NULL, ..., targetFunction=NULL, subsetToFit=NULL) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -52,7 +52,7 @@ setConstructorS3("GcContentNormalization", function(dataSet=NULL, ..., targetFun
     }
   }
 
-  extend(ChipEffectTransform(dataSet, ...), "GcContentNormalization", 
+  extend(ChipEffectTransform(dataSet, ...), "GcContentNormalization",
     .subsetToFit = subsetToFit,
     .targetFunction = targetFunction
   )
@@ -248,7 +248,7 @@ setMethodS3("getTargetFunction", "GcContentNormalization", function(this, ..., f
     yR <- log2(yR);
     verbose && cat(verbose, "Signals:");
     verbose && str(verbose, yR);
-    
+
     # Get GC contents for these units
     gcContents <- gcContents[units];
     verbose && cat(verbose, "GC content:");
@@ -296,7 +296,7 @@ setMethodS3("getTargetFunction", "GcContentNormalization", function(this, ..., f
 #
 # \arguments{
 #   \item{...}{Not used.}
-#   \item{force}{If @TRUE, data already normalized is re-normalized, 
+#   \item{force}{If @TRUE, data already normalized is re-normalized,
 #       otherwise not.}
 #   \item{verbose}{See @see "R.utils::Verbose".}
 # }
@@ -304,8 +304,6 @@ setMethodS3("getTargetFunction", "GcContentNormalization", function(this, ..., f
 # \value{
 #  Returns a @double @vector.
 # }
-#
-# @author
 #
 # \seealso{
 #   @seeclass
@@ -356,7 +354,7 @@ setMethodS3("process", "GcContentNormalization", function(this, ..., force=FALSE
   # Get (and create) the output path
   path <- getPath(this);
 
-  
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Normalize each array
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -428,7 +426,7 @@ setMethodS3("process", "GcContentNormalization", function(this, ..., force=FALSE
     # Extract the values to fit the normalization function
     verbose && enter(verbose, "Normalizing log2 signals");
     y <- log2(data[,"theta"]);
-    y <- normalizeFragmentLength(y, fragmentLengths=gcContents, 
+    y <- normalizeFragmentLength(y, fragmentLengths=gcContents,
                              targetFcn=targetFcn, subsetToFit=subset, ...);
     y <- 2^y;
     verbose && exit(verbose);
@@ -474,7 +472,7 @@ setMethodS3("process", "GcContentNormalization", function(this, ..., force=FALSE
   this$outputSet <- outputSet;
 
   verbose && exit(verbose);
-  
+
   outputSet;
 })
 

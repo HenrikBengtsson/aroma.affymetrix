@@ -31,7 +31,7 @@
 #   }
 # }
 #
-# @author
+# @author "HB"
 #
 # \seealso{
 #   @seeclass
@@ -123,7 +123,7 @@ setMethodS3("getAlleleProbePairs", "AffymetrixCdfFile", function(this, units=NUL
   # Save memory by converting to integers. [44Mb -> 11Mb]
   levels <- as.integer(1:4);
   names(levels) <- c("A", "C", "G", "T");
-  groupNames <- base::lapply(groupNames, FUN=function(s) { 
+  groupNames <- base::lapply(groupNames, FUN=function(s) {
     s <- levels[s];
     names(s) <- NULL;
     s;
@@ -137,7 +137,7 @@ setMethodS3("getAlleleProbePairs", "AffymetrixCdfFile", function(this, units=NUL
 
   gc <- gc();
   verbose && print(verbose, gc);
-  
+
   verbose && cat(verbose, "Unique group names:");
   verbose && str(verbose, lapply(uGroupNames, FUN=function(x) names(levels[x])), vec.len=8);
 
@@ -299,7 +299,7 @@ setMethodS3("getAlleleProbePairs", "AffymetrixCdfFile", function(this, units=NUL
       value <- value[-(1:2)];
     }
   }
-  verbose && cat(verbose, "Probe pairs: ", 
+  verbose && cat(verbose, "Probe pairs: ",
                                paste(sort(names(probeSets2)), collapse=", "));
   verbose && exit(verbose);
 
@@ -322,7 +322,7 @@ setMethodS3("getAlleleProbePairs", "AffymetrixCdfFile", function(this, units=NUL
     pairs <- base::lapply(pairs, FUN=function(x) paste(sort(x), collapse=""));
     pairs <- unlist(pairs);
     uPairs <- sort(unique(pairs));
-    verbose && cat(verbose, "Probe pairs (ignoring order): ", 
+    verbose && cat(verbose, "Probe pairs (ignoring order): ",
                                                 paste(uPairs, collapse=", "));
     probeSets <- list();
     for (pair in uPairs) {
@@ -332,7 +332,7 @@ setMethodS3("getAlleleProbePairs", "AffymetrixCdfFile", function(this, units=NUL
     }
     rm(probeSets2);
     verbose && exit(verbose);
-  
+
     verbose && enter(verbose, "Combining AB and BA groups");
     # Join AB with BA.
     for (kk in 1:length(probeSets)) {
@@ -409,7 +409,7 @@ setMethodS3("getAlleleProbePairs", "AffymetrixCdfFile", function(this, units=NUL
   nonSnpUnits <- which(unitTypes != 2);  # '2 == genotype unit'
 
   if (length(nonSnpUnits) > 0) {
-    cells <- getCellIndices(this, units=nonSnpUnits, 
+    cells <- getCellIndices(this, units=nonSnpUnits,
                 useNames=FALSE, unlist=TRUE, verbose=less(verbose,1));
   } else {
     cells <- NULL;
@@ -436,7 +436,7 @@ setMethodS3("getAlleleProbePairs", "AffymetrixCdfFile", function(this, units=NUL
 ############################################################################
 # HISTORY:
 # 2008-05-10
-# o ROBUSTNESS: Added backward compatibility for cases when the cached 
+# o ROBUSTNESS: Added backward compatibility for cases when the cached
 #   results has sets$nonSNPs as a list.
 # 2008-03-26
 # o CLEAN UP: getAlleleProbePairs() of AffymetrixCdfFile would print *all*
@@ -480,18 +480,18 @@ setMethodS3("getAlleleProbePairs", "AffymetrixCdfFile", function(this, units=NUL
 # 2006-03-24
 # o Added references to DM articles and Affymetrix manuals.
 # o Further speed up by improve rearrangement of CDF structure. Now a Hind
-#   chip takes about 11-13 minutes instead.  11 minutes compared with 
+#   chip takes about 11-13 minutes instead.  11 minutes compared with
 #   35 hours is 190 times faster.
 # o After several speed improvements (also in affxparser), estimation of DM
 #   rank scores now takes about 15-18 minutes for the 100K Hind chip.
 #   The first draft took 30-35 hours(!) and yesterday 60-80 minutes.  Note,
-#   the first draft was not "stupid" code; there is always room for 
+#   the first draft was not "stupid" code; there is always room for
 #   improvement.
 # o Defined a local colSums() in getDmRankScores() specialized for matrices.
 #   The overhead of the default colSums() is about 50%.
 # 2006-03-23
 # o Moved all SNP related methods into the new class AffymetrixSnpCelFile.
-# o Added getRelativeAlleleSignals().  Note, it was designed to be used 
+# o Added getRelativeAlleleSignals().  Note, it was designed to be used
 #   with the 10K SNP chips.  These are designed so that there are equal
 #   number of forward and reverse quartets with matching offsets in both
 #   strands.  This is not the case for the 100K chips and above.

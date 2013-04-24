@@ -16,7 +16,7 @@
 #   \item{...}{Not used.}
 # }
 #
-# @author
+# @author "HB"
 #
 # \seealso{
 #   @seeclass
@@ -87,7 +87,7 @@ setMethodS3("getBaseline", "ChipEffectSet", function(this, force=FALSE, verbose=
     res <- newInstance(df, pathname);
     verbose && exit(verbose);
   } else {
-    verbose && enter(verbose, "Allocating empty data file");    
+    verbose && enter(verbose, "Allocating empty data file");
 
     path <- paths[length(paths)];
     verbose && cat(verbose, "Path: ", path);

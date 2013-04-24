@@ -24,8 +24,7 @@
 #  @allmethods "public"
 # }
 #
-# \author{Ken Simpson (ksimpson[at]wehi.edu.au).}
-#
+# @author "KS, HB"
 #*/###########################################################################
 setConstructorS3("FirmaModel", function(rmaPlm=NULL, summaryMethod=c("median", "upperQuartile", "max"), operateOn=c("residuals", "weights"), ...) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -205,8 +204,6 @@ setMethodS3("getRootPath", "FirmaModel", function(this, ...) {
 #  Returns a @see "FirmaSet" object.
 # }
 #
-# @author
-#
 # \seealso{
 #   @seeclass
 # }
@@ -274,8 +271,6 @@ setMethodS3("getFirmaScores", "FirmaModel", function(this, ...) {
 #  Returns a @see "ResidualSet" object.
 # }
 #
-# @author
-#
 # \seealso{
 #   @seeclass
 # }
@@ -305,8 +300,6 @@ setMethodS3("calculateResidualSet", "FirmaModel", function(this, ...) {
 # \value{
 #  Returns a @function.
 # }
-#
-# @author
 #
 # \seealso{
 #   @seeclass
@@ -436,8 +429,6 @@ setMethodS3("getFitUnitFunction", "FirmaModel", function(this, ...) {
 #  Returns an @integer @vector of unit indices.
 # }
 #
-# @author
-#
 # \seealso{
 #   Internally this methods calls the same method for the
 #   @see "ChipEffectSet" class.
@@ -513,8 +504,6 @@ setMethodS3("findUnitsTodo", "FirmaModel", function(this, ...) {
 #   (unit, ngroups) map.  This can be obtained from getUnitNames() for the
 #   AffymetrixCdfFile class.
 # }
-#
-# @author
 #
 # \seealso{
 #   @seeclass

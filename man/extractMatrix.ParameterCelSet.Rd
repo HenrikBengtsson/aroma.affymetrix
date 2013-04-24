@@ -40,7 +40,7 @@
  The rows are ordered according to \code{units} arguments.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[aroma.affymetrix:extractDataFrame.ParameterCelSet]{*extractDataFrame}()}.

@@ -64,7 +64,5 @@ $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCa
 
 }
 
-\author{
-  Ken Simpson (ksimpson[at]wehi.edu.au).
-}
+\author{Ken Simpson, Henrik Bengtsson}
 \keyword{classes}

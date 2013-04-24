@@ -23,7 +23,7 @@
 #    to calculate the standard deviation.}
 #  \item{na.rm}{If @TRUE, @NAs are excluded before, otherwise not.}
 #  \item{...}{Not used.}
-#  \item{cellsPerChunk}{A @integer specifying the total number of cells 
+#  \item{cellsPerChunk}{A @integer specifying the total number of cells
 #    (across arrays) read into memory per chunk.}
 #  \item{moreCells}{A @double scalar indicating if more or less cells
 #    should be used per chunk.}
@@ -48,7 +48,7 @@
 #   estimate is stored as "pixels".
 # }
 #
-# @author
+# @author "HB, KS"
 #
 # \seealso{
 #   @seeclass
@@ -60,7 +60,7 @@ setMethodS3("getAverageFile", "AffymetrixCelSet", function(this, name=NULL, pref
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'field':
   field <- match.arg(field);
-  
+
   # Argument 'mean':
   if (is.character(mean)) {
     mean <- match.arg(mean);
@@ -88,13 +88,13 @@ setMethodS3("getAverageFile", "AffymetrixCelSet", function(this, name=NULL, pref
   } else if (is.function(sd)) {
     sdName <- "customSd";
   } else {
-    throw("Argument 'sd' must be either a character or a function: ", 
+    throw("Argument 'sd' must be either a character or a function: ",
                                                            mode(sd));
   }
 
   # Argument 'name':
   if (is.null(name)) {
-    key <- list(method="getAverageFile", class=class(this)[1], 
+    key <- list(method="getAverageFile", class=class(this)[1],
                 arrays=sort(getNames(this)), mean=meanName, sd=sdName);
     # assign mean and sd to an empty environment so that digest() doesn't
     # pick up any "promised" objects from the original environment.
@@ -118,7 +118,7 @@ setMethodS3("getAverageFile", "AffymetrixCelSet", function(this, name=NULL, pref
   }
 
   if (is.null(indices)) {
-    indices <- 1:nbrOfCells; 
+    indices <- 1:nbrOfCells;
   } else if (identical(indices, "remaining")) {
   } else {
     indices <- Arguments$getIndices(indices, max=nbrOfCells);
@@ -197,7 +197,7 @@ setMethodS3("getAverageFile", "AffymetrixCelSet", function(this, name=NULL, pref
       verbose && cat(verbose, "Pathname: ", pathname);
       res <- newInstance(df, pathname);
       verbose && exit(verbose);
-    } else { 
+    } else {
       verbose && enter(verbose, "Creating CEL file to store average signals");
       path <- paths[length(paths)];
 
@@ -209,7 +209,7 @@ setMethodS3("getAverageFile", "AffymetrixCelSet", function(this, name=NULL, pref
       res <- createFrom(df, filename=pathname, path=NULL, methods="create", clear=TRUE, verbose=less(verbose));
       verbose && exit(verbose);
     } # if (isFile(pathname))
- 
+
     verbose && exit(verbose);
     this$.averageFiles[[filename]] <- res;
   } # if (is.null(res))
@@ -222,7 +222,7 @@ setMethodS3("getAverageFile", "AffymetrixCelSet", function(this, name=NULL, pref
   # Identify which indices to use
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (identical(indices, "remaining")) {
-    pixels <- readCel(pathname, readIntensities=FALSE, readStdvs=FALSE, 
+    pixels <- readCel(pathname, readIntensities=FALSE, readStdvs=FALSE,
                       readPixels=TRUE)$pixels;
     indices <- which(pixels == 0);
     rm(pixels); # Not needed anymore.
@@ -241,7 +241,7 @@ setMethodS3("getAverageFile", "AffymetrixCelSet", function(this, name=NULL, pref
   # Estimate the mean and standard deviation
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Since we might want to do this robustly, but also because we want to
-  # estimate the standard deviation, for each cell we need all data across 
+  # estimate the standard deviation, for each cell we need all data across
   # arrays at once.  In order to this efficiently, we do this in chunks
   idxs <- 1:nbrOfIndices;
   head <- 1:cellsPerChunk;
@@ -272,8 +272,8 @@ setMethodS3("getAverageFile", "AffymetrixCelSet", function(this, name=NULL, pref
 #    X <- readCelIntensities(pathnames, indices=indices[ii]);
     readIntensities <- (field == "intensities");
     readStdvs <- (field == "stdvs");
-    # TODO: Ideally, affxparser::readCel() should support 
-    # multiple filenames turning every data fields into a 
+    # TODO: Ideally, affxparser::readCel() should support
+    # multiple filenames turning every data fields into a
     # matrix. /HB 2007-01-07
     X <- matrix(as.double(NA), nrow=length(ii), ncol=nbrOfArrays);
     for (kk in seq_len(nbrOfArrays)) {
@@ -301,7 +301,7 @@ setMethodS3("getAverageFile", "AffymetrixCelSet", function(this, name=NULL, pref
     if (na.rm)
       n <- base::apply(X, MARGIN=1, FUN=function(x) { sum(!is.na(x)) });
 
-    # Calculate the mean signal    
+    # Calculate the mean signal
     mu <- mean(X, na.rm=na.rm);          # Special mean()!
     # Calculate the standard deviation of the signals
     sigma <- sd(X, mean=mu, na.rm=na.rm);   # Special sd()!
@@ -334,7 +334,7 @@ setMethodS3("getAverageFile", "AffymetrixCelSet", function(this, name=NULL, pref
 
   verbose && exit(verbose);
 
-  res;  
+  res;
 })
 
 
@@ -354,7 +354,7 @@ setMethodS3("getAverageFile", "AffymetrixCelSet", function(this, name=NULL, pref
 # o Updated the following methods to preallocate matrixes with the correct
 #   data type to avoid coercing later: getData(), getAverageFile().
 # 2007-09-25
-# o Now getAverageFile() will detect if an average file has been deleted 
+# o Now getAverageFile() will detect if an average file has been deleted
 #   between calls and recalculate it.
 # 2007-03-16
 # o BUG FIX: getAverageFile() of AffymetrixCelSet would average the wrong
@@ -365,12 +365,12 @@ setMethodS3("getAverageFile", "AffymetrixCelSet", function(this, name=NULL, pref
 #   in the readCel() call making the function fail when processed chunk
 #   by chunk. /HB
 # 2006-11-07
-# o Now getAverageFile() uses rowMedians() of R.native if available, 
+# o Now getAverageFile() uses rowMedians() of R.native if available,
 #   otherwise a local version utilizing apply(). Same for rowMads().
 # 2006-10-24
 # o Added getAverageLog() and getAverageAsinh().
 # o Added transforms and anti-transforms g() and h() to getAverageFile().
-# o Changed the defaults from mean to median, and sd to mad for 
+# o Changed the defaults from mean to median, and sd to mad for
 #   getAverageFile().
 # o Added Rdoc comments to getAverageFile().
 # 2006-08-27

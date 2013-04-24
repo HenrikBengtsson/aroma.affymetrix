@@ -6,15 +6,15 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
- \name{RmaCnPlm}
+\name{RmaCnPlm}
 \docType{class}
 \alias{RmaCnPlm}
 
 
- \title{The RmaCnPlm class}
+\title{The RmaCnPlm class}
 
- \description{
-  Package:  aroma.affymetrix \cr
+\description{
+ Package:  aroma.affymetrix \cr
 \bold{Class RmaCnPlm}\cr
 
 \code{\link[R.oo]{Object}}\cr
@@ -46,20 +46,20 @@ public abstract static class \bold{RmaCnPlm}\cr
 extends \link[aroma.affymetrix]{CnPlm}\cr
 
 
- }
+}
 
- \usage{
+\usage{
 RmaCnPlm(..., combineAlleles=FALSE)
 }
 
- \arguments{
-   \item{...}{Arguments passed to \code{\link{RmaSnpPlm}}.}
-   \item{combineAlleles}{If \code{\link[base:logical]{FALSE}}, allele A and allele B are treated
-      seperately, otherwise together.}
- }
+\arguments{
+  \item{...}{Arguments passed to \code{\link{RmaSnpPlm}}.}
+  \item{combineAlleles}{If \code{\link[base:logical]{FALSE}}, allele A and allele B are treated
+     seperately, otherwise together.}
+}
 
- \section{Fields and Methods}{
-  \bold{Methods:}\cr
+\section{Fields and Methods}{
+ \bold{Methods:}\cr
 \emph{No methods defined}.
 
 
@@ -88,17 +88,17 @@ findUnitsTodo, getAsteriskTags, getFitSingleCellUnitFunction, getParameters
 as.character, fit, getAlias, getAsteriskTags, getDataSet, getFullName, getName, getParameterSet, getPath, getRootPath, getTags, setAlias, setTags
 
  \bold{Methods inherited from ParametersInterface}:\cr
-getParameters, getParametersAsString, getParameterSets
+getParameterSets, getParameters, getParametersAsString
 
  \bold{Methods inherited from Object}:\cr
 $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save, asThis
 
 
- }
+}
 
- \section{Model}{
-   TO DO.
- }
+\section{Model}{
+  TO DO.
+}
 
- \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 \keyword{classes}

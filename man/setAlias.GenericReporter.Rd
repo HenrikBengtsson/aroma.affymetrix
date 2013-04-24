@@ -34,8 +34,6 @@
   Returns nothing.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
-
 \seealso{
   \code{\link[aroma.affymetrix:getAlias.GenericReporter]{*getAlias}()}.
   \code{\link[aroma.affymetrix:getName.GenericReporter]{*getName}()}.

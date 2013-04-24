@@ -7,10 +7,10 @@
 # \description{
 #  @get "title" into a directory structure recognized by this package.
 #  ASCII CEL files are converted to binary CEL files, and for chip types
-#  where the array data is rotated 90-degrees counter clockwise by dChip, 
-#  the data is rotated back. 
+#  where the array data is rotated 90-degrees counter clockwise by dChip,
+#  the data is rotated back.
 #
-#  As of 2007-03-28, dChip rotates data for exon, tiling, and 
+#  As of 2007-03-28, dChip rotates data for exon, tiling, and
 #  Mapping 500K arrays.
 # }
 #
@@ -18,7 +18,7 @@
 #
 # \arguments{
 #   \item{path}{The path to all dChip-exported CEL files.}
-#   \item{name}{The name of the output data set. 
+#   \item{name}{The name of the output data set.
 #     If @NULL, the name is inferred from the source path.}
 #   \item{tags}{Tags added to the imported data set.}
 #   \item{rootPath}{The root path where to store the data set.}
@@ -40,7 +40,7 @@
 #  dChip and then export it data again.
 # }
 #
-# @author
+# @author "HB"
 #
 # \seealso{
 #   @seeclass
@@ -79,7 +79,7 @@ setMethodS3("importFromDChip", "AffymetrixCelSet", function(static, path, name=N
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   verbose && enter(verbose, "Getting the dChip CEL set");
   cs <- byPath(static, path=path, ..., verbose=less(verbose));
-  verbose && cat(verbose, "Number of arrays: ", length(cs));  
+  verbose && cat(verbose, "Number of arrays: ", length(cs));
   verbose && exit(verbose);
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

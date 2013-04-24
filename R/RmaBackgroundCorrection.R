@@ -38,7 +38,7 @@
 #   probe signals.  The default is to background correct PM signals only.
 # }
 #
-# \author{Ken Simpson (ksimpson[at]wehi.edu.au).}
+# @author "KS, HB"
 #*/###########################################################################
 setConstructorS3("RmaBackgroundCorrection", function(..., addJitter=FALSE, jitterSd=0.2) {
   extend(BackgroundCorrection(..., typesToUpdate="pm"),
@@ -54,7 +54,7 @@ setMethodS3("getParameters", "RmaBackgroundCorrection", function(this, ...) {
   params <- NextMethod("getParameters");
 
   pmOnly <- (this$.typesToUpdate == "pm");
-  
+
   # Get parameters of this class
   params2 <- list(
     addJitter = this$.addJitter,

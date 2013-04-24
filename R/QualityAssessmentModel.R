@@ -19,9 +19,7 @@
 #  @allmethods "public"
 # }
 #
-# \author{
-#   Ken Simpson (ksimpson[at]wehi.edu.au).
-# }
+# @author "KS, HB"
 #*/###########################################################################
 setConstructorS3("QualityAssessmentModel", function(plm=NULL, tags="*", ...) {
   # Argument 'plm':
@@ -116,7 +114,7 @@ setMethodS3("getTags", "QualityAssessmentModel", function(this, collapse=NULL, .
   }
 
   # Combine input tags and local tags
-  tags <- c(inputTags, tags);  
+  tags <- c(inputTags, tags);
 
   # Collapsed or split?
   if (!is.null(collapse)) {
@@ -153,7 +151,7 @@ setMethodS3("getPath", "QualityAssessmentModel", function(this, ...) {
   # Full name
   fullname <- getFullName(this);
 
-  # Chip type    
+  # Chip type
   cdf <- getCdf(this);
   chipType <- getChipType(cdf, fullname=FALSE);
 
@@ -178,15 +176,13 @@ setMethodS3("getPath", "QualityAssessmentModel", function(this, ...) {
 # @synopsis
 #
 # \arguments{
-#  \item{...}{Additional arguments passed \code{byPath()} of 
+#  \item{...}{Additional arguments passed \code{byPath()} of
 #     @see "QualityAssessmentSet".}
 # }
 #
 # \value{
 #   Returns an @see "QualityAssessmentSet".
 # }
-#
-# @author
 #
 # \seealso{
 #   @seeclass
@@ -212,7 +208,7 @@ setMethodS3("getResiduals", "QualityAssessmentModel", function(this, units=NULL,
     names(res) <- names(yL);
     res;
   } # resFcn()
-    
+
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
@@ -245,7 +241,7 @@ setMethodS3("getResiduals", "QualityAssessmentModel", function(this, units=NULL,
     pushState(verbose);
     on.exit(popState(verbose));
   }
-  
+
   unitsPerChunk <- ram * 100000/length(this);
   unitsPerChunk <- Arguments$getInteger(unitsPerChunk, range=c(1,Inf));
 
@@ -278,7 +274,7 @@ setMethodS3("getResiduals", "QualityAssessmentModel", function(this, units=NULL,
     pathname;
   });
   nbrOfFiles <- length(pathnames);
-  
+
 
   nbrOfArrays <- length(ds);
   cdf <- getCdf(ds);
@@ -321,7 +317,7 @@ setMethodS3("getResiduals", "QualityAssessmentModel", function(this, units=NULL,
     cdfList <- getCellIndices(cdf, units=units, stratifyBy="pm", ...);
     verbose && str(verbose, cdfList[[1]]);
     verbose && exit(verbose);
-    
+
     verbose && enter(verbose, "Retrieving raw data");
     rawDataList <- readUnits(ds, units=units, stratifyBy="pm", verbose=less(verbose));
     verbose && str(verbose, rawDataList[[1]]);
@@ -341,7 +337,7 @@ setMethodS3("getResiduals", "QualityAssessmentModel", function(this, units=NULL,
     residualsList <- lapply(head, FUN=resFcn);
     verbose && str(verbose, residualsList[[1]]);
     verbose && exit(verbose);
-    
+
     # Store residuals
     for (kk in seq_along(pathnames)) {
       # Back-transform data to intensity scale and encode as CEL structure
@@ -367,7 +363,7 @@ setMethodS3("getResiduals", "QualityAssessmentModel", function(this, units=NULL,
       updateCelUnits(pathname, cdf=cdfList, data=data);
       verbose && exit(verbose);
     } # for (kk ...)
-    
+
     unitsToDo <- unitsToDo[-head];
     count <- count + 1;
   } # while (length(unitsToDo) > 0)
@@ -408,8 +404,6 @@ setMethodS3("getResiduals", "QualityAssessmentModel", function(this, units=NULL,
 #   Returns an @see "QualityAssessmentSet".
 # }
 #
-# @author
-#
 # \seealso{
 #   @seeclass
 # }
@@ -430,7 +424,7 @@ setMethodS3("getWeights", "QualityAssessmentModel", function(this, path=NULL, na
       yhat <- outer(phi, theta, FUN="+");
       eps <- (y - yhat);
 #      mad <- 1.4826 * median(abs(yhat));
-      mad <- 1.4826 * median(abs(eps));      
+      mad <- 1.4826 * median(abs(eps));
       matrix(MASS::psi.huber(eps/mad), ncol=ncol(y));
     })
     res;
@@ -455,7 +449,7 @@ setMethodS3("getWeights", "QualityAssessmentModel", function(this, path=NULL, na
 
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
-  
+
   # Argument 'tags':
   if (!is.null(tags)) {
     tags <- Arguments$getCharacters(tags);
@@ -487,11 +481,11 @@ setMethodS3("getWeights", "QualityAssessmentModel", function(this, path=NULL, na
     pathname <- AffymetrixFile$renameToUpperCaseExt(pathname);
   });
   nbrOfFiles <- length(pathname);
-  
+
   ds <- getDataSet(this);
   ces <- getChipEffectSet(this);
   paf <- getProbeAffinityFile(getPlm(this));
-  
+
   nbrOfUnits <- nbrOfUnits(getCdf(ces));
 
   verbose && printf(verbose, "Number of units: %d\n", nbrOfUnits);
@@ -526,14 +520,14 @@ setMethodS3("getWeights", "QualityAssessmentModel", function(this, path=NULL, na
     chipEffectList <- readUnits(ces, units=units, transforms=logTransform, verbose=less(verbose));
     probeAffinityList <- readUnits(paf, units=units, transforms=list(log2), verbose=verbose);
 
-    
+
     weightsList <- lapply(head, FUN=resFcn);
     weightsList <- lapply(weightsList, FUN=.subset2, 1);
 
     # update output files
     cdf <- getCdf(ds);
     cdfList <- getCellIndices(cdf, units=units, stratifyBy="pm", ...);
-  
+
     for (kk in seq_along(pathname)) {
       # Create CEL file?
       if (!isFile(pathname[kk])) {
@@ -545,17 +539,17 @@ setMethodS3("getWeights", "QualityAssessmentModel", function(this, path=NULL, na
       }
 
       data <- lapply(weightsList, FUN=function(x){
-        nrow <- nrow(x); 
+        nrow <- nrow(x);
         list(list(
-          intensities=2^x[,kk], 
-          stdvs=rep(1, times=nrow), 
+          intensities=2^x[,kk],
+          stdvs=rep(1, times=nrow),
           pixels=rep(1, times=nrow)
         ))
       });
 
       updateCelUnits(pathname[kk], cdf=cdfList, data=data);
     } # for (kk ...)
-    
+
     unitsToDo <- unitsToDo[-head];
     count <- count + 1;
   } # while(...)
@@ -592,10 +586,10 @@ setMethodS3("plotRle", "QualityAssessmentModel", function(this, ...) {
 # 2007-12-10
 # o Added getAsteriskTags() and updated getTags() accordingly.
 # 2007-08-09
-# o getResiduals() and getWeights() of QualityAssessmentModel now creates 
-#   CEL files with upper-case filename extension "*.CEL", not "*.cel".  
+# o getResiduals() and getWeights() of QualityAssessmentModel now creates
+#   CEL files with upper-case filename extension "*.CEL", not "*.cel".
 #   The reason for this is that some software don't recognize lower-case
-#   filename extensions :(  
+#   filename extensions :(
 # 2007-01-31 /HB
 # o Removed any argument 'unitsPerChunk' and renamed 'moreUnits' to 'ram'.
 # o Replaced the usage of getDataSet() with other alternatives, in order

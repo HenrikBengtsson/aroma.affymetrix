@@ -1,3 +1,4 @@
+# @author "HB"
 setConstructorS3("AffymetrixCsvFile", function(..., sep=",", .verify=TRUE) {
   this <- extend(AffymetrixTabularFile(..., .verify=FALSE), "AffymetrixCsvFile");
 

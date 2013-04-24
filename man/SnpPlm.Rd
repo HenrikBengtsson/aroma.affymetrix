@@ -6,15 +6,15 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
- \name{SnpPlm}
+\name{SnpPlm}
 \docType{class}
 \alias{SnpPlm}
 
 
- \title{The SnpPlm interface class}
+\title{The SnpPlm interface class}
 
- \description{
-  Package:  aroma.affymetrix \cr
+\description{
+ Package:  aroma.affymetrix \cr
 \bold{Class SnpPlm}\cr
 
 \code{\link[R.oo]{Interface}}\cr
@@ -29,20 +29,20 @@ extends \link[R.oo]{Interface}\cr
 
 
 
-  An \code{\link[R.oo]{Interface}} implementing methods special for
-  \code{\link{ProbeLevelModel}}s specific to SNP arrays.
- }
+ An \code{\link[R.oo]{Interface}} implementing methods special for
+ \code{\link{ProbeLevelModel}}s specific to SNP arrays.
+}
 
- \usage{
+\usage{
 SnpPlm(...)
 }
 
- \arguments{
-   \item{...}{Not used.}
- }
+\arguments{
+  \item{...}{Not used.}
+}
 
- \section{Methods}{
-  \bold{Methods:}\cr
+\section{Methods}{
+ \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{getCellIndices} \tab  -\cr
  \tab \code{getChipEffectSet} \tab  -\cr
@@ -56,18 +56,18 @@ SnpPlm(...)
 extend, print, uses
 
 
- }
+}
 
- \section{Requirements}{
-   Classes inheriting from this \code{\link[R.oo]{Interface}} must provide the
-   following fields:
-   \itemize{
-    \item{mergeStrands}{A \code{\link[base]{logical}} value indicating if strands should be
-       merged or not.}
-   }
- }
+\section{Requirements}{
+  Classes inheriting from this \code{\link[R.oo]{Interface}} must provide the
+  following fields:
+  \itemize{
+   \item{mergeStrands}{A \code{\link[base]{logical}} value indicating if strands should be
+      merged or not.}
+  }
+}
 
- \examples{
+\examples{
 for (zzz in 0) {
 
 # Setup verbose output
@@ -165,5 +165,5 @@ par(opar)
 rm(zzz)
 }
 
- \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 \keyword{classes}

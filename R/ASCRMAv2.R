@@ -1,3 +1,4 @@
+# @author "HB"
 setConstructorS3("ASCRMAv2", function(...) {
   extend(AromaPipeline(..., .class="AffymetrixCelSet"), "ASCRMAv2");
 })
@@ -27,8 +28,8 @@ setMethodS3("getSteps", "ASCRMAv2", function(this, ...) {
       acc <- AllelicCrosstalkCalibration(csR, model="CRMAv2");
       print(acc);
       csC <- process(acc, verbose=log);
-      print(csC); 
-      csC; 
+      print(csC);
+      csC;
     },
 
     "bpn" = function(csC) {

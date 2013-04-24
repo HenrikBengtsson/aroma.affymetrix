@@ -8,7 +8,7 @@
 #
 #  This class represents estimates of chip effects in the probe-level models.
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
@@ -21,8 +21,8 @@
 #  @allmethods "public"
 # }
 #
-# @author
-# 
+# @author "KS, HB"
+#
 # \seealso{
 #   An object of this class is typically part of a @see "ExonChipEffectSet".
 # }
@@ -110,7 +110,7 @@ setMethodS3("getCellIndices", "ExonChipEffectFile", function(this, ..., unlist=F
     cdf <- getCdf(this);
     chipType <- getChipType(cdf);
     params <- getParameters(this);
-    key <- list(method="getCellIndices", class=class(this)[1], 
+    key <- list(method="getCellIndices", class=class(this)[1],
                 pathname=getPathname(this),
                 chipType=chipType, params=params, unlist=unlist, ...);
     if (getOption(aromaSettings, "devel/useCacheKeyInterface", FALSE)) {
@@ -133,7 +133,7 @@ setMethodS3("getCellIndices", "ExonChipEffectFile", function(this, ..., unlist=F
     }
     if (!is.null(res)) {
       size <- object.size(res);
-      verbose && printf(verbose, "Returning value cached %s: %.1fMB\n", 
+      verbose && printf(verbose, "Returning value cached %s: %.1fMB\n",
                                                    where, size/1024^2);
       verbose && exit(verbose);
       return(res);
@@ -172,7 +172,7 @@ setMethodS3("getCellIndices", "ExonChipEffectFile", function(this, ..., unlist=F
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (.cache) {
     # In-memory or on-file cache?
-    if (object.size(cells) < 10e6) { 
+    if (object.size(cells) < 10e6) {
       # In-memory cache for objects < 10Mb.
       this$.cellIndices <- list();
       this$.cellIndices[[id]] <- cells;
@@ -199,7 +199,7 @@ setMethodS3("readUnits", "ExonChipEffectFile", function(this, ..., force=FALSE, 
   verbose <- Arguments$getVerbose(verbose);
 
   # Check for cached data
-  key <- list(method="readUnits", class=class(this)[1], 
+  key <- list(method="readUnits", class=class(this)[1],
               mergeGroups=this$mergeGroups, ...);
   id <- digest2(key);
   res <- this$.readUnitsCache[[id]];
@@ -229,12 +229,12 @@ setMethodS3("readUnits", "ExonChipEffectFile", function(this, ..., force=FALSE, 
 ##     pushState(verbose);
 ##     on.exit(popState(verbose));
 ##   }
-## 
-## 
+##
+##
 ##   verbose && enter(verbose, "Identifying non-fitted units in chip-effect file");
 ##   verbose && cat(verbose, "Pathname: ", getPathname(this));
-## 
-## 
+##
+##
 ##   idxs <- NULL;
 ##   if (is.null(units)) {
 ##     # Look up chip-type and parameter specific but data set independent data
@@ -249,10 +249,10 @@ setMethodS3("readUnits", "ExonChipEffectFile", function(this, ..., force=FALSE, 
 ##         verbose && cat(verbose, "Found indices cached on file");
 ##     }
 ##   }
-## 
+##
 ##   if (is.null(idxs)) {
 ##     verbose && enter(verbose, "Identifying CDF units");
-## 
+##
 ##     verbose && enter(verbose, "Reading CDF cell indices");
 ##     idxs <- getCellIndices(this, units=units, verbose=less(verbose));
 ##     # Example:
@@ -263,7 +263,7 @@ setMethodS3("readUnits", "ExonChipEffectFile", function(this, ..., force=FALSE, 
 ##     #   .. ..$ groupB:List of 1
 ##     #   .. .. ..$ indices: int 23
 ##     verbose && exit(verbose);
-## 
+##
 ##     verbose && enter(verbose, "Extracting first CDF block for each unit");
 ##     idxs <- applyCdfGroups(idxs, .subset2, 1);
 ##     # Example:
@@ -281,36 +281,36 @@ setMethodS3("readUnits", "ExonChipEffectFile", function(this, ..., force=FALSE, 
 ##       #   ..$ groups: int 1
 ##     }
 ##     verbose && exit(verbose);
-## 
+##
 ##     idxs <- unlist(idxs, use.names=FALSE);
-## 
+##
 ##     if (is.null(units)) {
 ##       verbose && enter(verbose, "Saving to file cache");
 ##       saveCache(idxs, key=key, dirs=dirs);
 ##       verbose && exit(verbose);
 ##     }
-## 
+##
 ##     verbose && exit(verbose);
 ##   }
-## 
-## 
+##
+##
 ##   # Read one cell from each unit
 ##   verbose && enter(verbose, "Reading data for these ", length(idxs), " cells");
 ##   value <- readCel(getPathname(this), indices=idxs, readIntensities=FALSE,
 ##                    readStdvs=TRUE, readPixels=FALSE)$stdvs;
 ##   verbose && exit(verbose);
-## 
-## 
+##
+##
 ##   # Identify units for which the stdvs <= 0.
 ##   value <- which(value <= 0);
-## 
+##
 ##   if (!is.null(units))
 ##     value <- units[value];
 ##   verbose && cat(verbose, "Looking for stdvs <= 0 indicating non-estimated units:");
 ##   verbose && str(verbose, value);
-## 
+##
 ##   verbose && exit(verbose);
-## 
+##
 ##   value;
 ## })
 

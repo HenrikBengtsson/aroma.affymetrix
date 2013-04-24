@@ -9,13 +9,13 @@
 #  This abstract class represents a chromosomal smoothing method done
 #  chromosome by chromosome.
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
 #   \item{...}{Arguments passed to the constructor of @see "ChromosomalModel".}
 #   \item{typoOfWeights}{A @character string.}
-#   \item{bandwidth}{A single @numeric specifying the smoothing bandwidth 
+#   \item{bandwidth}{A single @numeric specifying the smoothing bandwidth
 #     in units of nucleotides.}
 #   \item{tags}{A @character @vector of tags to be added.}
 # }
@@ -24,8 +24,8 @@
 #  @allmethods "public"
 # }
 #
-# @author
-# 
+# @author "HB"
+#
 # \seealso{
 #  @see "CopyNumberSegmentationModel".
 # }

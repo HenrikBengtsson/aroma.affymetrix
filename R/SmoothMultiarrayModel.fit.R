@@ -14,7 +14,7 @@ setMethodS3("getFitUnitGroupFunction", "SmoothMultiarrayModel", abstract=TRUE, p
 # @synopsis
 #
 # \arguments{
-#   \item{data}{A @data.frame with columns \code{M} (log-ratio) and 
+#   \item{data}{A @data.frame with columns \code{M} (log-ratio) and
 #      \code{x} (locus position).
 #   }
 #   \item{chromosome}{An @integer specifying the index of the chromosome to
@@ -23,7 +23,7 @@ setMethodS3("getFitUnitGroupFunction", "SmoothMultiarrayModel", abstract=TRUE, p
 #   \item{verbose}{See @see "R.utils::Verbose".}
 # }
 #
-# @author
+# @author "HB"
 #
 # \seealso{
 #   @seeclass
@@ -52,7 +52,7 @@ setMethodS3("fit", "SmoothMultiarrayModel", function(this, chromosome, force=FAL
 
   fitOneChromosome(this, chromosome=chromosome, ..., verbose=less(verbose, 5));
 
-  fit;  
+  fit;
 }, private=TRUE) # fit()
 
 
@@ -90,7 +90,7 @@ setMethodS3("getPositionChipTypeUnit", "CopyNumberSegmentationModel", function(t
   # Get the UnitNameFile:s
   unfList <- getListOfUnitNamesFiles(this, verbose=less(verbose, 10));
 
-  # Get the genome information files  
+  # Get the genome information files
   ugpList <- base::lapply(unfList, FUN=getAromaUgpFile, verbose=less(verbose, 10));
   verbose && print(verbose, ugpList);
 
@@ -217,17 +217,17 @@ setMethodS3("createOutputTuple", "SmoothMultiarrayModel", function(this, ..., fo
     # Speed this up by inheriting parameters from input data set
     args <- list(path);
 
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # BEGIN: AFFX methods
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Ad hoc for ChipEffectSet classes. /HB 2007-09-25
     if (inherits(inSet, "SnpChipEffectSet"))
       args$mergeStrands <- inSet$mergeStrands;
     if (inherits(inSet, "CnChipEffectSet"))
       args$combineAlleles <- inSet$combineAlleles;
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # END: AFFX methods
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     verbose && str(verbose, args);
     args$verbose <- less(verbose, 30);
@@ -268,15 +268,15 @@ setMethodS3("fitOneChromosome", "SmoothMultiarrayModel", function(this, chromoso
 
   smoothFitFcn <- getFitUnitGroupFunction(this);
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # BEGIN: AFFX methods
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   cesList <- getSets(this);
   verbose && cat(verbose, "List of input data sets:");
   verbose && print(verbose, cesList);
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # END: AFFX methods
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   # Getting output data set (create if missing)
   outTuple <- getOutputTuple(this, verbose=less(verbose, 10));
@@ -285,7 +285,7 @@ setMethodS3("fitOneChromosome", "SmoothMultiarrayModel", function(this, chromoso
   # Extracting data
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   verbose && enter(verbose, "Extract data across arrays and chip types");
-  inData <- getPcuTheta(this, chromosome=chromosome, verbose=less(verbose, 10)); 
+  inData <- getPcuTheta(this, chromosome=chromosome, verbose=less(verbose, 10));
   colnames(inData$theta) <- getNames(cesList[[1]]); # AD HOC /2007-09-26
   verbose && cat(verbose, "Positions:");
   verbose && str(verbose, inData$pcu[,"position"]);
@@ -337,7 +337,7 @@ setMethodS3("fitOneChromosome", "SmoothMultiarrayModel", function(this, chromoso
 
   verbose && cat(verbose, "Prior weights:");
   verbose && str(verbose, w);
-  fit <- smoothFitFcn(Y=inData$theta, x=inData$pcu[,"position"], w=w, 
+  fit <- smoothFitFcn(Y=inData$theta, x=inData$pcu[,"position"], w=w,
                           sd=sd, progress=TRUE, verbose=less(verbose, 10));
   inData$theta <- fit$theta;
   inData$phi <- fit$phi;
@@ -361,7 +361,7 @@ setMethodS3("fitOneChromosome", "SmoothMultiarrayModel", function(this, chromoso
     outSet <- outList[[kk]];
     verbose && cat(verbose, "Output data set:");
     verbose && str(verbose, outSet);
-    
+
     # Extract the data for this chip type
     idxs <- which(as.integer(inData$pcu[,"chipType"]) == kk);
     theta <- inData$theta[idxs,,drop=FALSE];
@@ -437,7 +437,7 @@ setMethodS3("fitOneChromosome", "SmoothMultiarrayModel", function(this, chromoso
 #   This requires aroma.core v1.0.1.
 # 2007-09-26
 # o Renamed to SmoothMultiarrayModel (from SrmaModel).
-# o Added support for prior weights as the inverse of the log-ratio 
+# o Added support for prior weights as the inverse of the log-ratio
 #   variances.
 # 2007-09-25
 # o Renamed to SrmaModel (from CsrmaModel).

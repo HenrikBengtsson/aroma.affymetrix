@@ -18,9 +18,7 @@
 #  @allmethods "public"
 # }
 #
-# \author{
-#   Ken Simpson (ksimpson[at]wehi.edu.au).
-# }
+# @author "KS"
 #*/###########################################################################
 setConstructorS3("QualityAssessmentSet", function(...) {
   extend(AffymetrixCelSet(...), "QualityAssessmentSet");
@@ -28,7 +26,7 @@ setConstructorS3("QualityAssessmentSet", function(...) {
 
 ##########################################################################
 # HISTORY:
-# 2007-12-10 
+# 2007-12-10
 # o Now a QualityAssessmentSet is a plain AffymetrixCelSet.
 # o Removed argument 'tags' to constructor of QualityAssessmentSet,
 #   because it was never used anywhere.

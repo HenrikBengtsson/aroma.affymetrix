@@ -16,7 +16,7 @@
 #   \item{path}{The directory where the file is created.}
 #   \item{suffix}{Filename suffix.}
 #   \item{...}{Arguments passed to @see "affxparser::createCel".}
-#   \item{overwrite}{If @FALSE and the file already exists, then an 
+#   \item{overwrite}{If @FALSE and the file already exists, then an
 #      error is thrown.}
 #   \item{verbose}{See @see "R.utils::Verbose".}
 # }
@@ -25,7 +25,7 @@
 #  Returns an @see "AffymetrixCelFile".
 # }
 #
-# @author
+# @author "HB"
 #
 # \seealso{
 #   @seeclass
@@ -59,7 +59,7 @@ setMethodS3("allocateFromCdf", "AffymetrixCelFile", function(static, cdf, name, 
   filename <- sprintf("%s%s", fullname, suffix);
 
   # Argument 'filename' & 'path':
-  pathname <- Arguments$getWritablePathname(filename, path=path, 
+  pathname <- Arguments$getWritablePathname(filename, path=path,
                                                 mustNotExist=!overwrite);
 
   # Argument 'verbose':
@@ -104,7 +104,7 @@ setMethodS3("allocateFromCdf", "AffymetrixCelFile", function(static, cdf, name, 
 
 ##    # Fill with negative values
 ##    nbrOfProbes <- celHeader$total;
-##    updateCel(pathname, indices=1:nbrOfProbes, 
+##    updateCel(pathname, indices=1:nbrOfProbes,
 ##         intensities=rep(-1,nbrOfProbes), verbose=less(verbose));
 
   verbose && enter(verbose, "Setting up ", class(static)[1]);

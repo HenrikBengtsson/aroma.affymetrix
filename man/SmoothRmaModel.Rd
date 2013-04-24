@@ -6,15 +6,15 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
- \name{SmoothRmaModel}
+\name{SmoothRmaModel}
 \docType{class}
 \alias{SmoothRmaModel}
 
 
- \title{The SmoothRmaModel class}
+\title{The SmoothRmaModel class}
 
- \description{
-  Package:  aroma.affymetrix \cr
+\description{
+ Package:  aroma.affymetrix \cr
 \bold{Class SmoothRmaModel}\cr
 
 \code{\link[R.oo]{Object}}\cr
@@ -33,21 +33,21 @@ extends \emph{\link[aroma.affymetrix]{SmoothMultiarrayModel}}\cr
 
 
 
-  This class represents the Chromosomal Smoothing Robust Multichip Analysis
-  method.
- }
+ This class represents the Chromosomal Smoothing Robust Multichip Analysis
+ method.
+}
 
- \usage{
+\usage{
 SmoothRmaModel(...)
 }
 
- \arguments{
-   \item{...}{Arguments passed to the constructor of
-              \code{\link{SmoothMultiarrayModel}}.}
- }
+\arguments{
+  \item{...}{Arguments passed to the constructor of
+             \code{\link{SmoothMultiarrayModel}}.}
+}
 
- \section{Fields and Methods}{
-  \bold{Methods:}\cr
+\section{Fields and Methods}{
+ \bold{Methods:}\cr
 \emph{No methods defined}.
 
 
@@ -55,13 +55,13 @@ SmoothRmaModel(...)
 as.character, createOutputTuple, fitOneChromosome, getAsteriskTags, getBandwidth, getFitUnitGroupFunction, getOutputTuple, getRootPath, setBandwidth
 
  \bold{Methods inherited from ChromosomalModel}:\cr
-as.character, fit, getAlias, getAromaGenomeTextFile, getAsteriskTags, getChipType, getChipTypes, getChromosomes, getFullName, getFullNames, getGenome, getGenomeData, getGenomeFile, getListOfAromaUgpFiles, getName, getNames, getParentPath, getPath, getReportPath, getRootPath, getSets, getSetTuple, getTags, indexOf, nbrOfArrays, nbrOfChipTypes, setGenome, getListOfGenomeInformations, getPcuTheta, getPositionChipTypeUnit
+as.character, fit, getAlias, getAromaGenomeTextFile, getAsteriskTags, getChipType, getChipTypes, getChromosomes, getFullName, getFullNames, getGenome, getGenomeData, getGenomeFile, getListOfAromaUgpFiles, getName, getNames, getParentPath, getPath, getReportPath, getRootPath, getSetTuple, getSets, getTags, indexOf, nbrOfArrays, nbrOfChipTypes, setGenome, getListOfGenomeInformations, getPcuTheta, getPositionChipTypeUnit
 
  \bold{Methods inherited from Object}:\cr
 $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save, asThis
 
 
- }
+}
 
- \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 \keyword{classes}

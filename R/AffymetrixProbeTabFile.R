@@ -7,10 +7,10 @@
 #  @classhierarchy
 #
 #  An AffymetrixProbeTabFile represents an interface to query the data
-#  contained in an Affymetrix probe tab file, e.g. 
+#  contained in an Affymetrix probe tab file, e.g.
 #  \code{Mapping250K_Nsp_probe_tab}.
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
@@ -20,11 +20,11 @@
 # \section{Fields and Methods}{
 #  @allmethods "public"
 # }
-# 
+#
 # \section{About probe-tab files}{
-#  Probe-tab files are provided by Affymetrix and contains information 
+#  Probe-tab files are provided by Affymetrix and contains information
 #  on the probes.  Note that not necessarily all probes are represented
-#  in the files, e.g. typically only PM probes are given and MM are 
+#  in the files, e.g. typically only PM probes are given and MM are
 #  left to be inferred from the PMs.
 #
 #  The below is an extract of the \code{Mapping250K_Nsp_probe_tab} file
@@ -39,7 +39,7 @@
 #  }
 # }
 #
-# @author
+# @author "HB"
 #
 # @keyword internal
 #*/###########################################################################
@@ -80,14 +80,14 @@ setMethodS3("as.character", "AffymetrixProbeTabFile", function(x, ...) {
 setMethodS3("translateFullName", "AffymetrixProbeTabFile", function(this, name, ...) {
   name <- gsub("[._]probe(|[._]tab)", "", name);
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Turning special Affymetrix tags into regular tags
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   name <- gsub("[.](CN)(|[,_].*)", ",\\1\\2", name);
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Patching incorrect Affymetrix file names
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   map <- c(
     "HG-U133-PLUS" = "HG-U133_Plus_2",
     "Mapping50K_Hind" = "Mapping50K_Hind240",
@@ -101,7 +101,7 @@ setMethodS3("translateFullName", "AffymetrixProbeTabFile", function(this, name, 
     idx <- idx[1];
     name <- gsub(patterns[idx], sprintf("%s\\2", map[idx]), name);
   }
-  
+
   NextMethod("translateFullName");
 }, protected=TRUE)
 
@@ -196,7 +196,7 @@ setMethodS3("getColumnNames", "AffymetrixProbeTabFile", function(this, ..., tran
         verbose && cat(verbose, "Identified column: ", idx);
       }
       verbose && exit(verbose);
-  
+
       verbose && enter(verbose, "Locating column with PM/MM flags");
       # Identify PROBE_TYPE
       pattern <- "^(PM|MM)$";
@@ -207,7 +207,7 @@ setMethodS3("getColumnNames", "AffymetrixProbeTabFile", function(this, ..., tran
         verbose && cat(verbose, "Identified column: ", idx);
       }
       verbose && exit(verbose);
-  
+
       verbose && enter(verbose, "Locating column with strandness");
       # Identify TARGET_STRANDEDNESS
       pattern <- "^(\\+|-|f|r|Antisense|Sense)$";
@@ -218,7 +218,7 @@ setMethodS3("getColumnNames", "AffymetrixProbeTabFile", function(this, ..., tran
         verbose && cat(verbose, "Identified column: ", idx);
       }
       verbose && exit(verbose);
-  
+
       verbose && enter(verbose, "Locating column specifying the allele");
       # Identify ALLELE
       pattern <- "^[ACGT]$";
@@ -229,7 +229,7 @@ setMethodS3("getColumnNames", "AffymetrixProbeTabFile", function(this, ..., tran
         verbose && cat(verbose, "Identified column: ", idx);
       }
       verbose && exit(verbose);
-  
+
       verbose && enter(verbose, "Locating column of unit names");
       # Identify PROBESET_ID
       pattern <- "^[a-zA-Z0-9]+_[a-zA-Z0-9].*";
@@ -242,7 +242,7 @@ print(pattern);
         verbose && cat(verbose, "Identified column: ", idx);
       }
       verbose && exit(verbose);
-  
+
       verbose && enter(verbose, "Locating columns for (x,y) & position");
       idxs <- which(is.na(columns));
       verbose && cat(verbose, "Remaining columns:");
@@ -374,7 +374,7 @@ setMethodS3("findByChipType", "AffymetrixProbeTabFile", function(static, chipTyp
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Search in annotationData/chipTypes/<chipType>/
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  pathname <- findAnnotationDataByChipType(chipType, pattern, 
+  pathname <- findAnnotationDataByChipType(chipType, pattern,
                                                           firstOnly=FALSE);
   if (length(pathname) > 1) {
     verbose && cat(verbose, "Located files:");
@@ -419,7 +419,7 @@ setMethodS3("findByChipType", "AffymetrixProbeTabFile", function(static, chipTyp
   if (is.null(pathname)) {
     verbose && enter(verbose, "Backward compatible search (v2)");
     paths <- "annotations";
-  
+
     # First to an exact search
     pattern <- sprintf("^%s[._]probe_tab$", chipType);
     pathname <- findFiles(pattern=pattern, paths=paths, recursive=TRUE);
@@ -428,26 +428,26 @@ setMethodS3("findByChipType", "AffymetrixProbeTabFile", function(static, chipTyp
 
       # Since Affymetrix is not naming their probe tab files consistently,
       # it might be that they chop of the end of the chip type string.
-  
+
       # 1. Find all probe tab files
       pattern <- "[._]probe_tab$";
-      pathnames <- findFiles(pattern=pattern, paths=paths, 
+      pathnames <- findFiles(pattern=pattern, paths=paths,
                                               firstOnly=FALSE, recursive=TRUE);
 
       # Found any files?
       if (length(pathnames) > 0) {
         # 2. Extract the part of the filenames containing chip type names
         names <- gsub(pattern, "", basename(pathnames));
-      
+
         # 3. Create patterns out of these
         patterns <- paste("^", names, sep="");
-    
+
         # 4. Keep only those files that match the prefix of the chip type
         keep <- sapply(patterns, function(pattern) {
           (regexpr(pattern, chipType) != -1);
         });
         pathnames <- pathnames[keep];
-    
+
         # 4b. If more than one match was found, keep the longest one
         if (length(pathnames) > 1) {
           names <- names[keep];
@@ -455,7 +455,7 @@ setMethodS3("findByChipType", "AffymetrixProbeTabFile", function(static, chipTyp
           pathnames <- pathnames[keep];
         }
       }
-  
+
       pathname <- pathnames[1];
     }
     verbose && print(verbose, pathname);
@@ -505,7 +505,7 @@ setMethodS3("getIndexToRowMap", "AffymetrixProbeTabFile", function(this, ..., fo
     names(colClasses) <- c("unitName", "x", "y", "offset", "sequence", "strand", "type", "allele");
     pathname <- getPathname(this);
     df <- readTable(pathname, colClasses=colClasses, sep="\t", header=FALSE, col.names=names(colClasses));
-    
+
     # Calculate cell indices from (x,y)
     cdf <- getCdf(this);
     indices <- nbrOfColumns(cdf) * df$y + df$x + 1;
@@ -564,7 +564,7 @@ setMethodS3("readDataFrame2", "AffymetrixProbeTabFile", function(this, cells=NUL
     colClasses <- c("character", "integer", "integer", "integer", "character", "character", "character", "character");
     colClasses[2:3] <- "NULL";
     names(colClasses) <- c("unitName", "x", "y", "offset", "sequence", "strand", "type", "allele");
-  
+
     pathname <- getPathname(this);
     verbose && enter(verbose, "Reading data table");
     verbose && cat(verbose, "Pathname: ", pathname);
@@ -650,7 +650,7 @@ setMethodS3("readSequenceDataFrame", "AffymetrixProbeTabFile", function(this, ..
   # Reading data
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   verbose && enter(verbose, "Reading (x,y,sequence) data");
-  colClasses <- c("^probeXPos$"="integer", "^probeYPos$"="integer", 
+  colClasses <- c("^probeXPos$"="integer", "^probeYPos$"="integer",
                                             "^probeSequence$"="character");
   verbose && cat(verbose, "colClasses:");
   verbose && print(verbose, colClasses);
@@ -675,7 +675,7 @@ setMethodS3("readSequenceDataFrame", "AffymetrixProbeTabFile", function(this, ..
     throw("Detected negative probe y positions: ", getPathname(this));
   }
   verbose && exit(verbose);
-  
+
   verbose && exit(verbose);
 
   data;
@@ -699,13 +699,13 @@ setMethodS3("readSequenceDataFrame", "AffymetrixProbeTabFile", function(this, ..
 # o Updated to recognize column name 'Transcript Cluster ID' as a unit names
 #   columns as well, e.g. as for the HuGene-1_0-st-v1 probe tab file.
 # o Now findByChipType() of AffymetrixProbeTabFile only search according
-#   to "modern" rules.  The by now really old alternative search rules 
+#   to "modern" rules.  The by now really old alternative search rules
 #   (v1 and v2) have been made deprecated, i.e. it still searches using
-#   those but, if a file is found, it gives an error saying that the 
-#   the method is outdated.  This should not affect anyone, but just 
+#   those but, if a file is found, it gives an error saying that the
+#   the method is outdated.  This should not affect anyone, but just
 #   in case.
 # 2008-07-07
-# o Updated findByChipType() to search for pattern "[._]probe[._]tab$", 
+# o Updated findByChipType() to search for pattern "[._]probe[._]tab$",
 #   because all combinations exist.
 # 2008-07-06
 # o Added argument 'what' to findByChipType() and byChipType().
@@ -724,8 +724,8 @@ setMethodS3("readSequenceDataFrame", "AffymetrixProbeTabFile", function(this, ..
 # o Added verbose output to readDataFrame().
 # o Renamed getData() to readDataFrame().
 # 2007-06-07
-# o When there are no annotation files, findByChipType() of 
-#   AffymetrixProbeTabFile would throw "Error in basename(path) : a 
+# o When there are no annotation files, findByChipType() of
+#   AffymetrixProbeTabFile would throw "Error in basename(path) : a
 #   character vector argument expected".  Not it returns NULL.
 # 2006-12-06
 # o Can read probe-tab data from file.  However, for probes not in the file

@@ -27,9 +27,7 @@
 #  to the total number of features on the array.
 # }
 #
-# \author{
-#   Ken Simpson (ksimpson[at]wehi.edu.au).
-# }
+# @author "KS, HB, MR"
 #*/###########################################################################
 setMethodS3("computeAffinities", "AffymetrixCdfFile", function(this, safe=TRUE, force=FALSE, verbose=FALSE, ...) {
   isPackageInstalled("gcrma") || throw("Package not installed: gcrma");
@@ -98,7 +96,7 @@ setMethodS3("computeAffinities", "AffymetrixCdfFile", function(this, safe=TRUE, 
   }
 
   # Checking cache
-  key <- list(method="computeAffinities", class=class(this)[1], 
+  key <- list(method="computeAffinities", class=class(this)[1],
               chipTypeFull=chipTypeFull, version="2009-05-09");
   if (getOption(aromaSettings, "devel/useCacheKeyInterface", FALSE)) {
     key <- getCacheKey(this, method="computeAffinities", chipTypeFull=chipTypeFull);
@@ -124,7 +122,7 @@ setMethodS3("computeAffinities", "AffymetrixCdfFile", function(this, safe=TRUE, 
   sequenceInfo <- sequenceInfo[o,,drop=FALSE];
   verbose && str(verbose, sequenceInfo);
   nbrOfSequences <- nrow(sequenceInfo);
-  verbose && printf(verbose, "Number of known sequences: %d of %d (%.1f%%)\n", 
+  verbose && printf(verbose, "Number of known sequences: %d of %d (%.1f%%)\n",
                nbrOfSequences, nbrOfCells(this), 100*nbrOfSequences/nbrOfCells(this));
   verbose && exit(verbose);
 
@@ -133,12 +131,12 @@ setMethodS3("computeAffinities", "AffymetrixCdfFile", function(this, safe=TRUE, 
   cells <- getCellIndices(this, useNames=FALSE, unlist=TRUE, verbose=verbose);
   verbose && str(verbose, cells);
   n <- length(cells);
-  verbose && printf(verbose, "Number of CDF cell indices: %d of %d (%.1f%%)\n", 
+  verbose && printf(verbose, "Number of CDF cell indices: %d of %d (%.1f%%)\n",
                                    n, nbrOfCells(this), 100*n/nbrOfCells(this));
   verbose && exit(verbose);
 
   sum(is.element(sequenceInfo$cell, cells));
-  verbose && printf(verbose, "Number of known sequences out of all CDF cell indices: %d of %d (%.1f%%)\n", 
+  verbose && printf(verbose, "Number of known sequences out of all CDF cell indices: %d of %d (%.1f%%)\n",
                              nbrOfSequences, n, 100*nbrOfSequences/n);
 
 
@@ -148,7 +146,7 @@ setMethodS3("computeAffinities", "AffymetrixCdfFile", function(this, safe=TRUE, 
   # We will calculate affinity for PM and MM anyway, and then
   # try to match MM indices from the CDF file with their appropriate PMs (and
   # hence assign the correct affinity).
-   
+
   # assume that MM has same x-coordinate as PM, but y-coordinate larger by 1
   indexPm <- sequenceInfo$cell;
   dimension <- getDimension(this);
@@ -159,12 +157,12 @@ setMethodS3("computeAffinities", "AffymetrixCdfFile", function(this, safe=TRUE, 
   indexMm <- cells[isMm][matches];
   notNA <- which(!is.na(indexMm));
   indexMm <- indexMm[notNA];
-  
+
   # for PM+MM arrays, the number of MMs and the number of PMs in the
   # CDF is equal
   isPMMMChip <- (length(indexMm) == length(indexPm));
   verbose && enter(verbose, "Chip type is an \"PM+MM\" chip: ", isPMMMChip);
-  
+
   rm(indexMmPutative, matches); # Not needed anymore
 
 
@@ -217,7 +215,7 @@ setMethodS3("computeAffinities", "AffymetrixCdfFile", function(this, safe=TRUE, 
         reset(pb);
       }
     }
-  
+
     for (ii in seq_along(apm)) {
       if (!is.null(pb) && (ii %% 1000 == 0)) {
         increase(pb);
@@ -227,8 +225,8 @@ setMethodS3("computeAffinities", "AffymetrixCdfFile", function(this, safe=TRUE, 
       charMtrx <- getSeqMatrix(sequences[ii]);
 
       # Calculate the PM affinity
-      A <- cbind(charMtrx[1,,drop=TRUE] %*% affinity.basis.matrix, 
-                 charMtrx[2,,drop=TRUE] %*% affinity.basis.matrix, 
+      A <- cbind(charMtrx[1,,drop=TRUE] %*% affinity.basis.matrix,
+                 charMtrx[2,,drop=TRUE] %*% affinity.basis.matrix,
                  charMtrx[3,,drop=TRUE] %*% affinity.basis.matrix);
       apm[ii] <- A %*% affinity.spline.coefs;
 
@@ -245,7 +243,7 @@ setMethodS3("computeAffinities", "AffymetrixCdfFile", function(this, safe=TRUE, 
       increase(pb);
     }
 
-    # create a vector to hold affinities and assign values to the 
+    # create a vector to hold affinities and assign values to the
     # appropriate location in the vector
     affinities[indexPm] <- apm;
     affinities[indexMm] <- amm[notNA];
@@ -280,7 +278,7 @@ setMethodS3("computeAffinities", "AffymetrixCdfFile", function(this, safe=TRUE, 
         increase(pb);
       }
     }
-  
+
     for (ii in seq_along(idxs)) {
       if (!is.null(pb) && (ii %% 1000 == 0)) {
         increase(pb);
@@ -290,8 +288,8 @@ setMethodS3("computeAffinities", "AffymetrixCdfFile", function(this, safe=TRUE, 
       charMtrx <- getSeqMatrix(sequences[idx]);
 
       # Calculate the PM affinity
-      A <- cbind(charMtrx[1,,drop=TRUE] %*% affinity.basis.matrix, 
-                 charMtrx[2,,drop=TRUE] %*% affinity.basis.matrix, 
+      A <- cbind(charMtrx[1,,drop=TRUE] %*% affinity.basis.matrix,
+                 charMtrx[2,,drop=TRUE] %*% affinity.basis.matrix,
                  charMtrx[3,,drop=TRUE] %*% affinity.basis.matrix);
       apm[idx] <- A %*% affinity.spline.coefs;
     } # for (ii in ...)
@@ -318,7 +316,7 @@ setMethodS3("computeAffinities", "AffymetrixCdfFile", function(this, safe=TRUE, 
   saveCache(key=key, affinities, comment=comment, dirs=dirs);
 
   verbose && exit(verbose);
-  
+
   affinities;
 }, private=TRUE)
 
@@ -400,7 +398,7 @@ setMethodS3("computeAffinitiesByACS", "AffymetrixCdfFile", function(this, ..., m
 
 
   # Checking cache
-  key <- list(method="computeAffinities", class=class(this)[1], 
+  key <- list(method="computeAffinities", class=class(this)[1],
               chipType=chipTypeS, version="2010-09-29");
   if (getOption(aromaSettings, "devel/useCacheKeyInterface", FALSE)) {
     key <- getCacheKey(this, method="computeAffinitiesByACS", chipType=chipTypeS);
@@ -481,7 +479,7 @@ setMethodS3("computeAffinitiesByACS", "AffymetrixCdfFile", function(this, ..., m
       if (!is.null(pb) && (ii %% 1000 == 0)) {
         increase(pb);
       }
-  
+
       seqMatrixII <- seqMatrix[ii,,drop=TRUE];
       affinity <- 0;
       for (kk in 1:3) {
@@ -493,7 +491,7 @@ setMethodS3("computeAffinitiesByACS", "AffymetrixCdfFile", function(this, ..., m
         akk <- sum(Akk * coefsKK);
         affinity <- affinity + akk;
       }
-  
+
       cell <- cells[ii];
       affinities[cell] <- affinity;
     } # for (ii ...)
@@ -522,13 +520,13 @@ setMethodS3("computeAffinitiesByACS", "AffymetrixCdfFile", function(this, ..., m
       base <- bases[kk];
       idxs <- (df*(kk-1)) + (1:df);
       coefsKK <- affinity.spline.coefs[idxs];
-  
+
       # For each sequence...
       for (ii in seq_along(cells)) {
         seqMatrixII <- seqMatrix[ii,,drop=TRUE];
         isBase <- (seqMatrixII == base);
         basesII <- which(isBase);
-  
+
         # For each position...
         Bkk <- double(df);
         for (pp in basesII) {
@@ -567,31 +565,31 @@ setMethodS3("computeAffinitiesByACS", "AffymetrixCdfFile", function(this, ..., m
       nucleotides <- readSequenceMatrix(acs, cells=cells, positions=pp, drop=TRUE);
       verbose && str(verbose, nucleotides);
       verbose && exit(verbose);
-  
+
       # For each nucleotide type...
       for (tt in 1:3) {
         base <- bases[tt];
         verbose && enter(verbose, "Nucleotide ", base);
-  
+
         # Identify cells with this nucleotide at this position
         idxsTT <- which(nucleotides == base);
 
         verbose && cat(verbose, "Indices of cells with this base:");
         verbose && str(verbose, idxsTT);
-  
+
         # Nothing to do?
         if (length(idxsTT) == 0) {
           verbose && exit(verbose);
           next;
         }
-  
+
         idxs <- (df*(tt-1)) + (1:df);
         coefsTT <- affinity.spline.coefs[idxs];
         affinityBasisPPTT <- affinityBasisPP * coefsTT;
         affinityPPTT <- sum(affinityBasisPPTT);
 
         verbose && printf(verbose, "Affinity for nucleotide '%s' at position #%d: %.3f\n", base, pp, affinityPPTT);
-  
+
         affinitiesT[idxsTT] <- affinitiesT[idxsTT] + affinityPPTT;
 
         verbose && exit(verbose);
@@ -614,7 +612,7 @@ setMethodS3("computeAffinitiesByACS", "AffymetrixCdfFile", function(this, ..., m
   saveCache(key=key, affinities, comment=comment, dirs=dirs);
 
   verbose && exit(verbose);
-  
+
   affinities;
 }, private=TRUE)
 
@@ -632,11 +630,11 @@ setMethodS3("computeAffinitiesByACS", "AffymetrixCdfFile", function(this, ..., m
 # o Now the progress bar produced by computeAffinities() is ended correctly.
 # 2010-04-15
 # o BUG FIX: computeAffinities(..., verbose=FALSE) of AffymetrixCdfFile
-#   would give throw "Error in reset(pb) : object 'pb' not found". 
+#   would give throw "Error in reset(pb) : object 'pb' not found".
 #   Thanks Stephen ? at Mnemosyne BioSciences, Finland.
 # 2009-05-09 [HB]
 # o CLEAN UP: computeAffinities() of AffymetrixCdfFile no longer need to
-#   load 'gcrma'.  However, it still needs to load a small set of 
+#   load 'gcrma'.  However, it still needs to load a small set of
 #   prior estimates from the 'gcrma' package.
 #   'matchprobes' package, but never used it.
 # o CLEAN UP: computeAffinities() of AffymetrixCdfFile did load the
@@ -648,11 +646,11 @@ setMethodS3("computeAffinitiesByACS", "AffymetrixCdfFile", function(this, ..., m
 #   translateColumnNames() will take care of all variations of names for
 #   the column containing unit names.
 # 2009-03-28 [MR]
-# o Made several modifications to allow computing of affinities for 
+# o Made several modifications to allow computing of affinities for
 #   Gene 1.0 ST arrays.  For example:
 #   -- left the PM+MM array code mostly untouched
 #   -- fixed some assumptions about the columns of the probe_tab file
-#   -- added a different stream for PM-only (with NCs) 
+#   -- added a different stream for PM-only (with NCs)
 # 2007-07-30
 # o UPDATE: Now computeAffinities() for AffymetrixCdfFile gives an error
 #   if there are no MMs in the CDF.
@@ -664,7 +662,7 @@ setMethodS3("computeAffinitiesByACS", "AffymetrixCdfFile", function(this, ..., m
 #   new getCellIndices(cdf, useNames=FALSE, unlist=TRUE).
 # 2007-06-07
 # o BUG FIX: If an Affymetrix probe tab file is not found for the chip type,
-#   computeAffinitities() of AffymetrixCdfFile would throw "Error in 
+#   computeAffinitities() of AffymetrixCdfFile would throw "Error in
 #   paste(..., sep = sep, collapse = collapse): object "pattern" not found"
 #   instead of an intended and more information error.
 # 2007-02-06

@@ -15,7 +15,7 @@
 # \arguments{
 #   \item{...}{Arguments passed to the constructor of
 #     @see "BackgroundCorrection".}
-#   \item{args}{A @list of additional arguments passed to the 
+#   \item{args}{A @list of additional arguments passed to the
 #     correction algorithm.}
 #   \item{addJitter}{If @TRUE, Zero-mean gaussian noise is added to the
 #     signals before being background corrected.}
@@ -28,19 +28,19 @@
 #
 # \section{Jitter noise}{
 #   The fitting algorithm of the normal+exponentital background correction
-#   model may not converge if there too many small and discrete signals.  
-#   To overcome this problem, a small amount of noise may be added to the 
-#   signals before fitting the model.  This is an ad hoc solution that 
+#   model may not converge if there too many small and discrete signals.
+#   To overcome this problem, a small amount of noise may be added to the
+#   signals before fitting the model.  This is an ad hoc solution that
 #   seems to work.
 #   However, adding Gaussian noise may generate non-positive signals.
 # }
 #
 # \details{
-#   By default, only PM signals are background corrected and MMs are 
+#   By default, only PM signals are background corrected and MMs are
 #   left unchanged.
 # }
 #
-# \author{Henrik Bengtsson. 
+# \author{Henrik Bengtsson.
 #         Adopted from RmaBackgroundCorrection by Ken Simpson.}
 #
 # \seealso{
@@ -89,7 +89,7 @@ setMethodS3("getParameters", "LimmaBackgroundCorrection", function(this, ...) {
   params <- NextMethod("getParameters");
 
   pmOnly <- (this$.typesToUpdate == "pm");
-  
+
   # Get parameters of this class
   params2 <- list(
     addJitter = this$.addJitter,
@@ -165,8 +165,6 @@ setMethodS3("getSubsetToUpdate0", "LimmaBackgroundCorrection", function(this, ..
 #  Returns a @double @vector.
 # }
 #
-# @author
-#
 # \seealso{
 #   @seeclass
 # }
@@ -187,7 +185,7 @@ setMethodS3("process", "LimmaBackgroundCorrection", function(this, ..., force=FA
     outputDataSet <- getOutputDataSet(this);
     return(invisible(outputDataSet));
   }
-  
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Setup
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -232,9 +230,9 @@ setMethodS3("process", "LimmaBackgroundCorrection", function(this, ..., force=FA
     df <- getFile(ds, kk);
     verbose && print(verbose, df);
 
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Generating output pathname
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     fullname <- getFullName(df);
     filename <- sprintf("%s.CEL", fullname);
     pathname <- Arguments$getWritablePathname(filename, path=outputPath, ...);
@@ -247,9 +245,9 @@ setMethodS3("process", "LimmaBackgroundCorrection", function(this, ..., force=FA
     }
 
 
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Identify the indices for cells to be corrected
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     if (is.null(cells)) {
       cells <- getSubsetToUpdate0(this, verbose=less(verbose, 10));
     }
@@ -286,7 +284,7 @@ setMethodS3("process", "LimmaBackgroundCorrection", function(this, ..., force=FA
     # Storing data
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     verbose && enter(verbose, "Storing corrected data");
-  
+
     # Create CEL file to store results, if missing
     verbose && enter(verbose, "Creating CEL file for results, if missing");
     createFrom(df, filename=pathname, path=NULL, verbose=less(verbose));
@@ -305,7 +303,7 @@ setMethodS3("process", "LimmaBackgroundCorrection", function(this, ..., force=FA
   verbose && exit(verbose);
 
   outputDataSet <- getOutputDataSet(this, force=TRUE);
-  
+
   verbose && exit(verbose);
 
   invisible(outputDataSet);
@@ -315,7 +313,7 @@ setMethodS3("process", "LimmaBackgroundCorrection", function(this, ..., force=FA
 ############################################################################
 # HISTORY:
 # 2009-04-16
-# o Made this a limma-only class. Removed the 'flavor' argument. 
+# o Made this a limma-only class. Removed the 'flavor' argument.
 # 2009-04-09
 # o Added redundancy test for LimmaBackgroundCorrection.
 # 2009-04-06

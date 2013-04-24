@@ -15,13 +15,13 @@
 #     filtering by probe type is applied.
 #     If a @vector of @doubles, the cell indices.
 #     If a scalar @double in [0,1], the fraction of cells, which can
-#     be used to speed up the plotting if approximate densities are 
+#     be used to speed up the plotting if approximate densities are
 #     acceptable.
 #     if @NULL, all cells are considered.
 #   }
 #   \item{types}{The type of probes to include, e.g. \code{"all"},
 #     \code{"pmmm"}, \code{"pm"}, and \code{"mm"}.}
-#   \item{...}{Additional arguments passed to 
+#   \item{...}{Additional arguments passed to
 #      @see "plotDensity.AffymetrixCelFile".}
 #   \item{col}{A @vector of colors for each of the arrays.}
 #   \item{lty}{A @vector of line types for each of the arrays.}
@@ -34,23 +34,23 @@
 #  Returns nothing.
 # }
 #
-# @author
+# @author "HB"
 #
 # \seealso{
 #   @seeclass
 # }
 #*/###########################################################################
 setMethodS3("plotDensity", "AffymetrixCelSet", function(this, subset=NULL, types=NULL, ..., col=seq_along(this), lty=NULL, lwd=NULL, annotate=TRUE, add=FALSE, verbose=FALSE) {
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'subset':
   if (is.null(subset)) {
   } else if (is.numeric(subset)) {
   }
 
   nbrOfArrays <- length(this);
-  
+
   # Argument 'col':
   if (is.null(col)) {
     col <- seq_len(nbrOfArrays);
@@ -80,21 +80,21 @@ setMethodS3("plotDensity", "AffymetrixCelSet", function(this, subset=NULL, types
                                                     verbose=less(verbose));
   })
   verbose && exit(verbose);
-  
+
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Plot densities
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   for (kk in seq_len(nbrOfArrays)) {
     df <- getFile(this, kk);
-    verbose && enter(verbose, sprintf("Array #%d ('%s') of %d", kk, 
+    verbose && enter(verbose, sprintf("Array #%d ('%s') of %d", kk,
                                                 getName(df), nbrOfArrays));
 
     verbose && cat(verbose, "Using cell indices:");
     verbose && str(verbose, subset);
 
     add <- add || (kk > 1);
-    plotDensity(df, subset=subset, ..., col=col[kk], lty=lty[kk], 
+    plotDensity(df, subset=subset, ..., col=col[kk], lty=lty[kk],
               lwd=lwd[kk], annotate=FALSE, add=add, verbose=less(verbose));
 
     if (annotate) {
@@ -113,7 +113,7 @@ setMethodS3("plotDensity", "AffymetrixCelSet", function(this, subset=NULL, types
 ############################################################################
 # HISTORY:
 # 2009-09-17
-# o Now argument 'subset' of plotDensity() of AffymetrixCelSet defaults 
+# o Now argument 'subset' of plotDensity() of AffymetrixCelSet defaults
 #   to NULL (all probes).  Before it was 1/2 (a fraction).
 # o Added verbose output to plotDensity() to AffymetrixCelSet show what
 #   cells are used.

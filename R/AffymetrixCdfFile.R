@@ -8,7 +8,7 @@
 #
 #  An AffymetrixCdfFile object represents a generic Affymetrix CDF file.
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
@@ -16,13 +16,13 @@
 # }
 #
 # \section{Fields and Methods}{
-#  @allmethods "public"  
+#  @allmethods "public"
 # }
-# 
-# @author
+#
+# @author "HB, KS"
 #*/###########################################################################
 setConstructorS3("AffymetrixCdfFile", function(...) {
-  this <- extend(AromaChipTypeAnnotationFile(...), c("AffymetrixCdfFile", 
+  this <- extend(AromaChipTypeAnnotationFile(...), c("AffymetrixCdfFile",
             uses("UnitNamesFile", "UnitTypesFile", "AromaPlatformInterface")),
     "cached:.header" = NULL,
     "cached:.unitNames" = NULL,
@@ -125,8 +125,6 @@ setMethodS3("as.character", "AffymetrixCdfFile", function(x, ...) {
 #  error is thrown.
 # }
 #
-# @author
-#
 # \seealso{
 #   @seeclass
 # }
@@ -136,7 +134,7 @@ setMethodS3("as.character", "AffymetrixCdfFile", function(x, ...) {
 #*/###########################################################################
 setMethodS3("fromFile", "AffymetrixCdfFile", function(static, filename, path=NULL, ...) {
   # Arguments 'filename' and 'path':
-  pathname <- Arguments$getReadablePathname(filename, path=path, 
+  pathname <- Arguments$getReadablePathname(filename, path=path,
                                                               mustExist=TRUE);
 
   # Assert that it is a CDF file
@@ -176,8 +174,6 @@ setMethodS3("getDefaultExtension", "AffymetrixCdfFile", function(static, ...) {
 #  Returns a pathname as a @character string to the first CDF file found.
 #  If non CDF with requested chip type was found, @NULL is returned.
 # }
-#
-# @author
 #
 # \seealso{
 #   @seeclass
@@ -258,7 +254,7 @@ setMethodS3("findByChipType", "AffymetrixCdfFile", function(static, chipType, ta
   if (is.null(pathname)) {
     # Search for a Windows shortcut
     args <- list(
-      chipType=chipType, 
+      chipType=chipType,
       pattern=sprintf("^%s%s[.]lnk$", fullname, extPattern),
       ...
     );
@@ -296,8 +292,6 @@ setMethodS3("findByChipType", "AffymetrixCdfFile", function(static, chipType, ta
 #  Returns a @list structure as returned by @see "affxparser::readCdfHeader".
 # }
 #
-# @author
-#
 # \seealso{
 #   @seeclass
 # }
@@ -326,7 +320,7 @@ setMethodS3("getChipType", "AffymetrixCdfFile", function(this, fullname=TRUE, ..
     if (regexpr(pattern, chipType) != -1) {
       chipType <- gsub(pattern, "\\1", chipType);
       tags <- "monocell";
-    } else {    
+    } else {
       name <- gsub("[,].*$", "", chipType);
 
       # Keep anything after the data-set name (and the separator).
@@ -381,8 +375,6 @@ setMethodS3("nbrOfColumns", "AffymetrixCdfFile", function(this, ...) {
 #   Once read from file, this information is cached in memory for efficiency.
 #   The cache can be cleared by calling \code{gc(cdf)}.
 # }
-#
-# @author
 #
 # \seealso{
 #   @seeclass
@@ -468,8 +460,6 @@ setMethodS3("hasUnitTypes", "AffymetrixCdfFile", function(this, types, ..., verb
 #   The cache can be cleared by calling \code{gc(cdf)}.
 # }
 #
-# @author
-#
 # \seealso{
 #   @seeclass
 # }
@@ -483,10 +473,10 @@ setMethodS3("getUnitTypes", "AffymetrixCdfFile", function(this, units=NULL, ...,
   asUnitTypeIndex <- function(unitType) {
     # From the Fusion SDK documentation:
     # ASCII:
-    #   0 - Unknown, 1 - CustomSeq, 2 - Genotyping, 3 - Expression, 
+    #   0 - Unknown, 1 - CustomSeq, 2 - Genotyping, 3 - Expression,
     #   7 - Tag/GenFlex, 8 - Copy Number
     # XDA/binary:
-    #   1 - Expression, 2 - Genotyping, 3 - CustomSeq, 4 - Tag, 
+    #   1 - Expression, 2 - Genotyping, 3 - CustomSeq, 4 - Tag,
     #   5 - Copy Number
 
     map <- c("unknown"=0, "expression"=1, "genotyping"=2, "resequencing"=3, "tag"=4, "copynumber"=5, "genotypingcontrol"=6, "expressioncontrol"=7);
@@ -554,7 +544,7 @@ setMethodS3("getUnitTypes", "AffymetrixCdfFile", function(this, units=NULL, ...,
         verbose && exit(verbose);
       }
     }
-  
+
     if (!is.null(units)) {
       map <- attr(types, "typeMap");
       types <- types[units];
@@ -604,10 +594,10 @@ setMethodS3("getGroupDirections", "AffymetrixCdfFile", function(this, units=NULL
       groupDirections <- loadCache(key=key, dirs=dirs);
     }
 
-    if (is.null(groupDirections)) {    
+    if (is.null(groupDirections)) {
       verbose && enter(verbose, "Reading directions for *all* unit groups");
       # Have to read some group field in order to get group directions
-      groupDirections <- readCdfUnits(getPathname(this), readExpos=TRUE, 
+      groupDirections <- readCdfUnits(getPathname(this), readExpos=TRUE,
         readBases=FALSE, readXY=FALSE, readType=FALSE, readDirection=TRUE);
 
       gc <- gc();
@@ -627,7 +617,7 @@ setMethodS3("getGroupDirections", "AffymetrixCdfFile", function(this, units=NULL
       verbose && exit(verbose);
 
       verbose && enter(verbose, "Restructuring");
-      groupDirections <- restruct(this, groupDirections, 
+      groupDirections <- restruct(this, groupDirections,
                                                  verbose=less(verbose, 5));
 
       gc <- gc();
@@ -635,7 +625,7 @@ setMethodS3("getGroupDirections", "AffymetrixCdfFile", function(this, units=NULL
       verbose && exit(verbose);
 
       verbose && enter(verbose, "Unlisting each unit");
-      groupDirections <- base::lapply(groupDirections, FUN=unlist, 
+      groupDirections <- base::lapply(groupDirections, FUN=unlist,
                                                           use.names=FALSE);
 
       gc <- gc();
@@ -670,7 +660,7 @@ setMethodS3("getGroupDirections", "AffymetrixCdfFile", function(this, units=NULL
 #
 # \arguments{
 #   \item{units}{The units of interest. If @NULL, all units are considered.}
-#   \item{...}{Additional arguments passed to 
+#   \item{...}{Additional arguments passed to
 #      @see "affxparser::readCdfCellIndices".}
 #   \item{useNames}{If @TRUE, element names are returned, otherwise not.}
 #   \item{unlist}{If @TRUE, the unlisted result is returned. Using this
@@ -682,7 +672,7 @@ setMethodS3("getGroupDirections", "AffymetrixCdfFile", function(this, units=NULL
 # }
 #
 # \value{
-#  Returns the @list structure returned by 
+#  Returns the @list structure returned by
 #  @see "affxparser::readCdfCellIndices".
 # }
 #
@@ -691,8 +681,6 @@ setMethodS3("getGroupDirections", "AffymetrixCdfFile", function(this, units=NULL
 #  \code{getCellIndices(cdf, useNames=FALSE, unlist=TRUE)}
 #  compare with \code{unlist(getCellIndices(cdf), use.names=FALSE)}.
 # }
-#
-# @author
 #
 # \seealso{
 #   See @seemethod "setRestructor" to set a default re-constructor for
@@ -716,7 +704,7 @@ setMethodS3("getCellIndices", "AffymetrixCdfFile", function(this, units=NULL, ..
 
     verbose && enter(verbose, "Restructuring");
     # Always call restruct() after a readCdfNnn()!
-    cdfChunk <- restruct(this, cdfChunk, verbose=less(verbose, 5));  
+    cdfChunk <- restruct(this, cdfChunk, verbose=less(verbose, 5));
     verbose && exit(verbose);
 
     gc <- gc();
@@ -744,7 +732,7 @@ setMethodS3("getCellIndices", "AffymetrixCdfFile", function(this, units=NULL, ..
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Check for cached data
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  key <- list(method="getCellIndices", class=class(this)[1], 
+  key <- list(method="getCellIndices", class=class(this)[1],
              chipType=getChipType(this), units=units, ...,
              useNames=useNames, unlist=unlist);
   if (getOption(aromaSettings, "devel/useCacheKeyInterface", FALSE)) {
@@ -792,7 +780,7 @@ setMethodS3("getCellIndices", "AffymetrixCdfFile", function(this, units=NULL, ..
       res;
     }, chunkSize=100e3, useNames=useNames, verbose=verbose);
     cdf <- unlist(cdf, use.names=useNames);
-  } else {  
+  } else {
     cdf <- lapplyInChunks(units, function(unitsChunk) {
       getCellIndicesChunk(getPathname(this), units=unitsChunk, ..., verbose=verbose);
     }, chunkSize=100e3, useNames=useNames, verbose=verbose);
@@ -815,7 +803,7 @@ setMethodS3("getCellIndices", "AffymetrixCdfFile", function(this, units=NULL, ..
   if (cache) {
     verbose && cat(verbose, "readUnits.AffymetrixCdfFile(): Updating cache");
     # Cache small objects in memory
-    if (object.size(cdf) < 10e6) { 
+    if (object.size(cdf) < 10e6) {
       this$.cellIndices <- list();
       this$.cellIndices[[key]] <- cdf;
 ##    } else {
@@ -873,12 +861,12 @@ setMethodS3("restruct", "AffymetrixCdfFile", function(this, cdf, ..., verbose=FA
 #
 # \arguments{
 #   \item{units}{The units of interest. If @NULL, all units are considered.}
-#   \item{...}{Additional arguments passed to 
+#   \item{...}{Additional arguments passed to
 #      @see "affxparser::readCdfCellIndices".}
 # }
 #
 # \value{
-#  Returns the @list structure returned by 
+#  Returns the @list structure returned by
 #  @see "affxparser::readCdfCellIndices".
 # }
 #
@@ -899,8 +887,6 @@ setMethodS3("restruct", "AffymetrixCdfFile", function(this, cdf, ..., verbose=FA
 #   \item Exclude some cells, for instance by excluding MMs.
 #  }
 # }
-#
-# @author
 #
 # \seealso{
 #   @seeclass
@@ -952,8 +938,6 @@ setMethodS3("getRestructor", "AffymetrixCdfFile", function(this, ...) {
 # \section{Caching}{
 #   CDF data is neither cached in memory nor on file by this method.
 # }
-#
-# @author
 #
 # \seealso{
 #   @seeclass
@@ -1013,8 +997,6 @@ setMethodS3("readUnits", "AffymetrixCdfFile", function(this, units=NULL, ..., ve
 #   number of cells on the array. The size of this vector is approximately
 #   4*N bytes.  The vector indicates if a cell is a PM or not.
 # }
-#
-# @author
 #
 # \seealso{
 #   @seeclass
@@ -1096,9 +1078,9 @@ setMethodS3("identifyCells", "AffymetrixCdfFile", function(this, indices=NULL, f
   if ("all" %in% types) {
     other <- 1:nbrOfCells;
   } else {
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Check for cached results (already here)
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Create a cache key (already here)
     verbose && enter(verbose, "Checking cache");
     chipType <- getChipType(this);
@@ -1125,17 +1107,17 @@ setMethodS3("identifyCells", "AffymetrixCdfFile", function(this, indices=NULL, f
   }
 
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Intersect 'indices' and 'types'
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (!"all" %in% types) {
     verbose && enter(verbose, "Identifies cells of certain kind");
     verbose && cat(verbose, "Indices:");
     verbose && str(verbose, indices);
 
-    indices <- getCellIndices(this, useNames=FALSE, unlist=TRUE, 
+    indices <- getCellIndices(this, useNames=FALSE, unlist=TRUE,
                                             verbose=less(verbose));
-  
+
     other <- c();
     for (type in types) {
       if (type == "pm") {
@@ -1177,13 +1159,13 @@ setMethodS3("identifyCells", "AffymetrixCdfFile", function(this, indices=NULL, f
   gc <- gc();
   verbose && print(verbose, gc);
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Save result to cache
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (!"all" %in% types) {
     saveCache(indices, key=key, comment=comment, dirs=dirs);
   }
-  
+
   indices;
 }, private=TRUE);
 
@@ -1217,7 +1199,7 @@ setMethodS3("getFirstCellIndices", "AffymetrixCdfFile", function(this, units=NUL
     verbose && enter(verbose, "Reading all cell indices (slow)");
     res <- getCellIndices(this, units=NULL, ..., stratifyBy=stratifyBy, verbose=verbose);
     verbose && exit(verbose);
-      
+
     verbose && enter(verbose, "Extracting the first cell in each unit group");
     # For each unit and each group, get the index of the first cell.
     res <- applyCdfGroups(res, function(groups) {
@@ -1263,8 +1245,6 @@ setMethodS3("getFirstCellIndices", "AffymetrixCdfFile", function(this, units=NUL
 #  Returns @TRUE if the two objects are equal, otherwise @FALSE.
 # }
 #
-# @author
-#
 # \seealso{
 #   @seeclass
 # }
@@ -1309,8 +1289,6 @@ setMethodS3("compare", "AffymetrixCdfFile", function(this, other, ...) {
 # \value{
 #  Returns the new CDF as an @see "AffymetrixCdfFile" object.
 # }
-#
-# @author
 #
 # \seealso{
 #   To compare two CDFs, use \code{equals()}.
@@ -1361,7 +1339,7 @@ setMethodS3("convert", "AffymetrixCdfFile", function(this, chipType=getChipType(
 # @synopsis
 #
 # \arguments{
-#   \item{types}{A @character @vector specifying what type of genome 
+#   \item{types}{A @character @vector specifying what type of genome
 #     information sets to search for.}
 #   \item{...}{Not used.}
 #   \item{force}{If @FALSE, cached information is retrieved, otherwise not.}
@@ -1375,8 +1353,6 @@ setMethodS3("convert", "AffymetrixCdfFile", function(this, chipType=getChipType(
 # \examples{\dontrun{
 #   @include "../incl/getGenomeInformation.Rex"
 # }}
-#
-# @author
 #
 # \seealso{
 #   @seeclass
@@ -1418,11 +1394,11 @@ setMethodS3("getGenomeInformation", "AffymetrixCdfFile", function(this, types=c(
 
       tryCatch({
         if (type == "ugp") {
-          gi <- UgpGenomeInformation$byChipType(chipType, tags=tags, 
+          gi <- UgpGenomeInformation$byChipType(chipType, tags=tags,
                      nbrOfUnits=nbrOfUnits, verbose=less(verbose, 5));
           break;
         } else if (type == "dchip") {
-          gi <- DChipGenomeInformation$byChipType(chipType, 
+          gi <- DChipGenomeInformation$byChipType(chipType,
                      nbrOfUnits=nbrOfUnits, verbose=less(verbose, 5));
 
           break;
@@ -1431,7 +1407,7 @@ setMethodS3("getGenomeInformation", "AffymetrixCdfFile", function(this, types=c(
 
       verbose && exit(verbose);
     } # for (type ...)
-  
+
     if (is.null(gi)) {
       throw("Failed to retrieve genome information for this chip type: ",
                                                                chipType);
@@ -1486,9 +1462,9 @@ setMethodS3("getSnpInformation", "AffymetrixCdfFile", function(this, types=c("UF
     on.exit(popState(verbose));
   }
 
-  
+
   verbose && enter(verbose, "Locating a SnpInformation file");
-  
+
   chipType <- getChipType(this, fullname=FALSE);
   tags <- getTags(this);
   tags <- setdiff(tags, "monocell");
@@ -1509,7 +1485,7 @@ setMethodS3("getSnpInformation", "AffymetrixCdfFile", function(this, types=c("UF
                      nbrOfUnits=nbrOfUnits, verbose=less(verbose, 5));
           break;
         } else if (type == "dchip") {
-          si <- DChipSnpInformation$byChipType(chipType, 
+          si <- DChipSnpInformation$byChipType(chipType,
                      nbrOfUnits=nbrOfUnits, verbose=less(verbose, 5));
           break;
         }
@@ -1517,7 +1493,7 @@ setMethodS3("getSnpInformation", "AffymetrixCdfFile", function(this, types=c("UF
 
       verbose && exit(verbose);
     } # for (type ...)
-  
+
     if (is.null(si)) {
       throw("Failed to retrieve SNP information for this chip type: ",
                                                             chipType);
@@ -1527,7 +1503,7 @@ setMethodS3("getSnpInformation", "AffymetrixCdfFile", function(this, types=c("UF
   }
 
   verbose && exit(verbose);
-  
+
   si;
 }, private=TRUE)
 
@@ -1569,7 +1545,7 @@ setMethodS3("setSnpInformation", "AffymetrixCdfFile", function(this, si=NULL, ..
 #
 # \arguments{
 #   \item{units}{Either a @character @vector with unit names, or an @integer
-#     @vector with unit indices to be validated.  
+#     @vector with unit indices to be validated.
 #     If @NULL, all unit indices are returned.}
 #   \item{keepNULL}{If @TRUE, @NULL returns @NULL.}
 #   \item{...}{Not used.}
@@ -1579,8 +1555,6 @@ setMethodS3("setSnpInformation", "AffymetrixCdfFile", function(this, si=NULL, ..
 #  Returns an @integer @vector with unit indices.
 #  If some units are non existing, an error is thrown.
 # }
-#
-# @author
 #
 # \seealso{
 #   @seeclass
@@ -1603,7 +1577,7 @@ setMethodS3("convertUnits", "AffymetrixCdfFile", function(this, units=NULL, keep
     missing <- unitNames[is.na(units)];
     n <- length(missing);
     if (n > 0) {
-      throw(sprintf("Argument 'units' contains unknown unit names: %s [%d]", 
+      throw(sprintf("Argument 'units' contains unknown unit names: %s [%d]",
                                                       hpaste(missing), n));
     }
   } else {
@@ -1629,11 +1603,11 @@ setMethodS3("validate", "AffymetrixCdfFile", function(this, ...) {
     }
   } # assertUnits()
 
-  
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Check for units with zero unit groups
   #
-  # Examples: 
+  # Examples:
   # o HTHGU133A_Hs_ENTREZG.cdf (v 12.0.0):
   #    Error: Detected 1 unit(s) (i.e. 11973) with zero unit groups: ...
   #   because it's CDF header claims to have 11,973 units, whereas there
@@ -1650,7 +1624,7 @@ setMethodS3("validate", "AffymetrixCdfFile", function(this, ...) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Check for empty unit names
   #
-  # Examples: 
+  # Examples:
   # o HTHGU133A_Hs_ENTREZG.cdf (v 12.0.0):
   #    Error: Detected 1 unit(s) (i.e. 11973) with empty unit names: ...
   #   because it's CDF header claims to have 11,973 units, whereas there
@@ -1679,11 +1653,11 @@ setMethodS3("validate", "AffymetrixCdfFile", function(this, ...) {
 #   validation is not complete, i.e. rare/unknown errors are not caught.
 # 2012-10-14
 # o CLEANUP: findByChipType() for AffymetrixCdfFile no longer support
-#   monocell CDF file named <chipType>-monocell.CDF, and gives an 
+#   monocell CDF file named <chipType>-monocell.CDF, and gives an
 #   informative error if that is still the case.  Since December 2012,
 #   the filename should instead be <chipType>,monocell.CDF.
 # 2011-11-18
-# o CLEANUP: Now the filename extension pattern for findByChipType() 
+# o CLEANUP: Now the filename extension pattern for findByChipType()
 #   of AffymetrixCdfFile is inferred from getDefaultExtension().
 # o Added static getDefaultExtension() for AffymetrixCdfFile.
 # 2011-03-04
@@ -1703,7 +1677,7 @@ setMethodS3("validate", "AffymetrixCdfFile", function(this, ...) {
 # 2009-05-09
 # o Added names to the returned dimension of getDimension().
 # 2009-02-10
-# o Added selection/validation of number of units in 
+# o Added selection/validation of number of units in
 #   get(Genome|Snp)nformation().
 # 2008-10-09
 # o Added nbrOfCellsPerUnit() and nbrOfCellsPerUnitGroup().
@@ -1713,7 +1687,7 @@ setMethodS3("validate", "AffymetrixCdfFile", function(this, ...) {
 # o BUG FIX: getUnitTypes() of AffymetrixCdfFile did not return a
 #   name map for the unit types if a subset was units was selected.
 # 2008-08-09
-# o BUG FIX: getUnitTypes() of AffymetrixCdfFile would not return the 
+# o BUG FIX: getUnitTypes() of AffymetrixCdfFile would not return the
 #   correct integer for binary CDFs.  Now it uses readCdf() instead of
 #   readCdfUnits() of affxparser.
 # 2008-07-26
@@ -1747,7 +1721,7 @@ setMethodS3("validate", "AffymetrixCdfFile", function(this, ...) {
 #   file objects are compatible with the CDF.  At least for UGP & UFL files.
 # 2007-12-08
 # o Added setGenomeInformation() & setSnpInformation() to AffymetrixCdfFile.
-# o Now construct AffymetrixCdfFile$fromName("HuEx-1_0-st-v2", tags="core") 
+# o Now construct AffymetrixCdfFile$fromName("HuEx-1_0-st-v2", tags="core")
 #   can be used to locate 'HuEx-1_0-st-v2,core.CDF'.
 # 2007-09-10
 # o Now getGenomeInformation() of AffymetrixCdfFile recognizes UGP files
@@ -1788,7 +1762,7 @@ setMethodS3("validate", "AffymetrixCdfFile", function(this, ...) {
 # 2007-01-16
 # o Now all cache keys contains method name, class name, and chip type.
 # 2007-01-10
-# o Reordered internally in createMonoCell() preparing for code to read 
+# o Reordered internally in createMonoCell() preparing for code to read
 #   *and* write monocell CDFs in chunks.  It should not be too hard.
 #   We need to update affxparser with writeCdfHeader(), writeCdfQcUnits()
 #   and writeCdfUnits(), and are basically already in there, but as
@@ -1826,7 +1800,7 @@ setMethodS3("validate", "AffymetrixCdfFile", function(this, ...) {
 # o BUG FIX: createMonoCell() where resetting the cell indices for each
 #   chunk.
 # o Simple benchmarking of createMonoCell(): IBM Thinkpad A31 1.8GHz 1GB:
-#   Mapping50K_Hind to mono cells CDF takes ~13 mins.  Again, it is 
+#   Mapping50K_Hind to mono cells CDF takes ~13 mins.  Again, it is
 #   writeCdf() that is slow.  KH is working on improving this.
 # 2006-09-08
 # o Added equals() to compare to CDF object.

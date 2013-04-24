@@ -42,7 +42,7 @@
  Returns the monocell CDF as an \code{\link{AffymetrixCdfFile}} object.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson, Ken Simpson}
 
 \seealso{
   For more information see \code{\link{AffymetrixCdfFile}}.

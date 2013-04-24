@@ -24,7 +24,7 @@
 #  @allmethods "public"
 # }
 #
-# \author{Ken Simpson (ksimpson[at]wehi.edu.au).}
+# @author "KS, HB"
 #*/###########################################################################
 setConstructorS3("BackgroundCorrection", function(..., subsetToUpdate=NULL, typesToUpdate=NULL) {
   extend(ProbeLevelTransform(...), "BackgroundCorrection",

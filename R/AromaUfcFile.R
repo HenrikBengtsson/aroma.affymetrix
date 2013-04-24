@@ -1,3 +1,4 @@
+# @author "HB"
 setConstructorS3("AromaUfcFile", function(...) {
   this <- extend(AromaUnitTabularBinaryFile(...), "AromaUfcFile");
 
@@ -74,7 +75,7 @@ setMethodS3("importFromAffymetrixTabularFile", "AromaUfcFile", function(this, at
   if (verbose) {
     pushState(verbose);
     on.exit(popState(verbose));
-  } 
+  }
 
 
   verbose && enter(verbose, "Importing (unit, fragment recognition sequence class)");
@@ -146,12 +147,12 @@ setMethodS3("importFromAffymetrixTabularFile", "AromaUfcFile", function(this, at
   for (ee in ees) {
     # Get adaptor types
     values <- data[[ee+1]];
-  
+
     # Keep only non-missing elements
     keep <- which(!is.na(values));
     values <- values[keep];
     units <- data$unit[keep];
-  
+
     # Encode values
     map <- maps[[ee]];
     keys <- names(map);
@@ -159,7 +160,7 @@ setMethodS3("importFromAffymetrixTabularFile", "AromaUfcFile", function(this, at
       stop("Error in enzyme: ", ee);
     encodedValues <- map[match(values, keys)];
     names(encodedValues) <- NULL;
-  
+
     # Store values
     this[units,ee] <- encodedValues;
   }
@@ -175,22 +176,22 @@ setMethodS3("getOrderedFragmentPairMap", "AromaUfcFile", function(static, values
 
   # Generate all possible recognition sequence types
   hex <- sprintf("%x", values);
-  
+
   # Generate all ordered pairs of recognition sequence types
   classes <- outer(hex, hex, FUN=paste, sep="");
   dim <- dim(classes);
-  
+
   classes <- t(classes);
-  
+
   # Generate all sets (unordered pairs) of recognition sequence types
   equivalentClasses <- sapply(strsplit(classes, split=""), FUN=function(x) {
     paste(sort(x), collapse="")
   });
   dim(equivalentClasses) <- dim;
-  
+
   # Identify unique equivalent classes
   uniqueEquivalentClasses <- unique(sort(equivalentClasses));
-  
+
   # Map each unit to an equivalent class
   values <- match(uniqueEquivalentClasses, equivalentClasses)-1;
   map <- match(equivalentClasses, uniqueEquivalentClasses);
@@ -227,7 +228,7 @@ setMethodS3("getOrderedFragmentPairs", "AromaUfcFile", function(this, units=NULL
   }
   dim(ufe) <- dim;
 
-  ufe; 
+  ufe;
 })
 
 

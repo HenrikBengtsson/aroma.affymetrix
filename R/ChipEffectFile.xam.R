@@ -20,13 +20,13 @@
 # }
 #
 # \value{
-#  Returns a Nx2 matrix where N is the number of units returned.  
+#  Returns a Nx2 matrix where N is the number of units returned.
 #  The names of the columns are A (log-intensities) and M (log-ratios).
 #  The names of the rows are the unit indices (as indexed by the CDF).
 #  The rows are ordered according to \code{units} arguments.
 # }
 #
-# @author
+# @author "HB"
 #
 # \seealso{
 #   @seemethod "getXAM".
@@ -44,7 +44,7 @@ setMethodS3("getAM", "ChipEffectFile", function(this, other, units=NULL, ..., ve
   } else {
     other <- Arguments$getInstanceOf(other, "ChipEffectFile");
   }
-  
+
   # Argument 'units':
   ugcMap <- NULL;
   if (is.null(units)) {
@@ -53,14 +53,14 @@ setMethodS3("getAM", "ChipEffectFile", function(this, other, units=NULL, ..., ve
   } else {
     units <- Arguments$getIndices(units, max=nbrOfUnits(cdf));
   }
-  
+
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
   if (verbose) {
     pushState(verbose);
     on.exit(popState(verbose));
   }
-  
+
 
 
   verbose && enter(verbose, "Getting (A,M)-transformed chip effects");
@@ -77,12 +77,12 @@ setMethodS3("getAM", "ChipEffectFile", function(this, other, units=NULL, ..., ve
   rm(units);
   nunits <- nrow(ugcMap);
 
-  
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Get thetas from the sample
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   verbose && enter(verbose, "Retrieving sample thetas");
-  theta <- getDataFlat(this, units=ugcMap, fields="theta", 
+  theta <- getDataFlat(this, units=ugcMap, fields="theta",
                                           verbose=less(verbose))[,"theta"];
   nTheta <- length(theta);
   if (!identical(nTheta, nunits)) {
@@ -97,7 +97,7 @@ setMethodS3("getAM", "ChipEffectFile", function(this, other, units=NULL, ..., ve
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (!is.null(other)) {
     verbose && enter(verbose, "Retrieving other thetas");
-  
+
     # Workaround for now (just in case). /HB 2006-09-26 TODO
     if (inherits(other, "SnpChipEffectFile")) {
       other$mergeStrands <- this$mergeStrands;
@@ -105,9 +105,9 @@ setMethodS3("getAM", "ChipEffectFile", function(this, other, units=NULL, ..., ve
         other$combineAlleles <- this$combineAlleles;
       }
     }
-  
+
     # Get the other theta estimates
-    thetaR <- getDataFlat(other, units=ugcMap, fields="theta", 
+    thetaR <- getDataFlat(other, units=ugcMap, fields="theta",
                                             verbose=less(verbose))[,"theta"];
     stopifnot(identical(length(thetaR), nTheta));
     verbose && exit(verbose);
@@ -157,7 +157,7 @@ setMethodS3("getAM", "ChipEffectFile", function(this, other, units=NULL, ..., ve
 # @synopsis
 #
 # \arguments{
-#   \item{other}{The second @see "ChipEffectFile" object used as the 
+#   \item{other}{The second @see "ChipEffectFile" object used as the
 #     reference.}
 #   \item{chromosome}{(The chromosome for which results should be returned.}
 #   \item{units}{(The subset of units to be matched.
@@ -167,14 +167,14 @@ setMethodS3("getAM", "ChipEffectFile", function(this, other, units=NULL, ..., ve
 # }
 #
 # \value{
-#  Returns a Nx3 matrix where N is the number of units returned.  
-#  The names of the columns are X (physical position in a given chromosome), 
+#  Returns a Nx3 matrix where N is the number of units returned.
+#  The names of the columns are X (physical position in a given chromosome),
 #  A (log-intensities) and M (log-ratios).
 #  The names of the rows are the unit indices (as indexed by the CDF).
 #  \emph{Note: The rows are ordered according to chromosomal position.}
 # }
 #
-# @author
+# @author "HB"
 #
 # \seealso{
 #   @seemethod "getAM".
@@ -229,7 +229,7 @@ setMethodS3("getXAM", "ChipEffectFile", function(this, other, chromosome, units=
 
   # Get the unit indices for all unit groups
   units <- as.integer(rownames(am));
-  
+
   # Get the positions of all unit groups
   x <- getPositions(gi, units=units, verbose=less(verbose));
   verbose && exit(verbose);
@@ -269,7 +269,7 @@ setMethodS3("getXAM", "ChipEffectFile", function(this, other, chromosome, units=
 # 2006-12-02
 # o BUG FIX: getAM() did not handle units=NULL.
 # 2006-11-28
-# o Now getAM() is making use of the new getCellMap() and getDataFlat() 
+# o Now getAM() is making use of the new getCellMap() and getDataFlat()
 #   functions to speed up the reading.
 # 2006-10-31
 # o Added Rdoc comments.

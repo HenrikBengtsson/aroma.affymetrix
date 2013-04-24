@@ -6,15 +6,15 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
- \name{MbeiPlm}
+\name{MbeiPlm}
 \docType{class}
 \alias{MbeiPlm}
 
 
- \title{The MbeiPlm class}
+\title{The MbeiPlm class}
 
- \description{
-  Package:  aroma.affymetrix \cr
+\description{
+ Package:  aroma.affymetrix \cr
 \bold{Class MbeiPlm}\cr
 
 \code{\link[R.oo]{Object}}\cr
@@ -39,20 +39,20 @@ extends \emph{\link[aroma.affymetrix]{ProbeLevelModel}}\cr
 
 
 
-  This class represents the \emph{model-based expression indexes} (MBEI)
-  multiplicative model in Li \& Wong (2001).
- }
+ This class represents the \emph{model-based expression indexes} (MBEI)
+ multiplicative model in Li \& Wong (2001).
+}
 
- \usage{
+\usage{
 MbeiPlm(...)
 }
 
- \arguments{
-   \item{...}{Arguments passed to \code{\link{ProbeLevelModel}}.}
- }
+\arguments{
+  \item{...}{Arguments passed to \code{\link{ProbeLevelModel}}.}
+}
 
- \section{Fields and Methods}{
-  \bold{Methods:}\cr
+\section{Fields and Methods}{
+ \bold{Methods:}\cr
 \emph{No methods defined}.
 
 
@@ -69,34 +69,34 @@ findUnitsTodo, getAsteriskTags, getFitSingleCellUnitFunction, getParameters
 as.character, fit, getAlias, getAsteriskTags, getDataSet, getFullName, getName, getParameterSet, getPath, getRootPath, getTags, setAlias, setTags
 
  \bold{Methods inherited from ParametersInterface}:\cr
-getParameters, getParametersAsString, getParameterSets
+getParameterSets, getParameters, getParametersAsString
 
  \bold{Methods inherited from Object}:\cr
 $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save, asThis
 
 
- }
+}
 
- \section{Model}{
-   For a single unit group, the multiplicative model is:
+\section{Model}{
+  For a single unit group, the multiplicative model is:
 
-    \deqn{y_{ik} = \theta_i \phi_k + \varepsilon_{ik}}
+   \deqn{y_{ik} = \theta_i \phi_k + \varepsilon_{ik}}
 
-   where \eqn{\theta_i} are the chip effects for arrays \eqn{i=1,...,I},
-   and \eqn{\phi_k} are the probe affinities for probes \eqn{k=1,...,K}.
-   The \eqn{\varepsilon_{ik}} are zero-mean noise with equal variance.
-   To make to parameters identifiable, the constraint
-   \eqn{\prod_k \phi_k = 1} is added.
- }
+  where \eqn{\theta_i} are the chip effects for arrays \eqn{i=1,...,I},
+  and \eqn{\phi_k} are the probe affinities for probes \eqn{k=1,...,K}.
+  The \eqn{\varepsilon_{ik}} are zero-mean noise with equal variance.
+  To make to parameters identifiable, the constraint
+  \eqn{\prod_k \phi_k = 1} is added.
+}
 
- \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
- \seealso{
-   Internally \code{\link[affy]{fit.li.wong}} is used.
- }
+\seealso{
+  Internally \code{\link[affy]{fit.li.wong}} is used.
+}
 
- \references{
-   Li, C. and Wong, W.H. (2001), Genome Biology 2, 1-11.\cr
-   Li, C. and Wong, W.H. (2001), Proc. Natl. Acad. Sci USA 98, 31-36.\cr
- }
+\references{
+  Li, C. and Wong, W.H. (2001), Genome Biology 2, 1-11.\cr
+  Li, C. and Wong, W.H. (2001), Proc. Natl. Acad. Sci USA 98, 31-36.\cr
+}
 \keyword{classes}

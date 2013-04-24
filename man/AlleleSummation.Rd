@@ -6,15 +6,15 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
- \name{AlleleSummation}
+\name{AlleleSummation}
 \docType{class}
 \alias{AlleleSummation}
 
 
- \title{The AlleleSummation class}
+\title{The AlleleSummation class}
 
- \description{
-  Package:  aroma.affymetrix \cr
+\description{
+ Package:  aroma.affymetrix \cr
 \bold{Class AlleleSummation}\cr
 
 \code{\link[R.oo]{Object}}\cr
@@ -35,24 +35,24 @@ extends \emph{\link[aroma.affymetrix]{UnitModel}}\cr
 
 
 
-  This class takes allele-specific chip effect estimates of a
-  SnpChipEffectSet and returns a CnChipEffectSet holding the summed
-  allele estimates.
- }
+ This class takes allele-specific chip effect estimates of a
+ SnpChipEffectSet and returns a CnChipEffectSet holding the summed
+ allele estimates.
+}
 
- \usage{
+\usage{
 AlleleSummation(dataSet=NULL, ignoreNAs=TRUE, ...)
 }
 
- \arguments{
-   \item{dataSet}{A \code{\link{SnpChipEffectSet}}.}
-   \item{ignoreNAs}{If \code{\link[base:logical]{TRUE}}, missing values are excluded when summing
-      the signals from the two alleles.}
-   \item{...}{Arguments passed to \code{\link{UnitModel}}.}
- }
+\arguments{
+  \item{dataSet}{A \code{\link{SnpChipEffectSet}}.}
+  \item{ignoreNAs}{If \code{\link[base:logical]{TRUE}}, missing values are excluded when summing
+     the signals from the two alleles.}
+  \item{...}{Arguments passed to \code{\link{UnitModel}}.}
+}
 
- \section{Fields and Methods}{
-  \bold{Methods:}\cr
+\section{Fields and Methods}{
+ \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{findUnitsTodo} \tab  -\cr
  \tab \code{\link[aroma.affymetrix:getChipEffectSet.AlleleSummation]{getChipEffectSet}} \tab Gets the set of chip effects for this model.\cr
@@ -67,13 +67,13 @@ findUnitsTodo, getAsteriskTags, getFitSingleCellUnitFunction, getParameters
 as.character, fit, getAlias, getAsteriskTags, getDataSet, getFullName, getName, getParameterSet, getPath, getRootPath, getTags, setAlias, setTags
 
  \bold{Methods inherited from ParametersInterface}:\cr
-getParameters, getParametersAsString, getParameterSets
+getParameterSets, getParameters, getParametersAsString
 
  \bold{Methods inherited from Object}:\cr
 $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save, asThis
 
 
- }
+}
 
- \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 \keyword{classes}

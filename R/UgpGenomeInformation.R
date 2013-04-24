@@ -8,7 +8,7 @@
 #
 #  This class represents Aroma UGP genome information files.
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
@@ -18,10 +18,10 @@
 # }
 #
 # \section{Fields and Methods}{
-#  @allmethods "public"  
+#  @allmethods "public"
 # }
-# 
-# @author
+#
+# @author "HB"
 #*/###########################################################################
 setConstructorS3("UgpGenomeInformation", function(..., .ugp=NULL, .verify=TRUE) {
   this <- extend(GenomeInformation(..., .verify=FALSE), "UgpGenomeInformation",
@@ -78,11 +78,9 @@ setMethodS3("findByChipType", "UgpGenomeInformation", function(static, ...) {
 # }
 #
 # \value{
-#  Returns an @see "UgpGenomeInformation" object.  
+#  Returns an @see "UgpGenomeInformation" object.
 #  If no file was not found, an error is thrown.
 # }
-#
-# @author
 #
 # \seealso{
 #   @seeclass
@@ -149,7 +147,7 @@ setMethodS3("verify", "UgpGenomeInformation", function(this, ...) {
   tryCatch({
     df <- readDataFrame(this, nrow=10);
   }, error = function(ex) {
-    throw("File format error of the UGP genome information file (", 
+    throw("File format error of the UGP genome information file (",
                                  ex$message, "): ", getPathname(this));
   })
   invisible(TRUE);
@@ -217,7 +215,7 @@ setMethodS3("getData", "UgpGenomeInformation", function(this, units=NULL, fields
     if (length(missing)) {
       throw("Unknown fields: ", paste(missing, collapse=", "));
     }
-  
+
     verbose && enter(verbose, "Reading genome information data");
     data <- ugp[,,drop=FALSE];
     colnames(data) <- getDataColumns(this);
@@ -230,7 +228,7 @@ setMethodS3("getData", "UgpGenomeInformation", function(this, units=NULL, fields
     # Garbage collect
     gc <- gc();
     verbose && print(verbose, gc);
-    
+
     verbose && exit(verbose);
   }
 
@@ -293,7 +291,7 @@ setMethodS3("getUnitsOnChromosome", "UgpGenomeInformation", function(this, ...) 
 # 2008-12-29
 # o Added argument 'units' to readDataFrame().
 # 2008-07-23
-# o Now isCompatibleWithCdf() adds attribute 'reason' to FALSE explaining 
+# o Now isCompatibleWithCdf() adds attribute 'reason' to FALSE explaining
 #   why the object is not compatible.
 # 2008-05-20
 # o Added argument 'validate' to byChipType().
@@ -308,4 +306,4 @@ setMethodS3("getUnitsOnChromosome", "UgpGenomeInformation", function(this, ...) 
 # o Added clearCache() to clear cached UGP file.
 # 2007-09-11
 # o Created.
-############################################################################  
+############################################################################

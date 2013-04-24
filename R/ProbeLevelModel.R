@@ -8,13 +8,13 @@
 #
 #  This abstract class represents a probe-level model (PLM) as defined
 #  by the \pkg{affyPLM} package:
-#    "A [...] PLM is a model that is fit to probe-intensity data. 
+#    "A [...] PLM is a model that is fit to probe-intensity data.
 #     More specifically, it is where we fit a model with probe level
 #     and chip level parameters on a probeset by probeset basis",
 #  where the more general case for a probeset is a \emph{unit group}
 #  in Affymetrix CDF terms.
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
@@ -43,11 +43,11 @@
 #   Note that the above probe-affinity constraint guarantees that the
 #   estimated chip effects across models are on the same scale.
 # }
-# 
-# @author
+#
+# @author "HB"
 #
 # \seealso{
-#   For more details on probe-level models, please see 
+#   For more details on probe-level models, please see
 #   the \pkg{preprocessCore} package.
 # }
 #*/###########################################################################
@@ -99,8 +99,6 @@ setMethodS3("getRootPath", "ProbeLevelModel", function(this, ...) {
 #  Returns a @see "ProbeAffinityFile" object.
 # }
 #
-# @author
-#
 # \seealso{
 #   @seeclass
 # }
@@ -116,11 +114,11 @@ setMethodS3("getProbeAffinityFile", "ProbeLevelModel", function(this, ..., .clas
 
   # Create probe-affinity file from CEL file template
   df <- getOneFile(ds, mustExist=TRUE);
-  paf <- createFrom(df, filename="probeAffinities.CEL", path=getPath(this), 
+  paf <- createFrom(df, filename="probeAffinities.CEL", path=getPath(this),
                                           methods="create", clear=TRUE, ...);
 
   # Make it into an object of the correct class
-  paf <- newInstance(.class, getPathname(paf), cdf=getCdf(ds), 
+  paf <- newInstance(.class, getPathname(paf), cdf=getCdf(ds),
                                                   probeModel=this$probeModel);
 
   this$.paf <- paf;
@@ -153,8 +151,6 @@ setMethodS3("getProbeAffinityFile", "ProbeLevelModel", function(this, ..., .clas
 #  Returns a @see "ChipEffectSet" object.
 # }
 #
-# @author
-#
 # \seealso{
 #   @seeclass
 # }
@@ -176,14 +172,14 @@ setMethodS3("getChipEffectSet", "ProbeLevelModel", function(this, ..., verbose=F
     return(ces);
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Create chip-effect files 
+  # Create chip-effect files
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Let the parameter object know about the CDF structure, because we 
+  # Let the parameter object know about the CDF structure, because we
   # might use a modified version of the one in the CEL header.
   ds <- getDataSet(this);
   if (length(ds) == 0)
     throw("Cannot create chip-effect set. The CEL set is empty.");
-  
+
   verbose && enter(verbose, "Getting chip-effect set from data set");
   # Inherit the (monocell) CDF
   cdf <- getCdf(ds);
@@ -228,18 +224,18 @@ setMethodS3("getResidualSet", "ProbeLevelModel", function(this, ..., force=FALSE
     return(rs);
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Create residuals files 
+  # Create residuals files
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Let the parameter object know about the CDF structure, because we 
+  # Let the parameter object know about the CDF structure, because we
   # might use a modified version of the one in the CEL header.
   ds <- getDataSet(this);
   if (length(ds) == 0)
     throw("Cannot create residuals set. The data set is empty.");
-  
+
   verbose && enter(verbose, "Getting chip-effect set from data set");
   # Gets the ResidualSet Class object
   clazz <- getResidualSetClass(this);
-  rs <- clazz$fromDataSet(dataSet=ds, path=getPath(this), 
+  rs <- clazz$fromDataSet(dataSet=ds, path=getPath(this),
                                                      verbose=less(verbose));
   # Inherit the CDF from the input data set
   cdf <- getCdf(ds);
@@ -274,18 +270,18 @@ setMethodS3("getWeightsSet", "ProbeLevelModel", function(this, ..., verbose=FALS
     return(ws);
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Create weights files 
+  # Create weights files
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Let the parameter object know about the CDF structure, because we 
+  # Let the parameter object know about the CDF structure, because we
   # might use a modified version of the one in the CEL header.
   ds <- getDataSet(this);
   if (length(ds) == 0)
     throw("Cannot create weights set. The data set is empty.");
-  
+
   verbose && enter(verbose, "Getting chip-effect set from data set");
   # Gets the WeightsSet Class object
   clazz <- getWeightsSetClass(this);
-  ws <- clazz$fromDataSet(dataSet=ds, path=getPath(this), 
+  ws <- clazz$fromDataSet(dataSet=ds, path=getPath(this),
                                                      verbose=less(verbose));
   # make sure CDF is inherited
   setCdf(ws, getCdf(ds));
@@ -323,10 +319,8 @@ setMethodS3("getWeightsSetClass", "ProbeLevelModel", function(static, ...) {
 #  Returns an @integer @vector of unit indices.
 # }
 #
-# @author
-#
 # \seealso{
-#   Internally this methods calls the same method for the 
+#   Internally this methods calls the same method for the
 #   @see "ChipEffectSet" class.
 #   @seeclass
 # }
@@ -365,9 +359,9 @@ setMethodS3("findUnitsTodo", "ProbeLevelModel", function(this, verbose=FALSE, ..
 # o Now the tag for the 'probeModel' is set in getAsteriskTag().
 # o Added argument 'shift' to ProbeLevelModel.
 # 2007-08-09
-# o getProbeAffinityFile() of ProbeLevelModel now creates CEL files with 
+# o getProbeAffinityFile() of ProbeLevelModel now creates CEL files with
 #   upper-case filename extension "*.CEL", not "*.cel".  The reason for this
-#   is that some software don't recognize lower case filename extensions :(  
+#   is that some software don't recognize lower case filename extensions :(
 # 2007-04-12
 # o Added 'force' argument to getResidualSet().
 # 2007-04-02
@@ -380,10 +374,10 @@ setMethodS3("findUnitsTodo", "ProbeLevelModel", function(this, verbose=FALSE, ..
 # o Memory optimization: Further memory optimization by clearing the
 #   cache of the 'cs', the 'paf', and the 'ces', before fitting.
 # 2007-02-22
-# o Added getChipEffectSet() and getProbeAffinityFile() to replace 
+# o Added getChipEffectSet() and getProbeAffinityFile() to replace
 #   getChipEffects() and getProbeAffinites() in some future version.
 # 2007-02-09
-# o Added an additional garbage collection after fitting the PLM, but 
+# o Added an additional garbage collection after fitting the PLM, but
 #   before storing parameter estimates.
 # 2007-01-06
 # o Now gc() memory information is outputted after each chunk.
@@ -394,7 +388,7 @@ setMethodS3("findUnitsTodo", "ProbeLevelModel", function(this, verbose=FALSE, ..
 # o Now ProbeLevelModel inherits directly from UnitModel.
 # 2007-01-03
 # o "Protected" several methods to simplify the interface for end users.
-# o Added support from "PM-MM" probe models in addition to the default 
+# o Added support from "PM-MM" probe models in addition to the default
 #   "PM only" model.
 # 2006-09-26
 # o Fixed the timers for fit(). They only worked so and so before and only
@@ -402,7 +396,7 @@ setMethodS3("findUnitsTodo", "ProbeLevelModel", function(this, verbose=FALSE, ..
 # 2006-09-14
 # o Added detailed timing information to the verbose output of fit().
 # 2006-09-11
-# o Added argument ProbeLevelModel(..., standardize=TRUE) to make the 
+# o Added argument ProbeLevelModel(..., standardize=TRUE) to make the
 #   results from different PLMs be on the same scale.
 # 2006-09-10
 # o Added findUnitsTodo().

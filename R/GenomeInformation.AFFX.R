@@ -18,8 +18,6 @@
 #   Returns a @character string.
 # }
 #
-# @author
-#
 # \seealso{
 #   @seeclass
 # }
@@ -61,7 +59,7 @@ setMethodS3("getChipType", "GenomeInformation", function(this, ...) {
 # \arguments{
 #  \item{units}{The units for which the data should be returned.}
 #  \item{fields}{The fields to be returned.}
-#  \item{orderBy}{The fields by which the returned data frame should be 
+#  \item{orderBy}{The fields by which the returned data frame should be
 #      ordered.}
 #  \item{...}{Named arguments used to select a subset of the units to be
 #      returned.  Either a value to be compared to or a @function returning
@@ -72,8 +70,6 @@ setMethodS3("getChipType", "GenomeInformation", function(this, ...) {
 #   Returns a @data.frame, where the row names correspond to unit indices
 #   as defined by the annotation unit names file.
 # }
-#
-# @author
 #
 # \seealso{
 #   @seemethod "getUnitIndices".
@@ -140,7 +136,7 @@ setMethodS3("getData", "GenomeInformation", function(this, units=NULL, fields=c(
     # Garbage collect
     gc <- gc();
     verbose && print(verbose, gc);
-    
+
     verbose && exit(verbose);
   }
 
@@ -208,8 +204,6 @@ setMethodS3("getData", "GenomeInformation", function(this, units=NULL, fields=c(
 #   Returns a @see "GenomeInformation" object.
 # }
 #
-# @author
-#
 # \seealso{
 #   @seemethod "byChipType".
 #   @seeclass
@@ -234,16 +228,16 @@ setMethodS3("isCompatibleWithCdf", "GenomeInformation", function(this, cdf, ...)
 ############################################################################
 # HISTORY:
 # 2008-05-17
-# o Created GenomeInformation.AFFX.R to separate methods specific to 
+# o Created GenomeInformation.AFFX.R to separate methods specific to
 #   Affymetrix from platform generic methods.
 # 2008-04-14
-# o Renamed readData() to readDataFrame() for GenomeInformation. 
+# o Renamed readData() to readDataFrame() for GenomeInformation.
 # 2007-12-01
 # 2007-11-25
 # o Now getUnitsOnChromosome() of GenomeInformation can indentify units from
 #   multiple chromosomes.
 # 2007-10-30
-# o Now argument 'chromosome' for getUnitsOnChromosome() needs to be 
+# o Now argument 'chromosome' for getUnitsOnChromosome() needs to be
 #   specified explictly. Before its default was '23'.
 # 2007-09-10
 # o Now readData() in GenomeInformation is no longer abstract, but tries
@@ -279,5 +273,5 @@ setMethodS3("isCompatibleWithCdf", "GenomeInformation", function(this, cdf, ...)
 # o Added support for skipping header in readSampleInformationFile().
 # 2005-10-31
 # o Created.
-############################################################################  
- 
+############################################################################
+

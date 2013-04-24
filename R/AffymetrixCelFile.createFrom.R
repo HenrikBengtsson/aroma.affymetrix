@@ -11,7 +11,7 @@
 # @synopsis
 #
 # \arguments{
-#  \item{filename, path}{The filename and path of to the CEL 
+#  \item{filename, path}{The filename and path of to the CEL
 #     file to be created.}
 #  \item{version}{The file-format version of the CEL file to be created.}
 #  \item{methods}{If \code{"copy"}, the new file is created as a copy of the
@@ -28,7 +28,7 @@
 #  Returns a @see "AffymetrixCelFile" reference to the new CEL file.
 # }
 #
-# @author
+# @author "HB"
 #
 # \seealso{
 #   @seeclass
@@ -47,10 +47,10 @@ setMethodS3("createFrom", "AffymetrixCelFile", function(this, filename, path=NUL
   # Rename lower-case *.cel to *.CEL, if that is the case.  Old versions
   # of the package generated lower-case CEL files. /HB 2007-08-09
   if (regexpr("[.]cel$", pathname) != -1) {
-    pathname <- AffymetrixFile$renameToUpperCaseExt(pathname); 
+    pathname <- AffymetrixFile$renameToUpperCaseExt(pathname);
   }
 
-  pathname <- Arguments$getWritablePathname(pathname, 
+  pathname <- Arguments$getWritablePathname(pathname,
                                           mustNotExist=(!overwrite && !skip));
 
   # Argument 'version':
@@ -58,7 +58,7 @@ setMethodS3("createFrom", "AffymetrixCelFile", function(this, filename, path=NUL
 
   # Argument 'methods':
   if (!all(methods %in% c("copy", "create"))) {
-    throw("Unknown value of argument 'methods': ", 
+    throw("Unknown value of argument 'methods': ",
                                               paste(methods, collapse=", "));
   }
 
@@ -85,7 +85,7 @@ setMethodS3("createFrom", "AffymetrixCelFile", function(this, filename, path=NUL
     res <- newInstance(this, pathname);
     ver <- getHeader(res)$version;
     if (ver != version) {
-      throw("Cannot not retrieve CEL file of version ", version, 
+      throw("Cannot not retrieve CEL file of version ", version,
          ". The existing CEL file has version ", ver, ": ", pathname);
     }
     setCdf(res, cdf);
@@ -107,22 +107,22 @@ setMethodS3("createFrom", "AffymetrixCelFile", function(this, filename, path=NUL
       ver <- getHeader(this)$version;
       if (ver != version) {
         msgs[[method]] <- paste("Cannot create CEL file of version ", version,
-           " (", pathname, "). Template CEL file is of version ", 
+           " (", pathname, "). Template CEL file is of version ",
            ver, ": ", getPathname(this), sep="");
         verbose && cat(verbose, msgs[[method]]);
         verbose && exit(verbose);
         next;
       }
 
-      # 1. Create a temporary file    
-      res <- copyTo(this, filename=pathnameT, path=NULL, 
+      # 1. Create a temporary file
+      res <- copyTo(this, filename=pathnameT, path=NULL,
                                              verbose=less(verbose));
 #      verbose && cat(verbose, "Temporary file:");
 #      verbose && print(verbose, res);
-    
+
       # 2. Update the temporary file
       if (clear) {
-        clearData(res, ..., value=defValue, .forSure=TRUE, 
+        clearData(res, ..., value=defValue, .forSure=TRUE,
                                               verbose=less(verbose));
       }
 
@@ -133,7 +133,7 @@ setMethodS3("createFrom", "AffymetrixCelFile", function(this, filename, path=NUL
       verbose && exit(verbose);
       break;
     }
-  
+
     if (method == "create") {
       if (version != "4") {
         msgs[[method]] <- paste(
@@ -143,13 +143,13 @@ setMethodS3("createFrom", "AffymetrixCelFile", function(this, filename, path=NUL
         verbose && exit(verbose);
         next;
       }
-  
+
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       # Setting up CEL header
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       fullname <- getFullName(this);
       celHeader <- cdfHeaderToCelHeader(getHeader(cdf), sampleName=fullname);
-    
+
       # Add some extra information about what the CEL file is for
       params <- c(Descripion=sprintf("This CEL file contains data saved by the aroma.affymetrix v%s package.", getVersion(aroma.affymetrix)));
       parameters <- gsub(" ", "_", params);
@@ -161,11 +161,11 @@ setMethodS3("createFrom", "AffymetrixCelFile", function(this, filename, path=NUL
       parameters <- gsub(";$", "", parameters);
       celHeader$parameters <- parameters;
       rm(params, parameters);
-    
+
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       # Creating empty CEL file
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-      # 1. Create a temporary file    
+      # 1. Create a temporary file
       verbose && enter(verbose, "Creating an empty temporary CEL file");
       createCel(pathnameT, header=celHeader, overwrite=overwrite, ...,
                                                         verbose=less(verbose));
@@ -176,7 +176,7 @@ setMethodS3("createFrom", "AffymetrixCelFile", function(this, filename, path=NUL
       if (clear) {
         if (defValue != 0) {
           res <- newInstance(this, pathnameT);
-          clearData(res, ..., value=defValue, .forSure=TRUE, 
+          clearData(res, ..., value=defValue, .forSure=TRUE,
                                                 verbose=less(verbose));
           rm(res);
         }
@@ -203,10 +203,10 @@ setMethodS3("createFrom", "AffymetrixCelFile", function(this, filename, path=NUL
 
         verbose && exit(verbose);
       }
-  
+
       # 3. Rename the temporary file
       pathname <- popTemporaryFile(pathnameT, verbose=verbose);
-      
+
       res <- newInstance(this, pathname);
 
       # Break out of the methods loop
@@ -256,11 +256,11 @@ setMethodS3("createFrom", "AffymetrixCelFile", function(this, filename, path=NUL
 #   fails/is not possible, it tries to create the CEL file from scratch.
 #   For instance, calling createFrom() on an binary XDA CEL file, will copy
 #   it, but calling it on a Calvin CEL file, will create a binary XDA CEL
-#   file (because aroma.affymetrix/affxparser do not support updating 
+#   file (because aroma.affymetrix/affxparser do not support updating
 #   Calvin CEL file so we do not support "creating" them.
 # 2007-03-24
 # o Argument 'method' still defaults to "copy" altough "create" is much
-#   faster.  Argument 'clear' now defaults to FALSE.  The reason for this 
+#   faster.  Argument 'clear' now defaults to FALSE.  The reason for this
 #   is that we want in most cases want to "inherit" some of the fields
 #   from the source, e.g. we don't want to change stdvs in normalization.
 # o Added code to create CEL files from scratch by adopting the code in
@@ -271,8 +271,8 @@ setMethodS3("createFrom", "AffymetrixCelFile", function(this, filename, path=NUL
 #   format version 4.  Now it is asserted that the template CEL file is
 #   of the same version.
 # 2006-08-27
-# o Added createFrom() which utilizes new functions copyFile() and 
-#   clearData(). It is also no longer static. This is more generic and 
-#   cleaner.  The new clearData() does also not require the CDF file 
+# o Added createFrom() which utilizes new functions copyFile() and
+#   clearData(). It is also no longer static. This is more generic and
+#   cleaner.  The new clearData() does also not require the CDF file
 #   (in case that should be missing).
 ############################################################################

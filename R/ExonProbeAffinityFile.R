@@ -9,7 +9,7 @@
 #  This class represents estimates of probe affinities in exon array
 #  probe-level models.
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
@@ -22,8 +22,7 @@
 #  @allmethods "public"
 # }
 #
-# @author
-# 
+# @author "KS, HB"
 #*/###########################################################################
 setConstructorS3("ExonProbeAffinityFile", function(..., mergeGroups=FALSE) {
   extend(ProbeAffinityFile(...), "ExonProbeAffinityFile",
@@ -54,8 +53,6 @@ setConstructorS3("ExonProbeAffinityFile", function(..., mergeGroups=FALSE) {
 #   If argument \code{unlist=TRUE} is passed, an @integer @vector is returned.
 # }
 #
-# @author
-#
 # \seealso{
 #   @seeclass
 # }
@@ -71,8 +68,8 @@ setMethodS3("getCellIndices", "ExonProbeAffinityFile", function(this, ..., unlis
   mergeGroups <- this$mergeGroups;
   if (unlist && mergeGroups) {
     throw("Unsupported request: Argument 'unlist' have to be TRUE when parameter 'mergeGroups' is TRUE: ", unlist);
-  } 
- 
+  }
+
   cells <- NextMethod("getCellIndices");
 
   # Merge groups?

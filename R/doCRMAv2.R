@@ -1,7 +1,8 @@
+# @author "HB"
 setMethodS3("doCRMAv2", "AffymetrixCelSet", function(csR, combineAlleles=TRUE, lengthRange=NULL, arrays=NULL, ..., plm=c("AvgCnPlm", "RmaCnPlm"), drop=TRUE, ram=NULL, verbose=FALSE) {
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'csR':
   className <- "AffymetrixCelSet";
   if (!inherits(csR, className)) {
@@ -45,9 +46,9 @@ setMethodS3("doCRMAv2", "AffymetrixCelSet", function(csR, combineAlleles=TRUE, l
   }
 
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Setup data set to be processed
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   verbose && cat(verbose, "Data set");
   verbose && print(verbose, csR);
 
@@ -60,9 +61,9 @@ setMethodS3("doCRMAv2", "AffymetrixCelSet", function(csR, combineAlleles=TRUE, l
   }
 
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Check if the final results are already available?
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (drop) {
     verbose && enter(verbose, "Checking whether final results are available or not");
 
@@ -144,9 +145,9 @@ setMethodS3("doCRMAv2", "AffymetrixCelSet", function(csR, combineAlleles=TRUE, l
   } # if (drop)
 
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # CRMAv2
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   verbose && enter(verbose, "CRMAv2/Allelic crosstalk calibration");
   acc <- AllelicCrosstalkCalibration(csR, model="CRMAv2");
   verbose && print(verbose, acc);
@@ -174,7 +175,7 @@ setMethodS3("doCRMAv2", "AffymetrixCelSet", function(csR, combineAlleles=TRUE, l
   rm(csC, bpn);
   gc <- gc();
   verbose && print(verbose, gc);
-  
+
   verbose && enter(verbose, "CRMAv2/Probe summarization");
   cnPlm <- AvgCnPlm;
   if (plm == "RmaCnPlm") {
@@ -190,7 +191,7 @@ setMethodS3("doCRMAv2", "AffymetrixCelSet", function(csR, combineAlleles=TRUE, l
     units <- fit(plm, ram=ram, verbose=verbose);
     verbose && str(verbose, units);
     rm(units);
-  }  
+  }
   verbose && print(verbose, gc);
   ces <- getChipEffectSet(plm);
   verbose && print(verbose, ces);
@@ -203,7 +204,7 @@ setMethodS3("doCRMAv2", "AffymetrixCelSet", function(csR, combineAlleles=TRUE, l
   # Clean up
   rm(plm, csN);
   gc <- gc();
-  
+
   verbose && enter(verbose, "CRMAv2/PCR fragment-length normalization");
   fln <- FragmentLengthNormalization(ces, target="zero", lengthRange=lengthRange);
   verbose && print(verbose, fln);
@@ -218,7 +219,7 @@ setMethodS3("doCRMAv2", "AffymetrixCelSet", function(csR, combineAlleles=TRUE, l
   # Clean up
   rm(fln, ces);
   gc <- gc();
-  
+
   verbose && enter(verbose, "CRMAv2/Export to technology-independent data files");
   dsNList <- exportTotalAndFracB(cesN, verbose=verbose);
   verbose && print(verbose, dsNList);
@@ -275,7 +276,7 @@ setMethodS3("doCRMAv2", "character", function(dataSet, ..., verbose=FALSE) {
 
 
 setMethodS3("doASCRMAv2", "default", function(...) {
-  doCRMAv2(..., combineAlleles=FALSE); 
+  doCRMAv2(..., combineAlleles=FALSE);
 })
 
 
@@ -290,7 +291,7 @@ setMethodS3("doASCRMAv2", "default", function(...) {
 # 2011-04-07
 # o Added argument 'drop'.
 # 2011-03-14
-# o doCRMAv2() gained argument 'lengthRange', which is passed to 
+# o doCRMAv2() gained argument 'lengthRange', which is passed to
 #   the constructor of FragmentLengthNormalization.
 # 2010-06-21
 # o Added doASCRMAv2() for a convenient allele-specific CRMAv2 wrapper.

@@ -6,11 +6,11 @@
 # \description{
 #  @classhierarchy
 #
-#  This class takes allele-specific chip effect estimates of a 
+#  This class takes allele-specific chip effect estimates of a
 #  SnpChipEffectSet and returns a CnChipEffectSet holding the summed
 #  allele estimates.
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
@@ -24,7 +24,7 @@
 #  @allmethods "public"
 # }
 #
-# @author
+# @author "HB"
 #*/###########################################################################
 setConstructorS3("AlleleSummation", function(dataSet=NULL, ignoreNAs=TRUE, ...) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -87,8 +87,6 @@ setMethodS3("findUnitsTodo", "AlleleSummation", function(this, ...) {
 #  Returns a @see "ChipEffectSet" object.
 # }
 #
-# @author
-#
 # \seealso{
 #   @seeclass
 # }
@@ -110,14 +108,14 @@ setMethodS3("getChipEffectSet", "AlleleSummation", function(this, ..., verbose=F
     return(outputSet);
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Create chip-effect files 
+  # Create chip-effect files
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Let the parameter object know about the CDF structure, because we 
+  # Let the parameter object know about the CDF structure, because we
   # might use a modified version of the one in the CEL header.
   ds <- getDataSet(this);
   if (length(ds) == 0)
     throw("Cannot create chip-effect set. The input data set is empty.");
-  
+
   verbose && enter(verbose, "Getting chip-effect set from data set");
   cdfM <- getCdf(ds);
 
@@ -179,7 +177,7 @@ setMethodS3("process", "AlleleSummation", function(this, ..., verbose=FALSE) {
   snps <- which(types == 2);
   rm(types);
 
-  # WORKAROUND: Some of the units reported as SNPs, may actually be 
+  # WORKAROUND: Some of the units reported as SNPs, may actually be
   # non-SNPs.  Keep only those with two groups
   nbrOfGroups <- nbrOfGroupsPerUnit(cdf, units=snps);
   ok <- (nbrOfGroups %in% c(2,4));
@@ -209,7 +207,7 @@ setMethodS3("process", "AlleleSummation", function(this, ..., verbose=FALSE) {
       }
       cells <- otherUgcMap[,"cell"];
       if (length(cells) > 0) {
-        data <- readCel(getPathname(inputFile), indices=cells, 
+        data <- readCel(getPathname(inputFile), indices=cells,
                         readIntensities=TRUE, readStdvs=TRUE, readPixels=TRUE);
         data <- as.data.frame(data[c("intensities", "stdvs", "pixels")]);
         verbose && str(verbose, data);
@@ -231,7 +229,7 @@ setMethodS3("process", "AlleleSummation", function(this, ..., verbose=FALSE) {
         verbose && exit(verbose);
       }
       cells <- snpUgcMap[,"cell"];
-      data <- readCel(getPathname(inputFile), indices=cells, 
+      data <- readCel(getPathname(inputFile), indices=cells,
                       readIntensities=TRUE, readStdvs=TRUE, readPixels=FALSE);
       yAB <- data[["intensities"]];
       verbose && cat(verbose, "(yA,yB) signals:");
@@ -242,7 +240,7 @@ setMethodS3("process", "AlleleSummation", function(this, ..., verbose=FALSE) {
       # (A,B,A,B,A,B,...)
       yAB <- matrix(yAB, nrow=2);
       sdAB <- matrix(sdAB, nrow=2);
-  
+
       # Sum the alleles
       naValue <- as.double(NA);
       y <- sd <- rep(naValue, ncol(yAB));
@@ -262,7 +260,7 @@ setMethodS3("process", "AlleleSummation", function(this, ..., verbose=FALSE) {
         sd[ok] <- sdAB[1,ok];
       }
       rm(yAB, sdAB);
-  
+
       verbose && cat(verbose, "y=yA+yB signals:");
       verbose && str(verbose, y);
       verbose && cat(verbose, "sd=sqrt(sdA^2+sdB^2) signals:");
@@ -270,10 +268,10 @@ setMethodS3("process", "AlleleSummation", function(this, ..., verbose=FALSE) {
       # Store signals in the cell for the A alleles:
       cells <- matrix(cells, nrow=2);
       cells <- cells[1,];
-  
+
       data <- cbind(cell=cells, intensities=y, stdvs=sd);
       rm(cells, y, sd);
-  
+
       updateDataFlat(outputFile, data=data);
       rm(data);
       verbose && exit(verbose);
@@ -289,9 +287,6 @@ setMethodS3("process", "AlleleSummation", function(this, ..., verbose=FALSE) {
 
 
 
-
-
-
 ############################################################################
 # HISTORY:
 # 2008-12-18
@@ -304,7 +299,7 @@ setMethodS3("process", "AlleleSummation", function(this, ..., verbose=FALSE) {
 # o Now process() only processes non-summed units.
 # o Added findUnitsTodo() to AlleleSummation.
 # o Now AlleleSummation is also estimating the pooled standard deviation.
-# o BUG FIX: AlleleSummation would not work for chip types containing 
+# o BUG FIX: AlleleSummation would not work for chip types containing
 #   exclusively SNP units.  It expected some non-SNP units.
 # 2008-02-20
 # o Created.

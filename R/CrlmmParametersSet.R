@@ -6,22 +6,22 @@
 # \description{
 #  @classhierarchy
 #
-#  An CrlmmParametersSet object represents a set of 
+#  An CrlmmParametersSet object represents a set of
 #  @see "CrlmmParametersFile"s with \emph{identical} chip types.
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
-#   \item{...}{Arguments passed to 
+#   \item{...}{Arguments passed to
 #     @see "aroma.core::AromaUnitSignalBinarySet".}
 # }
 #
 # \section{Fields and Methods}{
 #  @allmethods "public"
 # }
-# 
-# @author
+#
+# @author "HB"
 #*/###########################################################################
 setConstructorS3("CrlmmParametersSet", function(...) {
   extend(AromaUnitSignalBinarySet(...), "CrlmmParametersSet");
@@ -30,12 +30,12 @@ setConstructorS3("CrlmmParametersSet", function(...) {
 
 setMethodS3("byName", "CrlmmParametersSet", function(static, name, tags=NULL, ..., chipType=NULL, paths="crlmmData(|,.*)/") {
   suppressWarnings({
-    path <- findByName(static, name=name, tags=tags, chipType=chipType, 
+    path <- findByName(static, name=name, tags=tags, chipType=chipType,
                                            ..., paths=paths, mustExist=TRUE);
   })
 
   byPath(static, path=path, ...);
-}, static=TRUE) 
+}, static=TRUE)
 
 setMethodS3("byPath", "CrlmmParametersSet", function(static, ...) {
   suppressWarnings({

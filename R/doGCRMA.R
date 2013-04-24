@@ -1,13 +1,16 @@
 #  doGCRMA() runs in bounded memory and replicates the results of
 #  @see "gcrma::gcrma" in the \pkg{gcrma} package with great precision.
+#
+# @author "HB"
+#
 # \references{
 #  [1] Z. Wu, R. Irizarry, R. Gentleman, F.M. Murillo & F. Spencer, A Model Based Background Adjustment for Oligonucleotide Expression Arrays, JASA, 2004.
 # }
 
 setMethodS3("doGCRMA", "AffymetrixCelSet", function(csR, arrays=NULL, type=c("fullmodel", "affinities"), ..., uniquePlm=FALSE, drop=TRUE, ram=NULL, verbose=FALSE) {
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'csR':
   className <- "AffymetrixCelSet";
   if (!inherits(csR, className)) {
@@ -63,7 +66,7 @@ setMethodS3("doGCRMA", "AffymetrixCelSet", function(csR, arrays=NULL, type=c("fu
 
   verbose && enter(verbose, "GCRMA/Background correction");
 
-  # Currently, you must use the standard CDF file. 
+  # Currently, you must use the standard CDF file.
   cdf <- getCdf(csR);
   chipTypeS <- getChipType(cdf, fullname=FALSE);
   cdfS <- AffymetrixCdfFile$byChipType(chipTypeS);
@@ -202,7 +205,7 @@ setMethodS3("doGCRMA", "character", function(dataSet, ..., verbose=FALSE) {
 ############################################################################
 # HISTORY:
 # 2011-11-10
-# o ROBUSTNESS: doGCRMA() is now guaranteed to undo any changes of 
+# o ROBUSTNESS: doGCRMA() is now guaranteed to undo any changes of
 #   the CDF of the data set, e.g. if there is a user interrupt.
 # 2011-04-07
 # o Added argument 'drop'.
@@ -211,7 +214,7 @@ setMethodS3("doGCRMA", "character", function(dataSet, ..., verbose=FALSE) {
 # o Now doGCRMA() automagically makes sure that the default CDF is used
 #   in the GcRmaBackgroundCorrection step, while use a custom CDF
 #   everywhere else if set.
-# o Added argument 'type' to doGCRMA() which is passed to 
+# o Added argument 'type' to doGCRMA() which is passed to
 #   QuantileNormalization().
 # 2010-08-14
 # o Created from doRMA.R.

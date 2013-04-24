@@ -7,9 +7,9 @@
 #
 # \description{
 #  In some cases, single probes map to multiple genome locations.  In cases
-#  where you may later want to store a probe estimate (e.g. a probe effect 
-#  or a residual), you will not be able to store more than one per cell.  
-#  The unique CDF facilitates this by making the cell indices unique 
+#  where you may later want to store a probe estimate (e.g. a probe effect
+#  or a residual), you will not be able to store more than one per cell.
+#  The unique CDF facilitates this by making the cell indices unique
 #  (essentially copying the multimapping probes).
 # }
 #
@@ -38,7 +38,7 @@
 #   once, whereas this may not be true for the input CDF.
 # }
 #
-# \author{Mark Robinson}
+# @author "MR"
 #
 # \seealso{
 #   @seeclass
@@ -111,7 +111,7 @@ setMethodS3("createUniqueCdf", "AffymetrixCdfFile", function(this, chipType=getC
 
     units;
   } # rearrangeCells()
-  
+
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
@@ -191,12 +191,12 @@ setMethodS3("createUniqueCdf", "AffymetrixCdfFile", function(this, chipType=getC
   gc <- gc();
   verbose && print(verbose, gc);
 
-  # get a relatively low-memory version of the CDF indices  
+  # get a relatively low-memory version of the CDF indices
   # Q: Why is readCdf(..., stratifyBy=<vector>) not throwing?
   #    Error in match.arg(stratifyBy) : 'arg' must be of length 1
   #    /HB 2011-04-15
   cdfLite <- readCdf(src, units=units,
-              readXY=FALSE, readBases=FALSE, 
+              readXY=FALSE, readBases=FALSE,
               readIndexpos=FALSE, readAtoms=FALSE,
               readUnitType=FALSE, readUnitDirection=FALSE,
               readUnitNumber=FALSE, readUnitAtomNumbers=FALSE,
@@ -222,7 +222,7 @@ setMethodS3("createUniqueCdf", "AffymetrixCdfFile", function(this, chipType=getC
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # QC units
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Keep all QC units  
+  # Keep all QC units
   verbose && enter(verbose, "Reading CDF QC units");
   destQcUnits <- readCdfQc(src);
   verbose && exit(verbose);
@@ -230,8 +230,8 @@ setMethodS3("createUniqueCdf", "AffymetrixCdfFile", function(this, chipType=getC
   nbrOfCellsPerQcUnit <- base::lapply(destQcUnits, FUN=.subset2, "ncells");
   nbrOfCellsPerQcUnit <- unlist(nbrOfCellsPerQcUnit, use.names=FALSE);
   nbrOfQcCells <- sum(nbrOfCellsPerQcUnit);
-  verbose && printf(verbose, 
-                        "Number of QC cells: %d in %d QC units (%.1fMB)\n", 
+  verbose && printf(verbose,
+                        "Number of QC cells: %d in %d QC units (%.1fMB)\n",
               nbrOfQcCells, nbrOfQcUnits, object.size(destQcUnits)/1024^2);
 
 
@@ -277,7 +277,7 @@ setMethodS3("createUniqueCdf", "AffymetrixCdfFile", function(this, chipType=getC
   verbose && exit(verbose);
 
   if (nbrOfUnits > 0) {
-    # Number of bytes per unit: 
+    # Number of bytes per unit:
     #  = 20 + (18+64)*nbrOfGroupsPerUnit + 14*nbrOfCellsPerUnit bytes
     unitLengths <- 20 + 82*nbrOfGroupsPerUnit + 14*nbrOfCellsPerUnit;
     avgUnitLength <- mean(unitLengths);
@@ -288,7 +288,7 @@ setMethodS3("createUniqueCdf", "AffymetrixCdfFile", function(this, chipType=getC
   # Number of bytes per QC unit:
   if (nbrOfQcUnits > 0) {
     # Start positions for QC units
-    # Number of bytes per QC unit: 
+    # Number of bytes per QC unit:
     #  = 6 + 7*nbrOfCellsPerQcUnit bytes
     qcUnitLengths <- 6 + 7*nbrOfCellsPerQcUnit;
   } else {
@@ -319,8 +319,8 @@ setMethodS3("createUniqueCdf", "AffymetrixCdfFile", function(this, chipType=getC
   });
 
   # Allocate/write CDF header
-  writeCdfHeader(con=con, destHeader, unitNames=unitNames, 
-                    qcUnitLengths=qcUnitLengths, unitLengths=unitLengths, 
+  writeCdfHeader(con=con, destHeader, unitNames=unitNames,
+                    qcUnitLengths=qcUnitLengths, unitLengths=unitLengths,
                                                         verbose=verbose2);
   # Not needed anymore
   rm(destHeader, unitNames, qcUnitLengths, unitLengths);
@@ -374,7 +374,7 @@ setMethodS3("createUniqueCdf", "AffymetrixCdfFile", function(this, chipType=getC
   nbrOfUnitsPerChunk <- as.integer(ram * scale * 20000);
 
   nbrOfChunks <- ceiling(nbrOfUnits / nbrOfUnitsPerChunk);
-  verbose && printf(verbose, "Number of chunks: %d (%d units/chunk)\n", 
+  verbose && printf(verbose, "Number of chunks: %d (%d units/chunk)\n",
                                          nbrOfChunks, nbrOfUnitsPerChunk);
 
 
@@ -394,7 +394,7 @@ setMethodS3("createUniqueCdf", "AffymetrixCdfFile", function(this, chipType=getC
       head <- 1:length(unitsToDo);
     }
     units <- unitsToDo[head];
-    verbose && printf(verbose, "Chunk #%d of %d (%d units)\n", 
+    verbose && printf(verbose, "Chunk #%d of %d (%d units)\n",
                                         count, nbrOfChunks, length(units));
     verbose && cat(verbose, "Units:");
     verbose && str(verbose, units);
@@ -424,7 +424,7 @@ setMethodS3("createUniqueCdf", "AffymetrixCdfFile", function(this, chipType=getC
     if (length(srcUnits) == 0) {
       throw("Internal error: While creating unique CDF, an empty list of CDF units was read.");
     }
-    
+
     # Precalculate
     srcUnits <- base::lapply(srcUnits, FUN=function(unit) {
       groups <- .subset2(unit, "groups");
@@ -448,7 +448,7 @@ setMethodS3("createUniqueCdf", "AffymetrixCdfFile", function(this, chipType=getC
       #unit$ncellsperatom <- as.integer(1);
       unit;
     })
-	
+
     #return(srcUnits)
 
     # Sanity check
@@ -473,7 +473,7 @@ setMethodS3("createUniqueCdf", "AffymetrixCdfFile", function(this, chipType=getC
   verbose && exit(verbose);
 
   # Close the connection
-  close(con); 
+  close(con);
   con <- NULL;
 
   verbose && cat(verbose, "Temporary CDF file created:");
@@ -554,7 +554,7 @@ setMethodS3("createUniqueCdf", "AffymetrixCdfFile", function(this, chipType=getC
   cells <- getCellIndices(cdfU, unlist=TRUE, useNames=FALSE);
   stopifnot(length(cells) <= nbrOfCells(cdfU));
   stopifnot(identical(unique(diff(cells)), 1L));
-  
+
   verbose && exit(verbose);
 
   cdfU;
@@ -622,7 +622,7 @@ setMethodS3("isUniqueCdf", "AffymetrixCdfFile", function(this, ...) {
 #  tags <- getTags(this);
 #  tags <- setdiff(tags, c("unique"));
 #
-#  # Try to locate the main CDF  
+#  # Try to locate the main CDF
 #  cdf <- byChipType(this, chipType=chipType, tags=tags, ...);
 #
 #  cdf;
@@ -649,7 +649,7 @@ setMethodS3("getUnitGroupCellMapWithUnique", "AffymetrixCdfFile", function(this,
   # Merge maps with ordered and unique units (and the expand in the end)
   if (!is.null(units))
     units <- sort(unique(units));
- 
+
   ugcMap <- list();
 
   # Get the (unit, group, cell) map for this CDF

@@ -31,8 +31,6 @@
  Returns the \code{\link[base]{list}} structure consisting of CDF cell indices.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
-
 \seealso{
   For more information see \code{\link{UnitModel}}.
 }

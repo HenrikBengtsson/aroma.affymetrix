@@ -6,22 +6,22 @@
 # \description{
 #  @classhierarchy
 #
-#  This class represents a normalization method that corrects for 
+#  This class represents a normalization method that corrects for
 #  annotation-data covariate effects on copy-number chip-effect estimates.
 # }
-# 
-# @synopsis 
+#
+# @synopsis
 #
 # \arguments{
-#   \item{...}{Arguments passed to the constructor of 
+#   \item{...}{Arguments passed to the constructor of
 #     @see "AdditiveCovariatesNormalization".}
 # }
 #
 # \section{Fields and Methods}{
-#  @allmethods "public"  
+#  @allmethods "public"
 # }
-# 
-# @author
+#
+# @author "HB"
 #*/###########################################################################
 setConstructorS3("GcContentNormalization2", function(...) {
   extend(AdditiveCovariatesNormalization(...), "GcContentNormalization2");

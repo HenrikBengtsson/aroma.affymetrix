@@ -29,7 +29,7 @@
  Returns a \code{\link[base]{function}}.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson, James Bullard, Kasper Hansen, Pierre Neuvial, Elizabeth Purdom, Mark Robinson, Ken Simpson}
 
 \seealso{
   \code{\link[aroma.light]{calibrateMultiscan}}.

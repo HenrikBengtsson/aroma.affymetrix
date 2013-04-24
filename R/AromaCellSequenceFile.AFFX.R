@@ -2,6 +2,7 @@
 # BEGIN: Affymetrix specific
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+# @author "HB"
 setMethodS3("allocateFromCdf", "AromaCellSequenceFile", function(static, cdf, path=NULL, tags="*", ...) {
   # Argument 'cdf':
   cdf <- Arguments$getInstanceOf(cdf, "AffymetrixCdfFile");
@@ -38,27 +39,27 @@ setMethodS3("allocateFromCdf", "AromaCellSequenceFile", function(static, cdf, pa
   filename <- sprintf("%s.%s", fullname, ext);
 
   # Create microarray tabular binary file
-  allocate(static, filename=filename, path=path, nbrOfCells=nbrOfCells, 
+  allocate(static, filename=filename, path=path, nbrOfCells=nbrOfCells,
                                platform=platform, chipType=chipType, ...);
 }, static=TRUE)
 
 
 
 setMethodS3("importFromAffymetrixProbeTabFile", "AromaCellSequenceFile", function(this, srcFile, rows=NULL, ..., onDuplicates=c("warning", "error", "ignore"), keepSequenceLengths=NULL, ram=NULL, verbose=FALSE) {
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'srcFile':
   if (inherits(srcFile, "AffymetrixProbeTabFile")) {
     # Validate chip type
     chipType <- getChipType(this, fullname=FALSE);
     chipTypeSrc <- getChipType(srcFile, fullname=FALSE);
     if (!identical(chipTypeSrc, chipType)) {
-      throw("Argument 'srcFile' has a different chip type: ", 
+      throw("Argument 'srcFile' has a different chip type: ",
                                             chipTypeSrc, " != ", chipType);
     }
   } else {
-    throw("Argument 'srcFile' is not an AffymetrixProbeTabFile: ", 
+    throw("Argument 'srcFile' is not an AffymetrixProbeTabFile: ",
                                                         class(srcFile)[1]);
   }
 
@@ -127,7 +128,7 @@ setMethodS3("importFromAffymetrixProbeTabFile", "AromaCellSequenceFile", functio
 
     rowsChunk <- rows[idxs];
     verbose && printf(verbose, "Row: %d-%d\n", min(rowsChunk), max(rowsChunk));
-    df <- readDataFrame(srcFile, colClasses=colClasses, 
+    df <- readDataFrame(srcFile, colClasses=colClasses,
                         rows=rowsChunk, ..., verbose=less(verbose, 25));
     if (nrow(df) == 0)
       break;
@@ -146,7 +147,7 @@ setMethodS3("importFromAffymetrixProbeTabFile", "AromaCellSequenceFile", functio
     if (hasDuplicates) {
       setOfDups <- cells[dups];
       n <- length(setOfDups);
-      msg <- paste("Identified ", n, " duplicated cell indices: ", 
+      msg <- paste("Identified ", n, " duplicated cell indices: ",
                              paste(head(setOfDups), collapse=", "), sep="");
       verbose && cat(verbose, msg);
       verbose && print(verbose, head(df[dups,]));
@@ -180,8 +181,8 @@ setMethodS3("importFromAffymetrixProbeTabFile", "AromaCellSequenceFile", functio
       keep <- which(keep);
       if (length(keep) != length(seqs)) {
         verbose && enter(verbose, "Dropping probe sequence with odd lengths");
-        msg <- paste("Dropped ", length(seqs)-length(keep), 
-                     " sequences, because they are of unwanted lengths: ", 
+        msg <- paste("Dropped ", length(seqs)-length(keep),
+                     " sequences, because they are of unwanted lengths: ",
                      paste(keepSequenceLengths, collapse=", "), sep="");
         verbose && cat(verbose, msg);
         cells <- cells[keep];
@@ -202,9 +203,9 @@ setMethodS3("importFromAffymetrixProbeTabFile", "AromaCellSequenceFile", functio
   } # while(TRUE)
 
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Update footer with import information
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   verbose && enter(verbose, "Updating file footer:");
   footer <- readFooter(this);
   keys <- paste("srcFile", c("", 2:99), sep="");
@@ -225,9 +226,9 @@ setMethodS3("importFromAffymetrixProbeTabFile", "AromaCellSequenceFile", functio
 
 
 setMethodS3("inferMmFromPm", "AromaCellSequenceFile", function(this, cdf, units=NULL, ..., safe=FALSE, ram=NULL, verbose=FALSE) {
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local functions
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Contract: X == dnaComplement(dnaComplement(X)) is always true
   dnaComplement <- function(X, ...) {
     # A (0x01) -> T (0x04)
@@ -247,15 +248,15 @@ setMethodS3("inferMmFromPm", "AromaCellSequenceFile", function(this, cdf, units=
   } # dnaComplement()
 
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'cdf':
   cdf <- Arguments$getInstanceOf(cdf, "AffymetrixCdfFile");
 
   chipType <- getChipType(this, fullname=FALSE);
   if (getChipType(cdf, fullname=FALSE) != chipType) {
-    throw("Argument 'cdf' is of a different chip type than this: ", 
+    throw("Argument 'cdf' is of a different chip type than this: ",
                        getChipType(cdf, fullname=FALSE), " != ", chipType);
   }
 
@@ -295,7 +296,7 @@ setMethodS3("inferMmFromPm", "AromaCellSequenceFile", function(this, cdf, units=
 
     # Read cell indices from CDF
     verbose && enter(verbose, "Querying CDF for cell indices");
-    cells <- getCellIndices(cdf, units=unitsChunk, stratifyBy="pmmm", 
+    cells <- getCellIndices(cdf, units=unitsChunk, stratifyBy="pmmm",
                                                unlist=TRUE, useNames=FALSE);
     rm(unitsChunk);
     # Sanity check
@@ -323,7 +324,7 @@ setMethodS3("inferMmFromPm", "AromaCellSequenceFile", function(this, cdf, units=
     keep <- (seqs[,1] != as.raw(0));
     keep <- which(keep);
     verbose && printf(verbose, "Keeping %d of %d (%.1f%%) non-missing PM sequences\n", length(keep), nrow(seqs), 100*length(keep)/nrow(seqs));
-    
+
     seqs <- seqs[keep,, drop=FALSE];
     cells <- cells[,keep, drop=FALSE];
 
@@ -365,11 +366,11 @@ setMethodS3("inferMmFromPm", "AromaCellSequenceFile", function(this, cdf, units=
     verbose && exit(verbose);
   } # while()
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Update footer with MM infer information
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   verbose && enter(verbose, "Updating file footer:");
-  footer <- readFooter(this);	
+  footer <- readFooter(this);
   footer$updates <- list(
     srcForMMs = list(
       methodName="inferMmFromPm",
@@ -402,7 +403,7 @@ setMethodS3("inferMmFromPm", "AromaCellSequenceFile", function(this, cdf, units=
 # o BUG FIX: allocateFromCdf() of AromaCellPositionFile would drop all
 #   but the first tag.
 # 2009-09-27
-# o Added argument 'keepSequenceLengths' to importFromAffymetrixProbeTabFile() 
+# o Added argument 'keepSequenceLengths' to importFromAffymetrixProbeTabFile()
 #   for AromaCellSequenceFile so that one can drop sequences of incorrect
 #   lengths, cf. HuGene-1_0-st-v1.probe.tab.
 # o Added argument 'onDuplicates' to importFromAffymetrixProbeTabFile() for
@@ -415,4 +416,4 @@ setMethodS3("inferMmFromPm", "AromaCellSequenceFile", function(this, cdf, units=
 #   infers target strandedness.
 # 2008-07-09
 # o Created from AromaProbeSequenceTextFile.AFFX.R.
-############################################################################ 
+############################################################################

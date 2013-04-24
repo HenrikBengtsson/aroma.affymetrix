@@ -1,3 +1,4 @@
+# @author "HB"
 setConstructorS3("AffymetrixTsvFile", function(...) {
   this <- extend(AffymetrixFile(...), "AffymetrixTsvFile",
     "cached:.cdf" = NULL,
@@ -20,7 +21,7 @@ setMethodS3("getExtensionPattern", "AffymetrixTsvFile", function(static, ...) {
   ext <- getDefaultExtension(static, ...);
   pattern <- sprintf("[.](%s|%s)$", tolower(ext), toupper(ext));
   pattern;
-}, static=TRUE, protected=TRUE) 
+}, static=TRUE, protected=TRUE)
 
 
 setMethodS3("findByChipType", "AffymetrixTsvFile", function(static, chipType, ...) {
@@ -46,7 +47,7 @@ setMethodS3("verify", "AffymetrixTsvFile", function(this, ...) {
   tryCatch({
     df <- readDataFrame(this, nrows=10);
   }, error = function(ex) {
-    throw("File format error of the Affymetrix TSV file: ", 
+    throw("File format error of the Affymetrix TSV file: ",
                                                   getPathname(this));
   })
   invisible(TRUE);
@@ -112,7 +113,7 @@ setMethodS3("readDataFrame", "AffymetrixTsvFile", function(this, ..., verbose=FA
   df[["unit"]] <- units;
 
 #  rownames(df) <-  units;
-  
+
   o <- order(units);
   df <- df[o,];
 
@@ -172,7 +173,7 @@ setMethodS3("getCdf", "AffymetrixTsvFile", function(this, ...) {
 # o Added getDefaultExtension() to AffymetrixCsvFile.
 # 2008-05-18
 # o Now readDataFrame() and getField() of AffymetrixTsvFile utilize the
-#   UnitNamesFile interface rather than the platform-specific 
+#   UnitNamesFile interface rather than the platform-specific
 #   AffymetrixCdfFile.  This is done in order minimize dependencies for
 #   certain file formats, i.e. not all chip types comes with a CDF.
 # 2008-04-14

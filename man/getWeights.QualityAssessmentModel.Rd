@@ -35,8 +35,6 @@
   Returns an \code{\link{QualityAssessmentSet}}.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
-
 \seealso{
   For more information see \code{\link{QualityAssessmentModel}}.
 }

@@ -1,7 +1,8 @@
+# @author "HB"
 setMethodS3("doCRMAv1", "AffymetrixCelSet", function(csR, shift=+300, combineAlleles=TRUE, lengthRange=NULL, arrays=NULL, ..., drop=TRUE, ram=NULL, verbose=FALSE) {
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'csR':
   className <- "AffymetrixCelSet";
   if (!inherits(csR, className)) {
@@ -43,9 +44,9 @@ setMethodS3("doCRMAv1", "AffymetrixCelSet", function(csR, shift=+300, combineAll
   }
 
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Setup data set to be processed
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   verbose && cat(verbose, "Data set");
   verbose && print(verbose, csR);
 
@@ -58,9 +59,9 @@ setMethodS3("doCRMAv1", "AffymetrixCelSet", function(csR, shift=+300, combineAll
   }
 
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # CRMAv1
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   verbose && enter(verbose, "CRMAv1/Allelic crosstalk calibration");
   acc <- AllelicCrosstalkCalibration(csR, model="CRMA", tags="*,v1");
   verbose && print(verbose, acc);
@@ -78,7 +79,7 @@ setMethodS3("doCRMAv1", "AffymetrixCelSet", function(csR, shift=+300, combineAll
   verbose && print(verbose, gc);
 
   verbose && enter(verbose, "CRMAv1/Probe summarization");
-  plm <- RmaCnPlm(csC, mergeStrands=TRUE, combineAlleles=combineAlleles, 
+  plm <- RmaCnPlm(csC, mergeStrands=TRUE, combineAlleles=combineAlleles,
                                                             shift=shift);
   verbose && print(verbose, plm);
   if (length(findUnitsTodo(plm)) > 0) {
@@ -89,7 +90,7 @@ setMethodS3("doCRMAv1", "AffymetrixCelSet", function(csR, shift=+300, combineAll
     units <- fit(plm, ram=ram, verbose=verbose);
     verbose && str(verbose, units);
     rm(units);
-  }  
+  }
   verbose && print(verbose, gc);
   ces <- getChipEffectSet(plm);
   verbose && print(verbose, ces);
@@ -102,7 +103,7 @@ setMethodS3("doCRMAv1", "AffymetrixCelSet", function(csR, shift=+300, combineAll
   # Clean up
   rm(plm, csC);
   gc <- gc();
-  
+
   verbose && enter(verbose, "CRMAv1/PCR fragment-length normalization");
   fln <- FragmentLengthNormalization(ces, target="zero", lengthRange=lengthRange);
   verbose && print(verbose, fln);
@@ -117,7 +118,7 @@ setMethodS3("doCRMAv1", "AffymetrixCelSet", function(csR, shift=+300, combineAll
   # Clean up
   rm(fln, ces);
   gc <- gc();
-  
+
   verbose && enter(verbose, "CRMAv1/Export to technology-independent data files");
   dsNList <- exportTotalAndFracB(cesN, verbose=verbose);
   verbose && print(verbose, dsNList);
@@ -174,7 +175,7 @@ setMethodS3("doCRMAv1", "character", function(dataSet, ..., verbose=FALSE) {
 
 
 setMethodS3("doASCRMAv1", "default", function(...) {
-  doCRMAv1(..., combineAlleles=FALSE); 
+  doCRMAv1(..., combineAlleles=FALSE);
 })
 
 
@@ -182,21 +183,21 @@ setMethodS3("doASCRMAv1", "default", function(...) {
 # HISTORY:
 # 2012-09-05
 # o ROBUSTNESS: Now doCRMAv1() adds also tag "v1" to the allele-specific
-#   calibration step.  The reason for this is to differentiate it from 
+#   calibration step.  The reason for this is to differentiate it from
 #   the output of doCRMAv2().  NOTE: This update means that any old CRMAv1
-#   analyses will not be detected by doCRMAv1(); to have doCRMAv1() detect 
+#   analyses will not be detected by doCRMAv1(); to have doCRMAv1() detect
 #   those add tag "v1" in that calibration step, e.g. "ACC,-XY,v1".
 # 2011-04-07
 # o Added argument 'drop'.
 # 2011-03-14
-# o doCRMAv1() gained argument 'lengthRange', which is passed to 
+# o doCRMAv1() gained argument 'lengthRange', which is passed to
 #   the constructor of FragmentLengthNormalization.
 # 2010-06-21
 # o Added doASCRMAv1() for a convenient allele-specific CRMAv1 wrapper.
 # 2010-06-07
 # o Added argument shift=+300 to doCRMAv1().
 # 2010-05-17
-# o CORRECTION: doCRMAv1() forgot to shift +300 the signals before 
+# o CORRECTION: doCRMAv1() forgot to shift +300 the signals before
 #   doing the probe-level summarization.
 # 2010-04-21
 # o BUG FIX: doCRMAv1() for AffymetrixCelSet used undefined 'csN' internally

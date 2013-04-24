@@ -31,8 +31,6 @@
  Returns nothing.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
-
 \seealso{
   \code{\link[aroma.affymetrix:getTags.Model]{*getTags}()}
   For more information see \code{\link{Model}}.

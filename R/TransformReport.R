@@ -6,8 +6,8 @@
 # \description{
 #  @classhierarchy
 # }
-# 
-# @synopsis 
+#
+# @synopsis
 #
 # \arguments{
 #   \item{inSet}{The input data set as an @see "AffymetrixCelSet".}
@@ -16,10 +16,10 @@
 # }
 #
 # \section{Fields and Methods}{
-#  @allmethods "public"  
+#  @allmethods "public"
 # }
-# 
-# @author
+#
+# @author "HB"
 #*/###########################################################################
 setConstructorS3("TransformReport", function(inSet=NULL, outSet=NULL, ...) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -36,7 +36,7 @@ setConstructorS3("TransformReport", function(inSet=NULL, outSet=NULL, ...) {
 #    }
   }
 
-  extend(Object(), "TransformReport", 
+  extend(Object(), "TransformReport",
     .inSet = inSet,
     .outSet = outSet,
     .alias = NULL
@@ -59,7 +59,7 @@ setMethodS3("as.character", "TransformReport", function(x, ...) {
   s <- c(s, sprintf("Input data set: %s", getFullName(ds)));
   ds <- getOutputDataSet(this);
   s <- c(s, sprintf("Output data set: %s", getFullName(ds)));
-  s <- c(s, sprintf("Number of arrays: %d (%.2fMB)", 
+  s <- c(s, sprintf("Number of arrays: %d (%.2fMB)",
                            length(ds), getFileSize(ds)/1024^2));
   s <- c(s, sprintf("Chip type: %s", getChipType(getCdf(ds))));
   s <- c(s, sprintf("RAM: %.2fMB", objectSize(this)/1024^2));
@@ -87,8 +87,6 @@ setMethodS3("as.character", "TransformReport", function(x, ...) {
 # \value{
 #  Returns a @character string.
 # }
-#
-# @author
 #
 # \seealso{
 #   @seeclass
@@ -135,8 +133,6 @@ setMethodS3("setAlias", "TransformReport", function(this, alias, ...) {
 #  Returns a @character @vector.
 # }
 #
-# @author
-#
 # \seealso{
 #   @seeclass
 # }
@@ -181,8 +177,6 @@ setMethodS3("getTags", "TransformReport", function(this, collapse=NULL, ...) {
 #  Returns a @character string.
 # }
 #
-# @author
-#
 # \seealso{
 #   @seeclass
 # }
@@ -216,8 +210,6 @@ setMethodS3("getFullName", "TransformReport", function(this, ...) {
 #  Returns a @character string.
 # }
 #
-# @author
-#
 # \seealso{
 #   @seeclass
 # }
@@ -231,7 +223,7 @@ setMethodS3("getPath", "TransformReport", function(this, ...) {
   # Full name
   fullname <- getFullName(this);
 
-  # Chip type    
+  # Chip type
   ds <- getOutputDataSet(this);
   unf <- getUnitNamesFile(ds);
   chipType <- getChipType(unf, fullname=FALSE);
@@ -267,8 +259,6 @@ setMethodS3("getPath", "TransformReport", function(this, ...) {
 #  Returns an @see "AffymetrixCelSet".
 # }
 #
-# @author
-#
 # \seealso{
 #   @seeclass
 # }
@@ -298,38 +288,36 @@ setMethodS3("getInputDataSet", "TransformReport", function(this, ...) {
 #  Returns an @see "AffymetrixCelSet".
 # }
 #
-# @author
-#
 # \seealso{
 #   @seeclass
 # }
 #*/###########################################################################
-setMethodS3("getOutputDataSet", "TransformReport", function(this, ...) { 
+setMethodS3("getOutputDataSet", "TransformReport", function(this, ...) {
   this$.outSet;
 })
 
 
-setMethodS3("getCdf", "TransformReport", function(this, ...) { 
+setMethodS3("getCdf", "TransformReport", function(this, ...) {
   getCdf(getOutputDataSet(this));
 })
 
 
-setMethodS3("getUnitNamesFile", "TransformReport", function(this, ...) { 
+setMethodS3("getUnitNamesFile", "TransformReport", function(this, ...) {
   dsOut <- getOutputDataSet(this);
   getUnitNamesFile(dsOut);
 })
 
-setMethodS3("getUnitTypesFile", "TransformReport", function(this, ...) { 
+setMethodS3("getUnitTypesFile", "TransformReport", function(this, ...) {
   dsOut <- getOutputDataSet(this);
   getUnitTypesFile(dsOut);
 })
 
 
-setMethodS3("nbrOfArrays", "TransformReport", function(this, ...) { 
+setMethodS3("nbrOfArrays", "TransformReport", function(this, ...) {
   length(getOutputDataSet(this));
 })
 
-setMethodS3("seq", "TransformReport", function(this, ...) { 
+setMethodS3("seq", "TransformReport", function(this, ...) {
   seq_len(length(this));
 })
 
@@ -385,23 +373,23 @@ setMethodS3("plotXYCurve", "TransformReport", function(this, arrays=seq_along(th
     name <- getName(df);
 
     verbose && enter(verbose, sprintf("Array #%d ('%s')", kk, name));
-    
+
     verbose && enter(verbose, "Retrieving data");
     suppressWarnings({
       yy <- getYY(this, array=array, ...);
     })
     verbose && str(verbose, yy);
     verbose && exit(verbose);
-  
+
     if (is.null(main))
       main <- name;
-  
+
     verbose && enter(verbose, "Plotting smooth (X,Y) curve");
     suppressWarnings({
       fit <- plotXYCurve(yy$y1, yy$y2, lwd=lwd, col=col[kk], xlim=xlim, xlab=xlab, ylab=ylab, ..., add=add);
     })
     verbose && exit(verbose);
-  
+
     if (!add)
       stextChipType(chipType, line=-1);
 
@@ -432,7 +420,7 @@ setMethodS3("plotXYCurveLog2", "TransformReport", function(this, xlim=c(0,16), x
 
 setMethodS3("writeImages", "TransformReport", function(this, path=NULL, width=800, height=width, ..., skip=TRUE, verbose=FALSE) {
   pngDev <- findPngDevice(transparent=FALSE);
- 
+
   unf <- getUnitNamesFile(this);
   chipType <- getChipType(unf, fullname=FALSE);
   rootPath <- getRootPath(this);
@@ -489,7 +477,7 @@ setMethodS3("writeImages", "TransformReport", function(this, path=NULL, width=80
 
 setMethodS3("writeImageCombined", "TransformReport", function(this, path=NULL, width=800, height=width, ..., skip=TRUE, verbose=FALSE) {
   pngDev <- findPngDevice(transparent=FALSE);
- 
+
   unf <- getUnitNamesFile(this);
   chipType <- getChipType(unf, fullname=FALSE);
   rootPath <- getRootPath(this);

@@ -6,31 +6,31 @@
 # \description{
 #  @classhierarchy
 #
-#  This class represents a normalization function that transforms the 
+#  This class represents a normalization function that transforms the
 #  probe signals such that each unit type gets the same average.
 # }
-# 
-# @synopsis 
+#
+# @synopsis
 #
 # \arguments{
-#   \item{...}{Arguments passed to the constructor of 
-#     @see "ProbeLevelTransform3".} 
+#   \item{...}{Arguments passed to the constructor of
+#     @see "ProbeLevelTransform3".}
 #   \item{targetAvg}{A @numeric value.}
 # }
 #
 # \section{Fields and Methods}{
-#  @allmethods "public"  
+#  @allmethods "public"
 # }
-# 
-# @author
+#
+# @author "HB"
 #*/###########################################################################
 setConstructorS3("UnitTypeScaleNormalization", function(..., targetAvg=4400) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   targetAvg <- Arguments$getDouble(targetAvg, range=c(1,Inf));
 
-  extend(ProbeLevelTransform3(...), "UnitTypeScaleNormalization", 
+  extend(ProbeLevelTransform3(...), "UnitTypeScaleNormalization",
     .targetAvg = targetAvg
   )
 })
@@ -66,10 +66,10 @@ setMethodS3("fitOne", "UnitTypeScaleNormalization", function(this, df, ..., verb
   if (verbose) {
     pushState(verbose);
     on.exit(popState(verbose));
-  } 
+  }
 
   verbose && enter(verbose, "Fitting normalization function for one array");
-  verbose && cat(verbose, "Full name: ", getFullName(df)); 
+  verbose && cat(verbose, "Full name: ", getFullName(df));
 
   verbose && enter(verbose, "Getting algorithm parameters");
   params <- getParameters(this, expand=TRUE);
@@ -87,12 +87,12 @@ setMethodS3("fitOne", "UnitTypeScaleNormalization", function(this, df, ..., verb
   knownUnitTypes <- attr(unitTypes, "types");
   verbose && exit(verbose);
 
-  fit <- list();  
+  fit <- list();
   for (kk in seq_along(uniqueUnitTypes)) {
-    unitType <- uniqueUnitTypes[kk];   
+    unitType <- uniqueUnitTypes[kk];
     key <- names(knownUnitTypes)[unitType == knownUnitTypes];
     names(unitType) <- key;
-    verbose && enter(verbose, sprintf("Unit type %d (%d; '%s') of %d", 
+    verbose && enter(verbose, sprintf("Unit type %d (%d; '%s') of %d",
                     kk, unitType, key, length(uniqueUnitTypes)));
     unitsKK <- units[unitTypes == unitType];
     verbose && cat(verbose, "Units:");
@@ -156,10 +156,10 @@ setMethodS3("getNormalizeSignalsOne", "UnitTypeScaleNormalization", function(thi
   if (verbose) {
     pushState(verbose);
     on.exit(popState(verbose));
-  } 
+  }
 
   verbose && enter(verbose, "Normalizing one array according to model fit");
-  verbose && cat(verbose, "Full name: ", getFullName(df)); 
+  verbose && cat(verbose, "Full name: ", getFullName(df));
 
   verbose && enter(verbose, "Getting algorithm parameters");
   params <- getParameters(this, expand=TRUE);
@@ -196,7 +196,7 @@ setMethodS3("getNormalizeSignalsOne", "UnitTypeScaleNormalization", function(thi
     unitType <- uniqueUnitTypes[kk];
     key <- names(knownUnitTypes)[unitType == knownUnitTypes];
     names(unitType) <- key;
-    verbose && enter(verbose, sprintf("Unit type %d (%d; '%s') of %d", 
+    verbose && enter(verbose, sprintf("Unit type %d (%d; '%s') of %d",
                     kk, unitType, key, length(uniqueUnitTypes)));
     unitsKK <- units[unitTypes == unitType];
     verbose && cat(verbose, "Units:");
@@ -267,7 +267,7 @@ setMethodS3("getNormalizeSignalsOne", "UnitTypeScaleNormalization", function(thi
 #
 # \arguments{
 #   \item{...}{Not used.}
-#   \item{force}{If @TRUE, data already normalized is re-normalized, 
+#   \item{force}{If @TRUE, data already normalized is re-normalized,
 #       otherwise not.}
 #   \item{verbose}{See @see "R.utils::Verbose".}
 # }
@@ -275,8 +275,6 @@ setMethodS3("getNormalizeSignalsOne", "UnitTypeScaleNormalization", function(thi
 # \value{
 #  Returns a @double @vector.
 # }
-#
-# @author
 #
 # \seealso{
 #   @seeclass
@@ -338,7 +336,7 @@ setMethodS3("process", "UnitTypeScaleNormalization", function(this, ..., skip=FA
     filename <- gsub("[.]cel$", ".CEL", filename);  # Only output upper case!
     pathname <- Arguments$getWritablePathname(filename, path=outputPath);
     pathname <- AffymetrixFile$renameToUpperCaseExt(pathname);
-  
+
     # Already normalized?
     if (isFile(pathname) && skip) {
       verbose && cat(verbose, "Normalized data file already exists: ",
@@ -346,7 +344,7 @@ setMethodS3("process", "UnitTypeScaleNormalization", function(this, ..., skip=FA
       verbose && exit(verbose);
       next;
     }
-  
+
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Fit model
@@ -361,7 +359,7 @@ setMethodS3("process", "UnitTypeScaleNormalization", function(this, ..., skip=FA
     # Normalize data
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     verbose && enter(verbose, "Normalizing for fitted effects");
-    data <- getNormalizeSignalsOne(this, df=df, fit=fit, 
+    data <- getNormalizeSignalsOne(this, df=df, fit=fit,
                                                   verbose=less(verbose));
     verbose && str(verbose, data);
     verbose && exit(verbose);
@@ -371,7 +369,7 @@ setMethodS3("process", "UnitTypeScaleNormalization", function(this, ..., skip=FA
     # Store normalized data
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     verbose && enter(verbose, "Writing normalized data");
-    writeSignals(this, pathname=pathname, cells=data$cell, 
+    writeSignals(this, pathname=pathname, cells=data$cell,
              intensities=data$y, templateFile=df, verbose=less(verbose));
     rm(data);
     verbose && exit(verbose);
@@ -394,7 +392,7 @@ setMethodS3("process", "UnitTypeScaleNormalization", function(this, ..., skip=FA
   this$outputDataSet <- outputDataSet;
 
   verbose && exit(verbose);
-  
+
   outputDataSet;
 })
 

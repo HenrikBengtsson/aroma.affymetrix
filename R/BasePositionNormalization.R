@@ -10,22 +10,22 @@
 #  effects in the probe intensities due to differences in positioning of
 #  A, C, G, and T:s in the probe sequences.
 # }
-# 
-# @synopsis 
+#
+# @synopsis
 #
 # \arguments{
-#   \item{...}{Arguments passed to the constructor of 
+#   \item{...}{Arguments passed to the constructor of
 #     @see "LinearModelProbeSequenceNormalization".}
-#   \item{model}{A @character string specifying the model used to fit 
+#   \item{model}{A @character string specifying the model used to fit
 #     the base-count effects.}
 #   \item{df}{The degrees of freedom of the model.}
 # }
 #
 # \section{Fields and Methods}{
-#  @allmethods "public"  
+#  @allmethods "public"
 # }
-# 
-# @author
+#
+# @author "HB, MR"
 #*/###########################################################################
 setConstructorS3("BasePositionNormalization", function(..., model=c("smooth.spline"), df=5) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -114,11 +114,11 @@ setMethodS3("getDesignMatrix", "BasePositionNormalization", function(this, cells
   acs <- getAromaCellSequenceFile(this, verbose=less(verbose, 5));
 
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Check file cache
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   key <- list(
-    method="getDesignMatrix", class=class(this[1]), 
+    method="getDesignMatrix", class=class(this[1]),
     cells=cells,
     model=model, df=df,
     acs=list(fullname=getFullName(acs))
@@ -135,7 +135,7 @@ setMethodS3("getDesignMatrix", "BasePositionNormalization", function(this, cells
   }
 
   verbose && enter(verbose, "Reading probe sequences");
-  seqs <- readSequenceMatrix(acs, cells=cells, what="raw", 
+  seqs <- readSequenceMatrix(acs, cells=cells, what="raw",
                                                 verbose=less(verbose, 5));
   rm(acs);
   verbose && cat(verbose, "Probe-sequence matrix:");
@@ -144,7 +144,7 @@ setMethodS3("getDesignMatrix", "BasePositionNormalization", function(this, cells
 
   verbose && enter(verbose, "Building probe-position design matrix");
   verbose && cat(verbose, "Degrees of freedom: ", df);
-  X <- getProbePositionEffectDesignMatrix(seqs, df=df, 
+  X <- getProbePositionEffectDesignMatrix(seqs, df=df,
                                                verbose=less(verbose, 5));
   rm(seqs);
 
@@ -157,9 +157,9 @@ setMethodS3("getDesignMatrix", "BasePositionNormalization", function(this, cells
   verbose && cat(verbose, "RAM: ", object.size(X));
   verbose && exit(verbose);
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Cache results?
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (cache) {
     saveCache(X, key=key, dirs=dirs);
   }
@@ -193,7 +193,7 @@ setMethodS3("getSignalTransform", "BasePositionNormalization", function(this, ..
 # o Extracted the LinearModelProbeSequenceNormalization class from this
 #   class.
 # o Now fitOne() takes an argument 'ram' which is passed from process().
-# o The predictOne() method is looping over probe positions, which is 
+# o The predictOne() method is looping over probe positions, which is
 #   fairly memory efficient.  For this reason, we leave it as it.  We
 #   can now fit a GenomeWideSNP_6 array with approx 1GB of RAM (instead
 #   of 5-6GB before)!

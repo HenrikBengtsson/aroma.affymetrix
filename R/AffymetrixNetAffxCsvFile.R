@@ -1,5 +1,6 @@
+# @author "HB"
 setConstructorS3("AffymetrixNetAffxCsvFile", function(..., .verify=TRUE) {
-  this <- extend(AffymetrixCsvFile(..., .verify=FALSE), 
+  this <- extend(AffymetrixCsvFile(..., .verify=FALSE),
                   c("AffymetrixNetAffxCsvFile", uses("UnitNamesFile")),
     "cached:.unitNames" = NULL
   );
@@ -121,7 +122,7 @@ setMethodS3("readDataUnitFragmentLength", "AffymetrixNetAffxCsvFile", function(t
     enzymes <- Arguments$getCharacters(enzymes);
   }
   if (any(duplicated(enzymes))) {
-    throw("Argument 'enzymes' contains duplicated values: ", 
+    throw("Argument 'enzymes' contains duplicated values: ",
                                           paste(enzymes, collapse=", "));
   }
 
@@ -158,7 +159,7 @@ setMethodS3("readDataUnitFragmentLength", "AffymetrixNetAffxCsvFile", function(t
   verbose && enter(verbose, "Inferring if enzyme names are specified");
   hasNames <- NA;
   for (kk in seq_along(fln)) {
-    unit <- fln[kk]; 
+    unit <- fln[kk];
     if (nchar(unit) > 0) {
       hasNames <- (regexpr("^([abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ]+|---)", unit) != -1);
       break;
@@ -168,7 +169,7 @@ setMethodS3("readDataUnitFragmentLength", "AffymetrixNetAffxCsvFile", function(t
     throw("INTERNAL ERROR: Failed to parse CSV file for fragment lengths.");
   verbose && cat(verbose, "Has enzyme names: ", hasNames);
   verbose && exit(verbose);
-  
+
 
   # Split by enzymes first
   fln <- strsplit(fln, split=";", fixed=TRUE);
@@ -183,7 +184,7 @@ setMethodS3("readDataUnitFragmentLength", "AffymetrixNetAffxCsvFile", function(t
     nbrOfEnzymes <- max(nbrOfEnzymes);
     verbose && cat(verbose, "Max number of enzymes: ", nbrOfEnzymes);
     verbose && exit(verbose);
-    
+
     verbose && enter(verbose, "Splitting into subunits and padding with NAs");
     keep <- 1:nbrOfEnzymes;
     fln <- base::lapply(fln, FUN=function(unit) {
@@ -195,7 +196,7 @@ setMethodS3("readDataUnitFragmentLength", "AffymetrixNetAffxCsvFile", function(t
     if (isVisible(verbose, level=-50))
       verbose && str(verbose, fln[1:min(10,length(fln))], level=-50);
     verbose && exit(verbose);
-    
+
     # Extract the name for each enzyme
     verbose && enter(verbose, "Extracting enzyme names");
     enzymeIdxs <- base::lapply(fln, FUN=function(unit) {
@@ -248,7 +249,7 @@ setMethodS3("readDataUnitFragmentLength", "AffymetrixNetAffxCsvFile", function(t
     verbose && enter(verbose, "Identifying the location of the fragment lengths");
     offset <- 1;
     for (kk in seq_along(fln)) {
-      unit <- fln[[kk]][[1]]; 
+      unit <- fln[[kk]][[1]];
       if (length(unit) > 1) {
         if (length(unit) == 5) {
           # e.g. GenomeWideSNP_5 for na25
@@ -262,7 +263,7 @@ setMethodS3("readDataUnitFragmentLength", "AffymetrixNetAffxCsvFile", function(t
 
     verbose && cat(verbose, "Offset: ", offset);
     verbose && exit(verbose);
-  
+
     # Extract the fragment length for each enzyme
     verbose && enter(verbose, "Extracting fragment lengths");
     fln <- base::lapply(fln, FUN=function(unit) {
@@ -319,19 +320,19 @@ setMethodS3("readDataUnitFragmentLength", "AffymetrixNetAffxCsvFile", function(t
       base::sapply(parts, FUN=.subset, 1, USE.NAMES=FALSE);
     });
     verbose && exit(verbose);
-   
+
     # Reorganize as an JxE integer matrix
     fln <- unlist(fln, use.names=FALSE);
     fln <- as.integer(fln);
     fln <- matrix(fln, ncol=nbrOfEnzymes, byrow=TRUE);
   }
-	
+
   if (isVisible(verbose, level=-10))
     verbose && str(verbose, fln, level=-10);
 
   # Sanity check
   if (nrow(fln) != nrow(data)) {
-    throw("Internal error. nrow(fln) != nrow(data): ", 
+    throw("Internal error. nrow(fln) != nrow(data): ",
                                        nrow(fln), " != ", nrow(data));
   }
 
@@ -379,7 +380,7 @@ setMethodS3("readDataUnitFragmentLength", "AffymetrixNetAffxCsvFile", function(t
 # 2008-04-25
 # o Added getUnitNames().
 # 2008-04-23
-# o NOTE: The CNV for GenomeWideSNP_5 for na25 contains one SNP 
+# o NOTE: The CNV for GenomeWideSNP_5 for na25 contains one SNP
 #   (SNP_A-1905053) with "duplicated" fragment lengths, i.e. NspI=617,
 #   StyI=912, StyI=57.  This will cause the returned data to contain "three"
 #   enzyme columns.

@@ -38,8 +38,6 @@
  error is thrown.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
-
 \seealso{
   \code{\link[aroma.affymetrix:byChipType.AromaChipTypeAnnotationFile]{*byChipType}()}.
   For more information see \code{\link{AromaChipTypeAnnotationFile}}.

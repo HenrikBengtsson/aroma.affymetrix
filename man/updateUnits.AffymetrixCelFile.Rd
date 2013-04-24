@@ -31,7 +31,7 @@
  Returns the \code{\link[base]{list}} structure that \code{\link[affxparser]{updateCelUnits}} returns.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[aroma.affymetrix:updateUnits.AffymetrixCelFile]{*updateUnits}()}.

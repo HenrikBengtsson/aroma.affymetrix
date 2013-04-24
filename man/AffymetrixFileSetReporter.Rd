@@ -6,15 +6,15 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
- \name{AffymetrixFileSetReporter}
+\name{AffymetrixFileSetReporter}
 \docType{class}
 \alias{AffymetrixFileSetReporter}
 
 
- \title{The AffymetrixFileSetReporter class}
+\title{The AffymetrixFileSetReporter class}
 
- \description{
-  Package:  aroma.affymetrix \cr
+\description{
+ Package:  aroma.affymetrix \cr
 \bold{Class AffymetrixFileSetReporter}\cr
 
 \code{\link[R.oo]{Object}}\cr
@@ -30,20 +30,20 @@ public abstract static class \bold{AffymetrixFileSetReporter}\cr
 extends \emph{\link[aroma.affymetrix]{GenericReporter}}\cr
 
 
- }
+}
 
- \usage{
+\usage{
 AffymetrixFileSetReporter(set=NULL, ..., .setClass="AffymetrixFileSet")
 }
 
- \arguments{
-   \item{set}{An \code{\link{AffymetrixFileSet}} object.}
-   \item{...}{Arguments passed to \code{\link{GenericReporter}}.}
-   \item{.setClass}{The name of the class of the input set.}
- }
+\arguments{
+  \item{set}{An \code{\link{AffymetrixFileSet}} object.}
+  \item{...}{Arguments passed to \code{\link{GenericReporter}}.}
+  \item{.setClass}{The name of the class of the input set.}
+}
 
- \section{Fields and Methods}{
-  \bold{Methods:}\cr
+\section{Fields and Methods}{
+ \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{getInputName} \tab  -\cr
  \tab \code{getInputTags} \tab  -\cr
@@ -57,7 +57,7 @@ as.character, getAlias, getAsteriskTags, getFullName, getInputName, getInputTags
 $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save, asThis
 
 
- }
+}
 
- \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 \keyword{classes}

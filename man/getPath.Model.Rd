@@ -34,8 +34,6 @@
  If the path does not exist, it is created.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
-
 \seealso{
   For more information see \code{\link{Model}}.
 }

@@ -6,15 +6,15 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
- \name{ChipEffectTransform}
+\name{ChipEffectTransform}
 \docType{class}
 \alias{ChipEffectTransform}
 
 
- \title{The ChipEffectTransform class}
+\title{The ChipEffectTransform class}
 
- \description{
-  Package:  aroma.affymetrix \cr
+\description{
+ Package:  aroma.affymetrix \cr
 \bold{Class ChipEffectTransform}\cr
 
 \code{\link[R.oo]{Object}}\cr
@@ -35,21 +35,21 @@ extends \emph{\link[aroma.affymetrix]{Transform}}\cr
 
 
 
-  This abstract class represents a transform that transforms chip-effect
-  estimates obtained from probe-level modelling.
- }
+ This abstract class represents a transform that transforms chip-effect
+ estimates obtained from probe-level modelling.
+}
 
- \usage{
+\usage{
 ChipEffectTransform(dataSet=NULL, ...)
 }
 
- \arguments{
-   \item{dataSet}{The input data set as an \code{\link{ChipEffectSet}}.}
-   \item{...}{Arguments passed to the constructor of \code{\link{Transform}}.}
- }
+\arguments{
+  \item{dataSet}{The input data set as an \code{\link{ChipEffectSet}}.}
+  \item{...}{Arguments passed to the constructor of \code{\link{Transform}}.}
+}
 
- \section{Fields and Methods}{
-  \bold{Methods:}\cr
+\section{Fields and Methods}{
+ \bold{Methods:}\cr
 \emph{No methods defined}.
 
 
@@ -60,17 +60,17 @@ getOutputDataSet, getOutputFiles
 as.character, getAsteriskTags, getExpectedOutputFiles, getExpectedOutputFullnames, getFullName, getInputDataSet, getName, getOutputDataSet, getOutputDataSet0, getOutputFiles, getPath, getRootPath, getTags, isDone, process, setTags
 
  \bold{Methods inherited from ParametersInterface}:\cr
-getParameters, getParametersAsString, getParameterSets
+getParameterSets, getParameters, getParametersAsString
 
  \bold{Methods inherited from Object}:\cr
 $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save, asThis
 
 
- }
+}
 
- \details{
-   Subclasses must implement the \code{process()} method.
- }
+\details{
+  Subclasses must implement the \code{process()} method.
+}
 
- \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 \keyword{classes}

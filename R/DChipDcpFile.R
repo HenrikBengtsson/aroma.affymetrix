@@ -8,22 +8,22 @@
 #
 #  A DChipDcpFile object represents a DChip DCP file.
 # }
-# 
-# @synopsis 
+#
+# @synopsis
 #
 # \arguments{
 #   \item{...}{Arguments passed to @see "AffymetrixFile".}
 # }
 #
 # \section{Fields and Methods}{
-#  @allmethods "public"  
+#  @allmethods "public"
 # }
-# 
+#
 # \seealso{
 #   @see "DChipDcpSet".
 # }
 #
-# @author
+# @author "HB"
 #*/###########################################################################
 setConstructorS3("DChipDcpFile", function(...) {
   this <- extend(AffymetrixFile(...), "DChipDcpFile",
@@ -56,7 +56,7 @@ setMethodS3("as.character", "DChipDcpFile", function(x, ...) {
 
   class(s) <- class;
   s;
-}, protected=TRUE) 
+}, protected=TRUE)
 
 
 setMethodS3("getFileFormat", "DChipDcpFile", function(this, ...) {
@@ -66,7 +66,7 @@ setMethodS3("getFileFormat", "DChipDcpFile", function(this, ...) {
 
   ver;
 })
- 
+
 
 setMethodS3("getExtensionPattern", "DChipDcpFile", function(static, ...) {
   "[.](dcp|DCP)$";
@@ -81,7 +81,7 @@ setMethodS3("fromFile", "DChipDcpFile", function(static, filename, path=NULL, ..
   hdr <- getHeader(df);
 
   df;
-}, protected=TRUE) 
+}, protected=TRUE)
 
 
 
@@ -279,27 +279,27 @@ setMethodS3("extractTheta", "DChipDcpFile", function(this, units=NULL, ..., drop
 # setMethodS3("getCdf", "DChipDcpFile", function(this, ...) {
 #   this$cdf;
 # })
-# 
-# 
+#
+#
 # setMethodS3("setCdf", "DChipDcpFile", function(this, cdf, ...) {
 #   # Argument 'cdf':
 #   if (!is.null(cdf)) {
 #     cdf <- Arguments$getInstanceOf(cdf, "AffymetrixCdfFile");
 #   }
-# 
+#
 #   this$cdf <- cdf;
 # })
-# 
+#
 # setMethodS3("getUnitMap", "DChipDcpFile", function(this, ...) {
 #   cdf <- getCdf(this);
 #   if (is.null(cdf)) {
 #     throw("Cannot infer the number of units. No CDF specified.");
 #   }
-# 
+#
 #   unitNames <- getUnitNames(cdf, ...);
 #   pattern <- "^(AFFX|Random)";
 #   units <- which(regexpr(pattern, unitNames) == -1);
-#   units;  
+#   units;
 # })
 #
 # setMethodS3("nbrOfUnits", "DChipDcpFile", function(this, ...) {

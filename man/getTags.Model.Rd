@@ -32,8 +32,6 @@
  Returns a \code{\link[base]{character}} \code{\link[base]{vector}}.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
-
 \seealso{
   \code{\link[aroma.affymetrix:setTags.Model]{*setTags}()}
   For more information see \code{\link{Model}}.

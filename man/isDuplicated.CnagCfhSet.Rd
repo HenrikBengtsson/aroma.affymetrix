@@ -32,8 +32,6 @@
   has the same time stamp as another preceeding CFH file.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
-
 \seealso{
   Internally \code{\link[base]{duplicated}}() is used to compare timestamps.
   For more information see \code{\link{CnagCfhSet}}.

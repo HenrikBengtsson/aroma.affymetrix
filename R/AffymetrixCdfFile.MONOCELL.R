@@ -27,7 +27,7 @@
 #  Returns the monocell CDF as an @see "AffymetrixCdfFile" object.
 # }
 #
-# @author
+# @author "HB, KS"
 #
 # \seealso{
 #   @seeclass
@@ -107,7 +107,7 @@ setMethodS3("createMonocellCdf", "AffymetrixCdfFile", function(this, chipType=ge
 
     units;
   } # rearrangeCells()
-  
+
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
@@ -174,7 +174,7 @@ setMethodS3("createMonocellCdf", "AffymetrixCdfFile", function(this, chipType=ge
   # Number of cells to keep in each group field
   fIdxs <- 1:nbrOfCellsPerField;
 
-  verbose && printf(verbose, "Number of cells per group field: %d\n", 
+  verbose && printf(verbose, "Number of cells per group field: %d\n",
                                                        nbrOfCellsPerField);
 
 
@@ -214,7 +214,7 @@ setMethodS3("createMonocellCdf", "AffymetrixCdfFile", function(this, chipType=ge
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # QC units
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Keep all QC units  
+  # Keep all QC units
   verbose && enter(verbose, "Reading CDF QC units");
   destQcUnits <- readCdfQc(src);
   verbose && exit(verbose);
@@ -222,8 +222,8 @@ setMethodS3("createMonocellCdf", "AffymetrixCdfFile", function(this, chipType=ge
   nbrOfCellsPerQcUnit <- base::lapply(destQcUnits, FUN=.subset2, "ncells");
   nbrOfCellsPerQcUnit <- unlist(nbrOfCellsPerQcUnit, use.names=FALSE);
   nbrOfQcCells <- sum(nbrOfCellsPerQcUnit);
-  verbose && printf(verbose, 
-                        "Number of QC cells: %d in %d QC units (%.1fMB)\n", 
+  verbose && printf(verbose,
+                        "Number of QC cells: %d in %d QC units (%.1fMB)\n",
               nbrOfQcCells, nbrOfQcUnits, object.size(destQcUnits)/1024^2);
 
 
@@ -269,7 +269,7 @@ setMethodS3("createMonocellCdf", "AffymetrixCdfFile", function(this, chipType=ge
   verbose && exit(verbose);
 
   if (nbrOfUnits > 0) {
-    # Number of bytes per unit: 
+    # Number of bytes per unit:
     #  = 20 + (18+64)*nbrOfGroupsPerUnit + 14*nbrOfCellsPerUnit bytes
     unitLengths <- 20 + 82*nbrOfGroupsPerUnit + 14*nbrOfCellsPerUnit;
     avgUnitLength <- mean(unitLengths);
@@ -280,7 +280,7 @@ setMethodS3("createMonocellCdf", "AffymetrixCdfFile", function(this, chipType=ge
   # Number of bytes per QC unit:
   if (nbrOfQcUnits > 0) {
     # Start positions for QC units
-    # Number of bytes per QC unit: 
+    # Number of bytes per QC unit:
     #  = 6 + 7*nbrOfCellsPerQcUnit bytes
     qcUnitLengths <- 6 + 7*nbrOfCellsPerQcUnit;
   } else {
@@ -309,8 +309,8 @@ setMethodS3("createMonocellCdf", "AffymetrixCdfFile", function(this, chipType=ge
       close(con);
     con <- NULL;
   });
-  writeCdfHeader(con=con, destHeader, unitNames=unitNames, 
-                    qcUnitLengths=qcUnitLengths, unitLengths=unitLengths, 
+  writeCdfHeader(con=con, destHeader, unitNames=unitNames,
+                    qcUnitLengths=qcUnitLengths, unitLengths=unitLengths,
                                                         verbose=verbose2);
   # Not needed anymore
   rm(destHeader, unitNames, qcUnitLengths, unitLengths);
@@ -369,7 +369,7 @@ setMethodS3("createMonocellCdf", "AffymetrixCdfFile", function(this, chipType=ge
   nbrOfUnitsPerChunk <- as.integer(ram * scale * 20000);
 
   nbrOfChunks <- ceiling(nbrOfUnits / nbrOfUnitsPerChunk);
-  verbose && printf(verbose, "Number of chunks: %d (%d units/chunk)\n", 
+  verbose && printf(verbose, "Number of chunks: %d (%d units/chunk)\n",
                                          nbrOfChunks, nbrOfUnitsPerChunk);
 
 
@@ -389,7 +389,7 @@ setMethodS3("createMonocellCdf", "AffymetrixCdfFile", function(this, chipType=ge
       head <- 1:length(unitsToDo);
     }
     units <- unitsToDo[head];
-    verbose && printf(verbose, "Chunk #%d of %d (%d units)\n", 
+    verbose && printf(verbose, "Chunk #%d of %d (%d units)\n",
                                         count, nbrOfChunks, length(units));
 
     unitsToDo <- unitsToDo[-head];
@@ -416,7 +416,7 @@ setMethodS3("createMonocellCdf", "AffymetrixCdfFile", function(this, chipType=ge
     if (length(srcUnits) == 0) {
       throw("Internal error: While creating monocell, an empty list of CDF units was read.");
     }
-    
+
     # 15/12/06: readCdf() no longer returns a list
     # with element "blocks"; instead, it returns a list
     # with element "groups". /KS
@@ -466,7 +466,7 @@ setMethodS3("createMonocellCdf", "AffymetrixCdfFile", function(this, chipType=ge
   verbose && exit(verbose);
 
   # Close the connection
-  close(con); 
+  close(con);
   con <- NULL;
 
   verbose && cat(verbose, "Temporary CDF file created:");
@@ -589,7 +589,7 @@ setMethodS3("getMainCdf", "AffymetrixCdfFile", function(this, ...) {
   tags <- setdiff(tags, c("monocell"));
   tags <- setdiff(tags, c("unique"));
 
-  # Try to locate the main CDF  
+  # Try to locate the main CDF
   cdf <- byChipType(this, chipType=chipType, tags=tags, ...);
 
   cdf;
@@ -616,7 +616,7 @@ setMethodS3("getUnitGroupCellMapWithMonocell", "AffymetrixCdfFile", function(thi
   # Merge maps with ordered and unique units (and the expand in the end)
   if (!is.null(units))
     units <- sort(unique(units));
- 
+
   ugcMap <- list();
 
   # Get the (unit, group, cell) map for this CDF
@@ -656,7 +656,7 @@ setMethodS3("getUnitGroupCellMapWithMonocell", "AffymetrixCdfFile", function(thi
 #   the CDF before trying to create the monocell CDF.  This should catch
 #   for instance invalid Brainarray custom CDFs, cf. ...
 # 2011-04-15
-# o CLEANUP: Dropped argument 'sep' of createMonocellCdf() and 
+# o CLEANUP: Dropped argument 'sep' of createMonocellCdf() and
 #   createUniqueCdf() for AffymetrixCdfFile.
 # 2011-01-09
 # o BUG FIX: createMonocellCdf(..., verbose=FALSE) for AffymetrixCdfFile
@@ -665,11 +665,11 @@ setMethodS3("getUnitGroupCellMapWithMonocell", "AffymetrixCdfFile", function(thi
 # o Now getMainCdf() works for "unique" (as well as "monocell") CDFs.
 # 2008-07-22
 # o MEMORY OPTIMIZATION: Now the validation part of createMonocellCdf() for
-#   AffymetrixCdfFile is also sensitive to the 'ram' argument.  The 
+#   AffymetrixCdfFile is also sensitive to the 'ram' argument.  The
 #   validation is now also down in smaller chunks.
 # 2008-03-18
 # o Added getUnitGroupCellMapWithMonocell() to AffymetrixCdfFile.
-# o Added getMainCdf() for AffymetrixCdfFile to get main CDF from a 
+# o Added getMainCdf() for AffymetrixCdfFile to get main CDF from a
 #   monocell CDF.
 # 2008-02-20
 # o Now getMonocellCdf() and createMonocellCdf() quietly return the input
@@ -687,7 +687,7 @@ setMethodS3("getUnitGroupCellMapWithMonocell", "AffymetrixCdfFile", function(thi
 # 2007-02-21 /HB + KS
 # o BUG FIX: When creating a monocell, the output did not strip of the tags
 #   from the chip type, e.g. annotationData/Foo,core/For,core,monocell.cdf
-#   instead of annotationData/Foo/For,core,monocell.cdf. 
+#   instead of annotationData/Foo/For,core,monocell.cdf.
 # 2007-02-08
 # o Now monocell CDF are names <chipType>,monocell.cdf.  Before a dash was
 #   used instead of a comma. This new style is more in line with the
@@ -697,7 +697,7 @@ setMethodS3("getUnitGroupCellMapWithMonocell", "AffymetrixCdfFile", function(thi
 # 2007-01-10
 # o Now createMonoCell() create the CDF in chunks, that is, in constant
 #   memory.
-# o Reordered internally in createMonoCell() preparing for code to read 
+# o Reordered internally in createMonoCell() preparing for code to read
 #   *and* write monocell CDFs in chunks.  It should not be too hard.
 #   We need to update affxparser with writeCdfHeader(), writeCdfQcUnits()
 #   and writeCdfUnits(), and are basically already in there, but as
@@ -735,7 +735,7 @@ setMethodS3("getUnitGroupCellMapWithMonocell", "AffymetrixCdfFile", function(thi
 # o BUG FIX: createMonoCell() where resetting the cell indices for each
 #   chunk.
 # o Simple benchmarking of createMonoCell(): IBM Thinkpad A31 1.8GHz 1GB:
-#   Mapping50K_Hind to mono cells CDF takes ~13 mins.  Again, it is 
+#   Mapping50K_Hind to mono cells CDF takes ~13 mins.  Again, it is
 #   writeCdf() that is slow.  KH is working on improving this.
 # 2006-09-08
 # o Added equals() to compare to CDF object.

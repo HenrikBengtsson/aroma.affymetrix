@@ -39,8 +39,6 @@ an affinity to each probe.
  to the total number of features on the array.
 }
 
-\author{
-  Ken Simpson (ksimpson[at]wehi.edu.au).
-}
+\author{Ken Simpson, Henrik Bengtsson, Mark Robinson}
 \keyword{internal}
 \keyword{methods}

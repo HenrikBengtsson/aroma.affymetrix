@@ -6,15 +6,15 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
- \name{UnitModel}
+\name{UnitModel}
 \docType{class}
 \alias{UnitModel}
 
 
- \title{The UnitModel class}
+\title{The UnitModel class}
 
- \description{
-  Package:  aroma.affymetrix \cr
+\description{
+ Package:  aroma.affymetrix \cr
 \bold{Class UnitModel}\cr
 
 \code{\link[R.oo]{Object}}\cr
@@ -33,26 +33,26 @@ extends \emph{\link[aroma.affymetrix]{Model}}\cr
 
 
 
-  This class is abstract and represents a generic unit model, i.e.
-  a model that is applied to each unit separately.
- }
+ This class is abstract and represents a generic unit model, i.e.
+ a model that is applied to each unit separately.
+}
 
- \usage{
+\usage{
 UnitModel(dataSet=NULL, probeModel=c("pm", "mm", "pm-mm", "min1(pm-mm)", "pm+mm"), shift=0, ...)
 }
 
- \arguments{
-   \item{dataSet}{An \code{\link{AffymetrixCelSet}} to which this model should
-      be fitted.}
-   \item{probeModel}{A \code{\link[base]{character}} string specifying how PM and MM values
-      should be modelled.  By default only PM signals are used.}
-   \item{shift}{An optional amount the signals should be shifted
-      (translated) before fitting the model.}
-   \item{...}{Arguments passed to the constructor of \code{\link{Model}}.}
- }
+\arguments{
+  \item{dataSet}{An \code{\link{AffymetrixCelSet}} to which this model should
+     be fitted.}
+  \item{probeModel}{A \code{\link[base]{character}} string specifying how PM and MM values
+     should be modelled.  By default only PM signals are used.}
+  \item{shift}{An optional amount the signals should be shifted
+     (translated) before fitting the model.}
+  \item{...}{Arguments passed to the constructor of \code{\link{Model}}.}
+}
 
- \section{Fields and Methods}{
-  \bold{Methods:}\cr
+\section{Fields and Methods}{
+ \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{\link[aroma.affymetrix:findUnitsTodo.UnitModel]{findUnitsTodo}} \tab Identifies non-fitted units.\cr
 }
@@ -62,13 +62,13 @@ UnitModel(dataSet=NULL, probeModel=c("pm", "mm", "pm-mm", "min1(pm-mm)", "pm+mm"
 as.character, fit, getAlias, getAsteriskTags, getDataSet, getFullName, getName, getParameterSet, getPath, getRootPath, getTags, setAlias, setTags
 
  \bold{Methods inherited from ParametersInterface}:\cr
-getParameters, getParametersAsString, getParameterSets
+getParameterSets, getParameters, getParametersAsString
 
  \bold{Methods inherited from Object}:\cr
 $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save, asThis
 
 
- }
+}
 
- \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 \keyword{classes}

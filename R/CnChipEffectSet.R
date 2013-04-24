@@ -8,7 +8,7 @@
 #
 #  This class represents estimates of chip effects in the probe-level models.
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
@@ -21,8 +21,7 @@
 #  @allmethods "public"
 # }
 #
-# @author
-# 
+# @author "HB"
 #*/###########################################################################
 setConstructorS3("CnChipEffectSet", function(..., combineAlleles="byFirstFile") {
   this <- extend(SnpChipEffectSet(...), c("CnChipEffectSet", uses("CopyNumberDataSet")));
@@ -100,7 +99,7 @@ setMethodS3("inferParameters", "CnChipEffectSet", function(this, ..., verbose=FA
 
 
   verbose && enter(verbose, "Infer (mergeStrands, combineAlleles) parameters from stored data in quartet units in CEL set");
-  
+
   # Identify units with quartets
   cdf <- getCdf(this);
   cdfPathname <- getPathname(cdf);
@@ -130,7 +129,7 @@ setMethodS3("inferParameters", "CnChipEffectSet", function(this, ..., verbose=FA
       verbose && cat(verbose, "Scanning units:");
       verbose && str(verbose, units);
       # Infer parameters from 'intensities'
-      values <- readCelUnits(cePathname, units=units, 
+      values <- readCelUnits(cePathname, units=units,
                readIntensities=TRUE, readStdvs=FALSE, dropArrayDim=TRUE);
       # Put quartets by columns
       values <- matrix(unlist(values, use.names=FALSE), nrow=4);
@@ -162,10 +161,10 @@ setMethodS3("inferParameters", "CnChipEffectSet", function(this, ..., verbose=FA
   }
 
   res <- list(combineAlleles=combineAlleles, mergeStrands=mergeStrands);
-  
+
   verbose && str(verbose, res);
   verbose && exit(verbose);
-  
+
   res;
 }, private=TRUE)
 

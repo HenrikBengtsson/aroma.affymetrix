@@ -27,19 +27,19 @@
 # }
 #
 # \details{
-#   This import method is robust and memory efficient.  One array at the 
+#   This import method is robust and memory efficient.  One array at the
 #   time is imported by first writing to a temporary file which is then
 #   renamed to the final name, if import was successful.  (If the import
 #   failed, a temporary file will rename that has to be deleted manually).
 #
 #   Since only one array at the time is imported, the memory overhead
-#   will be bounded allowing to import very large tab-delimited data files 
+#   will be bounded allowing to import very large tab-delimited data files
 #   containing a large number of arrays.  Unfortunately, this approach
 #   slows down the reading substantially, because in each import all but
 #   one column is parsed but ignored.
 # }
 #
-# @author
+# @author "HB"
 #
 # \seealso{
 #   @seeclass
@@ -60,8 +60,8 @@ setMethodS3("importFromDChip", "CnChipEffectSet", function(static, filename, pat
       value <- paste(line[-1], collapse="=");
       res[[name]] <- value;
     }
-    
-    res;    
+
+    res;
   } # readMbeiHeader()
 
 
@@ -92,7 +92,7 @@ setMethodS3("importFromDChip", "CnChipEffectSet", function(static, filename, pat
     if (nbrOfUnknown == length(units)) {
       throw("None of the read unit names belongs to the '", getChipType(cdf),
                                                    "' CDF file: ", pathname);
-    } 
+    }
 
     if (nbrOfUnknown > 0) {
       msg <- sprintf("Data file contains %d unknown unit names: %s", nbrOfUnknown, paste(unitNames[unknown], collapse=", "));
@@ -182,7 +182,7 @@ setMethodS3("importFromDChip", "CnChipEffectSet", function(static, filename, pat
   line <- readLines(con, n=1);
   magic <- "[dChip Expression Data File]";
   if (line != magic) {
-    throw(sprintf("File format error: First line is not '%s': %s", 
+    throw(sprintf("File format error: First line is not '%s': %s",
                                                              magic, line));
   }
 
@@ -194,7 +194,7 @@ setMethodS3("importFromDChip", "CnChipEffectSet", function(static, filename, pat
   verbose && str(verbose, header);
 
   if (tolower(header$ModelMethod) != tolower("Model-based expression")) {
-    throw("dChip data file does not contain MBEI estimates: ", 
+    throw("dChip data file does not contain MBEI estimates: ",
                                                         header$ModelMethod);
   }
 
@@ -229,7 +229,7 @@ setMethodS3("importFromDChip", "CnChipEffectSet", function(static, filename, pat
   sampleNames <- gsub(" (call|SD|SE)$", "", colNames[-1]);
   sampleNames <- unique(sampleNames);
   nbrOfSamples <- length(sampleNames);
-  verbose && printf(verbose, "Sample names [%d]: %s\n", nbrOfSamples, 
+  verbose && printf(verbose, "Sample names [%d]: %s\n", nbrOfSamples,
                                          paste(sampleNames, collapse=", "));
 
 
@@ -261,7 +261,7 @@ setMethodS3("importFromDChip", "CnChipEffectSet", function(static, filename, pat
   verbose && enter(verbose, "Importing ", nbrOfSamples, " samples");
   for (kk in seq_len(nbrOfSamples)) {
     sampleName <- sampleNames[kk];
-    verbose && enter(verbose, sprintf("Sample #%d (%s) of %d", 
+    verbose && enter(verbose, sprintf("Sample #%d (%s) of %d",
                                             kk, sampleName, nbrOfSamples));
 
     # Create output filename
@@ -295,13 +295,13 @@ setMethodS3("importFromDChip", "CnChipEffectSet", function(static, filename, pat
       # Ok, then rename this file
       res <- file.rename(pathname, pathnameT);
       if (!res) {
-        throw("Failed to rename existing file: ", pathname, 
+        throw("Failed to rename existing file: ", pathname,
                                                " -> ", pathnameT);
       }
       cef <- clazz$fromFile(pathnameT, verbose=less(verbose));
     } else {
       tmpFilename <- basename(pathnameT);
-      cef <- clazz$fromDataFile(filename=tmpFilename, path=outPath, 
+      cef <- clazz$fromDataFile(filename=tmpFilename, path=outPath,
                name=sampleName, cdf=monocellCdf, verbose=less(verbose));
       rm(tmpFilename);
     }
@@ -367,7 +367,7 @@ setMethodS3("importFromDChip", "CnChipEffectSet", function(static, filename, pat
     colClasses <- rep("NULL", nbrOfColumns+1);
     colClasses[cols] <- sampleColClasses;
     seek(con, where=dataOffset, rw="read");
-    data <- read.table(file=con, colClasses=colClasses, sep=sep, 
+    data <- read.table(file=con, colClasses=colClasses, sep=sep,
                  header=FALSE, comment.char="", quote="", fill=FALSE);
     data <- as.matrix(data[keep,,drop=FALSE]);
     dimnames(data) <- NULL;
@@ -385,7 +385,7 @@ setMethodS3("importFromDChip", "CnChipEffectSet", function(static, filename, pat
     } else {
       stdvs <- NULL;
     }
-    
+
     updateCel(pathnameT, indices=cells, intensities=data[,1], stdvs=stdvs);
     rm(data, stdvs);
     verbose && exit(verbose);
@@ -396,7 +396,7 @@ setMethodS3("importFromDChip", "CnChipEffectSet", function(static, filename, pat
     # Garbage collect
     gc <- gc();
     verbose && print(verbose, gc);
-    
+
     verbose && exit(verbose);
   } # for (kk ...)
   verbose && exit(verbose);
@@ -424,13 +424,13 @@ setMethodS3("importFromDChip", "CnChipEffectSet", function(static, filename, pat
 # o Updated importFromDChip() of CnChipEffectSet so that it can import data
 #   exported by more recent versions of dChip.  In recent versions, the
 #   standard-error columns are named '*SE' whereas before they were named
-#   '*SD'.  In either case, standard errors were exported (confirmed by 
+#   '*SD'.  In either case, standard errors were exported (confirmed by
 #   author), cf. dChip Forum 'SNP copy number & LOH analysis' and thread
 #   'File format version history for exported MBEIs' on 2008-01-11.
 # 2007-08-09
 # o CnChipEffectSet$importFromDChip() now creates CEL files with upper-case
 #   filename extension "*.CEL", not "*.cel".  The reason for this is that
-#   some software don't recognize lower case filename extensions :( 
+#   some software don't recognize lower case filename extensions :(
 # 2007-03-25
 # o Made importFromDChip() more robust in identifying what columns goes with
 #   what sample etc.

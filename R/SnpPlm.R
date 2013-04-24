@@ -6,10 +6,10 @@
 # \description{
 #  @classhierarchy
 #
-#  An @see "R.oo::Interface" implementing methods special for 
+#  An @see "R.oo::Interface" implementing methods special for
 #  @see "ProbeLevelModel"s specific to SNP arrays.
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
@@ -31,7 +31,7 @@
 #
 # @examples "../incl/SnpPlm.Rex"
 #
-# @author
+# @author "HB"
 #*/###########################################################################
 setConstructorS3("SnpPlm", function(...) {
   extend(Interface(), "SnpPlm");
@@ -62,7 +62,7 @@ setMethodS3("getCellIndices", "SnpPlm", function(this, ..., verbose=FALSE) {
   }
 
   verbose && exit(verbose);
-  
+
   cells;
 })
 
@@ -111,7 +111,7 @@ setMethodS3("setMergeStrands", "SnpPlm", function(this, status, ...) {
 # o Added getMergeStrands() to SnpPlm.
 # 2006-09-11
 # o The intention is to use SnpPlm as an interface class (that is a class
-#   that must not have any fields!) but any class "implementing" this class 
+#   that must not have any fields!) but any class "implementing" this class
 #   (by adding it to its list of classes), will have these methods too.
 # o Created from the RmaSnpPlm.
 ############################################################################

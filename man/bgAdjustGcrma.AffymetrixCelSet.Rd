@@ -56,9 +56,7 @@ CEL files.
  Returns the background adjusted \code{\link{AffymetrixCelFile}} object.
 }
 
-\author{
-  Ken Simpson (ksimpson[at]wehi.edu.au).
-}
+\author{Ken Simpson}
 
 \seealso{
  \code{\link[gcrma]{bg.adjust.gcrma}}

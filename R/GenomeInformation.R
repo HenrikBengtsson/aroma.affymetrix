@@ -6,7 +6,7 @@
 # \description{
 #  @classhierarchy
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
@@ -15,10 +15,10 @@
 # }
 #
 # \section{Fields and Methods}{
-#  @allmethods "public"  
+#  @allmethods "public"
 # }
-# 
-# @author
+#
+# @author "HB"
 #*/###########################################################################
 setConstructorS3("GenomeInformation", function(..., .verify=TRUE) {
   extend(GenericDataFile(...), c("GenomeInformation",
@@ -62,8 +62,6 @@ setMethodS3("as.character", "GenomeInformation", function(x, ...) {
 #   thrown.
 # }
 #
-# @author
-#
 # \seealso{
 #   @seeclass
 # }
@@ -94,8 +92,6 @@ setMethodS3("verify", "GenomeInformation", function(this, ...) {
 #   Returns a @see "GenomeInformation" object.
 # }
 #
-# @author
-#
 # \seealso{
 #   @seeclass
 # }
@@ -116,9 +112,9 @@ setMethodS3("getUnitsOnChromosome", "GenomeInformation", function(this, ...) {
 })
 
 setMethodS3("getUnitsOnChromosomes", "GenomeInformation", function(this, chromosomes, region=NULL, ..., .checkArgs=TRUE) {
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument '...':
   args <- list(...);
   if ("chromosome" %in% names(args)) {
@@ -140,11 +136,11 @@ setMethodS3("getUnitsOnChromosomes", "GenomeInformation", function(this, chromos
     if (!is.null(region)) {
       region <- Arguments$getNumerics(region);
       if (length(region) != 2) {
-        throw("Argument 'region' must be a numeric vector of length 2: ", 
+        throw("Argument 'region' must be a numeric vector of length 2: ",
                                                            length(region));
       }
       if (region[1] > region[2]) {
-        throw("Argument 'region' is not ordered: c(", 
+        throw("Argument 'region' is not ordered: c(",
                                         paste(region, collapse=", "), ")");
       }
     }
@@ -167,7 +163,7 @@ setMethodS3("getUnitsOnChromosomes", "GenomeInformation", function(this, chromos
   units <- as.integer(units);
 
   # CONTRACT
-  # Sanity check, cf. thread 'Error with AllelicCrosstalkCalibration 
+  # Sanity check, cf. thread 'Error with AllelicCrosstalkCalibration
   # and process' on 2011-03-03.
   units <- Arguments$getIndices(units);
 
@@ -195,7 +191,7 @@ setMethodS3("readTableInternal", "GenomeInformation", function(this, pathname, c
   colClasses[names(colClasses) %in% exclude] <- "NULL";
   toRead <- names(colClasses)[colClasses != "NULL"];
   verbose && cat(verbose, "Columns to be read: ", paste(toRead, collapse=", "));
-  
+
   df <- readTable(pathname, colClasses=colClasses, header=TRUE, sep="\t", fill=fill, ..., verbose=less(verbose));
 
   colnames(df) <- toCamelCase(colnames(df));
@@ -238,8 +234,6 @@ setMethodS3("getDataColumns", "GenomeInformation", function(this, ...) {
 # \value{
 #   Returns an @integer @vector.
 # }
-#
-# @author
 #
 # \seealso{
 #   @seemethod "getData".
@@ -287,7 +281,7 @@ setMethodS3("getChromosomeStats", "GenomeInformation", function(this, na.rm=TRUE
     rownames(stats) <- chromosomes;
     for (kk in seq_along(chromosomes)) {
       chr <- chromosomes[kk];
-      verbose && enter(verbose, sprintf("Chromosome %d ('Chr%02d') of %d", 
+      verbose && enter(verbose, sprintf("Chromosome %d ('Chr%02d') of %d",
                                           kk, chr, nbrOfChromosomes));
       pos <- getPositions(this, chromosome=chr);
       r <- range(pos, na.rm=na.rm);
@@ -302,7 +296,7 @@ setMethodS3("getChromosomeStats", "GenomeInformation", function(this, na.rm=TRUE
 
   verbose && exit(verbose);
 
-  stats;  
+  stats;
 })
 
 
@@ -329,8 +323,6 @@ setMethodS3("getChromosomeStats", "GenomeInformation", function(this, na.rm=TRUE
 # \value{
 #   Returns (invisibly) the estimated density.
 # }
-#
-# @author
 #
 # \seealso{
 #   @seeclass
@@ -382,8 +374,6 @@ setMethodS3("plotDensity", "GenomeInformation", function(this, chromosome, ..., 
 #   Returns an @integer @vector.
 # }
 #
-# @author
-#
 # \seealso{
 #   @seemethod "getData".
 #   @seeclass
@@ -424,13 +414,13 @@ setMethodS3("getUnitIndices", "GenomeInformation", function(this, ..., na.rm=TRU
 #   specific to Affymetrix are in GenomeInformation.AFFX.R.
 # o Now fromDataSet() uses getChipType(ds) and not getChipType(getCdf(ds)).
 # 2008-04-14
-# o Renamed readData() to readDataFrame() for GenomeInformation. 
+# o Renamed readData() to readDataFrame() for GenomeInformation.
 # 2007-12-01
 # 2007-11-25
 # o Now getUnitsOnChromosome() of GenomeInformation can indentify units from
 #   multiple chromosomes.
 # 2007-10-30
-# o Now argument 'chromosome' for getUnitsOnChromosome() needs to be 
+# o Now argument 'chromosome' for getUnitsOnChromosome() needs to be
 #   specified explictly. Before its default was '23'.
 # 2007-09-10
 # o Now readData() in GenomeInformation is no longer abstract, but tries
@@ -466,4 +456,4 @@ setMethodS3("getUnitIndices", "GenomeInformation", function(this, ..., na.rm=TRU
 # o Added support for skipping header in readSampleInformationFile().
 # 2005-10-31
 # o Created.
-############################################################################  
+############################################################################

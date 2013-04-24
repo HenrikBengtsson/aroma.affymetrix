@@ -6,15 +6,15 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
- \name{DChipGenomeInformation}
+\name{DChipGenomeInformation}
 \docType{class}
 \alias{DChipGenomeInformation}
 
 
- \title{The DChipGenomeInformation class}
+\title{The DChipGenomeInformation class}
 
- \description{
-  Package:  aroma.affymetrix \cr
+\description{
+ Package:  aroma.affymetrix \cr
 \bold{Class DChipGenomeInformation}\cr
 
 \code{\link[R.oo]{Object}}\cr
@@ -39,20 +39,20 @@ extends \emph{\link[aroma.affymetrix]{GenomeInformation}}\cr
 
 
 
-  This class represents dChip genome information files, which typically
-  contains information about chromosomal locations of the units.
- }
+ This class represents dChip genome information files, which typically
+ contains information about chromosomal locations of the units.
+}
 
- \usage{
+\usage{
 DChipGenomeInformation(...)
 }
 
- \arguments{
-   \item{...}{Arguments passed to \code{\link{GenomeInformation}}.}
- }
+\arguments{
+  \item{...}{Arguments passed to \code{\link{GenomeInformation}}.}
+}
 
- \section{Fields and Methods}{
-  \bold{Methods:}\cr
+\section{Fields and Methods}{
+ \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{\link[aroma.affymetrix:byChipType.DChipGenomeInformation]{byChipType}} \tab Defines a DChipGenomeInformation object by chip type.\cr
  \tab \code{readDataFrame} \tab  -\cr
@@ -60,7 +60,7 @@ DChipGenomeInformation(...)
 
 
  \bold{Methods inherited from GenomeInformation}:\cr
-as.character, byChipType, fromCdf, fromDataSet, getChipType, getChromosomes, getChromosomeStats, getData, getPositions, getUnitIndices, getUnitsOnChromosome, getUnitsOnChromosomes, isCompatibleWithCdf, nbrOfUnits, plotDensity, readDataFrame, verify
+as.character, byChipType, fromCdf, fromDataSet, getChipType, getChromosomeStats, getChromosomes, getData, getPositions, getUnitIndices, getUnitsOnChromosome, getUnitsOnChromosomes, isCompatibleWithCdf, nbrOfUnits, plotDensity, readDataFrame, verify
 
  \bold{Methods inherited from FileCacheKeyInterface}:\cr
 getCacheKey
@@ -69,30 +69,30 @@ getCacheKey
 getCacheKey
 
  \bold{Methods inherited from GenericDataFile}:\cr
-as.character, clone, compareChecksum, copyTo, equals, fromFile, getAttribute, getAttributes, getChecksum, getCreatedOn, getDefaultFullName, getExtension, getExtensionPattern, getFilename, getFilenameExtension, getFileSize, getFileType, getLastAccessedOn, getLastModifiedOn, getOutputExtension, getPath, getPathname, gunzip, gzip, hasBeenModified, isFile, isGzipped, readChecksum, renameTo, renameToUpperCaseExt, setAttribute, setAttributes, setAttributesBy, setAttributesByTags, setExtensionPattern, testAttributes, validate, validateChecksum, writeChecksum, getParentName
+as.character, clone, compareChecksum, copyTo, equals, fromFile, getAttribute, getAttributes, getChecksum, getCreatedOn, getDefaultFullName, getExtension, getExtensionPattern, getFileSize, getFileType, getFilename, getFilenameExtension, getLastAccessedOn, getLastModifiedOn, getOutputExtension, getPath, getPathname, gunzip, gzip, hasBeenModified, isFile, isGzipped, readChecksum, renameTo, renameToUpperCaseExt, setAttribute, setAttributes, setAttributesBy, setAttributesByTags, setExtensionPattern, testAttributes, validate, validateChecksum, writeChecksum, getParentName
 
  \bold{Methods inherited from FullNameInterface}:\cr
-appendFullNameTranslator, appendFullNameTranslatorBycharacter, appendFullNameTranslatorBydata.frame, appendFullNameTranslatorByfunction, appendFullNameTranslatorBylist, appendFullNameTranslatorByNULL, appendFullNameTranslatorByTabularTextFile, appendFullNameTranslatorByTabularTextFileSet, clearFullNameTranslator, clearListOfFullNameTranslators, getDefaultFullName, getFullName, getFullNameTranslator, getListOfFullNameTranslators, getName, getTags, hasTag, hasTags, resetFullName, setFullName, setFullNameTranslator, setListOfFullNameTranslators, setName, setTags, updateFullName
+appendFullNameTranslator, appendFullNameTranslatorByNULL, appendFullNameTranslatorByTabularTextFile, appendFullNameTranslatorByTabularTextFileSet, appendFullNameTranslatorBycharacter, appendFullNameTranslatorBydata.frame, appendFullNameTranslatorByfunction, appendFullNameTranslatorBylist, clearFullNameTranslator, clearListOfFullNameTranslators, getDefaultFullName, getFullName, getFullNameTranslator, getListOfFullNameTranslators, getName, getTags, hasTag, hasTags, resetFullName, setFullName, setFullNameTranslator, setListOfFullNameTranslators, setName, setTags, updateFullName
 
  \bold{Methods inherited from Object}:\cr
 $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save, asThis
 
 
- }
+}
 
- \details{
-   The dChip genome information files for various chip types can be
-   downloaded from \url{http://www.dchip.org/}.  Put each file in a
-   directory named identically as the corresponding chip type under the
-   \emph{annotations/} directory, e.g.
-   \emph{annotations/Mapping50K\_Hind240/50k hind genome info AfAm
-   june 05 hg17.xls}.
-   Note that dChip changes the filename and file format slightly between
-   chip types, but currently the \code{\link[aroma.affymetrix:byChipType.DChipGenomeInformation]{*byChipType}()} basically searches
-   for files with names consisting of \code{"genome info"} or
-   \code{"genome_info"}.  At least for the most common chip types, there
-   is no need to rename the files in order for this class to recognize them.
- }
+\details{
+  The dChip genome information files for various chip types can be
+  downloaded from \url{http://www.dchip.org/}.  Put each file in a
+  directory named identically as the corresponding chip type under the
+  \emph{annotations/} directory, e.g.
+  \emph{annotations/Mapping50K\_Hind240/50k hind genome info AfAm
+  june 05 hg17.xls}.
+  Note that dChip changes the filename and file format slightly between
+  chip types, but currently the \code{\link[aroma.affymetrix:byChipType.DChipGenomeInformation]{*byChipType}()} basically searches
+  for files with names consisting of \code{"genome info"} or
+  \code{"genome_info"}.  At least for the most common chip types, there
+  is no need to rename the files in order for this class to recognize them.
+}
 
- \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 \keyword{classes}

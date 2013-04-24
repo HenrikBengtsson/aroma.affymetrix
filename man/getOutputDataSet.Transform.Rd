@@ -32,8 +32,6 @@
  Returns an \code{\link[aroma.core]{AromaMicroarrayDataSet}} or \code{\link[base]{NULL}}.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
-
 \seealso{
   For more information see \code{\link{Transform}}.
 }

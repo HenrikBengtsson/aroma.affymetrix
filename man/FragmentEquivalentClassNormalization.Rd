@@ -6,15 +6,15 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
- \name{FragmentEquivalentClassNormalization}
+\name{FragmentEquivalentClassNormalization}
 \docType{class}
 \alias{FragmentEquivalentClassNormalization}
 
 
- \title{The FragmentEquivalentClassNormalization class}
+\title{The FragmentEquivalentClassNormalization class}
 
- \description{
-  Package:  aroma.affymetrix \cr
+\description{
+ Package:  aroma.affymetrix \cr
 \bold{Class FragmentEquivalentClassNormalization}\cr
 
 \code{\link[R.oo]{Object}}\cr
@@ -37,29 +37,29 @@ extends \emph{\link[aroma.affymetrix]{ChipEffectTransform}}\cr
 
 
 
-  This class represents a normalization method that corrects for systematic
-  effects between loci of different equivalent classes of pairs of
-  sequences that are recognized by the restriction enzymes that cut the
-  DNA studies.
- }
+ This class represents a normalization method that corrects for systematic
+ effects between loci of different equivalent classes of pairs of
+ sequences that are recognized by the restriction enzymes that cut the
+ DNA studies.
+}
 
- \usage{
+\usage{
 FragmentEquivalentClassNormalization(dataSet=NULL, ..., targetAvgs=NULL, subsetToFit="-XY")
 }
 
- \arguments{
-   \item{dataSet}{A \code{\link{CnChipEffectSet}}.}
-   \item{...}{Additional arguments passed to the constructor of
-     \code{\link{ChipEffectTransform}}.}
-   \item{targetAvgs}{An optional list of \code{\link[base]{function}}s.
-     For each enzyme there is one target averages to which all arrays
-     should be normalized to.}
-   \item{subsetToFit}{The units from which the normalization curve should
-     be estimated.  If \code{\link[base]{NULL}}, all are considered.}
- }
+\arguments{
+  \item{dataSet}{A \code{\link{CnChipEffectSet}}.}
+  \item{...}{Additional arguments passed to the constructor of
+    \code{\link{ChipEffectTransform}}.}
+  \item{targetAvgs}{An optional list of \code{\link[base]{function}}s.
+    For each enzyme there is one target averages to which all arrays
+    should be normalized to.}
+  \item{subsetToFit}{The units from which the normalization curve should
+    be estimated.  If \code{\link[base]{NULL}}, all are considered.}
+}
 
- \section{Fields and Methods}{
-  \bold{Methods:}\cr
+\section{Fields and Methods}{
+ \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{getAromaUfcFile} \tab  -\cr
  \tab \code{getCdf} \tab  -\cr
@@ -77,25 +77,25 @@ getOutputDataSet, getOutputFiles
 as.character, getAsteriskTags, getExpectedOutputFiles, getExpectedOutputFullnames, getFullName, getInputDataSet, getName, getOutputDataSet, getOutputDataSet0, getOutputFiles, getPath, getRootPath, getTags, isDone, process, setTags
 
  \bold{Methods inherited from ParametersInterface}:\cr
-getParameters, getParametersAsString, getParameterSets
+getParameterSets, getParameters, getParametersAsString
 
  \bold{Methods inherited from Object}:\cr
 $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save, asThis
 
 
- }
+}
 
- \section{Requirements}{
-   This class requires an UFC (Unit Fragment Class) annotation file.
- }
+\section{Requirements}{
+  This class requires an UFC (Unit Fragment Class) annotation file.
+}
 
- \section{Acknowledgments}{
-   The idea of normalization signals stratified on enzyme
-   recognition sequences is credited to Jim Veitch and
-   Ben Bolstad at Affymetrix Inc. (2008) who have designed
-   a similar method for copy number estimation in the
-   Affymetrix' Genotype Console v2.
- }
+\section{Acknowledgments}{
+  The idea of normalization signals stratified on enzyme
+  recognition sequences is credited to Jim Veitch and
+  Ben Bolstad at Affymetrix Inc. (2008) who have designed
+  a similar method for copy number estimation in the
+  Affymetrix' Genotype Console v2.
+}
 
- \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 \keyword{classes}

@@ -10,28 +10,28 @@
 #  effects in the probe intensities due to differences in the number of
 #  A, C, G, and T:s in the probe sequences.
 # }
-# 
-# @synopsis 
+#
+# @synopsis
 #
 # \arguments{
-#   \item{...}{Arguments passed to the constructor of 
+#   \item{...}{Arguments passed to the constructor of
 #     @see "AbstractProbeSequenceNormalization".}
-#   \item{model}{A @character string specifying the model used to fit 
+#   \item{model}{A @character string specifying the model used to fit
 #     the base-count effects.}
 #   \item{bootstrap}{If @TRUE, the model fitting is done by bootstrap in
 #     order to save memory.}
 # }
 #
 # \section{Fields and Methods}{
-#  @allmethods "public"  
+#  @allmethods "public"
 # }
-# 
+#
 # \section{Requirements}{
 #   This class requires that an aroma probe sequence file is available
 #   for the chip type.
 # }
-# 
-# @author
+#
+# @author "HB"
 #*/###########################################################################
 setConstructorS3("BaseCountNormalization", function(..., model=c("robustSmoothSpline", "lm"), bootstrap=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -138,12 +138,12 @@ setMethodS3("getDesignMatrix", "BaseCountNormalization", function(this, cells=NU
   verbose && exit(verbose);
 
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Check file cache
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   key <- list(
-    method="getDesignMatrix", class=class(this[1]), 
-    cells=cells, 
+    method="getDesignMatrix", class=class(this[1]),
+    cells=cells,
     model=model,
     acs=list(fullname=getFullName(acs))
   );
@@ -197,9 +197,9 @@ setMethodS3("getDesignMatrix", "BaseCountNormalization", function(this, cells=NU
   gc <- gc();
   verbose && print(verbose, gc);
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Cache results?
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (cache) {
     saveCache(X, key=key, dirs=dirs);
   }
@@ -287,20 +287,20 @@ setMethodS3("fitOne", "BaseCountNormalization", function(this, df, ..., verbose=
     verbose && str(verbose, cells);
     y <- extractMatrix(df, cells=cells, drop=TRUE, verbose=less(verbose, 10));
     verbose && exit(verbose);
-  
+
     if (shift != 0) {
       verbose && enter(verbose, "Shifting signals");
       verbose && cat(verbose, "Shift: ", shift);
       y <- y + shift;
       verbose && exit(verbose);
     }
-  
+
     verbose && enter(verbose, "Log2 transforming signals");
     y <- log2(y);
     verbose && cat(verbose, "Target log2 probe signals:");
     verbose && str(verbose, y);
     verbose && exit(verbose);
-  
+
     verbose && enter(verbose, "Identify finite data points");
     n <- length(y);
     # Fit only finite subset
@@ -312,7 +312,7 @@ setMethodS3("fitOne", "BaseCountNormalization", function(this, df, ..., verbose=
     verbose && printf(verbose, "Removed %d (%.4f%%) out of %d non-finite data points: ", n-n2, 100*(n-n2)/n, n);
     gc <- gc();
     verbose && exit(verbose);
-  
+
     verbose && enter(verbose, "Fitting base-count model");
     X <- getDesignMatrix(this, cells=cells, model=model, verbose=less(verbose, 5));
     rm(cells);
@@ -324,7 +324,7 @@ setMethodS3("fitOne", "BaseCountNormalization", function(this, df, ..., verbose=
     rm(y, X);
     verbose && print(verbose, fit);
     verbose && exit(verbose);
-  
+
     fit;
   } # fitSubset()
 
@@ -518,7 +518,7 @@ setMethodS3("predictOne", "BaseCountNormalization", function(this, fit, ..., ver
     }
 
     yPred <- predictFcn(fit, X);
-    
+
     yPred;
   } # predictBaseCounts()
 
@@ -605,7 +605,7 @@ setMethodS3("predictOne", "BaseCountNormalization", function(this, fit, ..., ver
 #   AbstractProbeSequenceNormalization, which already has process().
 # 2008-07-20
 # o Added an option to fit the model using bootstrap techiques.  It is not
-#   obvious how to merge two smooth spline estimates for which the degrees 
+#   obvious how to merge two smooth spline estimates for which the degrees
 #   of freedom do not have to match.  Now it is done by predicting outcomes
 #   at common covariates and using weighted average to combine the outcomes.
 #   The weight of the pooled estimate increase by each bootstrap iteration.

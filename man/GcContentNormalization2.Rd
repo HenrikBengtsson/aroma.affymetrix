@@ -6,15 +6,15 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
- \name{GcContentNormalization2}
+\name{GcContentNormalization2}
 \docType{class}
 \alias{GcContentNormalization2}
 
 
- \title{The GcContentNormalization2 class}
+\title{The GcContentNormalization2 class}
 
- \description{
-  Package:  aroma.affymetrix \cr
+\description{
+ Package:  aroma.affymetrix \cr
 \bold{Class GcContentNormalization2}\cr
 
 \code{\link[R.oo]{Object}}\cr
@@ -39,21 +39,21 @@ extends \emph{\link[aroma.affymetrix]{AdditiveCovariatesNormalization}}\cr
 
 
 
-  This class represents a normalization method that corrects for
-  annotation-data covariate effects on copy-number chip-effect estimates.
- }
+ This class represents a normalization method that corrects for
+ annotation-data covariate effects on copy-number chip-effect estimates.
+}
 
- \usage{
+\usage{
 GcContentNormalization2(...)
 }
 
- \arguments{
-   \item{...}{Arguments passed to the constructor of
-     \code{\link{AdditiveCovariatesNormalization}}.}
- }
+\arguments{
+  \item{...}{Arguments passed to the constructor of
+    \code{\link{AdditiveCovariatesNormalization}}.}
+}
 
- \section{Fields and Methods}{
-  \bold{Methods:}\cr
+\section{Fields and Methods}{
+ \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{plotCovariateEffects} \tab  -\cr
 }
@@ -72,13 +72,13 @@ getOutputDataSet, getOutputFiles
 as.character, getAsteriskTags, getExpectedOutputFiles, getExpectedOutputFullnames, getFullName, getInputDataSet, getName, getOutputDataSet, getOutputDataSet0, getOutputFiles, getPath, getRootPath, getTags, isDone, process, setTags
 
  \bold{Methods inherited from ParametersInterface}:\cr
-getParameters, getParametersAsString, getParameterSets
+getParameterSets, getParameters, getParametersAsString
 
  \bold{Methods inherited from Object}:\cr
 $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save, asThis
 
 
- }
+}
 
- \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 \keyword{classes}

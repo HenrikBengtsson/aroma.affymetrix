@@ -34,7 +34,7 @@
   has the same time stamp as another preceeding CEL file.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   Internally \code{\link[base]{duplicated}}() is used to compare timestamps.

@@ -45,8 +45,6 @@
  compare with \code{unlist(getCellIndices(cdf), use.names=FALSE)}.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
-
 \seealso{
   See \code{\link[aroma.affymetrix:setRestructor.AffymetrixCdfFile]{*setRestructor}()} to set a default re-constructor for
   the returned CDF structure.

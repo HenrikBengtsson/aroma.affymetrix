@@ -1,3 +1,4 @@
+# @author "MR, HB"
 setMethodS3("convertToUnique", "AffymetrixCelSet", function(this, ..., tags="UNQ", force=FALSE, verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
@@ -13,7 +14,7 @@ setMethodS3("convertToUnique", "AffymetrixCelSet", function(this, ..., tags="UNQ
   }
 
   verbose && enter(verbose, "Converting to unique CDF");
-  
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Already unique?
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -40,7 +41,7 @@ setMethodS3("convertToUnique", "AffymetrixCelSet", function(this, ..., tags="UNQ
   verbose && cat(verbose, "Source tags: ", srcTags);
 
   verbose && cat(verbose, "User tags: ", tags);
-  
+
   tags <- c(srcTags, tags);
   tags <- tags[nchar(tags) > 0];
   tags <- paste(tags, collapse=",");
@@ -48,7 +49,7 @@ setMethodS3("convertToUnique", "AffymetrixCelSet", function(this, ..., tags="UNQ
 
   chipType <- getChipType(this, fullname=FALSE);
   verbose && cat(verbose, "Chip type: ", chipType);
-  
+
   fullname <- paste(c(getName(this), tags), collapse=",");
   verbose && cat(verbose, "Output fullname: ", fullname);
 
@@ -60,7 +61,7 @@ setMethodS3("convertToUnique", "AffymetrixCelSet", function(this, ..., tags="UNQ
   # Expected output set
   fullnames <- getFullNames(this);
 
-  
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Already done?
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -69,10 +70,10 @@ setMethodS3("convertToUnique", "AffymetrixCelSet", function(this, ..., tags="UNQ
   tryCatch({
     # HB: Don't think argument 'checkChipType' makes a difference if
     #     argument 'cdf' is given.
-    res <- AffymetrixCelSet$byName(fullname, cdf=cdfUnique, 
+    res <- AffymetrixCelSet$byName(fullname, cdf=cdfUnique,
                            checkChipType=FALSE, verbose=less(verbose, 10));
   }, error = function(ex) {});
- 
+
   if (inherits(res, "AffymetrixCelSet")) {
     # Extract samples in the same order as they appear in the input
     # data set, and if more were found, drop those.
@@ -99,8 +100,8 @@ setMethodS3("convertToUnique", "AffymetrixCelSet", function(this, ..., tags="UNQ
 
   rm(res);   # Not needed anymore
   verbose && exit(verbose);
-  
-  
+
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Read indices for old and new
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -108,7 +109,7 @@ setMethodS3("convertToUnique", "AffymetrixCelSet", function(this, ..., tags="UNQ
 
   cdfStandard <- readCdf(getPathname(cdf), units=NULL, readXY=FALSE, readBases=FALSE, readIndexpos=FALSE, readAtoms=FALSE,readUnitType=FALSE, readUnitDirection=FALSE, readUnitNumber=FALSE, readUnitAtomNumbers=FALSE, readGroupAtomNumbers=FALSE, readGroupDirection=FALSE, readIndices=TRUE, readIsPm=FALSE);
   verbose && exit(verbose);
-  
+
   verbose && enter(verbose, "Reading cell indices list from unique CDF");
   cdfUniqueIndices <- readCdf(getPathname(cdfUnique), units=NULL, readXY=FALSE, readBases=FALSE, readIndexpos=FALSE, readAtoms=FALSE,readUnitType=FALSE, readUnitDirection=FALSE, readUnitNumber=FALSE, readUnitAtomNumbers=FALSE, readGroupAtomNumbers=FALSE, readGroupDirection=FALSE, readIndices=TRUE, readIsPm=FALSE);
 
@@ -119,7 +120,7 @@ setMethodS3("convertToUnique", "AffymetrixCelSet", function(this, ..., tags="UNQ
   # Process all arrays simultaneously
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   nbrOfArrays <- length(this);
-  
+
   # Get CDF header
   cdfHeader <- getHeader(cdfUnique);
 
@@ -129,7 +130,7 @@ setMethodS3("convertToUnique", "AffymetrixCelSet", function(this, ..., tags="UNQ
   for (kk in seq_len(nbrOfArrays)) {
       df <- getFile(this, kk);
       verbose && enter(verbose, sprintf("Converting CEL data from standard to unique CDF for sample #%d (%s) of %d", kk, getName(df), nbrOfArrays));
-  
+
       dfFullname <- getFullName(df);
       filename <- sprintf("%s.CEL", dfFullname);
       pathname <- Arguments$getWritablePathname(filename, path=outputPath, mustNotExist=FALSE, ...);
@@ -201,7 +202,7 @@ setMethodS3("convertToUnique", "AffymetrixCelSet", function(this, ..., tags="UNQ
   res <- extract(res, fullnames, onMissing="error");
 
   verbose && exit(verbose);
-  
+
   invisible(res);
 }, protected=TRUE) # convertToUnique()
 
@@ -214,10 +215,10 @@ setMethodS3("convertToUnique", "AffymetrixCelSet", function(this, ..., tags="UNQ
 #   corresponding to the input set, and possibly in a different order.
 # 2011-03-28 [HB]
 # o Now convertToUnique() for AffymetrixCelSet skips already processed
-#   files in partially processed data sets.  Previously it would give 
+#   files in partially processed data sets.  Previously it would give
 #   an error if only some output files existed.
 # 2011-02-24 [HB]
-# o Now convertToUnique() for AffymetrixCelSet searches for already 
+# o Now convertToUnique() for AffymetrixCelSet searches for already
 #   available data sets using the aroma-wide search rules.  Before it
 #   assumed it would always be located in probeData/, but with the new
 #   rules it can also be in probeData,<tags>/.
@@ -226,7 +227,7 @@ setMethodS3("convertToUnique", "AffymetrixCelSet", function(this, ..., tags="UNQ
 # 2010-05-12 [HB]
 # o BUG FIX: convertToUnique() for AffymetrixCelSet would not recognize
 #   Windows Shortcut links.
-# o ROBUSTNESS: Now convertToUnique() for AffymetrixCelSet writes to 
+# o ROBUSTNESS: Now convertToUnique() for AffymetrixCelSet writes to
 #   temporary files which are renamed when complete.  This lowers the
 #   risk of generating incomplete files.
 # o CLEAN UP: Code cleanup.
@@ -238,8 +239,8 @@ setMethodS3("convertToUnique", "AffymetrixCelSet", function(this, ..., tags="UNQ
 # o fixed small bug when previous dataset not available
 # 2008-11-28 [HB]
 # o Tidying up code.
-# o Replaced try() with tryCatch() statement.  I consider try() to be 
+# o Replaced try() with tryCatch() statement.  I consider try() to be
 #   obsolete.
 # 2008-11-11 [MR]
 # o Created.
-############################################################################ 
+############################################################################

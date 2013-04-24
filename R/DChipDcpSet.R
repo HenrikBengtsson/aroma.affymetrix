@@ -6,11 +6,11 @@
 # \description{
 #  @classhierarchy
 #
-#  A DChipDcpSet object represents a set of DChip DCP files 
+#  A DChipDcpSet object represents a set of DChip DCP files
 #  for \emph{identical} chip types.
 # }
-# 
-# @synopsis 
+#
+# @synopsis
 #
 # \arguments{
 #   \item{files}{A @list of @see "DChipDcpFile":s.}
@@ -18,14 +18,14 @@
 # }
 #
 # \section{Fields and Methods}{
-#  @allmethods "public"  
+#  @allmethods "public"
 # }
-# 
+#
 # \seealso{
 #   @see "DChipDcpFile".
 # }
 #
-# @author
+# @author "HB"
 #*/###########################################################################
 setConstructorS3("DChipDcpSet", function(files=NULL, ...) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -68,8 +68,6 @@ setConstructorS3("DChipDcpSet", function(files=NULL, ...) {
 # \value{
 #  Returns a @character string.
 # }
-#
-# @author
 #
 # \seealso{
 #   @seeclass
@@ -134,7 +132,7 @@ setMethodS3("byName", "DChipDcpSet", function(static, name, tags=NULL, chipType,
 setMethodS3("byPath", "DChipDcpSet", function(static, path="rawData/", pattern="[.](dcp|DCP)$", ..., fileClass="DChipDcpFile", verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
   if (verbose) {
@@ -142,7 +140,7 @@ setMethodS3("byPath", "DChipDcpSet", function(static, path="rawData/", pattern="
     on.exit(popState(verbose));
   }
 
-  
+
   verbose && enter(verbose, "Defining ", class(static)[1], " from files");
 
   this <- NextMethod("byPath", path=path, pattern=pattern, fileClass=fileClass, verbose=less(verbose));
@@ -151,13 +149,13 @@ setMethodS3("byPath", "DChipDcpSet", function(static, path="rawData/", pattern="
 
 
   if (length(this) > 0) {
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Scan all CHP files for possible chip types
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Chip type according to the directory structure
     path <- getPath(this);
     chipType <- basename(path);
-    verbose && cat(verbose, 
+    verbose && cat(verbose,
                    "The chip type according to the path is: ", chipType);
   }
 
@@ -188,8 +186,6 @@ setMethodS3("byPath", "DChipDcpSet", function(static, path="rawData/", pattern="
 # \value{
 #   Returns an @integer.
 # }
-#
-# @author
 #
 # \seealso{
 #   @seeclass
@@ -222,8 +218,6 @@ setMethodS3("nbrOfArrays", "DChipDcpSet", function(this, ...) {
 #   Returns an @see "DChipDcpSet" object.
 # }
 #
-# @author
-#
 # \seealso{
 #   @seeclass
 # }
@@ -245,7 +239,7 @@ setMethodS3("as.DChipDcpSet", "default", function(object, ...) {
 setMethodS3("extractTheta", "DChipDcpSet", function(this, units=NULL, ..., drop=FALSE, verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'units':
 
   # Argument 'verbose':
@@ -256,9 +250,9 @@ setMethodS3("extractTheta", "DChipDcpSet", function(this, units=NULL, ..., drop=
   }
 
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Extract the thetas
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   data <- NULL;
   nbrOfArrays <- length(this);
   gcCount <- 0;
@@ -305,7 +299,7 @@ setMethodS3("extractTheta", "DChipDcpSet", function(this, units=NULL, ..., drop=
 # o Expanded the searched root paths to be rawData(|,.*)/ and
 #   probeData(|,.*)/.
 # 2009-08-12
-# o Now findByName() of DChipDcpSet utilizes ditto of AffymetrixCelSet, 
+# o Now findByName() of DChipDcpSet utilizes ditto of AffymetrixCelSet,
 #   because its code was identical to the latter.
 # 2008-08-20
 # o Added extractTheta().

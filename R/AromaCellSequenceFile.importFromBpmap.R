@@ -1,8 +1,9 @@
+# @author "MR"
  setMethodS3("importFromBpMap", "AromaCellSequenceFile", function(this, srcPathname, rows=NULL, ..., verbose=TRUE) {
   # Argument 'srcPathname':
   srcPathname <- Arguments$getReadablePathname(srcPathname);
 
-  # Argument 'rows':  
+  # Argument 'rows':
   # HB: Can't we infer this from the BPMAP file? ...or have an option
   # to look it up in matching CDF.
   if (is.null(rows)) {
@@ -46,4 +47,4 @@
 # HISTORY:
 # 2008-10-xx [MR]
 # o Created.
-############################################################################ 
+############################################################################

@@ -6,43 +6,43 @@
 # \description{
 #  @classhierarchy
 #
-#  This class represents a normalization function that transforms the 
+#  This class represents a normalization function that transforms the
 #  probe-level signals towards the same empirical distribution.
 # }
-# 
-# @synopsis 
+#
+# @synopsis
 #
 # \arguments{
-#   \item{...}{Arguments passed to the constructor of 
+#   \item{...}{Arguments passed to the constructor of
 #     @see "ProbeLevelTransform".}
 #   \item{subsetToUpdate}{The probes to be updated.
 #     If @NULL, all probes are updated.}
 #   \item{typesToUpdate}{Types of probes to be updated.}
-#   \item{targetDistribution}{A @numeric @vector.  The empirical 
+#   \item{targetDistribution}{A @numeric @vector.  The empirical
 #     distribution to which all arrays should be normalized to.}
 #   \item{subsetToAvg}{The probes to calculate average empirical
 #     distribution over.  If a single @numeric in (0,1), then this
-#     fraction of all probes will be used.  
+#     fraction of all probes will be used.
 #     If @NULL, all probes are considered.}
-#   \item{typesToAvg}{Types of probes to be used when calculating the 
-#     average empirical distribution.  
-#     If \code{"pm"} and \code{"mm"} only perfect-match and mismatch 
+#   \item{typesToAvg}{Types of probes to be used when calculating the
+#     average empirical distribution.
+#     If \code{"pm"} and \code{"mm"} only perfect-match and mismatch
 #     probes are used, respectively. If \code{"pmmm"} both types are used.
 #   }
 # }
 #
 # \section{Fields and Methods}{
-#  @allmethods "public"  
+#  @allmethods "public"
 # }
-# 
+#
 # \examples{\dontrun{
 #   @include "../incl/QuantileNormalization.Rex"
 # }}
 #
-# @author
+# @author "HB"
 #*/###########################################################################
 setConstructorS3("QuantileNormalization", function(..., subsetToUpdate=NULL, typesToUpdate=NULL, targetDistribution=NULL, subsetToAvg=subsetToUpdate, typesToAvg=typesToUpdate) {
-  extend(ProbeLevelTransform(...), "QuantileNormalization", 
+  extend(ProbeLevelTransform(...), "QuantileNormalization",
     .subsetToUpdate = subsetToUpdate,
     .typesToUpdate = typesToUpdate,
     "cached:.targetDistribution" = targetDistribution,
@@ -265,7 +265,7 @@ setMethodS3("getTargetDistributionIdentifier", "QuantileNormalization", function
   }
 
   key <- list(
-    identifier=getIdentifier(ds), 
+    identifier=getIdentifier(ds),
     indices=indices,
     types=params$typesToAvg
   );
@@ -351,7 +351,7 @@ setMethodS3("findTargetDistributionFile", "QuantileNormalization", function(this
   });
   subdirs <- rev(subdirs);
   subdirs <- do.call(file.path, args=as.list(subdirs));
-  verbose && cat(verbose, "Subdirectories: ", subdirs); 
+  verbose && cat(verbose, "Subdirectories: ", subdirs);
 
   id <- getTargetDistributionIdentifier(this, verbose=less(verbose));
   filename <- sprintf(".averageQuantile-%s.apq", id);
@@ -366,7 +366,7 @@ setMethodS3("findTargetDistributionFile", "QuantileNormalization", function(this
   paths <- paths[sapply(paths, FUN=isDirectory)];
   verbose && cat(verbose, "Existing paths:");
   verbose && print(verbose, paths);
-  
+
   pathnames <- sapply(paths, FUN=function(path) {
     Arguments$getReadablePathname(filename, path=path, mustExist=FALSE);
   });
@@ -406,7 +406,7 @@ setMethodS3("calculateTargetDistribution", "QuantileNormalization", function(thi
 ##       throw("Argument 'targetDataSet' does not have the same chip type as the input data set: ", getChipType(cdf), " != ", getChipType(getCdf(dataSet)));
 ##     }
 ##   } else {
-##     throw("Argument 'targetDataSet' is not an AffymetrixCelSet: ", 
+##     throw("Argument 'targetDataSet' is not an AffymetrixCelSet: ",
 ##                                                   class(targetDataSet)[1]);
 ##   }
 
@@ -447,10 +447,10 @@ setMethodS3("calculateTargetDistribution", "QuantileNormalization", function(thi
   verbose && cat(verbose, "Excluding some cells when calculating the average distribution");
   verbose && str(verbose, excl);
 
-  verbose && cat(verbose, "Calculating target distribution from the ", 
+  verbose && cat(verbose, "Calculating target distribution from the ",
                 length(targetDataSet), " arrays in the input data set");
   # Calculate the average quantile
-  yTarget <- averageQuantile(targetDataSet, probes=probes, 
+  yTarget <- averageQuantile(targetDataSet, probes=probes,
                               excludeCells=excl, verbose=less(verbose));
   rm(probes);
 
@@ -483,7 +483,7 @@ setMethodS3("calculateTargetDistribution", "QuantileNormalization", function(thi
 #
 # \arguments{
 #   \item{...}{Not used.}
-#   \item{force}{If @TRUE, data already normalized is re-normalized, 
+#   \item{force}{If @TRUE, data already normalized is re-normalized,
 #       otherwise not.}
 #   \item{verbose}{See @see "R.utils::Verbose".}
 # }
@@ -491,8 +491,6 @@ setMethodS3("calculateTargetDistribution", "QuantileNormalization", function(thi
 # \value{
 #  Returns a @double @vector.
 # }
-#
-# @author
 #
 # \seealso{
 #   @seeclass
@@ -566,7 +564,7 @@ setMethodS3("process", "QuantileNormalization", function(this, ..., force=FALSE,
   this$outputDataSet <- outputDataSet;
 
   verbose && exit(verbose);
-  
+
   outputDataSet;
 })
 
@@ -593,8 +591,8 @@ setMethodS3("process", "QuantileNormalization", function(this, ..., force=FALSE,
 # o Now this pre-processor output results to probeData/.
 # o Renamed from QuantileNormalizer.
 # 2006-11-18
-# o Removed version and subversion tags, and related functions. 
-#   Now getTags() returns the tags of the input data set plus any tags 
+# o Removed version and subversion tags, and related functions.
+#   Now getTags() returns the tags of the input data set plus any tags
 #   of this instance.
 # 2006-10-30
 # o Created.

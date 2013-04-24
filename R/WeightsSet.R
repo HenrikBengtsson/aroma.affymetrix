@@ -8,7 +8,7 @@
 #
 #  This class represents probe-level weights.
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
@@ -20,8 +20,8 @@
 #  @allmethods "public"
 # }
 #
-# @author
-# 
+# @author "HB, KS"
+#
 # \seealso{
 #   An object of this class is typically obtained through the
 #   \code{getWeightsSet()} method for the @see "ProbeLevelModel" class.
@@ -84,10 +84,10 @@ setMethodS3("fromDataSet", "WeightsSet", function(static, dataSet, path, fullnam
   verbose && cat(verbose, "Data set: ", fullname);
   for (kk in seq_along(dataSet)) {
     df <- getFile(dataSet, kk);
-    verbose && enter(verbose, 
+    verbose && enter(verbose,
                            sprintf("Retrieving weights file #%d of %d (%s)",
                                                kk, length(ws), getName(df)));
-    wf <- clazz$fromDataFile(df, path=path, name=fullname, cdf=cdf, ..., 
+    wf <- clazz$fromDataFile(df, path=path, name=fullname, cdf=cdf, ...,
                                                        verbose=less(verbose));
     if (is.null(cdf)) {
       verbose && enter(verbose, "Retrieving the CDF for the weights file");
@@ -149,7 +149,7 @@ setMethodS3("readUnits", "WeightsSet", function(this, units=NULL, cdf=NULL, ...,
 
 
 setMethodS3("updateUnits", "WeightsSet", function(this, units=NULL, cdf=NULL, data, ..., verbose=FALSE) {
-  # Argument 'verbose': 
+  # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
 
   verbose && enter(verbose, "Updating weight files");
@@ -179,7 +179,7 @@ setMethodS3("updateUnits", "WeightsSet", function(this, units=NULL, cdf=NULL, da
   verbose <- less(verbose);
   names <- getNames(this);
   for (ii in arrays) {
-    verbose && enter(verbose, sprintf("Array #%d of %d: %s", 
+    verbose && enter(verbose, sprintf("Array #%d of %d: %s",
                                        ii, nbrOfArrays, names[ii]));
     wf <- getFile(this, ii);
 

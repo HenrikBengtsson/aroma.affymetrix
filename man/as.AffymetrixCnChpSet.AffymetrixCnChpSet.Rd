@@ -31,8 +31,6 @@
   Returns an \code{\link{AffymetrixCnChpSet}} object.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
-
 \seealso{
   For more information see \code{\link{AffymetrixCnChpSet}}.
 }

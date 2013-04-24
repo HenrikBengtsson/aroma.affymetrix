@@ -26,19 +26,19 @@
 # }
 #
 # \details{
-#   This import method is robust and memory efficient.  One array at the 
+#   This import method is robust and memory efficient.  One array at the
 #   time is imported by first writing to a temporary file which is then
 #   renamed to the final name, if import was successful.  (If the import
 #   failed, a temporary file will rename that has to be deleted manually).
 #
 #   Since only one array at the time is imported, the memory overhead
-#   will be bounded allowing to import very large tab-delimited data files 
+#   will be bounded allowing to import very large tab-delimited data files
 #   containing a large number of arrays.  Unfortunately, this approach
 #   slows down the reading substantially, because in each import all but
 #   one column is parsed but ignored.
 # }
 #
-# @author
+# @author "HB"
 #
 # \seealso{
 #   @seeclass
@@ -120,7 +120,7 @@ setMethodS3("importFromApt", "CnChipEffectSet", function(static, filename, path=
   arrayNames <- getArrayNames(apt);
   verbose && printf(verbose, "Arrays [%d]: %s\n", nbrOfArrays,
                                         paste(arrayNames, collapse=", "));
-  
+
 
   # Infer unit scale
   qScale <- getQuantificationScale(apt);
@@ -129,7 +129,7 @@ setMethodS3("importFromApt", "CnChipEffectSet", function(static, filename, path=
     # Assume default is log2.
     qScale <- "log2";
   }
-                              
+
   # Garbage collect
   gc <- gc();
 
@@ -137,7 +137,7 @@ setMethodS3("importFromApt", "CnChipEffectSet", function(static, filename, path=
   cells <- NULL;
   for (kk in seq_len(nbrOfArrays)) {
     arrayName <- arrayNames[kk];
-    verbose && enter(verbose, sprintf("Array #%d (%s) of %d", 
+    verbose && enter(verbose, sprintf("Array #%d (%s) of %d",
                                             kk, arrayName, nbrOfArrays));
 
     # Create output filename
@@ -168,13 +168,13 @@ setMethodS3("importFromApt", "CnChipEffectSet", function(static, filename, path=
       # Ok, then rename this file
       res <- file.rename(pathname, pathnameT);
       if (!res) {
-        throw("Failed to rename existing file: ", pathname, 
+        throw("Failed to rename existing file: ", pathname,
                                                " -> ", pathnameT);
       }
       cef <- clazz$fromFile(pathnameT, verbose=less(verbose));
     } else {
       tmpFilename <- basename(pathnameT);
-      cef <- clazz$fromDataFile(filename=tmpFilename, path=outPath, 
+      cef <- clazz$fromDataFile(filename=tmpFilename, path=outPath,
                name=arrayName, cdf=monocellCdf, verbose=less(verbose));
       rm(tmpFilename);
     }
@@ -214,7 +214,7 @@ setMethodS3("importFromApt", "CnChipEffectSet", function(static, filename, path=
         unitNames[isSnp] <- gsub("-A$", "", unitNames[isSnp]);
         verbose && str(verbose, unitNames);
 
-        # Match to CDF                             
+        # Match to CDF
         units <- indexOf(cdf, names=unitNames);
         rm(unitNames);
         verbose && str(verbose, units);
@@ -225,10 +225,10 @@ setMethodS3("importFromApt", "CnChipEffectSet", function(static, filename, path=
           verbose && printf(verbose, "Identified %d unit names not in the CDF.", sum(!keep));
         }
         verbose && exit(verbose);
-        
+
         res <- list(units=units, keep=keep);
         rm(units, keep);
-        
+
         # Store in cache
         saveCache(res, key=key, dirs=dirs);
       }
@@ -286,7 +286,7 @@ setMethodS3("importFromApt", "CnChipEffectSet", function(static, filename, path=
     # Garbage collect
     gc <- gc();
     verbose && print(verbose, gc);
-    
+
     verbose && exit(verbose);
   }
   verbose && exit(verbose);

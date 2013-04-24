@@ -6,12 +6,12 @@
 # \description{
 #  @classhierarchy
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
 #   \item{...}{Arguments passed to @see "HetLogAddCnPlm".}
-#   \item{combineAlleles}{If @FALSE, allele A and allele B are treated 
+#   \item{combineAlleles}{If @FALSE, allele A and allele B are treated
 #      seperately, otherwise together.}
 # }
 #
@@ -23,8 +23,7 @@
 #   TO DO.
 # }
 #
-# @author
-#
+# @author "HB"
 #*/###########################################################################
 setConstructorS3("HetLogAddCnPlm", function(..., combineAlleles=FALSE) {
   extend(HetLogAddSnpPlm(...), c("HetLogAddCnPlm", uses(CnPlm())),
@@ -42,10 +41,10 @@ setMethodS3("getAsteriskTags", "HetLogAddCnPlm", function(this, collapse=NULL, .
     tags <- c(tags, "A+B");
 
   # Collapse?
-  tags <- paste(tags, collapse=collapse); 
+  tags <- paste(tags, collapse=collapse);
 
   tags;
-}, protected=TRUE) 
+}, protected=TRUE)
 
 
 ############################################################################

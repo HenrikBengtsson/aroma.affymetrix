@@ -33,8 +33,6 @@
   This method is not constant in memory! /HB 2007-03-26
 }
 
-\author{
-  Ken Simpson (ksimpson[at]wehi.edu.au).
-}
+\author{Ken Simpson}
 \keyword{internal}
 \keyword{methods}

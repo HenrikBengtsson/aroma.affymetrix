@@ -9,7 +9,7 @@
 #  This class is abstract and represents a generic model that applies
 #  to a data set.
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
@@ -23,8 +23,7 @@
 #  @allmethods "public"
 # }
 #
-# @author
-#
+# @author "HB"
 #*/###########################################################################
 setConstructorS3("Model", function(dataSet=NULL, tags="*", ...) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -95,8 +94,6 @@ setMethodS3("as.character", "Model", function(x, ...) {
 #  Returns a @character string.
 # }
 #
-# @author
-#
 # \seealso{
 #   @seeclass
 # }
@@ -127,8 +124,6 @@ setMethodS3("getRootPath", "Model", function(this, ...) {
 # \value{
 #  Returns a @character string.
 # }
-#
-# @author
 #
 # \seealso{
 #   @seemethod "getAlias"
@@ -166,8 +161,6 @@ setMethodS3("getName", "Model", function(this, ...) {
 #  Returns a @character string, or @NULL.
 # }
 #
-# @author
-#
 # \seealso{
 #   @seemethod "getName"
 #   @seemethod "setAlias"
@@ -199,8 +192,6 @@ setMethodS3("getAlias", "Model", function(this, ...) {
 # \value{
 #  Returns nothing.
 # }
-#
-# @author
 #
 # \seealso{
 #   @seemethod "getAlias"
@@ -267,7 +258,7 @@ setMethodS3("getAsteriskTags", "Model", function(this, collapse=NULL, ...) {
 # @synopsis
 #
 # \arguments{
-#  \item{collapse}{A @character string used to concatenate the tags. 
+#  \item{collapse}{A @character string used to concatenate the tags.
 #     If @NULL, the tags are not concatenated.}
 #  \item{...}{Not used.}
 # }
@@ -275,8 +266,6 @@ setMethodS3("getAsteriskTags", "Model", function(this, collapse=NULL, ...) {
 # \value{
 #  Returns a @character @vector.
 # }
-#
-# @author
 #
 # \seealso{
 #   @seemethod "setTags"
@@ -340,8 +329,6 @@ setMethodS3("getTags", "Model", function(this, collapse=NULL, ...) {
 #  Returns nothing.
 # }
 #
-# @author
-#
 # \seealso{
 #   @seemethod "getTags"
 #   @seeclass
@@ -352,7 +339,7 @@ setMethodS3("setTags", "Model", function(this, tags=NULL, ...) {
   if (!is.null(tags)) {
     tags <- Arguments$getTags(tags, collapse=NULL);
   }
-  
+
   this$.tags <- tags;
 })
 
@@ -363,7 +350,7 @@ setMethodS3("setTags", "Model", function(this, tags=NULL, ...) {
 # @title "Gets the full name of the output set"
 #
 # \description{
-#  @get "title", which consists of the name with appended 
+#  @get "title", which consists of the name with appended
 #  comma-separated tags.
 # }
 #
@@ -376,8 +363,6 @@ setMethodS3("setTags", "Model", function(this, tags=NULL, ...) {
 # \value{
 #  Returns a @character string.
 # }
-#
-# @author
 #
 # \seealso{
 #   @seeclass
@@ -417,8 +402,6 @@ setMethodS3("getFullName", "Model", function(this, ...) {
 #  If the path does not exist, it is created.
 # }
 #
-# @author
-#
 # \seealso{
 #   @seeclass
 # }
@@ -432,7 +415,7 @@ setMethodS3("getPath", "Model", function(this, ...) {
   # Full name
   fullname <- getFullName(this);
 
-  # Chip type    
+  # Chip type
   ds <- getDataSet(this);
   cdf <- getCdf(ds);
   chipType <- getChipType(cdf, fullname=FALSE);
@@ -464,8 +447,6 @@ setMethodS3("getPath", "Model", function(this, ...) {
 #   Returns an @see "AffymetrixCelSet".
 # }
 #
-# @author
-#
 # \seealso{
 #   @seeclass
 # }
@@ -493,8 +474,6 @@ setMethodS3("getDataSet", "Model", function(this, ...) {
 # \value{
 #  Returns an @see "AffymetrixCdfFile" object.
 # }
-#
-# @author
 #
 # \seealso{
 #   @seeclass
@@ -526,8 +505,6 @@ setMethodS3("getCdf", "Model", function(this, ...) {
 # \value{
 #  Returns an @integer @vector specifying what units where fitted.
 # }
-#
-# @author
 #
 # \seealso{
 #   @seeclass
@@ -566,7 +543,7 @@ setMethodS3("setLabel", "Model", function(this, label, ...) {
 # 2007-03-19
 # o Added getAlias() and setAlias().
 # 2007-01-14
-# o Added a test for unknown arguments to constructor.  This was added 
+# o Added a test for unknown arguments to constructor.  This was added
 #   after long troubleshooting to find a call to MbeiPlm(mergeStrands=TRUE,
 #   combineAlleles=TRUE) instead of MbeiCnPlm(...).
 # 2007-01-06
@@ -578,7 +555,7 @@ setMethodS3("setLabel", "Model", function(this, label, ...) {
 # o Started to modify methods of this class to work similar to the
 #   QuantileNormalizer and AllelicCrosstalkCalibrator classes.
 # 2006-09-14
-# o Not cloning the data set anymore.  Each model is responsible for 
+# o Not cloning the data set anymore.  Each model is responsible for
 #   tranforming the data structure their way.  The advantage with this
 #   approach is that we can cache read data in the data set object.
 # 2006-08-28

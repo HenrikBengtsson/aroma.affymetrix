@@ -8,7 +8,7 @@
 #
 #  This class represents estimates of chip effects in the probe-level models.
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
@@ -21,8 +21,7 @@
 #  @allmethods "public"
 # }
 #
-# @author
-# 
+# @author "HB"
 #*/###########################################################################
 setConstructorS3("SnpChipEffectSet", function(..., mergeStrands="byFirstFile") {
   this <- extend(ChipEffectSet(...), "SnpChipEffectSet");
@@ -30,7 +29,7 @@ setConstructorS3("SnpChipEffectSet", function(..., mergeStrands="byFirstFile") {
   this;
 })
 
-  
+
 setMethodS3("byPath", "SnpChipEffectSet", function(static, ..., mergeStrands="auto") {
   NextMethod("byPath", mergeStrands=mergeStrands);
 }, protected=TRUE, static=TRUE)
@@ -92,7 +91,7 @@ setMethodS3("inferParameters", "SnpChipEffectSet", function(this, ..., verbose=F
 
 
   verbose && enter(verbose, "Infer (mergeStrands) parameters from stored data in quartet units in CEL set");
-  
+
   # Identify units with quartets
   cdf <- getCdf(this);
   cdfPathname <- getPathname(cdf);
@@ -122,13 +121,13 @@ setMethodS3("inferParameters", "SnpChipEffectSet", function(this, ..., verbose=F
       verbose && cat(verbose, "Scanning units:");
       verbose && str(verbose, units);
       # Infer parameters from 'intensities'
-      values <- readCelUnits(cePathname, units=units, 
+      values <- readCelUnits(cePathname, units=units,
                    readIntensities=TRUE, readStdvs=FALSE, dropArrayDim=TRUE);
       rm(units);
-  
+
       # Put quartets by columns
       values <- matrix(unlist(values, use.names=FALSE), nrow=4L);
-      
+
       # Keep only estimated units without NAs
       csums <- colSums(values);
       values <- values[,is.finite(csums) & (csums > 0),drop=FALSE];

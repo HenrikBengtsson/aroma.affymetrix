@@ -6,15 +6,15 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
- \name{HetLogAddPlm}
+\name{HetLogAddPlm}
 \docType{class}
 \alias{HetLogAddPlm}
 
 
- \title{The HetLogAddPlm class}
+\title{The HetLogAddPlm class}
 
- \description{
-  Package:  aroma.affymetrix \cr
+\description{
+ Package:  aroma.affymetrix \cr
 \bold{Class HetLogAddPlm}\cr
 
 \code{\link[R.oo]{Object}}\cr
@@ -41,21 +41,21 @@ extends \emph{\link[aroma.affymetrix]{RmaPlm}}\cr
 
 
 
-  This class represents a log-additive model similar to the one described
-  in Irizarry et al (2003), except that the errors may have different
-  variances for different probes.
- }
+ This class represents a log-additive model similar to the one described
+ in Irizarry et al (2003), except that the errors may have different
+ variances for different probes.
+}
 
- \usage{
+\usage{
 HetLogAddPlm(...)
 }
 
- \arguments{
-   \item{...}{Arguments passed to \code{\link{RmaPlm}}.}
- }
+\arguments{
+  \item{...}{Arguments passed to \code{\link{RmaPlm}}.}
+}
 
- \section{Fields and Methods}{
-  \bold{Methods:}\cr
+\section{Fields and Methods}{
+ \bold{Methods:}\cr
 \emph{No methods defined}.
 
 
@@ -75,17 +75,17 @@ findUnitsTodo, getAsteriskTags, getFitSingleCellUnitFunction, getParameters
 as.character, fit, getAlias, getAsteriskTags, getDataSet, getFullName, getName, getParameterSet, getPath, getRootPath, getTags, setAlias, setTags
 
  \bold{Methods inherited from ParametersInterface}:\cr
-getParameters, getParametersAsString, getParameterSets
+getParameterSets, getParameters, getParametersAsString
 
  \bold{Methods inherited from Object}:\cr
 $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save, asThis
 
 
- }
+}
 
- \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
- \seealso{
-  \code{\link{RmaPlm}}.
- }
+\seealso{
+ \code{\link{RmaPlm}}.
+}
 \keyword{classes}

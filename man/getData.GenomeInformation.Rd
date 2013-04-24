@@ -36,8 +36,6 @@
   as defined by the annotation unit names file.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
-
 \seealso{
   \code{\link[aroma.affymetrix:getUnitIndices.GenomeInformation]{*getUnitIndices}()}.
   For more information see \code{\link{GenomeInformation}}.

@@ -12,11 +12,11 @@
 #
 # \arguments{
 #   \item{chromosomes}{An @integer @vector specifying for which chromsosomes
-#     the baseline should be estimated.  
+#     the baseline should be estimated.
 #     If @NULL, all chromosomes are considered.}
 #   \item{ploidy}{An @integer specifying the ploidy that the baseline
 #     should have.}
-#   \item{defaultPloidy}{An @integer specifying the default ploidy of 
+#   \item{defaultPloidy}{An @integer specifying the default ploidy of
 #     chromosomes that have not explicitly been allocated one.}
 #   \item{all}{If @TRUE, signals are averaged also for cells that are not
 #     on the genome.}
@@ -25,7 +25,7 @@
 #   \item{...}{Not used.}
 # }
 #
-# @author
+# @author "HB"
 #
 # \seealso{
 #   @see "getAverageFile".
@@ -44,7 +44,7 @@ setMethodS3("calculateBaseline", "ChipEffectSet", function(this, chromosomes=NUL
   if (is.null(chromosomes)) {
     chromosomes <- allChromosomes;
   } else {
-    chromosomes <- Arguments$getChromosomes(chromosomes, 
+    chromosomes <- Arguments$getChromosomes(chromosomes,
                                                 range=range(allChromosomes));
   }
 
@@ -72,15 +72,15 @@ setMethodS3("calculateBaseline", "ChipEffectSet", function(this, chromosomes=NUL
   todo <- which(isZero(ds));
   ntodo <- length(todo);
   rm(ds);
-  
-  verbose && printf(verbose, "Found %d (%.1f%%) non-estimated cells.\n", 
+
+  verbose && printf(verbose, "Found %d (%.1f%%) non-estimated cells.\n",
                                                   ntodo, 100*ntodo/ncells);
   verbose && exit(verbose);
 
   # Garbage collect
   gc <- gc();
   verbose && print(verbose, gc);
-  
+
   n <- length(this);
   for (chromosome in chromosomes) {
     verbose && enter(verbose, "Chromosome ", chromosome);
@@ -106,19 +106,19 @@ setMethodS3("calculateBaseline", "ChipEffectSet", function(this, chromosomes=NUL
       cells <- intersect(cells, todo);
       nkeep <- length(cells);
 
-      verbose && printf(verbose, "Found %d (%.1f%%) non-estimated loci.\n", 
+      verbose && printf(verbose, "Found %d (%.1f%%) non-estimated loci.\n",
                                               nkeep, 100*nkeep/ncells);
       verbose && exit(verbose);
       if (nkeep == 0) {
         verbose && cat(verbose, "Baseline averages already exist for all loci on this chromosome.");
         verbose && exit(verbose);
-        rm(cells);        
+        rm(cells);
         next;
       }
     }
 
     verbose && enter(verbose, "Identifying samples that have the baseline ploidy and those that have not");
-    ploidies <- sapply(this, FUN=getPloidy, chromosome=chromosome, 
+    ploidies <- sapply(this, FUN=getPloidy, chromosome=chromosome,
                                               defaultValue=defaultPloidy);
     isBaseline <- (ploidies == ploidy);
     nB <- sum(isBaseline, na.rm=TRUE);
@@ -134,9 +134,9 @@ setMethodS3("calculateBaseline", "ChipEffectSet", function(this, chromosomes=NUL
     }
     verbose && exit(verbose);
 
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-    # Baseline samples 
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    # Baseline samples
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     verbose && enter(verbose, "Processing samples with baseline ploidy");
 
     verbose && enter(verbose, "Extracting subset of samples");
@@ -161,9 +161,9 @@ setMethodS3("calculateBaseline", "ChipEffectSet", function(this, chromosomes=NUL
     verbose && exit(verbose);
 
 
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Other samples?
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     if (nM > 0) {
       verbose && enter(verbose, "Processing samples with non-baseline ploidies");
       verbose && enter(verbose, "Extracting subset of samples");
@@ -185,25 +185,25 @@ setMethodS3("calculateBaseline", "ChipEffectSet", function(this, chromosomes=NUL
       verbose && exit(verbose);
 
 
-      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       # Estimating the shift
-      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       # Note, all of this is on the intensity and not the log scale.
 
       verbose && enter(verbose, "Estimating the baseline bias correction");
 
-      # 1) Get the differences the two groups for each locus.      
+      # 1) Get the differences the two groups for each locus.
       cs <- (muBs / muMs);
       verbose && str(verbose, cs);
       verbose && cat(verbose, "Summary of log2(cs*)");
       verbose && print(verbose, summary(log2(cs)));
-      
+
       # 2) Get the average difference across all loci.
       c <- median(cs, na.rm=TRUE);
       rm(cs);
       verbose && printf(verbose, "Bias correction: log2(c*)=%.3f\n", log2(c));
       verbose && exit(verbose);
-      
+
 
       # 3) Weighted average of the two groups
       verbose && enter(verbose, "Estimating the weighted average of the two groups at each locus");
@@ -237,13 +237,13 @@ setMethodS3("calculateBaseline", "ChipEffectSet", function(this, chromosomes=NUL
 
     # Mark cells as done
     todo <- setdiff(todo, cells);
-    
+
     rm(cells);
 
     # Garbage collect
     gc <- gc();
     verbose && print(verbose, gc);
-    
+
     verbose && exit(verbose);
   } # for (chromosome ...)
 
@@ -260,20 +260,20 @@ setMethodS3("calculateBaseline", "ChipEffectSet", function(this, chromosomes=NUL
       nkeep <- length(keep);
       cells <- cells[keep];
       rm(keep);
-  
-      verbose && printf(verbose, "Found %d (%.1f%%) non-estimated loci.\n", 
+
+      verbose && printf(verbose, "Found %d (%.1f%%) non-estimated loci.\n",
                                                   nkeep, 100*nkeep/ncells);
       verbose && exit(verbose);
-  
+
       if (nkeep > 0) {
         csRavg <- getAverageFile(this, indices=cells, force=force, verbose=less(verbose));
-    
+
         verbose && enter(verbose, "Reading the average signals");
         ds <- getData(csRavg, indices=cells, fields="intensities", verbose=less(verbose))$intensities;
         rm(csRavg);
         verbose && str(verbose, ds);
         verbose && exit(verbose);
-    
+
         verbose && enter(verbose, "Storing baseline signals");
         ds <- cbind(intensities=ds, cell=cells);
         muBs <- updateDataFlat(csBaseline, data=ds, verbose=less(verbose));

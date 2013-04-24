@@ -2,7 +2,7 @@
 # @RdocPackage aroma.affymetrix
 #
 # \description{
-#   @eval "getDescription(aroma.affymetrix)" 
+#   @eval "getDescription(aroma.affymetrix)"
 #
 #   This package should be considered to be in an alpha or beta phase.
 #   You should expect the API to be changing over time.
@@ -10,21 +10,21 @@
 #
 # \section{Requirements}{
 #   This package requires several packages from CRAN, Bioconductor,
-#   R-forge and our local braju.com repository.  We are moving more 
+#   R-forge and our local braju.com repository.  We are moving more
 #   and more of the packages to CRAN and Bioconductor.
 # }
 #
 # \section{Installation and updates}{
 #
-#   To install this package, see instructions at 
+#   To install this package, see instructions at
 #   \url{@eval "getUrl(aroma.affymetrix)"}.
-# } 
+# }
 #
 # \section{To get started}{
 #   To get started, see the online user guides and the vignettes
 #   \url{@eval "getUrl(aroma.affymetrix)"}.
 # }
-# 
+#
 # \section{How to cite this package}{
 #  In order to keep improving and providing support for this project,
 #  please cite references [1], [2], or any applicable publication listed on
@@ -32,22 +32,18 @@
 #  work that have been used any of the Aroma Framework.
 # }
 #
-# \author{
-#   Henrik Bengtsson with great contributions from several others.
-#   Please see \url{http://aroma-project.org/about/} for a current
-#   list of co-authors and major contributors.
-# }
+# @author "*"
 #
 # \section{License}{
-#   The releases of this package is licensed under 
+#   The releases of this package is licensed under
 #   LGPL version 2.1 or newer.
 #
-#   The development code of the packages is under a private licence 
+#   The development code of the packages is under a private licence
 #   (where applicable) and patches sent to the author fall under the
 #   latter license, but will be, if incorporated, released under the
 #   "release" license above.
 # }
-# 
+#
 # \references{
 #  [1] @include "../incl/BengtssonH_etal_2008b.bib.Rdoc" \cr
 #  [2] @include "../incl/BengtssonH_etal_2008.bib.Rdoc" \cr

@@ -41,8 +41,6 @@
   4*N bytes.  The vector indicates if a cell is a PM or not.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
-
 \seealso{
   For more information see \code{\link{AffymetrixCdfFile}}.
 }

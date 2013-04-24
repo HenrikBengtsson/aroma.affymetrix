@@ -43,7 +43,7 @@
  Returns a \code{\link[aroma.core]{AromaUnitTabularBinaryFile}} object.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   To update to file footer afterwards, see \code{writeFooter()}.

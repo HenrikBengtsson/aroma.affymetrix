@@ -1,3 +1,4 @@
+# @author "HB, EP"
 setMethodS3("plotBoxplot", "ChipEffectSet", function(this, type, transform=NULL, ..., main=NULL, ylab=NULL) {
   # Argument 'type':
   # Further validation in 'boxplotStats()':

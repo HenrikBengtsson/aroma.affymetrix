@@ -7,17 +7,17 @@
 # \description{
 #  @classhierarchy
 #
-#  This class represents affine model in Bengtsson \& 
+#  This class represents affine model in Bengtsson \&
 #  \enc{Hössjer}{Hossjer} (2006).
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
 #   \item{...}{Arguments passed to @see "ProbeLevelModel".}
 #   \item{background}{If @TRUE, background is estimate for each unit group,
-#     otherwise not. That is, if @FALSE, a \emph{linear} (proportional) 
-#     model without offset is fitted, resulting in very similar results as 
+#     otherwise not. That is, if @FALSE, a \emph{linear} (proportional)
+#     model without offset is fitted, resulting in very similar results as
 #     obtained by the @see "MbeiPlm".}
 # }
 #
@@ -30,8 +30,8 @@
 #
 #    \deqn{y_{ik} = a + \theta_i \phi_k + \varepsilon_{ik}}
 #
-#   where \eqn{a} is an offset common to all probe signals, 
-#   \eqn{\theta_i} are the chip effects for arrays \eqn{i=1,...,I}, 
+#   where \eqn{a} is an offset common to all probe signals,
+#   \eqn{\theta_i} are the chip effects for arrays \eqn{i=1,...,I},
 #   and \eqn{\phi_k} are the probe affinities for probes \eqn{k=1,...,K}.
 #   The \eqn{\varepsilon_{ik}} are zero-mean noise with equal variance.
 #   The model is constrained such that \eqn{\prod_k \phi_k = 1}.
@@ -42,7 +42,7 @@
 #   error structure, which in turn affects how the model is estimated.
 # }
 #
-# @author
+# @author "HB"
 #
 # \references{
 #   Bengtsson \& \enc{Hössjer}{Hossjer} (2006). \cr
@@ -94,10 +94,10 @@ setMethodS3("getProbeAffinityFile", "AffinePlm", function(this, ...) {
     phi <- .subset2(groupData, "phi");
     stdvs <- .subset2(groupData, "sdPhi");
     outliers <- .subset2(groupData, "phiOutliers");
-  
+
     # Encode outliers as the sign of 'pixels'; -1 = TRUE, +1 = FALSE
     pixels <- sign(0.5 - as.integer(outliers));
-  
+
     list(intensities=phi, stdvs=stdvs, pixels=pixels);
   })
 
@@ -105,13 +105,13 @@ setMethodS3("getProbeAffinityFile", "AffinePlm", function(this, ...) {
     intensities <- .subset2(groupData, "intensities");
     stdvs <- .subset2(groupData, "stdvs");
     pixels <- .subset2(groupData, "pixels");
-  
+
     # Outliers are encoded by the sign of 'pixels'.
     outliers <- as.logical(1-sign(pixels));
-  
+
     list(
-      phi=intensities, 
-      sdPhi=stdvs, 
+      phi=intensities,
+      sdPhi=stdvs,
       phiOutliers=outliers
     );
   })
@@ -175,7 +175,7 @@ setMethodS3("getFitUnitGroupFunction", "AffinePlm", function(this, ...) {
     }
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    # A fit function must return: theta, sdTheta, thetaOutliers, 
+    # A fit function must return: theta, sdTheta, thetaOutliers,
     # phi, sdPhi, phiOutliers.
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     sdTheta <- rep(1, I);
@@ -185,8 +185,8 @@ setMethodS3("getFitUnitGroupFunction", "AffinePlm", function(this, ...) {
 
 
     # Return data on the intensity scale
-    list(theta=theta, sdTheta=sdTheta, thetaOutliers=thetaOutliers, 
-         phi=phi, sdPhi=sdPhi, phiOutliers=phiOutliers);   
+    list(theta=theta, sdTheta=sdTheta, thetaOutliers=thetaOutliers,
+         phi=phi, sdPhi=sdPhi, phiOutliers=phiOutliers);
   } # affineFit()
 
   affineFit;

@@ -6,15 +6,15 @@
 # \description{
 #  @classhierarchy
 #
-#  This class represents a normalization method that corrects for PCR 
+#  This class represents a normalization method that corrects for PCR
 #  fragment length effects on copy-number chip-effect estimates.
 # }
-# 
-# @synopsis 
+#
+# @synopsis
 #
 # \arguments{
 #   \item{dataSet}{A @see "SnpChipEffectSet".}
-#   \item{...}{Additional arguments passed to the constructor of 
+#   \item{...}{Additional arguments passed to the constructor of
 #     @see "ChipEffectTransform".}
 #   \item{target}{(Optional) A @character string or a list of @functions
 #     specifying what to normalize toward.
@@ -22,10 +22,10 @@
 #     should be normalized to.}
 #   \item{subsetToFit}{The units from which the normalization curve should
 #     be estimated.  If @NULL, all are considered.}
-#   \item{lengthRange}{If given, a @numeric @vector of length 2 specifying 
+#   \item{lengthRange}{If given, a @numeric @vector of length 2 specifying
 #     the range of fragment lengths considered.  All fragments with lengths
 #     outside this range are treated as if they were missing.}
-#   \item{onMissing}{Specifies how to normalize units for which the 
+#   \item{onMissing}{Specifies how to normalize units for which the
 #     fragment lengths are unknown.}
 #   \item{shift}{An optional amount the data points should be shifted
 #      (translated).}
@@ -33,26 +33,26 @@
 # }
 #
 # \section{Fields and Methods}{
-#  @allmethods "public"  
+#  @allmethods "public"
 # }
-# 
+#
 # \section{Requirements}{
-#   This class requires a SNP information annotation file for the 
+#   This class requires a SNP information annotation file for the
 #   chip type to be normalized.
 # }
-# 
+#
 # \details{
-#   For SNPs, the normalization function is estimated based on the total 
+#   For SNPs, the normalization function is estimated based on the total
 #   chip effects, i.e. the sum of the allele signals.  The normalizing
 #   is done by rescale the chip effects on the intensity scale such that
 #   the mean of the total chip effects are the same across samples for
 #   any given fragment length.  For allele-specific estimates, both alleles
-#   are always rescaled by the same amount.  Thus, when normalizing  
+#   are always rescaled by the same amount.  Thus, when normalizing
 #   allele-specific chip effects, the total chip effects is change, but not
 #   the relative allele signal, e.g. the allele B frequency.
 # }
 #
-# @author
+# @author "HB"
 #*/###########################################################################
 setConstructorS3("FragmentLengthNormalization", function(dataSet=NULL, ..., target=targetFunctions, subsetToFit="-XY", lengthRange=NULL, onMissing=c("median", "ignore"), shift=0, targetFunctions=NULL) {
   extraTags <- NULL;
@@ -86,7 +86,7 @@ setConstructorS3("FragmentLengthNormalization", function(dataSet=NULL, ..., targ
       # Validate each element
       for (kk in seq_along(target)) {
         if (!is.function(target[[kk]])) {
-          throw("One element in 'target' is not a function: ", 
+          throw("One element in 'target' is not a function: ",
                                           class(target[[kk]])[1]);
         }
       }
@@ -112,7 +112,7 @@ setConstructorS3("FragmentLengthNormalization", function(dataSet=NULL, ..., targ
 
   # Argument 'shift':
   shift <- Arguments$getDouble(shift, disallow=c("NA", "NaN", "Inf"));
- 
+
   # Argument 'lengthRange':
   if (!is.null(lengthRange)) {
     lengthRange <- Arguments$getDoubles(lengthRange);
@@ -123,7 +123,7 @@ setConstructorS3("FragmentLengthNormalization", function(dataSet=NULL, ..., targ
   onMissing <- match.arg(onMissing);
 
 
-  extend(ChipEffectTransform(dataSet, ...), "FragmentLengthNormalization", 
+  extend(ChipEffectTransform(dataSet, ...), "FragmentLengthNormalization",
     "cached:.targetFunctions" = NULL,
     "cached:.target" = target,
     .subsetToFit = subsetToFit,
@@ -275,30 +275,30 @@ setMethodS3("getFilteredFragmentLengths", "FragmentLengthNormalization", functio
     for (ee in seq_len(ncol(fl))) {
       flEE <- fl[,ee];
       ok <- (!is.na(flEE));
-  
+
       tooSmall <- (ok & (flEE < range[1]));
       n <- sum(tooSmall);
       if (n > 0) {
         verbose && printf(verbose, "Detected %d fragments on enzyme %d that are too short (< %.0g)\n", n, ee, range[1]);
       }
-  
+
       tooLarge <- (ok & (flEE > range[2]));
       n <- sum(tooLarge);
       if (n > 0) {
         verbose && printf(verbose, "Detected %d fragments on enzyme %d that are too long (> %.0g)\n", n, ee, range[2]);
       }
-  
+
       tooExtreme <- (tooSmall | tooLarge);
       n <- sum(tooExtreme);
-  
+
       verbose && printf(verbose, "Detected %d fragments on enzyme %d with lengths outside of filtered range [%.0g,%.0g]\n", n, ee, range[1], range[2]);
-  
+
       fl[tooExtreme,ee] <- naValue;
     } # for (ee ...)
-  
+
     verbose && cat(verbose, "Summary of filtered fragment lengths:");
     verbose && summary(verbose, fl);
-  
+
     verbose && exit(verbose);
   } # if (!is.null(range))
 
@@ -380,7 +380,7 @@ setMethodS3("getSubsetToFit", "FragmentLengthNormalization", function(this, forc
         # Get the genome information (throws an exception if missing)
         gi <- getGenomeInformation(cdf);
         verbose && print(verbose, gi);
-  
+
         # Identify units to be excluded
         if (subsetToFit == "-X") {
           subset <- getUnitsOnChromosomes(gi, 23, .checkArgs=FALSE);
@@ -389,13 +389,13 @@ setMethodS3("getSubsetToFit", "FragmentLengthNormalization", function(this, forc
         } else if (subsetToFit == "-XY") {
           subset <- getUnitsOnChromosomes(gi, 23:24, .checkArgs=FALSE);
         }
-  
+
         verbose && cat(verbose, "Units to exclude: ");
         verbose && str(verbose, subset);
-  
+
         # The units to keep
         subset <- setdiff(1:nbrOfUnits(cdf), subset);
-  
+
         verbose && cat(verbose, "Units to include: ");
         verbose && str(verbose, subset);
 
@@ -515,7 +515,7 @@ setMethodS3("getTargetFunctions", "FragmentLengthNormalization", function(this, 
     this$.target <- target;
     force <- FALSE;
     verbose && exit(verbose);
-  } 
+  }
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -572,13 +572,13 @@ setMethodS3("getTargetFunctions", "FragmentLengthNormalization", function(this, 
       verbose && cat(verbose, "Summary of shifted signals (on the intensity scale):");
       verbose && summary(verbose, yR);
     }
-    
+
     yR <- log2(yR);
     verbose && cat(verbose, "Signals:");
     verbose && str(verbose, yR);
     verbose && cat(verbose, "Summary of signals (on the log2 scale):");
     verbose && summary(verbose, yR);
-    
+
     # Get PCR fragment lengths for these
     fl <- getFilteredFragmentLengths(this, units=units, verbose=less(verbose, 3));
     rm(units); # Not needed anymore
@@ -681,9 +681,9 @@ setMethodS3("getTargetFunctions", "FragmentLengthNormalization", function(this, 
 # @synopsis
 #
 # \arguments{
-#   \item{...}{Additional arguments passed to 
+#   \item{...}{Additional arguments passed to
 #     @see "aroma.light::normalizeFragmentLength" (only for advanced users).}
-#   \item{force}{If @TRUE, data already normalized is re-normalized, 
+#   \item{force}{If @TRUE, data already normalized is re-normalized,
 #       otherwise not.}
 #   \item{verbose}{See @see "R.utils::Verbose".}
 # }
@@ -691,8 +691,6 @@ setMethodS3("getTargetFunctions", "FragmentLengthNormalization", function(this, 
 # \value{
 #  Returns a @double @vector.
 # }
-#
-# @author
 #
 # \seealso{
 #   @seeclass
@@ -742,7 +740,7 @@ setMethodS3("process", "FragmentLengthNormalization", function(this, ..., force=
   verbose && cat(verbose, "subsetToUpdate:");
   verbose && str(verbose, subsetToUpdate);
   verbose && exit(verbose);
-  
+
 
   verbose && enter(verbose, "Retrieving SNP information annotations");
   si <- getSnpInformation(cdf);
@@ -764,7 +762,7 @@ setMethodS3("process", "FragmentLengthNormalization", function(this, ..., force=
   # Get (and create) the output path
   path <- getPath(this);
 
-  
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Normalize each array
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -809,7 +807,7 @@ setMethodS3("process", "FragmentLengthNormalization", function(this, ..., force=
 #    }
 
     if (is.null(fl)) {
-      # For the subset to be fitted, get PCR fragment lengths (for all enzymes) 
+      # For the subset to be fitted, get PCR fragment lengths (for all enzymes)
       fl <- getFilteredFragmentLengths(this, units=subsetToUpdate, verbose=less(verbose, 3));
       verbose && summary(verbose, fl);
 
@@ -879,8 +877,8 @@ setMethodS3("process", "FragmentLengthNormalization", function(this, ..., force=
 
     verbose && cat(verbose, "Log2 signals:");
     verbose && str(verbose, y);
-    yN <- normalizeFragmentLength(y, fragmentLengths=fl, 
-                    targetFcns=targetFcns, subsetToFit=subset, 
+    yN <- normalizeFragmentLength(y, fragmentLengths=fl,
+                    targetFcns=targetFcns, subsetToFit=subset,
                     onMissing=onMissing, ...);
     verbose && cat(verbose, "Normalized log2 signals:");
     verbose && summary(verbose, yN);
@@ -935,7 +933,7 @@ setMethodS3("process", "FragmentLengthNormalization", function(this, ..., force=
     rm(ok, theta);
 
     verbose2 <- -as.integer(verbose) - 5;
-    pathname <- getPathname(ceN);   
+    pathname <- getPathname(ceN);
     updateCel(pathname, indices=cells, intensities=data, verbose=verbose2);
     rm(cells, data);
     verbose && exit(verbose);
@@ -957,14 +955,14 @@ setMethodS3("process", "FragmentLengthNormalization", function(this, ..., force=
   outputSet <- getOutputDataSet(this, verbose=less(verbose,5));
 
   verbose && exit(verbose);
-  
+
   outputSet;
 })
 
 ############################################################################
 # HISTORY:
 # 2011-03-28
-# o CLARIFICATION: Now the error message thrown when there are not 
+# o CLARIFICATION: Now the error message thrown when there are not
 #   enough data points for a unique enzyme gives a hint on what to do.
 # 2011-02-08
 # o GENERALIZATION: Now it is possible to specify the range of fragment
@@ -976,7 +974,7 @@ setMethodS3("process", "FragmentLengthNormalization", function(this, ..., force=
 # 2008-12-03
 # o BUG FIX: Missing 'si' object.
 # 2008-12-01
-# o BUG FIX: For allele-specific estimates, FragmentLengthNormalization 
+# o BUG FIX: For allele-specific estimates, FragmentLengthNormalization
 #   would correctly estimate normalization scale factors, but due to a
 #   typo, it effectively only update the signals for allele A.
 #   Looking at the SVN history, this has always been the case.
@@ -1004,7 +1002,7 @@ setMethodS3("process", "FragmentLengthNormalization", function(this, ..., force=
 # 2008-06-06
 # o getTargetFunctions() now sums allele-specific thetas and fits the
 #   normalization function on the total thetas, if allele specific.
-# o Now getTargetFunctions() utilizes extractTheta() and no longer 
+# o Now getTargetFunctions() utilizes extractTheta() and no longer
 #   getDataFlat().
 # 2008-03-29
 # o Added more verbose output for the getTargetFunctions() in order to
@@ -1042,7 +1040,7 @@ setMethodS3("process", "FragmentLengthNormalization", function(this, ..., force=
 #   non-normalized data set.
 # 2007-01-07
 # o Now chip-effect parameters are carried over to the output set too.
-# o BUG FIX: process(): Forgot to skip to next array in for loop if an 
+# o BUG FIX: process(): Forgot to skip to next array in for loop if an
 #   array was detected to be already normalized. Generated a "file already
 #   exists" error.
 # o Added garbage collection after each array been normalized.

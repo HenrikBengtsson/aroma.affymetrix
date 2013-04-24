@@ -9,7 +9,7 @@
 #  An AffymetrixFileSet object represents a set of @see "AffymetrixFile"s
 #  with \emph{identical} chip types.
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
@@ -20,8 +20,8 @@
 # \section{Fields and Methods}{
 #  @allmethods "public"
 # }
-# 
-# @author
+#
+# @author "HB"
 #*/###########################################################################
 setConstructorS3("AffymetrixFileSet", function(files=NULL, ...) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -69,8 +69,6 @@ setConstructorS3("AffymetrixFileSet", function(files=NULL, ...) {
 #   Returns an @see "AffymetrixFileSet" object.
 # }
 #
-# @author
-#
 # \seealso{
 #   @seeclass
 # }
@@ -112,15 +110,13 @@ setMethodS3("as.AffymetrixFileSet", "default", function(object, ...) {
 # }
 #
 # \section{Reserved filenames}{
-#   Note that files with names starting with a period \code{.} are not 
+#   Note that files with names starting with a period \code{.} are not
 #   searched for.  The reason for this is that such files are reserved for
 #   internal use of this package.  For instance, the package store average
 #   signals across CEL files in a file named as \code{.average<something>.CEL}
 #   in the same directory as the CEL files, and when such a directory is
 #   scanned we do not want such files to be interpreted as data.
 # }
-#
-# @author
 #
 # \seealso{
 #   @seeclass
@@ -148,7 +144,7 @@ setMethodS3("getDefaultFullName", "AffymetrixFileSet", function(this, parent=1L,
 ############################################################################
 # HISTORY:
 # 2012-10-18
-# o WORKAROUND: Now byPath() for AffymetrixFileSet passes 
+# o WORKAROUND: Now byPath() for AffymetrixFileSet passes
 #   .onUnknownArgs="ignore" to the "next" method.
 # 2009-10-02
 # o Added getDefaultFullName() to AffymetrixFileSet.
@@ -210,7 +206,7 @@ setMethodS3("getDefaultFullName", "AffymetrixFileSet", function(this, parent=1L,
 # o Added argument 'subset' to calcAvgCellSignals() & normalizeQuantile().
 # 2006-03-15
 # o Now nbrOfCells() returns the number of cells for the first file only.
-# o Now the fromFiles(static, ...) creates an object of the same class as 
+# o Now the fromFiles(static, ...) creates an object of the same class as
 #   the static object.
 # 2006-03-04
 # o Added mapping functions.

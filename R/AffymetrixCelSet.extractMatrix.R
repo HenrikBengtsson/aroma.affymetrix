@@ -20,14 +20,14 @@
 # }
 #
 # \value{
-#  Returns an JxK @double @matrix where J is the number of units, 
+#  Returns an JxK @double @matrix where J is the number of units,
 #  and K is the number of arrays.
 #  The names of the columns are the names of the arrays.
 #  No names are set for the rows.
 #  The rows are ordered according to \code{cells} argument.
 # }
 #
-# @author
+# @author "HB, MR"
 #
 # \seealso{
 #   @seeclass
@@ -58,7 +58,7 @@ setMethodS3("extractMatrix", "AffymetrixCelSet", function(this, cells=NULL, ...,
 
 
   # Settings
-  gcArrayFrequency <- getOption(aromaSettings, "memory/gcArrayFrequency"); 
+  gcArrayFrequency <- getOption(aromaSettings, "memory/gcArrayFrequency");
   if (is.null(gcArrayFrequency))
     gcArrayFrequency <- 10;
 
@@ -92,7 +92,7 @@ setMethodS3("extractMatrix", "AffymetrixCelSet", function(this, cells=NULL, ...,
   } else {
     o <- seq_len(ncells);
   }
-  
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Get thetas from the samples
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -100,7 +100,7 @@ setMethodS3("extractMatrix", "AffymetrixCelSet", function(this, cells=NULL, ...,
   for (aa in seq_len(nbrOfArrays)) {
     verbose && printf(verbose, "Array %d,\n", aa);
     cf <- getFile(this, aa);
-    df[o,aa] <- getData(cf, indices=cells, fields=field, 
+    df[o,aa] <- getData(cf, indices=cells, fields=field,
                                            verbose=less(verbose))[[field]];
     if (aa %% gcArrayFrequency == 0) {
       # Garbage collect
@@ -126,7 +126,7 @@ setMethodS3("extractMatrix", "AffymetrixCelSet", function(this, cells=NULL, ...,
 # 2008-12-03
 # o Remove one internal gc().
 # o SPEED UP: The reordering the cell indices in extractMatrix() for
-#   optimizing the reading speed was slow.  It is much faster to use 
+#   optimizing the reading speed was slow.  It is much faster to use
 #   sort(..., method="quick", return.index=TRUE) than order(...).
 # 2008-07-20
 # o Updated the following methods to preallocate matrixes with the correct
@@ -134,7 +134,7 @@ setMethodS3("extractMatrix", "AffymetrixCelSet", function(this, cells=NULL, ...,
 # 2008-07-09
 # o Added argument drop=FALSE to extractMatrix().
 # 2008-07-07 [MR; Mark Robinson, WEHI]
-# o BUG FIX: extractMatrix() of AffymetrixCelSet returned cells in a 
+# o BUG FIX: extractMatrix() of AffymetrixCelSet returned cells in a
 #   different than requested.
 # 2008-03-11
 # o BUG FIX: extractMatrix(..., cells=NULL), the default, would throw

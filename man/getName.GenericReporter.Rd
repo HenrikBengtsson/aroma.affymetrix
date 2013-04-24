@@ -33,8 +33,6 @@
  If a name alias has not been set explicitly, the input name will be used.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
-
 \seealso{
   For more information see \code{\link{GenericReporter}}.
 }

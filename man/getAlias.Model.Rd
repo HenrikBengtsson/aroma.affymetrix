@@ -29,8 +29,6 @@
  Returns a \code{\link[base]{character}} string, or \code{\link[base]{NULL}}.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
-
 \seealso{
   \code{\link[aroma.affymetrix:getName.Model]{*getName}()}
   \code{\link[aroma.affymetrix:setAlias.Model]{*setAlias}()}

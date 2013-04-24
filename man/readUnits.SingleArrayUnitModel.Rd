@@ -35,8 +35,6 @@
  \code{\link{AffymetrixCelFile}} returns.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
-
 \seealso{
   For more information see \code{\link{SingleArrayUnitModel}}.
 }

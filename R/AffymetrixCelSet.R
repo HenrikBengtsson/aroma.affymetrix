@@ -6,11 +6,11 @@
 # \description{
 #  @classhierarchy
 #
-#  An AffymetrixCelSet object represents a set of Affymetrix CEL files 
+#  An AffymetrixCelSet object represents a set of Affymetrix CEL files
 #  with \emph{identical} chip types.
 # }
-# 
-# @synopsis 
+#
+# @synopsis
 #
 # \arguments{
 #   \item{files}{A @list of @see "AffymetrixCelFile":s.}
@@ -18,9 +18,9 @@
 # }
 #
 # \section{Fields and Methods}{
-#  @allmethods "public"  
+#  @allmethods "public"
 # }
-# 
+#
 # \examples{\dontrun{
 #   @include "../incl/AffymetrixCelSet.Rex"
 # }}
@@ -29,7 +29,7 @@
 #   @see "AffymetrixCelFile".
 # }
 #
-# @author
+# @author "HB"
 #*/###########################################################################
 setConstructorS3("AffymetrixCelSet", function(files=NULL, ...) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -187,7 +187,7 @@ setMethodS3("append", "AffymetrixCelSet", function(this, other, ..., verbose=FAL
 #  Returns a @character string.
 # }
 #
-# @author
+# @author "HB"
 #
 # \seealso{
 #   @seeclass
@@ -223,7 +223,7 @@ setMethodS3("as.character", "AffymetrixCelSet", function(x, ...) {
     # tifferent 'tzone' attributes, e.g. if some files where scanning during
     # daylight savings time and some not, we will get a warning saying:
     # "'tzone' attributes are inconsistent".  By doing the below, we avoid
-    # this warning (which confuses users). 
+    # this warning (which confuses users).
     ts <- sort(ts);
     ts <- ts[c(1,n)];
     ts <- format(ts, "%Y-%m-%d %H:%M:%S");  # range() gives strange values?!?
@@ -287,7 +287,7 @@ setMethodS3("getIdentifier", "AffymetrixCelSet", function(this, ..., force=FALSE
 #  Returns an @character string.
 # }
 #
-# @author
+# @author "HB"
 #
 # \seealso{
 #   @seemethod "getCdf".
@@ -338,7 +338,7 @@ setMethodS3("getUnitTypesFile", "AffymetrixCelSet", function(this, ...) {
 #  Returns an @see "AffymetrixCdfFile" object.
 # }
 #
-# @author
+# @author "HB"
 #
 # \seealso{
 #   @seemethod "setCdf".
@@ -375,7 +375,7 @@ setMethodS3("getCdf", "AffymetrixCelSet", function(this, ...) {
 #  Returns nothing.
 # }
 #
-# @author
+# @author "HB"
 #
 # \seealso{
 #   @seemethod "getCdf".
@@ -391,7 +391,7 @@ setMethodS3("setCdf", "AffymetrixCelSet", function(this, cdf, verbose=FALSE, ...
   if (.checkArgs) {
     # Argument 'cdf':
     cdf <- Arguments$getInstanceOf(cdf, "AffymetrixCdfFile");
-  
+
     # Assure that the CDF is compatible with the CEL file
     if (length(this) > 0L) {
       cf <- getOneFile(this);
@@ -432,7 +432,7 @@ setMethodS3("setCdf", "AffymetrixCelSet", function(this, cdf, verbose=FALSE, ...
   lapply(this, FUN=setCdf, cdf, .checkArgs=FALSE, ...);
   verbose && exit(verbose);
 
-  # Have to clear the cache 
+  # Have to clear the cache
   verbose && enter(verbose, "Clearing data-set cache");
   clearCache(this);
   verbose && exit(verbose);
@@ -463,7 +463,7 @@ setMethodS3("findByName", "AffymetrixCelSet", function(static, ..., chipType=NUL
 setMethodS3("byName", "AffymetrixCelSet", function(static, name, tags=NULL, chipType=NULL, cdf=NULL, paths=NULL, ..., verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'chipType':
   if (!is.null(chipType)) {
     chipType <- Arguments$getCharacter(chipType);
@@ -506,7 +506,7 @@ setMethodS3("byName", "AffymetrixCelSet", function(static, name, tags=NULL, chip
   verbose && cat(verbose, "Chip type: ", chipTypeShort);
 
   suppressWarnings({
-    paths <- findByName(static, name, tags=tags, chipType=chipTypeShort, 
+    paths <- findByName(static, name, tags=tags, chipType=chipTypeShort,
                        paths=paths, firstOnly=FALSE, ...);
   })
   if (is.null(paths)) {
@@ -550,7 +550,7 @@ setMethodS3("byName", "AffymetrixCelSet", function(static, name, tags=NULL, chip
 
   if (is.null(res)) {
     exMsgs <- sapply(exList, FUN=function(ex) {
-      sprintf("%s (while trying '%s').", 
+      sprintf("%s (while trying '%s').",
                    ex$exception$message, ex$path);
     });
     exMsgs <- sprintf("(%d) %s", seq_along(exMsgs), exMsgs);
@@ -570,7 +570,7 @@ setMethodS3("byName", "AffymetrixCelSet", function(static, name, tags=NULL, chip
 setMethodS3("update2", "AffymetrixCelSet", function(this, ..., verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
   if (verbose) {
@@ -587,7 +587,7 @@ setMethodS3("update2", "AffymetrixCelSet", function(this, ..., verbose=FALSE) {
 setMethodS3("updateSampleAnnotationSet", "AffymetrixCelSet", function(this, ..., verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
   if (verbose) {
@@ -595,9 +595,9 @@ setMethodS3("updateSampleAnnotationSet", "AffymetrixCelSet", function(this, ...,
     on.exit(popState(verbose));
   }
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Scan for SAF files and apply them
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   verbose && enter(verbose, "Scanning for and applying sample annotation files");
 
   # Nothing to do?
@@ -624,7 +624,7 @@ setMethodS3("updateSampleAnnotationSet", "AffymetrixCelSet", function(this, ...,
 setMethodS3("byPath", "AffymetrixCelSet", function(static, path, cdf=NULL, pattern="[.](c|C)(e|E)(l|L)$", ..., checkChipType=is.null(cdf), onDuplicates=c("keep", "exclude", "error"), fileClass="AffymetrixCelFile", force=TRUE, verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'path':
   path <- Arguments$getReadablePath(path, mustExist=TRUE);
 
@@ -638,7 +638,7 @@ setMethodS3("byPath", "AffymetrixCelSet", function(static, path, cdf=NULL, patte
     on.exit(popState(verbose));
   }
 
-  
+
   verbose && enter(verbose, "Defining ", class(static)[1], " from files");
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -659,9 +659,9 @@ setMethodS3("byPath", "AffymetrixCelSet", function(static, path, cdf=NULL, patte
   # WORKAROUND: For unknown reasons it is not possible to specify
   # 'path=path' below, because it is already passed implicitly by
   # NextMethod() and if done, then argument 'recursive' to byPath() for
-  # GenericDataFileSet will also be assign the value of 'path', e.g. 
+  # GenericDataFileSet will also be assign the value of 'path', e.g.
   # try byPath(AffymetrixCelSet(), "path/to/").  This seems to be related
-  # to R-devel thread 'Do *not* pass '...' to NextMethod() - it'll do it 
+  # to R-devel thread 'Do *not* pass '...' to NextMethod() - it'll do it
   # for you; missing documentation, a bug or just me?' on Oct 16-18, 2012.
   args <- list("byPath", pattern=pattern, fileClass=fileClass, verbose=less(verbose));
 #  set <- do.call(NextMethod, args);
@@ -671,7 +671,7 @@ setMethodS3("byPath", "AffymetrixCelSet", function(static, path, cdf=NULL, patte
   if (length(set) > 0) {
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Handle duplicates
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     if (onDuplicates %in% c("exclude", "error")) {
       dups <- isDuplicated(set, verbose=less(verbose));
       ndups <- sum(dups);
@@ -689,16 +689,16 @@ setMethodS3("byPath", "AffymetrixCelSet", function(static, path, cdf=NULL, patte
         }
       }
     }
-  
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Scan all CEL files for possible chip types
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Chip type according to the directory structure
     path <- getPath(set);
     chipType <- basename(path);
-    verbose && cat(verbose, 
+    verbose && cat(verbose,
                    "The chip type according to the path is: ", chipType);
-  
+
     # Let the directory name specify the chip type?
     if (checkChipType) {
       verbose && enter(verbose, "Scanning CEL set for used chip types");
@@ -710,22 +710,22 @@ setMethodS3("byPath", "AffymetrixCelSet", function(static, path, cdf=NULL, patte
       verbose && print(verbose, tChipTypes);
       nbrOfChipTypes <- length(tChipTypes);
       verbose && exit(verbose);
-    
+
       if (nbrOfChipTypes > 1) {
-        verbose && cat(verbose, "Detected ", nbrOfChipTypes, 
+        verbose && cat(verbose, "Detected ", nbrOfChipTypes,
                                         " different chip types in CEL set: ",
                                     paste(names(tChipTypes), collapse=", "));
       } else {
-        verbose && cat(verbose, "All CEL files use the same chip type: ", 
+        verbose && cat(verbose, "All CEL files use the same chip type: ",
                                                           names(tChipTypes));
       }
-    
+
       # If chip type is taken from CEL headers and there are more than
       # one chip type in the set, then it is an error.
       if (nbrOfChipTypes > 1) {
         throw("Detected ", nbrOfChipTypes, " different chip types in CEL set. Use argument 'checkChipType=FALSE' to let the directory name of the CEL set specify the chip type instead: ", paste(names(tChipTypes), collapse=", "));
-      } 
-  
+      }
+
       # Validate that the directory name matches the chip type
       tChipTypesShort <- gsub(",.*", "", names(tChipTypes));
       if (!identical(tChipTypesShort, chipType)) {
@@ -735,16 +735,16 @@ setMethodS3("byPath", "AffymetrixCelSet", function(static, path, cdf=NULL, patte
       verbose && cat(verbose, "Since 'checkChipType=FALSE', then the chip type specified by the directory name is used: ", chipType);
     }
 
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Use the same CDF object for all CEL files.
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     if (is.null(cdf)) {
       verbose && enter(verbose, "Retrieving the CDF for chip type '", chipType, "' inferred from path");
       cf <- getOneFile(set);
       nbrOfCells <- nbrOfCells(cf);
       cdf <- AffymetrixCdfFile$byChipType(chipType, nbrOfCells=nbrOfCells);
       verbose && exit(verbose);
-  
+
       verbose && enter(verbose, "Check compatibility with 1st CEL file");
       verbose && cat(verbose, "Chip type: ", chipType);
       if (nbrOfCells(cdf) != nbrOfCells(cf)) {
@@ -754,7 +754,7 @@ setMethodS3("byPath", "AffymetrixCelSet", function(static, path, cdf=NULL, patte
       }
       verbose && exit(verbose);
     } else {
-      verbose && cat(verbose, "Using prespecified CDF: ", 
+      verbose && cat(verbose, "Using prespecified CDF: ",
                      getChipType(cdf, fullname=TRUE));
     }
   }
@@ -799,7 +799,7 @@ setMethodS3("byPath", "AffymetrixCelSet", function(static, path, cdf=NULL, patte
 #   Returns an @integer.
 # }
 #
-# @author
+# @author "HB"
 #
 # \seealso{
 #   @seeclass
@@ -832,7 +832,7 @@ setMethodS3("nbrOfArrays", "AffymetrixCelSet", function(this, ...) {
 #   Returns an @see "AffymetrixCelSet" object.
 # }
 #
-# @author
+# @author "HB"
 #
 # \seealso{
 #   @seeclass
@@ -876,7 +876,7 @@ setMethodS3("as.AffymetrixCelSet", "default", function(object, ...) {
 #   has the same time stamp as another preceeding CEL file.
 # }
 #
-# @author
+# @author "HB"
 #
 # \seealso{
 #   Internally @see "base::duplicated" is used to compare timestamps.
@@ -1000,11 +1000,11 @@ setMethodS3("getData", "AffymetrixCelSet", function(this, indices=NULL, fields=c
 # }
 #
 # \value{
-#   Returns a @numeric \eqn{NxK} matrix, where \eqn{N} is the number of 
+#   Returns a @numeric \eqn{NxK} matrix, where \eqn{N} is the number of
 #   cells read, and \eqn{K} is the number of arrays in the data set.
 # }
 #
-# @author
+# @author "HB"
 #
 # \seealso{
 #   @seeclass
@@ -1028,7 +1028,7 @@ setMethodS3("getIntensities", "AffymetrixCelSet", function(this, ...) {
 # @synopsis
 #
 # \arguments{
-#  \item{units}{An @integer index @vector specifying units to be read. 
+#  \item{units}{An @integer index @vector specifying units to be read.
 #    If @NULL, all units are read.}
 #  \item{...}{Arguments passed to the low-level function for reading
 #    CEL units, i.e. @see "affxparser::readCelUnits".
@@ -1043,7 +1043,7 @@ setMethodS3("getIntensities", "AffymetrixCelSet", function(this, ...) {
 #   Returns a named @list structure.
 # }
 #
-# @author
+# @author "HB"
 #
 # \seealso{
 #   @seeclass
@@ -1072,9 +1072,9 @@ setMethodS3("getUnitIntensities", "AffymetrixCelSet", function(this, units=NULL,
     return(res);
   }
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Read signals
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Get the pathnames of all CEL files
   pathnames <- unlist(lapply(this, FUN=getPathname), use.names=FALSE);
 
@@ -1087,7 +1087,7 @@ setMethodS3("getUnitIntensities", "AffymetrixCelSet", function(this, units=NULL,
     cdfUnits <- getCellIndices(cdf, units=units, ...);
   }
 
-  res <- readCelUnits(pathnames, cdf=cdfUnits, readStdvs=FALSE, 
+  res <- readCelUnits(pathnames, cdf=cdfUnits, readStdvs=FALSE,
                               readPixels=FALSE, dropArrayDim=FALSE, ...);
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -1150,16 +1150,16 @@ setMethodS3("readUnits", "AffymetrixCelSet", function(this, units=NULL, ..., for
     }
   }
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Read signals
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Get the pathnames of all CEL files
   pathnames <- getPathnames(this);
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Read data from file
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-  verbose && enter(verbose, "Calling readCelUnits() for ", 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  verbose && enter(verbose, "Calling readCelUnits() for ",
                                               length(pathnames), " files");
   if (is.list(units)) {
     res <- readCelUnits(pathnames, cdf=units, dropArrayDim=FALSE, ...);
@@ -1254,10 +1254,10 @@ setMethodS3("getUnitGroupCellMap", "AffymetrixCelSet", function(this, ...) {
 #   necessarily retrieve the same CDF as the AffymetrixCelSet used.
 # 2011-08-16
 # o ROBUSTNESS: If static byName() for AffymetrixCelSet fails to setup
-#   a data set, it now reports the error message for each data set 
+#   a data set, it now reports the error message for each data set
 #   directory it tried.
 # 2011-03-03
-# o GENERALIZATION: Now AffymetrixCelSet locates sample annotation files 
+# o GENERALIZATION: Now AffymetrixCelSet locates sample annotation files
 #   and sets the attributes following the new aroma search convention.
 # 2011-03-01
 # o Now byName() handles if byPath() throws an exception.
@@ -1269,10 +1269,10 @@ setMethodS3("getUnitGroupCellMap", "AffymetrixCelSet", function(this, ...) {
 #   It also requires that the data sets found by byPath() are non-empty,
 #   otherwise they are skipped.
 # 2011-02-24
-# o Expanded the searched root paths to be rawData(|,.*)/ and 
+# o Expanded the searched root paths to be rawData(|,.*)/ and
 #   probeData(|,.*)/.
 # 2011-02-04
-# o BUG FIX: as.character() for an empty AffymetrixCelSet would throw 
+# o BUG FIX: as.character() for an empty AffymetrixCelSet would throw
 #   exception "Argument 'x' is of length 1 although the range ([0,0])
 #   implies that is should be empty.", while trying to infer the chip type.
 # 2010-07-02
@@ -1281,10 +1281,10 @@ setMethodS3("getUnitGroupCellMap", "AffymetrixCelSet", function(this, ...) {
 #   done by first locating the CDF for the chip type (with tags).
 # 2009-12-03
 # o BUG FIX: The test for allowing ASCII CDFs or not in setCdf() of an
-#   AffymetrixCelSet was only applied if getOption(aromaSettings, 
+#   AffymetrixCelSet was only applied if getOption(aromaSettings,
 #   "rules/allowAsciiCdfs") was TRUE (should be FALSE).
 # 2009-08-12
-# o Now findByName() of AffymetrixCelSet calls ditto of 
+# o Now findByName() of AffymetrixCelSet calls ditto of
 #   GenericDataFileSet of the R.filesets packages.
 # 2009-07-08
 # o Added getUnitTypesFile() for AffymetrixCelSet.
@@ -1309,7 +1309,7 @@ setMethodS3("getUnitGroupCellMap", "AffymetrixCelSet", function(this, ...) {
 # 2008-05-31
 # o BUG FIX: readUnits() would throw 'Error in readCelUnits(pathnames, cdf
 #   = cdf, ...) : No CDF file for chip type found: GenomeWideSNP_6', if
-#   the CDF was set to GenomeWideSNP_6,Full.CDF and no GenomeWideSNP_6.cdf 
+#   the CDF was set to GenomeWideSNP_6,Full.CDF and no GenomeWideSNP_6.cdf
 #   file was found.  This was because readUnits() retrieve (x,y) information
 #   units, which requires affxparser::readCelUnits() to locate the CDF to
 #   infer the number of probe column in order to map (x,y) to cell indices.
@@ -1325,13 +1325,13 @@ setMethodS3("getUnitGroupCellMap", "AffymetrixCelSet", function(this, ...) {
 # o BUG FIX: fromFiles() was not declared static.
 # o Made fromFiles() protected.
 # 2008-03-11
-# o BUG FIX: Calling readUnits(..., units=cdfUnits) twice, where 'cdfUnits' 
+# o BUG FIX: Calling readUnits(..., units=cdfUnits) twice, where 'cdfUnits'
 #   was first created with, say, stratifyBy="pm" and then with
 #   stratifyBy="pmmm", for the identical set of units, would give the same
 #   results both times.  This was because the hash key list object for the
 #   file cache where identical.
 # o BUG FIX: getUnitIntensities() would not pass arguments '...', e.g.
-#   'stratifyBy', to readUnits() for AffymetrixCdfFile.  Thanks Tim 
+#   'stratifyBy', to readUnits() for AffymetrixCdfFile.  Thanks Tim
 #   Keighley, CSIRO, Sydney for reporting this.
 # 2008-03-05
 # o Updated message specifying that it looks for *sample* annotation files.
@@ -1352,16 +1352,16 @@ setMethodS3("getUnitGroupCellMap", "AffymetrixCelSet", function(this, ...) {
 #   validated the arguments once and not for every file.
 # 2007-12-08
 # o Added argument 'cdf' to static fromName() of AffymetrixCelSet.  When
-#   using this argument, the 'chipType' argument is optional, and the 
+#   using this argument, the 'chipType' argument is optional, and the
 #   returned CEL set will be using the specified CDF.
 # o Now fromFiles() of AffymetrixCelSet takes argument 'cdf' which can be
 #   used to override the default CDF.  This way the default CDF must not
 #   have to be in the search path.
 # 2007-09-25
-# o Now getAverageFile() will detect if an average file has been deleted 
+# o Now getAverageFile() will detect if an average file has been deleted
 #   between calls and recalculate it.
 # 2007-09-13
-# o Added validate that the 'name' of an AffymetrixCelSet and 
+# o Added validate that the 'name' of an AffymetrixCelSet and
 #   AffymetrixCelFile is of at least length one.
 # 2007-09-06
 # o Now setCdf() throws an (informative) error message whenever one tries
@@ -1370,8 +1370,8 @@ setMethodS3("getUnitGroupCellMap", "AffymetrixCelSet", function(this, ...) {
 # 2007-08-01
 # o Renamed static fromName() of AffymetrixCelSet to byName().
 # 2007-04-06
-# o BUG FIX: fromFiles() of AffymetrixCelSet would give error "Exception: 
-#   Pathname not found: annotationData/samples" if that directory was 
+# o BUG FIX: fromFiles() of AffymetrixCelSet would give error "Exception:
+#   Pathname not found: annotationData/samples" if that directory was
 #   missing.  Now it is instead created.
 # 2007-04-03
 # o Now fromFiles() verifies that the set CDF is compatible with the CEL
@@ -1392,13 +1392,13 @@ setMethodS3("getUnitGroupCellMap", "AffymetrixCelSet", function(this, ...) {
 #   code of as.character() for explanation.
 # o Now fromFiles() accepts argument 'chipType' to override any chip type
 #   specified in the CEL headers. This is useful in case different CEL files
-#   refers to different chip types, which can be the case for mixed 
+#   refers to different chip types, which can be the case for mixed
 #   generations of CEL files.  Also added a scan of chip types.
 # 2007-02-14
 # o Added test for correct directory structure to fromFiles().  This will
 #   enforce users to use the correct structure so that for instance the
 #   name of the data set is correctly inferred.
-# o Added argument 'onDuplicates' to fromFiles() so it is possible to 
+# o Added argument 'onDuplicates' to fromFiles() so it is possible to
 #   exclude duplicated CEL files.
 # 2007-02-06
 # o Added static method findByName() and fromName().
@@ -1414,12 +1414,12 @@ setMethodS3("getUnitGroupCellMap", "AffymetrixCelSet", function(this, ...) {
 # 2006-12-01
 # o Now as.character() reports the range of CEL header timestamps.
 # 2006-11-07
-# o Now getAverageFile() uses rowMedians() of R.native if available, 
+# o Now getAverageFile() uses rowMedians() of R.native if available,
 #   otherwise a local version utilizing apply(). Same for rowMads().
 # 2006-10-24
 # o Added getAverageLog() and getAverageAsinh().
 # o Added transforms and anti-transforms g() and h() to getAverageFile().
-# o Changed the defaults from mean to median, and sd to mad for 
+# o Changed the defaults from mean to median, and sd to mad for
 #   getAverageFile().
 # o Added Rdoc comments to getAverageFile().
 # 2006-10-10
@@ -1461,7 +1461,7 @@ setMethodS3("getUnitGroupCellMap", "AffymetrixCelSet", function(this, ...) {
 # o Added argument 'subset' to calcAvgCellSignals() & normalizeQuantile().
 # 2006-03-15
 # o Now nbrOfCells() returns the number of cells for the first file only.
-# o Now the fromFiles(static, ...) creates an object of the same class as 
+# o Now the fromFiles(static, ...) creates an object of the same class as
 #   the static object.
 # 2006-03-04
 # o Added mapping functions.

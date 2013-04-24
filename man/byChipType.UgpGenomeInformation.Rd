@@ -40,8 +40,6 @@
  If no file was not found, an error is thrown.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
-
 \seealso{
   For more information see \code{\link{UgpGenomeInformation}}.
 }

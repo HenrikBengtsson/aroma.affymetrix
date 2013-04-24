@@ -6,15 +6,15 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
- \name{CnPlm}
+\name{CnPlm}
 \docType{class}
 \alias{CnPlm}
 
 
- \title{The CnPlm class}
+\title{The CnPlm class}
 
- \description{
-  Package:  aroma.affymetrix \cr
+\description{
+ Package:  aroma.affymetrix \cr
 \bold{Class CnPlm}\cr
 
 \code{\link[R.oo]{Interface}}\cr
@@ -31,20 +31,20 @@ extends \link[aroma.affymetrix]{SnpPlm}\cr
 
 
 
-  This suport class represents a \code{\link{SnpPlm}} specially designed for
-  copy-number analysis.
- }
+ This suport class represents a \code{\link{SnpPlm}} specially designed for
+ copy-number analysis.
+}
 
- \usage{
+\usage{
 CnPlm(...)
 }
 
- \arguments{
-   \item{...}{Arguments passed to \code{\link{SnpPlm}}.}
- }
+\arguments{
+  \item{...}{Arguments passed to \code{\link{SnpPlm}}.}
+}
 
- \section{Methods}{
-  \bold{Methods:}\cr
+\section{Methods}{
+ \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{getCellIndices} \tab  -\cr
  \tab \code{getChipEffectSet} \tab  -\cr
@@ -61,29 +61,29 @@ getCellIndices, getChipEffectSet, getMergeStrands, getParameters, getProbeAffini
 extend, print, uses
 
 
- }
+}
 
- \details{
-   Models implementing this copy-number PLM, provides either
-   allele-specific or total copy-number estimates.
-   For allele-specific CNs the underlying \code{\link{SnpPlm}} model is fitted as
-   is, i.e. for each allele seperately with or without the strands first
-   being merged.
+\details{
+  Models implementing this copy-number PLM, provides either
+  allele-specific or total copy-number estimates.
+  For allele-specific CNs the underlying \code{\link{SnpPlm}} model is fitted as
+  is, i.e. for each allele seperately with or without the strands first
+  being merged.
 
-   For total CNs the probe signals for the two alleles are combined
-   (=summed; not averaged) on the intensity scale before fitting
-   underlying \code{\link{SnpPlm}} model, again with or without the strands
-   first being merged.
- }
+  For total CNs the probe signals for the two alleles are combined
+  (=summed; not averaged) on the intensity scale before fitting
+  underlying \code{\link{SnpPlm}} model, again with or without the strands
+  first being merged.
+}
 
- \section{Requirements}{
-   Classes inheriting from this \code{\link[R.oo]{Interface}} must provide the
-   following fields, in addition to the ones according to \code{\link{SnpPlm}}:
-   \itemize{
-    \item{combineAlleles}{A \code{\link[base]{logical}} indicating if total or allele-specific
-      copy numbers should be estimated according to the above averaging.}
-   }
- }
+\section{Requirements}{
+  Classes inheriting from this \code{\link[R.oo]{Interface}} must provide the
+  following fields, in addition to the ones according to \code{\link{SnpPlm}}:
+  \itemize{
+   \item{combineAlleles}{A \code{\link[base]{logical}} indicating if total or allele-specific
+     copy numbers should be estimated according to the above averaging.}
+  }
+}
 
- \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 \keyword{classes}

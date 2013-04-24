@@ -32,7 +32,7 @@
  attribute \code{text}.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   Internally, \code{\link[base]{strptime}}() is used to parse the time stamp.

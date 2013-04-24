@@ -29,8 +29,6 @@
  Returns an \code{\link[base]{integer}} \code{\link[base]{vector}} specifying what units where fitted.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
-
 \seealso{
   For more information see \code{\link{Model}}.
 }

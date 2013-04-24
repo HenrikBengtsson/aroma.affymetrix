@@ -9,7 +9,7 @@
 #  An AromaChipTypeAnnotationFile object represents an annotation file for a
 #  specific chip type.
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
@@ -17,10 +17,10 @@
 # }
 #
 # \section{Fields and Methods}{
-#  @allmethods "public"  
+#  @allmethods "public"
 # }
-# 
-# @author
+#
+# @author "HB"
 #*/###########################################################################
 setConstructorS3("AromaChipTypeAnnotationFile", function(...) {
   this <- extend(AffymetrixFile(...), "AromaChipTypeAnnotationFile");
@@ -82,8 +82,6 @@ setMethodS3("as.character", "AromaChipTypeAnnotationFile", function(x, ...) {
 #  error is thrown.
 # }
 #
-# @author
-#
 # \seealso{
 #   @seemethod "byChipType".
 #   @seeclass
@@ -93,17 +91,17 @@ setMethodS3("as.character", "AromaChipTypeAnnotationFile", function(x, ...) {
 # @keyword programming
 #*/###########################################################################
 setMethodS3("fromFile", "AromaChipTypeAnnotationFile", function(static, filename, path=NULL, ...) {
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Arguments 'filename' and 'path':
-  pathname <- Arguments$getReadablePathname(filename, path=path, 
+  pathname <- Arguments$getReadablePathname(filename, path=path,
                                                               mustExist=TRUE);
 
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Try to define an instance of a subclass traversing bottom up.
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   clazz <- Class$forName(class(static)[1]);
   for (className in rev(getKnownSubclasses(clazz))) {
     clazz <- Class$forName(className);
@@ -139,10 +137,8 @@ setMethodS3("fromFile", "AromaChipTypeAnnotationFile", function(static, filename
 # }
 #
 # \value{
-#  Returns an @see "AromaChipTypeAnnotationFile" object.  
+#  Returns an @see "AromaChipTypeAnnotationFile" object.
 # }
-#
-# @author
 #
 # \seealso{
 #   @seemethod "fromFile".
@@ -245,8 +241,6 @@ setMethodS3("getDefaultExtension", "AromaChipTypeAnnotationFile", function(stati
 #  chip type file found.  If no one was found, @NULL is returned.
 # }
 #
-# @author
-#
 # \seealso{
 #   @seemethod "byChipType".
 #   @seeclass
@@ -279,8 +273,6 @@ setMethodS3("findByChipType", "AromaChipTypeAnnotationFile", abstract=TRUE, prot
 # \value{
 #  Returns a @list structure.
 # }
-#
-# @author
 #
 # \seealso{
 #   @seeclass

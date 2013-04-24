@@ -41,8 +41,6 @@
  Returns an \code{\link{AromaChipTypeAnnotationFile}} object.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
-
 \seealso{
   \code{\link[aroma.affymetrix:fromFile.AromaChipTypeAnnotationFile]{*fromFile}()}.
   For more information see \code{\link{AromaChipTypeAnnotationFile}}.

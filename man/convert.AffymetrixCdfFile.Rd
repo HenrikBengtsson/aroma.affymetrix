@@ -34,8 +34,6 @@
  Returns the new CDF as an \code{\link{AffymetrixCdfFile}} object.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
-
 \seealso{
   To compare two CDFs, use \code{equals()}.
   Internally \code{\link[affxparser]{convertCdf}} is used.

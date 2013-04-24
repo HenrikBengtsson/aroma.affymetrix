@@ -9,11 +9,11 @@
 #  This class represents the Chromosomal Smoothing Robust Multichip Analysis
 #  method.
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
-#   \item{...}{Arguments passed to the constructor of 
+#   \item{...}{Arguments passed to the constructor of
 #              @see "SmoothMultiarrayModel".}
 # }
 #
@@ -21,7 +21,7 @@
 #  @allmethods "public"
 # }
 #
-# @author
+# @author "HB"
 #*/###########################################################################
 setConstructorS3("SmoothSaModel", function(...) {
   extend(SmoothMultiarrayModel(...), "SmoothSaModel");
@@ -42,7 +42,7 @@ setMethodS3("getAsteriskTags", "SmoothSaModel", function(this, collapse=NULL, ..
   }
 
   tags;
-}, protected=TRUE) 
+}, protected=TRUE)
 
 
 setMethodS3("getFitUnitGroupFunction", "SmoothSaModel", function(this, ...) {

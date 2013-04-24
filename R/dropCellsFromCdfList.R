@@ -1,3 +1,4 @@
+# @author "HB"
 dropCellsFromCdfList <- function(cdfList, maxNbrOfCells, cellsToExclude, ..., verbose=0) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
@@ -26,7 +27,7 @@ dropCellsFromCdfList <- function(cdfList, maxNbrOfCells, cellsToExclude, ..., ve
     cat("Excluding cells from CDF list structure...\n");
     cat("Number of units: ", nbrOfUnits, "\n", sep="");
     cat("Number of cells to exclude: ", length(cellsToExclude), "\n", sep="");
-  } 
+  }
 
   toExclude <- logical(maxNbrOfCells);
   toExclude[cellsToExclude] <- TRUE;
@@ -57,7 +58,7 @@ dropCellsFromCdfList <- function(cdfList, maxNbrOfCells, cellsToExclude, ..., ve
   for (jj in seq_len(nbrOfUnits)) {
     if(verbose >= 1 && jj %% 10e3 == 1) {
       cat(nbrOfUnits-jj+1L, ", ", sep="");
-    } 
+    }
 
     cdfUnit <- cdfList[[jj]];
 
@@ -65,9 +66,9 @@ dropCellsFromCdfList <- function(cdfList, maxNbrOfCells, cellsToExclude, ..., ve
     nbrOfAtoms <- 0L;
     nbrOfCells <- 0L;
 
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Update the groups
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     groups <- cdfUnit[["groups"]];
 
     # Number of cells dropped for this unit
@@ -127,9 +128,9 @@ dropCellsFromCdfList <- function(cdfList, maxNbrOfCells, cellsToExclude, ..., ve
     nDrop <- nDrop + nDropUU;
     nCells <- nCells + nCellsUU;
 
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Update the unit counts
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Total number of cells in unit
     cdfUnit$natoms <- nbrOfAtoms;
     cdfUnit$ncells <- nbrOfCells;
@@ -142,7 +143,7 @@ dropCellsFromCdfList <- function(cdfList, maxNbrOfCells, cellsToExclude, ..., ve
     cat("Total number of cells: ", nCells, "\n");
     cat("Number of cells dropped: ", nDrop, "\n");
     cat("Excluding cells from CDF list structure...done\n");
-  } 
+  }
 
   cdfList;
 } # dropCellsFromCdfList()

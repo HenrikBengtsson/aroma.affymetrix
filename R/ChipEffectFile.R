@@ -8,7 +8,7 @@
 #
 #  This class represents estimates of chip effects in the probe-level models.
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
@@ -20,8 +20,8 @@
 #  @allmethods "public"
 # }
 #
-# @author
-# 
+# @author "HB"
+#
 # \seealso{
 #   An object of this class is typically obtained through the
 #   \code{getChipEffectSet()} method for the @see "ProbeLevelModel" class.
@@ -47,7 +47,7 @@ setConstructorS3("ChipEffectFile", function(..., probeModel=c("pm")) {
     pixels <- NULL;
     if (!is.null(outliers))
       pixels <- -as.integer(outliers);
-  
+
     res <- list();
     if (!is.null(theta))
       res$intensities <- theta;
@@ -55,7 +55,7 @@ setConstructorS3("ChipEffectFile", function(..., probeModel=c("pm")) {
       res$stdvs <- stdvs;
     if (!is.null(pixels))
       res$pixels <- pixels;
-  
+
     res;
   })
 
@@ -66,7 +66,7 @@ setConstructorS3("ChipEffectFile", function(..., probeModel=c("pm")) {
 ##     groupData;
 ##   })
 
-  
+
   setDecodeFunction(this, function(groupData, ...) {
     res <- list();
     if (!is.null(groupData$intensities))
@@ -105,7 +105,7 @@ setMethodS3("getParameters", "ChipEffectFile", function(this, ...) {
 
 
 setMethodS3("createParamCdf", "ChipEffectFile", function(static, sourceCdf, ..., verbose=FALSE) {
-  # Argument 'verbose': 
+  # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
 
   verbose && enter(verbose, "Creating CDF for chip effects");
@@ -153,7 +153,7 @@ setMethodS3("readUnits", "ChipEffectFile", function(this, units=NULL, cdf=NULL, 
 
 
   # Check for cached data
-  key <- list(method="readUnits", class=class(this)[1], 
+  key <- list(method="readUnits", class=class(this)[1],
               pathname=getPathname(this),
               cdf=cdf, units=units, ...);
   if (getOption(aromaSettings, "devel/useCacheKeyInterface", FALSE)) {
@@ -211,8 +211,6 @@ setMethodS3("readUnits", "ChipEffectFile", function(this, units=NULL, cdf=NULL, 
 #   If argument \code{unlist=TRUE} is passed, an @integer @vector is returned.
 # }
 #
-# @author
-#
 # \seealso{
 #   @seeclass
 # }
@@ -259,7 +257,7 @@ setMethodS3("findUnitsTodo", "ChipEffectFile", function(this, units=NULL, ..., f
     # Look up chip-type and parameter specific but data set independent data
     cdf <- getCdf(this);
     chipType <- getChipType(cdf);
-    key <- list(method="findUnitsTodo", class=class(this)[1], 
+    key <- list(method="findUnitsTodo", class=class(this)[1],
                 chipType=chipType, params=getParameters(this));
     dirs <- c("aroma.affymetrix", chipType);
     if (!force) {
@@ -271,7 +269,7 @@ setMethodS3("findUnitsTodo", "ChipEffectFile", function(this, units=NULL, ..., f
 
   if (is.null(idxs)) {
     verbose && enter(verbose, "Identifying CDF units");
-  
+
     units0 <- units;
     if (is.null(units)) {
       cdf <- getCdf(this);
@@ -296,7 +294,7 @@ setMethodS3("findUnitsTodo", "ChipEffectFile", function(this, units=NULL, ..., f
       verbose && exit(verbose);
 
       gc <- gc();
- 
+
       idxsChunk;
     }, chunkSize=100e3, useNames=FALSE, verbose=verbose);
 
@@ -312,7 +310,7 @@ setMethodS3("findUnitsTodo", "ChipEffectFile", function(this, units=NULL, ..., f
     if (length(idxs) != nbrOfUnits) {
       throw("Internal error: Expected ", nbrOfUnits, " cell indices, but got ", length(idxs), ".");
     }
-    
+
     if (is.null(units)) {
       verbose && enter(verbose, "Saving to file cache");
       saveCache(idxs, key=key, dirs=dirs);
@@ -325,7 +323,7 @@ setMethodS3("findUnitsTodo", "ChipEffectFile", function(this, units=NULL, ..., f
 
   # Read one cell from each unit
   verbose && enter(verbose, "Reading data for these ", length(idxs), " cells");
-  value <- readCel(getPathname(this), indices=idxs, readIntensities=FALSE, 
+  value <- readCel(getPathname(this), indices=idxs, readIntensities=FALSE,
                    readStdvs=TRUE, readPixels=FALSE)$stdvs;
   verbose && exit(verbose);
 
@@ -370,16 +368,14 @@ setMethodS3("findUnitsTodo", "ChipEffectFile", function(this, units=NULL, ..., f
 # }
 #
 # \examples{\dontrun{
-#      unit group cell 
-#    1  104     1  335 
-#    2  104     2  336 
-#    3  105     1  337 
-#    4  105     2  338 
-#    5  105     3  339 
-#    6  105     4  340 
+#      unit group cell
+#    1  104     1  335
+#    2  104     2  336
+#    3  105     1  337
+#    4  105     2  338
+#    5  105     3  339
+#    6  105     4  340
 # }}
-#
-# @author
 #
 # \seealso{
 #   @seeclass
@@ -397,7 +393,7 @@ setMethodS3("getUnitGroupCellMap", "ChipEffectFile", function(this, units=NULL, 
   } else {
     units <- Arguments$getIndices(units);
   }
-             
+
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
   if (verbose) {
@@ -428,7 +424,7 @@ setMethodS3("getUnitGroupCellMap", "ChipEffectFile", function(this, units=NULL, 
   if (useFileCache) {
     chipType <- getChipType(cdf);
     # Look up chip-type and parameter specific but data set independent data
-    key <- list(method="getUnitGroupCellMap", class=class(this)[1], 
+    key <- list(method="getUnitGroupCellMap", class=class(this)[1],
                 chipType=chipType, params=getParameters(this),
                 units=units);
     dirs <- c("aroma.affymetrix", chipType);
@@ -480,7 +476,7 @@ setMethodS3("getUnitGroupCellMap", "ChipEffectFile", function(this, units=NULL, 
 
     # Store cell indices first chunk-by-chunk, then as a vector.
     cells <- vector("list", nbrOfChunks);
-    
+
     offset <- 0;
     for (kk in seq_len(nbrOfChunks)) {
       verbose && printf(verbose, "Chunk #%d of %d\n", kk, length(chunks));
@@ -504,14 +500,14 @@ setMethodS3("getUnitGroupCellMap", "ChipEffectFile", function(this, units=NULL, 
     gc <- gc();
     verbose && print(verbose, gc);
   }
-  
+
   cells <- unlist(cells, use.names=FALSE);
   gc <- gc();
   verbose && exit(verbose);
-  
+
   verbose && enter(verbose, "Creating return data frame");
   uUnitSizes <- sort(unique(unitSizes));
-  verbose && cat(verbose, "Unique number of groups per unit: ", 
+  verbose && cat(verbose, "Unique number of groups per unit: ",
                                         paste(uUnitSizes, collapse=","));
   verbose && cat(verbose, "Number of units: ", length(unitNames));
 
@@ -522,7 +518,7 @@ setMethodS3("getUnitGroupCellMap", "ChipEffectFile", function(this, units=NULL, 
   #  groups <- sapply(unitSizes, FUN=function(n) seq_len(n));
 
   # Instead, updated size by size
-  verbose && printf(verbose, "Allocating matrix of size %dx%d.\n", 
+  verbose && printf(verbose, "Allocating matrix of size %dx%d.\n",
                                      max(uUnitSizes), length(unitNames));
   naValue <- as.integer(NA);
   units2 <- groups <- matrix(naValue, nrow=max(uUnitSizes), ncol=length(unitNames));
@@ -564,7 +560,7 @@ setMethodS3("getUnitGroupCellMap", "ChipEffectFile", function(this, units=NULL, 
 setMethodS3("getUnitGroupCellChromosomePositionMap", "ChipEffectFile", function(this, units=NULL, chromosomes=NULL, orderByPosition=TRUE, ..., force=FALSE, verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   cdf <- getCdf(this);
 
   # Argument 'units':
@@ -587,7 +583,7 @@ setMethodS3("getUnitGroupCellChromosomePositionMap", "ChipEffectFile", function(
     allChromosomes <- getChromosomes(gi);
     unknown <- chromosomes[!(chromosomes %in% allChromosomes)];
     if (length(unknown) > 0) {
-      throw("Argument 'chromosomes' contains unknown values: ", 
+      throw("Argument 'chromosomes' contains unknown values: ",
                                  paste(unknown, collapse=", "));
     }
   }
@@ -605,16 +601,16 @@ setMethodS3("getUnitGroupCellChromosomePositionMap", "ChipEffectFile", function(
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Check for cached results
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Look for results in file cache 
+  # Look for results in file cache
   verbose && enter(verbose, "Checking cache");
   chipType <- getChipType(cdf);
-  key <- list(method="getUnitGroupCellChromosomePositionMap", 
-              class=class(this)[1], 
+  key <- list(method="getUnitGroupCellChromosomePositionMap",
+              class=class(this)[1],
               chipType=chipType, units=units, ugcMap=ugcMap,
               chromosomes=chromosomes, orderByPosition=orderByPosition);
   dirs <- c("aroma.affymetrix", chipType);
   if (!force) {
-    map <- loadCache(key=key, dirs=dirs); 
+    map <- loadCache(key=key, dirs=dirs);
     if (!is.null(map)) {
       verbose && cat(verbose, "Found cached results");
       verbose && exit(verbose);
@@ -672,13 +668,13 @@ setMethodS3("getUnitGroupCellChromosomePositionMap", "ChipEffectFile", function(
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Save only results > 50kB
   if (object.size(map) > 50e3) {
-    saveCache(map, key=key, dirs=dirs); 
+    saveCache(map, key=key, dirs=dirs);
     verbose && cat(verbose, "Saved to file cache");
   }
 
   verbose && exit(verbose);
 
-  map;  
+  map;
 }, private=TRUE)
 
 
@@ -740,7 +736,7 @@ setMethodS3("updateDataFlat", "ChipEffectFile", function(this, data, ..., verbos
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'data':
-  names <- colnames(data);  
+  names <- colnames(data);
   namesStr <- paste(names, collapse=", ");
   if (!"cell" %in% names)
     throw("Argument 'data' must contain a column 'cell': ", namesStr);
@@ -789,7 +785,7 @@ setMethodS3("mergeGroups", "ChipEffectFile", function(this, fcn, fields=c("theta
 
   # Argument 'pathname':
   pathname <- Arguments$getWritablePathname(pathname, mustNotExist=!overwrite);
-  
+
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
   if (verbose) {
@@ -799,7 +795,7 @@ setMethodS3("mergeGroups", "ChipEffectFile", function(this, fcn, fields=c("theta
 
 
   verbose && enter(verbose, "Merging groups");
-  
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Test 'fcn':
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -814,13 +810,13 @@ setMethodS3("mergeGroups", "ChipEffectFile", function(this, fcn, fields=c("theta
     }
   }
   verbose && exit(verbose);
-  
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Get flat (unit, group, cell) map
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   map <- getUnitGroupCellMap(this, verbose=less(verbose));
   verbose && str(verbose, map);
-  
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Merge data for each unit size separately (in reverse order!)
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -849,7 +845,7 @@ setMethodS3("mergeGroups", "ChipEffectFile", function(this, fcn, fields=c("theta
       y <- fcn(y);
       verbose && str(verbose, y);
 
-      # Update data table 
+      # Update data table
       data[idxs, field] <- as.vector(y);
     }
 
@@ -857,13 +853,13 @@ setMethodS3("mergeGroups", "ChipEffectFile", function(this, fcn, fields=c("theta
     verbose && exit(verbose);
   }
 
-  
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Copy CEL file and update the copy
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   verbose && enter(verbose, "Storing merged data");
   verbose && cat(verbose, "Pathname: ", pathname);
-  
+
   # Create CEL file to store results, if missing
   verbose && enter(verbose, "Creating CEL file for results, if missing");
   cfN <- createFrom(this, filename=pathname, path=NULL, methods="create", clear=TRUE, verbose=less(verbose));
@@ -874,8 +870,8 @@ setMethodS3("mergeGroups", "ChipEffectFile", function(this, fcn, fields=c("theta
   updateDataFlat(cfN, data=data, verbose=less(verbose));
   verbose && exit(verbose);
   verbose && exit(verbose);
-  
-  
+
+
   verbose && exit(verbose);
 
   cfN;
@@ -897,7 +893,7 @@ setMethodS3("extractMatrix", "ChipEffectFile", function(this, ..., field=c("thet
 # o MEMORY: readUnits() for ChipEffectFile no longer caches results
 #   by default.
 # 2012-10-14
-# o CLEANUP: createParamCdf() for ChipEffectFile no longer support 
+# o CLEANUP: createParamCdf() for ChipEffectFile no longer support
 #   '<chipType>-monocell' filenames.  If detected, an informative
 #   error is thrown.
 # 2009-05-19
@@ -923,14 +919,14 @@ setMethodS3("extractMatrix", "ChipEffectFile", function(this, ..., field=c("thet
 # o Now updateDataFile() only encodes the "outliers" field, if it part of
 #   the input.  If the input is in "raw data", i.e. "pixels", it won't be
 #   encoded.
-# o Now fromDataFile() of ChipEffectFile no longer replicates the 
+# o Now fromDataFile() of ChipEffectFile no longer replicates the
 #   "chipEffects" if already part of the filename.
 # 2007-12-11
 # o BUG FIX: getCellMap() of ChipEffectFile was broken.
 # 2007-12-10
 # o Now fromDataFile() of ChipEffectSet accepts argument 'cdf'.
 # 2007-11-20
-# o MEMORY OPTIMIZATION: Now getCellMap() builds data in chunks if 
+# o MEMORY OPTIMIZATION: Now getCellMap() builds data in chunks if
 #   argument 'units' is NULL.
 # 2007-09-12
 # o Now getCellMap() of ChipEffectFile caches (large) results to file.
@@ -996,8 +992,8 @@ setMethodS3("extractMatrix", "ChipEffectFile", function(this, ..., field=c("thet
 #   front (instead of suffix "-chipEffects').  This way getName() will
 #   return the sample name without any extra endings.
 # 2006-09-11
-# o Great! Using the specially designed CDFs and CEL files to store 
-#   estimates is much faster and smaller than using the originally 
+# o Great! Using the specially designed CDFs and CEL files to store
+#   estimates is much faster and smaller than using the originally
 #   structured CDF and CEL files.  Now storing the estimates takes a much
 #   smaller part of the overall fitting algorithm.
 # 2006-09-10

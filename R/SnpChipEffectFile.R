@@ -8,7 +8,7 @@
 #
 #  This class represents estimates of chip effects in the probe-level models.
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
@@ -21,8 +21,8 @@
 #  @allmethods "public"
 # }
 #
-# @author
-# 
+# @author "HB"
+#
 # \seealso{
 #   An object of this class is typically part of a @see "SnpChipEffectSet".
 # }
@@ -76,8 +76,6 @@ setMethodS3("getParameters", "SnpChipEffectFile", function(this, ...) {
 #   If argument \code{unlist=TRUE} is passed, an @integer @vector is returned.
 # }
 #
-# @author
-#
 # \seealso{
 #   @seeclass
 # }
@@ -111,7 +109,7 @@ setMethodS3("getCellIndices", "SnpChipEffectFile", function(this, units=NULL, ..
   mergeStrands <- this$mergeStrands;
   if (unlist && mergeStrands) {
     throw("Unsupported request: Argument 'unlist' have to be TRUE when parameter 'mergeStrands' is TRUE: ", unlist);
-  }  
+  }
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -120,7 +118,7 @@ setMethodS3("getCellIndices", "SnpChipEffectFile", function(this, units=NULL, ..
   if (!force || .cache) {
     chipType <- getChipType(cdf);
     params <- getParameters(this);
-    key <- list(method="getCellIndices", class=class(this)[1L], 
+    key <- list(method="getCellIndices", class=class(this)[1L],
                 pathname=getPathname(this),  ## <= WRONG! /HB 2012-11-29
                 chipType=chipType, params=params, units=units, unlist=unlist, ...);
     if (getOption(aromaSettings, "devel/useCacheKeyInterface", FALSE)) {
@@ -143,7 +141,7 @@ setMethodS3("getCellIndices", "SnpChipEffectFile", function(this, units=NULL, ..
     }
     if (!is.null(res)) {
       size <- object.size(res);
-      verbose && printf(verbose, "Returning value cached %s: %.1fMB\n", 
+      verbose && printf(verbose, "Returning value cached %s: %.1fMB\n",
                                                    where, size/1024^2);
       verbose && exit(verbose);
       return(res);
@@ -165,13 +163,13 @@ setMethodS3("getCellIndices", "SnpChipEffectFile", function(this, units=NULL, ..
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 ## NOTE: NextMethod() does not work from within another function
 ##    cells <- NextMethod("getCellIndices", units=unitChunk, force=force, .cache=FALSE, verbose=verbose);
-    cells <- getCellIndices.ChipEffectFile(this, units=unitChunk, ..., 
+    cells <- getCellIndices.ChipEffectFile(this, units=unitChunk, ...,
               unlist=unlist, force=force, .cache=FALSE, verbose=verbose);
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Merge strands?
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    # If merging strands, we only need half the number of chip-effect 
+    # If merging strands, we only need half the number of chip-effect
     # parameters per unit group.  Example:
     # (a) mergeStrands=FALSE:
     #    Fit by strand and allele:        #groups=4, #chip effects=4
@@ -218,7 +216,7 @@ setMethodS3("getCellIndices", "SnpChipEffectFile", function(this, units=NULL, ..
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (.cache) {
     # In-memory or on-file cache?
-    if (object.size(cells) < 10e6) { 
+    if (object.size(cells) < 10e6) {
       # In-memory cache for objects < 10Mb.
       this$.cellIndices <- list();
       this$.cellIndices[[id]] <- cells;
@@ -272,7 +270,7 @@ setMethodS3("mergeStrands", "SnpChipEffectFile", function(this, ...) {
 
   cfM <- mergeGroups(this, fcn=mergeStrandsMatrix, ...);
   cfM$mergeStrands <- TRUE;
-  
+
   cfM;
 }, protected=TRUE)
 
@@ -283,7 +281,7 @@ setMethodS3("readUnits", "SnpChipEffectFile", function(this, ..., force=FALSE, c
   verbose <- Arguments$getVerbose(verbose);
 
   # Check for cached data
-  key <- list(method="readUnits", class=class(this)[1], 
+  key <- list(method="readUnits", class=class(this)[1],
               mergeStrands=this$mergeStrands, ...);
   id <- digest2(key);
   res <- this$.readUnitsCache[[id]];
@@ -330,7 +328,7 @@ setMethodS3("readUnits", "SnpChipEffectFile", function(this, ..., force=FALSE, c
 # 2006-09-17
 # o Added an in-memory cache for getCellIndices().
 # 2006-09-12
-# o Updated.  Now the names of the groups reflects the allele names as 
+# o Updated.  Now the names of the groups reflects the allele names as
 #   expected.
 # 2006-09-11
 # o Created.

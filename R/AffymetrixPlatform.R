@@ -1,3 +1,4 @@
+# @author "HB"
 setConstructorS3("AffymetrixPlatform", function(...) {
   extend(AromaPlatform(), "AffymetrixPlatform");
 })

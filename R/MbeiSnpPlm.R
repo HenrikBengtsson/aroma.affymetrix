@@ -6,7 +6,7 @@
 # \description{
 #  @classhierarchy
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
@@ -19,7 +19,7 @@
 #  @allmethods "public"
 # }
 #
-# @author
+# @author "HB"
 #*/###########################################################################
 setConstructorS3("MbeiSnpPlm", function(..., mergeStrands=FALSE) {
   extend(MbeiPlm(...), c("MbeiSnpPlm", uses(SnpPlm())),
@@ -40,7 +40,7 @@ setMethodS3("getAsteriskTags", "MbeiSnpPlm", function(this, collapse=NULL, ...) 
   tags <- paste(tags, collapse=collapse);
 
   tags;
-}, protected=TRUE) 
+}, protected=TRUE)
 
 
 ############################################################################

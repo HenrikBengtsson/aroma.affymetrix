@@ -6,12 +6,12 @@
 # \description{
 #  @classhierarchy
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
 #   \item{...}{Arguments passed to @see "AvgSnpPlm".}
-#   \item{combineAlleles}{If @FALSE, allele A and allele B are treated 
+#   \item{combineAlleles}{If @FALSE, allele A and allele B are treated
 #      seperately, otherwise together.}
 # }
 #
@@ -19,7 +19,7 @@
 #  @allmethods "public"
 # }
 #
-# @author
+# @author "HB"
 #*/###########################################################################
 setConstructorS3("AvgCnPlm", function(..., combineAlleles=FALSE) {
   extend(AvgSnpPlm(...), c("AvgCnPlm", uses(CnPlm())),
@@ -37,10 +37,10 @@ setMethodS3("getAsteriskTags", "AvgCnPlm", function(this, collapse=NULL, ...) {
     tags <- c(tags, "A+B");
 
   # Collapse
-  tags <- paste(tags, collapse=collapse); 
+  tags <- paste(tags, collapse=collapse);
 
   tags;
-}, protected=TRUE) 
+}, protected=TRUE)
 
 
 ############################################################################

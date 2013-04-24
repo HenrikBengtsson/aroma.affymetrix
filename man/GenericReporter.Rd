@@ -6,15 +6,15 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
- \name{GenericReporter}
+\name{GenericReporter}
 \docType{class}
 \alias{GenericReporter}
 
 
- \title{The GenericReporter class}
+\title{The GenericReporter class}
 
- \description{
-  Package:  aroma.affymetrix \cr
+\description{
+ Package:  aroma.affymetrix \cr
 \bold{Class GenericReporter}\cr
 
 \code{\link[R.oo]{Object}}\cr
@@ -28,19 +28,19 @@ public abstract static class \bold{GenericReporter}\cr
 extends \link[R.oo]{Object}\cr
 
 
- }
+}
 
- \usage{
+\usage{
 GenericReporter(tags="*", ...)
 }
 
- \arguments{
-   \item{tags}{A \code{\link[base]{character}} \code{\link[base]{vector}} of tags to be added to the output path.}
-   \item{...}{Not used.}
- }
+\arguments{
+  \item{tags}{A \code{\link[base]{character}} \code{\link[base]{vector}} of tags to be added to the output path.}
+  \item{...}{Not used.}
+}
 
- \section{Fields and Methods}{
-  \bold{Methods:}\cr
+\section{Fields and Methods}{
+ \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{getFullName} \tab  -\cr
  \tab \code{\link[aroma.affymetrix:getName.GenericReporter]{getName}} \tab Gets the name of the explorer.\cr
@@ -55,7 +55,7 @@ GenericReporter(tags="*", ...)
 $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save, asThis
 
 
- }
+}
 
- \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 \keyword{classes}

@@ -6,15 +6,15 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
- \name{FirmaModel}
+\name{FirmaModel}
 \docType{class}
 \alias{FirmaModel}
 
 
- \title{The FirmaModel class}
+\title{The FirmaModel class}
 
- \description{
-  Package:  aroma.affymetrix \cr
+\description{
+ Package:  aroma.affymetrix \cr
 \bold{Class FirmaModel}\cr
 
 \code{\link[R.oo]{Object}}\cr
@@ -35,24 +35,24 @@ extends \emph{\link[aroma.affymetrix]{UnitModel}}\cr
 
 
 
-  This class represents the FIRMA (Finding Isoforms using RMA) alternative
-  splicing model.
+ This class represents the FIRMA (Finding Isoforms using RMA) alternative
+ splicing model.
 
- }
+}
 
- \usage{
+\usage{
 FirmaModel(rmaPlm=NULL, summaryMethod=c("median", "upperQuartile", "max"), operateOn=c("residuals", "weights"), ...)
 }
 
- \arguments{
-   \item{rmaPlm}{An @RmaPlm object.}
-   \item{summaryMethod}{A \code{\link[base]{character}} specifying what summarization method should be used.}
-   \item{operateOn}{A \code{\link[base]{character}} specifying what statistic to operate on.}
-   \item{...}{Arguments passed to constructor of \code{\link{UnitModel}}.}
- }
+\arguments{
+  \item{rmaPlm}{An @RmaPlm object.}
+  \item{summaryMethod}{A \code{\link[base]{character}} specifying what summarization method should be used.}
+  \item{operateOn}{A \code{\link[base]{character}} specifying what statistic to operate on.}
+  \item{...}{Arguments passed to constructor of \code{\link{UnitModel}}.}
+}
 
- \section{Fields and Methods}{
-  \bold{Methods:}\cr
+\section{Fields and Methods}{
+ \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{\link[aroma.affymetrix:fit.FirmaModel]{fit}} \tab Estimates the model parameters.\cr
  \tab \code{getCdf} \tab  -\cr
@@ -71,13 +71,13 @@ findUnitsTodo, getAsteriskTags, getFitSingleCellUnitFunction, getParameters
 as.character, fit, getAlias, getAsteriskTags, getDataSet, getFullName, getName, getParameterSet, getPath, getRootPath, getTags, setAlias, setTags
 
  \bold{Methods inherited from ParametersInterface}:\cr
-getParameters, getParametersAsString, getParameterSets
+getParameterSets, getParameters, getParametersAsString
 
  \bold{Methods inherited from Object}:\cr
 $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save, asThis
 
 
- }
+}
 
- \author{Ken Simpson (ksimpson[at]wehi.edu.au).}
+\author{Ken Simpson, Henrik Bengtsson}
 \keyword{classes}

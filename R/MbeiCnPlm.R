@@ -6,12 +6,12 @@
 # \description{
 #  @classhierarchy
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
 #   \item{...}{Arguments passed to @see "MbeiSnpPlm".}
-#   \item{combineAlleles}{If @FALSE, allele A and allele B are treated 
+#   \item{combineAlleles}{If @FALSE, allele A and allele B are treated
 #      seperately, otherwise together.}
 # }
 #
@@ -19,7 +19,7 @@
 #  @allmethods "public"
 # }
 #
-# @author
+# @author "HB"
 #*/###########################################################################
 setConstructorS3("MbeiCnPlm", function(..., combineAlleles=FALSE) {
   extend(MbeiSnpPlm(...), c("MbeiCnPlm", uses(CnPlm())),
@@ -40,7 +40,7 @@ setMethodS3("getAsteriskTags", "MbeiCnPlm", function(this, collapse=NULL, ...) {
   tags <- paste(tags, collapse=collapse);
 
   tags;
-}, protected=TRUE) 
+}, protected=TRUE)
 
 
 

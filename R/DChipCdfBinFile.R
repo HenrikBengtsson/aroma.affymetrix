@@ -8,21 +8,21 @@
 #
 #  A DChipCdfBinFile object represents a DChip CDF.bin file.
 # }
-# 
-# @synopsis 
+#
+# @synopsis
 #
 # \arguments{
 #   \item{...}{Arguments passed to @see "AffymetrixFile".}
 # }
 #
 # \section{Fields and Methods}{
-#  @allmethods "public"  
+#  @allmethods "public"
 # }
-# 
-# @author
+#
+# @author "HB"
 #*/###########################################################################
 setConstructorS3("DChipCdfBinFile", function(...) {
-  this <- extend(AffymetrixFile(...), c("DChipCdfBinFile", 
+  this <- extend(AffymetrixFile(...), c("DChipCdfBinFile",
                                                        uses("UnitNamesFile")),
     "cached:.header" = NULL,
     "cached:.unitNames" = NULL
@@ -53,7 +53,7 @@ setMethodS3("getFileFormat", "DChipCdfBinFile", function(this, ...) {
   ver <- sprintf("v%d", as.integer(hdr$Format));
   ver;
 })
- 
+
 
 setMethodS3("getChipType", "DChipCdfBinFile", function(this, fullname=TRUE, ...) {
   hdr <- getHeader(this);
@@ -79,13 +79,13 @@ setMethodS3("getCellDim", "DChipCdfBinFile", function(this, ...) {
   hdr <- getHeader(this);
   hdr$CellDim;
 }, protected=TRUE);
- 
+
 setMethodS3("nbrOfCells", "DChipCdfBinFile", function(this, ...) {
   nbrOfCells <- getCellDim(this)^2;
   nbrOfCells <- as.integer(nbrOfCells);
   nbrOfCells;
 })
- 
+
 
 setMethodS3("findByChipType", "DChipCdfBinFile", function(this, chipType, tags=NULL, ...) {
   # Argument 'chipType':
@@ -143,7 +143,7 @@ setMethodS3("getUnitNames", "DChipCdfBinFile", function(this, units=NULL, ...) {
     names <- names[units];
 
   names;
-  
+
 })
 
 

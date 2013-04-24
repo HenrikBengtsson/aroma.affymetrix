@@ -6,15 +6,15 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
- \name{ProbeLevelModel}
+\name{ProbeLevelModel}
 \docType{class}
 \alias{ProbeLevelModel}
 
 
- \title{The ProbeLevelModel class}
+\title{The ProbeLevelModel class}
 
- \description{
-  Package:  aroma.affymetrix \cr
+\description{
+ Package:  aroma.affymetrix \cr
 \bold{Class ProbeLevelModel}\cr
 
 \code{\link[R.oo]{Object}}\cr
@@ -37,27 +37,27 @@ extends \emph{\link[aroma.affymetrix]{MultiArrayUnitModel}}\cr
 
 
 
-  This abstract class represents a probe-level model (PLM) as defined
-  by the \pkg{affyPLM} package:
-    "A [...] PLM is a model that is fit to probe-intensity data.
-     More specifically, it is where we fit a model with probe level
-     and chip level parameters on a probeset by probeset basis",
-  where the more general case for a probeset is a \emph{unit group}
-  in Affymetrix CDF terms.
- }
+ This abstract class represents a probe-level model (PLM) as defined
+ by the \pkg{affyPLM} package:
+   "A [...] PLM is a model that is fit to probe-intensity data.
+    More specifically, it is where we fit a model with probe level
+    and chip level parameters on a probeset by probeset basis",
+ where the more general case for a probeset is a \emph{unit group}
+ in Affymetrix CDF terms.
+}
 
- \usage{
+\usage{
 ProbeLevelModel(..., standardize=TRUE)
 }
 
- \arguments{
-   \item{...}{Arguments passed to \code{\link{MultiArrayUnitModel}}.}
-   \item{standardize}{If \code{\link[base:logical]{TRUE}}, chip-effect and probe-affinity estimates are
-      rescaled such that the product of the probe affinities is one.}
- }
+\arguments{
+  \item{...}{Arguments passed to \code{\link{MultiArrayUnitModel}}.}
+  \item{standardize}{If \code{\link[base:logical]{TRUE}}, chip-effect and probe-affinity estimates are
+     rescaled such that the product of the probe affinities is one.}
+}
 
- \section{Fields and Methods}{
-  \bold{Methods:}\cr
+\section{Fields and Methods}{
+ \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{\link[aroma.affymetrix:fit.ProbeLevelModel]{fit}} \tab Estimates the model parameters.\cr
  \tab \code{\link[aroma.affymetrix:getChipEffectSet.ProbeLevelModel]{getChipEffectSet}} \tab Gets the set of chip effects for this model.\cr
@@ -77,35 +77,35 @@ findUnitsTodo, getAsteriskTags, getFitSingleCellUnitFunction, getParameters
 as.character, fit, getAlias, getAsteriskTags, getDataSet, getFullName, getName, getParameterSet, getPath, getRootPath, getTags, setAlias, setTags
 
  \bold{Methods inherited from ParametersInterface}:\cr
-getParameters, getParametersAsString, getParameterSets
+getParameterSets, getParameters, getParametersAsString
 
  \bold{Methods inherited from Object}:\cr
 $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save, asThis
 
 
- }
+}
 
- \details{
-   In order to minimize the risk for mistakes, but also to be able compare
-   results from different PLMs, all PLM subclasses must meet the following
-   criteria:
-   \enumerate{
-     \item All parameter estimates must be (stored and returned) on the
-       intensity scale, e.g. log-additive models such as \code{\link{RmaPlm}}
-       have to transform the parameters on the log-scale to the intensity
-       scale.
-     \item The probe-affinity estimates \eqn{\phi_k} for a unit group
-       must be constrained such that \eqn{\prod_k \phi_k = 1},
-       or equivalently if \eqn{\phi_k > 0},\eqn{\sum_k \log(\phi_k) = 0}.
-   }
-   Note that the above probe-affinity constraint guarantees that the
-   estimated chip effects across models are on the same scale.
- }
+\details{
+  In order to minimize the risk for mistakes, but also to be able compare
+  results from different PLMs, all PLM subclasses must meet the following
+  criteria:
+  \enumerate{
+    \item All parameter estimates must be (stored and returned) on the
+      intensity scale, e.g. log-additive models such as \code{\link{RmaPlm}}
+      have to transform the parameters on the log-scale to the intensity
+      scale.
+    \item The probe-affinity estimates \eqn{\phi_k} for a unit group
+      must be constrained such that \eqn{\prod_k \phi_k = 1},
+      or equivalently if \eqn{\phi_k > 0},\eqn{\sum_k \log(\phi_k) = 0}.
+  }
+  Note that the above probe-affinity constraint guarantees that the
+  estimated chip effects across models are on the same scale.
+}
 
- \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
- \seealso{
-   For more details on probe-level models, please see
-   the \pkg{preprocessCore} package.
- }
+\seealso{
+  For more details on probe-level models, please see
+  the \pkg{preprocessCore} package.
+}
 \keyword{classes}

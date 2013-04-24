@@ -6,15 +6,15 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
- \name{DChipQuantileNormalization}
+\name{DChipQuantileNormalization}
 \docType{class}
 \alias{DChipQuantileNormalization}
 
 
- \title{The DChipQuantileNormalization class}
+\title{The DChipQuantileNormalization class}
 
- \description{
-  Package:  aroma.affymetrix \cr
+\description{
+ Package:  aroma.affymetrix \cr
 \bold{Class DChipQuantileNormalization}\cr
 
 \code{\link[R.oo]{Object}}\cr
@@ -39,23 +39,23 @@ extends \link[aroma.affymetrix]{QuantileNormalization}\cr
 
 
 
-  This class represents a special \code{\link{QuantileNormalization}}
-  using smooth-splines.
- }
+ This class represents a special \code{\link{QuantileNormalization}}
+ using smooth-splines.
+}
 
- \usage{
+\usage{
 DChipQuantileNormalization(..., robust=FALSE)
 }
 
- \arguments{
-   \item{...}{Arguments passed to the constructor of
-       \code{\link{QuantileNormalization}}.}
-   \item{robust}{If \code{\link[base:logical]{TRUE}}, the normalization function is estimated
-       robustly, otherwise not.}
- }
+\arguments{
+  \item{...}{Arguments passed to the constructor of
+      \code{\link{QuantileNormalization}}.}
+  \item{robust}{If \code{\link[base:logical]{TRUE}}, the normalization function is estimated
+      robustly, otherwise not.}
+}
 
- \section{Fields and Methods}{
-  \bold{Methods:}\cr
+\section{Fields and Methods}{
+ \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{\link[aroma.affymetrix:process.DChipQuantileNormalization]{process}} \tab Normalizes the data set.\cr
 }
@@ -74,24 +74,24 @@ getOutputDataSet, getOutputFiles
 as.character, getAsteriskTags, getExpectedOutputFiles, getExpectedOutputFullnames, getFullName, getInputDataSet, getName, getOutputDataSet, getOutputDataSet0, getOutputFiles, getPath, getRootPath, getTags, isDone, process, setTags
 
  \bold{Methods inherited from ParametersInterface}:\cr
-getParameters, getParametersAsString, getParameterSets
+getParameterSets, getParameters, getParametersAsString
 
  \bold{Methods inherited from Object}:\cr
 $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save, asThis
 
 
- }
+}
 
- \details{
-   This normalization method implements the two-pass algorithm described
-   in Bengtsson et al. (2008).
- }
+\details{
+  This normalization method implements the two-pass algorithm described
+  in Bengtsson et al. (2008).
+}
 
- \references{
-   [1] H. Bengtsson, R. Irizarry, B. Carvalho, & T.P. Speed.
-       Estimation and assessment of raw copy numbers at the single
-       locus level, Bioinformatics, 2008.
- }
+\references{
+  [1] H. Bengtsson, R. Irizarry, B. Carvalho, & T.P. Speed.
+      Estimation and assessment of raw copy numbers at the single
+      locus level, Bioinformatics, 2008.
+}
 
- \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 \keyword{classes}

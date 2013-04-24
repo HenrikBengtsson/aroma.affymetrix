@@ -6,15 +6,15 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
- \name{MatNormalization}
+\name{MatNormalization}
 \docType{class}
 \alias{MatNormalization}
 
 
- \title{The MatNormalization class}
+\title{The MatNormalization class}
 
- \description{
-  Package:  aroma.affymetrix \cr
+\description{
+ Package:  aroma.affymetrix \cr
 \bold{Class MatNormalization}\cr
 
 \code{\link[R.oo]{Object}}\cr
@@ -41,27 +41,27 @@ extends \emph{\link[aroma.affymetrix]{AbstractProbeSequenceNormalization}}\cr
 
 
 
-  This class represents a normalization method that corrects for systematic
-  effects in the probe intensities due to differences in the number of
-  A, C, G, and T:s and the match scores according to MAT [1].
- }
+ This class represents a normalization method that corrects for systematic
+ effects in the probe intensities due to differences in the number of
+ A, C, G, and T:s and the match scores according to MAT [1].
+}
 
- \usage{
+\usage{
 MatNormalization(..., unitsToFit=NULL, model=c("lm"), nbrOfBins=200)
 }
 
- \arguments{
-   \item{...}{Arguments passed to the constructor of
-     \code{\link{AbstractProbeSequenceNormalization}}.}
-   \item{unitsToFit}{The units from which the normalization curve should
-     be estimated.  If \code{\link[base]{NULL}}, all are considered.}
-   \item{model}{A \code{\link[base]{character}} string specifying the model used to fit
-     the base-count effects.}
-   \item{nbrOfBins}{The number of bins to use for the variance smoothing step.}
- }
+\arguments{
+  \item{...}{Arguments passed to the constructor of
+    \code{\link{AbstractProbeSequenceNormalization}}.}
+  \item{unitsToFit}{The units from which the normalization curve should
+    be estimated.  If \code{\link[base]{NULL}}, all are considered.}
+  \item{model}{A \code{\link[base]{character}} string specifying the model used to fit
+    the base-count effects.}
+  \item{nbrOfBins}{The number of bins to use for the variance smoothing step.}
+}
 
- \section{Fields and Methods}{
-  \bold{Methods:}\cr
+\section{Fields and Methods}{
+ \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{\link[aroma.affymetrix:process.MatNormalization]{process}} \tab Normalizes the data set.\cr
 }
@@ -83,25 +83,23 @@ getOutputDataSet, getOutputFiles
 as.character, getAsteriskTags, getExpectedOutputFiles, getExpectedOutputFullnames, getFullName, getInputDataSet, getName, getOutputDataSet, getOutputDataSet0, getOutputFiles, getPath, getRootPath, getTags, isDone, process, setTags
 
  \bold{Methods inherited from ParametersInterface}:\cr
-getParameters, getParametersAsString, getParameterSets
+getParameterSets, getParameters, getParametersAsString
 
  \bold{Methods inherited from Object}:\cr
 $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save, asThis
 
 
- }
+}
 
- \section{Requirements}{
-   This class requires that an aroma probe sequence file and aroma
-   match scores file is available for the chip type.
- }
+\section{Requirements}{
+  This class requires that an aroma probe sequence file and aroma
+  match scores file is available for the chip type.
+}
 
- \author{
-   Mark Robinson, WEHI.
- }
+\author{Mark Robinson}
 
- \references{
-   [1] Johnson WE, Li W, Meyer CA, Gottardo R, Carroll JS, Brown M, Liu XS.
-     \emph{Model-based analysis of tiling-arrays for ChIP-chip}, PNAS, 2006.
- }
+\references{
+  [1] Johnson WE, Li W, Meyer CA, Gottardo R, Carroll JS, Brown M, Liu XS.
+    \emph{Model-based analysis of tiling-arrays for ChIP-chip}, PNAS, 2006.
+}
 \keyword{classes}

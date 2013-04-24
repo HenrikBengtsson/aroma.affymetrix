@@ -9,22 +9,22 @@
 #  This abstract class represents a transformation methods that transforms
 #  probe-level signals, typically intensities.
 # }
-# 
-# @synopsis 
+#
+# @synopsis
 #
 # \arguments{
 #   \item{...}{Arguments passed to the constructor of @see "Transform".}
 # }
 #
 # \section{Fields and Methods}{
-#  @allmethods "public"  
+#  @allmethods "public"
 # }
-# 
+#
 # \details{
 #   Subclasses must implement the \code{process()} method.
 # }
 #
-# @author
+# @author "HB"
 #*/###########################################################################
 setConstructorS3("ProbeLevelTransform", function(...) {
   extend(Transform(...), "ProbeLevelTransform")

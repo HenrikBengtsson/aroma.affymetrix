@@ -90,7 +90,7 @@ update:
 # Install missing dependencies
 deps: DESCRIPTION
 	$(MAKE) update
-	$(R_SCRIPT) -e "x <- unlist(strsplit(read.dcf('DESCRIPTION',fields=c('Depends', 'Imports', 'Suggests')),',')); x <- gsub('([[:space:]]*|[(].*[)])', '', x); x <- unique(setdiff(x, c('R', rownames(installed.packages())))); if (length(x) > 0) install.packages(x)"
+	$(R_SCRIPT) -e "x <- unlist(strsplit(read.dcf('DESCRIPTION',fields=c('Depends', 'Imports', 'Suggests')),',')); x <- gsub('([[:space:]]*|[(].*[)])', '', x); x <- unique(setdiff(x, c('R', rownames(installed.packages())))); if (length(x) > 0) { install.packages(x); x <- unique(setdiff(x, c('R', rownames(installed.packages())))); source('http://bioconductor.org/biocLite.R'); biocLite(x); }"
 
 
 # Build source tarball

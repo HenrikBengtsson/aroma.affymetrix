@@ -19,7 +19,7 @@
 # }
 #
 # \value{
-#  Returns an @see "Biobase::FeatureSet-class" object.
+#  Returns an @see "oligoClasses::FeatureSet-class" object.
 # }
 #
 # @author "HB"
@@ -27,7 +27,7 @@
 # \seealso{
 #   Internally @see "oligo::read.celfiles" is used to read the data.
 #   To read \emph{summarized} data as a @see "Biobase::ExpressionSet-class"
-#   object, see @seemethod "extractExpressionSet".
+#   object, see \code{\link[aroma.affymetrix:extractExpressionSet.ChipEffectSet]{*extractExpressionSet}()}.
 #   @seeclass
 # }
 #

@@ -13,7 +13,7 @@
 # @synopsis
 #
 # \arguments{
-#  \item{csR}{...}
+#  \item{csR}{An @see "AffymetrixCelSet".}
 #  \item{...}{Additional arguments passed to @see "FirmaModel".}
 #  \item{flavor}{A @character string specifying the flavor of FIRMA to use.}
 #  \item{drop}{If @TRUE, the FIRMA scores are returned, otherwise

@@ -12,6 +12,8 @@
 
 
 % Other missing docs
+\alias{extractFeatureSet}
+\alias{extractSnpFeatureSet}
 \alias{[.AffymetrixCelFile}
 \alias{[.AffymetrixCelSet}
 \alias{[.CnagCfhFile}
@@ -222,8 +224,6 @@
 \alias{extractMatrix.ParameterCelFile}
 \alias{extractSnpCnvQSet}
 \alias{extractSnpCnvQSet.SnpChipEffectSet}
-\alias{extractSnpFeatureSet}
-\alias{extractSnpFeatureSet.AffymetrixCelSet}
 \alias{extractSnpQSet}
 \alias{extractSnpQSet.SnpChipEffectSet}
 \alias{extractTheta}

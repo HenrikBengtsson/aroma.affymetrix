@@ -18,10 +18,11 @@
 #    log-transforming the signals.  If @NULL, the signals are not
 #    transformed, but kept as is.}
 #   \item{annotationPkg}{(optional) A @character string specifies a
-#    Bioconductor (PDInfo or CDF environment) annotation package, which
-#    then sets the 'annotation' slot of the returned object.
-#    If \code{"PDInfo"} ("CDFenv") the PDInfo (CDF environment) package
-#    is inferred from the CDF's chip type.}
+#    Bioconductor (ChipDb, CDF environment or PDInfo) annotation package,
+#    which then sets the 'annotation' slot of the returned object.
+#    If \code{"ChipDb"}, \code{"cdf"} or \code{"PDInfo"} th corresponding
+#    ChipDB, CDF environment or PDInfo package is inferred from
+#    the CDF's chip type.}
 #   \item{verbose}{See @see "R.utils::Verbose".}
 # }
 #
@@ -72,16 +73,19 @@ setMethodS3("extractExpressionSet", "ChipEffectSet", function(this, ..., logBase
   if (!is.null(annotationPkg)) {
     verbose && enter(verbose, "Infer annotation string from annotation package");
 
-    if (is.element(annotationPkg, c("CDFenv", "PDInfo", "oligo", "affy"))) {
+    if (is.element(annotationPkg, c("ChipDb", "cdf", "PDInfo"))) {
       verbose && enter(verbose, "Infer annotation package name from CDF");
       cdfM <- getCdf(this);
       chipType <- getChipType(cdfM);
       chipType <- gsub(",monocell", "", chipType, fixed=TRUE);
       verbose && cat(verbose, "Chip type: ", chipType);
 
-      if (is.element(annotationPkg, c("CDFenv", "affy"))) {
+      if (is.element(annotationPkg, c("ChipDb"))) {
+        annotationPkg <- affy::cleancdfname(chipType, addcdf=FALSE);
+        annotationPkg <- sprintf("%s.db", annotationPkg);
+      } else if (is.element(annotationPkg, c("cdf"))) {
         annotationPkg <- affy::cleancdfname(chipType);
-      } else if (is.element(annotationPkg, c("PDInfo", "oligo"))) {
+      } else if (is.element(annotationPkg, c("PDInfo"))) {
         annotationPkg <- oligo::cleanPlatformName(chipType);
       }
 
@@ -121,8 +125,15 @@ setMethodS3("extractExpressionSet", "ChipEffectSet", function(this, ..., logBase
         throw("Unknown type of CDF annotation package: ", annotationPkg);
       }
       unitNames <- ls(envir=db);
-      annotation <- gsub("cdf$", "", annotationPkg);
+      annotation <- gsub("[.]cdf$", "", annotationPkg);
       rm(db, unitNames); # Not needed anymore
+    } else if (regexpr("[.]db$", annotationPkg) != -1L) {
+      db <- ns[[annotationPkg]];
+      if (is.null(db) || !inherits(db, "ChipDb")) {
+        throw("Unknown type of DB annotation package: ", annotationPkg);
+      }
+      annotation <- gsub("[.]db$", "", annotationPkg);
+      rm(db); # Not needed anymore
     } else {
       throw("Unknown type of annotation package: ", annotationPkg);
     }

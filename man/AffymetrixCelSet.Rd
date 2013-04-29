@@ -64,7 +64,7 @@ AffymetrixCelSet(files=NULL, ...)
  \tab \code{doGCRMA} \tab  -\cr
  \tab \code{doRMA} \tab  -\cr
  \tab \code{\link[aroma.affymetrix:extractAffyBatch.AffymetrixCelSet]{extractAffyBatch}} \tab Extracts an in-memory AffyBatch object from the CEL set.\cr
- \tab \code{extractFeatureSet} \tab  -\cr
+ \tab \code{\link[aroma.affymetrix:extractFeatureSet.AffymetrixCelSet]{extractFeatureSet}} \tab Extracts CEL signals an in-memory FeatureSet object.\cr
  \tab \code{\link[aroma.affymetrix:extractMatrix.AffymetrixCelSet]{extractMatrix}} \tab Extract data as a matrix for a set of arrays.\cr
  \tab \code{getAverage} \tab  -\cr
  \tab \code{getAverageAsinh} \tab  -\cr

@@ -1,3 +1,4 @@
+extractFeatureSet extractSnpFeatureSet
   [.AffymetrixCelFile [.AffymetrixCelSet [.CnagCfhFile [.CnagCfhSet
   [[.AffymetrixCelFile [[.AffymetrixCelSet [[.CnagCfhFile [[.CnagCfhSet
   addColorMap addColorMap.ArrayExplorer addColorMap.SpatialReporter
@@ -97,8 +98,7 @@
   extractMatrix.ChipEffectFile extractMatrix.ChipEffectSet
   extractMatrix.FirmaFile extractMatrix.FirmaSet
   extractMatrix.ParameterCelFile extractSnpCnvQSet
-  extractSnpCnvQSet.SnpChipEffectSet extractSnpFeatureSet
-  extractSnpFeatureSet.AffymetrixCelSet extractSnpQSet
+  extractSnpCnvQSet.SnpChipEffectSet extractSnpQSet
   extractSnpQSet.SnpChipEffectSet extractTheta
   extractTheta.ChipEffectFile extractTheta.ChipEffectSet
   extractTheta.CnChipEffectFile extractTheta.CnChipEffectSet

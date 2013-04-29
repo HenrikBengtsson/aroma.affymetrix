@@ -1,8 +1,48 @@
-#  doRMA() runs in bounded memory and replicates the results of
-#  fitPLM() in the affyPLM package with great precision.
+###########################################################################/**
+# @set "class=AffymetrixCelSet"
+# @RdocMethod "doRMA"
+# @alias doRMA.character
+# @alias doRMA
+#
+# @title "Robust Multichip Analysis (RMA)"
+#
+# \description{
+#  @get "title" based on [1].
+#  The algorithm is processed in bounded memory, meaning virtually
+#  any number of arrays can be analyzed on also very limited computer
+#  systems.
+#  The method replicates the results of @see "affyPLM::fitPLM" with
+#  great precision.
+# }
+#
+# @synopsis
+#
+# \arguments{
+#  \item{csR}{An @see "AffymetrixCelSet".}
+#  \item{arrays}{A @integer @vector specifying the subset of arrays
+#   to run RMA on.  If @NULL, all arrays are considered.}
+#  \item{uniquePlm}{If @TRUE, the log-additive probe-summarization model
+#   is done on probeset with \emph{unique} sets of probes.
+#   If @FALSE, the summarization is done on "as-is" probesets as
+#   specified by the CDF.}
+#  \item{drop}{If @TRUE, the RMA summaries are returned, otherwise
+#   a named @list of all intermediate and final results.}
+#  \item{verbose}{See @see "Verbose".}
+#  \item{...}{Not used.}
+# }
+#
+# \value{
+#   Returns a named @list, iff \code{drop == FALSE}, otherwise
+#   only @see "ChipEffectSet" object (containing the RMA summaries).
+# }
+#
+# \references{
+#  [1] ...
+# }
 #
 # @author "HB"
-setMethodS3("doRMA", "AffymetrixCelSet", function(csR, arrays=NULL, ..., uniquePlm=FALSE, drop=TRUE, ram=NULL, verbose=FALSE) {
+#*/###########################################################################
+setMethodS3("doRMA", "AffymetrixCelSet", function(csR, arrays=NULL, uniquePlm=FALSE, drop=TRUE, ram=NULL, verbose=FALSE, ...) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -36,22 +76,67 @@ setMethodS3("doRMA", "AffymetrixCelSet", function(csR, arrays=NULL, ..., uniqueP
   verbose && cat(verbose, "Fit PLM on unique probe sets: ", uniquePlm);
   verbose && cat(verbose, "ram: ", ram);
 
-
-  # List of objects to be returned
-  res <- list();
-  if (!drop) {
-    res <- c(res, list(csR=csR));
-  }
-
   verbose && cat(verbose, "Data set");
   verbose && print(verbose, csR);
 
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Subset?
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (!is.null(arrays)) {
     verbose && enter(verbose, "RMA/Extracting subset of arrays");
     csR <- extract(csR, arrays);
     verbose && cat(verbose, "Data subset");
     verbose && print(verbose, csR);
     verbose && exit(verbose);
+  }
+
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Check if the final results are already available?
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  if (drop) {
+    verbose && enter(verbose, "Checking whether final results are available or not");
+
+    # The name, tags and chip type and array names of the results to look for
+    dataSet <- getFullName(csR);
+    cdf <- getCdf(csR);
+    chipType <- getChipType(cdf, fullname=FALSE);
+
+    # The fullnames of all arrays that should exist
+    fullnames <- getFullNames(csR);
+
+    # RMA tags
+    tags <- c("RBC");
+    tags <- c(tags, "QN");
+    tags <- c(tags, "RMA");
+
+    # Try to load the final TCN data set
+    ces <- tryCatch({
+      cesT <- ChipEffectSet$byName(dataSet, tags=tags, chipType=chipType);
+      extract(cesT, fullnames, onMissing="error");
+    }, error=function(ex) { NULL });
+
+    # Done?
+    if (!is.null(ces)) {
+      verbose && cat(verbose, "Already done.");
+      verbose && print(verbose, ces);
+      verbose && exit(verbose);
+      verbose && exit(verbose);
+      return(ces);
+    } # if (!is.null(ces))
+
+    verbose && exit(verbose);
+  } # if (drop)
+
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # RMA
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # List of objects to be returned
+  res <- list();
+  if (!drop) {
+    res <- c(res, list(csR=csR));
   }
 
   verbose && enter(verbose, "RMA/Background correction (normal & exponential mixture model)");
@@ -176,6 +261,9 @@ setMethodS3("doRMA", "character", function(dataSet, ..., verbose=FALSE) {
 
 ############################################################################
 # HISTORY:
+# 2013-04-29
+# o SPEEDUP: Now doRMA() returns much quicker, iff already done.
+# o DOCUMENTATION: Added help("doRMA").
 # 2011-04-04
 # o Added argument 'drop' to doRMA().  If FALSE, all intermediate data
 #   sets and models are returned in a named list, otherwise only the

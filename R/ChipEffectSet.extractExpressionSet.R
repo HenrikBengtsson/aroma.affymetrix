@@ -6,7 +6,7 @@
 #
 # \description{
 #  @get "title" from a @see "ChipEffectSet" object.
-#  Note that any modifications done to the extract object will \emph{not}
+#  Note that any modifications done to the extracted object will \emph{not}
 #  be reflected in the original chip-effect set.
 # }
 #
@@ -17,6 +17,11 @@
 #   \item{logBase}{An @integer specifying the base to use when
 #    log-transforming the signals.  If @NULL, the signals are not
 #    transformed, but kept as is.}
+#   \item{annotationPkg}{(optional) A @character string specifies a
+#    Bioconductor (PDInfo or CDF environment) annotation package, which
+#    then sets the 'annotation' slot of the returned object.
+#    If \code{"PDInfo"} ("CDFenv") the PDInfo (CDF environment) package
+#    is inferred from the CDF's chip type.}
 #   \item{verbose}{See @see "R.utils::Verbose".}
 # }
 #
@@ -33,7 +38,7 @@
 # @keyword IO
 # @keyword programming
 #*/###########################################################################
-setMethodS3("extractExpressionSet", "ChipEffectSet", function(this, ..., logBase=2, verbose=FALSE) {
+setMethodS3("extractExpressionSet", "ChipEffectSet", function(this, ..., logBase=2, annotationPkg=NULL, verbose=FALSE) {
   require("Biobase") || throw("Package not loaded: Biobase");
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -42,6 +47,11 @@ setMethodS3("extractExpressionSet", "ChipEffectSet", function(this, ..., logBase
   # Argument 'logBase':
   if (!is.null(logBase)) {
     logBase <- Arguments$getInteger(logBase, range=c(1,Inf));
+  }
+
+  # Argument 'annotationPkg':
+  if (!is.null(annotationPkg)) {
+    annotationPkg <- Arguments$getCharacter(annotationPkg);
   }
 
   # Argument 'verbose':
@@ -55,6 +65,74 @@ setMethodS3("extractExpressionSet", "ChipEffectSet", function(this, ..., logBase
 
   verbose && print(verbose, this);
   verbose && cat(verbose, "Number of arrays: ", length(this));
+
+
+  # Annotation string
+  annotation <- character();
+  if (!is.null(annotationPkg)) {
+    verbose && enter(verbose, "Infer annotation string from annotation package");
+
+    if (is.element(annotationPkg, c("CDFenv", "PDInfo", "oligo", "affy"))) {
+      verbose && enter(verbose, "Infer annotation package name from CDF");
+      cdfM <- getCdf(this);
+      chipType <- getChipType(cdfM);
+      chipType <- gsub(",monocell", "", chipType, fixed=TRUE);
+      verbose && cat(verbose, "Chip type: ", chipType);
+
+      if (is.element(annotationPkg, c("CDFenv", "affy"))) {
+        annotationPkg <- affy::cleancdfname(chipType);
+      } else if (is.element(annotationPkg, c("PDInfo", "oligo"))) {
+        annotationPkg <- oligo::cleanPlatformName(chipType);
+      }
+
+      verbose && cat(verbose, "Inferred annotation package name: ", annotationPkg);
+
+      verbose && exit(verbose);
+    }
+
+    verbose && enter(verbose, "Loading annotation package");
+    verbose && cat(verbose, "Annotation package: ", annotationPkg);
+    require(annotationPkg, character.only=TRUE) || throw("Bioconductor annotation package not available: ", annotationPkg);
+    verbose && exit(verbose);
+
+    ns <- asNamespace(annotationPkg);
+
+    # Infer type of annotation package, i.e. CDF of PDInfo package.
+    if (regexpr("^pd[.]", annotationPkg) != -1L) {
+      db <- ns[[annotationPkg]];
+      if (is.null(db)) {
+        throw("Unknown type of PDInfo annotation package: ", annotationPkg);
+      }
+
+      # Sanity checks
+      dim <- geometry(db);
+      cdfM <- getCdf(this);
+      cdf <- getMainCdf(cdfM);
+      dim0 <- getDimension(cdf);
+      if (!isTRUE(all.equal(dim, dim0, check.attributes=FALSE))) {
+        throw(sprintf("The chip dimension of the requested annotation package ('%s') does not match the CDF: (%s) != (%s)", annotationPkg, paste(dim, collapse=", "), paste(dim0, collapse=", ")));
+      }
+
+      annotation <- annotation(db);
+      rm(db, dim, dim0); # Not needed anymore
+    } else if (regexpr("cdf$", annotationPkg) != -1L) {
+      db <- ns[[annotationPkg]];
+      if (is.null(db)) {
+        throw("Unknown type of CDF annotation package: ", annotationPkg);
+      }
+      unitNames <- ls(envir=db);
+      annotation <- gsub("cdf$", "", annotationPkg);
+      rm(db, unitNames); # Not needed anymore
+    } else {
+      throw("Unknown type of annotation package: ", annotationPkg);
+    }
+
+    annotation <- Arguments$getCharacter(annotation);
+    verbose && cat(verbose, "Annotation string: ", annotation);
+
+    rm(ns); # Not needed anymore
+    verbose && exit(verbose);
+  } # if (!is.null(annotationPkg))
 
 
   verbose && enter(verbose, "Reading data");
@@ -96,7 +174,7 @@ setMethodS3("extractExpressionSet", "ChipEffectSet", function(this, ..., logBase
   rm(names, ugNames, ugcMap, cdf);
 
   verbose && enter(verbose, "Allocating ExpressionSet object");
-  eset <- new("ExpressionSet", exprs=Y);
+  eset <- new("ExpressionSet", exprs=Y, annotation=annotation);
   verbose && print(verbose, eset);
 
   rm(Y); # Not needed anymore
@@ -110,6 +188,10 @@ setMethodS3("extractExpressionSet", "ChipEffectSet", function(this, ..., logBase
 
 ###########################################################################
 # HISTORY:
+# 2013-04-27 [HB]
+# o Added argument 'annotationPkg' to extractExpressionSet() for
+#   ChipEffectSet, which (indirectly) sets the 'annotation' slot
+#   of the returned ExpressionSet.
 # 2011-07-14 [HB]
 # o Added argument 'logBase' to extractExpressionSet().
 # 2011-07-09 [HB]

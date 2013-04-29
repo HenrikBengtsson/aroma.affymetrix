@@ -16,12 +16,12 @@
 
 \description{
  Extracts an in-memory ExpressionSet object from a \code{\link{ChipEffectSet}} object.
- Note that any modifications done to the extract object will \emph{not}
+ Note that any modifications done to the extracted object will \emph{not}
  be reflected in the original chip-effect set.
 }
 
 \usage{
-\method{extractExpressionSet}{ChipEffectSet}(this, ..., logBase=2, verbose=FALSE)
+\method{extractExpressionSet}{ChipEffectSet}(this, ..., logBase=2, annotationPkg=NULL, verbose=FALSE)
 }
 
 \arguments{
@@ -29,6 +29,11 @@
   \item{logBase}{An \code{\link[base]{integer}} specifying the base to use when
    log-transforming the signals.  If \code{\link[base]{NULL}}, the signals are not
    transformed, but kept as is.}
+  \item{annotationPkg}{(optional) A \code{\link[base]{character}} string specifies a
+   Bioconductor (PDInfo or CDF environment) annotation package, which
+   then sets the 'annotation' slot of the returned object.
+   If \code{"PDInfo"} ("CDFenv") the PDInfo (CDF environment) package
+   is inferred from the CDF's chip type.}
   \item{verbose}{See \code{\link[R.utils]{Verbose}}.}
 }
 

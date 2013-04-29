@@ -1,7 +1,11 @@
 Package: aroma.affymetrix
 =========================
 
-Version: 2.8.4 [2013-04-23]
+Version: 2.8.4 [2013-04-29]
+o Added argument 'annotationPkg' to extractExpressionSet() for
+  ChipEffectSet, which (indirectly) sets the 'annotation' slot
+  of the returned ExpressionSet.
+o Added extractFeatureSet() for AffymetrixCelSet.
 o SPEEDUP: Added ^Cyto.*Array$ to list of SNP chips that isSnpChip()
   for AffymetrixCdfFile knows of without having to scan the CDF.
 

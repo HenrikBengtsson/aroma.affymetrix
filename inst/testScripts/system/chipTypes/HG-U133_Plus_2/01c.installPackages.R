@@ -10,6 +10,7 @@ library("R.utils");
 verbose && enter(verbose, "Installing test-specific packages");
 
 pkgs <- c("BioC:limma", "BioC:oligo");
+pkgs <- c(pkgs, "BioC:hgu133plus2cdf");
 for (pkg in pkgs) {
   verbose && cat(verbose, "Package: ", pkg);
   installPkg(pkg);

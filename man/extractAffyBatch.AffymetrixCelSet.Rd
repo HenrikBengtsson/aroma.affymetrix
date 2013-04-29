@@ -44,6 +44,7 @@
 \author{Henrik Bengtsson}
 
 \seealso{
+  Internally \code{\link[affy]{read.affybatch}} is used to read the data.
   For more information see \code{\link{AffymetrixCelSet}}.
 }
 

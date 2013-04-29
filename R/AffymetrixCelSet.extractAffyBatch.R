@@ -32,6 +32,7 @@
 # @author "HB"
 #
 # \seealso{
+#   Internally @see "affy::read.affybatch" is used to read the data.
 #   @seeclass
 # }
 #

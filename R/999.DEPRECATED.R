@@ -656,7 +656,7 @@ setMethodS3("getExpectedOutputFiles", "MatSmoothing", function(this, ...) {
 # o CLEANUP: Deprecated PdInfo2Cdf() in favor (identical) pdInfo2Cdf(),
 #   because the former does not follow the Aroma naming conventions.
 PdInfo2Cdf <- function(...) {
-  .Defunction("pdInfo2Cdf");
+  .Defunct("pdInfo2Cdf");
   throw("PdInfo2Cdf() is deprecated. Use pdInfo2Cdf() instead, which works identically.");
   pdInfo2Cdf(...);
 } # PdInfo2Cdf()

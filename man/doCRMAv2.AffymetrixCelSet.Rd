@@ -14,6 +14,7 @@
 \alias{doCRMAv2.character}
 \alias{doCRMAv2}
 \alias{doASCRMAv2}
+\alias{doASCRMAv2.default}
 
 \title{A single-array preprocessing method for estimating full-resolution raw copy numbers from all Affymetrix genotyping arrays (CRMA v2)}
 

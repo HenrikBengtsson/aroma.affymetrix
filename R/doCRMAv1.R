@@ -4,6 +4,7 @@
 # @alias doCRMAv1.character
 # @alias doCRMAv1
 # @alias doASCRMAv1
+# @alias doASCRMAv1.default
 #
 # @title "Estimation and assessment of raw copy numbers at the single locus level (CRMA v1)"
 #

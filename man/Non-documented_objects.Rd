@@ -1334,10 +1334,6 @@
 \alias{extractAlleleSet.SnpChipEffectSet}
 \alias{env2Cdf}
 \alias{Env2Cdf}
-\alias{doASCRMAv1}
-\alias{doASCRMAv2}
-\alias{doASCRMAv1.default}
-\alias{doASCRMAv2.default}
 \alias{computeAffinitiesByACS}
 \alias{computeAffinitiesByACS.AffymetrixCdfFile}
 \alias{getACSFile}

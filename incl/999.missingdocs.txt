@@ -689,7 +689,6 @@ allocateFromCdf.AromaCellCpgFile
 groupUnitsByDimension
 extractAlleleSet extractAlleleSet.SnpChipEffectSet
     env2Cdf Env2Cdf
-doASCRMAv1 doASCRMAv2 doASCRMAv1.default doASCRMAv2.default
  computeAffinitiesByACS computeAffinitiesByACS.AffymetrixCdfFile
  getACSFile getACSFile.AffymetrixCdfFile
  getAromaCellSequenceFile.AffymetrixCdfFile

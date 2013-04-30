@@ -1,6 +1,8 @@
 ###########################################################################/**
 # @set "class=AffymetrixCelSet"
 # @RdocMethod extractAffyBatch
+# @alias extractAffyBatch.ChipEffectSet
+# @alias extractAffyBatch
 #
 # @title "Extracts an in-memory AffyBatch object from the CEL set"
 #

@@ -1,4 +1,3 @@
-extractFeatureSet extractSnpFeatureSet
   [.AffymetrixCelFile [.AffymetrixCelSet [.CnagCfhFile [.CnagCfhSet
   [[.AffymetrixCelFile [[.AffymetrixCelSet [[.CnagCfhFile [[.CnagCfhSet
   addColorMap addColorMap.ArrayExplorer addColorMap.SpatialReporter
@@ -87,7 +86,7 @@ extractFeatureSet extractSnpFeatureSet
   exportTotalAndFracB.CnChipEffectSet exportTotalAndFracB.DChipDcpSet
   exportTotalAndFracB.SnpChipEffectFile
   exportTotalAndFracB.SnpChipEffectSet
-  exportTotalCnRatioSet.AffymetrixCnChpSet extractAffyBatch
+  exportTotalCnRatioSet.AffymetrixCnChpSet 
   extractChromosomalDataFrame
   extractChromosomalDataFrame.ChipEffectFile
   extractChromosomalDataFrame.ChipEffectSet extractCNT
@@ -686,16 +685,11 @@ getFileSet
   writeRegions.profileCGH writeSgr writeSgr.AffymetrixCelSet
   writeSignals writeSignals.ProbeLevelTransform3 writeWig
   writeWig.CnChipEffectSet
- doCRMAv2 doCRMAv2.AffymetrixCelSet doCRMAv2.character
 allocateFromCdf.AromaCellCpgFile
-doCRMAv1 doCRMAv1.AffymetrixCelSet doCRMAv1.character
 groupUnitsByDimension
 extractAlleleSet extractAlleleSet.SnpChipEffectSet
     env2Cdf Env2Cdf
- doRMA doRMA.AffymetrixCelSet doRMA.character
 doASCRMAv1 doASCRMAv2 doASCRMAv1.default doASCRMAv2.default
-doGCRMA doGCRMA.AffymetrixCelSet doGCRMA.character
-extractAffyBatch.ChipEffectSet
  computeAffinitiesByACS computeAffinitiesByACS.AffymetrixCdfFile
  getACSFile getACSFile.AffymetrixCdfFile
  getAromaCellSequenceFile.AffymetrixCdfFile
@@ -705,7 +699,6 @@ writeCdf writeCdf.default
 findTargetDistributionFile
 findTargetDistributionFile.QuantileNormalization
   readGeneAssignments readGeneAssignments.AffymetrixNetAffxCsvFile
-extractExpressionSet
 cat getOption append 
 apply colMeans colSums library require
   createExonByTranscriptCdf getGenomeBuild

@@ -2,13 +2,17 @@ Package: aroma.affymetrix
 =========================
 
 Version: 2.8.4 [2013-04-29]
-o SPEEDUP: Now doRMA() returns much quicker, iff already done.
 o Added argument 'annotationPkg' to extractExpressionSet() for
   ChipEffectSet, which (indirectly) sets the 'annotation' slot
   of the returned ExpressionSet.
 o Added extractFeatureSet() for AffymetrixCelSet.
 o SPEEDUP: Added ^Cyto.*Array$ to list of SNP chips that isSnpChip()
   for AffymetrixCdfFile knows of without having to scan the CDF.
+o SPEEDUP: Just as doCRMAv2()/doASCRMAv2(), now also doRMA() and
+  doGCRMA() return much quicker if already processed.
+o DOCUMENTATION: Added help pages for doRMA(), doGCRMA(),
+  doCRMAv1()/doASCRMAv1() and doCRMAv2()/doASCRMAv2().
+o CLEANUP: Made several deprecated methods defunct.
 
 
 Version: 2.8.3 [2013-04-01]

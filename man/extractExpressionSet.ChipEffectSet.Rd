@@ -11,6 +11,7 @@
 \alias{extractExpressionSet.ChipEffectSet}
 \alias{ChipEffectSet.extractExpressionSet}
 \alias{extractExpressionSet,ChipEffectSet-method}
+\alias{extractExpressionSet}
 
 \title{Extracts an in-memory ExpressionSet object}
 
@@ -30,10 +31,11 @@
    log-transforming the signals.  If \code{\link[base]{NULL}}, the signals are not
    transformed, but kept as is.}
   \item{annotationPkg}{(optional) A \code{\link[base]{character}} string specifies a
-   Bioconductor (PDInfo or CDF environment) annotation package, which
-   then sets the 'annotation' slot of the returned object.
-   If \code{"PDInfo"} ("CDFenv") the PDInfo (CDF environment) package
-   is inferred from the CDF's chip type.}
+   Bioconductor (ChipDb, CDF environment or PDInfo) annotation package,
+   which then sets the 'annotation' slot of the returned object.
+   If \code{"ChipDb"}, \code{"cdf"} or \code{"PDInfo"} th corresponding
+   ChipDB, CDF environment or PDInfo package is inferred from
+   the CDF's chip type.}
   \item{verbose}{See \code{\link[R.utils]{Verbose}}.}
 }
 

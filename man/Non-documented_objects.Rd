@@ -12,8 +12,6 @@
 
 
 % Other missing docs
-\alias{extractFeatureSet}
-\alias{extractSnpFeatureSet}
 \alias{[.AffymetrixCelFile}
 \alias{[.AffymetrixCelSet}
 \alias{[.CnagCfhFile}
@@ -204,7 +202,6 @@
 \alias{exportTotalAndFracB.SnpChipEffectFile}
 \alias{exportTotalAndFracB.SnpChipEffectSet}
 \alias{exportTotalCnRatioSet.AffymetrixCnChpSet}
-\alias{extractAffyBatch}
 \alias{extractChromosomalDataFrame}
 \alias{extractChromosomalDataFrame.ChipEffectFile}
 \alias{extractChromosomalDataFrame.ChipEffectSet}
@@ -1331,29 +1328,16 @@
 \alias{writeSignals.ProbeLevelTransform3}
 \alias{writeWig}
 \alias{writeWig.CnChipEffectSet}
-\alias{doCRMAv2}
-\alias{doCRMAv2.AffymetrixCelSet}
-\alias{doCRMAv2.character}
 \alias{allocateFromCdf.AromaCellCpgFile}
-\alias{doCRMAv1}
-\alias{doCRMAv1.AffymetrixCelSet}
-\alias{doCRMAv1.character}
 \alias{groupUnitsByDimension}
 \alias{extractAlleleSet}
 \alias{extractAlleleSet.SnpChipEffectSet}
 \alias{env2Cdf}
 \alias{Env2Cdf}
-\alias{doRMA}
-\alias{doRMA.AffymetrixCelSet}
-\alias{doRMA.character}
 \alias{doASCRMAv1}
 \alias{doASCRMAv2}
 \alias{doASCRMAv1.default}
 \alias{doASCRMAv2.default}
-\alias{doGCRMA}
-\alias{doGCRMA.AffymetrixCelSet}
-\alias{doGCRMA.character}
-\alias{extractAffyBatch.ChipEffectSet}
 \alias{computeAffinitiesByACS}
 \alias{computeAffinitiesByACS.AffymetrixCdfFile}
 \alias{getACSFile}
@@ -1367,7 +1351,6 @@
 \alias{findTargetDistributionFile.QuantileNormalization}
 \alias{readGeneAssignments}
 \alias{readGeneAssignments.AffymetrixNetAffxCsvFile}
-\alias{extractExpressionSet}
 \alias{cat}
 \alias{getOption}
 \alias{append}

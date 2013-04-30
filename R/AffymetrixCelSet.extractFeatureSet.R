@@ -1,7 +1,9 @@
 ###########################################################################/**
 # @set "class=AffymetrixCelSet"
 # @RdocMethod extractFeatureSet
+# @alias extractFeatureSet
 # @aliasmethod extractSnpFeatureSet
+# @alias extractSnpFeatureSet
 #
 # @title "Extracts CEL signals an in-memory FeatureSet object"
 #

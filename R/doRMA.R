@@ -11,8 +11,8 @@
 #  The algorithm is processed in bounded memory, meaning virtually
 #  any number of arrays can be analyzed on also very limited computer
 #  systems.
-#  The method replicates the results of @see "affyPLM::fitPLM" with
-#  great precision.
+#  The method replicates the results of @see "affyPLM::fitPLM"
+#  (package \pkg{affyPLM}) with great precision.
 # }
 #
 # @synopsis
@@ -37,7 +37,9 @@
 # }
 #
 # \references{
-#  [1] ...
+#  [1] Irizarry et al.
+#      \emph{Summaries of Affymetrix GeneChip probe level data}.
+#      NAR, 2003, 31, e15.\cr
 # }
 #
 # @author "HB"

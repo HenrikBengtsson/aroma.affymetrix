@@ -7,3 +7,6 @@ csR <- AffymetrixCelSet$byName(dataSet, chipType=chipType);
 
 res <- doGCRMA(csR, drop=FALSE, verbose=verbose);
 print(res);
+
+ces <- doGCRMA(csR, verbose=verbose);
+print(ces);

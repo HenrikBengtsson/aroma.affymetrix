@@ -25,7 +25,7 @@
 }
 
 \arguments{
- \item{csR}{...}
+ \item{csR}{An \code{\link{AffymetrixCelSet}}.}
  \item{...}{Additional arguments passed to \code{\link{FirmaModel}}.}
  \item{flavor}{A \code{\link[base]{character}} string specifying the flavor of FIRMA to use.}
  \item{drop}{If \code{\link[base:logical]{TRUE}}, the FIRMA scores are returned, otherwise

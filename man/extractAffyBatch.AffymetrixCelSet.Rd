@@ -11,6 +11,8 @@
 \alias{extractAffyBatch.AffymetrixCelSet}
 \alias{AffymetrixCelSet.extractAffyBatch}
 \alias{extractAffyBatch,AffymetrixCelSet-method}
+\alias{extractAffyBatch.ChipEffectSet}
+\alias{extractAffyBatch}
 
 \title{Extracts an in-memory AffyBatch object from the CEL set}
 

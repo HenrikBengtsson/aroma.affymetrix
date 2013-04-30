@@ -1,13 +1,53 @@
-#  doGCRMA() runs in bounded memory and replicates the results of
-#  @see "gcrma::gcrma" in the \pkg{gcrma} package with great precision.
+###########################################################################/**
+# @set "class=AffymetrixCelSet"
+# @RdocMethod "doGCRMA"
+# @alias doGCRMA.character
+# @alias doGCRMA
 #
-# @author "HB"
+# @title "Robust Multichip Analysis (GCRMA)"
+#
+# \description{
+#  @get "title" based on [1].
+#  The algorithm is processed in bounded memory, meaning virtually
+#  any number of arrays can be analyzed on also very limited computer
+#  systems.
+#  The method replicates the results of @see "gcrma::gcrma"
+#  (package \pkg{gcrma}) with great precision.
+# }
+#
+# @synopsis
+#
+# \arguments{
+#  \item{csR}{An @see "AffymetrixCelSet".}
+#  \item{arrays}{A @integer @vector specifying the subset of arrays
+#   to run RMA on.  If @NULL, all arrays are considered.}
+#  \item{type}{A @character string specifying what type of model to
+#   use for the GCRMA background correction.
+#   For more details, see @see "GcRmaBackgroundCorrection".}
+#  \item{uniquePlm}{If @TRUE, the log-additive probe-summarization model
+#   is done on probeset with \emph{unique} sets of probes.
+#   If @FALSE, the summarization is done on "as-is" probesets as
+#   specified by the CDF.}
+#  \item{drop}{If @TRUE, the RMA summaries are returned, otherwise
+#   a named @list of all intermediate and final results.}
+#  \item{verbose}{See @see "Verbose".}
+#  \item{...}{Not used.}
+# }
+#
+# \value{
+#   Returns a named @list, iff \code{drop == FALSE}, otherwise
+#   only @see "ChipEffectSet" object (containing the RMA summaries).
+# }
 #
 # \references{
-#  [1] Z. Wu, R. Irizarry, R. Gentleman, F.M. Murillo & F. Spencer, A Model Based Background Adjustment for Oligonucleotide Expression Arrays, JASA, 2004.
+#  [1] Z. Wu, R. Irizarry, R. Gentleman, F.M. Murillo & F. Spencer.
+#      \emph{A Model Based Background Adjustment for Oligonucleotide
+#      Expression Arrays}, JASA, 2004.\cr
 # }
-
-setMethodS3("doGCRMA", "AffymetrixCelSet", function(csR, arrays=NULL, type=c("fullmodel", "affinities"), ..., uniquePlm=FALSE, drop=TRUE, ram=NULL, verbose=FALSE) {
+#
+# @author "HB"
+#*/###########################################################################
+setMethodS3("doGCRMA", "AffymetrixCelSet", function(csR, arrays=NULL, type=c("fullmodel", "affinities"), uniquePlm=FALSE, drop=TRUE, ram=NULL, verbose=FALSE, ...) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -46,16 +86,12 @@ setMethodS3("doGCRMA", "AffymetrixCelSet", function(csR, arrays=NULL, type=c("fu
   verbose && cat(verbose, "Fit PLM on unique probe sets: ", uniquePlm);
   verbose && cat(verbose, "ram: ", ram);
 
-
-  # List of objects to be returned
-  res <- list();
-  if (!drop) {
-    res <- c(res, list(csR=csR));
-  }
-
   verbose && cat(verbose, "Data set");
   verbose && print(verbose, csR);
 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Subset?
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (!is.null(arrays)) {
     verbose && enter(verbose, "GCRMA/Extracting subset of arrays");
     csR <- extract(csR, arrays);
@@ -63,6 +99,56 @@ setMethodS3("doGCRMA", "AffymetrixCelSet", function(csR, arrays=NULL, type=c("fu
     verbose && print(verbose, csR);
     verbose && exit(verbose);
   }
+
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Check if the final results are already available?
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  if (drop) {
+    verbose && enter(verbose, "Checking whether final results are available or not");
+
+    # The name, tags and chip type and array names of the results to look for
+    dataSet <- getFullName(csR);
+    cdf <- getCdf(csR);
+    chipType <- getChipType(cdf, fullname=FALSE);
+
+    # The fullnames of all arrays that should exist
+    fullnames <- getFullNames(csR);
+
+    # gcRMA tags
+    tags <- c("GRBC"); # Same tags regardless of 'type' argument
+    tags <- c(tags, "QN");
+    tags <- c(tags, "RMA,oligo");
+
+    # Try to load the final TCN data set
+    ces <- tryCatch({
+      cesT <- ChipEffectSet$byName(dataSet, tags=tags, chipType=chipType);
+      extract(cesT, fullnames, onMissing="error");
+    }, error=function(ex) { NULL });
+
+    # Done?
+    if (!is.null(ces)) {
+      verbose && cat(verbose, "Already done.");
+      verbose && print(verbose, ces);
+      verbose && exit(verbose);
+      verbose && exit(verbose);
+      return(ces);
+    } # if (!is.null(ces))
+
+    verbose && exit(verbose);
+  } # if (drop)
+
+
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # RMA
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # List of objects to be returned
+  res <- list();
+  if (!drop) {
+    res <- c(res, list(csR=csR));
+  }
+
 
   verbose && enter(verbose, "GCRMA/Background correction");
 

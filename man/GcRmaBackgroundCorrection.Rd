@@ -96,5 +96,11 @@ $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCa
 
 }
 
+\references{
+ [1] Z. Wu, R. Irizarry, R. Gentleman, F.M. Murillo & F. Spencer.
+     \emph{A Model Based Background Adjustment for Oligonucleotide
+     Expression Arrays}, JASA, 2004.\cr
+}
+
 \author{Ken Simpson, Henrik Bengtsson}
 \keyword{classes}

@@ -1,5 +1,59 @@
+###########################################################################/**
+# @set "class=AffymetrixCelSet"
+# @RdocMethod "doCRMAv1"
+# @alias doCRMAv1.character
+# @alias doCRMAv1
+# @alias doASCRMAv1
+#
+# @title "Estimation and assessment of raw copy numbers at the single locus level (CRMA v1)"
+#
+# \description{
+#  @get "title" based on [1].
+#  The algorithm is processed in bounded memory, meaning virtually
+#  any number of arrays can be analyzed on also very limited computer
+#  systems.
+#
+#  \code{doASCRMAv1(...)} is a wrapper for
+#  \code{doCRMAv1(..., combineAlleles=FALSE)}.
+# }
+#
+# @synopsis
+#
+# \arguments{
+#  \item{csR}{An @see "AffymetrixCelSet".}
+#  \item{shift}{An tuning parameter specifying how much to shift the
+#   probe signals before probe summarization.}
+#  \item{combineAlleles}{A @logical specifying whether allele probe pairs
+#   should be summed before modelling or not.}
+#  \item{lengthRange}{}
+#  \item{arrays}{A @integer @vector specifying the subset of arrays
+#   to run RMA on.  If @NULL, all arrays are considered.}
+#  \item{plm}{}
+#  \item{drop}{If @TRUE, the RMA summaries are returned, otherwise
+#   a named @list of all intermediate and final results.}
+#  \item{verbose}{See @see "Verbose".}
+#  \item{...}{Not used.}
+# }
+#
+# \value{
+#   Returns a named @list, iff \code{drop == FALSE}, otherwise
+#   only @see "ChipEffectSet" object (containing the RMA summaries).
+# }
+#
+# \references{
+#  [1] H. Bengtsson, R. Irizarry, B. Carvalho & T.P. Speed.
+#      \emph{Estimation and assessment of raw copy numbers at the
+#      single locus level},
+#      Bioinformatics, 2008.\cr
+# }
+#
+# \seealso{
+#  @see "doCRMAv2".
+# }
+#
 # @author "HB"
-setMethodS3("doCRMAv1", "AffymetrixCelSet", function(csR, shift=+300, combineAlleles=TRUE, lengthRange=NULL, arrays=NULL, ..., drop=TRUE, ram=NULL, verbose=FALSE) {
+#*/###########################################################################
+setMethodS3("doCRMAv1", "AffymetrixCelSet", function(csR, shift=+300, combineAlleles=TRUE, lengthRange=NULL, arrays=NULL, drop=TRUE, ram=NULL, verbose=FALSE, ...) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

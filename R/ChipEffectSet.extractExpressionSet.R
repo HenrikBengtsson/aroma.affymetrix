@@ -1,6 +1,7 @@
 ###########################################################################/**
 # @set "class=ChipEffectSet"
 # @RdocMethod extractExpressionSet
+# @alias extractExpressionSet
 #
 # @title "Extracts an in-memory ExpressionSet object"
 #

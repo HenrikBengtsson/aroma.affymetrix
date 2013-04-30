@@ -78,7 +78,7 @@ setMethodS3("[[", "CnagCfhSet", function(this, units=NULL, ...) {
 setMethodS3("fromName", "AffymetrixCelSet", function(static, ...) {
   .Defunct("byName");
   className <- class(static)[1];
-  msg <- sprintf("%s$fromName() is defunct. Use %s$byName() instead.", 
+  msg <- sprintf("%s$fromName() is defunct. Use %s$byName() instead.",
                                                 className, className);
   throw(msg);
 }, static=TRUE, protected=TRUE, deprecated=TRUE)
@@ -86,7 +86,7 @@ setMethodS3("fromName", "AffymetrixCelSet", function(static, ...) {
 setMethodS3("fromName", "CnagCfhSet", function(static, ...) {
   .Defunct("byName");
   className <- class(static)[1];
-  msg <- sprintf("%s$fromName() is defunct. Use %s$byName() instead.", 
+  msg <- sprintf("%s$fromName() is defunct. Use %s$byName() instead.",
                                                 className, className);
   throw(msg);
 }, static=TRUE, protected=TRUE, deprecated=TRUE)
@@ -94,7 +94,7 @@ setMethodS3("fromName", "CnagCfhSet", function(static, ...) {
 setMethodS3("fromName", "DChipDcpSet", function(static, ...) {
   .Defunct("byName");
   className <- class(static)[1];
-  msg <- sprintf("%s$fromName() is defunct. Use %s$byName() instead.", 
+  msg <- sprintf("%s$fromName() is defunct. Use %s$byName() instead.",
                                                 className, className);
   throw(msg);
 }, static=TRUE, protected=TRUE, deprecated=TRUE)
@@ -111,7 +111,7 @@ setMethodS3("fromName", "DChipDcpSet", function(static, ...) {
 setMethodS3("fromChipType", "AffymetrixCsvGenomeInformation", function(static, ...) {
   .Defunct("byChipType");
   className <- class(static)[1];
-  msg <- sprintf("%s$fromChipType() is defunct. Use %s$byChipType() instead.", 
+  msg <- sprintf("%s$fromChipType() is defunct. Use %s$byChipType() instead.",
                                                         className, className);
   throw(msg);
 }, static=TRUE, protected=TRUE, deprecated=TRUE)
@@ -119,7 +119,7 @@ setMethodS3("fromChipType", "AffymetrixCsvGenomeInformation", function(static, .
 setMethodS3("fromChipType", "AffymetrixProbeTabFile", function(static, ...) {
   .Defunct("byChipType");
   className <- class(static)[1];
-  msg <- sprintf("%s$fromChipType() is defunct. Use %s$byChipType() instead.", 
+  msg <- sprintf("%s$fromChipType() is defunct. Use %s$byChipType() instead.",
                                                         className, className);
   throw(msg);
 }, static=TRUE, protected=TRUE, deprecated=TRUE)
@@ -127,7 +127,7 @@ setMethodS3("fromChipType", "AffymetrixProbeTabFile", function(static, ...) {
 setMethodS3("fromChipType", "AffymetrixTabularFile", function(static, ...) {
   .Defunct("byChipType");
   className <- class(static)[1];
-  msg <- sprintf("%s$fromChipType() is defunct. Use %s$byChipType() instead.", 
+  msg <- sprintf("%s$fromChipType() is defunct. Use %s$byChipType() instead.",
                                                         className, className);
   throw(msg);
 }, static=TRUE, protected=TRUE, deprecated=TRUE)
@@ -135,7 +135,7 @@ setMethodS3("fromChipType", "AffymetrixTabularFile", function(static, ...) {
 setMethodS3("fromChipType", "AffymetrixTsvFile", function(static, ...) {
   .Defunct("byChipType");
   className <- class(static)[1];
-  msg <- sprintf("%s$fromChipType() is defunct. Use %s$byChipType() instead.", 
+  msg <- sprintf("%s$fromChipType() is defunct. Use %s$byChipType() instead.",
                                                         className, className);
   throw(msg);
 }, static=TRUE, protected=TRUE, deprecated=TRUE)
@@ -143,7 +143,7 @@ setMethodS3("fromChipType", "AffymetrixTsvFile", function(static, ...) {
 setMethodS3("fromChipType", "AromaChipTypeAnnotationFile", function(static, ...) {
   .Defunct("byChipType");
   className <- class(static)[1];
-  msg <- sprintf("%s$fromChipType() is defunct. Use %s$byChipType() instead.", 
+  msg <- sprintf("%s$fromChipType() is defunct. Use %s$byChipType() instead.",
                                                         className, className);
   throw(msg);
 }, static=TRUE, protected=TRUE, deprecated=TRUE)
@@ -151,7 +151,7 @@ setMethodS3("fromChipType", "AromaChipTypeAnnotationFile", function(static, ...)
 setMethodS3("fromChipType", "DChipGenomeInformation", function(static, ...) {
   .Defunct("byChipType");
   className <- class(static)[1];
-  msg <- sprintf("%s$fromChipType() is defunct. Use %s$byChipType() instead.", 
+  msg <- sprintf("%s$fromChipType() is defunct. Use %s$byChipType() instead.",
                                                         className, className);
   throw(msg);
 }, static=TRUE, protected=TRUE, deprecated=TRUE)
@@ -159,7 +159,7 @@ setMethodS3("fromChipType", "DChipGenomeInformation", function(static, ...) {
 setMethodS3("fromChipType", "DChipSnpInformation", function(static, ...) {
   .Defunct("byChipType");
   className <- class(static)[1];
-  msg <- sprintf("%s$fromChipType() is defunct. Use %s$byChipType() instead.", 
+  msg <- sprintf("%s$fromChipType() is defunct. Use %s$byChipType() instead.",
                                                         className, className);
   throw(msg);
 }, static=TRUE, protected=TRUE, deprecated=TRUE)
@@ -167,7 +167,7 @@ setMethodS3("fromChipType", "DChipSnpInformation", function(static, ...) {
 setMethodS3("fromChipType", "GenomeInformation", function(static, ...) {
   .Defunct("byChipType");
   className <- class(static)[1];
-  msg <- sprintf("%s$fromChipType() is defunct. Use %s$byChipType() instead.", 
+  msg <- sprintf("%s$fromChipType() is defunct. Use %s$byChipType() instead.",
                                                         className, className);
   throw(msg);
 }, static=TRUE, protected=TRUE, deprecated=TRUE)
@@ -175,7 +175,7 @@ setMethodS3("fromChipType", "GenomeInformation", function(static, ...) {
 setMethodS3("fromChipType", "SnpInformation", function(static, ...) {
   .Defunct("byChipType");
   className <- class(static)[1];
-  msg <- sprintf("%s$fromChipType() is defunct. Use %s$byChipType() instead.", 
+  msg <- sprintf("%s$fromChipType() is defunct. Use %s$byChipType() instead.",
                                                         className, className);
   throw(msg);
 }, static=TRUE, protected=TRUE, deprecated=TRUE)
@@ -183,7 +183,7 @@ setMethodS3("fromChipType", "SnpInformation", function(static, ...) {
 setMethodS3("fromChipType", "UflSnpInformation", function(static, ...) {
   .Defunct("byChipType");
   className <- class(static)[1];
-  msg <- sprintf("%s$fromChipType() is defunct. Use %s$byChipType() instead.", 
+  msg <- sprintf("%s$fromChipType() is defunct. Use %s$byChipType() instead.",
                                                         className, className);
   throw(msg);
 }, static=TRUE, protected=TRUE, deprecated=TRUE)
@@ -191,7 +191,7 @@ setMethodS3("fromChipType", "UflSnpInformation", function(static, ...) {
 setMethodS3("fromChipType", "UgpGenomeInformation", function(static, ...) {
   .Defunct("byChipType");
   className <- class(static)[1];
-  msg <- sprintf("%s$fromChipType() is defunct. Use %s$byChipType() instead.", 
+  msg <- sprintf("%s$fromChipType() is defunct. Use %s$byChipType() instead.",
                                                         className, className);
   throw(msg);
 }, static=TRUE, protected=TRUE, deprecated=TRUE)
@@ -201,9 +201,9 @@ setMethodS3("fromChipType", "UgpGenomeInformation", function(static, ...) {
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # readData() => readDataFrame()
 #
-# Version: 0.9.1.4 [2008-05-09] (Never released) 
-# o CLEAN UP: Renamed all readData() methods that return a data.frame 
-#   to readDataFrame(). 
+# Version: 0.9.1.4 [2008-05-09] (Never released)
+# o CLEAN UP: Renamed all readData() methods that return a data.frame
+#   to readDataFrame().
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 setMethodS3("readData", "AffymetrixTsvFile", function(this, ...) {
   .Defunct("readDataFrame");
@@ -225,8 +225,8 @@ setMethodS3("readData", "SnpInformation", function(this, ...) {
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # getCellMap() => getUnitGroupCellMap()
 #
-# Version: 0.9.1.4 [2008-05-09] (Never released) 
-# o DEFUNCT: All getCellMap() are now defunct; use getUnitGroupCellMap(). 
+# Version: 0.9.1.4 [2008-05-09] (Never released)
+# o DEFUNCT: All getCellMap() are now defunct; use getUnitGroupCellMap().
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 setMethodS3("getCellMap", "ChipEffectFile", function(this, ...) {
   .Defunct("getUnitGroupCellMap");
@@ -306,7 +306,7 @@ setMethodS3("bgAdjustOptical", "AffymetrixCelSet", function(this, ...) {
 setMethodS3("bgAdjustRma", "AffymetrixCelSet", function(this, ...) {
   .Defunct("RmaBackgroundCorrection");
 }, private=TRUE, deprecated=TRUE)
-  
+
 
 setMethodS3("getUnitSizes", "AffymetrixCdfFile", function(this, ...) {
   .Deprecated("nbrOfGroupsPerUnit");
@@ -314,17 +314,19 @@ setMethodS3("getUnitSizes", "AffymetrixCdfFile", function(this, ...) {
 }, protected=TRUE, deprecated=TRUE)
 
 
+# 2013-04-29 [HB]
+# o Made getUnique(), createUnique(), createMonoCell(), doCRMA() defunct.
 # 2011-04-15 [HB]
-# o DEPRECATED: getUnique() and createUnique() are deprecated. 
+# o DEPRECATED: getUnique() and createUnique() are deprecated.
 #   Use getUniqueCdf() and createUniqueCdf() instead.
 setMethodS3("getUnique", "AffymetrixCdfFile", function(this, ...) {
-  .Deprecated("getUniqueCdf");
+  .Defunct("getUniqueCdf");
   getUniqueCdf(this, ...);
 }, protected=TRUE, deprecated=TRUE)
 
 
 setMethodS3("createUnique", "AffymetrixCdfFile", function(this, ...) {
-  .Deprecated("createUniqueCdf");
+  .Defunct("createUniqueCdf");
   createUniqueCdf(this, ...);
 }, protected=TRUE, deprecated=TRUE)
 
@@ -336,7 +338,7 @@ setMethodS3("getMonoCell", "AffymetrixCdfFile", function(this, ...) {
 
 
 setMethodS3("createMonoCell", "AffymetrixCdfFile", function(this, ...) {
-  .Deprecated("createMonocellCdf");
+  .Defunct("createMonocellCdf");
   createMonocellCdf(this, ...);
 }, protected=TRUE, deprecated=TRUE)
 
@@ -362,7 +364,7 @@ setMethodS3("calculateResiduals", "FirmaModel", function(this, ...) {
 # 2011-11-19
 # o Deprecated doCRMA().  Use doCRMAv1() or doCRMAv2() instead.
 setMethodS3("doCRMA", "default", function(dataSet, chipTypes=NULL, ..., logName=NULL, ram=NULL, verbose=-8) {
-  .Deprecated("doCRMAv1");
+  .Defunct("doCRMAv1");
 
   csRawList <- NULL;
 
@@ -405,7 +407,7 @@ setMethodS3("doCRMA", "default", function(dataSet, chipTypes=NULL, ..., logName=
   if (verbose) {
     pushState(verbose);
     on.exit(popState(verbose));
-  } 
+  }
 
   # Return object
   fit <- list();
@@ -414,7 +416,7 @@ setMethodS3("doCRMA", "default", function(dataSet, chipTypes=NULL, ..., logName=
   # Setup log file
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (is.null(logName)) {
-    mergedChipTypes <- mergeByCommonTails(chipTypes, collapse="+"); 
+    mergedChipTypes <- mergeByCommonTails(chipTypes, collapse="+");
     logName <- sprintf("%s,%s", dataSet, mergedChipTypes);
   }
   logDate <- format(Sys.time(), "%Y%m%d-%H%M%S");
@@ -434,9 +436,9 @@ setMethodS3("doCRMA", "default", function(dataSet, chipTypes=NULL, ..., logName=
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (is.null(csRawList)) {
     csRawList <- list();
-    for (chipType in chipTypes) {  
+    for (chipType in chipTypes) {
       cs <- AffymetrixCelSet$byName(dataSet, chipType=chipType);
-      log && print(log, cs); 
+      log && print(log, cs);
       csRawList[[chipType]] <- cs;
       rm(cs);
     }
@@ -493,7 +495,7 @@ setMethodS3("doCRMA", "default", function(dataSet, chipTypes=NULL, ..., logName=
 
     # Identify units on sex chromosomes
     chromosomes <- intersect(23:24, getChromosomes(gi));
-    unitsXY <- getUnitsOnChromosomes(gi, chromosomes); 
+    unitsXY <- getUnitsOnChromosomes(gi, chromosomes);
     nbrOfUnits <- nbrOfUnits(cdf);
     log && printf(log, "Identified %d units (%.1f%%) on sex chromosomes out of %d\n", length(unitsXY), 100*length(unitsXY)/nbrOfUnits, nbrOfUnits);
 
@@ -515,7 +517,7 @@ setMethodS3("doCRMA", "default", function(dataSet, chipTypes=NULL, ..., logName=
 
     # Validation
     stopifnot(identical(getNames(csC), getNames(cs)));
-   
+
     # Storing results
     csCList[[chipType]] <- csC;
     rm(cs, csC);
@@ -596,9 +598,9 @@ setMethodS3("doCRMA", "default", function(dataSet, chipTypes=NULL, ..., logName=
 
     # Identify units on sex chromosomes
     chromosomes <- intersect(23:24, getChromosomes(gi));
-    unitsXY <- getUnitsOnChromosomes(gi, chromosomes); 
+    unitsXY <- getUnitsOnChromosomes(gi, chromosomes);
     nbrOfUnits <- nbrOfUnits(cdf);
-    unitsNotXY <- setdiff(1:nbrOfUnits, unitsXY); 
+    unitsNotXY <- setdiff(1:nbrOfUnits, unitsXY);
     log && printf(log, "Identified %d units (%.1f%%) on sex chromosomes out of %d\n", length(unitsXY), 100*length(unitsXY)/nbrOfUnits, nbrOfUnits);
     rm(unitsXY);
 
@@ -648,14 +650,16 @@ setMethodS3("getExpectedOutputFiles", "MatSmoothing", function(this, ...) {
 }, protected=TRUE, deprecated=TRUE)
 
 
+# 2013-04-29
+# o Made PdInfo2Cdf() defunct.
 # 2012-03-23
-# o CLEANUP: Deprecated PdInfo2Cdf() in favor (identical) pdInfo2Cdf(), 
-#   because the former does not follow the Aroma naming conventions. 
+# o CLEANUP: Deprecated PdInfo2Cdf() in favor (identical) pdInfo2Cdf(),
+#   because the former does not follow the Aroma naming conventions.
 PdInfo2Cdf <- function(...) {
-  .Deprecated("pdInfo2Cdf");
+  .Defunction("pdInfo2Cdf");
   throw("PdInfo2Cdf() is deprecated. Use pdInfo2Cdf() instead, which works identically.");
   pdInfo2Cdf(...);
-} # PdInfo2Cdf() 
+} # PdInfo2Cdf()
 
 
 
@@ -671,6 +675,8 @@ setMethodS3("getData", "AffymetrixCelFile", function(this, ...) {
 
 ############################################################################
 # HISTORY:
+# 2013-04-29
+# o CLEANUP: Made several deprecated methods defunct.
 # 2012-11-20
 # o Deprecated getParameterSet() in favor of old getParameters().
 # o Defuncted bgAdjust(Optical|Rma)() for AffymetrixCelSet.

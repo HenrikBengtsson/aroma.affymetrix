@@ -11,10 +11,12 @@
 \alias{extractFeatureSet.AffymetrixCelSet}
 \alias{AffymetrixCelSet.extractFeatureSet}
 \alias{extractFeatureSet,AffymetrixCelSet-method}
+\alias{extractFeatureSet}
 \alias{AffymetrixCelSet.extractSnpFeatureSet}
 \alias{extractSnpFeatureSet.AffymetrixCelSet}
 \alias{extractSnpFeatureSet,AffymetrixCelSet-method}
 
+\alias{extractSnpFeatureSet}
 
 \title{Extracts CEL signals an in-memory FeatureSet object}
 

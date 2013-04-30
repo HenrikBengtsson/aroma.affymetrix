@@ -1,5 +1,58 @@
+###########################################################################/**
+# @set "class=AffymetrixCelSet"
+# @RdocMethod "doCRMAv2"
+# @alias doCRMAv2.character
+# @alias doCRMAv2
+# @alias doASCRMAv2
+#
+# @title "A single-array preprocessing method for estimating full-resolution raw copy numbers from all Affymetrix genotyping arrays (CRMA v2)"
+#
+# \description{
+#  @get "title" based on [1].
+#  The algorithm is processed in bounded memory, meaning virtually
+#  any number of arrays can be analyzed on also very limited computer
+#  systems.
+#
+#  \code{doASCRMAv2(...)} is a wrapper for
+#  \code{doCRMAv2(..., combineAlleles=FALSE)}.
+# }
+#
+# @synopsis
+#
+# \arguments{
+#  \item{csR}{An @see "AffymetrixCelSet".}
+#  \item{combineAlleles}{A @logical specifying whether allele probe pairs
+#   should be summed before modelling or not.}
+#  \item{lengthRange}{}
+#  \item{arrays}{A @integer @vector specifying the subset of arrays
+#   to run RMA on.  If @NULL, all arrays are considered.}
+#  \item{plm}{}
+#  \item{drop}{If @TRUE, the RMA summaries are returned, otherwise
+#   a named @list of all intermediate and final results.}
+#  \item{verbose}{See @see "Verbose".}
+#  \item{...}{Not used.}
+# }
+#
+# \value{
+#   Returns a named @list, iff \code{drop == FALSE}, otherwise
+#   only @see "ChipEffectSet" object (containing the RMA summaries).
+# }
+#
+# \references{
+#  [1] H. Bengtsson, P. Wirapati & T.P. Speed.
+#      \emph{A single-array preprocessing method for estimating
+#      full-resolution raw copy numbers from all Affymetrix
+#      genotyping arrays including GenomeWideSNP 5 \& 6},
+#      Bioinformatics, 2009.\cr
+# }
+#
+# \seealso{
+#  @see "doCRMAv1".
+# }
+#
 # @author "HB"
-setMethodS3("doCRMAv2", "AffymetrixCelSet", function(csR, combineAlleles=TRUE, lengthRange=NULL, arrays=NULL, ..., plm=c("AvgCnPlm", "RmaCnPlm"), drop=TRUE, ram=NULL, verbose=FALSE) {
+#*/###########################################################################
+setMethodS3("doCRMAv2", "AffymetrixCelSet", function(csR, combineAlleles=TRUE, lengthRange=NULL, arrays=NULL, plm=c("AvgCnPlm", "RmaCnPlm"), drop=TRUE, ram=NULL, verbose=FALSE, ...) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

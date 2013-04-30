@@ -37,6 +37,12 @@
 #  @allmethods "public"
 # }
 #
+# \references{
+#  [1] Z. Wu, R. Irizarry, R. Gentleman, F.M. Murillo & F. Spencer.
+#      \emph{A Model Based Background Adjustment for Oligonucleotide
+#      Expression Arrays}, JASA, 2004.\cr
+# }
+#
 # @author "KS, HB"
 #*/###########################################################################
 setConstructorS3("GcRmaBackgroundCorrection", function(..., indicesNegativeControl=NULL, affinities=NULL, type=c("fullmodel", "affinities"), opticalAdjust=TRUE, gsbAdjust=TRUE, gsbParameters=NULL) {

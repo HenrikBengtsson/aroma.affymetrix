@@ -26,7 +26,7 @@
 }
 
 \usage{
-\method{doGCRMA}{AffymetrixCelSet}(csR, arrays=NULL, type=c("fullmodel", "affinities"), ..., uniquePlm=FALSE, drop=TRUE, ram=NULL, verbose=FALSE)
+\method{doGCRMA}{AffymetrixCelSet}(csR, arrays=NULL, type=c("fullmodel", "affinities"), uniquePlm=FALSE, drop=TRUE, ram=NULL, verbose=FALSE, ...)
 }
 
 \arguments{

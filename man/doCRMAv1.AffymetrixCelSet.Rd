@@ -28,7 +28,7 @@
 }
 
 \usage{
-\method{doCRMAv1}{AffymetrixCelSet}(csR, shift=+300, combineAlleles=TRUE, lengthRange=NULL, arrays=NULL, ..., drop=TRUE, ram=NULL, verbose=FALSE)
+\method{doCRMAv1}{AffymetrixCelSet}(csR, shift=+300, combineAlleles=TRUE, lengthRange=NULL, arrays=NULL, drop=TRUE, ram=NULL, verbose=FALSE, ...)
 }
 
 \arguments{

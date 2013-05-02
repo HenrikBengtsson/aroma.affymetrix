@@ -9,8 +9,8 @@
 # }
 #
 # \usage{
-#   \method{doFIRMA}{AffymetrixCelSet}(csR, arrays=NULL, uniquePlm=FALSE, drop=TRUE, ram=NULL, verbose=FALSE, ...)
-#   \method{doFIRMA}{default}(dataSet, ...)
+#   \method{doFIRMA}{AffymetrixCelSet}(csR, ..., flavor=c("v1b", "v1a"), drop=TRUE, verbose=FALSE, ...)
+#   \method{doFIRMA}{default}(dataSet, ..., verbose=FALSE)
 # }
 #
 # \arguments{
@@ -86,6 +86,16 @@ setMethodS3("doFIRMA", "AffymetrixCelSet", function(csR, ..., flavor=c("v1b", "v
   verbose && cat(verbose, "Arguments:");
   verbose && str(verbose, list(...));
 
+  # Backward compatibility
+  ram <- list(...)$ram;
+  if (!is.null(ram)) {
+    ram <- Arguments$getDouble(ram, range=c(0,Inf));
+    verbose && cat(verbose, "ram: ", ram);
+    oram <- setOption(aromaSettings, "memory/ram", ram);
+    on.exit({
+      setOption(aromaSettings, "memory/ram", oram);
+    });
+  }
 
   # List of objects to be returned
   res <- list();
@@ -223,7 +233,7 @@ setMethodS3("doFIRMA", "AffymetrixCelSet", function(csR, ..., flavor=c("v1b", "v
   verbose && enter(verbose, "FIRMA/Alternative Splicing Analysis");
 
   # Setup FIRMA model
-  firma <- FirmaModel(plm, ...);
+  firma <- FirmaModel(plm, ..., .onUnknownArgs="warning");
   verbose && print(verbose, firma);
 
   units <- fit(firma, verbose=verbose);
@@ -290,6 +300,8 @@ setMethodS3("doFIRMA", "default", function(dataSet, ..., verbose=FALSE) {
 
 ############################################################################
 # HISTORY:
+# 2013-05-02
+# o Removed argument 'ram' in favor of aroma option 'memory/ram'.
 # 2011-11-10
 # o Added Rdoc comments.
 # o Created from doGCRMA.R.

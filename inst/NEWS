@@ -13,6 +13,8 @@ o SPEEDUP: Added ^Cyto.*Array$ to list of SNP chips that isSnpChip()
   for AffymetrixCdfFile knows of without having to scan the CDF.
 o SPEEDUP: Just as doCRMAv2()/doASCRMAv2(), now also doRMA() and
   doGCRMA() return much quicker if already processed.
+o CLEANUP: Removed argument 'ram' from doNnn() methods in favor
+  setOption(aromaSettings, 'memory/ram', ram).
 o CLEANUP: Made several deprecated methods defunct.
 
 

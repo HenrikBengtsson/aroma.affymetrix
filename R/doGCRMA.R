@@ -14,8 +14,8 @@
 # }
 #
 # \usage{
-#   \method{doGCRMA}{AffymetrixCelSet}(csR, arrays=NULL, type=c("fullmodel", "affinities"), uniquePlm=FALSE, drop=TRUE, ram=NULL, verbose=FALSE, ...)
-#   \method{doGCRMA}{default}(dataSet, ...)
+#   \method{doGCRMA}{AffymetrixCelSet}(csR, arrays=NULL, type=c("fullmodel", "affinities"), uniquePlm=FALSE, drop=TRUE, verbose=FALSE, ...)
+#   \method{doGCRMA}{default}(dataSet, ..., verbose=FALSE)
 # }
 #
 # \arguments{
@@ -48,7 +48,7 @@
 #
 # @author "HB"
 #*/###########################################################################
-setMethodS3("doGCRMA", "AffymetrixCelSet", function(csR, arrays=NULL, type=c("fullmodel", "affinities"), uniquePlm=FALSE, drop=TRUE, ram=NULL, verbose=FALSE, ...) {
+setMethodS3("doGCRMA", "AffymetrixCelSet", function(csR, arrays=NULL, type=c("fullmodel", "affinities"), uniquePlm=FALSE, drop=TRUE, verbose=FALSE, ...) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -85,7 +85,17 @@ setMethodS3("doGCRMA", "AffymetrixCelSet", function(csR, arrays=NULL, type=c("fu
   verbose && cat(verbose, "arrays:");
   verbose && str(verbose, arraysTag);
   verbose && cat(verbose, "Fit PLM on unique probe sets: ", uniquePlm);
-  verbose && cat(verbose, "ram: ", ram);
+
+  # Backward compatibility
+  ram <- list(...)$ram;
+  if (!is.null(ram)) {
+    ram <- Arguments$getDouble(ram, range=c(0,Inf));
+    verbose && cat(verbose, "ram: ", ram);
+    oram <- setOption(aromaSettings, "memory/ram", ram);
+    on.exit({
+      setOption(aromaSettings, "memory/ram", oram);
+    });
+  }
 
   verbose && cat(verbose, "Data set");
   verbose && print(verbose, csR);
@@ -229,7 +239,7 @@ setMethodS3("doGCRMA", "AffymetrixCelSet", function(csR, arrays=NULL, type=c("fu
   plm <- RmaPlm(csN, flavor="oligo");
   verbose && print(verbose, plm);
   if (length(findUnitsTodo(plm)) > 0) {
-    units <- fit(plm, ram=ram, verbose=verbose);
+    units <- fit(plm, verbose=verbose);
     verbose && str(verbose, units);
     rm(units);
   }
@@ -291,6 +301,8 @@ setMethodS3("doGCRMA", "default", function(dataSet, ..., verbose=FALSE) {
 
 ############################################################################
 # HISTORY:
+# 2013-05-02
+# o Removed argument 'ram' in favor of aroma option 'memory/ram'.
 # 2011-11-10
 # o ROBUSTNESS: doGCRMA() is now guaranteed to undo any changes of
 #   the CDF of the data set, e.g. if there is a user interrupt.

@@ -18,8 +18,8 @@
 }
 
 \usage{
-  \method{doFIRMA}{AffymetrixCelSet}(csR, arrays=NULL, uniquePlm=FALSE, drop=TRUE, ram=NULL, verbose=FALSE, ...)
-  \method{doFIRMA}{default}(dataSet, ...)
+  \method{doFIRMA}{AffymetrixCelSet}(csR, ..., flavor=c("v1b", "v1a"), drop=TRUE, verbose=FALSE, ...)
+  \method{doFIRMA}{default}(dataSet, ..., verbose=FALSE)
 }
 
 \arguments{

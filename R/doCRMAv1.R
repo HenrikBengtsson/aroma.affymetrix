@@ -14,8 +14,8 @@
 # }
 #
 # \usage{
-#   \method{doCRMAv1}{AffymetrixCelSet}(csR, shift=+300, combineAlleles=TRUE, lengthRange=NULL, arrays=NULL, drop=TRUE, ram=NULL, verbose=FALSE, ...)
-#   \method{doCRMAv1}{default}(dataSet, ...)
+#   \method{doCRMAv1}{AffymetrixCelSet}(csR, shift=+300, combineAlleles=TRUE, lengthRange=NULL, arrays=NULL, drop=TRUE, verbose=FALSE, ...)
+#   \method{doCRMAv1}{default}(dataSet, ..., verbose=FALSE)
 #   \method{doASCRMAv1}{default}(...)
 # }
 #
@@ -68,7 +68,7 @@
 #
 # @author "HB"
 #*/###########################################################################
-setMethodS3("doCRMAv1", "AffymetrixCelSet", function(csR, shift=+300, combineAlleles=TRUE, lengthRange=NULL, arrays=NULL, drop=TRUE, ram=NULL, verbose=FALSE, ...) {
+setMethodS3("doCRMAv1", "AffymetrixCelSet", function(csR, shift=+300, combineAlleles=TRUE, lengthRange=NULL, arrays=NULL, drop=TRUE, verbose=FALSE, ...) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -103,8 +103,17 @@ setMethodS3("doCRMAv1", "AffymetrixCelSet", function(csR, shift=+300, combineAll
   arraysTag <- seqToHumanReadable(arrays);
   verbose && cat(verbose, "arrays:");
   verbose && str(verbose, arraysTag);
-  verbose && cat(verbose, "ram: ", ram);
 
+  # Backward compatibility
+  ram <- list(...)$ram;
+  if (!is.null(ram)) {
+    ram <- Arguments$getDouble(ram, range=c(0,Inf));
+    verbose && cat(verbose, "ram: ", ram);
+    oram <- setOption(aromaSettings, "memory/ram", ram);
+    on.exit({
+      setOption(aromaSettings, "memory/ram", oram);
+    });
+  }
 
   # List of objects to be returned
   res <- list();
@@ -156,7 +165,7 @@ setMethodS3("doCRMAv1", "AffymetrixCelSet", function(csR, shift=+300, combineAll
     units <- fitCnProbes(plm, verbose=verbose);
     verbose && str(verbose, units);
     # Fit remaining units, i.e. SNPs (~5-10min/array)
-    units <- fit(plm, ram=ram, verbose=verbose);
+    units <- fit(plm, verbose=verbose);
     verbose && str(verbose, units);
     rm(units);
   }
@@ -250,6 +259,8 @@ setMethodS3("doASCRMAv1", "default", function(...) {
 
 ############################################################################
 # HISTORY:
+# 2013-05-02
+# o Removed argument 'ram' in favor of aroma option 'memory/ram'.
 # 2012-09-05
 # o ROBUSTNESS: Now doCRMAv1() adds also tag "v1" to the allele-specific
 #   calibration step.  The reason for this is to differentiate it from

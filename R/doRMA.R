@@ -15,7 +15,7 @@
 #
 # \usage{
 #   \method{doRMA}{AffymetrixCelSet}(csR, arrays=NULL, uniquePlm=FALSE, drop=TRUE, ram=NULL, verbose=FALSE, ...)
-#   \method{doRMA}{default}(dataSet, ...)
+#   \method{doRMA}{default}(dataSet, ..., verbose=FALSE)
 # }
 #
 # \arguments{
@@ -45,7 +45,7 @@
 #
 # @author "HB"
 #*/###########################################################################
-setMethodS3("doRMA", "AffymetrixCelSet", function(csR, arrays=NULL, uniquePlm=FALSE, drop=TRUE, ram=NULL, verbose=FALSE, ...) {
+setMethodS3("doRMA", "AffymetrixCelSet", function(csR, arrays=NULL, uniquePlm=FALSE, drop=TRUE, verbose=FALSE, ...) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -77,7 +77,17 @@ setMethodS3("doRMA", "AffymetrixCelSet", function(csR, arrays=NULL, uniquePlm=FA
   verbose && cat(verbose, "arrays:");
   verbose && str(verbose, arraysTag);
   verbose && cat(verbose, "Fit PLM on unique probe sets: ", uniquePlm);
-  verbose && cat(verbose, "ram: ", ram);
+
+  # Backward compatibility
+  ram <- list(...)$ram;
+  if (!is.null(ram)) {
+    ram <- Arguments$getDouble(ram, range=c(0,Inf));
+    verbose && cat(verbose, "ram: ", ram);
+    oram <- setOption(aromaSettings, "memory/ram", ram);
+    on.exit({
+      setOption(aromaSettings, "memory/ram", oram);
+    });
+  }
 
   verbose && cat(verbose, "Data set");
   verbose && print(verbose, csR);
@@ -202,7 +212,7 @@ setMethodS3("doRMA", "AffymetrixCelSet", function(csR, arrays=NULL, uniquePlm=FA
   plm <- RmaPlm(csN);
   verbose && print(verbose, plm);
   if (length(findUnitsTodo(plm)) > 0) {
-    units <- fit(plm, ram=ram, verbose=verbose);
+    units <- fit(plm, verbose=verbose);
     verbose && str(verbose, units);
     rm(units);
   }
@@ -264,6 +274,8 @@ setMethodS3("doRMA", "default", function(dataSet, ..., verbose=FALSE) {
 
 ############################################################################
 # HISTORY:
+# 2013-05-02
+# o Removed argument 'ram' in favor of aroma option 'memory/ram'.
 # 2013-04-29
 # o SPEEDUP: Now doRMA() returns much quicker, iff already done.
 # o DOCUMENTATION: Added help("doRMA").

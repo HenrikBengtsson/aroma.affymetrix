@@ -14,7 +14,7 @@
 # }
 #
 # \usage{
-#   \method{doRMA}{AffymetrixCelSet}(csR, arrays=NULL, uniquePlm=FALSE, drop=TRUE, ram=NULL, verbose=FALSE, ...)
+#   \method{doRMA}{AffymetrixCelSet}(csR, arrays=NULL, uniquePlm=FALSE, drop=TRUE, verbose=FALSE, ...)
 #   \method{doRMA}{default}(dataSet, ..., verbose=FALSE)
 # }
 #
@@ -83,6 +83,7 @@ setMethodS3("doRMA", "AffymetrixCelSet", function(csR, arrays=NULL, uniquePlm=FA
   if (!is.null(ram)) {
     ram <- Arguments$getDouble(ram, range=c(0,Inf));
     verbose && cat(verbose, "ram: ", ram);
+    warning("Argument 'ram' of doRMA() is deprecated. Instead use setOption(aromaSettings, \"memory/ram\", ram).");
     oram <- setOption(aromaSettings, "memory/ram", ram);
     on.exit({
       setOption(aromaSettings, "memory/ram", oram);

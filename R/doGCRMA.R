@@ -91,6 +91,7 @@ setMethodS3("doGCRMA", "AffymetrixCelSet", function(csR, arrays=NULL, type=c("fu
   if (!is.null(ram)) {
     ram <- Arguments$getDouble(ram, range=c(0,Inf));
     verbose && cat(verbose, "ram: ", ram);
+    warning("Argument 'ram' of doRMA() is deprecated. Instead use setOption(aromaSettings, \"memory/ram\", ram).");
     oram <- setOption(aromaSettings, "memory/ram", ram);
     on.exit({
       setOption(aromaSettings, "memory/ram", oram);

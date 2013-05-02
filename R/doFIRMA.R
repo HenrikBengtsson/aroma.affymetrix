@@ -9,7 +9,7 @@
 # }
 #
 # \usage{
-#   \method{doFIRMA}{AffymetrixCelSet}(csR, ..., flavor=c("v1b", "v1a"), drop=TRUE, verbose=FALSE, ...)
+#   \method{doFIRMA}{AffymetrixCelSet}(csR, ..., flavor=c("v1b", "v1a"), drop=TRUE, verbose=FALSE)
 #   \method{doFIRMA}{default}(dataSet, ..., verbose=FALSE)
 # }
 #
@@ -91,6 +91,7 @@ setMethodS3("doFIRMA", "AffymetrixCelSet", function(csR, ..., flavor=c("v1b", "v
   if (!is.null(ram)) {
     ram <- Arguments$getDouble(ram, range=c(0,Inf));
     verbose && cat(verbose, "ram: ", ram);
+    warning("Argument 'ram' of doFIRMA() is deprecated. Instead use setOption(aromaSettings, \"memory/ram\", ram).");
     oram <- setOption(aromaSettings, "memory/ram", ram);
     on.exit({
       setOption(aromaSettings, "memory/ram", oram);

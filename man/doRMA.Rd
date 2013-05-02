@@ -23,7 +23,7 @@
 }
 
 \usage{
-  \method{doRMA}{AffymetrixCelSet}(csR, arrays=NULL, uniquePlm=FALSE, drop=TRUE, ram=NULL, verbose=FALSE, ...)
+  \method{doRMA}{AffymetrixCelSet}(csR, arrays=NULL, uniquePlm=FALSE, drop=TRUE, verbose=FALSE, ...)
   \method{doRMA}{default}(dataSet, ..., verbose=FALSE)
 }
 

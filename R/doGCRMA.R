@@ -1,8 +1,6 @@
 ###########################################################################/**
-# @set "class=AffymetrixCelSet"
-# @RdocMethod "doGCRMA"
-# @alias doGCRMA.character
-# @alias doGCRMA
+# @RdocDefault doGCRMA
+# @alias doGCRMA.AffymetrixCelSet
 #
 # @title "Robust Multichip Analysis (GCRMA)"
 #
@@ -15,10 +13,13 @@
 #  (package \pkg{gcrma}) with great precision.
 # }
 #
-# @synopsis
+# \usage{
+#   \method{doGCRMA}{AffymetrixCelSet}(csR, arrays=NULL, type=c("fullmodel", "affinities"), uniquePlm=FALSE, drop=TRUE, ram=NULL, verbose=FALSE, ...)
+#   \method{doGCRMA}{default}(dataSet, ...)
+# }
 #
 # \arguments{
-#  \item{csR}{An @see "AffymetrixCelSet".}
+#  \item{csR, dataSet}{An @see "AffymetrixCelSet" (or the name of an @see "AffymetrixCelSet").}
 #  \item{arrays}{A @integer @vector specifying the subset of arrays
 #   to run RMA on.  If @NULL, all arrays are considered.}
 #  \item{type}{A @character string specifying what type of model to
@@ -31,7 +32,7 @@
 #  \item{drop}{If @TRUE, the RMA summaries are returned, otherwise
 #   a named @list of all intermediate and final results.}
 #  \item{verbose}{See @see "Verbose".}
-#  \item{...}{Not used.}
+#  \item{...}{Additional arguments used to set up @see "AffymetrixCelSet" (when argument \code{dataSet} is specified).}
 # }
 #
 # \value{
@@ -257,7 +258,7 @@ setMethodS3("doGCRMA", "AffymetrixCelSet", function(csR, arrays=NULL, type=c("fu
 }) # doGCRMA()
 
 
-setMethodS3("doGCRMA", "character", function(dataSet, ..., verbose=FALSE) {
+setMethodS3("doGCRMA", "default", function(dataSet, ..., verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

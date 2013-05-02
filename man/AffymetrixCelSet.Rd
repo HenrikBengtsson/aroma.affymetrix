@@ -58,11 +58,11 @@ AffymetrixCelSet(files=NULL, ...)
  \tab \code{as} \tab  -\cr
  \tab \code{\link[aroma.affymetrix:as.AffymetrixCelSet.AffymetrixCelSet]{as.AffymetrixCelSet}} \tab Coerce an object to an AffymetrixCelSet object.\cr
  \tab \code{byName} \tab  -\cr
- \tab \code{\link[aroma.affymetrix:doCRMAv1.AffymetrixCelSet]{doCRMAv1}} \tab Estimation and assessment of raw copy numbers at the single locus level (CRMA v1).\cr
- \tab \code{\link[aroma.affymetrix:doCRMAv2.AffymetrixCelSet]{doCRMAv2}} \tab A single-array preprocessing method for estimating full-resolution raw copy numbers from all Affymetrix genotyping arrays (CRMA v2).\cr
- \tab \code{\link[aroma.affymetrix:doFIRMA.AffymetrixCelSet]{doFIRMA}} \tab Finding Isoforms using Robust Multichip Analysis (FIRMA).\cr
- \tab \code{\link[aroma.affymetrix:doGCRMA.AffymetrixCelSet]{doGCRMA}} \tab Robust Multichip Analysis (GCRMA).\cr
- \tab \code{\link[aroma.affymetrix:doRMA.AffymetrixCelSet]{doRMA}} \tab Robust Multichip Analysis (RMA).\cr
+ \tab \code{doCRMAv1} \tab  -\cr
+ \tab \code{doCRMAv2} \tab  -\cr
+ \tab \code{doFIRMA} \tab  -\cr
+ \tab \code{doGCRMA} \tab  -\cr
+ \tab \code{doRMA} \tab  -\cr
  \tab \code{\link[aroma.affymetrix:extractAffyBatch.AffymetrixCelSet]{extractAffyBatch}} \tab Extracts an in-memory AffyBatch object from the CEL set.\cr
  \tab \code{\link[aroma.affymetrix:extractFeatureSet.AffymetrixCelSet]{extractFeatureSet}} \tab Extracts CEL signals an in-memory FeatureSet object.\cr
  \tab \code{\link[aroma.affymetrix:extractMatrix.AffymetrixCelSet]{extractMatrix}} \tab Extract data as a matrix for a set of arrays.\cr

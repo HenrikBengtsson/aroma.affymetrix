@@ -1,8 +1,6 @@
 ###########################################################################/**
-# @set "class=AffymetrixCelSet"
-# @RdocMethod "doCRMAv2"
-# @alias doCRMAv2.character
-# @alias doCRMAv2
+# @RdocDefault doCRMAv2
+# @alias doCRMAv2.AffymetrixCelSet
 # @alias doASCRMAv2
 # @alias doASCRMAv2.default
 #
@@ -14,29 +12,48 @@
 #  any number of arrays can be analyzed on also very limited computer
 #  systems.
 #
-#  \code{doASCRMAv2(...)} is a wrapper for
-#  \code{doCRMAv2(..., combineAlleles=FALSE)}.
+#  We recommend CRMA v2 for estimating allele-specific as well total
+#  SNP signals from Affymetrix SNP chips.
 # }
 #
-# @synopsis
+# \usage{
+#   \method{doCRMAv2}{AffymetrixCelSet}(csR, combineAlleles=TRUE, lengthRange=NULL, arrays=NULL, plm=c("AvgCnPlm", "RmaCnPlm"), drop=TRUE, ram=NULL, verbose=FALSE, ...)
+#   \method{doCRMAv2}{default}(dataSet, ...)
+#   \method{doASCRMAv2}{default}(...)
+# }
 #
 # \arguments{
-#  \item{csR}{An @see "AffymetrixCelSet".}
+#  \item{csR, dataSet}{An @see "AffymetrixCelSet" (or the name of an @see "AffymetrixCelSet").}
 #  \item{combineAlleles}{A @logical specifying whether allele probe pairs
 #   should be summed before modelling or not.}
-#  \item{lengthRange}{}
+#  \item{lengthRange}{An optional @numeric vector of length two passed
+#   to @see "FragmentLengthNormalization".}
 #  \item{arrays}{A @integer @vector specifying the subset of arrays
 #   to run RMA on.  If @NULL, all arrays are considered.}
-#  \item{plm}{}
+#  \item{plm}{A @character string specifying which type of
+#   probe-summarization model to used.}
 #  \item{drop}{If @TRUE, the RMA summaries are returned, otherwise
 #   a named @list of all intermediate and final results.}
 #  \item{verbose}{See @see "Verbose".}
-#  \item{...}{Not used.}
+#  \item{...}{Additional arguments used to set up @see "AffymetrixCelSet" (when argument \code{dataSet} is specified).}
 # }
 #
 # \value{
 #   Returns a named @list, iff \code{drop == FALSE}, otherwise
 #   only @see "ChipEffectSet" object (containing the RMA summaries).
+# }
+#
+# \section{Allele-specific or only total-SNP signals}{
+#   If you wish to obtain allele-specific estimates for SNPs, which
+#   are needed to call genotypes or infer parent-specific copy numbers,
+#   then use argument \code{combineAlleles=FALSE}.  Total copy number
+#   signals are still available.
+#   If you know for certain that you will not use allele-specific
+#   estimates, you will get slightly less noisy signals
+#   (very small difference) if you use \code{combineAlleles=TRUE}.
+#
+#   \code{doASCRMAv2(...)} is a wrapper for
+#   \code{doCRMAv2(..., combineAlleles=FALSE)}.
 # }
 #
 # \references{
@@ -48,7 +65,8 @@
 # }
 #
 # \seealso{
-#  @see "doCRMAv1".
+#  For CRMA v1, which is a multi-array methods that precedes CRMA v2,
+#  see @see "doCRMAv1".
 # }
 #
 # @author "HB"
@@ -298,7 +316,7 @@ setMethodS3("doCRMAv2", "AffymetrixCelSet", function(csR, combineAlleles=TRUE, l
 }) # doCRMAv2()
 
 
-setMethodS3("doCRMAv2", "character", function(dataSet, ..., verbose=FALSE) {
+setMethodS3("doCRMAv2", "default", function(dataSet, ..., verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

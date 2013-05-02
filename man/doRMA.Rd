@@ -1,41 +1,36 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Do not modify this file since it was automatically generated from:
 % 
-%  doGCRMA.R
+%  doRMA.R
 % 
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\name{doRMA}
+\alias{doRMA.default}
+\alias{doRMA}
+\alias{doRMA.AffymetrixCelSet}
 
-\name{doGCRMA.AffymetrixCelSet}
-\alias{doGCRMA.AffymetrixCelSet}
-\alias{AffymetrixCelSet.doGCRMA}
-\alias{doGCRMA,AffymetrixCelSet-method}
-\alias{doGCRMA.character}
-\alias{doGCRMA}
-
-\title{Robust Multichip Analysis (GCRMA)}
+\title{Robust Multichip Analysis (RMA)}
 
 \description{
- Robust Multichip Analysis (GCRMA) based on [1].
+ Robust Multichip Analysis (RMA) based on [1].
  The algorithm is processed in bounded memory, meaning virtually
  any number of arrays can be analyzed on also very limited computer
  systems.
- The method replicates the results of \code{\link[gcrma]{gcrma}}
- (package \pkg{gcrma}) with great precision.
+ The method replicates the results of \code{\link[affyPLM]{fitPLM}}
+ (package \pkg{affyPLM}) with great precision.
 }
 
 \usage{
-\method{doGCRMA}{AffymetrixCelSet}(csR, arrays=NULL, type=c("fullmodel", "affinities"), uniquePlm=FALSE, drop=TRUE, ram=NULL, verbose=FALSE, ...)
+  \method{doRMA}{AffymetrixCelSet}(csR, arrays=NULL, uniquePlm=FALSE, drop=TRUE, ram=NULL, verbose=FALSE, ...)
+  \method{doRMA}{default}(dataSet, ...)
 }
 
 \arguments{
- \item{csR}{An \code{\link{AffymetrixCelSet}}.}
+ \item{csR, dataSet}{An \code{\link{AffymetrixCelSet}} (or the name of an \code{\link{AffymetrixCelSet}}).}
  \item{arrays}{A \code{\link[base]{integer}} \code{\link[base]{vector}} specifying the subset of arrays
   to run RMA on.  If \code{\link[base]{NULL}}, all arrays are considered.}
- \item{type}{A \code{\link[base]{character}} string specifying what type of model to
-  use for the GCRMA background correction.
-  For more details, see \code{\link{GcRmaBackgroundCorrection}}.}
  \item{uniquePlm}{If \code{\link[base:logical]{TRUE}}, the log-additive probe-summarization model
   is done on probeset with \emph{unique} sets of probes.
   If \code{\link[base:logical]{FALSE}}, the summarization is done on "as-is" probesets as
@@ -43,7 +38,7 @@
  \item{drop}{If \code{\link[base:logical]{TRUE}}, the RMA summaries are returned, otherwise
   a named \code{\link[base]{list}} of all intermediate and final results.}
  \item{verbose}{See \code{\link{Verbose}}.}
- \item{...}{Not used.}
+ \item{...}{Additional arguments used to set up \code{\link{AffymetrixCelSet}} (when argument \code{dataSet} is specified).}
 }
 
 \value{
@@ -52,11 +47,10 @@
 }
 
 \references{
- [1] Z. Wu, R. Irizarry, R. Gentleman, F.M. Murillo & F. Spencer.
-     \emph{A Model Based Background Adjustment for Oligonucleotide
-     Expression Arrays}, JASA, 2004.\cr
+ [1] Irizarry et al.
+     \emph{Summaries of Affymetrix GeneChip probe level data}.
+     NAR, 2003, 31, e15.\cr
 }
 
 \author{Henrik Bengtsson}
-\keyword{internal}
-\keyword{methods}
+

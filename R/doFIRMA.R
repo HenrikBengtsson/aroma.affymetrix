@@ -1,8 +1,6 @@
 ###########################################################################/**
-# @set "class=AffymetrixCelSet"
-# @RdocMethod "doFIRMA"
-# @alias doFIRMA.character
-# @alias doFIRMA
+# @RdocDefault doFIRMA
+# @alias doFIRMA.AffymetrixCelSet
 #
 # @title "Finding Isoforms using Robust Multichip Analysis (FIRMA)"
 #
@@ -10,11 +8,16 @@
 #  @get "title" based on [1].
 # }
 #
-# @synopsis
+# \usage{
+#   \method{doFIRMA}{AffymetrixCelSet}(csR, arrays=NULL, uniquePlm=FALSE, drop=TRUE, ram=NULL, verbose=FALSE, ...)
+#   \method{doFIRMA}{default}(dataSet, ...)
+# }
 #
 # \arguments{
-#  \item{csR}{An @see "AffymetrixCelSet".}
-#  \item{...}{Additional arguments passed to @see "FirmaModel".}
+#  \item{csR, dataSet}{An @see "AffymetrixCelSet" (or the name of an @see "AffymetrixCelSet").}
+#  \item{...}{Additional arguments passed to @see "FirmaModel",
+#             and to set up @see "AffymetrixCelSet" (when
+#             argument \code{dataSet} is specified).}
 #  \item{flavor}{A @character string specifying the flavor of FIRMA to use.}
 #  \item{drop}{If @TRUE, the FIRMA scores are returned, otherwise
 #   a named @list of all intermediate and final results.}
@@ -254,7 +257,7 @@ setMethodS3("doFIRMA", "AffymetrixCelSet", function(csR, ..., flavor=c("v1b", "v
 
 
 
-setMethodS3("doFIRMA", "character", function(dataSet, ..., verbose=FALSE) {
+setMethodS3("doFIRMA", "default", function(dataSet, ..., verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

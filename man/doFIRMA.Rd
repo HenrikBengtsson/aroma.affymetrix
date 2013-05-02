@@ -6,13 +6,10 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
-\name{doFIRMA.AffymetrixCelSet}
-\alias{doFIRMA.AffymetrixCelSet}
-\alias{AffymetrixCelSet.doFIRMA}
-\alias{doFIRMA,AffymetrixCelSet-method}
-\alias{doFIRMA.character}
+\name{doFIRMA}
+\alias{doFIRMA.default}
 \alias{doFIRMA}
+\alias{doFIRMA.AffymetrixCelSet}
 
 \title{Finding Isoforms using Robust Multichip Analysis (FIRMA)}
 
@@ -21,12 +18,15 @@
 }
 
 \usage{
-\method{doFIRMA}{AffymetrixCelSet}(csR, ..., flavor=c("v1b", "v1a"), drop=TRUE, verbose=FALSE)
+  \method{doFIRMA}{AffymetrixCelSet}(csR, arrays=NULL, uniquePlm=FALSE, drop=TRUE, ram=NULL, verbose=FALSE, ...)
+  \method{doFIRMA}{default}(dataSet, ...)
 }
 
 \arguments{
- \item{csR}{An \code{\link{AffymetrixCelSet}}.}
- \item{...}{Additional arguments passed to \code{\link{FirmaModel}}.}
+ \item{csR, dataSet}{An \code{\link{AffymetrixCelSet}} (or the name of an \code{\link{AffymetrixCelSet}}).}
+ \item{...}{Additional arguments passed to \code{\link{FirmaModel}},
+            and to set up \code{\link{AffymetrixCelSet}} (when
+            argument \code{dataSet} is specified).}
  \item{flavor}{A \code{\link[base]{character}} string specifying the flavor of FIRMA to use.}
  \item{drop}{If \code{\link[base:logical]{TRUE}}, the FIRMA scores are returned, otherwise
   a named \code{\link[base]{list}} of all intermediate and final results.}
@@ -67,5 +67,4 @@
 }
 
 \author{Henrik Bengtsson}
-\keyword{internal}
-\keyword{methods}
+

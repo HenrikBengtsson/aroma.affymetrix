@@ -1,8 +1,6 @@
 ###########################################################################/**
-# @set "class=AffymetrixCelSet"
-# @RdocMethod "doRMA"
-# @alias doRMA.character
-# @alias doRMA
+# @RdocDefault doRMA
+# @alias doRMA.AffymetrixCelSet
 #
 # @title "Robust Multichip Analysis (RMA)"
 #
@@ -15,10 +13,13 @@
 #  (package \pkg{affyPLM}) with great precision.
 # }
 #
-# @synopsis
+# \usage{
+#   \method{doRMA}{AffymetrixCelSet}(csR, arrays=NULL, uniquePlm=FALSE, drop=TRUE, ram=NULL, verbose=FALSE, ...)
+#   \method{doRMA}{default}(dataSet, ...)
+# }
 #
 # \arguments{
-#  \item{csR}{An @see "AffymetrixCelSet".}
+#  \item{csR, dataSet}{An @see "AffymetrixCelSet" (or the name of an @see "AffymetrixCelSet").}
 #  \item{arrays}{A @integer @vector specifying the subset of arrays
 #   to run RMA on.  If @NULL, all arrays are considered.}
 #  \item{uniquePlm}{If @TRUE, the log-additive probe-summarization model
@@ -28,7 +29,7 @@
 #  \item{drop}{If @TRUE, the RMA summaries are returned, otherwise
 #   a named @list of all intermediate and final results.}
 #  \item{verbose}{See @see "Verbose".}
-#  \item{...}{Not used.}
+#  \item{...}{Additional arguments used to set up @see "AffymetrixCelSet" (when argument \code{dataSet} is specified).}
 # }
 #
 # \value{
@@ -230,7 +231,7 @@ setMethodS3("doRMA", "AffymetrixCelSet", function(csR, arrays=NULL, uniquePlm=FA
 }) # doRMA()
 
 
-setMethodS3("doRMA", "character", function(dataSet, ..., verbose=FALSE) {
+setMethodS3("doRMA", "default", function(dataSet, ..., verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

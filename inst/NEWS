@@ -1,6 +1,11 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 2.9.0 [2013-05-02]
+o Submitted to CRAN.
+o The package passes all redundancy tests.
+
+
 Version: 2.8.4 [2013-05-02]
 o DOCUMENTATION: Now doRMA(), doGCRMA(), doFIRMA(),
   doCRMAv1()/doASCRMAv1() and doCRMAv2()/doASCRMAv2() are

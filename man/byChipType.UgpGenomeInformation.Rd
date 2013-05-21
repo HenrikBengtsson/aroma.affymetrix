@@ -20,7 +20,8 @@
 
 \usage{
 ## Static method (use this):
-## UgpGenomeInformation$byChipType(chipType, tags=NULL, ..., nbrOfUnits=NULL, verbose=FALSE)
+## UgpGenomeInformation$byChipType(chipType, tags=NULL, ..., nbrOfUnits=NULL,
+##   verbose=FALSE)
 
 ## Don't use the below:
 \method{byChipType}{UgpGenomeInformation}(static, chipType, tags=NULL, ..., nbrOfUnits=NULL, verbose=FALSE)

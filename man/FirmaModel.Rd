@@ -41,7 +41,8 @@ extends \emph{\link[aroma.affymetrix]{UnitModel}}\cr
 }
 
 \usage{
-FirmaModel(rmaPlm=NULL, summaryMethod=c("median", "upperQuartile", "max"), operateOn=c("residuals", "weights"), ...)
+FirmaModel(rmaPlm=NULL, summaryMethod=c("median", "upperQuartile", "max"),
+  operateOn=c("residuals", "weights"), ...)
 }
 
 \arguments{

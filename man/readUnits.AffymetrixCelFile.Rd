@@ -18,7 +18,8 @@
 }
 
 \usage{
-\method{readUnits}{AffymetrixCelFile}(this, units=NULL, cdf=NULL, ..., stratifyBy=NULL, force=FALSE, cache=FALSE, verbose=FALSE)
+\method{readUnits}{AffymetrixCelFile}(this, units=NULL, cdf=NULL, ..., stratifyBy=NULL, force=FALSE, cache=FALSE,
+  verbose=FALSE)
 }
 
 \arguments{

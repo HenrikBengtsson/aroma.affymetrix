@@ -26,7 +26,8 @@
 }
 
 \usage{
-  \method{doCRMAv2}{AffymetrixCelSet}(csR, combineAlleles=TRUE, lengthRange=NULL, arrays=NULL, plm=c("AvgCnPlm", "RmaCnPlm"), drop=TRUE, verbose=FALSE, ...)
+  \method{doCRMAv2}{AffymetrixCelSet}(csR, combineAlleles=TRUE, lengthRange=NULL,
+    arrays=NULL, plm=c("AvgCnPlm", "RmaCnPlm"), drop=TRUE, verbose=FALSE, ...)
   \method{doCRMAv2}{default}(dataSet, ..., verbose=FALSE)
   \method{doASCRMAv2}{default}(...)
 }

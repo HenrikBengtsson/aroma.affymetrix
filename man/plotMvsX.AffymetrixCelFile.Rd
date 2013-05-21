@@ -18,7 +18,8 @@
 }
 
 \usage{
-\method{plotMvsX}{AffymetrixCelFile}(this, reference, x, indices=NULL, pch=176, ylim=c(-1, 1) * 2, ylab=NULL, ..., what=c("M", "A"), add=FALSE, annotate=!add)
+\method{plotMvsX}{AffymetrixCelFile}(this, reference, x, indices=NULL, pch=176, ylim=c(-1, 1) * 2, ylab=NULL, ...,
+  what=c("M", "A"), add=FALSE, annotate=!add)
 }
 
 \arguments{

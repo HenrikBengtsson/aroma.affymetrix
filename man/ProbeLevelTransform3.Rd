@@ -43,7 +43,8 @@ extends \emph{\link[aroma.affymetrix]{ProbeLevelTransform}}\cr
 }
 
 \usage{
-ProbeLevelTransform3(dataSet=NULL, ..., unitsToFit="-XY", typesToFit=typesToUpdate, unitsToUpdate=NULL, typesToUpdate="pm", shift=0)
+ProbeLevelTransform3(dataSet=NULL, ..., unitsToFit="-XY", typesToFit=typesToUpdate,
+  unitsToUpdate=NULL, typesToUpdate="pm", shift=0)
 }
 
 \arguments{

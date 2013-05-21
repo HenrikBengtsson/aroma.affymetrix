@@ -44,7 +44,8 @@ extends \emph{\link[aroma.affymetrix]{ChipEffectTransform}}\cr
 }
 
 \usage{
-FragmentEquivalentClassNormalization(dataSet=NULL, ..., targetAvgs=NULL, subsetToFit="-XY")
+FragmentEquivalentClassNormalization(dataSet=NULL, ..., targetAvgs=NULL,
+  subsetToFit="-XY")
 }
 
 \arguments{

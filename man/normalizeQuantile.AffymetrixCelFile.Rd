@@ -19,7 +19,9 @@
 }
 
 \usage{
-\method{normalizeQuantile}{AffymetrixCelFile}(this, path=file.path("normQuantile", getChipType(this)), xTarget, subsetToUpdate=NULL, typesToUpdate=NULL, ..., overwrite=FALSE, skip=!overwrite, verbose=FALSE)
+\method{normalizeQuantile}{AffymetrixCelFile}(this, path=file.path("normQuantile", getChipType(this)), xTarget,
+  subsetToUpdate=NULL, typesToUpdate=NULL, ..., overwrite=FALSE, skip=!overwrite,
+  verbose=FALSE)
 }
 
 \arguments{

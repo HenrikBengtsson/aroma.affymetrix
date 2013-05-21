@@ -21,10 +21,12 @@
 
 \usage{
 ## Static method (use this):
-## ChipEffectFile$fromDataFile(df=NULL, filename=sprintf("\%s,chipEffects.CEL", getFullName(df)), path, name=getName(df), cdf=NULL, ..., verbose=FALSE)
+## ChipEffectFile$fromDataFile(df=NULL, filename=sprintf("\%s,chipEffects.CEL",
+##   getFullName(df)), path, name=getName(df), cdf=NULL, ..., verbose=FALSE)
 
 ## Don't use the below:
-\method{fromDataFile}{ChipEffectFile}(static, df=NULL, filename=sprintf("\%s,chipEffects.CEL", getFullName(df)), path, name=getName(df), cdf=NULL, ..., verbose=FALSE)
+\method{fromDataFile}{ChipEffectFile}(static, df=NULL, filename=sprintf("\%s,chipEffects.CEL", getFullName(df)),
+  path, name=getName(df), cdf=NULL, ..., verbose=FALSE)
 }
 
 \arguments{

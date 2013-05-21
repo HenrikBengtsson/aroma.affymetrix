@@ -27,7 +27,8 @@
 }
 
 \usage{
-\method{createUniqueCdf}{AffymetrixCdfFile}(this, chipType=getChipType(this), tags="unique", path=NULL, units=NULL, ..., ram=NULL, verbose=TRUE)
+\method{createUniqueCdf}{AffymetrixCdfFile}(this, chipType=getChipType(this), tags="unique", path=NULL, units=NULL,
+  ..., ram=NULL, verbose=TRUE)
 }
 
 \arguments{

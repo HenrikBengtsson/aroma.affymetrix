@@ -18,7 +18,8 @@
 }
 
 \usage{
-\method{getUnitIntensities}{AffymetrixCelSet}(this, units=NULL, ..., force=FALSE, cache=!is.null(units), verbose=FALSE)
+\method{getUnitIntensities}{AffymetrixCelSet}(this, units=NULL, ..., force=FALSE, cache=!is.null(units),
+  verbose=FALSE)
 }
 
 \arguments{

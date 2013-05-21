@@ -19,7 +19,8 @@
 }
 
 \usage{
-\method{plotDensity}{AffymetrixCelSet}(this, subset=NULL, types=NULL, ..., col=seq_along(this), lty=NULL, lwd=NULL, annotate=TRUE, add=FALSE, verbose=FALSE)
+\method{plotDensity}{AffymetrixCelSet}(this, subset=NULL, types=NULL, ..., col=seq_along(this), lty=NULL, lwd=NULL,
+  annotate=TRUE, add=FALSE, verbose=FALSE)
 }
 
 \arguments{

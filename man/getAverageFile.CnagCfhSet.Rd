@@ -18,7 +18,10 @@
 }
 
 \usage{
-\method{getAverageFile}{CnagCfhSet}(this, name=NULL, prefix="average", indices="remaining", field=c("intensities", "stdvs"), mean=c("median", "mean"), sd=c("mad", "sd"), na.rm=TRUE, g=NULL, h=NULL, ..., cellsPerChunk=moreCells * 10^7/length(this), moreCells=1, force=FALSE, verbose=FALSE)
+\method{getAverageFile}{CnagCfhSet}(this, name=NULL, prefix="average", indices="remaining",
+  field=c("intensities", "stdvs"), mean=c("median", "mean"), sd=c("mad", "sd"),
+  na.rm=TRUE, g=NULL, h=NULL, ..., cellsPerChunk=moreCells * 10^7/length(this),
+  moreCells=1, force=FALSE, verbose=FALSE)
 }
 
 \arguments{

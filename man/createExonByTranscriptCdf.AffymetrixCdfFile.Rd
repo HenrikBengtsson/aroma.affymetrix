@@ -20,7 +20,9 @@
  }
 
  \usage{
-\method{createExonByTranscriptCdf}{AffymetrixCdfFile}(cdf, csv, tags=c("*"), path=getPath(cdf), type=c("all", "core", "extended", "full", "main", "control", "cds"), subsetBy=NULL, within=NULL, ..., overwrite=FALSE, verbose=FALSE)
+\method{createExonByTranscriptCdf}{AffymetrixCdfFile}(cdf, csv, tags=c("*"), path=getPath(cdf),
+  type=c("all", "core", "extended", "full", "main", "control", "cds"), subsetBy=NULL,
+  within=NULL, ..., overwrite=FALSE, verbose=FALSE)
 }
 
  \arguments{

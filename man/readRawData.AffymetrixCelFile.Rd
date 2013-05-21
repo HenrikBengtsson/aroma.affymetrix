@@ -22,7 +22,8 @@
 }
 
 \usage{
-\method{readRawData}{AffymetrixCelFile}(this, indices=NULL, fields=c("xy", "intensities", "stdvs", "pixels"), ..., drop=FALSE, verbose=FALSE)
+\method{readRawData}{AffymetrixCelFile}(this, indices=NULL, fields=c("xy", "intensities", "stdvs", "pixels"), ...,
+  drop=FALSE, verbose=FALSE)
 }
 
 \arguments{

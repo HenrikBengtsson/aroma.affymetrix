@@ -19,7 +19,8 @@
 }
 
 \usage{
-\method{plotDensity}{AffymetrixCelFile}(this, subset=NULL, types=NULL, ..., xlim=c(0, 16), xlab=NULL, ylab="density (integrates to one)", log=TRUE, annotate=TRUE, verbose=FALSE)
+\method{plotDensity}{AffymetrixCelFile}(this, subset=NULL, types=NULL, ..., xlim=c(0, 16), xlab=NULL,
+  ylab="density (integrates to one)", log=TRUE, annotate=TRUE, verbose=FALSE)
 }
 
 \arguments{

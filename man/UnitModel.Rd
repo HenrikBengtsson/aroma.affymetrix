@@ -38,7 +38,8 @@ extends \emph{\link[aroma.affymetrix]{Model}}\cr
 }
 
 \usage{
-UnitModel(dataSet=NULL, probeModel=c("pm", "mm", "pm-mm", "min1(pm-mm)", "pm+mm"), shift=0, ...)
+UnitModel(dataSet=NULL, probeModel=c("pm", "mm", "pm-mm", "min1(pm-mm)", "pm+mm"),
+  shift=0, ...)
 }
 
 \arguments{

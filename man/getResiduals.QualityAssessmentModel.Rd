@@ -18,7 +18,8 @@
 }
 
 \usage{
-\method{getResiduals}{QualityAssessmentModel}(this, units=NULL, path=NULL, name="qcData", tags="*", ram=NULL, force=FALSE, verbose=FALSE, ...)
+\method{getResiduals}{QualityAssessmentModel}(this, units=NULL, path=NULL, name="qcData", tags="*", ram=NULL, force=FALSE,
+  verbose=FALSE, ...)
 }
 
 \arguments{

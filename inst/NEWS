@@ -1,6 +1,10 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 2.9.1 [2013-05-20]
+o CRAN POLICY: Now all Rd \usage{} lines are at most 90 characters long.
+
+
 Version: 2.9.0 [2013-05-02]
 o Submitted to CRAN.
 o The package passes all redundancy tests.

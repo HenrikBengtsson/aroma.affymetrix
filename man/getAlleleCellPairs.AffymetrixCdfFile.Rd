@@ -20,7 +20,8 @@
 }
 
 \usage{
-\method{getAlleleCellPairs}{AffymetrixCdfFile}(this, units=NULL, stratifyBy=c("pm", "pmmm", "mm"), force=FALSE, ..., verbose=FALSE)
+\method{getAlleleCellPairs}{AffymetrixCdfFile}(this, units=NULL, stratifyBy=c("pm", "pmmm", "mm"), force=FALSE, ...,
+  verbose=FALSE)
 }
 
 \arguments{

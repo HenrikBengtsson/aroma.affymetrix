@@ -18,7 +18,9 @@
 }
 
 \usage{
-\method{smoothScatterMvsA}{AffymetrixCelFile}(this, reference, indices=NULL, pch=176, xlim=c(0, 16), ylim=c(-1, 1) * diff(xlim), xlab=expression(A == 1/2 \%*\% log[2](y[1] * y[2])), ylab=expression(M == log[2](y[1]/y[2])), ..., annotate=TRUE)
+\method{smoothScatterMvsA}{AffymetrixCelFile}(this, reference, indices=NULL, pch=176, xlim=c(0, 16),
+  ylim=c(-1, 1) * diff(xlim), xlab=expression(A == 1/2 \%*\% log[2](y[1] * y[2])),
+  ylab=expression(M == log[2](y[1]/y[2])), ..., annotate=TRUE)
 }
 
 \arguments{

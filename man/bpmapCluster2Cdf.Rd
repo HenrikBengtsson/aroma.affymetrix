@@ -23,7 +23,10 @@
  }
 
  \usage{
-\method{bpmapCluster2Cdf}{default}(pathname, chipType, tags=NULL, rows, cols, maxProbeDistance=3000, minNbrOfProbes=30, groupName=gsub("_.*", "", chipType), field="fullname", stringRemove=sprintf("\%s:.*;", groupName), ..., flavor=c("v2", "v1"), path="*", verbose=-10)
+\method{bpmapCluster2Cdf}{default}(pathname, chipType, tags=NULL, rows, cols, maxProbeDistance=3000L,
+  minNbrOfProbes=30L, groupName=gsub("_.*", "", chipType), field="fullname",
+  stringRemove=sprintf("\%s:.*;", groupName), ..., flavor=c("v2", "v1"), path="*",
+  verbose=-10)
 }
 
  \arguments{

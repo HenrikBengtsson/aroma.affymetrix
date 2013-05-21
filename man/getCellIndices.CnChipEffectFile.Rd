@@ -18,7 +18,8 @@
 }
 
 \usage{
-\method{getCellIndices}{CnChipEffectFile}(this, units=NULL, ..., unlist=FALSE, force=FALSE, .cache=TRUE, verbose=FALSE)
+\method{getCellIndices}{CnChipEffectFile}(this, units=NULL, ..., unlist=FALSE, force=FALSE, .cache=TRUE,
+  verbose=FALSE)
 }
 
 \arguments{

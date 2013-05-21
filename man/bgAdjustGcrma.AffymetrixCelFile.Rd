@@ -20,7 +20,10 @@
 }
 
 \usage{
-\method{bgAdjustGcrma}{AffymetrixCelFile}(this, path, type=c("fullmodel", "affinities"), indicesNegativeControl=NULL, affinities=NULL, gsbAdjust=TRUE, parametersGsb=NULL, k=ifelse(fast, 6, 0.5), rho=0.7, stretch=ifelse(fast, 1.15, 1), fast=TRUE, overwrite=FALSE, skip=!overwrite, ..., verbose=FALSE, .deprecated=TRUE)
+\method{bgAdjustGcrma}{AffymetrixCelFile}(this, path, type=c("fullmodel", "affinities"), indicesNegativeControl=NULL,
+  affinities=NULL, gsbAdjust=TRUE, parametersGsb=NULL, k=ifelse(fast, 6, 0.5), rho=0.7,
+  stretch=ifelse(fast, 1.15, 1), fast=TRUE, overwrite=FALSE, skip=!overwrite, ...,
+  verbose=FALSE, .deprecated=TRUE)
 }
 
 \arguments{

@@ -44,7 +44,9 @@ extends \emph{\link[aroma.affymetrix]{BackgroundCorrection}}\cr
 }
 
 \usage{
-GcRmaBackgroundCorrection(..., indicesNegativeControl=NULL, affinities=NULL, type=c("fullmodel", "affinities"), opticalAdjust=TRUE, gsbAdjust=TRUE, gsbParameters=NULL)
+GcRmaBackgroundCorrection(..., indicesNegativeControl=NULL, affinities=NULL,
+  type=c("fullmodel", "affinities"), opticalAdjust=TRUE, gsbAdjust=TRUE,
+  gsbParameters=NULL)
 }
 
 \arguments{

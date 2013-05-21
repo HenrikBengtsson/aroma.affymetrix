@@ -21,10 +21,12 @@
 
 \usage{
 ## Static method (use this):
-## AffymetrixCelFile$allocateFromCdf(cdf, name, tags=NULL, path=".", suffix=".CEL", ..., overwrite=FALSE, verbose=FALSE)
+## AffymetrixCelFile$allocateFromCdf(cdf, name, tags=NULL, path=".", suffix=".CEL", ...,
+##   overwrite=FALSE, verbose=FALSE)
 
 ## Don't use the below:
-\method{allocateFromCdf}{AffymetrixCelFile}(static, cdf, name, tags=NULL, path=".", suffix=".CEL", ..., overwrite=FALSE, verbose=FALSE)
+\method{allocateFromCdf}{AffymetrixCelFile}(static, cdf, name, tags=NULL, path=".", suffix=".CEL", ...,
+  overwrite=FALSE, verbose=FALSE)
 }
 
 \arguments{

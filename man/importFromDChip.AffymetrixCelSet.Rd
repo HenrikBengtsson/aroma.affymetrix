@@ -27,10 +27,12 @@
 
 \usage{
 ## Static method (use this):
-## AffymetrixCelSet$importFromDChip(path, name=NULL, tags="dChip", rootPath="probeData", rotateBack=NA, ..., skip=TRUE, verbose=FALSE)
+## AffymetrixCelSet$importFromDChip(path, name=NULL, tags="dChip", rootPath="probeData",
+##   rotateBack=NA, ..., skip=TRUE, verbose=FALSE)
 
 ## Don't use the below:
-\method{importFromDChip}{AffymetrixCelSet}(static, path, name=NULL, tags="dChip", rootPath="probeData", rotateBack=NA, ..., skip=TRUE, verbose=FALSE)
+\method{importFromDChip}{AffymetrixCelSet}(static, path, name=NULL, tags="dChip", rootPath="probeData",
+  rotateBack=NA, ..., skip=TRUE, verbose=FALSE)
 }
 
 \arguments{

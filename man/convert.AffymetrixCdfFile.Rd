@@ -18,7 +18,8 @@
 }
 
 \usage{
-\method{convert}{AffymetrixCdfFile}(this, chipType=getChipType(this), suffix=NULL, sep="-", path="cdf", ..., verbose=FALSE)
+\method{convert}{AffymetrixCdfFile}(this, chipType=getChipType(this), suffix=NULL, sep="-", path="cdf", ...,
+  verbose=FALSE)
 }
 
 \arguments{

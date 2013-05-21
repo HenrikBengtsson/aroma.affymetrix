@@ -18,7 +18,9 @@
 }
 
 \usage{
-\method{getImage}{AffymetrixCelFile}(this, other=NULL, transforms=list(sqrt), xrange=c(0, Inf), yrange=xrange, zrange=c(0, sqrt(2^16)), field=c("intensities", "stdvs", "pixels"), zoom=1, ..., readRectFcn=NULL, verbose=FALSE)
+\method{getImage}{AffymetrixCelFile}(this, other=NULL, transforms=list(sqrt), xrange=c(0, Inf), yrange=xrange,
+  zrange=c(0, sqrt(2^16)), field=c("intensities", "stdvs", "pixels"), zoom=1, ...,
+  readRectFcn=NULL, verbose=FALSE)
 }
 
 \arguments{

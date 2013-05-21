@@ -20,7 +20,8 @@
 }
 
 \usage{
-\method{bgAdjustRma}{AffymetrixCelFile}(this, path, pmonly=TRUE, addJitter=FALSE, jitterSd=0.2, overwrite=FALSE, skip=!overwrite, ..., verbose=FALSE, .deprecated=TRUE)
+\method{bgAdjustRma}{AffymetrixCelFile}(this, path, pmonly=TRUE, addJitter=FALSE, jitterSd=0.2, overwrite=FALSE,
+  skip=!overwrite, ..., verbose=FALSE, .deprecated=TRUE)
 }
 
 \arguments{

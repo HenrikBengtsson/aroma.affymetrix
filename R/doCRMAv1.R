@@ -14,7 +14,8 @@
 # }
 #
 # \usage{
-#   \method{doCRMAv1}{AffymetrixCelSet}(csR, shift=+300, combineAlleles=TRUE, lengthRange=NULL, arrays=NULL, drop=TRUE, verbose=FALSE, ...)
+#   \method{doCRMAv1}{AffymetrixCelSet}(csR, shift=+300, combineAlleles=TRUE,
+#     lengthRange=NULL, arrays=NULL, drop=TRUE, verbose=FALSE, ...)
 #   \method{doCRMAv1}{default}(dataSet, ..., verbose=FALSE)
 #   \method{doASCRMAv1}{default}(...)
 # }

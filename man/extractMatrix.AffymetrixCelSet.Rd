@@ -19,7 +19,8 @@
 }
 
 \usage{
-\method{extractMatrix}{AffymetrixCelSet}(this, cells=NULL, ..., field=c("intensities", "stdvs", "pixels"), drop=FALSE, verbose=FALSE)
+\method{extractMatrix}{AffymetrixCelSet}(this, cells=NULL, ..., field=c("intensities", "stdvs", "pixels"),
+  drop=FALSE, verbose=FALSE)
 }
 
 \arguments{

@@ -19,7 +19,9 @@
 }
 
 \usage{
-\method{createFrom}{AffymetrixCelFile}(this, filename, path=NULL, overwrite=FALSE, skip=!overwrite, version=c("4", "3"), methods=c("copy", "create"), clear=FALSE, defValue=0, ..., verbose=FALSE)
+\method{createFrom}{AffymetrixCelFile}(this, filename, path=NULL, overwrite=FALSE, skip=!overwrite,
+  version=c("4", "3"), methods=c("copy", "create"), clear=FALSE, defValue=0, ...,
+  verbose=FALSE)
 }
 
 \arguments{

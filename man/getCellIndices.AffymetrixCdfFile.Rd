@@ -18,7 +18,8 @@
 }
 
 \usage{
-\method{getCellIndices}{AffymetrixCdfFile}(this, units=NULL, ..., useNames=TRUE, unlist=FALSE, force=FALSE, cache=TRUE, verbose=FALSE)
+\method{getCellIndices}{AffymetrixCdfFile}(this, units=NULL, ..., useNames=TRUE, unlist=FALSE, force=FALSE,
+  cache=TRUE, verbose=FALSE)
 }
 
 \arguments{

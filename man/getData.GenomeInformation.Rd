@@ -18,7 +18,8 @@
 }
 
 \usage{
-\method{getData}{GenomeInformation}(this, units=NULL, fields=c("chromosome", "physicalPosition"), orderBy=NULL, ..., force=FALSE, verbose=FALSE)
+\method{getData}{GenomeInformation}(this, units=NULL, fields=c("chromosome", "physicalPosition"), orderBy=NULL, ...,
+  force=FALSE, verbose=FALSE)
 }
 
 \arguments{

@@ -18,7 +18,8 @@
 }
 
 \usage{
-\method{getWeights}{QualityAssessmentModel}(this, path=NULL, name="qcData", tags="*", ..., ram=NULL, force=FALSE, verbose=FALSE)
+\method{getWeights}{QualityAssessmentModel}(this, path=NULL, name="qcData", tags="*", ..., ram=NULL, force=FALSE,
+  verbose=FALSE)
 }
 
 \arguments{

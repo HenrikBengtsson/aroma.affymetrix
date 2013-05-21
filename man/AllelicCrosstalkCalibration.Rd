@@ -45,7 +45,11 @@ extends \emph{\link[aroma.affymetrix]{ProbeLevelTransform}}\cr
 }
 
 \usage{
-AllelicCrosstalkCalibration(dataSet=NULL, ..., model=c("asis", "auto", "CRMA", "CRMAv2"), rescaleBy=c("auto", "groups", "all", "none"), targetAvg=c(2200, 2200), subsetToAvg="-XY", mergeShifts=TRUE, B=1, flavor=c("sfit", "expectile"), alpha=c(0.1, 0.075, 0.05, 0.03, 0.01), q=2, Q=98, lambda=2, pairBy=c("CDF", "sequence"))
+AllelicCrosstalkCalibration(dataSet=NULL, ..., model=c("asis", "auto", "CRMA", "CRMAv2"),
+  rescaleBy=c("auto", "groups", "all", "none"), targetAvg=c(2200, 2200),
+  subsetToAvg="-XY", mergeShifts=TRUE, B=1, flavor=c("sfit", "expectile"),
+  alpha=c(0.1, 0.075, 0.05, 0.03, 0.01), q=2, Q=98, lambda=2,
+  pairBy=c("CDF", "sequence"))
 }
 
 \arguments{

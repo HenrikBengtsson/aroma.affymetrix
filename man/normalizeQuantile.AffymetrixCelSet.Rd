@@ -19,7 +19,9 @@
 }
 
 \usage{
-\method{normalizeQuantile}{AffymetrixCelSet}(this, path=NULL, name="normQuantile", subsetToUpdate=NULL, typesToUpdate=NULL, xTarget=NULL, subsetToAvg=subsetToUpdate, typesToAvg=typesToUpdate, ..., verbose=FALSE)
+\method{normalizeQuantile}{AffymetrixCelSet}(this, path=NULL, name="normQuantile", subsetToUpdate=NULL,
+  typesToUpdate=NULL, xTarget=NULL, subsetToAvg=subsetToUpdate, typesToAvg=typesToUpdate,
+  ..., verbose=FALSE)
 }
 
 \arguments{

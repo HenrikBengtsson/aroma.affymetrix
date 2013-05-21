@@ -19,7 +19,8 @@
 }
 
 \usage{
-\method{calculateBaseline}{ChipEffectSet}(this, chromosomes=NULL, ploidy=2, defaultPloidy=NA, all=FALSE, force=FALSE, verbose=FALSE, ...)
+\method{calculateBaseline}{ChipEffectSet}(this, chromosomes=NULL, ploidy=2, defaultPloidy=NA, all=FALSE,
+  force=FALSE, verbose=FALSE, ...)
 }
 
 \arguments{

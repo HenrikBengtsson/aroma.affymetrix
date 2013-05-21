@@ -20,7 +20,8 @@
 
 \usage{
 ## Static method (use this):
-## AffymetrixCdfFile$findByChipType(chipType, tags=NULL, pattern=NULL, ..., .useAffxparser=TRUE)
+## AffymetrixCdfFile$findByChipType(chipType, tags=NULL, pattern=NULL, ...,
+##   .useAffxparser=TRUE)
 
 ## Don't use the below:
 \method{findByChipType}{AffymetrixCdfFile}(static, chipType, tags=NULL, pattern=NULL, ..., .useAffxparser=TRUE)

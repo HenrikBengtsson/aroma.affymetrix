@@ -42,7 +42,8 @@ extends \emph{\link[aroma.affymetrix]{ChipEffectTransform}}\cr
 }
 
 \usage{
-FragmentLengthNormalization(dataSet=NULL, ..., target=targetFunctions, subsetToFit="-XY", lengthRange=NULL, onMissing=c("median", "ignore"), shift=0, targetFunctions=NULL)
+FragmentLengthNormalization(dataSet=NULL, ..., target=targetFunctions, subsetToFit="-XY",
+  lengthRange=NULL, onMissing=c("median", "ignore"), shift=0, targetFunctions=NULL)
 }
 
 \arguments{

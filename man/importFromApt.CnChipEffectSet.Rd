@@ -22,10 +22,12 @@
 
 \usage{
 ## Static method (use this):
-## CnChipEffectSet$importFromApt(filename, path=NULL, combineAlleles=TRUE, cdf, ..., skip=TRUE, verbose=FALSE)
+## CnChipEffectSet$importFromApt(filename, path=NULL, combineAlleles=TRUE, cdf, ...,
+##   skip=TRUE, verbose=FALSE)
 
 ## Don't use the below:
-\method{importFromApt}{CnChipEffectSet}(static, filename, path=NULL, combineAlleles=TRUE, cdf, ..., skip=TRUE, verbose=FALSE)
+\method{importFromApt}{CnChipEffectSet}(static, filename, path=NULL, combineAlleles=TRUE, cdf, ..., skip=TRUE,
+  verbose=FALSE)
 }
 
 \arguments{

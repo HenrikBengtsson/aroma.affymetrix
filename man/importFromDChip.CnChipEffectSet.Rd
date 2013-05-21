@@ -23,10 +23,12 @@
 
 \usage{
 ## Static method (use this):
-## CnChipEffectSet$importFromDChip(filename, path=NULL, combineAlleles=TRUE, cdf, ..., skip=TRUE, verbose=FALSE)
+## CnChipEffectSet$importFromDChip(filename, path=NULL, combineAlleles=TRUE, cdf, ...,
+##   skip=TRUE, verbose=FALSE)
 
 ## Don't use the below:
-\method{importFromDChip}{CnChipEffectSet}(static, filename, path=NULL, combineAlleles=TRUE, cdf, ..., skip=TRUE, verbose=FALSE)
+\method{importFromDChip}{CnChipEffectSet}(static, filename, path=NULL, combineAlleles=TRUE, cdf, ..., skip=TRUE,
+  verbose=FALSE)
 }
 
 \arguments{

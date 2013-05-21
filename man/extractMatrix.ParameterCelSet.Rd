@@ -18,7 +18,8 @@
 }
 
 \usage{
-\method{extractMatrix}{ParameterCelSet}(this, units=NULL, ..., field=c("intensities", "stdvs", "pixels"), returnUgcMap=FALSE, drop=FALSE, verbose=FALSE)
+\method{extractMatrix}{ParameterCelSet}(this, units=NULL, ..., field=c("intensities", "stdvs", "pixels"),
+  returnUgcMap=FALSE, drop=FALSE, verbose=FALSE)
 }
 
 \arguments{

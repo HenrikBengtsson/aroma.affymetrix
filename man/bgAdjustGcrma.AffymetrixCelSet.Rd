@@ -23,7 +23,10 @@ CEL files.
 }
 
 \usage{
-\method{bgAdjustGcrma}{AffymetrixCelSet}(this, path, affinities=NULL, type="fullmodel", indicesNegativeControl=NULL, opticalAdjust=TRUE, gsbAdjust=TRUE, k=6 * fast + 0.5 * (1 - fast), rho=0.7, stretch=1.15 * fast + (1 - fast), fast=TRUE, overwrite=FALSE, skip=!overwrite, ..., verbose=FALSE, .deprecated=TRUE)
+\method{bgAdjustGcrma}{AffymetrixCelSet}(this, path, affinities=NULL, type="fullmodel", indicesNegativeControl=NULL,
+  opticalAdjust=TRUE, gsbAdjust=TRUE, k=6 * fast + 0.5 * (1 - fast), rho=0.7,
+  stretch=1.15 * fast + (1 - fast), fast=TRUE, overwrite=FALSE, skip=!overwrite, ...,
+  verbose=FALSE, .deprecated=TRUE)
 }
 
 \arguments{

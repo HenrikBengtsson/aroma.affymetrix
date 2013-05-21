@@ -18,7 +18,9 @@
 }
 
 \usage{
-\method{writeImage}{AffymetrixCelFile}(this, filename=NULL, fullname=NULL, tags=c("*", "sqrt", "gray"), imgFormat="png", path=NULL, field=c("intensities", "stdvs", "pixels"), ..., skip=TRUE, verbose=FALSE)
+\method{writeImage}{AffymetrixCelFile}(this, filename=NULL, fullname=NULL, tags=c("*", "sqrt", "gray"),
+  imgFormat="png", path=NULL, field=c("intensities", "stdvs", "pixels"), ..., skip=TRUE,
+  verbose=FALSE)
 }
 
 \arguments{

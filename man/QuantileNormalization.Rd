@@ -42,7 +42,8 @@ extends \emph{\link[aroma.affymetrix]{ProbeLevelTransform}}\cr
 }
 
 \usage{
-QuantileNormalization(..., subsetToUpdate=NULL, typesToUpdate=NULL, targetDistribution=NULL, subsetToAvg=subsetToUpdate, typesToAvg=typesToUpdate)
+QuantileNormalization(..., subsetToUpdate=NULL, typesToUpdate=NULL,
+  targetDistribution=NULL, subsetToAvg=subsetToUpdate, typesToAvg=typesToUpdate)
 }
 
 \arguments{

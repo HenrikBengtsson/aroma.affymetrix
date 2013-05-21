@@ -18,7 +18,8 @@
 }
 
 \usage{
-\method{image270}{AffymetrixCelFile}(this, xrange=c(0, Inf), yrange=c(0, Inf), takeLog=TRUE, interleaved=FALSE, ..., field=c("intensities", "stdvs", "pixels"), col=gray.colors(256), main=getName(this))
+\method{image270}{AffymetrixCelFile}(this, xrange=c(0, Inf), yrange=c(0, Inf), takeLog=TRUE, interleaved=FALSE, ...,
+  field=c("intensities", "stdvs", "pixels"), col=gray.colors(256), main=getName(this))
 }
 
 \arguments{

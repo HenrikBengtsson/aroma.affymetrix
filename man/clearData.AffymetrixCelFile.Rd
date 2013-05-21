@@ -20,10 +20,12 @@
 
 \usage{
 ## Static method (use this):
-## AffymetrixCelFile$clearData(fields=c("intensities", "stdvs", "pixels"), value=0, ..., .forSure=FALSE, verbose=TRUE)
+## AffymetrixCelFile$clearData(fields=c("intensities", "stdvs", "pixels"), value=0, ...,
+##   .forSure=FALSE, verbose=TRUE)
 
 ## Don't use the below:
-\method{clearData}{AffymetrixCelFile}(this, fields=c("intensities", "stdvs", "pixels"), value=0, ..., .forSure=FALSE, verbose=TRUE)
+\method{clearData}{AffymetrixCelFile}(this, fields=c("intensities", "stdvs", "pixels"), value=0, ..., .forSure=FALSE,
+  verbose=TRUE)
 }
 
 \arguments{

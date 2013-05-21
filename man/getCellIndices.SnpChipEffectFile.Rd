@@ -18,7 +18,8 @@
 }
 
 \usage{
-\method{getCellIndices}{SnpChipEffectFile}(this, units=NULL, ..., unlist=FALSE, force=FALSE, .cache=TRUE, verbose=FALSE)
+\method{getCellIndices}{SnpChipEffectFile}(this, units=NULL, ..., unlist=FALSE, force=FALSE, .cache=TRUE,
+  verbose=FALSE)
 }
 
 \arguments{

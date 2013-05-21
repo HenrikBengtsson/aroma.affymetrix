@@ -21,7 +21,8 @@ Adapted from \code{\link[gcrma]{bg.adjust.optical}} in the \pkg{gcrma} package.
 }
 
 \usage{
-\method{bgAdjustOptical}{AffymetrixCelFile}(this, path, minimum=1, subsetToUpdate=NULL, typesToUpdate=NULL, overwrite=FALSE, skip=!overwrite, verbose=FALSE, ..., .deprecated=TRUE)
+\method{bgAdjustOptical}{AffymetrixCelFile}(this, path, minimum=1, subsetToUpdate=NULL, typesToUpdate=NULL,
+  overwrite=FALSE, skip=!overwrite, verbose=FALSE, ..., .deprecated=TRUE)
 }
 
 \arguments{

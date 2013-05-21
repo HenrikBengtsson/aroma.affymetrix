@@ -18,7 +18,8 @@
 }
 
 \usage{
-\method{getData}{SnpInformation}(this, units=NULL, fields=c("fragmentLength", "start", "stop"), orderBy=NULL, ..., force=FALSE, verbose=FALSE)
+\method{getData}{SnpInformation}(this, units=NULL, fields=c("fragmentLength", "start", "stop"), orderBy=NULL, ...,
+  force=FALSE, verbose=FALSE)
 }
 
 \arguments{

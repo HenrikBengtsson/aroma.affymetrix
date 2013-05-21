@@ -42,7 +42,8 @@ extends \emph{\link[aroma.affymetrix]{ChipEffectTransform}}\cr
  }
 
  \usage{
-AdditiveCovariatesNormalization(dataSet=NULL, ..., target=NULL, subsetToFit="-XY", shift=0, onMissing=c("median", "ignore"))
+AdditiveCovariatesNormalization(dataSet=NULL, ..., target=NULL, subsetToFit="-XY",
+  shift=0, onMissing=c("median", "ignore"))
 }
 
  \arguments{

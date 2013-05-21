@@ -19,7 +19,8 @@
 }
 
 \usage{
-\method{fitQuantileNormFcn}{AffymetrixCelFile}(this, yTarget, subset=NULL, ..., spar=NULL, nknots=1024, verbose=FALSE)
+\method{fitQuantileNormFcn}{AffymetrixCelFile}(this, yTarget, subset=NULL, ..., spar=NULL, nknots=1024,
+  verbose=FALSE)
 }
 
 \arguments{

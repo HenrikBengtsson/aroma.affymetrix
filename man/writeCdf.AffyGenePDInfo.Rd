@@ -22,7 +22,8 @@
  }
 
  \usage{
-\method{writeCdf}{AffyGenePDInfo}(this, tags=c("*"), unitsBy=c("transcript", "exon"), namesBy=c("fsetid", "id"), path=NULL, overwrite=FALSE, verbose=TRUE, ...)
+\method{writeCdf}{AffyGenePDInfo}(this, tags=c("*"), unitsBy=c("transcript", "exon"), namesBy=c("fsetid", "id"),
+  path=NULL, overwrite=FALSE, verbose=TRUE, ...)
 }
 
  \arguments{

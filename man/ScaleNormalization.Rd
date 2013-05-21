@@ -42,7 +42,8 @@ extends \emph{\link[aroma.affymetrix]{ProbeLevelTransform}}\cr
 }
 
 \usage{
-ScaleNormalization(dataSet=NULL, ..., targetAvg=4400, subsetToUpdate=NULL, typesToUpdate=NULL, subsetToAvg="-XY", typesToAvg=typesToUpdate, shift=0)
+ScaleNormalization(dataSet=NULL, ..., targetAvg=4400, subsetToUpdate=NULL,
+  typesToUpdate=NULL, subsetToAvg="-XY", typesToAvg=typesToUpdate, shift=0)
 }
 
 \arguments{

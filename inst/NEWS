@@ -2,8 +2,10 @@ Package: aroma.affymetrix
 =========================
 
 Version: 2.9.2 [2013-05-22]
-o CLEANUP: Now using getChecksum() instead of (internal) 
+o CLEANUP: Now using getChecksum() instead of (internal)
   R.filesets::digest2() with identical results.
+o CLEANUP: Now getIdentifier() for CnagCfhFile utilizes
+  getChecksum() for the GenericDataFile class.
 
 
 Version: 2.9.1 [2013-05-20]

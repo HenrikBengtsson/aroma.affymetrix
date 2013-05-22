@@ -75,16 +75,12 @@ setMethodS3("getExtensionPattern", "CnagCfhFile", function(static, ...) {
 
 
 setMethodS3("getIdentifier", "CnagCfhFile", function(this, ..., force=FALSE) {
-  identifier <- this$.identifier;
+  id <- this$.identifier;
   if (force || is.null(identifier)) {
-    path <- getPath(this);
-    path <- dropRootPathTags(path, depth=2);
-    filename <- getFilename(this);
-    pathname <- file.path(path, filename);
-    id <- digest2(pathname, file=TRUE);
+    id <- getChecksum(this);
     this$.identifier <- id;
   }
-  identifier;
+  id;
 }, private=TRUE)
 
 
@@ -447,6 +443,9 @@ setMethodS3("range", "CnagCfhFile", function(this, ..., na.rm=TRUE) {
 
 ############################################################################
 # HISTORY:
+# 2013-05-22
+# o CLEANUP: Now getIdentifier() for CnagCfhFile utilizes getChecksum()
+#   for the GenericDataFile class.
 # 2012-11-20
 # o CLEANUP: Deprecated "[" and "[[", because they should be used to
 #   subset files and not units.

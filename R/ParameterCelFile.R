@@ -119,7 +119,7 @@ setMethodS3("readUnits", "ParameterCelFile", function(this, ..., readStdvs=FALSE
     cache <- FALSE;
   } else {
     verbose && enter(verbose, "Generating hashcode key for cache");
-    id <- digest2(args);
+    id <- getChecksum(args);
     verbose && exit(verbose);
     if (!force) {
       verbose && enter(verbose, "Trying to obtain cached data");

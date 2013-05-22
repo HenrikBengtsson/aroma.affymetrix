@@ -258,7 +258,7 @@ setMethodS3("getIdentifier", "AffymetrixCelSet", function(this, ..., force=FALSE
     identifier <- NextMethod("getIdentifier");
     if (is.null(identifier)) {
       identifiers <- lapply(this, FUN=getIdentifier);
-      identifier <- digest2(identifiers);
+      identifier <- getChecksum(identifiers);
     }
     this$.identifier <- identifier;
   }
@@ -1065,7 +1065,7 @@ setMethodS3("getUnitIntensities", "AffymetrixCelSet", function(this, units=NULL,
   # Check for cached data
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   key <- list(method="getUnitIntensities", class=class(this)[1], units=units, ...);
-  id <- digest2(key);
+  id <- getChecksum(key);
   res <- this$.getUnitIntensitiesCache[[id]];
   if (!force && !is.null(res)) {
     verbose && cat(verbose, "getUnitIntensitiesCache(): Returning cached data");
@@ -1131,14 +1131,14 @@ setMethodS3("readUnits", "AffymetrixCelSet", function(this, units=NULL, ..., for
     # This will allow us to pass pre-digested object.
     unitsHashcode <- attr(units, "hashcode");
     if (is.null(unitsHashcode)) {
-      unitsHashcode <- digest2(units);
+      unitsHashcode <- getChecksum(units);
       attr(units, "hashcode") <- unitsHashcode;
     }
     key <- c(key, unitsHashcode=unitsHashcode, ...);
   } else {
     key <- c(key, units=units, ...);
   }
-  id <- digest2(key);
+  id <- getChecksum(key);
   verbose && exit(verbose);
   if (!force) {
     verbose && enter(verbose, "Trying to obtain cached data");

@@ -269,7 +269,7 @@ setMethodS3("getTargetDistributionIdentifier", "QuantileNormalization", function
     indices=indices,
     types=params$typesToAvg
   );
-  id <- digest2(key);
+  id <- getChecksum(key);
   verbose && exit(verbose);
 
   id;

@@ -15,7 +15,7 @@ setMethodS3("getIdentifier", "AffymetrixFileSet", function(this, ...) {
   }
 
   if (!is.null(res)) {
-    res <- digest2(list(res));
+    res <- getChecksum(list(res));
   }
 
   res;

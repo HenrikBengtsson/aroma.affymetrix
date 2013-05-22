@@ -117,7 +117,7 @@ setMethodS3("getCellIndices", "ExonChipEffectFile", function(this, ..., unlist=F
       key <- getCacheKey(cdf, method="getCellIndices", class=class(this)[1L], chipType=chipType, params=params, units=units, unlist=unlist, ...);
     }
     dirs <- c("aroma.affymetrix", chipType);
-    id <- digest2(key);
+    id <- getChecksum(key);
   }
 
   if (!force) {
@@ -201,7 +201,7 @@ setMethodS3("readUnits", "ExonChipEffectFile", function(this, ..., force=FALSE, 
   # Check for cached data
   key <- list(method="readUnits", class=class(this)[1],
               mergeGroups=this$mergeGroups, ...);
-  id <- digest2(key);
+  id <- getChecksum(key);
   res <- this$.readUnitsCache[[id]];
   if (!force && !is.null(res)) {
     verbose && cat(verbose, "readUnits.ExonChipEffectFile(): Returning cached data");

@@ -740,7 +740,7 @@ setMethodS3("getCellIndices", "AffymetrixCdfFile", function(this, units=NULL, ..
   }
 
   # This is a trick to store either to memory or file cache
-  key <- digest2(key);
+  key <- getChecksum(key);
   if (!force) {
     # (a) Check memory cache
     res <- this$.cellIndices[[key]];

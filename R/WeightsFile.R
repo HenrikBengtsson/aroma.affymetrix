@@ -147,7 +147,7 @@ setMethodS3("readUnits", "WeightsFile", function(this, units=NULL, cdf=NULL, ...
   if (getOption(aromaSettings, "devel/useCacheKeyInterface", FALSE)) {
     key <- getCacheKey(this, method="readUnits", pathname=getPathname(this), cdf=cdf, units=units, ...);
   }
-  id <- digest2(key);
+  id <- getChecksum(key);
   res <- this$.readUnitsCache[[id]];
   if (!force && !is.null(res)) {
     verbose && cat(verbose, "readUnits.WeightsFile(): Returning cached data");

@@ -20,14 +20,14 @@ setMethodS3("getOutputIdentifier", "QuantileNormalization", function(this, ..., 
   paramId <- this$.paramId;
   params <- getParameters(this);
   params$.targetDistribution <- attr(params$.targetDistribution, "identifier");
-  paramId <- digest2(list(params));
+  paramId <- getChecksum(list(params));
   this$.paramId <- paramId;
   verbose && exit(verbose);
 
   verbose && enter(verbose, "Calculating the joint identifier");
-  id <- digest2(list(inputId, paramId));
+  id <- getChecksum(list(inputId, paramId));
   verbose && exit(verbose);
- 
+
   verbose && exit(verbose);
 
   id;

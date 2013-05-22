@@ -197,7 +197,7 @@ setMethodS3("getIdentifier", "CnagCfhSet", function(this, ..., force=FALSE) {
     identifier <- NextMethod("getIdentifier");
     if (is.null(identifier)) {
       identifiers <- lapply(this, FUN=getIdentifier);
-      identifier <- digest2(identifiers);
+      identifier <- getChecksum(identifiers);
     }
     this$.identifier <- identifier;
   }
@@ -632,7 +632,7 @@ setMethodS3("readUnits", "CnagCfhSet", function(this, units=NULL, ..., force=FAL
   } else {
     key <- c(key, units=units, ...);
   }
-  id <- digest2(key);
+  id <- getChecksum(key);
   verbose && exit(verbose);
   if (!force) {
     verbose && enter(verbose, "Trying to obtain cached data");
@@ -789,7 +789,7 @@ setMethodS3("getAverageFile", "CnagCfhSet", function(this, name=NULL, prefix="av
         environment(x) <- emptyenv();
       x;
     })
-    id <- digest2(key);
+    id <- getChecksum(key);
     name <- sprintf("%s-%s-%s-%s,%s", prefix, field, meanName, sdName, id);
   }
 

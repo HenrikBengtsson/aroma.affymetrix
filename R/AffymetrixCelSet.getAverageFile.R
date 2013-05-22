@@ -104,7 +104,7 @@ setMethodS3("getAverageFile", "AffymetrixCelSet", function(this, name=NULL, pref
         environment(x) <- emptyenv();
       x;
     })
-    id <- digest2(key);
+    id <- getChecksum(key);
     name <- sprintf("%s-%s-%s-%s,%s", prefix, field, meanName, sdName, id);
   }
 

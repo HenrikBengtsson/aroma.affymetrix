@@ -313,7 +313,8 @@ setMethodS3("createMonocellCdf", "AffymetrixCdfFile", function(this, chipType=ge
                     qcUnitLengths=qcUnitLengths, unitLengths=unitLengths,
                                                         verbose=verbose2);
   # Not needed anymore
-  rm(destHeader, unitNames, qcUnitLengths, unitLengths);
+  # Not needed anymore
+  destHeader <- unitNames <- qcUnitLengths <- unitLengths <- NULL;
 
   # Garbage collect
   gc <- gc();
@@ -338,7 +339,8 @@ setMethodS3("createMonocellCdf", "AffymetrixCdfFile", function(this, chipType=ge
 
   # Write QC units
   writeCdfQcUnits(con=con, destQcUnits, verbose=verbose2);
-  rm(destQcUnits); # Not needed anymore
+  # Not needed anymore
+  destQcUnits <- NULL; # Not needed anymore
 
   # Garbage collect
   gc <- gc();
@@ -453,11 +455,13 @@ setMethodS3("createMonocellCdf", "AffymetrixCdfFile", function(this, chipType=ge
 
     # Write regular units
     writeCdfUnits(con=con, srcUnits, verbose=verbose2);
-    rm(srcUnits, units); # Not needed anymore
+    # Not needed anymore
+    srcUnits <- units <- NULL; # Not needed anymore
 
     count <- count + 1;
   } # while (length(unitsToDo) > 0)
-  rm(unitsToDo, head, fields, fIdxs, count);
+  # Not needed anymore
+  unitsToDo <- head <- fields <- fIdxs <- count <- NULL;
 
   # Garbage collect
   gc <- gc();
@@ -506,7 +510,8 @@ setMethodS3("createMonocellCdf", "AffymetrixCdfFile", function(this, chipType=ge
     if (!identical(udcells, 1:1)) {
       throw("Failed to create a valid mono-cell CDF: The cell indices are not contiguous: ", paste(udcells, collapse=", "));
     }
-    rm(cells, udcells);
+    # Not needed anymore
+    cells <- udcells <- NULL;
   }
   verbose && exit(verbose);
 
@@ -640,9 +645,11 @@ setMethodS3("getUnitGroupCellMapWithMonocell", "AffymetrixCdfFile", function(thi
   })
   # (2) Map (unit, group)_monocell to (unit, group)_main
   rr <- match(ugHashcode[[1]], ugHashcode[[2]]);
-  rm(ugHashcode);
+  # Not needed anymore
+  ugHashcode <- NULL;
   mergedMap <- cbind(ugcMap[[1]], cellM=ugcMap[[2]][rr,"cell"]);
-  rm(ugcMap);
+  # Not needed anymore
+  ugcMap <- NULL;
 
   mergedMap;
 }, protected=TRUE)

@@ -96,14 +96,16 @@ setMethodS3("writeCdf", "AffyGenePDInfo", function(this, tags=c("*"), unitsBy=c(
   pkgInfo <- packageDescription(pkgName);
   title <- pkgInfo$Title;
   chipType <- gsub(".* ", "", title);
-  rm(pkgInfo, title);
+  # Not needed anymore
+  pkgInfo <- title <- NULL;
 
   # Chip type package name
   pkgNameT <- cleanPlatformName(chipType);
 
   # Sanity check
   stopifnot(pkgNameT == pkgName);
-  rm(pkgNameT);
+  # Not needed anymore
+  pkgNameT <- NULL;
 
   
   if (is.null(path)) {
@@ -136,7 +138,8 @@ setMethodS3("writeCdf", "AffyGenePDInfo", function(this, tags=c("*"), unitsBy=c(
   dim <- geometry(pd);
   nrows <- dim[1];
   ncols <- dim[2];
-  rm(dim);
+  # Not needed anymore
+  dim <- NULL;
 
   nbrOfCells <- nrows*ncols;
   verbose && cat(verbose, "Chip type: ", chipType);
@@ -244,7 +247,8 @@ setMethodS3("writeCdf", "AffyGenePDInfo", function(this, tags=c("*"), unitsBy=c(
     ff$probeset_id <- id;
   }
 
-  rm(pd);  # Not needed anymore
+  # Not needed anymore
+  pd <- NULL;  # Not needed anymore
   verbose && str(verbose, ff);
   nbrOfPdCells <- nrow(ff);
   verbose && printf(verbose, "Number of cells (probes) in PD database: %d (%.2f%%) of %d\n", nbrOfPdCells, 100*nbrOfPdCells/nbrOfCells, nbrOfCells);
@@ -357,7 +361,8 @@ setMethodS3("writeCdf", "PDInfoList", function(ffs, pathname, overwrite=FALSE, .
   verbose && enter(verbose, "Setting up CDF units");
   verbose && cat(verbose, "Number of units: ", nbrOfUnits);
   cdfList <- lapply(ffs, FUN=pmFeature2List);
-  rm(ffs);  # Not needed anymore
+  # Not needed anymore
+  ffs <- NULL;  # Not needed anymore
   # Updating 'unitnumber':s
   for (kk in seq_along(cdfList)) {
     cdfList[[kk]]$unitnumber <- kk;

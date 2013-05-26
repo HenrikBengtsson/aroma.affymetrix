@@ -93,7 +93,8 @@ setMethodS3("getSubsetOfCellIndices", "AffymetrixCdfFile", function(this, units=
       verbose && str(verbose, chromosomes);
 
       unitsExcl <- getUnitsOnChromosomes(gi, chromosomes, .checkArgs=FALSE);
-      rm(chromosomes);
+      # Not needed anymore
+      chromosomes <- NULL;
 
       verbose && exit(verbose);
     } else {
@@ -148,7 +149,8 @@ setMethodS3("getSubsetOfCellIndices", "AffymetrixCdfFile", function(this, units=
   }
 
   # Not needed anymore
-  rm(unitsIncl, unitsExcl);
+  # Not needed anymore
+  unitsIncl <- unitsExcl <- NULL;
 
   
   if (is.null(cellsIncl)) {
@@ -175,7 +177,8 @@ setMethodS3("getSubsetOfCellIndices", "AffymetrixCdfFile", function(this, units=
   # Including and excluding cell indices
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   cells <- setdiff(cellsIncl, cellsExcl);
-  rm(cellsIncl, cellsExcl);
+  # Not needed anymore
+  cellsIncl <- cellsExcl <- NULL;
 
   verbose && cat(verbose, "Final set of cell indices:");
   verbose && str(verbose, cells);

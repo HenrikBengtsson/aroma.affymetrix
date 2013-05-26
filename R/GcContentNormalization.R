@@ -188,7 +188,8 @@ setMethodS3("getSubsetToFit", "GcContentNormalization", function(this, force=FAL
 
     # Now filter
     units <- units[keep];
-    rm(keep);
+    # Not needed anymore
+    keep <- NULL;
   }
 
   # Sort units
@@ -244,7 +245,8 @@ setMethodS3("getTargetFunction", "GcContentNormalization", function(this, ..., f
     verbose && str(verbose, units);
 
     yR <- data[,"theta"];
-    rm(data); # Not needed anymore
+    # Not needed anymore
+    data <- NULL; # Not needed anymore
     yR <- log2(yR);
     verbose && cat(verbose, "Signals:");
     verbose && str(verbose, yR);
@@ -261,7 +263,8 @@ setMethodS3("getTargetFunction", "GcContentNormalization", function(this, ..., f
     class(fit) <- "lowess";
 
     # Remove as many promises as possible
-    rm(fcn, ces, ceR, units, gc, yR, ok);
+    # Not needed anymore
+    fcn <- ces <- ceR <- units <- gc <- yR <- ok <- NULL;
 
     # Create target prediction function
     fcn <- function(x, ...) {
@@ -449,9 +452,11 @@ setMethodS3("process", "GcContentNormalization", function(this, ..., force=FALSE
 
     verbose && enter(verbose, "Storing normalized signals");
     data[,"theta"] <- y;
-    rm(y);
+    # Not needed anymore
+    y <- NULL;
     updateDataFlat(ceN, data=data, verbose=less(verbose));
-    rm(data);
+    # Not needed anymore
+    data <- NULL;
     verbose && exit(verbose);
 
     # Garbage collect

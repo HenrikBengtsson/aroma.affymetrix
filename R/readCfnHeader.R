@@ -100,7 +100,8 @@ setMethodS3("readCfnHeader", "default", function(pathname, ..., verbose=FALSE) {
     throw("Could not locate CDF for this chip type: ", chipType);
   isSnp <- (regexpr("SNP_", readCdfUnitNames(cdfPathname)) != -1);
   nbrOfSnps <- sum(isSnp);
-  rm(isSnp);
+  # Not needed anymore
+  isSnp <- NULL;
   verbose && cat(verbose, "Number of SNPs (from CDF file): ", nbrOfSnps);
 
   dataOffset <- nbrOfBytes %% nbrOfSnps;

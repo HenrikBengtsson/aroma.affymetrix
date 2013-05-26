@@ -94,7 +94,8 @@ setMethodS3("fitOne", "ScaleNormalization3", function(this, df, ..., verbose=FAL
 
   verbose && enter(verbose, "Estimating mean parameter");
   mu <- median(y, na.rm=TRUE);
-  rm(y);
+  # Not needed anymore
+  y <- NULL;
   verbose && exit(verbose);
 
   # Building fit
@@ -283,7 +284,8 @@ setMethodS3("process", "ScaleNormalization3", function(this, ..., skip=FALSE, fo
     verbose && enter(verbose, "Writing normalized data");
     writeSignals(this, pathname=pathname, cells=params$cellsToUpdate,
                  intensities=yN, templateFile=df, verbose=less(verbose));
-    rm(yN);
+    # Not needed anymore
+    yN <- NULL;
     verbose && exit(verbose);
 
     # Garbage collect

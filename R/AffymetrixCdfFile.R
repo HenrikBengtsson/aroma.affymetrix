@@ -790,7 +790,8 @@ setMethodS3("getCellIndices", "AffymetrixCdfFile", function(this, units=NULL, ..
   verbose && exit(verbose);
 
   units <- units0;
-  rm(units0);
+  # Not needed anymore
+  units0 <- NULL;
 
   # Garbage collect
   gc <- gc();
@@ -1142,7 +1143,8 @@ setMethodS3("identifyCells", "AffymetrixCdfFile", function(this, indices=NULL, f
 
   if (is.null(indices)) {
     indices <- other;
-    rm(other);
+    # Not needed anymore
+    other <- NULL;
   } else {
     if (getFraction) {
       # Get the fraction from the already filtered cell indices

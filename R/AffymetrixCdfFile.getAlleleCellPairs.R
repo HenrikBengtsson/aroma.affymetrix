@@ -97,7 +97,8 @@ setMethodS3("getAlleleCellPairs", "AffymetrixCdfFile", function(this, units=NULL
   } else {
     units <- units[keep];
   }
-  rm(unitTypes, keep);
+  # Not needed anymore
+  unitTypes <- keep <- NULL;
 
   # ...and with either 2 or 4 groups
   verbose && enter(verbose, "Reading number of groups per SNP unit");
@@ -108,7 +109,8 @@ setMethodS3("getAlleleCellPairs", "AffymetrixCdfFile", function(this, units=NULL
 
   keep <- which(is.element(unitSizes, c(2,4)));
   units <- units[keep];
-  rm(unitSizes, keep);
+  # Not needed anymore
+  unitSizes <- keep <- NULL;
 
   nbrOfUnits <- length(units);
   verbose && cat(verbose, "Number of SNP units to query: ", nbrOfUnits);
@@ -128,7 +130,8 @@ setMethodS3("getAlleleCellPairs", "AffymetrixCdfFile", function(this, units=NULL
   verbose && cat(verbose, "Stratify by: ", stratifyBy);
   cells <- getCellIndices(this, units=units, stratifyBy=stratifyBy,
                                           useNames=FALSE, verbose=verbose);
-  rm(units);
+  # Not needed anymore
+  units <- NULL;
 
   verbose && enter(verbose, "Merging groups by allele pair");
   verbose && printf(verbose, "Units left: ");
@@ -146,7 +149,8 @@ setMethodS3("getAlleleCellPairs", "AffymetrixCdfFile", function(this, units=NULL
     }
   }
   verbose && writeRaw(verbose, "0.\n");
-  rm(unit, groups, uu);
+  # Not needed anymore
+  unit <- groups <- uu <- NULL;
   verbose && exit(verbose);
 
   cells <- unlist(cells, use.names=FALSE);

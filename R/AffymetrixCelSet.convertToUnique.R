@@ -98,7 +98,8 @@ setMethodS3("convertToUnique", "AffymetrixCelSet", function(this, ..., tags="UNQ
     }
   }
 
-  rm(res);   # Not needed anymore
+  # Not needed anymore
+  res <- NULL;   # Not needed anymore
   verbose && exit(verbose);
 
 
@@ -152,7 +153,8 @@ setMethodS3("convertToUnique", "AffymetrixCelSet", function(this, ..., tags="UNQ
 
       # Build a valid CEL header
       celHeader <- cdfHeaderToCelHeader(cdfHeader, sampleName=dfFullname);
-      rm(dfFullname);
+      # Not needed anymore
+      dfFullname <- NULL;
 
       # Add some extra information about what the CEL file is for
       params <- c(Descripion="This CEL file was created by the aroma.affymetrix package.");
@@ -184,7 +186,8 @@ setMethodS3("convertToUnique", "AffymetrixCelSet", function(this, ..., tags="UNQ
       updateCelUnits(pathnameT, cdf=cdfUniqueIndices, data=data, verbose=FALSE);
       verbose && exit(verbose);
 
-      rm(data);
+      # Not needed anymore
+      data <- NULL;
       gc <- gc();
       verbose && print(verbose, gc);
 

@@ -239,7 +239,8 @@ setMethodS3("averageQuantile", "AffymetrixCelSet", function(this, probes=NULL, e
       verbose && printf(verbose, "Detected %d NAs (%.2f%%),\n",
                            nbrOfNAs, 100*nbrOfNAs/nbrOfObservations);
       tt <- !is.na(Xcc);  # TODO?!? /HB 2006-07-22
-      rm(Xcc, tt);
+      # Not needed anymore
+      Xcc <- tt <- NULL;
 
       # Get the sample quantiles for those values
       bins <- (0:(nobs-1))/(nobs-1);
@@ -247,15 +248,18 @@ setMethodS3("averageQuantile", "AffymetrixCelSet", function(this, probes=NULL, e
       # Interpolate to get the values at positions specified by
       # 'quantile' using data points given by 'bins' and 'Scc'.
       Scc <- approx(x=bins, y=Scc, xout=quantiles, ties="ordered")$y;
-      rm(bins);
+      # Not needed anymore
+      bins <- NULL;
     } else {
-      rm(Xcc);
+      # Not needed anymore
+      Xcc <- NULL;
     }
 
     # Incremental mean
     verbose && printf(verbose, "summing...\n");
     xTarget <- xTarget + Scc;
-    rm(Scc);
+    # Not needed anymore
+    Scc <- NULL;
 
     # Garbage collect
     gc();

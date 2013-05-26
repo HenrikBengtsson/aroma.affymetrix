@@ -96,7 +96,8 @@ setMethodS3("readDataFrame", "AffymetrixTsvFile", function(this, ..., verbose=FA
     chr <- as.integer(chr);
   })
   df[["chromosome"]] <- chr;
-  rm(chr);
+  # Not needed anymore
+  chr <- NULL;
 
   # Remove duplicated rows (type by Affymetrix?!? /HB 2007-04-02)
   df <- unique(df);

@@ -87,7 +87,8 @@ setMethodS3("extractMatrix", "AffymetrixCelSet", function(this, cells=NULL, ...,
     srt <- sort(cells, method="quick", index.return=TRUE);
     o <- srt$ix;
     cells <- srt$x;
-    rm(srt);
+    # Not needed anymore
+    srt <- NULL;
     verbose && exit(verbose);
   } else {
     o <- seq_len(ncells);

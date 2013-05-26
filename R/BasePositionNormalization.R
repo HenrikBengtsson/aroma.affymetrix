@@ -137,7 +137,8 @@ setMethodS3("getDesignMatrix", "BasePositionNormalization", function(this, cells
   verbose && enter(verbose, "Reading probe sequences");
   seqs <- readSequenceMatrix(acs, cells=cells, what="raw",
                                                 verbose=less(verbose, 5));
-  rm(acs);
+  # Not needed anymore
+  acs <- NULL;
   verbose && cat(verbose, "Probe-sequence matrix:");
   verbose && str(verbose, seqs);
   verbose && exit(verbose);
@@ -146,7 +147,8 @@ setMethodS3("getDesignMatrix", "BasePositionNormalization", function(this, cells
   verbose && cat(verbose, "Degrees of freedom: ", df);
   X <- getProbePositionEffectDesignMatrix(seqs, df=df,
                                                verbose=less(verbose, 5));
-  rm(seqs);
+  # Not needed anymore
+  seqs <- NULL;
 
   # Garbage collect
   gc <- gc();
@@ -174,7 +176,8 @@ setMethodS3("getDesignMatrix", "BasePositionNormalization", function(this, cells
 setMethodS3("getSignalTransform", "BasePositionNormalization", function(this, ...) {
   params <- getParameters(this, expand=FALSE, ...);
   shift <- params$shift;
-  rm(params);
+  # Not needed anymore
+  params <- NULL;
 
   transform <- function(y, ...) {
     y <- y + shift;

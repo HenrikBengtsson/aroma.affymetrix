@@ -63,7 +63,8 @@ setMethodS3("extractChromosomalDataFrame", "ChipEffectFile", function(this, unit
     } else {
       units <- units[o];
     }
-    rm(o);
+    # Not needed anymore
+    o <- NULL;
     verbose && cat(verbose, "Ordered units:");
     verbose && str(verbose, units);
     verbose && exit(verbose);
@@ -90,7 +91,8 @@ setMethodS3("extractChromosomalDataFrame", "ChipEffectFile", function(this, unit
     verbose && str(verbose, gp);
     verbose && exit(verbose);
   }
-  rm(units);
+  # Not needed anymore
+  units <- NULL;
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
@@ -103,11 +105,13 @@ setMethodS3("extractChromosomalDataFrame", "ChipEffectFile", function(this, unit
 
   dataHead <- data[,1:at,drop=FALSE];
   dataTail <- data[,(at+1):ncol(data),drop=FALSE];
-  rm(data, at);
+  # Not needed anymore
+  data <- at <- NULL;
 
   data <- cbind(dataHead, gp, dataTail);
   
-  rm(dataHead, dataTail, gp);
+  # Not needed anymore
+  dataHead <- dataTail <- gp <- NULL;
 
   data;  
 }, protected=TRUE)

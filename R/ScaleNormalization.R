@@ -136,7 +136,8 @@ setMethodS3("getSubsetToUpdate", "ScaleNormalization", function(this, ..., verbo
     } else {
       subsetToUpdate <- intersect(subsetToUpdate, possibleCells);
     }
-    rm(possibleCells);
+    # Not needed anymore
+    possibleCells <- NULL;
     verbose && cat(verbose, "'subsetToUpdate' (after): ");
     verbose && str(verbose, subsetToUpdate);
 
@@ -218,7 +219,8 @@ setMethodS3("getSubsetToAvg", "ScaleNormalization", function(this, ..., verbose=
       } # if (is.null(subset))
 
       subsetToAvg <- subset;
-      rm(subset);
+      # Not needed anymore
+      subset <- NULL;
 
       verbose && exit(verbose);
     }
@@ -244,7 +246,8 @@ setMethodS3("getSubsetToAvg", "ScaleNormalization", function(this, ..., verbose=
     } else {
       subsetToAvg <- intersect(subsetToAvg, possibleCells);
     }
-    rm(possibleCells);
+    # Not needed anymore
+    possibleCells <- NULL;
     verbose && cat(verbose, "'subsetToAvg' (after): ");
     verbose && str(verbose, subsetToAvg);
 
@@ -415,7 +418,8 @@ setMethodS3("process", "ScaleNormalization", function(this, ..., skip=FALSE, for
     verbose && exit(verbose);
 
     # Garbage collect
-    rm(x, xM);
+    # Not needed anymore
+    x <- xM <- NULL;
     gc <- gc();
     verbose && print(verbose, gc);
 
@@ -449,9 +453,11 @@ setMethodS3("process", "ScaleNormalization", function(this, ..., skip=FALSE, for
 
     verbose && enter(verbose, "Storing normalized signals");
 #    updateDataFlat(ceN, data=data, verbose=less(verbose));
-#    rm(data);
+#    # Not needed anymore
+#    data <- NULL;
     updateCel(pathname, indices=subsetToUpdate, intensities=x);
-    rm(x);
+    # Not needed anymore
+    x <- NULL;
     verbose && exit(verbose);
 
     verbose && exit(verbose);

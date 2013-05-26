@@ -87,7 +87,8 @@ setMethodS3("readDataUnitChromosomePosition", "AffymetrixNetAffxCsvFile", functi
   }
   values <- as.integer(values);
   data[[cc]] <- values;
-  rm(values, idxs);
+  # Not needed anymore
+  values <- idxs <- NULL;
   gc <- gc();
 
 
@@ -296,7 +297,8 @@ setMethodS3("readDataUnitFragmentLength", "AffymetrixNetAffxCsvFile", function(t
           values <- fln[rr,idxs];
           ok <- is.finite(values);
           fln2[idxs[ok],ee] <- values[ok];
-          rm(ok, values);
+          # Not needed anymore
+          ok <- values <- NULL;
         }
       }
     } # for (ee ...)
@@ -307,7 +309,8 @@ setMethodS3("readDataUnitFragmentLength", "AffymetrixNetAffxCsvFile", function(t
     verbose && summary(verbose, fln2);
     fln <- fln2[,enzymes,drop=FALSE];
 #    verbose && summary(verbose, fln);
-    rm(enzymeIdxs, fln2);
+    # Not needed anymore
+    enzymeIdxs <- fln2 <- NULL;
     verbose && exit(verbose);
   } else {
     nbrOfEnzymes <- length(enzymes);

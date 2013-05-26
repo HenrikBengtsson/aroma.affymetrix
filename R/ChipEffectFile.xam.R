@@ -74,7 +74,8 @@ setMethodS3("getAM", "ChipEffectFile", function(this, other, units=NULL, ..., ve
     ugcMap <- getUnitGroupCellMap(this, units=units, verbose=less(verbose));
     verbose && exit(verbose);
   }
-  rm(units);
+  # Not needed anymore
+  units <- NULL;
   nunits <- nrow(ugcMap);
 
 

@@ -220,9 +220,11 @@ setMethodS3("readDataFrame", "DChipGenomeInformation", function(this, units=NULL
     cdf <- AffymetrixCdfFile$byChipType(chipType);
     unitNames <- getUnitNames(cdf, units=units);
     idxs <- match(unitNames, res[,1]);
-    rm(unitNames);
+    # Not needed anymore
+    unitNames <- NULL;
     res <- res[idxs,,drop=FALSE];
-    rm(idxs);
+    # Not needed anymore
+    idxs <- NULL;
   }
 
   res;

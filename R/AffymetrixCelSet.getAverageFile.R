@@ -225,7 +225,8 @@ setMethodS3("getAverageFile", "AffymetrixCelSet", function(this, name=NULL, pref
     pixels <- readCel(pathname, readIntensities=FALSE, readStdvs=FALSE,
                       readPixels=TRUE)$pixels;
     indices <- which(pixels == 0);
-    rm(pixels); # Not needed anymore.
+    # Not needed anymore
+    pixels <- NULL; # Not needed anymore.
   }
 
   nbrOfIndices <- length(indices);

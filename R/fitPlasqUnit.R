@@ -126,7 +126,8 @@ setMethodS3("fitPlasqUnit", "matrix", function(ly, ptype, maxIter=1000, acc=0.1,
   alphaIdxs <- paramIndMat2[,2];
   betaIdxs  <- paramIndMat2[,3];
   sigmaIdxs <- paramIndMat2[,4];
-  rm(paramIndMat, paramIndMat2);
+  # Not needed anymore
+  paramIndMat <- paramIndMat2 <- NULL;
 
   iis <- seq_len(nbrOfSamples);
   offsets <- nbrOfProbes*(iis-1);
@@ -319,7 +320,8 @@ setMethodS3("fitPlasqUnit", "matrix", function(ly, ptype, maxIter=1000, acc=0.1,
 ##     mu0 <- log((pMat %*% c(1,0,2,0))[,1]);
 ##     mu1 <- log((pMat %*% c(1,1,1,0))[,1]);
 ##     mu2 <- log((pMat %*% c(1,2,0,0))[,1]);
-##     rm(pMat, params); # Not needed anymore
+##     # Not needed anymore
+##     pMat <- params <- NULL; # Not needed anymore
 ##     mu11 <- list(mu0, mu1, mu2);
 ##  
 ##     stopifnot(identical(mu00, mu11));

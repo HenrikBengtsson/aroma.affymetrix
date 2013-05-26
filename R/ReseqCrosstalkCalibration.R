@@ -171,7 +171,8 @@ setMethodS3("getSubsetToAvg", "ReseqCrosstalkCalibration", function(this, ..., v
       }
 
       subsetToAvg <- subset;
-      rm(subset);
+      # Not needed anymore
+      subset <- NULL;
 
       verbose && exit(verbose);
     }
@@ -252,7 +253,8 @@ setMethodS3("rescaleByAll", "ReseqCrosstalkCalibration", function(this, yAll, pa
     }
     yAvg <- median(y, na.rm=TRUE);
     verbose && printf(verbose, "yAvg (using %d/%.1f%% summed pairs): %.2f of %.2f (%.1f%%)\n", n, 100*n/n0, yAvg, yAvg0, 100*yAvg/yAvg0);
-    rm(y, n);
+    # Not needed anymore
+    y <- n <- NULL;
   } else {
     yAvg <- yAvg0;
     verbose && printf(verbose, "yAvg (100%%): %.2f\n", yAvg);
@@ -375,7 +377,8 @@ setMethodS3("fitOne", "ReseqCrosstalkCalibration", function(this, yAll, ..., ver
     fits[[uu]] <- fitsUU;
     verbose && exit(verbose);
   } # for (uu ...)
-  rm(fitsUU, fitGG, keyGG, keyUU, y, cellsGG, cellsUU);
+  # Not needed anymore
+  fitsUU <- fitGG <- keyGG <- keyUU <- y <- cellsGG <- cellsUU <- NULL;
 
   verbose && exit(verbose);
 
@@ -439,7 +442,8 @@ setMethodS3("calibrateOne", "ReseqCrosstalkCalibration", function(this, yAll, fi
       # Calibrating
       y <- t(y);
       yC <- backtransformMultiDimensionalCone(y, fit=fitGG);
-      rm(y, fitGG);
+      # Not needed anymore
+      y <- fitGG <- NULL;
       yC <- t(yC);
 
       # Rescaling toward target average?
@@ -451,20 +455,23 @@ setMethodS3("calibrateOne", "ReseqCrosstalkCalibration", function(this, yAll, fi
   ##      fit$paramsShort <- paramsShort;
 
         rescaleFitsUU[[gg]] <- fit;
-        rm(fit);
+        # Not needed anymore
+        fit <- NULL;
         verbose && exit(verbose);
       }
 
       # Updating
       yAll[cellsGG] <- yC;
-      rm(yC);
+      # Not needed anymore
+      yC <- NULL;
 
       verbose && exit(verbose);
     } # for (gg ...)
 
     rescaleFits[[uu]] <- rescaleFitsUU;
 
-    rm(cellsUU, fitsUU, rescaleFitsUU);
+    # Not needed anymore
+    cellsUU <- fitsUU <- rescaleFitsUU <- NULL;
     verbose && exit(verbose);
   } # for (uu ...)
 
@@ -623,7 +630,8 @@ setMethodS3("process", "ReseqCrosstalkCalibration", function(this, ..., force=FA
       # Backtransforming (calibrating)
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       yAll <- calibrateOne(this, yAll=yAll, fits=fits, verbose=verbose);
-      rm(fits);
+      # Not needed anymore
+      fits <- NULL;
 
       # Store rescaling parameters
       modelFit$rescaleFits <- attr(yAll, "rescaleFits");
@@ -638,7 +646,8 @@ setMethodS3("process", "ReseqCrosstalkCalibration", function(this, ..., force=FA
 
       saveObject(modelFit, file=fitPathname);
       verbose && str(verbose, modelFit, level=-50);
-      rm(modelFit);
+      # Not needed anymore
+      modelFit <- NULL;
 
 
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -655,7 +664,8 @@ setMethodS3("process", "ReseqCrosstalkCalibration", function(this, ..., force=FA
       verbose2 <- -as.integer(verbose)-2;
       updateCel(pathname, intensities=yAll, verbose=verbose2);
 
-      rm(yAll, verbose2);
+      # Not needed anymore
+      yAll <- verbose2 <- NULL;
       gc <- gc();
       verbose && print(verbose, gc);
       verbose && exit(verbose);
@@ -664,14 +674,16 @@ setMethodS3("process", "ReseqCrosstalkCalibration", function(this, ..., force=FA
     # Test if calibrated data file can be retrieved
     dfC <- newInstance(df, pathname);
 
-    rm(df); # Not needed anymore
+    # Not needed anymore
+    df <- NULL; # Not needed anymore
 
     verbose && exit(verbose);
   } # for (kk in ...)
   verbose && exit(verbose);
 
   # Garbage collect
-  rm(ds, cellQuartets);
+  # Not needed anymore
+  ds <- cellQuartets <- NULL;
 
   gc <- gc();
   verbose && print(verbose, gc);

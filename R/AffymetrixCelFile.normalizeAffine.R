@@ -50,7 +50,8 @@ setMethodS3("transformAffine", "AffymetrixCelFile", function(this, outPath=file.
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   verbose && enter(verbose, sprintf("Transforming probe intensities by (offset,scale)=(%.1f,%.2f) ", offset, scale));
   x[subsetToUpdate] <- offset + scale*x[subsetToUpdate];
-  rm(subsetToUpdate);
+  # Not needed anymore
+  subsetToUpdate <- NULL;
   verbose && exit(verbose);
 
   # Write normalized data to file

@@ -248,7 +248,8 @@ setMethodS3("getCellsToInternal", "ProbeLevelTransform3", function(this, units, 
     } else {
       cells <- intersect(cells, possibleCells);
     }
-    rm(possibleCells);
+    # Not needed anymore
+    possibleCells <- NULL;
 
     verbose && cat(verbose, "Cells: ");
     verbose && str(verbose, cells);

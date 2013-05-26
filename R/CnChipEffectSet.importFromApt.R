@@ -99,7 +99,8 @@ setMethodS3("importFromApt", "CnChipEffectSet", function(static, filename, path=
    # Get the ChipEffectFile class specific for this set
   clazz <- getChipEffectFileClass(static);
   monocellCdf <- clazz$createParamCdf(cdf);
-  rm(cdf);
+  # Not needed anymore
+  cdf <- NULL;
   verbose && print(verbose, monocellCdf);
   verbose && exit(verbose);
 
@@ -176,7 +177,8 @@ setMethodS3("importFromApt", "CnChipEffectSet", function(static, filename, path=
       tmpFilename <- basename(pathnameT);
       cef <- clazz$fromDataFile(filename=tmpFilename, path=outPath,
                name=arrayName, cdf=monocellCdf, verbose=less(verbose));
-      rm(tmpFilename);
+      # Not needed anymore
+      tmpFilename <- NULL;
     }
     pathnameT <- getPathname(cef);
     cef$combineAlleles <- combineAlleles;
@@ -216,7 +218,8 @@ setMethodS3("importFromApt", "CnChipEffectSet", function(static, filename, path=
 
         # Match to CDF
         units <- indexOf(cdf, names=unitNames);
-        rm(unitNames);
+        # Not needed anymore
+        unitNames <- NULL;
         verbose && str(verbose, units);
 
         # Any missing?
@@ -227,14 +230,16 @@ setMethodS3("importFromApt", "CnChipEffectSet", function(static, filename, path=
         verbose && exit(verbose);
 
         res <- list(units=units, keep=keep);
-        rm(units, keep);
+        # Not needed anymore
+        units <- keep <- NULL;
 
         # Store in cache
         saveCache(res, key=key, dirs=dirs);
       }
       units <- res$units;
       keep <- res$keep;
-      rm(res);
+      # Not needed anymore
+      res <- NULL;
       # Garbage collect
       gc <- gc();
       verbose && print(verbose, gc);
@@ -260,7 +265,8 @@ setMethodS3("importFromApt", "CnChipEffectSet", function(static, filename, path=
 
       verbose && exit(verbose);
     } # if (is.null(cells))
-    rm(cef);  # Not needed anymore
+    # Not needed anymore
+    cef <- NULL;  # Not needed anymore
 
     verbose && enter(verbose, "Reading data");
     data <- readArrays(apt, arrayName, verbose=less(verbose, 10));
@@ -277,7 +283,8 @@ setMethodS3("importFromApt", "CnChipEffectSet", function(static, filename, path=
 
     verbose && enter(verbose, "Storing chip effects");
     updateCel(pathnameT, indices=cells, intensities=data);
-    rm(data);
+    # Not needed anymore
+    data <- NULL;
     verbose && exit(verbose);
 
     # Rename temporary file

@@ -596,7 +596,8 @@ setMethodS3("getData", "CnagCfhSet", function(this, indices=NULL, fields=c("x", 
       res[[field]][,kk] <- value[[field]];
       value[[field]] <- NULL;
     }
-    rm(value); gc();
+    # Not needed anymore
+    value <- NULL; gc();
     verbose && exit(verbose);
   }
   verbose && exit(verbose);
@@ -904,7 +905,8 @@ setMethodS3("getAverageFile", "CnagCfhSet", function(this, name=NULL, prefix="av
     pixels <- readCel(pathname, readIntensities=FALSE, readStdvs=FALSE,
                       readPixels=TRUE)$pixels;
     indices <- which(pixels == 0);
-    rm(pixels); # Not needed anymore.
+    # Not needed anymore
+    pixels <- NULL; # Not needed anymore.
   }
 
   nbrOfIndices <- length(indices);

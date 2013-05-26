@@ -106,7 +106,8 @@ setMethodS3("bgAdjustOptical", "AffymetrixCelFile", function(this, path, minimum
   verbose && printf(verbose, "Correction: -(%.2f-%.2f) = %+.2f\n",
                                          arrayMinimum, minimum, -xdiff);
   x[subsetToUpdate] <- x[subsetToUpdate] - xdiff;
-  rm(subsetToUpdate);
+  # Not needed anymore
+  subsetToUpdate <- NULL;
   verbose && exit(verbose);
 
   # Write adjusted data to file
@@ -372,7 +373,8 @@ setMethodS3("bgAdjustGcrma", "AffymetrixCelFile", function(this, path, type=c("f
     pmCells <- pmCells[keep];
     apm <- apm[keep];
     verbose && exit(verbose);
-    rm(keep);
+    # Not needed anymore
+    keep <- NULL;
 
     verbose && enter(verbose, "Dropping negative controls with missing signals or missing affinities");
     n0 <- length(ncs);
@@ -391,7 +393,8 @@ setMethodS3("bgAdjustGcrma", "AffymetrixCelFile", function(this, path, type=c("f
     ncs <- ncs[keep];
     anc <- anc[keep];
     verbose && exit(verbose);
-    rm(keep);
+    # Not needed anymore
+    keep <- NULL;
 
     verbose && cat(verbose, "Number of PMs: ", length(pm));
     verbose && cat(verbose, "Number of negative controls: ", length(ncs));
@@ -408,7 +411,8 @@ setMethodS3("bgAdjustGcrma", "AffymetrixCelFile", function(this, path, type=c("f
   } # if (type == ...)
 
   # Not needed anymore
-  rm(anc, ncs, mm, amm);
+  # Not needed anymore
+  anc <- ncs <- mm <- amm <- NULL;
 
   verbose && exit(verbose);
 
@@ -430,7 +434,8 @@ setMethodS3("bgAdjustGcrma", "AffymetrixCelFile", function(this, path, type=c("f
   }
 
   # Not needed anymore
-  rm(apm);
+  # Not needed anymore
+  apm <- NULL;
 
 
   # don't understand this, but it was in original bg.adjust.gcrma(), so
@@ -604,7 +609,8 @@ setMethodS3("bgAdjustRma", "AffymetrixCelFile", function(this, path, pmonly=TRUE
   verbose && exit(verbose);
 
   # get rid of redundant objects to save space
-  rm(pm, pmCells);
+  # Not needed anymore
+  pm <- pmCells <- NULL;
 
   # Garbage collection
   gc <- gc();

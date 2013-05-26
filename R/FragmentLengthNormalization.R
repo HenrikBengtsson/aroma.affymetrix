@@ -343,7 +343,8 @@ setMethodS3("getSubsetToFit", "FragmentLengthNormalization", function(this, forc
   types <- getUnitTypes(cdf, verbose=less(verbose,1));
   verbose && print(verbose, table(types));
   units <- which(types == 2 | types == 5);
-  rm(types);
+  # Not needed anymore
+  types <- NULL;
   verbose && cat(verbose, "units:");
   verbose && str(verbose, units);
   verbose && exit(verbose);
@@ -361,7 +362,8 @@ setMethodS3("getSubsetToFit", "FragmentLengthNormalization", function(this, forc
     units <- units[keep];
     verbose && printf(verbose, "Number of SNP/CN units without fragment-length details: %d out of %d (%.1f%%)\n", sum(!keep), length(keep), 100*sum(!keep)/length(keep));
     verbose && exit(verbose);
-    rm(fl);
+    # Not needed anymore
+    fl <- NULL;
   }
 
 
@@ -404,7 +406,8 @@ setMethodS3("getSubsetToFit", "FragmentLengthNormalization", function(this, forc
       }
 
       subsetToFit <- subset;
-      rm(subset);
+      # Not needed anymore
+      subset <- NULL;
 
       verbose && exit(verbose);
     }
@@ -427,14 +430,16 @@ setMethodS3("getSubsetToFit", "FragmentLengthNormalization", function(this, forc
     for (ee in seq_len(ncol(fl))) {
       extremeUnits <- c(extremeUnits, which.min(fl[,ee]), which.max(fl[,ee]));
     }
-    rm(fl);
+    # Not needed anymore
+    fl <- NULL;
 
     keep <- c(keep, extremeUnits);
     keep <- unique(keep);
 
     # Now filter
     units <- units[keep];
-    rm(keep);
+    # Not needed anymore
+    keep <- NULL;
   }
 
   # Sort units
@@ -477,7 +482,8 @@ setMethodS3("getTargetFunctions", "FragmentLengthNormalization", function(this, 
       targetType <- attr(target, "targetType");
       if (!is.null(targetType))
         target <- targetType;
-      rm(targetType);
+      # Not needed anymore
+      targetType <- NULL;
     }
   }
 
@@ -501,7 +507,8 @@ setMethodS3("getTargetFunctions", "FragmentLengthNormalization", function(this, 
     # Infer the number of enzymes
     fl <- getFilteredFragmentLengths(this, units=1:5);
     nbrOfEnzymes <- ncol(fl);
-    rm(fl);
+    # Not needed anymore
+    fl <- NULL;
 
     if (identical(targetType, "zero")) {
       target <- rep(list(function(...) log2(2200)), nbrOfEnzymes);
@@ -526,7 +533,8 @@ setMethodS3("getTargetFunctions", "FragmentLengthNormalization", function(this, 
     ces <- getInputDataSet(this);
     verbose && enter(verbose, "Getting average signal across arrays");
     ceR <- getAverageFile(ces, force=force, verbose=less(verbose));
-    rm(ces); # Not needed anymore
+    # Not needed anymore
+    ces <- NULL; # Not needed anymore
     verbose && exit(verbose);
 
     # Garbage collect
@@ -556,10 +564,12 @@ setMethodS3("getTargetFunctions", "FragmentLengthNormalization", function(this, 
     verbose && str(verbose, yR);
 
 ##     data <- getDataFlat(ceR, units=units, fields="theta", verbose=less(verbose));
-    rm(ceR); # Not needed anymore
+    # Not needed anymore
+    ceR <- NULL; # Not needed anymore
 ##     units <- data[,"unit"];
 ##     yR <- data[,"theta"];
-##     rm(data); # Not needed anymore
+##     # Not needed anymore
+##     data <- NULL; # Not needed anymore
 
     verbose && cat(verbose, "Summary of total signals (on the intensity scale):");
     verbose && summary(verbose, yR);
@@ -581,7 +591,8 @@ setMethodS3("getTargetFunctions", "FragmentLengthNormalization", function(this, 
 
     # Get PCR fragment lengths for these
     fl <- getFilteredFragmentLengths(this, units=units, verbose=less(verbose, 3));
-    rm(units); # Not needed anymore
+    # Not needed anymore
+    units <- NULL; # Not needed anymore
 
     verbose && cat(verbose, "Fragment lengths:");
     verbose && str(verbose, fl);
@@ -629,17 +640,20 @@ setMethodS3("getTargetFunctions", "FragmentLengthNormalization", function(this, 
       fit <- lowess(fl[ok,ee], yR[ok]);
       class(fit) <- "lowess";
 
-      rm(ok);
+      # Not needed anymore
+      ok <- NULL;
 
       fits[[ee]] <- fit;
 
-      rm(fit);
+      # Not needed anymore
+      fit <- NULL;
 
       verbose && exit(verbose);
     } # for (ee in allEnzymes)
 
     # Remove as many promises as possible
-    rm(target, nbrOfEnzymes, allEnzymes, fl, yR, okYR, hasFL);
+    # Not needed anymore
+    target <- nbrOfEnzymes <- allEnzymes <- fl <- yR <- okYR <- hasFL <- NULL;
 
     # Create a target prediction function for each enzyme
     fcns <- vector("list", length(fits));
@@ -656,7 +670,8 @@ setMethodS3("getTargetFunctions", "FragmentLengthNormalization", function(this, 
     verbose && print(verbose, gc);
 
     target <- fcns;
-    rm(fcns);
+    # Not needed anymore
+    fcns <- NULL;
     this$.target <- target;
     force <- FALSE;
 
@@ -736,7 +751,8 @@ setMethodS3("process", "FragmentLengthNormalization", function(this, ..., force=
   types <- getUnitTypes(cdf, verbose=less(verbose,1));
   verbose && print(verbose, table(types));
   subsetToUpdate <- which(types == 2 | types == 5);
-  rm(types);
+  # Not needed anymore
+  types <- NULL;
   verbose && cat(verbose, "subsetToUpdate:");
   verbose && str(verbose, subsetToUpdate);
   verbose && exit(verbose);
@@ -885,7 +901,8 @@ setMethodS3("process", "FragmentLengthNormalization", function(this, ..., force=
 
     # Normalization scale factor for each unit (on the log2 scale)
     rho <- y-yN;
-    rm(y,yN);
+    # Not needed anymore
+    y <- yN <- NULL;
     # On the intensity scale
     rho <- 2^rho;
     verbose && cat(verbose, "Normalization scale factors:");
@@ -898,7 +915,8 @@ setMethodS3("process", "FragmentLengthNormalization", function(this, ..., force=
     ok <- which(is.finite(rho));
     verbose && str(verbose, ok);
     theta[ok,] <- theta[ok,]/rho[ok];
-    rm(ok, rho);
+    # Not needed anymore
+    ok <- rho <- NULL;
 
     verbose && cat(verbose, "Normalized thetas:");
     verbose && str(verbose, theta);
@@ -924,18 +942,22 @@ setMethodS3("process", "FragmentLengthNormalization", function(this, ..., force=
 
     verbose && enter(verbose, "Storing normalized signals");
 #    data[,"theta"] <- yN;
-#    rm(yN);
+#    # Not needed anymore
+#    yN <- NULL;
 #    updateDataFlat(ceN, data=data, verbose=less(verbose));
-#    rm(data);
+#    # Not needed anymore
+#    data <- NULL;
     ok <- which(is.finite(cellMatrixMap));
     cells <- cellMatrixMap[ok];
     data <- theta[ok];
-    rm(ok, theta);
+    # Not needed anymore
+    ok <- theta <- NULL;
 
     verbose2 <- -as.integer(verbose) - 5;
     pathname <- getPathname(ceN);
     updateCel(pathname, indices=cells, intensities=data, verbose=verbose2);
-    rm(cells, data);
+    # Not needed anymore
+    cells <- data <- NULL;
     verbose && exit(verbose);
 
     # Garbage collect
@@ -946,7 +968,8 @@ setMethodS3("process", "FragmentLengthNormalization", function(this, ..., force=
   } # for (kk in ...)
 
   # Garbage collect
-  rm(fl);
+  # Not needed anymore
+  fl <- NULL;
 #  clearCache(this);
   gc <- gc();
   verbose && print(verbose, gc);

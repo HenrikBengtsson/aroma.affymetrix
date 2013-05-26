@@ -118,7 +118,8 @@ pdInfo2Cdf <- function(pdpkg, celfile, overwrite=FALSE, verbose=TRUE, ...) {
   nrows <- as.integer(hdr$rows);
   ncols <- as.integer(hdr$cols);
   chipType <- hdr$chiptype;
-  rm(hdr);  # Not needed anymore
+  # Not needed anymore
+  hdr <- NULL;  # Not needed anymore
   nbrOfCells <- nrows*ncols;
   verbose && cat(verbose, "Chip type: ", chipType);
   verbose && printf(verbose, "Chip type dimensions: %dx%d\n", nrows, ncols);
@@ -137,12 +138,14 @@ pdInfo2Cdf <- function(pdpkg, celfile, overwrite=FALSE, verbose=TRUE, ...) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   verbose && enter(verbose, "Retrieving Platform Design database");
   pd <- getPlatformDesign(cel);
-  rm(cel);  # Not needed anymore
+  # Not needed anymore
+  cel <- NULL;  # Not needed anymore
   verbose && exit(verbose);
 
   verbose && enter(verbose, "Querying Platform Design database");
   ff <- dbGetQuery(db(pd), "select * from pmfeature");
-  rm(pd);  # Not needed anymore
+  # Not needed anymore
+  pd <- NULL;  # Not needed anymore
   verbose && str(verbose, ff);
   nbrOfPdCells <- nrow(ff);
   verbose && printf(verbose, "Number of cells (probes) in PD database: %d (%.2f%%) of %d\n",
@@ -177,7 +180,8 @@ pdInfo2Cdf <- function(pdpkg, celfile, overwrite=FALSE, verbose=TRUE, ...) {
   verbose && enter(verbose, "Setting up CDF units");
   verbose && cat(verbose, "Number of units: ", nbrOfUnits);
   newCdfList <- lapply(ffs, FUN=pmFeature2List);
-  rm(ffs);  # Not needed anymore
+  # Not needed anymore
+  ffs <- NULL;  # Not needed anymore
   verbose && exit(verbose);
 
   verbose && exit(verbose);

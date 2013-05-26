@@ -208,7 +208,8 @@ setMethodS3("updateUnits", "ChipEffectSet", function(this, units=NULL, cdf=NULL,
     arrays <- arrays[o];
     verbose && str(verbose, arrays);
     verbose && cat(verbose, "Last array: ", fullnames[arrays[nbrOfArrays]]);
-    rm(fullnames, o);
+    # Not needed anymore
+    fullnames <- o <- NULL;
     verbose && exit(verbose);
   }
 
@@ -243,7 +244,8 @@ setMethodS3("updateUnits", "ChipEffectSet", function(this, units=NULL, cdf=NULL,
 #    verbose && printf(verbose, "class(ce)[1]: %s\n", class(ce)[1]);
 #    updateUnits(ce, cdf=cdf, data=dataOne, verbose=less(verbose, 50));
     updateUnits(ce, cdf=cdf, data=dataOne, verbose=verbose);
-    rm(dataOne, ce);
+    # Not needed anymore
+    dataOne <- ce <- NULL;
     verbose && exit(verbose);
 
     verbose <- more(verbose, 50);
@@ -317,7 +319,8 @@ setMethodS3("extractMatrix", "ChipEffectSet", function(this, ..., field=c("theta
 
     # Log ratios of chip effects
     data <- data - dataR;
-    rm(dataR, avg);
+    # Not needed anymore
+    dataR <- avg <- NULL;
 
     verbose && exit(verbose);
   } else if (toupper(field) == "NUSE") {
@@ -336,7 +339,8 @@ setMethodS3("extractMatrix", "ChipEffectSet", function(this, ..., field=c("theta
 
     # Log ratios of standard errors
     data <- data / dataR;
-    rm(dataR, avg);
+    # Not needed anymore
+    dataR <- avg <- NULL;
 
     verbose && exit(verbose);
   } else {

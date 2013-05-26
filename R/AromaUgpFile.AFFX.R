@@ -84,7 +84,8 @@ setMethodS3("importFromAffymetrixNetAffxCsvFile", "AromaUgpFile", function(this,
   importNames <- importNames[2:3];
 
   # Garbage collect
-  rm(keep);
+  # Not needed anymore
+  keep <- NULL;
   gc <- gc();
 
 
@@ -133,7 +134,8 @@ setMethodS3("importFromAffymetrixNetAffxCsvFile", "AromaUgpFile", function(this,
       data <- data[-dups,,drop=FALSE];
       unfUnits <- unfUnits[-dups];
       verbose && exit(verbose);
-      rm(dupUnits, units);
+      # Not needed anymore
+      dupUnits <- units <- NULL;
       verbose && str(verbose, unfUnits);
       warning("The positions for ", nDupUnits, " units were calculated as the average of replicated positions, since that was what was available on file.");
     } else {
@@ -141,7 +143,8 @@ setMethodS3("importFromAffymetrixNetAffxCsvFile", "AromaUgpFile", function(this,
     }
     verbose && exit(verbose);
   }
-  rm(dups);
+  # Not needed anymore
+  dups <- NULL;
 
   # Garbage collect
   gc <- gc();
@@ -150,7 +153,8 @@ setMethodS3("importFromAffymetrixNetAffxCsvFile", "AromaUgpFile", function(this,
   this[unfUnits,1] <- data[,1];
   this[unfUnits,2] <- data[,2];
 
-  rm(data);
+  # Not needed anymore
+  data <- NULL;
   gc <- gc();
   verbose && print(verbose, gc, level=-10);
 

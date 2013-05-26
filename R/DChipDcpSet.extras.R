@@ -76,7 +76,8 @@ setMethodS3("exportTotalAndFracB", "DChipDcpSet", function(this, ..., overwrite=
   verbose && cat(verbose, "Chip type: ", chipType);
 
   units <- mapToUnitNamesFile(cdfBin, cdf=cdf, verbose=less(verbose, 10));
-  rm(cdf);
+  # Not needed anymore
+  cdf <- NULL;
   verbose && cat(verbose, "Units in output files:");
   verbose && str(verbose, units);
 

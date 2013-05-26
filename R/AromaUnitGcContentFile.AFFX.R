@@ -39,26 +39,30 @@ setMethodS3("importFromAffymetrixNetAffxCsvFile", "AromaUnitGcContentFile", func
   verbose && str(verbose, unitNames);
   values <- as.double(data[,2]);
   verbose && str(verbose, values);
-  rm(data);
+  # Not needed anymore
+  data <- NULL;
   
   # Keep the units in the CDF
   units <- indexOf(cdf, names=unitNames);
   verbose && cat(verbose, "Unit indices:");
   verbose && str(verbose, units);
-  rm(unitNames);
+  # Not needed anymore
+  unitNames <- NULL;
 
   keep <- which(!is.na(units));
   verbose && printf(verbose, "Keeping %d of %d (%.2f%%)\n", 
        length(keep), length(units), 100*length(keep)/length(units));
   units <- units[keep];
-  rm(keep);
+  # Not needed anymore
+  keep <- NULL;
   if (length(units) == 0) {
     warning("None of the unit names in the CSV match the ones in the CDF ('", getPathname(cdf), "'). Is the correct file ('", getPathname(csv), "'), being imported?");
   }
 
   # Update
   this[units,1] <- values;
-  rm(values);
+  # Not needed anymore
+  values <- NULL;
 
   verbose && exit(verbose);
 

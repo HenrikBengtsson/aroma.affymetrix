@@ -48,7 +48,8 @@ setMethodS3("extractSnpQSet", "SnpChipEffectSet", function(this, units=NULL, sor
     srt <- sort(unitNames, method="quick", index.return=TRUE);
     unitNames <- srt$x;
     units <- units[srt$ix];
-    rm(srt);  # Not needed anymore
+    # Not needed anymore
+    srt <- NULL;  # Not needed anymore
     verbose && exit(verbose);
   }
 
@@ -68,7 +69,8 @@ setMethodS3("extractSnpQSet", "SnpChipEffectSet", function(this, units=NULL, sor
   # Make sure pairs are order as (sense, antisense)
   dirs <- getGroupDirections(cdf, units=units);
   names(dirs) <- NULL;
-  rm(units);
+  # Not needed anymore
+  units <- NULL;
 
   # Sanity check
   lens <- sapply(dirs, FUN=length);
@@ -85,12 +87,14 @@ setMethodS3("extractSnpQSet", "SnpChipEffectSet", function(this, units=NULL, sor
 
   # Identify which to swap from (antisense,sense) to (sense,antisense)
   idxs <- which(dirs == 2);
-  rm(dirs);
+  # Not needed anymore
+  dirs <- NULL;
 
   verbose && cat(verbose, "Swapping elements:");
   verbose && str(verbose, idxs);
   theta[idxs,,] <- theta[idxs,c(3,4,1,2),];
-  rm(idxs);   # Not needed anymore
+  # Not needed anymore
+  idxs <- NULL;   # Not needed anymore
   verbose && exit(verbose);
 
 
@@ -106,11 +110,13 @@ setMethodS3("extractSnpQSet", "SnpChipEffectSet", function(this, units=NULL, sor
   );
 
   # Not needed anymore
-  rm(theta);
+  # Not needed anymore
+  theta <- NULL;
 
   # Assign feature data
   featureNames(res) <- unitNames;
-  rm(unitNames);
+  # Not needed anymore
+  unitNames <- NULL;
 
   # Assign annotation data
   pdPkgName <- oligo::cleanPlatformName(chipType);

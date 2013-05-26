@@ -398,7 +398,8 @@ setMethodS3("plotXYCurve", "TransformReport", function(this, arrays=seq_along(th
 
     add <- TRUE;
 
-    rm(yy);
+    # Not needed anymore
+    yy <- NULL;
 
     # Garbage collect
     gc();

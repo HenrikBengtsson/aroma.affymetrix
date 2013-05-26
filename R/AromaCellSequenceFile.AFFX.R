@@ -158,13 +158,15 @@ setMethodS3("importFromAffymetrixProbeTabFile", "AromaCellSequenceFile", functio
       } else if (onDuplicates == "ignore") {
       }
     }
-    rm(dups);
+    # Not needed anymore
+    dups <- NULL;
 
     # Clean up to save memory
     df[["probeXPos"]] <- df[["probeYPos"]] <- NULL;
     seqs <- df[,"probeSequence"];
     strands <- df[,"targetStrandedness"];
-    rm(df);
+    # Not needed anymore
+    df <- NULL;
     gc <- gc();
     verbose && str(verbose, cells);
     verbose && str(verbose, seqs);
@@ -191,7 +193,8 @@ setMethodS3("importFromAffymetrixProbeTabFile", "AromaCellSequenceFile", functio
         warning(msg);
         verbose && exit(verbose);
       }
-      rm(keep);
+      # Not needed anymore
+      keep <- NULL;
     }
 
     updateSequences(this, cells=cells, seqs=seqs, verbose=less(verbose, 25));
@@ -298,7 +301,8 @@ setMethodS3("inferMmFromPm", "AromaCellSequenceFile", function(this, cdf, units=
     verbose && enter(verbose, "Querying CDF for cell indices");
     cells <- getCellIndices(cdf, units=unitsChunk, stratifyBy="pmmm",
                                                unlist=TRUE, useNames=FALSE);
-    rm(unitsChunk);
+    # Not needed anymore
+    unitsChunk <- NULL;
     # Sanity check
     if (length(cells) %% 2 != 0) {
       throw("Expected an even number of cell indices: ", length(cells));
@@ -335,7 +339,8 @@ setMethodS3("inferMmFromPm", "AromaCellSequenceFile", function(this, cdf, units=
 
     # Keep only MM cell indices
     cells <- cells["mm",];
-    rm(keep);
+    # Not needed anymore
+    keep <- NULL;
     verbose && cat(verbose, "MM cell indices:");
     verbose && str(verbose, cells);
 
@@ -343,7 +348,8 @@ setMethodS3("inferMmFromPm", "AromaCellSequenceFile", function(this, cdf, units=
     verbose && cat(verbose, "MM strands (same as PM strands):");
     verbose && str(verbose, strands);
     updateTargetStrands(this, cells=cells, strands=strands, verbose=less(verbose, 5));
-    rm(strands);
+    # Not needed anymore
+    strands <- NULL;
 
     # Complement 13th base to get MM sequences
     seqs[,13] <- dnaComplement(seqs[,13]);
@@ -353,11 +359,13 @@ setMethodS3("inferMmFromPm", "AromaCellSequenceFile", function(this, cdf, units=
     verbose && str(verbose, seqs);
 
     updateSequenceMatrix(this, cells=cells, seqs=seqs, verbose=less(verbose, 5));
-    rm(cells, seqs);
+    # Not needed anymore
+    cells <- seqs <- NULL;
 
     # Next chunk of units
     units <- units[-uu];
-    rm(uu);
+    # Not needed anymore
+    uu <- NULL;
 
     gc <- gc();
     verbose && print(verbose, gc);

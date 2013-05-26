@@ -76,7 +76,8 @@ setMethodS3("writeCNT", "SnpChipEffectFile", function(this, reference, filename=
   cat(file=con, "[Data]\n");
   write.table(file=con, data, sep="\t", row.names=FALSE, col.names=FALSE, 
                                                               quote=FALSE);
-  rm(data);
+  # Not needed anymore
+  data <- NULL;
   verbose && exit(verbose);
 
   verbose && exit(verbose);
@@ -148,7 +149,8 @@ setMethodS3("writeCNT", "SnpChipEffectSet", function(this, reference, filename=N
   cat(file=con, "[ColumnName]\n");
   data <- extractCNT(this, reference=reference, fields=fields, chromosomes=99, ...);
   cat(file=con, paste(colnames(data), collapse="\t"), "\n", sep="");
-  rm(data);
+  # Not needed anymore
+  data <- NULL;
   verbose && exit(verbose);
 
   # Write CNT data
@@ -167,7 +169,8 @@ setMethodS3("writeCNT", "SnpChipEffectSet", function(this, reference, filename=N
       write.table(file=con, data, sep="\t", row.names=FALSE, col.names=FALSE, 
                                                                 quote=FALSE);
     }
-    rm(data);
+    # Not needed anymore
+    data <- NULL;
     verbose && exit(verbose);
   } # for (chr ...)
   verbose && exit(verbose);

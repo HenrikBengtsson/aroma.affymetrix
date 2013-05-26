@@ -123,7 +123,8 @@ setMethodS3("process", "SpatialRowColumnNormalization", function(this, ..., forc
                               spar=params$spar, maxIter=params$maxIter, ...);
       verbose && str(verbose, fit); 
       y <- residuals(fit);
-      rm(fit);
+      # Not needed anymore
+      fit <- NULL;
       verbose && exit(verbose); 
 
       verbose && enter(verbose, "Back-transforming to intensity scale");
@@ -150,7 +151,8 @@ setMethodS3("process", "SpatialRowColumnNormalization", function(this, ..., forc
         verbose && str(verbose, cells);
       }
       updateCel(pathname, indices=cells, intensities=y, verbose=verbose2);
-      rm(y, verbose2);
+      # Not needed anymore
+      y <- verbose2 <- NULL;
 
       gc <- gc();
       verbose && print(verbose, gc);
@@ -166,13 +168,15 @@ setMethodS3("process", "SpatialRowColumnNormalization", function(this, ..., forc
     # Record 
     dataFiles[[kk]] <- dfN;
 
-    rm(df, dfN);
+    # Not needed anymore
+    df <- dfN <- NULL;
     verbose && exit(verbose);
   } # for (kk ...)
   verbose && exit(verbose);
 
   # Garbage collect
-  rm(dataFiles, ds, cells);
+  # Not needed anymore
+  dataFiles <- ds <- cells <- NULL;
   gc <- gc();
   verbose && print(verbose, gc); 
 

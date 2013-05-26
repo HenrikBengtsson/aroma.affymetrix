@@ -43,7 +43,8 @@ setMethodS3("extractAlleleSet", "SnpChipEffectSet", function(this, units=NULL, s
     srt <- sort(unitNames, method="quick", index.return=TRUE);
     unitNames <- srt$x;
     units <- units[srt$ix];
-    rm(srt);  # Not needed anymore
+    # Not needed anymore
+    srt <- NULL;  # Not needed anymore
     verbose && exit(verbose);
   }
 
@@ -55,7 +56,8 @@ setMethodS3("extractAlleleSet", "SnpChipEffectSet", function(this, units=NULL, s
   verbose && cat(verbose, "Chip type: ", getChipType(this));
   ugcMap <- getUnitGroupCellMap(this, units=units, verbose=verbose);
   maxGroup <- max(ugcMap$group, na.rm=TRUE);
-  rm(ugcMap);
+  # Not needed anymore
+  ugcMap <- NULL;
   verbose && cat(verbose, "Max number of groups unit (unit,group,cell) map: ", maxGroup);
   if (maxGroup > 4) {
     maxGroup <- 4L;
@@ -100,7 +102,8 @@ setMethodS3("extractAlleleSet", "SnpChipEffectSet", function(this, units=NULL, s
   
     # Identify which to swap from (antisense,sense) to (sense,antisense)
     idxs <- which(dirs == 2);
-    rm(dirs);
+    # Not needed anymore
+    dirs <- NULL;
 
     gc <- gc();
     verbose && print(verbose, gc);
@@ -115,7 +118,8 @@ setMethodS3("extractAlleleSet", "SnpChipEffectSet", function(this, units=NULL, s
   theta <- extractTheta(this, groups=groups, units=units, verbose=verbose);
 
   # Not needed anymore
-  rm(units);
+  # Not needed anymore
+  units <- NULL;
 
   gc <- gc();
   verbose && print(verbose, gc);
@@ -131,7 +135,8 @@ setMethodS3("extractAlleleSet", "SnpChipEffectSet", function(this, units=NULL, s
     verbose && cat(verbose, "Swapping elements:");
     verbose && str(verbose, idxs);
     theta[idxs,,] <- theta[idxs,c(3,4,1,2),,drop=FALSE];
-    rm(idxs);   # Not needed anymore
+    # Not needed anymore
+    idxs <- NULL;   # Not needed anymore
     gc <- gc();
     verbose && print(verbose, gc);
     verbose && exit(verbose);
@@ -170,11 +175,13 @@ setMethodS3("extractAlleleSet", "SnpChipEffectSet", function(this, units=NULL, s
   }
 
   # Not needed anymore
-  rm(theta);
+  # Not needed anymore
+  theta <- NULL;
 
   # Assign feature data
   featureNames(res) <- unitNames;
-  rm(unitNames);
+  # Not needed anymore
+  unitNames <- NULL;
 
   # Assign annotation data
   pdPkgName <- oligo::cleanPlatformName(chipType);

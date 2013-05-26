@@ -137,7 +137,8 @@ setMethodS3("doFIRMA", "AffymetrixCelSet", function(csR, ..., flavor=c("v1b", "v
     }
 
     # Not needed anymore
-    rm(chipTypeS);
+    # Not needed anymore
+    chipTypeS <- NULL;
 
     verbose && exit(verbose);
   }
@@ -159,7 +160,8 @@ setMethodS3("doFIRMA", "AffymetrixCelSet", function(csR, ..., flavor=c("v1b", "v
   }
 
   # Clean up
-  rm(csR, bc);
+  # Not needed anymore
+  csR <- bc <- NULL;
   gc <- gc();
   verbose && print(verbose, gc);
 
@@ -182,7 +184,8 @@ setMethodS3("doFIRMA", "AffymetrixCelSet", function(csR, ..., flavor=c("v1b", "v
   }
 
   # Clean up
-  rm(csB, qn);
+  # Not needed anymore
+  csB <- qn <- NULL;
   gc <- gc();
   verbose && print(verbose, gc);
 
@@ -200,7 +203,8 @@ setMethodS3("doFIRMA", "AffymetrixCelSet", function(csR, ..., flavor=c("v1b", "v
       setCdf(csN, cdf);
     }
     # Not needed anymore
-    rm(cdfS);
+    # Not needed anymore
+    cdfS <- NULL;
   }
   verbose && cat(verbose, "Using CDF: ", getFullName(getCdf(csN)));
 
@@ -221,7 +225,8 @@ setMethodS3("doFIRMA", "AffymetrixCelSet", function(csR, ..., flavor=c("v1b", "v
   }
 
   # Clean up
-  rm(cdfTag, plmTags, units);
+  # Not needed anymore
+  cdfTag <- plmTags <- units <- NULL;
   gc <- gc();
   verbose && print(verbose, gc);
 
@@ -255,7 +260,8 @@ setMethodS3("doFIRMA", "AffymetrixCelSet", function(csR, ..., flavor=c("v1b", "v
   }
 
   # Clean up
-  rm(firma, fs);
+  # Not needed anymore
+  firma <- fs <- NULL;
   gc <- gc();
   verbose && print(verbose, gc);
 
@@ -290,7 +296,8 @@ setMethodS3("doFIRMA", "default", function(dataSet, ..., verbose=FALSE) {
   res <- doFIRMA(csR, ..., verbose=verbose);
 
   # Clean up
-  rm(csR);
+  # Not needed anymore
+  csR <- NULL;
   gc <- gc();
 
   verbose && exit(verbose);

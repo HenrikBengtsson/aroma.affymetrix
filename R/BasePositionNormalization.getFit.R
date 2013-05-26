@@ -15,7 +15,8 @@ setMethodS3("getFit", "BasePositionNormalization", function(this, array, ...) {
   pathname <- Arguments$getReadablePathname(filename, path=path, mustExist=TRUE);  
   res <- loadObject(pathname);
   fit <- res$fit;
-  rm(res);
+  # Not needed anymore
+  res <- NULL;
 
   fit;
 }, protected=TRUE);

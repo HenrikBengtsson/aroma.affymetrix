@@ -87,7 +87,8 @@ setMethodS3("getAlleleProbePairs3", "AffymetrixCdfFile", function(this, units=NU
 
   units <- which(unitTypes == 2);
   verbose && cat(verbose, "Number of SNP units: ", length(units));
-  rm(unitTypes);
+  # Not needed anymore
+  unitTypes <- NULL;
 
   # ...and with either 2 or 4 groups
   verbose && enter(verbose, "Reading number of groups per SNP unit");
@@ -97,7 +98,8 @@ setMethodS3("getAlleleProbePairs3", "AffymetrixCdfFile", function(this, units=NU
   verbose && exit(verbose);
 
   units <- units[is.element(unitSizes, c(2,4))];
-  rm(unitSizes);
+  # Not needed anymore
+  unitSizes <- NULL;
   verbose && cat(verbose, "Number of SNP units with 2 or 4 groups: ",
                                                             length(units));
   verbose && exit(verbose);
@@ -219,14 +221,16 @@ setMethodS3("getAlleleProbePairs3", "AffymetrixCdfFile", function(this, units=NU
       values <- unlist(values, use.names=FALSE);
       cellGroups[[pair]] <- c(cellGroups[[pair]], values);
     }
-    rm(cdfData);
+    # Not needed anymore
+    cdfData <- NULL;
 
 ##    # Turn each group into a matrix
 ##    for (kk in seq_along(cellGroups)) {
 ##      values <- matrix(cellGroups[[kk]], nrow=4);
 ##      rownames(values) <- c("unit", "group", "A", "B");
 ##      cellGroups[[kk]] <- values;
-##      rm(values);
+##      # Not needed anymore
+##      values <- NULL;
 ##    }
 
     # Append
@@ -239,7 +243,8 @@ setMethodS3("getAlleleProbePairs3", "AffymetrixCdfFile", function(this, units=NU
     verbose && exit(verbose);
   } # while(...)
   # Not needed anymore
-  rm(units, unitsTodo, uu);
+  # Not needed anymore
+  units <- unitsTodo <- uu <- NULL;
   verbose && exit(verbose);
 
 
@@ -249,7 +254,8 @@ setMethodS3("getAlleleProbePairs3", "AffymetrixCdfFile", function(this, units=NU
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Flatten
   cdfData <- allCdfData;
-  rm(allCdfData);
+  # Not needed anymore
+  allCdfData <- NULL;
   knownPairs <- lapply(cdfData, FUN=names);
   knownPairs <- unlist(knownPairs, use.names=FALSE);
   knownPairs <- sort(unique(knownPairs), na.last=TRUE);
@@ -260,7 +266,8 @@ setMethodS3("getAlleleProbePairs3", "AffymetrixCdfFile", function(this, units=NU
     values <- unlist(values, use.names=FALSE);
     cellGroups[[pair]] <- c(cellGroups[[pair]], values);
   }
-  rm(cdfData);
+  # Not needed anymore
+  cdfData <- NULL;
 
   # Turn each group into a matrix
   for (kk in seq_along(cellGroups)) {
@@ -269,7 +276,8 @@ setMethodS3("getAlleleProbePairs3", "AffymetrixCdfFile", function(this, units=NU
     values <- matrix(cellGroups[[kk]], nrow=4);
     rownames(values) <- c("unit", "group", pair);
     cellGroups[[kk]] <- values;
-    rm(values);
+    # Not needed anymore
+    values <- NULL;
   }
 
   gc <- gc();
@@ -294,7 +302,8 @@ setMethodS3("getAlleleProbePairs3", "AffymetrixCdfFile", function(this, units=NU
   verbose && cat(verbose, "Table of identified unit types:");
   verbose && print(verbose, table(unitTypes));
   units <- which(unitTypes != 2);
-  rm(unitTypes);
+  # Not needed anymore
+  unitTypes <- NULL;
 
   if (!is.null(unitsWanted)) {
     verbose && enter(verbose, "Subsetting");
@@ -310,14 +319,16 @@ setMethodS3("getAlleleProbePairs3", "AffymetrixCdfFile", function(this, units=NU
     cells <- getCellIndices(this, units=units, useNames=FALSE, unlist=TRUE,
                                                           verbose=verbose);
   }
-  rm(units);
+  # Not needed anymore
+  units <- NULL;
   verbose && cat(verbose, "Identified non-SNP cells:");
   verbose && str(verbose, cells);
   verbose && exit(verbose);
 
 
   res <- list(snps=cellGroups, nonSNPs=cells);
-  rm(cellGroups, cells);
+  # Not needed anymore
+  cellGroups <- cells <- NULL;
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

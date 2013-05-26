@@ -73,7 +73,8 @@ setMethodS3("getSetsOfProbes", "AllelicCrosstalkCalibration", function(this, ...
       pairs <- sapply(pairs, FUN=paste, collapse="/");
       names(setsOfProbes) <- pairs;
       setsOfProbes <- list(snps=setsOfProbes, nonSNPs=nonSNPs);
-      rm(nonSNPs, pairs);
+      # Not needed anymore
+      nonSNPs <- pairs <- NULL;
     } else if (version == 3) {
       setsOfProbes <- getAlleleProbePairs3(cdf, ignoreOrder=TRUE, verbose=verbose);
       snps <- setsOfProbes$snps;
@@ -82,19 +83,22 @@ setMethodS3("getSetsOfProbes", "AllelicCrosstalkCalibration", function(this, ...
         o <- order(cells[1,]); 
         cells <- cells[,o,drop=FALSE];
         snps[[kk]] <- cells;
-        rm(cells, o);
+        # Not needed anymore
+        cells <- o <- NULL;
       }
       pairs <- names(snps);
       pairs <- strsplit(pairs, split="", fixed=TRUE);
       pairs <- sapply(pairs, FUN=paste, collapse="/");
       names(snps) <- pairs;
       setsOfProbes$snps <- snps;
-      rm(snps, pairs);
+      # Not needed anymore
+      snps <- pairs <- NULL;
     } else if (version == 4) {
       verbose && enter(verbose, "Identifying cell indices for all non-SNP units");
       unitTypes <- getUnitTypes(cdf, verbose=verbose);
       units <- which(unitTypes != 2);
-      rm(unitTypes); 
+      # Not needed anymore
+      unitTypes <- NULL; 
       verbose && enter(verbose, "Non-SNP units:");
       verbose && str(verbose, units);
       if (length(units) > 0) {
@@ -103,7 +107,8 @@ setMethodS3("getSetsOfProbes", "AllelicCrosstalkCalibration", function(this, ...
       } else {
         nonSNPs <- NULL;
       }
-      rm(units);
+      # Not needed anymore
+      units <- NULL;
       verbose && enter(verbose, "Non-SNP cells:");
       verbose && str(verbose, nonSNPs);
       verbose && exit(verbose);
@@ -115,7 +120,8 @@ setMethodS3("getSetsOfProbes", "AllelicCrosstalkCalibration", function(this, ...
       verbose && print(verbose, shifts);
       snps <- groupBySnpNucleotides(acs, cells=cells, shifts=shifts, 
                                                      verbose=verbose);
-      rm(cells, shifts);
+      # Not needed anymore
+      cells <- shifts <- NULL;
       # Clean out empty sets
       for (kk in seq_along(snps)) {
         cells <- snps[[kk]];
@@ -123,7 +129,8 @@ setMethodS3("getSetsOfProbes", "AllelicCrosstalkCalibration", function(this, ...
           snps[[kk]] <- NULL;
       }
       setsOfProbes <- list(snps=snps, nonSNPs=nonSNPs);
-      rm(snps, nonSNPs);
+      # Not needed anymore
+      snps <- nonSNPs <- NULL;
     }
 
 
@@ -137,9 +144,11 @@ setMethodS3("getSetsOfProbes", "AllelicCrosstalkCalibration", function(this, ...
       for (kk in seq_along(snps)) {
         snpsT$all <- cbind(snpsT$all, snps[[kk]]);
       }
-      rm(snps);
+      # Not needed anymore
+      snps <- NULL;
       setsOfProbes$snps <- snpsT;
-      rm(snpsT);
+      # Not needed anymore
+      snpsT <- NULL;
       verbose && exit(verbose);
     } else if (B == 1) {
       # Nothing to do, default
@@ -179,7 +188,8 @@ setMethodS3("getSetsOfProbes", "AllelicCrosstalkCalibration", function(this, ...
           seqsA <- readSequenceMatrix(acs, cells=cells[,1], positions=pos);
           seqsB <- readSequenceMatrix(acs, cells=cells[,2], positions=pos);
           snpPositions[(seqsA != seqsB)] <- pos;
-          rm(seqsA, seqsB);
+          # Not needed anymore
+          seqsA <- seqsB <- NULL;
         }
         shifts <- snpPositions - as.integer(13);
 
@@ -199,12 +209,15 @@ setMethodS3("getSetsOfProbes", "AllelicCrosstalkCalibration", function(this, ...
           }
           cellsSS <- cells[idxs,,drop=FALSE];
           subgroups[[ss]] <- cellsSS;
-          rm(idxs, cellsSS);
+          # Not needed anymore
+          idxs <- cellsSS <- NULL;
         } # for (shift ...)
-        rm(cells);
+        # Not needed anymore
+        cells <- NULL;
 
         setsOfProbes[[gg]] <- subgroups;
-        rm(subgroups);
+        # Not needed anymore
+        subgroups <- NULL;
 
         verbose && exit(verbose);
       } # for (gg ...)
@@ -222,10 +235,12 @@ setMethodS3("getSetsOfProbes", "AllelicCrosstalkCalibration", function(this, ...
         cc <- seq(from=1, to=ncol(idxs), by=2);
         idxs[,cc] <- idxs[2:1,cc, drop=FALSE];
         snps[[kk]] <- idxs;
-        rm(cc, idxs);
+        # Not needed anymore
+        cc <- idxs <- NULL;
       } # for (gg ...)
       setsOfProbes$snps <- snps;
-      rm(snps);
+      # Not needed anymore
+      snps <- NULL;
       verbose && exit(verbose);
     }
 
@@ -239,7 +254,8 @@ setMethodS3("getSetsOfProbes", "AllelicCrosstalkCalibration", function(this, ...
       snps[[kk]] <- t(snps[[kk]]);
     } # for (gg ...)
     setsOfProbes$snps <- snps;
-    rm(snps);
+    # Not needed anymore
+    snps <- NULL;
 
     # Tag the result with a version number
     attr(setsOfProbes, "version") <- version;

@@ -21,7 +21,8 @@ setMethodS3("exportTotalAndFracB", "SnpChipEffectSet", function(this, fields=c("
       signalClass <- AromaUnitFracBCnBinarySet;
     }
     signalClassList[[field]] <- signalClass;
-    rm(signalClass);
+    # Not needed anymore
+    signalClass <- NULL;
   } # for (field ...)
 
   names <- paste(sapply(signalClassList, FUN=getName), collapse=" and ");
@@ -45,10 +46,12 @@ setMethodS3("exportTotalAndFracB", "SnpChipEffectSet", function(this, fields=c("
     for (field in fields) {
       asb <- asbList[[field]];
       fullnamesList[[field]] <- c(fullnamesList[[field]], getFullName(asb));
-      rm(asb);
+      # Not needed anymore
+      asb <- NULL;
     }
     
-    rm(asbList);
+    # Not needed anymore
+    asbList <- NULL;
     verbose && exit(verbose);
   } # for (kk ...)
 
@@ -78,7 +81,8 @@ setMethodS3("exportTotalAndFracB", "SnpChipEffectSet", function(this, fields=c("
 
       # Sanity check?
       stopifnot(!anyMissing(keep));
-      rm(keep);
+      # Not needed anymore
+      keep <- NULL;
 
       verbose && exit(verbose);
     }

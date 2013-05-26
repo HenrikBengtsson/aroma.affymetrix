@@ -144,7 +144,8 @@ setConstructorS3("AllelicCrosstalkCalibration", function(dataSet=NULL, ..., mode
         types <- getUnitTypes(cdf);
         # 5 == Copy Number
         hasCns <- is.element(5, types);
-        rm(types);
+        # Not needed anymore
+        types <- NULL;
 
         if (hasCns) {
           rescaleBy <- "all";
@@ -319,7 +320,8 @@ setMethodS3("getSubsetToAvg", "AllelicCrosstalkCalibration", function(this, ...,
       }
 
       subsetToAvg <- subset;
-      rm(subset);
+      # Not needed anymore
+      subset <- NULL;
 
       verbose && exit(verbose);
     }
@@ -404,7 +406,8 @@ setMethodS3("rescaleByAll", "AllelicCrosstalkCalibration", function(this, yAll, 
     }
     yAvg <- median(y, na.rm=TRUE);
     verbose && printf(verbose, "yAvg (using %d/%.1f%% summed pairs): %.2f of %.2f (%.1f%%)\n", n, 100*n/n0, yAvg, yAvg0, 100*yAvg/yAvg0);
-    rm(y, n);
+    # Not needed anymore
+    y <- n <- NULL;
   } else {
     yAvg <- yAvg0;
     verbose && printf(verbose, "yAvg (100%%): %.2f\n", yAvg);
@@ -463,14 +466,16 @@ setMethodS3("rescaleByGroups", "AllelicCrosstalkCalibration", function(this, yAl
   snps <- vector("list", nbrOfPairs);
   names(snps) <- basepairs;
   subset <- list(snps=snps, nonSNPs=NULL);
-  rm(snps);
+  # Not needed anymore
+  snps <- NULL;
   fit <- list(
     dimY = dim(yAll),
     params = params,
     method = method,
     subset = subset
   );
-  rm(subset);
+  # Not needed anymore
+  subset <- NULL;
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Rescale based on y = yA+yB
@@ -492,13 +497,15 @@ setMethodS3("rescaleByGroups", "AllelicCrosstalkCalibration", function(this, yAl
       # Calculate current average
       yAvg <- median(y, na.rm=TRUE);
       yAvg0 <- yAvg;
-      rm(y);
+      # Not needed anymore
+      y <- NULL;
 
       if (!is.null(params$subsetToAvg)) {
         keep <- matrix((idxAB %in% params$subsetToAvg), ncol=2, byrow=FALSE);
         keep <- (keep[,1] & keep[,2]);
         idxAB <- idxAB[keep,,drop=FALSE];
-        rm(keep);
+        # Not needed anymore
+        keep <- NULL;
 
         # Sum y=yA+yB
         y <- yAll[idxAB[,1]]+yAll[idxAB[,2]];
@@ -509,7 +516,8 @@ setMethodS3("rescaleByGroups", "AllelicCrosstalkCalibration", function(this, yAl
         }
 
         yAvg <- median(y, na.rm=TRUE);
-        rm(y);
+        # Not needed anymore
+        y <- NULL;
 
         verbose && printf(verbose, "yAvg (using %d/%.1f%% summed pairs): %.2f of %.2f (%.1f%%)\n", n, 100*n/n0, yAvg, yAvg0, 100*yAvg/yAvg0);
       } else {
@@ -526,7 +534,8 @@ setMethodS3("rescaleByGroups", "AllelicCrosstalkCalibration", function(this, yAl
       idxAB <- setsOfProbes$snps[[name]];
       yAll[idxAB] <- b*yAll[idxAB];
 
-      rm(idx);
+      # Not needed anymore
+      idx <- NULL;
 
       fit$subset$snps[[name]] <- list(b=b);
 
@@ -559,7 +568,8 @@ setMethodS3("rescaleByGroups", "AllelicCrosstalkCalibration", function(this, yAl
         # Calculate current average
         yAvg <- median(y, na.rm=TRUE);
         yAvg0 <- yAvg;
-        rm(y);
+        # Not needed anymore
+        y <- NULL;
 
         if (!is.null(params$subsetToAvg)) {
           idx <- idxAB[,cc];
@@ -572,7 +582,8 @@ setMethodS3("rescaleByGroups", "AllelicCrosstalkCalibration", function(this, yAl
           }
 
           yAvg <- median(y, na.rm=TRUE);
-          rm(y);
+          # Not needed anymore
+          y <- NULL;
 
           verbose && printf(verbose, "yAvg (using %d/%.1f%% pairs): %.2f of %.2f (%.1f%%)\n", n, 100*n/n0, yAvg, yAvg0, 100*yAvg/yAvg0);
         } else {
@@ -589,7 +600,8 @@ setMethodS3("rescaleByGroups", "AllelicCrosstalkCalibration", function(this, yAl
         idx <- idxAB[,cc];
         yAll[idx] <- b[cc]*yAll[idx];
 
-        rm(idx);
+        # Not needed anymore
+        idx <- NULL;
       } # for (cc ...)
 
       fit$subset$snps[[name]] <- list(b=b);
@@ -612,7 +624,8 @@ setMethodS3("rescaleByGroups", "AllelicCrosstalkCalibration", function(this, yAl
   n <- length(y);
   if (n > 0) {
     yAvg <- median(y, na.rm=TRUE);
-    rm(y);
+    # Not needed anymore
+    y <- NULL;
     if (!is.finite(yAvg))
       throw("Cannot rescale to target average. Signal average is non-finite: ", yAvg);
 
@@ -640,7 +653,8 @@ setMethodS3("rescaleByGroups", "AllelicCrosstalkCalibration", function(this, yAl
     yAll[idx] <- b*yAll[idx];
     fit$subset$nonSNPs <- list(b=b);
   } # if (n > 0)
-  rm(idx);
+  # Not needed anymore
+  idx <- NULL;
   verbose && exit(verbose);
 
   attr(yAll, "fit") <- fit;
@@ -798,7 +812,8 @@ setMethodS3("process", "AllelicCrosstalkCalibration", function(this, ..., force=
         verbose && enter(verbose, "Fitting");
         y <- matrix(yAll[idx], ncol=2, byrow=FALSE);
         verboseL <- (verbose && isVisible(verbose, -50));
-        rm(idx);
+        # Not needed anymore
+        idx <- NULL;
 
         verbose && cat(verbose, "Model/algorithm flavor: ", flavor);
         if (flavor == "sfit") {
@@ -830,7 +845,8 @@ setMethodS3("process", "AllelicCrosstalkCalibration", function(this, ..., force=
 
         callHooks(sprintf("%s.onFitOne", hookName), df=df, y=y, fit=fit, ...);
 
-        rm(y, fit); # Not needed anymore
+        # Not needed anymore
+        y <- fit <- NULL; # Not needed anymore
         gc <- gc();
 
         verbose && exit(verbose);
@@ -851,7 +867,8 @@ setMethodS3("process", "AllelicCrosstalkCalibration", function(this, ..., force=
       origins <- colMeans(origins, na.rm=TRUE);
       offset <- sum(w*origins, na.rm=TRUE);
       verbose && printf(verbose, "Weighted average offset: %.2f\n", offset);
-      rm(origins, w);
+      # Not needed anymore
+      origins <- w <- NULL;
 
       fit <- list(
         offset = offset,
@@ -859,7 +876,8 @@ setMethodS3("process", "AllelicCrosstalkCalibration", function(this, ..., force=
         dimData = length(setsOfProbes$nonSNPs)
       );
       fits[["nonSNPs"]] <- fit;
-      rm(fit, ns, offset);
+      # Not needed anymore
+      fit <- ns <- offset <- NULL;
 
       # Store allelic crosstalk model fits
       modelFit$accFits <- fits;
@@ -894,7 +912,8 @@ setMethodS3("process", "AllelicCrosstalkCalibration", function(this, ..., force=
         yAll[idx] <- yC;
 
 #        callHooks(sprintf("%s.onUpdated", hookName), df=df, y=y, basepair=basepair, fit=fits[[name]], yC=yC,...);
-        rm(idx, y, yC);
+        # Not needed anymore
+        idx <- y <- yC <- NULL;
         gc <- gc();
 
         verbose && exit(verbose);
@@ -915,10 +934,12 @@ setMethodS3("process", "AllelicCrosstalkCalibration", function(this, ..., force=
         yAll[cells] <- yAll[cells] - offset;
         verbose && exit(verbose);
       }
-      rm(cells);
+      # Not needed anymore
+      cells <- NULL;
 
       # Not needed anymore
-      rm(fits);
+      # Not needed anymore
+      fits <- NULL;
 
       # Garbage collect
       gc <- gc();
@@ -934,7 +955,8 @@ setMethodS3("process", "AllelicCrosstalkCalibration", function(this, ..., force=
         fit$params <- NULL;
         fit$paramsShort <- paramsShort;
         modelFit$rescaleFit <- fit;
-        rm(fit);
+        # Not needed anymore
+        fit <- NULL;
 
         # Garbage collect
         gc <- gc();
@@ -953,7 +975,8 @@ setMethodS3("process", "AllelicCrosstalkCalibration", function(this, ..., force=
 
       saveObject(modelFit, file=fitPathname);
       verbose && str(verbose, modelFit, level=-50);
-      rm(modelFit);
+      # Not needed anymore
+      modelFit <- NULL;
 
         # Garbage collect
       gc <- gc();
@@ -974,7 +997,8 @@ setMethodS3("process", "AllelicCrosstalkCalibration", function(this, ..., force=
       verbose2 <- -as.integer(verbose)-2;
       updateCel(pathname, intensities=yAll, verbose=verbose2);
 
-      rm(yAll, verbose2);
+      # Not needed anymore
+      yAll <- verbose2 <- NULL;
       gc <- gc();
       verbose && print(verbose, gc);
       verbose && exit(verbose);
@@ -991,14 +1015,16 @@ setMethodS3("process", "AllelicCrosstalkCalibration", function(this, ..., force=
 
     # Record
 
-    rm(df, dfC);
+    # Not needed anymore
+    df <- dfC <- NULL;
 
     verbose && exit(verbose);
   } # for (kk in seq_len(nbrOfArrays))
   verbose && exit(verbose);
 
   # Garbage collect
-  rm(ds, setsOfProbes);
+  # Not needed anymore
+  ds <- setsOfProbes <- NULL;
 #  clearCache(this);
   gc <- gc();
   verbose && print(verbose, gc);
@@ -1132,7 +1158,8 @@ setMethodS3("plotBasepair", "AllelicCrosstalkCalibration", function(this, array,
     y[y < xlim[1]-0.1*diff(xlim) | y > xlim[2] + 0.1*diff(xlim)] <- NA;
     keep <- (!is.na(y[,1]) & !is.na(y[,2]));
     y <- y[keep,,drop=FALSE];
-    rm(keep);
+    # Not needed anymore
+    keep <- NULL;
 
     plotFcn(y, xlim=xlim, ylim=ylim, ...);
 
@@ -1148,7 +1175,8 @@ setMethodS3("plotBasepair", "AllelicCrosstalkCalibration", function(this, array,
       linesFcn(a=fit$origin, B=fit$W, lwd=lwd, col=lcol, ...);
     }
 
-    rm(y, idx, fit); # Not needed anymore
+    # Not needed anymore
+    y <- idx <- fit <- NULL; # Not needed anymore
     gc <- gc();
 
     verbose && exit(verbose);
@@ -1198,7 +1226,8 @@ setMethodS3("getDataPairs", "AllelicCrosstalkCalibration", function(this, array,
     y <- matrix(yAll[idx], ncol=2, byrow=FALSE);
     colnames(y) <- c("A", "B");
     res[[kk]] <- y;
-    rm(y);
+    # Not needed anymore
+    y <- NULL;
   }
   verbose && exit(verbose);
 

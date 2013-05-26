@@ -71,7 +71,8 @@ setMethodS3("calculateBaseline", "ChipEffectSet", function(this, chromosomes=NUL
   ncells <- length(ds);
   todo <- which(isZero(ds));
   ntodo <- length(todo);
-  rm(ds);
+  # Not needed anymore
+  ds <- NULL;
 
   verbose && printf(verbose, "Found %d (%.1f%%) non-estimated cells.\n",
                                                   ntodo, 100*ntodo/ncells);
@@ -93,7 +94,8 @@ setMethodS3("calculateBaseline", "ChipEffectSet", function(this, chromosomes=NUL
 
     verbose && enter(verbose, "Identifying cells for these units");
     cells <- getCellIndices(this, units=units);
-    rm(units);
+    # Not needed anymore
+    units <- NULL;
     cells <- unlist(cells, use.names=FALSE);
     cells <- sort(cells);
     ncells <- length(cells);
@@ -112,7 +114,8 @@ setMethodS3("calculateBaseline", "ChipEffectSet", function(this, chromosomes=NUL
       if (nkeep == 0) {
         verbose && cat(verbose, "Baseline averages already exist for all loci on this chromosome.");
         verbose && exit(verbose);
-        rm(cells);
+        # Not needed anymore
+        cells <- NULL;
         next;
       }
     }
@@ -152,7 +155,8 @@ setMethodS3("calculateBaseline", "ChipEffectSet", function(this, chromosomes=NUL
 
     verbose && enter(verbose, "Reading the average signals");
     muBs <- getData(csBavg, indices=cells, fields="intensities", verbose=less(verbose))$intensities;
-    rm(csBavg);
+    # Not needed anymore
+    csBavg <- NULL;
     verbose && str(verbose, muBs);
 #    verbose && cat(verbose, "Summary of log2(mu2s)");
 #    verbose && print(verbose, summary(log2(muBs)));
@@ -178,7 +182,8 @@ setMethodS3("calculateBaseline", "ChipEffectSet", function(this, chromosomes=NUL
 
       verbose && enter(verbose, "Reading the average signals");
       muMs <- getData(csMavg, indices=cells, fields="intensities", verbose=less(verbose))$intensities;
-      rm(csMavg);
+      # Not needed anymore
+      csMavg <- NULL;
       verbose && str(verbose, muMs);
       verbose && exit(verbose);
 
@@ -200,7 +205,8 @@ setMethodS3("calculateBaseline", "ChipEffectSet", function(this, chromosomes=NUL
 
       # 2) Get the average difference across all loci.
       c <- median(cs, na.rm=TRUE);
-      rm(cs);
+      # Not needed anymore
+      cs <- NULL;
       verbose && printf(verbose, "Bias correction: log2(c*)=%.3f\n", log2(c));
       verbose && exit(verbose);
 
@@ -210,7 +216,8 @@ setMethodS3("calculateBaseline", "ChipEffectSet", function(this, chromosomes=NUL
 
       # The estimate of the baseline according to the non-baseline samples
       muBs2 <- muMs * c;
-      rm(muMs);
+      # Not needed anymore
+      muMs <- NULL;
       verbose && cat(verbose, "Summary of log2(muBs*)");
       verbose && print(verbose, summary(log2(muBs2)));
 
@@ -219,7 +226,8 @@ setMethodS3("calculateBaseline", "ChipEffectSet", function(this, chromosomes=NUL
       wM <- 1-wB;
 
       ds <- wB*muBs + wM*muBs2;
-      rm(muBs, muBs2);
+      # Not needed anymore
+      muBs <- muBs2 <- NULL;
       verbose && exit(verbose);
     } else {
       ds <- muBs;
@@ -232,13 +240,15 @@ setMethodS3("calculateBaseline", "ChipEffectSet", function(this, chromosomes=NUL
     verbose && enter(verbose, "Storing baseline signals");
     ds <- cbind(intensities=ds, cell=cells);
     muBs <- updateDataFlat(csBaseline, data=ds, verbose=less(verbose));
-    rm(ds);
+    # Not needed anymore
+    ds <- NULL;
     verbose && exit(verbose);
 
     # Mark cells as done
     todo <- setdiff(todo, cells);
 
-    rm(cells);
+    # Not needed anymore
+    cells <- NULL;
 
     # Garbage collect
     gc <- gc();
@@ -251,7 +261,8 @@ setMethodS3("calculateBaseline", "ChipEffectSet", function(this, chromosomes=NUL
   if (all) {
     verbose && enter(verbose, "Calculate the average signal for all cells not on a chromosome");
     cells <- todo;
-    rm(todo);
+    # Not needed anymore
+    todo <- NULL;
     ncells <- length(cells);
     verbose && cat(verbose, "Number of remaining cells: ", length(cells));
     if (ncells > 0) {
@@ -259,7 +270,8 @@ setMethodS3("calculateBaseline", "ChipEffectSet", function(this, chromosomes=NUL
       keep <- todo[cells];
       nkeep <- length(keep);
       cells <- cells[keep];
-      rm(keep);
+      # Not needed anymore
+      keep <- NULL;
 
       verbose && printf(verbose, "Found %d (%.1f%%) non-estimated loci.\n",
                                                   nkeep, 100*nkeep/ncells);
@@ -270,14 +282,16 @@ setMethodS3("calculateBaseline", "ChipEffectSet", function(this, chromosomes=NUL
 
         verbose && enter(verbose, "Reading the average signals");
         ds <- getData(csRavg, indices=cells, fields="intensities", verbose=less(verbose))$intensities;
-        rm(csRavg);
+        # Not needed anymore
+        csRavg <- NULL;
         verbose && str(verbose, ds);
         verbose && exit(verbose);
 
         verbose && enter(verbose, "Storing baseline signals");
         ds <- cbind(intensities=ds, cell=cells);
         muBs <- updateDataFlat(csBaseline, data=ds, verbose=less(verbose));
-        rm(ds);
+        # Not needed anymore
+        ds <- NULL;
         verbose && exit(verbose);
       } # if (nkeep > 0)
     } # if (ncells > 0)

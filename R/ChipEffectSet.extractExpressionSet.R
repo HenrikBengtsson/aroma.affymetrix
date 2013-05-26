@@ -119,7 +119,8 @@ setMethodS3("extractExpressionSet", "ChipEffectSet", function(this, ..., logBase
       }
 
       annotation <- annotation(db);
-      rm(db, dim, dim0); # Not needed anymore
+      # Not needed anymore
+      db <- dim <- dim0 <- NULL; # Not needed anymore
     } else if (regexpr("cdf$", annotationPkg) != -1L) {
       db <- ns[[annotationPkg]];
       if (is.null(db)) {
@@ -127,14 +128,16 @@ setMethodS3("extractExpressionSet", "ChipEffectSet", function(this, ..., logBase
       }
       unitNames <- ls(envir=db);
       annotation <- gsub("[.]cdf$", "", annotationPkg);
-      rm(db, unitNames); # Not needed anymore
+      # Not needed anymore
+      db <- unitNames <- NULL; # Not needed anymore
     } else if (regexpr("[.]db$", annotationPkg) != -1L) {
       db <- ns[[annotationPkg]];
       if (is.null(db) || !inherits(db, "ChipDb")) {
         throw("Unknown type of DB annotation package: ", annotationPkg);
       }
       annotation <- gsub("[.]db$", "", annotationPkg);
-      rm(db); # Not needed anymore
+      # Not needed anymore
+      db <- NULL; # Not needed anymore
     } else {
       throw("Unknown type of annotation package: ", annotationPkg);
     }
@@ -142,7 +145,8 @@ setMethodS3("extractExpressionSet", "ChipEffectSet", function(this, ..., logBase
     annotation <- Arguments$getCharacter(annotation);
     verbose && cat(verbose, "Annotation string: ", annotation);
 
-    rm(ns); # Not needed anymore
+    # Not needed anymore
+    ns <- NULL; # Not needed anymore
     verbose && exit(verbose);
   } # if (!is.null(annotationPkg))
 
@@ -183,13 +187,15 @@ setMethodS3("extractExpressionSet", "ChipEffectSet", function(this, ..., logBase
   rownames(Y) <- names;
 
   # Not needed anymore
-  rm(names, ugNames, ugcMap, cdf);
+  # Not needed anymore
+  names <- ugNames <- ugcMap <- cdf <- NULL;
 
   verbose && enter(verbose, "Allocating ExpressionSet object");
   eset <- new("ExpressionSet", exprs=Y, annotation=annotation);
   verbose && print(verbose, eset);
 
-  rm(Y); # Not needed anymore
+  # Not needed anymore
+  Y <- NULL; # Not needed anymore
   verbose && exit(verbose);
 
   verbose && exit(verbose);

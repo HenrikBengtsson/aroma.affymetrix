@@ -48,7 +48,8 @@ setMethodS3("extractSnpCnvQSet", "SnpChipEffectSet", function(this, units=NULL, 
     srt <- sort(unitNames, method="quick", index.return=TRUE);
     unitNames <- srt$x;
     units <- units[srt$ix];
-    rm(srt);  # Not needed anymore
+    # Not needed anymore
+    srt <- NULL;  # Not needed anymore
     verbose && exit(verbose);
   }
 
@@ -71,11 +72,13 @@ setMethodS3("extractSnpCnvQSet", "SnpChipEffectSet", function(this, units=NULL, 
   );
 
   # Not needed anymore
-  rm(theta);
+  # Not needed anymore
+  theta <- NULL;
 
   # Assign feature data
   featureNames(res) <- unitNames;
-  rm(unitNames);
+  # Not needed anymore
+  unitNames <- NULL;
 
   # Assign annotation data
   pdPkgName <- oligo::cleanPlatformName(chipType);

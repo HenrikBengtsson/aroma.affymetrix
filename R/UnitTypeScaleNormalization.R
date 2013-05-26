@@ -110,7 +110,8 @@ setMethodS3("fitOne", "UnitTypeScaleNormalization", function(this, df, ..., verb
     y <- getData(df, indices=cells, fields="intensities", drop=TRUE, verbose=verbose);
     verbose && str(verbose, y);
     verbose && exit(verbose);
-    rm(cells);
+    # Not needed anymore
+    cells <- NULL;
 
     # Shift?
     if (shift != 0) {
@@ -121,14 +122,16 @@ setMethodS3("fitOne", "UnitTypeScaleNormalization", function(this, df, ..., verb
 
     verbose && enter(verbose, "Estimating parameters");
     mu <- median(y, na.rm=TRUE);
-    rm(y);
+    # Not needed anymore
+    y <- NULL;
     verbose && exit(verbose);
 
     fitKK <- list(mu=mu, unitType=unitType, nbrOfUnits=nbrOfUnits, nbrOfCells=nbrOfCells);
     verbose && str(verbose, fitKK);
 
     fit[[key]] <- fitKK;
-    rm(fitKK);
+    # Not needed anymore
+    fitKK <- NULL;
     verbose && exit(verbose);
   } # for (kk ...)
 
@@ -234,10 +237,12 @@ setMethodS3("getNormalizeSignalsOne", "UnitTypeScaleNormalization", function(thi
     verbose && exit(verbose);
 
     dataKK <- data.frame(cell=cells, y=y);
-    rm(cells, y, mu, b, yM);
+    # Not needed anymore
+    cells <- y <- mu <- b <- yM <- NULL;
 
     data <- rbind(data, dataKK);
-    rm(dataKK);
+    # Not needed anymore
+    dataKK <- NULL;
     verbose && exit(verbose);
   } # for (kk ...)
 
@@ -371,7 +376,8 @@ setMethodS3("process", "UnitTypeScaleNormalization", function(this, ..., skip=FA
     verbose && enter(verbose, "Writing normalized data");
     writeSignals(this, pathname=pathname, cells=data$cell,
              intensities=data$y, templateFile=df, verbose=less(verbose));
-    rm(data);
+    # Not needed anymore
+    data <- NULL;
     verbose && exit(verbose);
 
     # Garbage collect

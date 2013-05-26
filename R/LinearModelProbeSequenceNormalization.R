@@ -99,7 +99,8 @@ setMethodS3("getNormalEquations", "LinearModelProbeSequenceNormalization", funct
 
   isMissing <- isMissing(acs, verbose=less(verbose, 10))[cells];
   cells <- cells[!isMissing];
-  rm(isMissing);
+  # Not needed anymore
+  isMissing <- NULL;
   n1 <- length(cells);
   verbose && printf(verbose, "Removed %d (%.2f%%) missing sequences out of %d\n", n0-n1, 100*(n0-n1)/n0, n0);
 
@@ -188,7 +189,8 @@ setMethodS3("getNormalEquations", "LinearModelProbeSequenceNormalization", funct
     verbose && cat(verbose, "Factors:");
     verbose && str(verbose, factors);
 
-    rm(res);
+    # Not needed anymore
+    res <- NULL;
 
     gc <- gc();
     verbose && print(verbose, gc);
@@ -208,7 +210,8 @@ setMethodS3("getNormalEquations", "LinearModelProbeSequenceNormalization", funct
     keep <- which(is.finite(yCC));
     yCC <- yCC[keep];
     X <- X[keep,,drop=FALSE];
-    rm(keep);
+    # Not needed anymore
+    keep <- NULL;
     verbose && exit(verbose);
 
     # Garbage collect
@@ -222,7 +225,8 @@ setMethodS3("getNormalEquations", "LinearModelProbeSequenceNormalization", funct
     xtxChunk <- crossprod(X);
     verbose && str(verbose, xtxChunk);
     xtx <- xtx + xtxChunk;
-    rm(xtxChunk);
+    # Not needed anymore
+    xtxChunk <- NULL;
     verbose && exit(verbose);
 
 
@@ -230,7 +234,8 @@ setMethodS3("getNormalEquations", "LinearModelProbeSequenceNormalization", funct
     xtyChunk <- crossprod(X, yCC);
     verbose && str(verbose, xtyChunk);
     xty <- xty + xtyChunk;
-    rm(X, yCC, xtyChunk);
+    # Not needed anymore
+    X <- yCC <- xtyChunk <- NULL;
     verbose && exit(verbose);
 
     # Clean up
@@ -251,7 +256,8 @@ setMethodS3("getNormalEquations", "LinearModelProbeSequenceNormalization", funct
   verbose && str(verbose, xty);
 
   res <- list(xtx=xtx, xty=xty, n0=n0, n1=n1, cells=cells, map=map, B=B, factors=factors, y=y);
-  rm(xtx, xty, cells);
+  # Not needed anymore
+  xtx <- xty <- cells <- NULL;
 
   res;
 }, protected=TRUE)
@@ -321,7 +327,8 @@ setMethodS3("fitOne", "LinearModelProbeSequenceNormalization", function(this, df
 
   xtx <- ne$xtx;
   xty <- ne$xty;
-  rm(ne);
+  # Not needed anymore
+  ne <- NULL;
   verbose && exit(verbose);
 
 
@@ -330,7 +337,8 @@ setMethodS3("fitOne", "LinearModelProbeSequenceNormalization", function(this, df
   coefs <- as.vector(coefs);
   verbose && cat(verbose, "Coeffients:")
   verbose && print(verbose, coefs);
-  rm(xtx, xty);
+  # Not needed anymore
+  xtx <- xty <- NULL;
   verbose && exit(verbose);
 
 
@@ -402,7 +410,8 @@ setMethodS3("predictOne", "LinearModelProbeSequenceNormalization", function(this
   verbose && cat(verbose, "Model: ", model);
   verbose && exit(verbose);
 
-  rm(params);
+  # Not needed anymore
+  params <- NULL;
 
   nbrOfCells <- length(cells);
 
@@ -413,7 +422,8 @@ setMethodS3("predictOne", "LinearModelProbeSequenceNormalization", function(this
     acs <- getAromaCellSequenceFile(this, verbose=less(verbose, 5));
     seqs <- readSequenceMatrix(acs, cells=cells, what="raw",
                                          verbose=less(verbose, 5));
-    rm(acs, cells);
+    # Not needed anymore
+    acs <- cells <- NULL;
     gc <- gc();
     verbose && print(verbose, gc);
   } else {
@@ -425,7 +435,8 @@ setMethodS3("predictOne", "LinearModelProbeSequenceNormalization", function(this
 
   verbose && enter(verbose, "Predicting mean (transformed) probe signals");
   mu <- predict(fit, seqs=seqs, verbose=less(verbose, 5));
-  rm(seqs);
+  # Not needed anymore
+  seqs <- NULL;
   verbose && str(verbose, "mu:");
   verbose && str(verbose, mu);
   verbose && summary(verbose, mu);

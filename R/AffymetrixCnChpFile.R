@@ -292,7 +292,8 @@ setMethodS3("readRawData", "AffymetrixCnChpFile", function(this, fields=c("Probe
       values <- trim(values);
       res[,kk] <- values;
     }
-    rm(values);
+    # Not needed anymore
+    values <- NULL;
   }
 
   if (!hasUnitReadMap(this)) {

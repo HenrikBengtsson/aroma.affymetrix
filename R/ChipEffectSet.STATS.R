@@ -87,7 +87,8 @@ setMethodS3("calculateFieldBoxplotStats", "ChipEffectSet", function(this, field=
       data <- transform(data);
     }
     stats[[kk]] <- boxplotStats(data, ...);
-    rm(data);
+    # Not needed anymore
+    data <- NULL;
     verbose && exit(verbose);
   }
   names(stats) <- getNames(this)[arrays];
@@ -165,7 +166,8 @@ setMethodS3("calculateRleBoxplotStats", "ChipEffectSet", function(this, arrays=N
   medianLE <- extractMatrix(avg, field="theta", units=ugcMap, 
                                                  verbose=less(verbose, 5));
   medianLE <- log2(as.vector(medianLE));
-  rm(avg);
+  # Not needed anymore
+  avg <- NULL;
 
   verbose && enter(verbose, "Calculating RLE statistics for ", nbrOfArrays, 
                                                     " (specified) arrays");
@@ -190,10 +192,12 @@ setMethodS3("calculateRleBoxplotStats", "ChipEffectSet", function(this, arrays=N
     }
 
     stats[[kk]] <- boxplotStats(theta-medianLE, ...);
-    rm(theta);
+    # Not needed anymore
+    theta <- NULL;
     verbose && exit(verbose);
   }
-  rm(medianLE, units);
+  # Not needed anymore
+  medianLE <- units <- NULL;
   names(stats) <- getNames(this)[arrays];
   verbose && exit(verbose);
 
@@ -256,7 +260,8 @@ setMethodS3("calculateNuseBoxplotStats", "ChipEffectSet", function(this, arrays=
   # Note, the average of the 'stdvs' is stored in the 'theta' field.
   medianSE <- extractMatrix(avg, field="theta", units=ugcMap, 
                                                  verbose=less(verbose, 5));
-  rm(avg);
+  # Not needed anymore
+  avg <- NULL;
   medianSE <- log2(as.vector(medianSE));
 
   verbose && enter(verbose, "Calculating NUSE statistics for ", nbrOfArrays, 
@@ -281,10 +286,12 @@ setMethodS3("calculateNuseBoxplotStats", "ChipEffectSet", function(this, arrays=
     }
 
     stats[[kk]] <- boxplot.stats(stdvs/medianSE, ...);
-    rm(stdvs);
+    # Not needed anymore
+    stdvs <- NULL;
     verbose && exit(verbose);
   }
-  rm(medianSE, units);
+  # Not needed anymore
+  medianSE <- units <- NULL;
   names(stats) <- getNames(this)[arrays];
   verbose && exit(verbose);
 

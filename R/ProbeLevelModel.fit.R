@@ -154,7 +154,8 @@ setMethodS3("fit", "ProbeLevelModel", function(this, units="remaining", ..., for
   if (hasPriors) {
     verbose && cat(verbose, "Prior parameters detected");
   }
-  rm(priors);
+  # Not needed anymore
+  priors <- NULL;
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -170,7 +171,8 @@ setMethodS3("fit", "ProbeLevelModel", function(this, units="remaining", ..., for
 ##     counts <- nbrOfCellsPerUnit(cdf, units=units, verbose=less(verbose, 5));
 ##     verbose && print(verbose, table(verbose));
 ##     singleCellUnits <- which(counts == 1);
-##     rm(counts);
+##     # Not needed anymore
+##     counts <- NULL;
 ##     verbose && str(verbose, singleCellUnits);
 ##     verbose && exit(verbose);
 ##
@@ -186,7 +188,8 @@ setMethodS3("fit", "ProbeLevelModel", function(this, units="remaining", ..., for
 ##
 ##       verbose && enter(verbose, "Reading signals");
 ##       verbose && exit(verbose);
-##       rm(cells);
+##       # Not needed anymore
+##       cells <- NULL;
 ##
 ##       verbose && enter(verbose, "Fitting units");
 ##       verbose && exit(verbose);
@@ -274,7 +277,8 @@ setMethodS3("fit", "ProbeLevelModel", function(this, units="remaining", ..., for
     verbose && enter(verbose, "Grouping units into equivalent (unit,group,cell) dimensions");
     unitDimensions <- groupUnitsByDimension(cdf, units=unitsTT, verbose=less(verbose, 50));
     # Not needed anymore
-    rm(unitsTT);
+    # Not needed anymore
+    unitsTT <- NULL;
 
     sets <- unitDimensions$sets;
     dims <- unitDimensions$setDimensions;
@@ -292,7 +296,8 @@ setMethodS3("fit", "ProbeLevelModel", function(this, units="remaining", ..., for
         verbose && print(verbose, head(dimsT));
         verbose && print(verbose, tail(dimsT));
       }
-      rm(dimsT);
+      # Not needed anymore
+      dimsT <- NULL;
     }
     verbose && exit(verbose);
 

@@ -49,7 +49,8 @@ setMethodS3("importFromAffymetrixNetAffxCsvFile", "AromaUflFile", function(this,
   units <- indexOf(cdf, names=unitNames);
   verbose && cat(verbose, "Unit indices:");
   verbose && str(verbose, units);
-  rm(unitNames);
+  # Not needed anymore
+  unitNames <- NULL;
 
   keep <- which(!is.na(units));
   verbose && printf(verbose, "Keeping %d of %d (%.2f%%)\n", 
@@ -75,7 +76,8 @@ setMethodS3("importFromAffymetrixNetAffxCsvFile", "AromaUflFile", function(this,
 
   # Update
   this[units,enzymesToUpdate] <- data;
-  rm(data);
+  # Not needed anymore
+  data <- NULL;
 
   gc <- gc();
   verbose && print(verbose, gc, level=-10);

@@ -12,7 +12,8 @@ setMethodS3("extractTotalAndFreqB", "CnChipEffectSet", function(this, units=NULL
     ugcMap <- units;
     units <- unique(ugcMap[,"unit"]);
     nbrOfUnits <- length(units);
-    rm(units);
+    # Not needed anymore
+    units <- NULL;
   } else {
     units <- Arguments$getIndices(units, max=nbrOfUnits(cdf));
     nbrOfUnits <- length(units);
@@ -80,9 +81,11 @@ setMethodS3("extractTotalAndFreqB", "CnChipEffectSet", function(this, units=NULL
                                                 verbose=less(verbose, 5));
     verbose && str(verbose, dataKK);
     data[,,kk] <- dataKK;
-    rm(dataKK);
+    # Not needed anymore
+    dataKK <- NULL;
   }
-  rm(ugcMap);
+  # Not needed anymore
+  ugcMap <- NULL;
 
   # Drop singleton dimensions?
   if (drop) {
@@ -115,7 +118,8 @@ setMethodS3("extractTotalAndFreqB", "SnpChipEffectSet", function(this, units=NUL
     ugcMap <- units;
     units <- unique(ugcMap[,"unit"]);
     nbrOfUnits <- length(units);
-    rm(units);
+    # Not needed anymore
+    units <- NULL;
   } else {
     units <- Arguments$getIndices(units, range=c(1, nbrOfUnits(cdf)));
     nbrOfUnits <- length(units);
@@ -178,9 +182,11 @@ setMethodS3("extractTotalAndFreqB", "SnpChipEffectSet", function(this, units=NUL
                                                 verbose=less(verbose, 5));
     verbose && str(verbose, dataKK);
     data[,,kk] <- dataKK;
-    rm(dataKK);
+    # Not needed anymore
+    dataKK <- NULL;
   }
-  rm(ugcMap);
+  # Not needed anymore
+  ugcMap <- NULL;
 
   # Drop singleton dimensions?
   if (drop) {

@@ -18,7 +18,8 @@ setMethodS3("exportTotalAndFracB", "SnpChipEffectFile", function(this, fields=c(
   if (is.null(path)) {
     chipType <- getChipType(this, fullname=FALSE);
     path <- filePath(rootPath, dataSet, chipType);
-    rm(chipType);
+    # Not needed anymore
+    chipType <- NULL;
   }
   path <- Arguments$getWritablePath(path);
 
@@ -111,7 +112,8 @@ setMethodS3("exportTotalAndFracB", "SnpChipEffectFile", function(this, fields=c(
     asbList[[field]] <- asb;
   } # for (field ...)
   names(asbList) <- fields;
-  rm(data);
+  # Not needed anymore
+  data <- NULL;
 
   if (drop && length(asbList) == 1) {
     asbList <- asbList[[1]];

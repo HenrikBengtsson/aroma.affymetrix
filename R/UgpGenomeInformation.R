@@ -256,14 +256,16 @@ setMethodS3("getData", "UgpGenomeInformation", function(this, units=NULL, fields
       }
       data <- data[keep,,drop=FALSE];
     }
-    rm(keep);
+    # Not needed anymore
+    keep <- NULL;
   }
 
   # Reorder?
   if (!is.null(orderBy)) {
     o <- do.call("order", args=as.list(data[,orderBy,drop=FALSE]));
     data <- data[o,,drop=FALSE];
-    rm(o);
+    # Not needed anymore
+    o <- NULL;
   }
 
   # Extract a subset of fields?

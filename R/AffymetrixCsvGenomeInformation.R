@@ -123,7 +123,8 @@ setMethodS3("readDataFrame", "AffymetrixCsvGenomeInformation", function(this, ..
     chr <- as.integer(chr);
   })
   df[["chromosome"]] <- chr;
-  rm(chr);
+  # Not needed anymore
+  chr <- NULL;
 
   # Coerce to integers
   df[["physicalPosition"]] <- as.integer(df[["physicalPosition"]]);

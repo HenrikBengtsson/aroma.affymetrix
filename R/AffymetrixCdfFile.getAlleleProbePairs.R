@@ -95,7 +95,8 @@ setMethodS3("getAlleleProbePairs", "AffymetrixCdfFile", function(this, units=NUL
   verbose && print(verbose, table(unitSizes));
 
   unitsAll <- unitsAll[unitSizes %in% c(2,4)];
-  rm(unitSizes);
+  # Not needed anymore
+  unitSizes <- NULL;
   verbose && cat(verbose, "Number of SNP units with 2 or 4 groups: ",
                                                         length(unitsAll));
 
@@ -108,7 +109,8 @@ setMethodS3("getAlleleProbePairs", "AffymetrixCdfFile", function(this, units=NUL
     unitsAll <- intersect(unitsAll, units);
   }
   units <- unitsAll;
-  rm(unitsAll);
+  # Not needed anymore
+  unitsAll <- NULL;
   nunits <- length(units);
 
   verbose && cat(verbose, "Number of SNP units to query: ", nunits);
@@ -133,7 +135,8 @@ setMethodS3("getAlleleProbePairs", "AffymetrixCdfFile", function(this, units=NUL
   # Order by basepairs so that the verbose output is easier to read
   o <- order(as.integer(sapply(uGroupNames, FUN=paste, collapse="")));
   uGroupNames <- uGroupNames[o];
-  rm(o);
+  # Not needed anymore
+  o <- NULL;
 
   gc <- gc();
   verbose && print(verbose, gc);
@@ -186,7 +189,8 @@ setMethodS3("getAlleleProbePairs", "AffymetrixCdfFile", function(this, units=NUL
 
     cdfAll <- c(cdfAll, cdfAll0);
 
-    rm(cdfAll0);
+    # Not needed anymore
+    cdfAll0 <- NULL;
     gc <- gc();
     verbose && print(verbose, gc);
 
@@ -195,7 +199,8 @@ setMethodS3("getAlleleProbePairs", "AffymetrixCdfFile", function(this, units=NUL
   } # while(...)
 
   # Not needed anymore
-  rm(units, unitsTodo, uu);
+  # Not needed anymore
+  units <- unitsTodo <- uu <- NULL;
   gc <- gc();
   verbose && print(verbose, gc);
 
@@ -229,12 +234,14 @@ setMethodS3("getAlleleProbePairs", "AffymetrixCdfFile", function(this, units=NUL
       bpNames <- matrix(names(levels)[name], nrow=2);
       bpNames <- paste(bpNames[1,], bpNames[2,], sep="");
       verbose && cat(verbose, "Allele pairs: ", paste(bpNames, collapse=","));
-      rm(bpNames);
+      # Not needed anymore
+      bpNames <- NULL;
       verbose && cat(verbose, "Number of units: ", length(idx));
     }
     cdf <- cdfAll[idx];
     cdfAll[idx] <- NA;  # Not needed anymore (save memory)
-    rm(idx);
+    # Not needed anymore
+    idx <- NULL;
 #    gc <- gc();
 
     cdf0 <- vector("list", length=length(name));
@@ -242,9 +249,11 @@ setMethodS3("getAlleleProbePairs", "AffymetrixCdfFile", function(this, units=NUL
       cdf0[[gg]] <- unlist(base::lapply(cdf, FUN=.subset2, gg), use.names=FALSE);
     }
 
-    rm(cdf);
+    # Not needed anymore
+    cdf <- NULL;
     probeSets[[kk]] <- cdf0;
-    rm(cdf0);
+    # Not needed anymore
+    cdf0 <- NULL;
     names(probeSets)[kk] <- basepair;
 
 #    gc <- gc();
@@ -252,7 +261,8 @@ setMethodS3("getAlleleProbePairs", "AffymetrixCdfFile", function(this, units=NUL
 
     verbose && exit(verbose);
   }
-  rm(cdfAll);
+  # Not needed anymore
+  cdfAll <- NULL;
   gc <- gc();
   verbose && print(verbose, gc);
   verbose && exit(verbose);
@@ -292,7 +302,8 @@ setMethodS3("getAlleleProbePairs", "AffymetrixCdfFile", function(this, units=NUL
       value2[[1]] <- c(value2[[1]], value[[1]]);
       value2[[2]] <- c(value2[[2]], value[[2]]);
       probeSets2[[bp]] <- value2;
-      rm(value2);
+      # Not needed anymore
+      value2 <- NULL;
       bp <- strsplit(bp, split="")[[1]];
       bp <- c(A="T", C="G", G="C", T="A")[bp];
       bp <- paste(bp, collapse="");
@@ -316,7 +327,8 @@ setMethodS3("getAlleleProbePairs", "AffymetrixCdfFile", function(this, units=NUL
 
   if (ignoreOrder) {
     verbose && enter(verbose, "Putting AB and BA groups together");
-    rm(probeSets);
+    # Not needed anymore
+    probeSets <- NULL;
     gc <- gc();
     pairs <- strsplit(names(probeSets2), split="");
     pairs <- base::lapply(pairs, FUN=function(x) paste(sort(x), collapse=""));
@@ -330,7 +342,8 @@ setMethodS3("getAlleleProbePairs", "AffymetrixCdfFile", function(this, units=NUL
       basepairs <- sort(names(probeSets2)[idx]);
       probeSets[[pair]] <- probeSets2[basepairs];
     }
-    rm(probeSets2);
+    # Not needed anymore
+    probeSets2 <- NULL;
     verbose && exit(verbose);
 
     verbose && enter(verbose, "Combining AB and BA groups");
@@ -346,11 +359,13 @@ setMethodS3("getAlleleProbePairs", "AffymetrixCdfFile", function(this, units=NUL
       }
       probeSets[[kk]] <- values;
     }
-    rm(values);
+    # Not needed anymore
+    values <- NULL;
     verbose && exit(verbose);
   } else {
     probeSets <- probeSets2;
-    rm(probeSets2);
+    # Not needed anymore
+    probeSets2 <- NULL;
   }
 
   # Assert correctness
@@ -377,7 +392,8 @@ setMethodS3("getAlleleProbePairs", "AffymetrixCdfFile", function(this, units=NUL
     probeSets[[kk]] <- values;
     verbose && exit(verbose);
   }
-  rm(values, o);
+  # Not needed anymore
+  values <- o <- NULL;
   gc <- gc();
   if (isVisible(verbose, level=-20))
     verbose && str(verbose, probeSets, level=-20);
@@ -400,7 +416,8 @@ setMethodS3("getAlleleProbePairs", "AffymetrixCdfFile", function(this, units=NUL
 ##        unitNames <- getUnitNames(this);
 ##        snpNames <- getSnpNames(this);
 ##        nonSnpUnits <- which(!(unitNames %in% snpNames));
-##        rm(unitNames, snpNames);
+##        # Not needed anymore
+##        unitNames <- snpNames <- NULL;
 
   # Identifying all units types
   unitTypes <- getUnitTypes(this, verbose=less(verbose,1)); # Takes time
@@ -417,7 +434,8 @@ setMethodS3("getAlleleProbePairs", "AffymetrixCdfFile", function(this, units=NUL
   verbose && cat(verbose, "Identified non-SNP units:");
   verbose && str(verbose, cells);
   probeSets$nonSNPs <- cells;
-  rm(cells);
+  # Not needed anymore
+  cells <- NULL;
   verbose && exit(verbose);
 
 

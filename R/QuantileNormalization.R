@@ -88,7 +88,8 @@ setMethodS3("getSubsetToUpdate", "QuantileNormalization", function(this, ..., ve
     } else {
       subsetToUpdate <- intersect(subsetToUpdate, possibleCells);
     }
-    rm(possibleCells);
+    # Not needed anymore
+    possibleCells <- NULL;
     verbose && cat(verbose, "'subsetToUpdate' (after): ");
     verbose && str(verbose, subsetToUpdate);
 
@@ -146,7 +147,8 @@ setMethodS3("getSubsetToAvg", "QuantileNormalization", function(this, ..., verbo
     } else {
       subsetToAvg <- intersect(subsetToAvg, possibleCells);
     }
-    rm(possibleCells);
+    # Not needed anymore
+    possibleCells <- NULL;
     verbose && cat(verbose, "'subsetToAvg' (after): ");
     verbose && str(verbose, subsetToAvg);
 
@@ -433,7 +435,8 @@ setMethodS3("calculateTargetDistribution", "QuantileNormalization", function(thi
   cellsToSearch <- params$subsetToAvg;
   probes <- identifyCells(cdf, indices=cellsToSearch,
                          types=params$typesToAvg, verbose=less(verbose));
-  rm(params, cellsToSearch);
+  # Not needed anymore
+  params <- cellsToSearch <- NULL;
 
   # Garbage collect
   gc <- gc();
@@ -452,7 +455,8 @@ setMethodS3("calculateTargetDistribution", "QuantileNormalization", function(thi
   # Calculate the average quantile
   yTarget <- averageQuantile(targetDataSet, probes=probes,
                               excludeCells=excl, verbose=less(verbose));
-  rm(probes);
+  # Not needed anymore
+  probes <- NULL;
 
   # Write the result to file
   verbose && cat(verbose, "Saving distribution: ", pathname);
@@ -547,7 +551,8 @@ setMethodS3("process", "QuantileNormalization", function(this, ..., force=FALSE,
   args <- c(list(ds, path=outputPath), params);
 
   # Garbage collect
-  rm(params); gc();
+  # Not needed anymore
+  params <- NULL; gc();
 
   verbose && cat(verbose, "Calling normalizeQuantile() with arguments:");
   verbose && str(verbose, args);

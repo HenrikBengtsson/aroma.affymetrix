@@ -90,7 +90,8 @@ setMethodS3("justSNPRMA", "AffymetrixCelSet", function(this, ..., normalizeToHap
       verbose && exit(verbose);
 
       qn$.targetDistribution <- target;
-      rm(target);
+      # Not needed anymore
+      target <- NULL;
       verbose && exit(verbose);
     } # if (normalizeToHapMap)
 
@@ -114,11 +115,13 @@ setMethodS3("justSNPRMA", "AffymetrixCelSet", function(this, ..., normalizeToHap
       cells <- getCellIndices(cdf, units=units, unlist=TRUE, useNames=FALSE);
       verbose && cat(verbose, "Cells:");
       verbose && str(verbose, cells);
-      rm(units);
+      # Not needed anymore
+      units <- NULL;
       verbose && exit(verbose);
 
       qn$.subsetToAvg <- cells;
-      rm(cells);
+      # Not needed anymore
+      cells <- NULL;
       verbose && exit(verbose);
     } # if (normalizeSNPsOnly)
   } # if (!isDone(qn))

@@ -119,7 +119,8 @@ setMethodS3("importFromAffymetrixTabularFile", "AromaUfcFile", function(this, at
   ##    622  470200  941900  940900 1412000 1881000     543
 
   data0[["unit"]] <- units;
-  rm(units);
+  # Not needed anymore
+  units <- NULL;
   verbose && exit(verbose);
 
   verbose && enter(verbose, "Filter out non-existing units");

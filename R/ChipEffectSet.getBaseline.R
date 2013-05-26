@@ -103,7 +103,8 @@ setMethodS3("getBaseline", "ChipEffectSet", function(this, force=FALSE, verbose=
     verbose && exit(verbose);
   } # if (isFile(pathname))
 
-  rm(df);
+  # Not needed anymore
+  df <- NULL;
   verbose && exit(verbose);
 
   res;

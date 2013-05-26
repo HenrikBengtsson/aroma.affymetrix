@@ -163,7 +163,8 @@ setMethodS3("computeAffinities", "AffymetrixCdfFile", function(this, safe=TRUE, 
   isPMMMChip <- (length(indexMm) == length(indexPm));
   verbose && enter(verbose, "Chip type is an \"PM+MM\" chip: ", isPMMMChip);
 
-  rm(indexMmPutative, matches); # Not needed anymore
+  # Not needed anymore
+  indexMmPutative <- matches <- NULL; # Not needed anymore
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -188,7 +189,8 @@ setMethodS3("computeAffinities", "AffymetrixCdfFile", function(this, safe=TRUE, 
   # Predicting probe affinities based on the probe sequences
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   nbrOfCells <- dimension[1]*dimension[2];
-  rm(dimension); # Not needed anymore
+  # Not needed anymore
+  dimension <- NULL; # Not needed anymore
 
   # Allocate empty vector of affinities
   naValue <- as.double(NA);
@@ -205,7 +207,8 @@ setMethodS3("computeAffinities", "AffymetrixCdfFile", function(this, safe=TRUE, 
     deltas <- c(A=T13-A13, C=G13-C13, G=C13-G13, T=A13-T13);
 
     sequences <- sequenceInfo$sequence;
-    rm(sequenceInfo);
+    # Not needed anymore
+    sequenceInfo <- NULL;
 
     pb <- NULL;
     if (verbose) {
@@ -237,7 +240,8 @@ setMethodS3("computeAffinities", "AffymetrixCdfFile", function(this, safe=TRUE, 
       if (length(beta) != 1) throw("Unknown nucleotide index: ", base);
       amm[ii] <- apm[ii] + deltas[base];
     } # for (ii in ...)
-    rm(charMtrx, A); # Not needed anymore
+    # Not needed anymore
+    charMtrx <- A <- NULL; # Not needed anymore
 
     if (!is.null(pb)) {
       increase(pb);
@@ -247,7 +251,8 @@ setMethodS3("computeAffinities", "AffymetrixCdfFile", function(this, safe=TRUE, 
     # appropriate location in the vector
     affinities[indexPm] <- apm;
     affinities[indexMm] <- amm[notNA];
-    rm(indexPm, indexMm, apm, amm, notNA); # Not needed anymore
+    # Not needed anymore
+    indexPm <- indexMm <- apm <- amm <- notNA <- NULL; # Not needed anymore
     # ---------------------------------------------------------
   } else {
     # ---------------------------------------------------------
@@ -259,7 +264,8 @@ setMethodS3("computeAffinities", "AffymetrixCdfFile", function(this, safe=TRUE, 
 
     indexAll <- sequenceInfo$cell;
     sequences <- sequenceInfo$sequence;
-    rm(sequenceInfo);
+    # Not needed anymore
+    sequenceInfo <- NULL;
 
     # Process only sequences of length 25
     n <- nchar(sequences);
@@ -300,7 +306,8 @@ setMethodS3("computeAffinities", "AffymetrixCdfFile", function(this, safe=TRUE, 
 
     affinities[indexAll] <- apm;
 
-    rm(indexAll, apm); # Not needed anymore
+    # Not needed anymore
+    indexAll <- apm <- NULL; # Not needed anymore
   } # if(isPMMMChip)
   verbose && exit(verbose);
 

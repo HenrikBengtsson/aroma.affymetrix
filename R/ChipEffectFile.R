@@ -300,7 +300,8 @@ setMethodS3("findUnitsTodo", "ChipEffectFile", function(this, units=NULL, ..., f
 
     # Not needed anymore
     units <- units0;
-    rm(units0);
+    # Not needed anymore
+    units0 <- NULL;
 
     idxs <- unlist(idxs, use.names=FALSE);
     gc <- gc();
@@ -485,18 +486,22 @@ setMethodS3("getUnitGroupCellMap", "ChipEffectFile", function(this, units=NULL, 
       cells0 <- getCellIndices(this, units=chunk, force=force, .cache=FALSE, verbose=less(verbose));
       idxs <- offset + seq_len(length(chunk));
       offset <- offset + length(chunk);
-      rm(chunk);
+      # Not needed anymore
+      chunk <- NULL;
       unitNames[idxs] <- names(cells0);
       names(cells0) <- NULL;
       unitSizes0 <- base::lapply(cells0, FUN=function(unit) {
         length(.subset2(unit, "groups"));
       });
       unitSizes[idxs] <- unlist(unitSizes0, use.names=FALSE);
-      rm(unitSizes0);
+      # Not needed anymore
+      unitSizes0 <- NULL;
       cells[[kk]] <- unlist(cells0, use.names=FALSE);
-      rm(cells0, idxs);
+      # Not needed anymore
+      cells0 <- idxs <- NULL;
     }
-    rm(chunks);
+    # Not needed anymore
+    chunks <- NULL;
     gc <- gc();
     verbose && print(verbose, gc);
   }
@@ -530,13 +535,15 @@ setMethodS3("getUnitGroupCellMap", "ChipEffectFile", function(this, units=NULL, 
     groups[seq,cc] <- seq;
     # Assign unit indices to ditto
     units2[seq,cc] <- rep(units[cc], each=size);
-    rm(seq);
+    # Not needed anymore
+    seq <- NULL;
     gc <- gc();
   }
   keep <- !is.na(groups);
   groups <- groups[keep];
   units2 <- units2[keep];
-  rm(keep);
+  # Not needed anymore
+  keep <- NULL;
   gc <- gc();
 
   map <- data.frame(unit=units2, group=groups, cell=cells);
@@ -653,12 +660,14 @@ setMethodS3("getUnitGroupCellChromosomePositionMap", "ChipEffectFile", function(
 
   # Merge the two maps
   map <- cbind(ugcMap, cpMap);
-  rm(ugcMap, cpMap);
+  # Not needed anymore
+  ugcMap <- cpMap <- NULL;
 
   if (orderByPosition) {
     o <- with(map, order(chromosome, physicalPosition));
     map <- map[o,,drop=FALSE];
-    rm(o);
+    # Not needed anymore
+    o <- NULL;
     verbose && cat(verbose, "Reordered by genomic position");
   }
   rownames(map) <- NULL;

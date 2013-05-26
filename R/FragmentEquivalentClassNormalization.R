@@ -240,7 +240,8 @@ setMethodS3("getSubsetToFit", "FragmentEquivalentClassNormalization", function(t
 ## OLD:  units <- indexOf(cdf, "^(SNP|CN)");
   types <- getUnitTypes(cdf);
   units <- which(types == 2 | types == 5);
-  rm(types);
+  # Not needed anymore
+  types <- NULL;
   verbose && str(verbose, units);
   verbose && exit(verbose);
 
@@ -298,7 +299,8 @@ setMethodS3("getSubsetToFit", "FragmentEquivalentClassNormalization", function(t
       }
 
       subsetToFit <- subset;
-      rm(subset);
+      # Not needed anymore
+      subset <- NULL;
 
       verbose && exit(verbose);
     }
@@ -313,7 +315,8 @@ setMethodS3("getSubsetToFit", "FragmentEquivalentClassNormalization", function(t
     }
 
     units <- units[keep];
-    rm(keep);
+    # Not needed anymore
+    keep <- NULL;
   }
 
   # Sort units
@@ -366,7 +369,8 @@ setMethodS3("getExclusiveUnitSubsets", "FragmentEquivalentClassNormalization", f
 
     # Get fragmenth equivalent class information for these
     ufe <- getOrderedFragmentPairs(ufc, units=units, verbose=less(verbose, 5));
-    rm(ufc); # Not needed anymore
+    # Not needed anymore
+    ufc <- NULL; # Not needed anymore
     verbose && cat(verbose, "Fragment equivalent classes data:");
     verbose && str(verbose, ufe);
     verbose && cat(verbose, "Unique equivalent classes:");
@@ -396,7 +400,8 @@ setMethodS3("getExclusiveUnitSubsets", "FragmentEquivalentClassNormalization", f
 
       # Fit effects to each fragment equivalent class
       data <- ufe[ok,ee];
-      rm(ok);
+      # Not needed anymore
+      ok <- NULL;
 
       classes <- sort(unique(data));
       nbrOfEqClasses <- length(classes);
@@ -414,12 +419,14 @@ setMethodS3("getExclusiveUnitSubsets", "FragmentEquivalentClassNormalization", f
           class  = classes[cc],
           subset = subset
         );
-        rm(subset);
+        # Not needed anymore
+        subset <- NULL;
         verbose && exit(verbose);
       }
 
       unitSets[[ee]] <- sets;
-      rm(sets);
+      # Not needed anymore
+      sets <- NULL;
 
       verbose && exit(verbose);
     }
@@ -428,7 +435,8 @@ setMethodS3("getExclusiveUnitSubsets", "FragmentEquivalentClassNormalization", f
     verbose && str(verbose, unitSets);
 
     # Remove as many promises as possible
-    rm(nbrOfEnzymes, allEnzymes, ufe, hasUfe);
+    # Not needed anymore
+    nbrOfEnzymes <- allEnzymes <- ufe <- hasUfe <- NULL;
     verbose && exit(verbose);
 
     # Garbage collect
@@ -508,19 +516,22 @@ setMethodS3("calculateAverages", "FragmentEquivalentClassNormalization", functio
       # Store
       avgsEE[[kk]] <- list(mu=mu, sigma=sigma, n=n);
 
-      rm(data, mu, sigma, n, subset);
+      # Not needed anymore
+      data <- mu <- sigma <- n <- subset <- NULL;
 
 #      verbose && exit(verbose);
     } # for (kk ...)
 
     avgs[[ee]] <- avgsEE;
-    rm(avgsEE);
+    # Not needed anymore
+    avgsEE <- NULL;
 
     verbose && exit(verbose);
   } # for (ee ...)
 
   # Remove as many promises as possible
-  rm(nbrOfEnzymes, allEnzymes, y);
+  # Not needed anymore
+  nbrOfEnzymes <- allEnzymes <- y <- NULL;
   verbose && exit(verbose);
 
   verbose && exit(verbose);
@@ -550,17 +561,20 @@ setMethodS3("getTargetAverages", "FragmentEquivalentClassNormalization", functio
     ces <- getInputDataSet(this);
     verbose && enter(verbose, "Get average signal across arrays");
     ceR <- getAverageFile(ces, force=force, verbose=less(verbose));
-    rm(ces); # Not needed anymore
+    # Not needed anymore
+    ces <- NULL; # Not needed anymore
     verbose && exit(verbose);
 
     cef <- ceR;
-    rm(ceR);
+    # Not needed anymore
+    ceR <- NULL;
 
     # Read signals
     units <- getSubsetToFit(this, verbose=less(verbose, 5));
     y <- getDataFlat(cef, units=units, fields="theta",
                                verbose=less(verbose, 5))[,"theta"];
-    rm(cef); # Not needed anymore
+    # Not needed anymore
+    cef <- NULL; # Not needed anymore
 
     if (log2) {
       suppressWarnings({
@@ -572,7 +586,8 @@ setMethodS3("getTargetAverages", "FragmentEquivalentClassNormalization", functio
     verbose && str(verbose, y);
 
     avgs <- calculateAverages(this, y=y, verbose=less(verbose,5));
-    rm(y);
+    # Not needed anymore
+    y <- NULL;
 
     # Garbage collect
     gc <- gc();
@@ -686,11 +701,13 @@ setMethodS3("normalizeOneArrayVector", "FragmentEquivalentClassNormalization", f
 
     # Map to correction factor
     idxs <- match(class, classIds);
-    rm(class, classIds);
+    # Not needed anymore
+    class <- classIds <- NULL;
 
     # Get correction factor
     deltas2[,ee] <- delta[idxs];
-    rm(delta, idxs);
+    # Not needed anymore
+    delta <- idxs <- NULL;
 
     verbose && exit(verbose);
   } # for (ee ...)
@@ -702,9 +719,11 @@ setMethodS3("normalizeOneArrayVector", "FragmentEquivalentClassNormalization", f
     ok <- is.finite(deltas2[,ee]);
     counts <- counts + as.integer(ok);
     dy[ok] <- dy[ok] + deltas2[ok,ee];
-    rm(ok);
+    # Not needed anymore
+    ok <- NULL;
   } # for (ee ...)
-  rm(deltas2);
+  # Not needed anymore
+  deltas2 <- NULL;
 
   dy[counts == 0] <- NA;
   dy <- dy / counts;
@@ -727,7 +746,8 @@ setMethodS3("normalizeOneArrayVector", "FragmentEquivalentClassNormalization", f
   # Normalize
   ok <- which(is.finite(dy));
   y[ok] <- y[ok] + dy[ok];
-  rm(ok);
+  # Not needed anymore
+  ok <- NULL;
 
   # Take anti-log2?
   if (log2) {
@@ -809,7 +829,8 @@ setMethodS3("process", "FragmentEquivalentClassNormalization", function(this, ..
 # OLD:  subsetToUpdate <- indexOf(cdf, "^(SNP|CN)");
   types <- getUnitTypes(cdf);
   subsetToUpdate <- which(types == 2 | types == 5);
-  rm(types);
+  # Not needed anymore
+  types <- NULL;
 
   verbose && enter(verbose, "Retrieving fragment class annotations");
   chipType <- getChipType(cdf);
@@ -872,7 +893,8 @@ setMethodS3("process", "FragmentEquivalentClassNormalization", function(this, ..
       ufc <- getAromaUfcFile(this);
       ufe <- getOrderedFragmentPairs(ufc, units=subsetToUpdate,
                                                 verbose=less(verbose));
-      rm(ufc);
+      # Not needed anymore
+      ufc <- NULL;
       verbose && exit(verbose);
     }
 
@@ -884,7 +906,8 @@ setMethodS3("process", "FragmentEquivalentClassNormalization", function(this, ..
 
     verbose && enter(verbose, "Normalizing signals");
     yN <- normalizeOneArrayVector(this, y=y, ufe=ufe, ..., verbose=less(verbose));
-    rm(y);
+    # Not needed anymore
+    y <- NULL;
     verbose && str(verbose, yN);
     verbose && exit(verbose);
 
@@ -910,9 +933,11 @@ setMethodS3("process", "FragmentEquivalentClassNormalization", function(this, ..
 
     verbose && enter(verbose, "Storing normalized signals");
     data[,"theta"] <- yN;
-    rm(yN);
+    # Not needed anymore
+    yN <- NULL;
     updateDataFlat(ceN, data=data, verbose=less(verbose));
-    rm(data);
+    # Not needed anymore
+    data <- NULL;
     verbose && exit(verbose);
 
     # Garbage collect

@@ -48,14 +48,16 @@ setMethodS3("extractCNT", "SnpChipEffectFile", function(this, reference, units=N
     keep <- which(gp[,1] %in% chromosomes);
     units <- units[keep];
     gp <- gp[keep,,drop=FALSE];
-    rm(keep);
+    # Not needed anymore
+    keep <- NULL;
   }
 
   if (order) {
     o <- order(gp[,1], gp[,2]);
     units <- units[o];
     gp <- gp[o,,drop=FALSE];
-    rm(o);
+    # Not needed anymore
+    o <- NULL;
   }
 
 
@@ -66,14 +68,17 @@ setMethodS3("extractCNT", "SnpChipEffectFile", function(this, reference, units=N
     Chromosome=gp[,1],
     Position=gp[,2]
   );
-  rm(gp);
+  # Not needed anymore
+  gp <- NULL;
 
   if (addNames) {
     unitNames <- getUnitNames(cdf, units=units);
     dataHead <- cbind(ProbeSet=unitNames, dataHead);
-    rm(unitNames);
+    # Not needed anymore
+    unitNames <- NULL;
   }
-  rm(cdf);
+  # Not needed anymore
+  cdf <- NULL;
 
 
   # Special case/Nothing (more) to do?
@@ -95,7 +100,8 @@ setMethodS3("extractCNT", "SnpChipEffectFile", function(this, reference, units=N
   # Drop dimensions? [extract() to deal w/ either a matrix or an array]
   keep <- match(fields, colnames(data));
   data <- extract(data, "2"=keep, drop=FALSE);
-  rm(keep);
+  # Not needed anymore
+  keep <- NULL;
 
   # Special case/ad hoc: If 'this' is a data set...
   if (length(dim(data)) == 3) {
@@ -108,14 +114,16 @@ setMethodS3("extractCNT", "SnpChipEffectFile", function(this, reference, units=N
     # Extract (total) theta:s of the reference
     thetaR <- extractTotalAndFreqB(reference, units=units)[,"total"];
     data[,cc] <- log2(data[,cc]/thetaR);
-    rm(thetaR);
+    # Not needed anymore
+    thetaR <- NULL;
   }
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
   # Build return structure
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
   data <- cbind(dataHead, data);
-  rm(dataHead);
+  # Not needed anymore
+  dataHead <- NULL;
 
   data;  
 }, protected=TRUE)

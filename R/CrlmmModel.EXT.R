@@ -49,10 +49,10 @@ setMethodS3("getCrlmmPriors", "CrlmmModel", function(this, ..., verbose=FALSE) {
   pkgName <- "oligoParams";
   if (isPackageInstalled(pkgName) && require(pkgName, character.only=TRUE)) {
     # To trick R CMD check
-    getCrlmmSnpNames <- NULL; rm(getCrlmmSnpNames);
+    getCrlmmSnpNames <- NULL; rm(list="getCrlmmSnpNames");
     verbose && enter(verbose, "Querying oligoParams");
     tryCatch({
-      res <- getCrlmmSnpNames(chipType, tags="SNPs", 
+      res <- getCrlmmSnpNames(chipType, tags="SNPs",
                                            verbose=less(verbose, -20));
     }, error=function(ex) {})
     verbose && exit(verbose);
@@ -67,7 +67,7 @@ setMethodS3("getCrlmmPriors", "CrlmmModel", function(this, ..., verbose=FALSE) {
 
     pdPkgName <- oligo::cleanPlatformName(chipType);
     verbose && cat(verbose, "Platform Design (PD) package: ", pdPkgName);
- 
+
     # Load target from PD package
     path <- system.file(package=pdPkgName);
     if (path == "") {
@@ -128,14 +128,14 @@ setMethodS3("getCrlmmSNPs", "CrlmmModel", function(this, flavor=c("oligoPD", "ol
     pkgName <- "oligoParams";
     if (isPackageInstalled(pkgName) && require(pkgName, character.only=TRUE)) {
       # To trick R CMD check
-      getCrlmmSnpNames <- NULL; rm(getCrlmmSnpNames);
+      getCrlmmSnpNames <- NULL; rm(list="getCrlmmSnpNames");
       ds <- getDataSet(this);
       cdf <- getCdf(ds);
       chipType <- getChipType(cdf, fullname=FALSE);
 
       verbose && enter(verbose, "Querying oligoParams");
       tryCatch({
-        res <- getCrlmmSnpNames(chipType, tags="SNPs", 
+        res <- getCrlmmSnpNames(chipType, tags="SNPs",
                                              verbose=less(verbose, -20));
       }, error=function(ex) {})
       verbose && exit(verbose);
@@ -143,10 +143,10 @@ setMethodS3("getCrlmmSNPs", "CrlmmModel", function(this, flavor=c("oligoPD", "ol
 
     if (is.null(res)) {
       verbose && enter(verbose, "Querying the PD package");
-  
+
       pdDB <- getPlatformDesignDB(this, verbose=less(verbose,1));
       verbose && print(verbose, pdDB);
-  
+
       res <- DBI::dbGetQuery(pdDB, "SELECT man_fsetid FROM featureSet WHERE man_fsetid LIKE 'SNP%' ORDER BY man_fsetid")[[1]];
       verbose && str(verbose, res);
       verbose && exit(verbose);
@@ -198,7 +198,8 @@ setMethodS3("getCrlmmSNPsOnChrX", "CrlmmModel", function(this, flavor=c("oligoPD
     # Identify which are SNP* units.
     unitNames <- getUnitNames(cdf, units=units);
     units <- units[grep("^SNP", unitNames)];
-    rm(unitNames);
+    # Not needed anymore
+    unitNames <- NULL;
 
     verbose && exit(verbose);
   } else if (flavor == "oligoPD") {
@@ -208,14 +209,14 @@ setMethodS3("getCrlmmSNPsOnChrX", "CrlmmModel", function(this, flavor=c("oligoPD
     pkgName <- "oligoParams";
     if (isPackageInstalled(pkgName) && require(pkgName, character.only=TRUE)) {
       # To trick R CMD check
-      getCrlmmSnpNames <- NULL; rm(getCrlmmSnpNames);
+      getCrlmmSnpNames <- NULL; rm(list="getCrlmmSnpNames");
       ds <- getDataSet(this);
       cdf <- getCdf(ds);
       chipType <- getChipType(cdf, fullname=FALSE);
 
       verbose && enter(verbose, "Querying oligoParams");
       tryCatch({
-        res <- getCrlmmSnpNames(chipType, tags="SNPs,ChrX", 
+        res <- getCrlmmSnpNames(chipType, tags="SNPs,ChrX",
                                              verbose=less(verbose, -20));
       }, error=function(ex) {})
       verbose && exit(verbose);
@@ -225,7 +226,7 @@ setMethodS3("getCrlmmSNPsOnChrX", "CrlmmModel", function(this, flavor=c("oligoPD
       verbose && enter(verbose, "Querying the PD package");
       pdDB <- getPlatformDesignDB(this, verbose=less(verbose,1));
       verbose && print(verbose, pdDB);
-  
+
       res <- dbGetQuery(pdDB, "SELECT man_fsetid FROM featureSet WHERE man_fsetid LIKE 'SNP%' AND chrom = 'X'")[[1]];
       verbose && str(verbose, res);
     }
@@ -271,7 +272,7 @@ setMethodS3("getCrlmmSplineParameters", "CrlmmModel", function(this, flavor=c("o
 
   if (flavor == "oligoPD") {
     verbose && enter(verbose, "Querying the PD package");
-  
+
     pdPkgName <- oligo::cleanPlatformName(chipType);
     verbose && cat(verbose, "Platform Design (PD) package: ", pdPkgName);
 

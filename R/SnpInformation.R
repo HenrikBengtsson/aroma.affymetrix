@@ -263,7 +263,8 @@ setMethodS3("getData", "SnpInformation", function(this, units=NULL, fields=c("fr
     rownames(lss) <- 1:nrow(lss);
     colnames(lss) <- c("fragmentLength", "start", "stop");
     data <- cbind(data[,-cc,drop=FALSE], lss);
-    rm(lss);
+    # Not needed anymore
+    lss <- NULL;
     verbose && exit(verbose);
 
     verbose && enter(verbose, "Reordering units according to the CDF file");
@@ -302,14 +303,16 @@ setMethodS3("getData", "SnpInformation", function(this, units=NULL, fields=c("fr
       }
       data <- data[keep,,drop=FALSE];
     }
-    rm(keep);
+    # Not needed anymore
+    keep <- NULL;
   }
 
   # Reorder?
   if (!is.null(orderBy)) {
     o <- do.call("order", args=as.list(data[,orderBy]));
     data <- data[o,,drop=FALSE];
-    rm(o);
+    # Not needed anymore
+    o <- NULL;
   }
 
   # Extract a subset of fields?

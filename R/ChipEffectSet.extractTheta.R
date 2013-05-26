@@ -12,7 +12,8 @@ setMethodS3("extractTheta", "ChipEffectSet", function(this, units=NULL, groups=N
     ugcMap <- units;
     units <- unique(ugcMap[,"unit"]);
     nbrOfUnits <- length(units);
-    rm(units);
+    # Not needed anymore
+    units <- NULL;
   } else {
     units <- Arguments$getIndices(units, max=nbrOfUnits(cdf));
     nbrOfUnits <- length(units);
@@ -69,7 +70,8 @@ setMethodS3("extractTheta", "ChipEffectSet", function(this, units=NULL, groups=N
     verbose && str(verbose, thetaKK);
     theta[,,kk] <- thetaKK;
   }
-  rm(ugcMap);
+  # Not needed anymore
+  ugcMap <- NULL;
 
   # Drop singleton dimensions
   if (drop) {

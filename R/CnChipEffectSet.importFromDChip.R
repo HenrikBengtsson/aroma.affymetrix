@@ -84,7 +84,8 @@ setMethodS3("importFromDChip", "CnChipEffectSet", function(static, filename, pat
     verbose && enter(verbose, "Validating unit names towards the chip type");
     cdfUnitNames <- getUnitNames(cdf);
     units <- match(unitNames, cdfUnitNames);
-    rm(cdfUnitNames);
+    # Not needed anymore
+    cdfUnitNames <- NULL;
 
     unknown <- which(is.na(units));
     nbrOfUnknown <- length(unknown);
@@ -98,7 +99,8 @@ setMethodS3("importFromDChip", "CnChipEffectSet", function(static, filename, pat
       msg <- sprintf("Data file contains %d unknown unit names: %s", nbrOfUnknown, paste(unitNames[unknown], collapse=", "));
       throw(msg);
     }
-    rm(unitNames, unknown);
+    # Not needed anymore
+    unitNames <- unknown <- NULL;
 
     # Store only known units
     keep <- !is.na(units);
@@ -167,7 +169,8 @@ setMethodS3("importFromDChip", "CnChipEffectSet", function(static, filename, pat
    # Get the ChipEffectFile class specific for this set
   clazz <- getChipEffectFileClass(static);
   monocellCdf <- clazz$createParamCdf(cdf);
-  rm(cdf);
+  # Not needed anymore
+  cdf <- NULL;
   verbose && print(verbose, monocellCdf);
   verbose && exit(verbose);
 
@@ -303,7 +306,8 @@ setMethodS3("importFromDChip", "CnChipEffectSet", function(static, filename, pat
       tmpFilename <- basename(pathnameT);
       cef <- clazz$fromDataFile(filename=tmpFilename, path=outPath,
                name=sampleName, cdf=monocellCdf, verbose=less(verbose));
-      rm(tmpFilename);
+      # Not needed anymore
+      tmpFilename <- NULL;
     }
     pathnameT <- getPathname(cef);
     cef$combineAlleles <- combineAlleles;
@@ -336,7 +340,8 @@ setMethodS3("importFromDChip", "CnChipEffectSet", function(static, filename, pat
       }
       units <- res$units;
       keep <- res$keep;
-      rm(res);
+      # Not needed anymore
+      res <- NULL;
       # Garbage collect
       gc <- gc();
       verbose && print(verbose, gc);
@@ -361,7 +366,8 @@ setMethodS3("importFromDChip", "CnChipEffectSet", function(static, filename, pat
 
       verbose && exit(verbose);
     } # if (is.null(cells))
-    rm(cef);  # Not needed anymore
+    # Not needed anymore
+    cef <- NULL;  # Not needed anymore
 
     verbose && enter(verbose, "Reading data");
     colClasses <- rep("NULL", nbrOfColumns+1);
@@ -387,7 +393,8 @@ setMethodS3("importFromDChip", "CnChipEffectSet", function(static, filename, pat
     }
 
     updateCel(pathnameT, indices=cells, intensities=data[,1], stdvs=stdvs);
-    rm(data, stdvs);
+    # Not needed anymore
+    data <- stdvs <- NULL;
     verbose && exit(verbose);
 
     # Rename temporary file

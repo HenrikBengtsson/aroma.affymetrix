@@ -131,13 +131,15 @@ setMethodS3("groupUnitsByDimension", "AffymetrixCdfFile", function(this, units=N
       verbose && str(verbose, resKK);
 
       resUU$sets[[kk]] <- resKK;
-      rm(idxsKK, unitsKK, resKK);
+      # Not needed anymore
+      idxsKK <- unitsKK <- resKK <- NULL;
 
       verbose && exit(verbose);
     } # for (kk ...)
 
     res[[uu]] <- resUU;
-    rm(keep, idxsUU, unitsUU, resUU);
+    # Not needed anymore
+    keep <- idxsUU <- unitsUU <- resUU <- NULL;
 
     verbose && exit(verbose);
   } # for (uu ...)

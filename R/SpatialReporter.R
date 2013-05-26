@@ -326,7 +326,8 @@ setMethodS3("readRawDataRectangle", "SpatialReporter", function(this, array, ...
     yR <- readRawDataRectangle(refFile, fields=field, ..., drop=TRUE, verbose=less(verbose, 5));
 ##    verbose && str(verbose, yR);
     y <- y/yR;
-    rm(yR);
+    # Not needed anymore
+    yR <- NULL;
 ##    verbose && str(verbose, y);
   }
 

@@ -99,7 +99,8 @@ setMethodS3("getPositionChipTypeUnit", "CopyNumberSegmentationModel", function(t
     getUnitsOnChromosome(ugp, chromosome=chromosome, ...);
   });
   verbose && str(verbose, unitsList);
-  rm(ugpList);
+  # Not needed anymore
+  ugpList <- NULL;
 
   # Gets (position, chipType) for these units
   posList <- vector("list", length(unitsList));
@@ -124,9 +125,11 @@ setMethodS3("getPositionChipTypeUnit", "CopyNumberSegmentationModel", function(t
     unitsList[[kk]] <- units;
     posList[[kk]] <- pos;
     chipTypeList[[kk]] <- rep(kk, length(units));
-    rm(ugp, units, keep);
+    # Not needed anymore
+    ugp <- units <- keep <- NULL;
   }
-  rm(ugpList);
+  # Not needed anymore
+  ugpList <- NULL;
 
   verbose && str(verbose, unitsList);
   verbose && str(verbose, posList);
@@ -134,27 +137,33 @@ setMethodS3("getPositionChipTypeUnit", "CopyNumberSegmentationModel", function(t
 
   # Unlist and order (units, position, chipType) by position
   pos <- unlist(posList, use.names=FALSE);
-  rm(posList);
+  # Not needed anymore
+  posList <- NULL;
   o <- order(pos);
   pos <- pos[o];
 
   chipType <- unlist(chipTypeList, use.names=FALSE);
-  rm(chipTypeList);
+  # Not needed anymore
+  chipTypeList <- NULL;
   chipType <- chipType[o];
 
   # Convert chipType into a factor
   chipTypes <- sapply(unfList, FUN=getChipType);
   attr(chipType, "levels") <- chipTypes;
   class(chipType) <- "factor";
-  rm(unfList);
+  # Not needed anymore
+  unfList <- NULL;
 
   units <- unlist(unitsList, use.names=FALSE);
-  rm(unitsList);
+  # Not needed anymore
+  unitsList <- NULL;
   units <- units[o];
-  rm(o);
+  # Not needed anymore
+  o <- NULL;
 
   pcu <- data.frame(position=pos, chipType=chipType, unit=units);
-  rm(units, pos, chipType);
+  # Not needed anymore
+  units <- pos <- chipType <- NULL;
 
   # Garbage collect
   gc <- gc();
@@ -329,7 +338,8 @@ setMethodS3("fitOneChromosome", "SmoothMultiarrayModel", function(this, chromoso
     M <- log2(Y/YR);
     s <- rowMads(M, na.rm=TRUE);
     w <- 1/(s^2);
-    rm(Y,YR,M,s);
+    # Not needed anymore
+    Y <- YR <- M <- s <- NULL;
     gc <- gc();
   } else {
     w <- NULL;
@@ -367,7 +377,8 @@ setMethodS3("fitOneChromosome", "SmoothMultiarrayModel", function(this, chromoso
     theta <- inData$theta[idxs,,drop=FALSE];
     phi <- inData$phi[idxs];
     units <- inData$pcu[idxs,"unit"];
-    rm(idxs);
+    # Not needed anymore
+    idxs <- NULL;
 
     verbose && cat(verbose, "Units:");
     verbose && str(verbose, units);
@@ -387,7 +398,8 @@ setMethodS3("fitOneChromosome", "SmoothMultiarrayModel", function(this, chromoso
         map <- getUnitGroupCellMap(outFile, units=units, verbose=less(verbose,2));
         verbose && str(verbose, map);
         # Not needed anymore
-        rm(units);
+        # Not needed anymore
+        units <- NULL;
         verbose && exit(verbose);
       }
 
@@ -402,24 +414,28 @@ setMethodS3("fitOneChromosome", "SmoothMultiarrayModel", function(this, chromoso
 
       updateDataFlat(outFile, data=outData, verbose=less(verbose));
 
-      rm(outFile);
+      # Not needed anymore
+      outFile <- NULL;
 
       verbose && exit(verbose);
     } # for (aa in ...)
 
     # Clean up
-    rm(map, outData, theta, phi);
+    # Not needed anymore
+    map <- outData <- theta <- phi <- NULL;
     gc <- gc();
     verbose && print(verbose, gc);
 
-    rm(outSet);
+    # Not needed anymore
+    outSet <- NULL;
 
     verbose && exit(verbose);
   } # for (kk in ...)
   verbose && exit(verbose);
 
   # Clean up
-  rm(outList, inData);
+  # Not needed anymore
+  outList <- inData <- NULL;
   gc <- gc();
   verbose && print(verbose, gc);
 

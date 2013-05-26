@@ -175,14 +175,16 @@ setMethodS3("process", "AlleleSummation", function(this, ..., verbose=FALSE) {
 ## snps <- indexOf(cdf, "SNP");
   types <- getUnitTypes(cdf, units=units);
   snps <- which(types == 2);
-  rm(types);
+  # Not needed anymore
+  types <- NULL;
 
   # WORKAROUND: Some of the units reported as SNPs, may actually be
   # non-SNPs.  Keep only those with two groups
   nbrOfGroups <- nbrOfGroupsPerUnit(cdf, units=snps);
   ok <- (nbrOfGroups %in% c(2,4));
   snps <- snps[ok];
-  rm(ok, nbrOfGroups);
+  # Not needed anymore
+  ok <- nbrOfGroups <- NULL;
 
   otherUnits <- setdiff(units, snps);
   verbose && cat(verbose, "Non-SNP units:");
@@ -213,11 +215,13 @@ setMethodS3("process", "AlleleSummation", function(this, ..., verbose=FALSE) {
         verbose && str(verbose, data);
         data <- cbind(cell=cells, data);
         updateDataFlat(outputFile, data=data);
-        rm(data);
+        # Not needed anymore
+        data <- NULL;
       } else {
         verbose && cat(verbose, "Nothing to do: All units are SNP units.");
       }
-      rm(cells);
+      # Not needed anymore
+      cells <- NULL;
       verbose && exit(verbose);
     }
 
@@ -259,7 +263,8 @@ setMethodS3("process", "AlleleSummation", function(this, ..., verbose=FALSE) {
         y[ok] <- yAB[1,ok];
         sd[ok] <- sdAB[1,ok];
       }
-      rm(yAB, sdAB);
+      # Not needed anymore
+      yAB <- sdAB <- NULL;
 
       verbose && cat(verbose, "y=yA+yB signals:");
       verbose && str(verbose, y);
@@ -270,10 +275,12 @@ setMethodS3("process", "AlleleSummation", function(this, ..., verbose=FALSE) {
       cells <- cells[1,];
 
       data <- cbind(cell=cells, intensities=y, stdvs=sd);
-      rm(cells, y, sd);
+      # Not needed anymore
+      cells <- y <- sd <- NULL;
 
       updateDataFlat(outputFile, data=data);
-      rm(data);
+      # Not needed anymore
+      data <- NULL;
       verbose && exit(verbose);
     } # if (length(snps) > 0)
 

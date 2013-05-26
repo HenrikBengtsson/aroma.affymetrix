@@ -440,7 +440,8 @@ setMethodS3("doCRMA", "default", function(dataSet, chipTypes=NULL, ..., logName=
       cs <- AffymetrixCelSet$byName(dataSet, chipType=chipType);
       log && print(log, cs);
       csRawList[[chipType]] <- cs;
-      rm(cs);
+      # Not needed anymore
+      cs <- NULL;
     }
   }
   log && print(log, csRawList);
@@ -500,15 +501,18 @@ setMethodS3("doCRMA", "default", function(dataSet, chipTypes=NULL, ..., logName=
     log && printf(log, "Identified %d units (%.1f%%) on sex chromosomes out of %d\n", length(unitsXY), 100*length(unitsXY)/nbrOfUnits, nbrOfUnits);
 
     cellsXY <- getCellIndices(cdf, units=unitsXY, useNames=FALSE, unlist=TRUE);
-    rm(unitsXY);
+    # Not needed anymore
+    unitsXY <- NULL;
     nbrOfCells <- nbrOfCells(cdf);
     cellsNotXY <- setdiff(1:nbrOfCells, cellsXY);
     log && printf(log, "Identified %d cells (%.1f%%) on sex chromosomes out of %d\n", length(cellsXY), 100*length(cellsXY)/nbrOfCells, nbrOfCells);
-    rm(cellsXY);
+    # Not needed anymore
+    cellsXY <- NULL;
 
     tags <- c("*", "-XY");
     acc <- AllelicCrosstalkCalibration(cs, subsetToAvg=cellsNotXY, tags=tags);
-    rm(cellsNotXY);
+    # Not needed anymore
+    cellsNotXY <- NULL;
     log && print(log, acc);
 
     # Output data
@@ -520,7 +524,8 @@ setMethodS3("doCRMA", "default", function(dataSet, chipTypes=NULL, ..., logName=
 
     # Storing results
     csCList[[chipType]] <- csC;
-    rm(cs, csC);
+    # Not needed anymore
+    cs <- csC <- NULL;
 
     # Garbage collect
     gc <- gc();
@@ -564,14 +569,16 @@ setMethodS3("doCRMA", "default", function(dataSet, chipTypes=NULL, ..., logName=
     # Getting the chip effects
     ces <- getChipEffectSet(plm);
     log && print(log, ces);
-    rm(plm);
+    # Not needed anymore
+    plm <- NULL;
 
     # Validation
     stopifnot(identical(getNames(ces), getNames(csC)));
 
     # Storing results
     cesList[[chipType]] <- ces;
-    rm(csC, ces);
+    # Not needed anymore
+    csC <- ces <- NULL;
 
     # Garbage collect
     gc <- gc();
@@ -602,25 +609,29 @@ setMethodS3("doCRMA", "default", function(dataSet, chipTypes=NULL, ..., logName=
     nbrOfUnits <- nbrOfUnits(cdf);
     unitsNotXY <- setdiff(1:nbrOfUnits, unitsXY);
     log && printf(log, "Identified %d units (%.1f%%) on sex chromosomes out of %d\n", length(unitsXY), 100*length(unitsXY)/nbrOfUnits, nbrOfUnits);
-    rm(unitsXY);
+    # Not needed anymore
+    unitsXY <- NULL;
 
     # Setting up the fragment-length normalization model
     tags <- c("*", "-XY");
     fln <- FragmentLengthNormalization(ces, subsetToFit=unitsNotXY, tags=tags);
     log && print(log, fln);
-    rm(unitsNotXY);
+    # Not needed anymore
+    unitsNotXY <- NULL;
 
     # Processing
     cesN <- process(fln, verbose=log);
     log && print(log, cesN);
-    rm(fln);
+    # Not needed anymore
+    fln <- NULL;
 
     # Validation
     stopifnot(identical(getNames(cesN), getNames(ces)));
 
     # Storing results
     cesNList[[chipType]] <- cesN;
-    rm(ces, cesN);
+    # Not needed anymore
+    ces <- cesN <- NULL;
 
     # Garbage collect
     gc <- gc();

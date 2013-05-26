@@ -154,7 +154,8 @@ setMethodS3("doCRMAv1", "AffymetrixCelSet", function(csR, shift=+300, combineAll
   }
 
   # Clean up
-  rm(csR, acc);
+  # Not needed anymore
+  csR <- acc <- NULL;
   gc <- gc();
   verbose && print(verbose, gc);
 
@@ -169,7 +170,8 @@ setMethodS3("doCRMAv1", "AffymetrixCelSet", function(csR, shift=+300, combineAll
     # Fit remaining units, i.e. SNPs (~5-10min/array)
     units <- fit(plm, verbose=verbose);
     verbose && str(verbose, units);
-    rm(units);
+    # Not needed anymore
+    units <- NULL;
   }
   verbose && print(verbose, gc);
   ces <- getChipEffectSet(plm);
@@ -181,7 +183,8 @@ setMethodS3("doCRMAv1", "AffymetrixCelSet", function(csR, shift=+300, combineAll
   }
 
   # Clean up
-  rm(plm, csC);
+  # Not needed anymore
+  plm <- csC <- NULL;
   gc <- gc();
 
   verbose && enter(verbose, "CRMAv1/PCR fragment-length normalization");
@@ -196,7 +199,8 @@ setMethodS3("doCRMAv1", "AffymetrixCelSet", function(csR, shift=+300, combineAll
   }
 
   # Clean up
-  rm(fln, ces);
+  # Not needed anymore
+  fln <- ces <- NULL;
   gc <- gc();
 
   verbose && enter(verbose, "CRMAv1/Export to technology-independent data files");
@@ -209,7 +213,8 @@ setMethodS3("doCRMAv1", "AffymetrixCelSet", function(csR, shift=+300, combineAll
   }
 
   # Clean up
-  rm(cesN);
+  # Not needed anymore
+  cesN <- NULL;
   gc <- gc();
 
   verbose && exit(verbose);
@@ -245,7 +250,8 @@ setMethodS3("doCRMAv1", "default", function(dataSet, ..., verbose=FALSE) {
   dsNList <- doCRMAv1(csR, ..., verbose=verbose);
 
   # Clean up
-  rm(csR);
+  # Not needed anymore
+  csR <- NULL;
   gc <- gc();
 
   verbose && exit(verbose);

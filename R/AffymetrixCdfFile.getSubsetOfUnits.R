@@ -83,7 +83,8 @@ setMethodS3("getSubsetOfUnits", "AffymetrixCdfFile", function(this, units=NULL, 
       verbose && str(verbose, chromosomes);
 
       unitsExcl <- getUnitsOnChromosomes(gi, chromosomes, .checkArgs=FALSE);
-      rm(chromosomes);
+      # Not needed anymore
+      chromosomes <- NULL;
 
       verbose && exit(verbose);
     } else {
@@ -104,7 +105,8 @@ setMethodS3("getSubsetOfUnits", "AffymetrixCdfFile", function(this, units=NULL, 
   verbose && str(verbose, unitsExcl);
 
   units <- setdiff(unitsIncl, unitsExcl);
-  rm(unitsIncl, unitsExcl);
+  # Not needed anymore
+  unitsIncl <- unitsExcl <- NULL;
 
   verbose && cat(verbose, "Units:");
   verbose && str(verbose, units);
@@ -128,9 +130,11 @@ setMethodS3("getSubsetOfUnits", "AffymetrixCdfFile", function(this, units=NULL, 
 
     verbose && cat(verbose, "Keeping units of interest:");
     keep <- which(ut %in% unitTypes);
-    rm(ut);
+    # Not needed anymore
+    ut <- NULL;
     units <- units[keep];
-    rm(keep);
+    # Not needed anymore
+    keep <- NULL;
     verbose && str(verbose, units);
 
     verbose && exit(verbose);

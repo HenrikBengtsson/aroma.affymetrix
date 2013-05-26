@@ -202,7 +202,8 @@ setMethodS3("bpmapCluster2Cdf", "default", function(pathname, chipType, tags=NUL
   nbrOfSeqs <- length(bpmapList);
   # Sanity check
   stopifnot(nbrOfSeqs <= hdr$numSequences);
-  rm(hdr); # Not needed anymore
+  # Not needed anymore
+  hdr <- NULL; # Not needed anymore
   verbose && exit(verbose);
 
 
@@ -299,7 +300,8 @@ setMethodS3("bpmapCluster2Cdf", "default", function(pathname, chipType, tags=NUL
   # Sanity check
   stopifnot(length(bpmapdfList) == nbrOfSeqs);
   verbose && exit(verbose);
-  rm(bpmapList); # Not needed anymore
+  # Not needed anymore
+  bpmapList <- NULL; # Not needed anymore
 
 
 
@@ -460,7 +462,8 @@ setMethodS3("bpmapCluster2Cdf", "default", function(pathname, chipType, tags=NUL
   verbose && enter(verbose, "Writing PPS file");
   verbose && cat(verbose, "Output pathname: ", ppsPathname);
   saveObject(startPositionList, file=ppsPathname);
-  rm(startPositionList); # Not needed anymore
+  # Not needed anymore
+  startPositionList <- NULL; # Not needed anymore
   verbose && exit(verbose);
 
   verbose && enter(verbose, "Writing CDF file");

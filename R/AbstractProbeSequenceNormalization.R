@@ -104,7 +104,8 @@ setMethodS3("getAromaCellSequenceFile", "AbstractProbeSequenceNormalization", fu
     cdf <- getCdf(dataSet);
     chipType <- getChipType(cdf, fullname=FALSE);
     nbrOfCells <- nbrOfCells(cdf);
-    rm(dataSet, cdf);
+    # Not needed anymore
+    dataSet <- cdf <- NULL;
 
     verbose && cat(verbose, "Chip type: ", chipType);
     verbose && cat(verbose, "Number of cells: ", nbrOfCells);
@@ -145,7 +146,8 @@ setMethodS3("indexOfMissingSequences", "AbstractProbeSequenceNormalization", fun
   idxs <- which(idxs);
   verbose && cat(verbose, "Cells with unknown sequences:");
   verbose && str(verbose, idxs);
-  rm(acs);
+  # Not needed anymore
+  acs <- NULL;
   verbose && exit(verbose);
 
   idxs;
@@ -199,7 +201,8 @@ setMethodS3("process", "AbstractProbeSequenceNormalization", function(this, ...,
     acs <- getAromaCellSequenceFile(this, verbose=less(verbose, 5));
     seqs <- readSequenceMatrix(acs, cells=cells, what="raw", 
                                                   verbose=less(verbose, 5));
-    rm(acs);
+    # Not needed anymore
+    acs <- NULL;
     verbose && exit(verbose);
     seqs;
   } # readSeqs()
@@ -260,7 +263,8 @@ setMethodS3("process", "AbstractProbeSequenceNormalization", function(this, ...,
   nbrOfCells <- nbrOfCells(df);
   verbose && enter(verbose, "Normalizing ", nbrOfArrays, " arrays");
   verbose && enter(verbose, "Path: ", outputPath);
-  rm(df);
+  # Not needed anymore
+  df <- NULL;
 
   # Garbage collection
   gc <- gc();
@@ -340,7 +344,8 @@ setMethodS3("process", "AbstractProbeSequenceNormalization", function(this, ...,
         }
 
         verbose && str(verbose, modelFitT, level=-50);
-        rm(dfT, modelFitT);
+        # Not needed anymore
+        dfT <- modelFitT <- NULL;
         verbose && exit(verbose);
 
   
@@ -349,7 +354,8 @@ setMethodS3("process", "AbstractProbeSequenceNormalization", function(this, ...,
           seqs <- readSeqs(this, cells=cellsToUpdate);
         }
         muT <- predictOne(this, fit=fitT, params=params, seqs=seqs, verbose=less(verbose, 5));
-        rm(fitT);
+        # Not needed anymore
+        fitT <- NULL;
         verbose && cat(verbose, "muT:");
         verbose && str(verbose, muT);
         verbose && summary(verbose, muT);
@@ -381,7 +387,8 @@ setMethodS3("process", "AbstractProbeSequenceNormalization", function(this, ...,
                                                       path=outputPath, ...);
       saveObject(modelFit, file=fitPathname);
       verbose && str(verbose, modelFit, level=-50);
-      rm(modelFit);
+      # Not needed anymore
+      modelFit <- NULL;
       verbose && exit(verbose);
 
       # Garbage collect
@@ -411,7 +418,8 @@ setMethodS3("process", "AbstractProbeSequenceNormalization", function(this, ...,
         seqs <- readSeqs(this, cells=cellsToUpdate);
       }
       mu <- predictOne(this, fit=fit, params=params, seqs=seqs, verbose=less(verbose, 5));
-      rm(fit);
+      # Not needed anymore
+      fit <- NULL;
       verbose && cat(verbose, "mu:");
       verbose && str(verbose, mu);
       verbose && summary(verbose, mu);
@@ -426,7 +434,8 @@ setMethodS3("process", "AbstractProbeSequenceNormalization", function(this, ...,
       } else if (target == "zero") {
         rho <- -mu;
       }
-      rm(mu);
+      # Not needed anymore
+      mu <- NULL;
       summary(verbose, rho);
       rho <- 2^rho;
       summary(verbose, rho);
@@ -436,14 +445,16 @@ setMethodS3("process", "AbstractProbeSequenceNormalization", function(this, ...,
       rho <- rho[keep];
       y <- y[keep];
       cellsToUpdateKK <- cellsToUpdate[keep];
-      rm(keep);
+      # Not needed anymore
+      keep <- NULL;
       gc <- gc();
       verbose && print(verbose, gc);
       verbose && exit(verbose);
 
       verbose && enter(verbose, "Normalizing probe signals");
       y <- rho * y;
-      rm(rho);
+      # Not needed anymore
+      rho <- NULL;
       verbose && str(verbose, y);
       verbose && summary(verbose, y);
       verbose && exit(verbose);
@@ -469,7 +480,8 @@ setMethodS3("process", "AbstractProbeSequenceNormalization", function(this, ...,
       # Write calibrated data to file
       verbose2 <- -as.integer(verbose)-2;
       updateCel(pathnameT, indices=cellsToUpdateKK, intensities=y, verbose=verbose2);
-      rm(y, cellsToUpdateKK, verbose2);
+      # Not needed anymore
+      y <- cellsToUpdateKK <- verbose2 <- NULL;
       gc <- gc();
       verbose && print(verbose, gc);
 
@@ -482,7 +494,8 @@ setMethodS3("process", "AbstractProbeSequenceNormalization", function(this, ...,
     # Validating by retrieving calibrated data file
     dfC <- newInstance(df, pathname);
 
-    rm(df, dfC);
+    # Not needed anymore
+    df <- dfC <- NULL;
 
     # Garbage collection
     gc <- gc();
@@ -493,7 +506,8 @@ setMethodS3("process", "AbstractProbeSequenceNormalization", function(this, ...,
   verbose && exit(verbose);
 
   # Garbage collect
-  rm(ds, seqs, muT);
+  # Not needed anymore
+  ds <- seqs <- muT <- NULL;
 #  clearCache(this);
   gc <- gc();
   verbose && print(verbose, gc);

@@ -132,7 +132,8 @@ setMethodS3("getSubsetToUpdate0", "LimmaBackgroundCorrection", function(this, ..
       if (is.null(cells)) {
         indices <- getCellIndices(cdf, useNames=FALSE, unlist=TRUE);
         cells <- indices[isPm(cdf)];
-        rm(indices);
+        # Not needed anymore
+        indices <- NULL;
         saveCache(cells, key=key, dirs=dirs);
       }
       verbose && exit(verbose);
@@ -293,11 +294,13 @@ setMethodS3("process", "LimmaBackgroundCorrection", function(this, ..., force=FA
     # Write calibrated data to file
     verbose2 <- -as.integer(verbose)-2;
     updateCel(pathname, indices=cells, intensities=y, verbose=verbose2);
-    rm(y, verbose2);
+    # Not needed anymore
+    y <- verbose2 <- NULL;
 
     verbose && exit(verbose);
 
-    rm(df);
+    # Not needed anymore
+    df <- NULL;
     verbose && exit(verbose);
   } # for (kk ...)
   verbose && exit(verbose);

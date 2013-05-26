@@ -56,7 +56,8 @@ setMethodS3("mapToUnitNamesFile", "DChipCdfBinFile", function(this, unf=NULL, ..
 
   verbose && enter(verbose, "Querying target UnitNamesFile");
   units <- indexOf(unf, names=unitNames);
-  rm(unitNames);
+  # Not needed anymore
+  unitNames <- NULL;
   verbose && str(verbose, units);
   verbose && exit(verbose);
 

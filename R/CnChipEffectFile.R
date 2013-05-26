@@ -321,11 +321,12 @@ setMethodS3("getNumberOfFilesAveraged", "CnChipEffectFile", function(this, ..., 
 
   # Keep only first group (in case mergeStrands or combineAlleles is FALSE)
   # To please R CMD check
-  group <- NULL; rm(group);
+  group <- NULL; rm(list="group");
   ugcMap <- subset(ugcMap, group == 1);
 
   cells <- ugcMap[,"cell", drop=TRUE];
-  rm(ugcMap);
+  # Not needed anymore
+  ugcMap <- NULL;
 
   verbose && cat(verbose, "Cell indices:");
   verbose && str(verbose, cells);
@@ -336,7 +337,8 @@ setMethodS3("getNumberOfFilesAveraged", "CnChipEffectFile", function(this, ..., 
   verbose && exit(verbose);
 
   ns <- data$pixels;
-  rm(data);
+  # Not needed anymore
+  data <- NULL;
 
   verbose && exit(verbose);
 

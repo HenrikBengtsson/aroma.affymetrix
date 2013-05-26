@@ -109,10 +109,12 @@ setMethodS3("calculateWeights", "ProbeLevelModel", function(this, units=NULL, ra
   } # while (...)
 
   if (exists("residualsList")) {
-    rm(residualsList);
+    # Not needed anymore
+    residualsList <- NULL;
   }
   if (exists("weightsList")) {
-    rm(weightsList);
+    # Not needed anymore
+    weightsList <- NULL;
   }
 
   # Garbage collect

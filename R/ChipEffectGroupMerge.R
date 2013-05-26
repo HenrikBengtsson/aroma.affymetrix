@@ -232,7 +232,8 @@ setMethodS3("process", "ChipEffectGroupMerge", function(this, ..., force=FALSE, 
 
       # Get the subset of the data for such units
       idxs <- which(data[,"unit"] %in% unitsS);
-      rm(unitsS);
+      # Not needed anymore
+      unitsS <- NULL;
 
       for (field in fields) {
         # Extract signals as a matrix where each column is one unit
@@ -246,16 +247,19 @@ setMethodS3("process", "ChipEffectGroupMerge", function(this, ..., force=FALSE, 
         data[idxs, field] <- as.vector(y);
 
         # Not needed anymore
-        rm(y);
+        # Not needed anymore
+        y <- NULL;
       }
 
       # Not needed anymore
-      rm(idxs);
+      # Not needed anymore
+      idxs <- NULL;
 
       verbose && exit(verbose);
     } # for (size in ...)
       # Not needed anymore
-    rm(excl);
+    # Not needed anymore
+    excl <- NULL;
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Copy CEL file and update the copy
@@ -283,7 +287,8 @@ setMethodS3("process", "ChipEffectGroupMerge", function(this, ..., force=FALSE, 
     verbose && exit(verbose);
 
     # Not needed anymore
-    rm(ce, data);
+    # Not needed anymore
+    ce <- data <- NULL;
 
     # CDF inheritance
     setCdf(ceOut, cdf);

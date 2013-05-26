@@ -191,7 +191,8 @@ setMethodS3("updateUnits", "ResidualSet", function(this, units=NULL, cdf=NULL, d
     arrays <- arrays[o];
     verbose && str(verbose, arrays);
     verbose && cat(verbose, "Last array: ", fullnames[arrays[nbrOfArrays]]);
-    rm(fullnames, o);
+    # Not needed anymore
+    fullnames <- o <- NULL;
     verbose && exit(verbose);
   }
 
@@ -214,7 +215,8 @@ setMethodS3("updateUnits", "ResidualSet", function(this, units=NULL, cdf=NULL, d
 
     verbose && enter(verbose, "Updating file");  # 6-7s ~98% in encode()
     updateUnits(rf, cdf=cdf, data=dataOne, verbose=less(verbose, 50));
-    rm(dataOne, rf);
+    # Not needed anymore
+    dataOne <- rf <- NULL;
     verbose && exit(verbose);
     verbose <- more(verbose, 50);
 

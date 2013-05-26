@@ -66,9 +66,11 @@ setMethodS3("getPositionChipTypeUnit", "ChromosomalModel", function(this, chromo
     unitsList[[kk]] <- units;
     posList[[kk]] <- pos;
     chipTypeList[[kk]] <- rep(kk, length(units));
-    rm(ugp, units, keep);
+    # Not needed anymore
+    ugp <- units <- keep <- NULL;
   }
-  rm(ugpList);
+  # Not needed anymore
+  ugpList <- NULL;
 
   verbose && str(verbose, unitsList);
   verbose && str(verbose, posList);
@@ -76,27 +78,33 @@ setMethodS3("getPositionChipTypeUnit", "ChromosomalModel", function(this, chromo
 
   # Unlist and order (units, position, chipType) by position
   pos <- unlist(posList, use.names=FALSE);
-  rm(posList);
+  # Not needed anymore
+  posList <- NULL;
   o <- order(pos);
   pos <- pos[o];
 
   chipType <- unlist(chipTypeList, use.names=FALSE);
-  rm(chipTypeList);
+  # Not needed anymore
+  chipTypeList <- NULL;
   chipType <- chipType[o];
 
   # Convert chipType into a factor
   chipTypes <- sapply(unfList, FUN=getChipType);
   attr(chipType, "levels") <- chipTypes;
   class(chipType) <- "factor";
-  rm(unfList);
+  # Not needed anymore
+  unfList <- NULL;
 
   units <- unlist(unitsList, use.names=FALSE);
-  rm(unitsList);
+  # Not needed anymore
+  unitsList <- NULL;
   units <- units[o];
-  rm(o);
+  # Not needed anymore
+  o <- NULL;
 
   pcu <- data.frame(position=pos, chipType=chipType, unit=units);
-  rm(units, pos, chipType);
+  # Not needed anymore
+  units <- pos <- chipType <- NULL;
 
   # Garbage collect
   gc <- gc();

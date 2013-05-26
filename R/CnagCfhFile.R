@@ -76,7 +76,7 @@ setMethodS3("getExtensionPattern", "CnagCfhFile", function(static, ...) {
 
 setMethodS3("getIdentifier", "CnagCfhFile", function(this, ..., force=FALSE) {
   id <- this$.identifier;
-  if (force || is.null(identifier)) {
+  if (force || is.null(id)) {
     id <- getChecksum(this);
     this$.identifier <- id;
   }

@@ -53,7 +53,8 @@ setMethodS3("getAlleleProbePairs2", "AffymetrixCdfFile", function(this, ..., ver
   # Read all of the CDF file
   verbose && enter(verbose, "Loading cell indices for all probepairs");
   cdfAll <- readCdfCellIndices(cdfFile, units=units, stratifyBy="pm");
-  rm(units);
+  # Not needed anymore
+  units <- NULL;
   verbose && exit(verbose);
 
   verbose && enter(verbose, "Stratifying by unique allele basepairs");

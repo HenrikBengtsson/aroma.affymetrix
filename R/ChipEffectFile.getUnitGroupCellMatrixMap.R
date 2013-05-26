@@ -68,7 +68,8 @@ setMethodS3("getUnitGroupCellMatrixMap", "ChipEffectFile", function(this, units=
     rr <- match(units, allUnits);
     map[rr,gg] <- cells;
 
-    rm(idxs, rr, units, cells);
+    # Not needed anymore
+    idxs <- rr <- units <- cells <- NULL;
     verbose && exit(verbose);
   }
 
@@ -165,7 +166,8 @@ setMethodS3("getUnitGroupCellArrayMap", "ChipEffectFile", function(this, units=N
     rr <- match(units, allUnits);
     map[rr,gg] <- cells;
 
-    rm(idxs, rr, units, cells);
+    # Not needed anymore
+    idxs <- rr <- units <- cells <- NULL;
     verbose && exit(verbose);
   }
 

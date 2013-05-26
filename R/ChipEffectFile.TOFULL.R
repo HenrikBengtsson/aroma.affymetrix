@@ -31,7 +31,8 @@ setMethodS3("getExpandedCellMap", "ChipEffectFile", function(this, resetFields=N
   
   verbose && cat(verbose, "Unit sizes:");
   verbose && print(verbose, table(unitSizes));
-#  rm(unitSizesX, unitSizes);
+#  # Not needed anymore
+#  unitSizesX <- unitSizes <- NULL;
 
   for (size in uUnitSizes) {
     verbose && enter(verbose, "Unit size: ", size);
@@ -49,10 +50,12 @@ setMethodS3("getExpandedCellMap", "ChipEffectFile", function(this, resetFields=N
     verbose && cat(verbose, "Cells 2:");
     verbose && str(verbose, cells2);
     map[cells2] <- cells1;
-    rm(cells1, cells2, units);
+    # Not needed anymore
+    cells1 <- cells2 <- units <- NULL;
     verbose && exit(verbose);
   }
-  rm(cells, cellsX);
+  # Not needed anymore
+  cells <- cellsX <- NULL;
 
   stopifnot(length(map) == nbrOfCells(this));
 
@@ -81,16 +84,19 @@ setMethodS3("getCellMapForMainCdf", "ChipEffectFile", function(this, ..., verbos
   readMap <- map[,"cellM"];
   o <- order(readMap);
   writeMap <- map[o,"cell"];
-  rm(map);
+  # Not needed anymore
+  map <- NULL;
   readMap <- readMap[o];
-  rm(o);
+  # Not needed anymore
+  o <- NULL;
 
   map2 <- getExpandedCellMap(this, verbose=verbose);
   readMap <- map2[readMap];
 
   readMap2 <- rep(as.integer(NA), length=nbrOfCells(cdf));
   readMap2[writeMap] <- readMap;
-  rm(readMap, writeMap);
+  # Not needed anymore
+  readMap <- writeMap <- NULL;
 
   # Sanity check
   stopifnot(length(readMap2) == nbrOfCells(cdf));

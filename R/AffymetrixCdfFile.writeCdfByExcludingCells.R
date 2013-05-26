@@ -108,7 +108,8 @@ setMethodS3("writeCdfByExcludingCells", "AffymetrixCdfFile", function(this, tags
 
     verbose && enter(verbose, "Dropping cells");
     cdfListChunkF <- dropCellsFromCdfList(cdfListChunk, cellsToExclude=cellsToExclude, maxNbrOfCells=maxNbrOfCells, verbose=verbose2);
-    rm(cdfListChunk); # Not needed anymore
+    # Not needed anymore
+    cdfListChunk <- NULL; # Not needed anymore
     verbose && exit(verbose);
 
     # Drop empty groups?
@@ -132,7 +133,8 @@ setMethodS3("writeCdfByExcludingCells", "AffymetrixCdfFile", function(this, tags
 
     verbose && enter(verbose, "Appending to result CDF structure");
     cdfListF[unitsChunk] <- cdfListChunkF;
-    rm(cdfListChunkF); # Not needed anymore
+    # Not needed anymore
+    cdfListChunkF <- NULL; # Not needed anymore
     verbose && exit(verbose);
 
     # Garbage collect
@@ -186,7 +188,8 @@ setMethodS3("writeCdfByExcludingCells", "AffymetrixCdfFile", function(this, tags
   
   writeCdf(pathnameT, cdfheader=cdfHeader, cdf=cdfListF, cdfqc=cdfQcUnits, verbose=verbose2);
 
-  rm(cdfHeader, cdfListF); # Not needed anymore
+  # Not needed anymore
+  cdfHeader <- cdfListF <- NULL; # Not needed anymore
 
   # Validate new CDF
   cdfT <- newInstance(this, pathnameT);

@@ -33,7 +33,8 @@ setMethodS3("getUnitGroupCellMap", "AffymetrixCdfFile", function(this, units=NUL
 
     units <- gsub(pattern, "\\1", names);
     groups <- gsub(pattern, "\\2", names);
-    rm(pattern, names); # Not needed anymore
+    # Not needed anymore
+    pattern <- names <- NULL; # Not needed anymore
     verbose && exit(verbose);
 
     if (!retNames) {
@@ -243,12 +244,14 @@ setMethodS3("getUnitGroupCellChromosomePositionMap", "AffymetrixCdfFile", functi
 
   # Merge the two maps
   map <- cbind(ugcMap, cpMap);
-  rm(ugcMap, cpMap);
+  # Not needed anymore
+  ugcMap <- cpMap <- NULL;
 
   if (orderByPosition) {
     o <- with(map, order(chromosome, physicalPosition));
     map <- map[o,,drop=FALSE];
-    rm(o);
+    # Not needed anymore
+    o <- NULL;
     verbose && cat(verbose, "Reordered by genomic position");
   }
   rownames(map) <- NULL;

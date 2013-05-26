@@ -972,7 +972,8 @@ setMethodS3("getData", "AffymetrixCelSet", function(this, indices=NULL, fields=c
       res[[field]][,kk] <- value[[field]];
       value[[field]] <- NULL;
     }
-    rm(value); gc();
+    # Not needed anymore
+    value <- NULL; gc();
     verbose && exit(verbose);
   }
   verbose && exit(verbose);

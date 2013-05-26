@@ -111,7 +111,8 @@ setMethodS3("getData", "GenomeInformation", function(this, units=NULL, fields=c(
     args <- as.list(data[,fields,drop=FALSE]);
     o <- do.call("order", args=args);
     data <- data[o,,drop=FALSE];
-    rm(o);
+    # Not needed anymore
+    o <- NULL;
     verbose && str(verbose, data);
     verbose && exit(verbose);
 
@@ -125,7 +126,8 @@ setMethodS3("getData", "GenomeInformation", function(this, units=NULL, fields=c(
         chr <- as.integer(chr);
       })
       data[,"chromosome"] <- chr;
-      rm(chr);
+      # Not needed anymore
+      chr <- NULL;
       verbose && str(verbose, data);
       verbose && exit(verbose);
     }
@@ -165,14 +167,16 @@ setMethodS3("getData", "GenomeInformation", function(this, units=NULL, fields=c(
       }
       data <- data[keep,,drop=FALSE];
     }
-    rm(keep);
+    # Not needed anymore
+    keep <- NULL;
   }
 
   # Reorder?
   if (!is.null(orderBy)) {
     o <- do.call("order", args=as.list(data[,orderBy,drop=FALSE]));
     data <- data[o,,drop=FALSE];
-    rm(o);
+    # Not needed anymore
+    o <- NULL;
   }
 
   # Extract a subset of fields?

@@ -581,7 +581,8 @@ setMethodS3("readDataFrame2", "AffymetrixProbeTabFile", function(this, cells=NUL
   verbose && str(verbose, df);
 #  df <- as.list(df);
 #  nas <- which(!ok);
-#  rm(ok);
+#  # Not needed anymore
+#  ok <- NULL;
 #  for (kk in seq_along(df)) {
 #    df[[kk]] <- insert(df[[kk]], at=nas, values=NA);
 #  }
@@ -590,7 +591,8 @@ setMethodS3("readDataFrame2", "AffymetrixProbeTabFile", function(this, cells=NUL
   data <- dataFrame(colClasses=colClasses, nrow=length(rows));
   data[ok,] <- df;
   data[!ok,] <- NA;
-  rm(ok);
+  # Not needed anymore
+  ok <- NULL;
   verbose && str(verbose, data);
   verbose && exit(verbose);
 
@@ -661,7 +663,8 @@ setMethodS3("readSequenceDataFrame", "AffymetrixProbeTabFile", function(this, ..
   verbose && cat(verbose, "First 10 data rows (parsed):");
   verbose && print(verbose, data);
   verbose && str(verbose, data);
-  rm(data);
+  # Not needed anymore
+  data <- NULL;
 
   data <- readDataFrame(this, colClasses=colClasses, rows=rows,
                                                verbose=less(verbose, 20));

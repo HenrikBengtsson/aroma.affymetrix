@@ -130,7 +130,8 @@ setMethodS3("process", "RmaBackgroundCorrection", function(this, ..., force=FALS
   pmonly <- params$pmonly;
   addJitter <- params$addJitter;
   jitterSd <- params$jitterSd;
-  rm(params);
+  # Not needed anymore
+  params <- NULL;
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -146,7 +147,8 @@ setMethodS3("process", "RmaBackgroundCorrection", function(this, ..., force=FALS
     verbose && print(verbose, dfD);
 
     # Not needed anymore
-    rm(df, dfD);
+    # Not needed anymore
+    df <- dfD <- NULL;
 
     verbose && exit(verbose);
   } # for (ii ...)

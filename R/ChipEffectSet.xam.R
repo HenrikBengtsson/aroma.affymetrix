@@ -133,7 +133,8 @@ setMethodS3("getAM", "ChipEffectSet", function(this, other, units=NULL, ..., ver
     am[,aa,"A"] <- A;
     am[,aa,"M"] <- M;
 
-    rm(theta, A, M);
+    # Not needed anymore
+    theta <- A <- M <- NULL;
   } # for (aa in ...)
   verbose && exit(verbose);
 

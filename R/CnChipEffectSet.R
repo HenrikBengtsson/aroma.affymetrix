@@ -117,7 +117,8 @@ setMethodS3("inferParameters", "CnChipEffectSet", function(this, ..., verbose=FA
     uu <- seq_len(min(10e3,length(allUnits)));
     units <- allUnits[uu];
     allUnits <- allUnits[-uu];
-    rm(uu);
+    # Not needed anymore
+    uu <- NULL;
 
     # Identify units that are quartets
     unitSizes <- readCdfGroupNames(cdfPathname, units=units);
@@ -136,7 +137,8 @@ setMethodS3("inferParameters", "CnChipEffectSet", function(this, ..., verbose=FA
       # Keep only estimated units
       csums <- colSums(values);
       values <- values[,is.finite(csums) & (csums > 0),drop=FALSE];
-      rm(csums);
+      # Not needed anymore
+      csums <- NULL;
       verbose && cat(verbose, "Values quartets:");
       verbose && print(verbose, values[,seq_len(min(ncol(values),6)),drop=FALSE]);
       if (ncol(values) > 0) {
@@ -148,11 +150,14 @@ setMethodS3("inferParameters", "CnChipEffectSet", function(this, ..., verbose=FA
             mergeStrands <- isZero[3] && isZero[4];
             break;
           }
-          rm(isZero);
+          # Not needed anymore
+          isZero <- NULL;
         }
-        rm(t);
+        # Not needed anymore
+        t <- NULL;
       }
-      rm(values);
+      # Not needed anymore
+      values <- NULL;
     }
   } # while(...)
 

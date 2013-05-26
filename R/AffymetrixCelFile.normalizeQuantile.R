@@ -104,7 +104,8 @@ setMethodS3("normalizeQuantile", "AffymetrixCelFile", function(this, path=file.p
   # Normalize intensities
   verbose && enter(verbose, "Normalizing to empirical target distribution");
   x[subsetToUpdate] <- normalizeQuantile(x[subsetToUpdate], xTarget=xTarget);
-  rm(subsetToUpdate);
+  # Not needed anymore
+  subsetToUpdate <- NULL;
   verbose && exit(verbose);
 
   # Write normalized data to file

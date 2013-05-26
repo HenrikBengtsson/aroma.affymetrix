@@ -238,7 +238,8 @@ setMethodS3("createExonByTranscriptCdf", "AffymetrixCdfFile", function(cdf, csv,
   verbose && cat(verbose, "Chip type (fullname): ", chipTypeF);
   filename <- sprintf("%s.cdf", chipTypeF);
   pathname <- Arguments$getWritablePathname(filename, path=path, mustNotExist=!overwrite);
-  rm(filename);
+  # Not needed anymore
+  filename <- NULL;
 
   verbose && cat(verbose, "NetAffx annotation data file");
   verbose && print(verbose, csv);
@@ -312,7 +313,8 @@ setMethodS3("createExonByTranscriptCdf", "AffymetrixCdfFile", function(cdf, csv,
     psData <- psData[!is.na(units),];
     nbrOfProbesets <- nrow(psData);
   }
-  rm(units);
+  # Not needed anymore
+  units <- NULL;
   verbose && cat(verbose, "Number of (filtered) CSV probesets: ", nbrOfProbesets);
   verbose && exit(verbose);
 
@@ -334,16 +336,19 @@ setMethodS3("createExonByTranscriptCdf", "AffymetrixCdfFile", function(cdf, csv,
       throw("Cannot create CDF. No probesets remaining.");
     }
 
-    rm(keep);
+    # Not needed anymore
+    keep <- NULL;
     verbose && exit(verbose);
   }
-  rm(nbrOfProbesets);
+  # Not needed anymore
+  nbrOfProbesets <- NULL;
   gc();
 
   # Sanity check
   units <- indexOf(cdf, names=psData[,"probesetId"]);
   stopifnot(all(is.finite(units)));
-  rm(units);
+  # Not needed anymore
+  units <- NULL;
   verbose && exit(verbose);
 
 
@@ -384,7 +389,8 @@ setMethodS3("createExonByTranscriptCdf", "AffymetrixCdfFile", function(cdf, csv,
   stopifnot(nbrOfExons2 == nbrOfExons);
 
   # Not needed anymore
-  rm(psData);
+  # Not needed anymore
+  psData <- NULL;
 
   verbose && exit(verbose);
 

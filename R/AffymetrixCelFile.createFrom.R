@@ -160,7 +160,8 @@ setMethodS3("createFrom", "AffymetrixCelFile", function(this, filename, path=NUL
       parameters <- gsub(";;", ";", parameters);
       parameters <- gsub(";$", "", parameters);
       celHeader$parameters <- parameters;
-      rm(params, parameters);
+      # Not needed anymore
+      params <- parameters <- NULL;
 
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       # Creating empty CEL file
@@ -169,7 +170,8 @@ setMethodS3("createFrom", "AffymetrixCelFile", function(this, filename, path=NUL
       verbose && enter(verbose, "Creating an empty temporary CEL file");
       createCel(pathnameT, header=celHeader, overwrite=overwrite, ...,
                                                         verbose=less(verbose));
-      rm(celHeader);
+      # Not needed anymore
+      celHeader <- NULL;
       verbose && exit(verbose);
 
       # 2. Update the temporary file
@@ -178,7 +180,8 @@ setMethodS3("createFrom", "AffymetrixCelFile", function(this, filename, path=NUL
           res <- newInstance(this, pathnameT);
           clearData(res, ..., value=defValue, .forSure=TRUE,
                                                 verbose=less(verbose));
-          rm(res);
+          # Not needed anymore
+          res <- NULL;
         }
       } else {
         verbose && enter(verbose, "Copying CEL data");
@@ -195,11 +198,13 @@ setMethodS3("createFrom", "AffymetrixCelFile", function(this, filename, path=NUL
           updateCel(pathnameT, indices=cells, intensities=data);
           verbose && exit(verbose);
 
-          rm(data);
+          # Not needed anymore
+          data <- NULL;
           gc <- gc();
           verbose && print(verbose, gc);
         }, chunkSize=1e6, verbose=verbose);
-        rm(cells);
+        # Not needed anymore
+        cells <- NULL;
 
         verbose && exit(verbose);
       }

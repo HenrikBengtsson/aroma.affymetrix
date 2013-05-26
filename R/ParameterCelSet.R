@@ -251,13 +251,15 @@ setMethodS3("extractDataFrame", "ParameterCelSet", function(this, addNames=FALSE
                                         getChipType(cdf, fullname=TRUE));
     ugNames <- getUnitGroupNamesFromUgcMap(cdf, ugcMap=ugcMap,
                                               verbose=less(verbose, 10));
-    rm(cdf, ugcMap);
+    # Not needed anymore
+    cdf <- ugcMap <- NULL;
     verbose && cat(verbose, "(unit, group) names: ");
     verbose && str(verbose, ugNames);
 
     ugNames <- as.data.frame(ugNames);
     data <- cbind(ugNames, data);
-    rm(ugNames);
+    # Not needed anymore
+    ugNames <- NULL;
 
     verbose && exit(verbose);
   }

@@ -109,21 +109,24 @@ setMethodS3("inferParameters", "SnpChipEffectSet", function(this, ..., verbose=F
     uu <- seq_len(min(10e3,length(allUnits)));
     units <- allUnits[uu];
     allUnits <- allUnits[-uu];
-    rm(uu);
+    # Not needed anymore
+    uu <- NULL;
 
     # Identify units that are quartets
     unitSizes <- readCdfGroupNames(cdfPathname, units=units);
     names(unitSizes) <- NULL;
     unitSizes <- sapply(unitSizes, FUN=length);
     units <- units[unitSizes == 4L];
-    rm(unitSizes);
+    # Not needed anymore
+    unitSizes <- NULL;
     if (length(units) > 0L) {
       verbose && cat(verbose, "Scanning units:");
       verbose && str(verbose, units);
       # Infer parameters from 'intensities'
       values <- readCelUnits(cePathname, units=units,
                    readIntensities=TRUE, readStdvs=FALSE, dropArrayDim=TRUE);
-      rm(units);
+      # Not needed anymore
+      units <- NULL;
 
       # Put quartets by columns
       values <- matrix(unlist(values, use.names=FALSE), nrow=4L);
@@ -131,7 +134,8 @@ setMethodS3("inferParameters", "SnpChipEffectSet", function(this, ..., verbose=F
       # Keep only estimated units without NAs
       csums <- colSums(values);
       values <- values[,is.finite(csums) & (csums > 0),drop=FALSE];
-      rm(csums);
+      # Not needed anymore
+      csums <- NULL;
       verbose && cat(verbose, "Values quartets:");
       verbose && print(verbose, values[,seq_len(min(ncol(values),6)),drop=FALSE]);
       if (ncol(values) > 0L) {
@@ -142,11 +146,14 @@ setMethodS3("inferParameters", "SnpChipEffectSet", function(this, ..., verbose=F
             mergeStrands <- isZero[3] && isZero[4];
             break;
           }
-          rm(isZero);
+          # Not needed anymore
+          isZero <- NULL;
         }
-        rm(t);
+        # Not needed anymore
+        t <- NULL;
       }
-      rm(values);
+      # Not needed anymore
+      values <- NULL;
     }
   } # while(...)
 

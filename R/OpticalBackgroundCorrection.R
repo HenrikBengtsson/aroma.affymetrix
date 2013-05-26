@@ -105,7 +105,8 @@ setMethodS3("process", "OpticalBackgroundCorrection", function(this, ..., force=
   subsetToUpdate <- params$subsetToUpdate;
   typesToUpdate <- params$typesToUpdate;
   minimum <- params$minimum;
-  rm(params);
+  # Not needed anymore
+  params <- NULL;
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -132,12 +133,14 @@ setMethodS3("process", "OpticalBackgroundCorrection", function(this, ..., force=
     verbose && print(verbose, dfD);
 
     # Not needed anymore
-    rm(df, dfD);
+    # Not needed anymore
+    df <- dfD <- NULL;
 
     verbose && exit(verbose);
   } # for (ii ...)
 
-  rm(subsetToUpdate);
+  # Not needed anymore
+  subsetToUpdate <- NULL;
 
   # Garbage collect
   gc <- gc();

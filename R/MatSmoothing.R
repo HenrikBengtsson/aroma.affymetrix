@@ -405,7 +405,8 @@ setMethodS3("process", "MatSmoothing", function(this, ..., units=NULL, force=FAL
   design <- params$design;
   nProbes <- params$nProbes;
   meanTrim <- params$meanTrim;
-  rm(params);
+  # Not needed anymore
+  params <- NULL;
 
 
   # ------------------------------------------------------
@@ -484,7 +485,8 @@ setMethodS3("process", "MatSmoothing", function(this, ..., units=NULL, force=FAL
     dataList <- readUnits(dsII, units=cdfCellsList, verbose=verbose);
     # ...instead of rereading all again
     ## dataList <- readUnits(dsII, units=units, stratifyBy="pm", verbose=verbose);
-    rm(dsII);
+    # Not needed anymore
+    dsII <- NULL;
     verbose && exit(verbose);
 
     dataList <- base::lapply(dataList, FUN=function(u) {
@@ -529,7 +531,8 @@ setMethodS3("process", "MatSmoothing", function(this, ..., units=NULL, force=FAL
     } # for (jj ...)
 
     # Memory cleanup
-    rm(dataList);
+    # Not needed anymore
+    dataList <- NULL;
 
     verbose && exit(verbose);
 
@@ -551,7 +554,8 @@ setMethodS3("process", "MatSmoothing", function(this, ..., units=NULL, force=FAL
       verbose && enter(verbose, "Calculating null distributions for controls and treatments in parallel");
       nullX <- cbind(neg=matScoreNeg, pos=matScorePos);
       nullDists <- calcNullDists(chr, pos, nullX);
-      rm(chr, pos, nullX);
+      # Not needed anymore
+      chr <- pos <- nullX <- NULL;
       verbose && str(verbose, nullDists);
       verbose && exit(verbose);
 
@@ -559,7 +563,8 @@ setMethodS3("process", "MatSmoothing", function(this, ..., units=NULL, force=FAL
       verbose && printf(verbose, "Scale factor: %.4g\n", scaleFactor);
       # Sanity check
       stopifnot(is.finite(scaleFactor));
-      rm(nullDists);
+      # Not needed anymore
+      nullDists <- NULL;
       verbose && exit(verbose);
     } else {
       scaleFactor <- 1;
@@ -571,7 +576,8 @@ setMethodS3("process", "MatSmoothing", function(this, ..., units=NULL, force=FAL
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     verbose && enter(verbose, "Calculating MAT scores (on intensity scale)");
     matScores <- matScorePos - scaleFactor*matScoreNeg;
-    rm(matScoreNeg, matScorePos);
+    # Not needed anymore
+    matScoreNeg <- matScorePos <- NULL;
     # ...on the intensity scale
     matScores <- 2^matScores;
     verbose && str(verbose, matScores);
@@ -604,7 +610,8 @@ setMethodS3("process", "MatSmoothing", function(this, ..., units=NULL, force=FAL
     # Rename temporary file
     pathname <- popTemporaryFile(pathnameT, verbose=verbose);
 
-    rm(filename, pathname, pathnameT);
+    # Not needed anymore
+    filename <- pathname <- pathnameT <- NULL;
     verbose && exit(verbose);
 
 
@@ -612,7 +619,8 @@ setMethodS3("process", "MatSmoothing", function(this, ..., units=NULL, force=FAL
     # Next column in design matrix
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Memory cleanup
-    rm(matScores);
+    # Not needed anymore
+    matScores <- NULL;
 
     # Garbage collect
     gc <- gc();
@@ -622,7 +630,8 @@ setMethodS3("process", "MatSmoothing", function(this, ..., units=NULL, force=FAL
   } # for (ii ...)
 
   # Clean up
-  rm(cellsList, allInds, acpData);
+  # Not needed anymore
+  cellsList <- allInds <- acpData <- NULL;
 
   outputDataSet <- getOutputDataSet(this, force=TRUE);
 

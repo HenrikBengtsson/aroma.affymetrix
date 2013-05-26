@@ -52,7 +52,8 @@ setMethodS3("calculateParametersGsb", "AffymetrixCelSet", function(this, nbrOfPm
   verbose && enter(verbose, "Extracting PM indices");
   cells <- getCellIndices(cdf, useNames=FALSE, unlist=TRUE, verbose=less(verbose,2));
   pmCells <- cells[isPm(cdf, cache=FALSE)];
-  rm(cells);
+  # Not needed anymore
+  cells <- NULL;
   pmCells <- sort(pmCells);
   verbose && exit(verbose);
 
@@ -65,7 +66,8 @@ setMethodS3("calculateParametersGsb", "AffymetrixCelSet", function(this, nbrOfPm
   # get a sorted random subset of PM to use in parameter estimation
   pmCells.random <- sample(pmCells, size=nbrOfPms);
   pmCells.random <- sort(pmCells.random);
-  rm(pmCells);   # Not needed anymore
+  # Not needed anymore
+  pmCells <- NULL;   # Not needed anymore
 
   # Garbage collect
   gc <- gc();
@@ -87,10 +89,12 @@ setMethodS3("calculateParametersGsb", "AffymetrixCelSet", function(this, nbrOfPm
     cells <- pmCells.random[idxs];
     pm.random2[idxs] <- readCel(pathnames[ii], indices=cells,
                        readIntensities=TRUE, readStdvs=FALSE)$intensities;
-    rm(idxs, cells);
+    # Not needed anymore
+    idxs <- cells <- NULL;
     verbose && exit(verbose);
   } # for (ii ...)
-  rm(iarray, pathnames);
+  # Not needed anymore
+  iarray <- pathnames <- NULL;
 
   # Garbage collect
   gc <- gc();
@@ -101,7 +105,8 @@ setMethodS3("calculateParametersGsb", "AffymetrixCelSet", function(this, nbrOfPm
   verbose && enter(verbose, "Extracting probe affinities and fitting linear model")
 
   aff <- affinities[pmCells.random];
-  rm(pmCells.random);  # Not needed anymore
+  # Not needed anymore
+  pmCells.random <- NULL;  # Not needed anymore
 
   # Work on the log2 scale
   pm.random2 <- log2(pm.random2);  # Minimize memory usage.
@@ -219,7 +224,8 @@ setMethodS3("bgAdjustGcrma", "AffymetrixCelSet", function(this, path, affinities
   if (opticalAdjust) {
     OBG <- OpticalBackgroundCorrection(this);
     dsOBG <- process(OBG, ..., verbose=verbose);
-    rm(OBG);
+    # Not needed anymore
+    OBG <- NULL;
     this <- dsOBG;
   }
 
@@ -249,7 +255,8 @@ setMethodS3("bgAdjustGcrma", "AffymetrixCelSet", function(this, path, affinities
     verbose && print(verbose, dfD);
 
     dataFiles[[ii]] <- dfD;
-    rm(df, dfD);
+    # Not needed anymore
+    df <- dfD <- NULL;
 
     # Garbage collect
     gc <- gc();

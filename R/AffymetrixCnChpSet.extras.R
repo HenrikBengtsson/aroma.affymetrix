@@ -28,7 +28,8 @@ setMethodS3("exportTotalCnRatioSet", "AffymetrixCnChpSet", function(this, ..., o
 
   verbose && cat(verbose, "Platform: ", platform);
   verbose && cat(verbose, "Chip type: ", chipType);
-  rm(cdf);
+  # Not needed anymore
+  cdf <- NULL;
 
 
   # Setup output directory

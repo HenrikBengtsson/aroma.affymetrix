@@ -157,7 +157,8 @@ setMethodS3("getDesignMatrix", "MatNormalization", function(this, cells=NULL, mo
   designMatrix <- cbind(nT, A, C, G, rowSums(A)^2, rowSums(C)^2, rowSums(G)^2, nT^2, log(as.integer(ms[,1])));
 
   # Garbage collect
-  rm(nT,G,A,C,ms,sm);
+  # Not needed anymore
+  nT <- G <- A <- C <- ms <- sm <- NULL;
   gc <- gc();
   verbose && print(verbose, gc);
 
@@ -349,7 +350,8 @@ setMethodS3("predictOne", "MatNormalization", function(this, fit, ram=NULL, ...,
     verbose && exit(verbose);
   } # while (...)
 
-  rm(X,indSubset);
+  # Not needed anymore
+  X <- indSubset <- NULL;
   gc <- gc();
 
   #nbrOfBins <- this$.nbrOfBins
@@ -507,12 +509,14 @@ setMethodS3("process", "MatNormalization", function(this, ..., ram=NULL, force=F
 
       xtyList[[ii]] <- xtyList[[ii]] + crossprod(X, y);
 
-      rm(y);
+      # Not needed anymore
+      y <- NULL;
       verbose && exit(verbose);
     } # for (ii ...)
     verbose && exit(verbose);
 
-    rm(X);
+    # Not needed anymore
+    X <- NULL;
 
     # Next chunk
     idxs <- idxs[-head];
@@ -528,7 +532,8 @@ setMethodS3("process", "MatNormalization", function(this, ..., ram=NULL, force=F
   verbose && exit(verbose);
 
   # Not needed anmore
-  rm(xtx, xtyList);
+  # Not needed anymore
+  xtx <- xtyList <- NULL;
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -634,7 +639,8 @@ setMethodS3("process", "MatNormalization", function(this, ..., ram=NULL, force=F
     verbose && exit(verbose);
 
     # Not needed anymore
-    rm(mu);
+    # Not needed anymore
+    mu <- NULL;
 
     # Garbage collect
     gc <- gc();
@@ -694,7 +700,8 @@ setMethodS3("process", "MatNormalization", function(this, ..., ram=NULL, force=F
 
     verbose2 <- as.logical(verbose);
     updateCel(pathname, indices=cellsToFit, intensities=2^r, verbose=verbose2);
-    rm(q,ss,ssvar,v,r,y);
+    # Not needed anymore
+    q <- ss <- ssvar <- v <- r <- y <- NULL;
     gc <- gc();
     verbose && print(verbose, gc);
 

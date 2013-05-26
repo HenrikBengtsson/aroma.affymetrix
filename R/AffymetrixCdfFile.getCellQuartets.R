@@ -145,13 +145,15 @@ setMethodS3("readUnitsByQuartets", "AffymetrixCdfFile", function(this, units=NUL
       cdfGroup <- list(indices=cells, tbase=tbase);
 
       cdfGroups[[gg]] <- cdfGroup;
-      rm(pbase, cells, cdfGroup);
+      # Not needed anymore
+      pbase <- cells <- cdfGroup <- NULL;
       verbose && exit(verbose);
     } # for (gg ...)
 
     cdfUnit$groups <- cdfGroups;
     cdfUnits[[uu]] <- cdfUnit;
-    rm(cdfUnit);
+    # Not needed anymore
+    cdfUnit <- NULL;
 
     verbose && exit(verbose);
   } # for (uu ...)
@@ -238,7 +240,8 @@ setMethodS3("getCellQuartets", "AffymetrixCdfFile", function(this, units=NULL, m
     lapply(groups, FUN=.subset2, 1);
   });
   cells <- lapply(cells, FUN=.subset2, "groups");
-  rm(cdfUnits);  # Not needed anymore
+  # Not needed anymore
+  cdfUnits <- NULL;  # Not needed anymore
 
   # Attach 'tbase' as column names to 'cells'
   for (uu in seq_along(cells)) {
@@ -251,9 +254,11 @@ setMethodS3("getCellQuartets", "AffymetrixCdfFile", function(this, units=NULL, m
       cellsUU[[gg]] <- cellsGG;
     } # for (gg ...)
     cells[[uu]] <- cellsUU;
-    rm(cellsUU, tbaseUU);
+    # Not needed anymore
+    cellsUU <- tbaseUU <- NULL;
   } # for (uu ...)
-  rm(tbase, cellsGG, tbaseGG);
+  # Not needed anymore
+  tbase <- cellsGG <- tbaseGG <- NULL;
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -269,7 +274,8 @@ setMethodS3("getCellQuartets", "AffymetrixCdfFile", function(this, units=NULL, m
         cellsUUMerged <- cbind(cellsUUMerged, cellsGG);
       } # for (gg ...)
       cells[[uu]] <- list(all=cellsUUMerged);
-      rm(cellsUU, cellsUUMerged);
+      # Not needed anymore
+      cellsUU <- cellsUUMerged <- NULL;
     } # for (uu ...)
   }
 

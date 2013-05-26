@@ -162,7 +162,8 @@ setMethodS3("getDesignMatrix", "BaseCountNormalization", function(this, cells=NU
   verbose && enter(verbose, "Count nucleotide bases for *all* cells");
   verbose && cat(verbose, "Chip type: ", getChipType(acs));
   designMatrix <- countBases(acs, mode=mode, verbose=less(verbose, 5));
-  rm(acs);
+  # Not needed anymore
+  acs <- NULL;
   verbose && cat(verbose, "Nucleotide base counts:");
   verbose && str(verbose, designMatrix);
   verbose && cat(verbose, "object.size(designMatrix): ",
@@ -176,7 +177,8 @@ setMethodS3("getDesignMatrix", "BaseCountNormalization", function(this, cells=NU
     nbrOfCells <- nrow(designMatrix);
     cells <- Arguments$getIndices(cells, max=nbrOfCells);
     designMatrix <- designMatrix[cells,,drop=FALSE];
-    rm(cells);
+    # Not needed anymore
+    cells <- NULL;
 
     # Garbage collect
     gc <- gc();
@@ -261,15 +263,18 @@ setMethodS3("fitOne", "BaseCountNormalization", function(this, df, ..., verbose=
 ##              fit[[ff]] <- NULL;
 ##            }
             mu <- predict(fit, x=Xcc)$y;
-            rm(Xcc);
+            # Not needed anymore
+            Xcc <- NULL;
           }
 
           # Remove the effect of term #cc
           y <- y - mu;
-          rm(mu);
+          # Not needed anymore
+          mu <- NULL;
 
           fits[[cc]] <- fit;
-          rm(fit);
+          # Not needed anymore
+          fit <- NULL;
         }
         fits;
       }
@@ -307,7 +312,8 @@ setMethodS3("fitOne", "BaseCountNormalization", function(this, df, ..., verbose=
     keep <- which(is.finite(y));
     y <- y[keep];
     cells <- cells[keep];
-    rm(keep);
+    # Not needed anymore
+    keep <- NULL;
     n2 <- length(y);
     verbose && printf(verbose, "Removed %d (%.4f%%) out of %d non-finite data points: ", n-n2, 100*(n-n2)/n, n);
     gc <- gc();
@@ -315,13 +321,15 @@ setMethodS3("fitOne", "BaseCountNormalization", function(this, df, ..., verbose=
 
     verbose && enter(verbose, "Fitting base-count model");
     X <- getDesignMatrix(this, cells=cells, model=model, verbose=less(verbose, 5));
-    rm(cells);
+    # Not needed anymore
+    cells <- NULL;
     verbose && cat(verbose, "Design matrix:");
     verbose && str(verbose, X);
     gc <- gc();
     verbose && print(verbose, gc);
     fit <- fitBaseCounts(y, X=X, model=model, verbose=less(verbose, 5));
-    rm(y, X);
+    # Not needed anymore
+    y <- X <- NULL;
     verbose && print(verbose, fit);
     verbose && exit(verbose);
 
@@ -401,12 +409,14 @@ setMethodS3("fitOne", "BaseCountNormalization", function(this, df, ..., verbose=
       verbose && cat(verbose, "Chunk size: ", chunkSize);
       subset <- sample(1:nbrOfCells, size=chunkSize);
       cellsChunk <- cells[subset];
-      rm(subset);
+      # Not needed anymore
+      subset <- NULL;
       cellsChunk <- sort(cellsChunk);
       verbose && cat(verbose, "Cells:");
       verbose && str(verbose, cellsChunk);
       fitB <- fitSubset(df, cells=cellsChunk, verbose=verbose);
-      rm(cellsChunk);
+      # Not needed anymore
+      cellsChunk <- NULL;
       verbose && exit(verbose);
 
       verbose && enter(verbose, "Updating estimates");
@@ -434,15 +444,18 @@ setMethodS3("fitOne", "BaseCountNormalization", function(this, df, ..., verbose=
             delta <- mean(abs(y - yB), na.rm=TRUE);
             deltaMax <- max(c(deltaMax, delta), na.rm=TRUE);
             fitKK <- list(x=x, y=yB, delta=delta);
-            rm(x,y,yB, delta);
+            # Not needed anymore
+            x <- y <- yB <- delta <- NULL;
           }
 
           fit[[kk]] <- fitKK;
 
-          rm(fitKK, fitBKK);
+          # Not needed anymore
+          fitKK <- fitBKK <- NULL;
         } # for (kk ...)
       }
-      rm(fitB);
+      # Not needed anymore
+      fitB <- NULL;
       verbose && exit(verbose);
 
       verbose && printf(verbose, "deltaMax < threshold: %.6f < %.6f\n", deltaMax, acc);
@@ -507,11 +520,13 @@ setMethodS3("predictOne", "BaseCountNormalization", function(this, fit, ..., ver
             }
             x <- as.double(X[idxs,cc]);
             mu[idxs] <- predict(fit, x=x)$y;
-            rm(idxs, x);
+            # Not needed anymore
+            idxs <- x <- NULL;
           }
           str(mu);
           yPred <- yPred + mu;
-          rm(fit, mu);
+          # Not needed anymore
+          fit <- mu <- NULL;
         } # for (cc ...)
         yPred;
       } # predictFcn()
@@ -568,12 +583,14 @@ setMethodS3("predictOne", "BaseCountNormalization", function(this, fit, ..., ver
 
   verbose && enter(verbose, "Predicting mean log2 probe signals");
   X <- getDesignMatrix(this, cells=cells, model=model, verbose=less(verbose, 5));
-  rm(cells);
+  # Not needed anymore
+  cells <- NULL;
   verbose && cat(verbose, "Design matrix:");
   verbose && str(verbose, X);
 
   mu <- predictBaseCounts(fit, X=X, model=model);
-  rm(fit, X);
+  # Not needed anymore
+  fit <- X <- NULL;
   verbose && str(verbose, "mu:");
   verbose && str(verbose, mu);
   verbose && exit(verbose);

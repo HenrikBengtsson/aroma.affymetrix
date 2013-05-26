@@ -165,7 +165,8 @@ setMethodS3("doRMA", "AffymetrixCelSet", function(csR, arrays=NULL, uniquePlm=FA
   }
 
   # Clean up
-  rm(csR, bc);
+  # Not needed anymore
+  csR <- bc <- NULL;
   gc <- gc();
   verbose && print(verbose, gc);
 
@@ -180,7 +181,8 @@ setMethodS3("doRMA", "AffymetrixCelSet", function(csR, arrays=NULL, uniquePlm=FA
     res <- c(res, list(qn=qn, csN=csN));
   }
   # Clean up
-  rm(csB, qn);
+  # Not needed anymore
+  csB <- qn <- NULL;
   gc <- gc();
   verbose && print(verbose, gc);
 
@@ -215,7 +217,8 @@ setMethodS3("doRMA", "AffymetrixCelSet", function(csR, arrays=NULL, uniquePlm=FA
   if (length(findUnitsTodo(plm)) > 0) {
     units <- fit(plm, verbose=verbose);
     verbose && str(verbose, units);
-    rm(units);
+    # Not needed anymore
+    units <- NULL;
   }
   verbose && print(verbose, gc);
   ces <- getChipEffectSet(plm);
@@ -227,7 +230,8 @@ setMethodS3("doRMA", "AffymetrixCelSet", function(csR, arrays=NULL, uniquePlm=FA
   }
 
   # Clean up
-  rm(plm, csN);
+  # Not needed anymore
+  plm <- csN <- NULL;
   gc <- gc();
   verbose && print(verbose, gc);
 
@@ -264,7 +268,8 @@ setMethodS3("doRMA", "default", function(dataSet, ..., verbose=FALSE) {
   res <- doRMA(csR, ..., verbose=verbose);
 
   # Clean up
-  rm(csR);
+  # Not needed anymore
+  csR <- NULL;
   gc <- gc();
 
   verbose && exit(verbose);

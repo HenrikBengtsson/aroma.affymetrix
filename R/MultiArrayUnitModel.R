@@ -253,7 +253,8 @@ setMethodS3("readPriorsByUnits", "MultiArrayUnitModel", function(this, units=NUL
     values <- readUnits(priors, units=units, ..., verbose=less(verbose, 1));
     verbose && str(verbose, values[1]);
     res[[kk]] <- values;
-    rm(values, priors);
+    # Not needed anymore
+    values <- priors <- NULL;
     verbose && exit(verbose);
   } # for (kk ...)
   verbose && exit(verbose);

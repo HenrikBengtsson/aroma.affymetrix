@@ -35,7 +35,8 @@ setMethodS3("importFromBpMap", "AromaCellMatchScoreFile", function(this, srcPath
       cells <- bp$pmy[w]*rows + bp$pmx[w] + 1;
       updateMatchScores(this, cells=cells, scores=ms[w]);
     }
-    rm(ms,w);
+    # Not needed anymore
+    ms <- w <- NULL;
 
     verbose && exit(verbose);
   } # for (kk ...)

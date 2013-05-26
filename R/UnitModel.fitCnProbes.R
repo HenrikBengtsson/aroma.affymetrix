@@ -45,7 +45,8 @@ setMethodS3("fitCnProbes", "UnitModel", function(this, ..., verbose=FALSE) {
   verbose && enter(verbose, "Identifying subset to fit");
   units2 <- findUnitsTodo(ces, verbose=verbose);
   units <- intersect(units, units2);
-  rm(units2);
+  # Not needed anymore
+  units2 <- NULL;
   # Nothing to do?
   if (length(units) == 0) {
     verbose && cat(verbose, "Nothing to do: All copy-number units are fitted");
@@ -66,7 +67,8 @@ setMethodS3("fitCnProbes", "UnitModel", function(this, ..., verbose=FALSE) {
   verbose && enter(verbose, "Keeping only single-cell units");
   unitCellCounts <- sapply(cells, FUN=length);
   keep <- which(unitCellCounts == 1);
-  rm(unitCellCounts);
+  # Not needed anymore
+  unitCellCounts <- NULL;
   units <- units[keep];
   verbose && cat(verbose, "Single-cell units:");
   verbose && str(verbose, units);
@@ -119,13 +121,15 @@ setMethodS3("fitCnProbes", "UnitModel", function(this, ..., verbose=FALSE) {
     verbose && enter(verbose, "Transforming signals to estimates");
     sdTheta <- .Machine$float.eps;  # Smallest float > 0.
     data <- data.frame(cell=cellsM, theta=y, sdTheta=sdTheta, outliers=FALSE);
-    rm(y);
+    # Not needed anymore
+    y <- NULL;
     verbose && str(verbose, data);
     verbose && exit(verbose);
 
     verbose && enter(verbose, "Writing estimates");
     updateDataFlat(cef, data=data, verbose=verbose);
-    rm(data);
+    # Not needed anymore
+    data <- NULL;
     verbose && exit(verbose);
 
     verbose && exit(verbose);

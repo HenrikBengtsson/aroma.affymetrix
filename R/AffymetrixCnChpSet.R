@@ -330,7 +330,8 @@ setMethodS3("extractLogRatios", "AffymetrixCnChpSet", function(this, units=NULL,
       data <- array(naValue, dim=dim, dimnames=dimnames);
     }
     data[,kk] <- dataKK;
-    rm(dataKK);
+    # Not needed anymore
+    dataKK <- NULL;
 
     # Garbage collect?
     gcCount <- gcCount + 1;

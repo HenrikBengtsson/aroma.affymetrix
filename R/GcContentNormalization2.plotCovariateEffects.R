@@ -50,7 +50,8 @@ setMethodS3("plotCovariateEffects", "GcContentNormalization2", function(this, ar
   keep <- is.finite(X);
   X <- X[keep];
   units <- units[keep];
-  rm(keep);
+  # Not needed anymore
+  keep <- NULL;
   # Sanity check
   stopifnot(length(units) == length(X));
 
@@ -128,7 +129,8 @@ setMethodS3("plotCovariateEffects", "GcContentNormalization2", function(this, ar
     ok <- (is.finite(x) & is.finite(y));
     x <- x[ok];
     y <- y[ok];
-    rm(ok);
+    # Not needed anymore
+    ok <- NULL;
     verbose && enter(verbose, "smoothScatter(x,y, ...):");
     verbose && str(verbose, x);
     verbose && str(verbose, y);
@@ -140,11 +142,13 @@ setMethodS3("plotCovariateEffects", "GcContentNormalization2", function(this, ar
     }
     fit <- smooth.spline(x,y);
     lines(fit, col="red", lwd=lwd);
-    rm(x,y);
+    # Not needed anymore
+    x <- y <- NULL;
     verbose && exit(verbose);
   } # for (cc ...)
   verbose && exit(verbose);
-  rm(yR);
+  # Not needed anymore
+  yR <- NULL;
 
   verbose && exit(verbose);
 }) # plotCovariateEffects()

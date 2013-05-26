@@ -53,7 +53,8 @@ setMethodS3("extractTotalAndFreqB", "CnChipEffectFile", function(this, units=NUL
     ugcMap <- units;
     units <- unique(ugcMap[,"unit"]);
     nbrOfUnits <- length(units);
-    rm(units);
+    # Not needed anymore
+    units <- NULL;
   } else {
     units <- Arguments$getIndices(units, max=nbrOfUnits(cdf));
     nbrOfUnits <- length(units);
@@ -122,16 +123,19 @@ setMethodS3("extractTotalAndFreqB", "CnChipEffectFile", function(this, units=NUL
   # Calculating Allele B frequency
   if (this$combineAlleles) {
     freqB <- rep(NA, nbrOfUnits);
-    rm(theta);
+    # Not needed anymore
+    theta <- NULL;
   } else {
     if (ncol(theta) == 2) {
       thetaB <- theta[,2];
     } else if (ncol(theta) == 4) {
       thetaB <- rowSums(theta[,c(2,4)], na.rm=TRUE);
     }
-    rm(theta);
+    # Not needed anymore
+    theta <- NULL;
     freqB <- thetaB/thetaTotal;
-    rm(thetaB);
+    # Not needed anymore
+    thetaB <- NULL;
   }
 
   data <- matrix(c(thetaTotal, freqB), nrow=nbrOfUnits, ncol=2);
@@ -166,7 +170,8 @@ setMethodS3("extractTotalAndFracB", "SnpChipEffectFile", function(this, units=NU
     ugcMap <- units;
     units <- unique(ugcMap[,"unit"]);
     nbrOfUnits <- length(units);
-    rm(units);
+    # Not needed anymore
+    units <- NULL;
   } else {
     units <- Arguments$getIndices(units, max=nbrOfUnits(cdf));
     nbrOfUnits <- length(units);
@@ -231,9 +236,11 @@ setMethodS3("extractTotalAndFracB", "SnpChipEffectFile", function(this, units=NU
   } else if (ncol(theta) == 4) {
     thetaB <- rowSums(theta[,c(2,4)], na.rm=TRUE);
   }
-  rm(theta);
+  # Not needed anymore
+  theta <- NULL;
   freqB <- thetaB/thetaTotal;
-  rm(thetaB);
+  # Not needed anymore
+  thetaB <- NULL;
 
   data <- matrix(c(thetaTotal, freqB), nrow=nbrOfUnits, ncol=2);
   colnames(data) <- c("total", "freqB");

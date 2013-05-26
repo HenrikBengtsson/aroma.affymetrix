@@ -109,7 +109,8 @@ setMethodS3("applyAnyOrder", "CopyNumberChromosomalModel", function(this, chipTy
   if (any(is.na(pair))) {
     throw("Internal error: Could not identify a pair of ChipEffectFile:s");
   }
-  rm(arrayTable);
+  # Not needed anymore
+  arrayTable <- NULL;
 
   cesSets <- getSets(cesTuple);
   nbrOfChipTypes <- nbrOfChipTypes(cesTuple);
@@ -118,7 +119,8 @@ setMethodS3("applyAnyOrder", "CopyNumberChromosomalModel", function(this, chipTy
   for (kk in seq_len(nbrOfChipTypes)) {
     ces <- cesSets[[kk]];
     ceFiles[[kk]] <- getFile(ces, pair[kk]);
-    rm(ces);
+    # Not needed anymore
+    ces <- NULL;
   }
 
   # (2) For each of them, extract one map per chromsome
@@ -133,7 +135,8 @@ setMethodS3("applyAnyOrder", "CopyNumberChromosomalModel", function(this, chipTy
     mapsT <- vector("list", nbrOfChromosomes);
     names(mapsT) <- sprintf("Chr%02d", as.integer(chromosomes));
     maps[[chipType]] <- mapsT;
-    rm(mapsT);
+    # Not needed anymore
+    mapsT <- NULL;
 
     ce <- ceFiles[[kk]];
     for (ll in seq_len(nbrOfChromosomes)) {
@@ -143,14 +146,17 @@ setMethodS3("applyAnyOrder", "CopyNumberChromosomalModel", function(this, chipTy
 
       map <- getUnitGroupCellChromosomePositionMap(ce, chromosome=chromosome, verbose=less(verbose, 5));
       maps[[kk]][[ll]] <- map;
-      rm(map);
+      # Not needed anymore
+      map <- NULL;
 
       verbose && exit(verbose);
     }
-    rm(ce);
+    # Not needed anymore
+    ce <- NULL;
     verbose && exit(verbose);
   }
-  rm(ceFiles);
+  # Not needed anymore
+  ceFiles <- NULL;
   verbose && cat(verbose, "(UGC, chromosome, position) maps:");
   verbose && str(verbose, maps);  
 
@@ -233,7 +239,8 @@ setMethodS3("applyCCF0", "CopyNumberChromosomalModel", function(this, cesSets, r
         verbose && exit(verbose);
       }
 
-      rm(map);
+      # Not needed anymore
+      map <- NULL;
       verbose && exit(verbose);
     }
 
@@ -302,7 +309,8 @@ setMethodS3("applyCFC0", "CopyNumberChromosomalModel", function(this, cesSets, r
         verbose && exit(verbose);
       }
 
-      rm(map);
+      # Not needed anymore
+      map <- NULL;
       verbose && exit(verbose);
     }
 
@@ -321,7 +329,8 @@ setMethodS3("calcRawCnStats", "default", function(M, ...) {
   # Ignore NAs
   ok <- !is.na(M);
   M <- M[ok];
-  rm(ok);
+  # Not needed anymore
+  ok <- NULL;
 
   # Number of non-missing data points
   n <- length(M);
@@ -359,7 +368,8 @@ setMethodS3("calcRawCnStats", "CopyNumberChromosomalModel", function(this, ..., 
         pos <<- pos[o];
         theta <<- theta[o];
         thetaR <<- thetaR[o];
-        rm(o);
+        # Not needed anymore
+        o <- NULL;
       } else {
         theta <<- theta0;
         thetaR <<- thetaR0;

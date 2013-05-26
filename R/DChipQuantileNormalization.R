@@ -238,7 +238,8 @@ setMethodS3("process", "DChipQuantileNormalization", function(this, ..., force=F
 
 
   # Not needed anymore
-  rm(excl);
+  # Not needed anymore
+  excl <- NULL;
 
   # Garbage collection
   gc <- gc();
@@ -302,7 +303,8 @@ setMethodS3("process", "DChipQuantileNormalization", function(this, ..., force=F
     updateCel(pathname, indices=subsetToUpdate, intensities=x);
 
     # Not needed anymore
-    rm(x);
+    # Not needed anymore
+    x <- NULL;
 
     verbose && exit(verbose);
     verbose && exit(verbose);
@@ -319,7 +321,8 @@ setMethodS3("process", "DChipQuantileNormalization", function(this, ..., force=F
   verbose && exit(verbose);
 
   # Not needed anymore
-  rm(w);
+  # Not needed anymore
+  w <- NULL;
 
   # Garbage collection
   gc <- gc();

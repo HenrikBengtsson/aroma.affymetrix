@@ -72,7 +72,7 @@ x <- getPositions(gi, units=units, na.rm=FALSE)
 x <- x/10^6
 xlab <- "Physical position (Mb)"
 ylab <- expression(log[2](theta[i]/theta[avg]))
-xlim <- c(0,chrStats["max"]/10^6);
+xlim <- c(0,chrStats["max"]/10^6)
 ylim <- c(-1,1)*2
 main <- sprintf("CN estimates for chromosome %s", chr)
 plot(NA, xlab=xlab, ylab=ylab, xlim=xlim, ylim=ylim, main=main)

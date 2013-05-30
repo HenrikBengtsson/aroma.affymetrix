@@ -335,6 +335,8 @@ setMethodS3("doCRMAv2", "AffymetrixCelSet", function(csR, combineAlleles=TRUE, l
 
 
 setMethodS3("doCRMAv2", "default", function(dataSet, ..., verbose=FALSE) {
+  require("aroma.affymetrix") || throw("Package not loaded: aroma.affymetrix");
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -367,6 +369,8 @@ setMethodS3("doCRMAv2", "default", function(dataSet, ..., verbose=FALSE) {
 
 
 setMethodS3("doASCRMAv2", "default", function(...) {
+  require("aroma.affymetrix") || throw("Package not loaded: aroma.affymetrix");
+
   doCRMAv2(..., combineAlleles=FALSE);
 })
 

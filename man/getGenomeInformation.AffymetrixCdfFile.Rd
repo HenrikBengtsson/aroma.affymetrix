@@ -55,7 +55,7 @@ cat(sprintf("Number of units on chromosome X: \%d\n", nunits))
 str(units)
 
 # Plot the SNP density for this chromosome
-plotDensity(gi, chromosome="X");
+plotDensity(gi, chromosome="X")
 
 } # for (zzz in 0)
 rm(zzz)

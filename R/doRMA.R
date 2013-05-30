@@ -247,6 +247,8 @@ setMethodS3("doRMA", "AffymetrixCelSet", function(csR, arrays=NULL, uniquePlm=FA
 
 
 setMethodS3("doRMA", "default", function(dataSet, ..., verbose=FALSE) {
+  require("aroma.affymetrix") || throw("Package not loaded: aroma.affymetrix");
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

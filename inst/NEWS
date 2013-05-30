@@ -1,6 +1,12 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 2.9.4 [2013-05-30]
+o Now it's possible to call aroma.core::doRMA() without first loading
+  package.  Same for all other doNnn() methods, e.g. doCRMAv2(),
+  doFIRMA() and doGCRMA().
+
+
 Version: 2.9.3 [2013-05-25]
 o SPEEDUP: Replaced all rm() calls with NULL assignments.
 

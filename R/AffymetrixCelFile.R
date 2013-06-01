@@ -679,8 +679,7 @@ setMethodS3("updateUnits", "AffymetrixCelFile", function(this, data, ...) {
 # \arguments{
 #   \item{fields}{A @character @vector of fields to be cleared.}
 #   \item{value}{A @numeric value to be written over the data.}
-#   \item{...}{Additional arguments passed to the
-#      @see "affxparser::updateCelUnits" methods.}
+#   \item{...}{Not used.}
 #   \item{.forSure}{If not @TRUE, an exception is thrown asking if the
 #      method was called by mistake.}
 #   \item{verbose}{A @logical or @see "R.utils::Verbose".}
@@ -694,6 +693,7 @@ setMethodS3("updateUnits", "AffymetrixCelFile", function(this, data, ...) {
 #
 # \seealso{
 #   @seeclass
+#   Internally, @see "affxparser::updateCel" is used.}
 # }
 #
 # @keyword IO
@@ -711,7 +711,7 @@ setMethodS3("clearData", "AffymetrixCelFile", function(this, fields=c("intensiti
     throw("Did you call clearData() by mistake? If not, use .forSure=TRUE.");
 
   # Nothing do to?
-  if (length(fields) == 0) {
+  if (length(fields) == 0L) {
     verbose && cat(verbose, "No fields to be cleared.");
     return(invisible(fields));
   }

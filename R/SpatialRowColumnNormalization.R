@@ -30,7 +30,7 @@ setMethodS3("getParameters", "SpatialRowColumnNormalization", function(this, ...
 
   params;
 }, protected=TRUE)
- 
+
 
 setMethodS3("getSpar", "SpatialRowColumnNormalization", function(this, ...) {
   this$.spar;
@@ -89,12 +89,12 @@ setMethodS3("process", "SpatialRowColumnNormalization", function(this, ..., forc
   cells <- NULL;
   for (kk in seq_len(nbrOfArrays)) {
     df <- getFile(ds, kk);
-    verbose && enter(verbose, sprintf("Array #%d ('%s') of %d", 
+    verbose && enter(verbose, sprintf("Array #%d ('%s') of %d",
                                               kk, getName(df), nbrOfArrays));
 
     fullname <- getFullName(df);
     filename <- sprintf("%s.CEL", fullname);
-    pathname <- Arguments$getWritablePathname(filename, path=outputPath, ...); 
+    pathname <- Arguments$getWritablePathname(filename, path=outputPath, ...);
 
     # Already normalized?
     if (!force && isFile(pathname)) {
@@ -114,49 +114,58 @@ setMethodS3("process", "SpatialRowColumnNormalization", function(this, ..., forc
       verbose && str(verbose, y);
       verbose && exit(verbose);
 
- 
+
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       # Normalizing log-ratios data
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       verbose && enter(verbose, "Normalizing rows and columns in blocks");
-      fit <- fitSplineBlockPolish(y, blockSizes=params$blockSizes, 
+      fit <- fitSplineBlockPolish(y, blockSizes=params$blockSizes,
                               spar=params$spar, maxIter=params$maxIter, ...);
-      verbose && str(verbose, fit); 
+      verbose && str(verbose, fit);
       y <- residuals(fit);
       # Not needed anymore
       fit <- NULL;
-      verbose && exit(verbose); 
+      verbose && exit(verbose);
 
       verbose && enter(verbose, "Back-transforming to intensity scale");
       y <- y + 12;
       y <- 2^y;
       y <- as.vector(y);
-      verbose && str(verbose, y); 
-      verbose && exit(verbose); 
+      verbose && str(verbose, y);
+      verbose && exit(verbose);
 
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       # Storing data
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       verbose && enter(verbose, "Storing normalized data");
-    
-      # Create CEL file to store results, if missing
-      verbose && enter(verbose, "Creating CEL file for results, if missing");
-      createFrom(df, filename=pathname, path=NULL, verbose=less(verbose));
-      verbose && exit(verbose);
 
-      # Write calibrated data to file
-      verbose2 <- -as.integer(verbose)-2;
       if (is.null(cells)) {
         cells <- matrix(seq_along(y), nrow=dim[1], ncol=dim[2], byrow=TRUE);
         verbose && str(verbose, cells);
       }
-      updateCel(pathname, indices=cells, intensities=y, verbose=verbose2);
+
+      # Create CEL file to store results, if missing
+      verbose && enter(verbose, "Creating CEL file for results, if missing");
+
+      # Write to a temporary file (allow rename of existing one if forced)
+      isFile <- (force && isFile(pathname));
+      pathnameT <- pushTemporaryFile(pathname, isFile=isFile, verbose=verbose);
+
+      createFrom(df, filename=pathnameT, path=NULL, verbose=less(verbose));
+      verbose && exit(verbose);
+
+      # Write calibrated data to file
+      verbose2 <- -as.integer(verbose)-2;
+      updateCel(pathnameT, indices=cells, intensities=y, verbose=verbose2);
       # Not needed anymore
       y <- verbose2 <- NULL;
 
+      # Rename temporary file
+      pathname <- popTemporaryFile(pathnameT, verbose=verbose);
+
       gc <- gc();
       verbose && print(verbose, gc);
-      verbose && exit(verbose); 
+      verbose && exit(verbose);
     } # if-else
 
     # Retrieving normalized data file
@@ -165,7 +174,7 @@ setMethodS3("process", "SpatialRowColumnNormalization", function(this, ..., forc
     # CDF inheritance
     setCdf(dfN, cdf);
 
-    # Record 
+    # Record
     dataFiles[[kk]] <- dfN;
 
     # Not needed anymore
@@ -178,22 +187,22 @@ setMethodS3("process", "SpatialRowColumnNormalization", function(this, ..., forc
   # Not needed anymore
   dataFiles <- ds <- cells <- NULL;
   gc <- gc();
-  verbose && print(verbose, gc); 
+  verbose && print(verbose, gc);
 
   # Update the output data set
   outputDataSet <- getOutputDataSet(this, force=TRUE);
 
   verbose && exit(verbose);
-  
+
   invisible(outputDataSet);
-}) 
+})
 
 
 ############################################################################
-# HISTORY: 
+# HISTORY:
 # 2008-04-02
 # o Note: Normalizing log-ratios and then transforming back to chip effects
 #   might not do.  See my PPT notes from today.
 # 2008-03-19
 # o Created.
-############################################################################ 
+############################################################################

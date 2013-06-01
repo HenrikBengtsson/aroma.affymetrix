@@ -76,7 +76,7 @@ setMethodS3("bgAdjustOptical", "AffymetrixCelFile", function(this, path, minimum
   pathname <- AffymetrixFile$renameToUpperCaseExt(pathname);
 
   # Already corrected?
-  if (isFile(pathname) && skip) {
+  if (skip && isFile(pathname)) {
     verbose && cat(verbose, "Optical background adjusted data file already exists: ", pathname);
     # make sure CDF gets inherited from source object
     res <- fromFile(this, pathname);
@@ -113,14 +113,22 @@ setMethodS3("bgAdjustOptical", "AffymetrixCelFile", function(this, path, minimum
   # Write adjusted data to file
   verbose && enter(verbose, "Writing adjusted probe signals");
 
+  # Write to a temporary file (allow rename of existing one if forced)
+  isFile <- (!skip && isFile(pathname));
+  pathnameT <- pushTemporaryFile(pathname, isFile=isFile, verbose=verbose);
+
   # Create CEL file to store results, if missing
   verbose && enter(verbose, "Creating CEL file for results, if missing");
-  createFrom(this, filename=pathname, path=NULL, verbose=less(verbose));
+  createFrom(this, filename=pathnameT, path=NULL, verbose=less(verbose));
   verbose && exit(verbose);
 
   verbose && enter(verbose, "Writing adjusted intensities");
-  updateCel(pathname, intensities=x);
+  updateCel(pathnameT, intensities=x);
   verbose && exit(verbose);
+
+  # Rename temporary file
+  pathname <- popTemporaryFile(pathnameT, verbose=verbose);
+
   verbose && exit(verbose);
 
   # Return new BG adjusted data file object, making sure CDF is
@@ -247,7 +255,7 @@ setMethodS3("bgAdjustGcrma", "AffymetrixCelFile", function(this, path, type=c("f
   cdf <- getCdf(this);
 
   # Already corrected?
-  if (isFile(pathname) && skip) {
+  if (skip && isFile(pathname)) {
     verbose && cat(verbose, "GC-adjusted data file already exists: ", pathname);
     # inheritance of CDF
     res <- fromFile(this, pathname);
@@ -455,15 +463,23 @@ setMethodS3("bgAdjustGcrma", "AffymetrixCelFile", function(this, path, type=c("f
   # Write adjusted data to file
   verbose && enter(verbose, "Writing adjusted probe signals");
 
+  # Write to a temporary file (allow rename of existing one if forced)
+  isFile <- (!skip && isFile(pathname));
+  pathnameT <- pushTemporaryFile(pathname, isFile=isFile, verbose=verbose);
+
   # Create CEL file to store results, if missing
   verbose && enter(verbose, "Creating CEL file for results, if missing");
-  createFrom(this, filename=pathname, path=NULL, verbose=less(verbose));
+  createFrom(this, filename=pathnameT, path=NULL, verbose=less(verbose));
   verbose && exit(verbose);
 
   verbose && enter(verbose, "Writing adjusted intensities");
   verbose && cat(verbose, "Number of cells (PMs only): ", length(pmCells));
-  updateCel(pathname, indices=pmCells, intensities=pm);
+  updateCel(pathnameT, indices=pmCells, intensities=pm);
   verbose && exit(verbose);
+
+  # Rename temporary file
+  pathname <- popTemporaryFile(pathnameT, verbose=verbose);
+
   verbose && exit(verbose);
 
   # Return new background corrected data file object
@@ -549,7 +565,7 @@ setMethodS3("bgAdjustRma", "AffymetrixCelFile", function(this, path, pmonly=TRUE
   setCdf(this, cdf);
 
   # Already corrected?
-  if (isFile(pathname) && skip) {
+  if (skip && isFile(pathname)) {
     verbose && cat(verbose, "Background-adjusted data file already exists: ", pathname);
     # inheritance of CDF
     res <- fromFile(this, pathname);
@@ -597,14 +613,21 @@ setMethodS3("bgAdjustRma", "AffymetrixCelFile", function(this, path, pmonly=TRUE
   # Write adjusted data to file
   verbose && enter(verbose, "Writing adjusted probe signals");
 
+  # Write to a temporary file (allow rename of existing one if forced)
+  isFile <- (!skip && isFile(pathname));
+  pathnameT <- pushTemporaryFile(pathname, isFile=isFile, verbose=verbose);
+
   # Create CEL file to store results, if missing
   verbose && enter(verbose, "Creating CEL file for results, if missing");
-  createFrom(this, filename=pathname, path=NULL, verbose=less(verbose));
+  createFrom(this, filename=pathnameT, path=NULL, verbose=less(verbose));
   verbose && exit(verbose);
 
   verbose && enter(verbose, "Writing adjusted intensities");
-  updateCel(pathname, indices=pmCells, intensities=pm);
+  updateCel(pathnameT, indices=pmCells, intensities=pm);
   verbose && exit(verbose);
+
+  # Rename temporary file
+  pathname <- popTemporaryFile(pathnameT, verbose=verbose);
 
   verbose && exit(verbose);
 

@@ -878,6 +878,7 @@ setMethodS3("mergeGroups", "ChipEffectFile", function(this, fcn, fields=c("theta
   verbose && enter(verbose, "Writing merged data");
   updateDataFlat(cfN, data=data, verbose=less(verbose));
   verbose && exit(verbose);
+
   verbose && exit(verbose);
 
 

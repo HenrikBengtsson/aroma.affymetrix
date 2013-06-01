@@ -8,7 +8,7 @@ setMethodS3("exportTotalCnRatioSet", "AffymetrixCnChpSet", function(this, ..., o
     pushState(verbose);
     on.exit(popState(verbose));
   }
- 
+
 
   verbose && enter(verbose, "Exporting log2(theta/thetaR) data from ", class(this)[1]);
   dataSet <- getFullName(this);
@@ -55,21 +55,23 @@ setMethodS3("exportTotalCnRatioSet", "AffymetrixCnChpSet", function(this, ..., o
       next;
     }
 
-    verbose && enter(verbose, "Allocating (temporary) output file");
-    pathnameT <- pushTemporaryFile(pathname, verbose=verbose);
-
-    asb <- AromaUnitSignalBinaryFile$allocate(pathnameT, nbrOfRows=nbrOfUnits, platform=platform, chipType=chipType);
-
-    verbose && print(verbose, asb);
-    verbose && exit(verbose);
-  
-
     verbose && enter(verbose, "Reading data from CN5.CHP file");
     data <- extractLogRatios(ce, verbose=verbose);
     verbose && str(verbose, data);
     # Sanity check
     stopifnot(length(data) == nbrOfUnits);
     verbose && exit(verbose);
+
+    verbose && enter(verbose, "Allocating (temporary) output file");
+    # (allow rename of existing one if forced)
+    isFile <- (overwrite && isFile(pathname));
+    pathnameT <- pushTemporaryFile(pathname, isFile=isFile, verbose=less(verbose,10));
+
+    asb <- AromaUnitSignalBinaryFile$allocate(pathnameT, nbrOfRows=nbrOfUnits, platform=platform, chipType=chipType);
+
+    verbose && print(verbose, asb);
+    verbose && exit(verbose);
+
 
     verbose && enter(verbose, "Updating temporary output file");
     # Store data
@@ -80,10 +82,13 @@ setMethodS3("exportTotalCnRatioSet", "AffymetrixCnChpSet", function(this, ..., o
       srcDataSet=dataSet,
       srcFullName=getFullName(ce),
       srcFilename=getFilename(ce),
-      srcChecksum=getChecksum(ce) 
+      srcChecksum=getChecksum(ce)
     );
     writeFooter(asb, footer);
     verbose && exit(verbose);
+
+    # Not needed anymore
+    asb <- data <- footer <- NULL;
 
     # Rename temporary file
     pathname <- popTemporaryFile(pathnameT, verbose=verbose);
@@ -108,7 +113,7 @@ setMethodS3("exportTotalCnRatioSet", "AffymetrixCnChpSet", function(this, ..., o
 # HISTORY:
 # 2010-01-06
 # o CLEAN UP: No need for assign NAs when allocating new files; this is now
-#   always the default way (in aroma.core v1.4.1). 
+#   always the default way (in aroma.core v1.4.1).
 # 2009-02-14
 # o Created.
 ############################################################################

@@ -926,7 +926,12 @@ setMethodS3("process", "FragmentLengthNormalization", function(this, ..., force=
 
     # Create CEL file to store results, if missing
     verbose && enter(verbose, "Creating CEL file for results, if missing");
-    ceN <- createFrom(ce, filename=pathname, path=NULL, verbose=less(verbose));
+
+    # Write to a temporary file (allow rename of existing one if forced)
+    isFile <- isFile(pathname);
+    pathnameT <- pushTemporaryFile(pathname, isFile=isFile, verbose=verbose);
+
+    ceN <- createFrom(ce, filename=pathnameT, path=NULL, verbose=less(verbose));
     verbose && exit(verbose);
 
     # Carry over parameters too.  AD HOC for now. /HB 2007-01-07
@@ -954,11 +959,14 @@ setMethodS3("process", "FragmentLengthNormalization", function(this, ..., force=
     ok <- theta <- NULL;
 
     verbose2 <- -as.integer(verbose) - 5;
-    pathname <- getPathname(ceN);
-    updateCel(pathname, indices=cells, intensities=data, verbose=verbose2);
+    pathnameN <- getPathname(ceN);
+    updateCel(pathnameN, indices=cells, intensities=data, verbose=verbose2);
     # Not needed anymore
-    cells <- data <- NULL;
+    cells <- data <- ceN <- NULL;
     verbose && exit(verbose);
+
+    # Rename temporary file
+    pathname <- popTemporaryFile(pathnameT, verbose=verbose);
 
     # Garbage collect
     gc <- gc();

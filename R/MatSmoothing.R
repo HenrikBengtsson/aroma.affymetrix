@@ -464,10 +464,12 @@ setMethodS3("process", "MatSmoothing", function(this, ..., units=NULL, force=FAL
       next;
     }
 
-    # Check already here if there is already a tempory output file.  This
+    # Check already here if there is already a temporary output file.  This
     # may be a left over from a interrupted previous run, or the fact that
     # the array is processed by another session elsewhere. /HB
-    pathnameT <- pushTemporaryFile(pathname, verbose=verbose);
+    # (allow rename of existing one if forced)
+    isFile <- (force && isFile(pathname));
+    pathnameT <- pushTemporaryFile(pathname, isFile=isFile, verbose=verbose);
 
     matScoreNeg <- matScorePos <- outputList <- vector("list", nbrOfUnits);
     names(outputList) <- unitNames;
@@ -593,7 +595,7 @@ setMethodS3("process", "MatSmoothing", function(this, ..., units=NULL, force=FAL
     verbose && enter(verbose, "Storing results");
 
     # Always validate the output file just before writing
-    pathnameT <- Arguments$getWritablePathname(pathnameT, mustNotExist=TRUE);
+    pathnameT <- Arguments$getWritablePathname(pathnameT, mustNotExist=!force);
 
     # Create CEL file to store results, if missing
     verbose && enter(verbose, "Creating CEL file for results, if missing");

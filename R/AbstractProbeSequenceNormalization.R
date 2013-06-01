@@ -10,11 +10,11 @@
 #  systematic effects in the probe intensities due to differences in
 #  probe sequences.
 # }
-# 
-# @synopsis 
+#
+# @synopsis
 #
 # \arguments{
-#   \item{...}{Arguments passed to the constructor of 
+#   \item{...}{Arguments passed to the constructor of
 #     @see "ProbeLevelTransform3".}
 #   \item{target}{A @character string specifying type of "target" used.
 #     If \code{"zero"}, all arrays are normalized to have no effects.
@@ -23,14 +23,14 @@
 # }
 #
 # \section{Fields and Methods}{
-#  @allmethods "public"  
+#  @allmethods "public"
 # }
-# 
+#
 # \section{Requirements}{
-#   This class requires that an @see "aroma.core::AromaCellSequenceFile" is 
+#   This class requires that an @see "aroma.core::AromaCellSequenceFile" is
 #   available for the chip type.
 # }
-# 
+#
 # @author
 #*/###########################################################################
 setConstructorS3("AbstractProbeSequenceNormalization", function(..., target=NULL) {
@@ -110,7 +110,7 @@ setMethodS3("getAromaCellSequenceFile", "AbstractProbeSequenceNormalization", fu
     verbose && cat(verbose, "Chip type: ", chipType);
     verbose && cat(verbose, "Number of cells: ", nbrOfCells);
 
-    aps <- AromaCellSequenceFile$byChipType(chipType, 
+    aps <- AromaCellSequenceFile$byChipType(chipType,
                             nbrOfCells=nbrOfCells, ..., verbose=verbose);
 
     verbose && exit(verbose);
@@ -174,7 +174,7 @@ setMethodS3("predictOne", "AbstractProbeSequenceNormalization", abstract=TRUE, p
 #   \item{...}{Not used.}
 #   \item{ram}{A positive @double scale factor specifying how much more
 #     memory to use relative to the default.}
-#   \item{force}{If @TRUE, data already normalized is re-normalized, 
+#   \item{force}{If @TRUE, data already normalized is re-normalized,
 #       otherwise not.}
 #   \item{verbose}{See @see "R.utils::Verbose".}
 # }
@@ -193,13 +193,13 @@ setMethodS3("process", "AbstractProbeSequenceNormalization", function(this, ...,
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local functions
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  readSeqs <- function(this, cells, ...) {    
+  readSeqs <- function(this, cells, ...) {
     verbose && enter(verbose, "Reading probe sequences");
     verbose && cat(verbose, "Cells:");
     verbose && str(verbose, cells);
 
     acs <- getAromaCellSequenceFile(this, verbose=less(verbose, 5));
-    seqs <- readSequenceMatrix(acs, cells=cells, what="raw", 
+    seqs <- readSequenceMatrix(acs, cells=cells, what="raw",
                                                   verbose=less(verbose, 5));
     # Not needed anymore
     acs <- NULL;
@@ -253,7 +253,7 @@ setMethodS3("process", "AbstractProbeSequenceNormalization", function(this, ...,
 
   # Get shift
   shift <- params$shift;
-   
+
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Normalize each array
@@ -275,7 +275,7 @@ setMethodS3("process", "AbstractProbeSequenceNormalization", function(this, ...,
   seqs <- NULL;
   for (kk in seq_len(nbrOfArrays)) {
     df <- getFile(ds, kk);
-    verbose && enter(verbose, sprintf("Array #%d ('%s') of %d", 
+    verbose && enter(verbose, sprintf("Array #%d ('%s') of %d",
                                               kk, getName(df), nbrOfArrays));
 
     fullname <- getFullName(df);
@@ -320,7 +320,7 @@ setMethodS3("process", "AbstractProbeSequenceNormalization", function(this, ...,
         dfT <- getTargetFile(this, verbose=less(verbose, 5));
         fullnameT <- getFullName(dfT);
         filename <- sprintf("%s,fit.RData", fullnameT);
-        fitPathname <- Arguments$getWritablePathname(filename, 
+        fitPathname <- Arguments$getWritablePathname(filename,
                                                        path=outputPath, ...);
         if (isFile(fitPathname)) {
           verbose && enter(verbose, "Loading already fitted probe-sequence effects for target");
@@ -348,7 +348,7 @@ setMethodS3("process", "AbstractProbeSequenceNormalization", function(this, ...,
         dfT <- modelFitT <- NULL;
         verbose && exit(verbose);
 
-  
+
         verbose && enter(verbose, "Predicting probe affinities");
         if (is.null(seqs)) {
           seqs <- readSeqs(this, cells=cellsToUpdate);
@@ -383,7 +383,7 @@ setMethodS3("process", "AbstractProbeSequenceNormalization", function(this, ...,
       # Store fit and parameters (in case someone are interested in looking
       # at them later; no promises of backward compatibility though).
       filename <- sprintf("%s,fit.RData", fullname);
-      fitPathname <- Arguments$getWritablePathname(filename, 
+      fitPathname <- Arguments$getWritablePathname(filename,
                                                       path=outputPath, ...);
       saveObject(modelFit, file=fitPathname);
       verbose && str(verbose, modelFit, level=-50);
@@ -468,10 +468,11 @@ setMethodS3("process", "AbstractProbeSequenceNormalization", function(this, ...,
       # Storing data
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       verbose && enter(verbose, "Storing normalized data");
-    
-      # Write to a temporary file
-      pathnameT <- pushTemporaryFile(pathname, verbose=verbose);
-    
+
+      # Write to a temporary file (allow rename of existing one if forced)
+      isFile <- (force && isFile(pathname));
+      pathnameT <- pushTemporaryFile(pathname, isFile=isFile, verbose=verbose);
+
       # Create CEL file to store results, if missing
       verbose && enter(verbose, "Creating CEL file for results, if missing");
       createFrom(df, filename=pathnameT, path=NULL, verbose=less(verbose));
@@ -515,7 +516,7 @@ setMethodS3("process", "AbstractProbeSequenceNormalization", function(this, ...,
   outputDataSet <- getOutputDataSet(this, force=TRUE);
 
   verbose && exit(verbose);
-  
+
   invisible(outputDataSet);
 })
 
@@ -531,13 +532,13 @@ setMethodS3("process", "AbstractProbeSequenceNormalization", function(this, ...,
 ## o MEMORY OPTIMIZATION: Now process() of AbstractProbeSequenceNormalization
 ##   clears the in-memory cache when finished.
 # 2009-07-08
-# o ROBUSTNESS: Updated process() of AbstractProbeSequenceNormalization to 
+# o ROBUSTNESS: Updated process() of AbstractProbeSequenceNormalization to
 #   write to a tempory file which is the renamed.  This will lower the risk
 #   for generating corrupt files in case of interrupts.
 # 2008-12-03
-# o SPEED UP: Now the "expanded" algorithm parameters ('params') are passed 
+# o SPEED UP: Now the "expanded" algorithm parameters ('params') are passed
 #   to fitOne() and predictOne().  It is up to the implementation of these
-#   two to either use them or not.  
+#   two to either use them or not.
 # 2008-11-29
 # o Added argument 'ram' to process().
 # 2008-08-05

@@ -627,13 +627,21 @@ setMethodS3("process", "MatNormalization", function(this, ..., ram=NULL, force=F
       filename <- sprintf("%s.CEL", fullname);
       pathname <- Arguments$getWritablePathname(filename, path=outputPath, ...);
 
+      # Write to a temporary file (allow rename of existing one if forced)
+      isFile <- isFile(pathname);
+      pathnameT <- pushTemporaryFile(pathname, isFile=isFile, verbose=verbose);
+
       # Create CEL file to store results, if missing
       verbose && enter(verbose, "Creating CEL file for results, if missing");
-      createFrom(df, filename=pathname, path=NULL, verbose=less(verbose));
+      createFrom(df, filename=pathnameT, path=NULL, verbose=less(verbose));
       verbose && exit(verbose);
 
       verbose2 <- as.logical(verbose);
-      updateCel(pathname, indices=cellsChunk, intensities=2^mu, verbose=verbose2);
+      updateCel(pathnameT, indices=cellsChunk, intensities=2^mu, verbose=verbose2);
+
+      # Rename temporary file
+      pathname <- popTemporaryFile(pathnameT, verbose=verbose);
+
       verbose && exit(verbose);
     } # for (ii ...)
     verbose && exit(verbose);
@@ -693,15 +701,24 @@ setMethodS3("process", "MatNormalization", function(this, ..., ram=NULL, force=F
 
     #return(list(y=y,mu=mu,r=r))
 
+    # Write to a temporary file (allow rename of existing one if forced)
+    isFile <- isFile(pathname);
+    pathnameT <- pushTemporaryFile(pathname, isFile=isFile, verbose=verbose);
+
     # Create CEL file to store results, if missing
     verbose && enter(verbose, "Creating CEL file for results, if missing");
-    createFrom(df, filename=pathname, path=NULL, verbose=less(verbose));
+    createFrom(df, filename=pathnameT, path=NULL, verbose=less(verbose));
     verbose && exit(verbose);
 
     verbose2 <- as.logical(verbose);
-    updateCel(pathname, indices=cellsToFit, intensities=2^r, verbose=verbose2);
+    updateCel(pathnameT, indices=cellsToFit, intensities=2^r, verbose=verbose2);
+
     # Not needed anymore
     q <- ss <- ssvar <- v <- r <- y <- NULL;
+
+    # Rename temporary file
+    pathname <- popTemporaryFile(pathnameT, verbose=verbose);
+
     gc <- gc();
     verbose && print(verbose, gc);
 

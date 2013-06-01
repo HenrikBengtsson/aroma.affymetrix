@@ -261,7 +261,7 @@ setMethodS3("process", "DChipQuantileNormalization", function(this, ..., force=F
     pathname <- AffymetrixFile$renameToUpperCaseExt(pathname);
 
     # Already normalized?
-    if (isFile(pathname) && skip) {
+    if (skip && isFile(pathname)) {
       verbose && cat(verbose, "Normalized data file already exists: ",
                                                                    pathname);
       # CDF inheritance
@@ -294,17 +294,23 @@ setMethodS3("process", "DChipQuantileNormalization", function(this, ..., force=F
     # Write normalized data to file
     verbose && enter(verbose, "Writing normalized probe signals");
 
+    # Write to a temporary file (allow rename of existing one if forced)
+    isFile <- (!skip && isFile(pathname));
+    pathnameT <- pushTemporaryFile(pathname, isFile=isFile, verbose=verbose);
+
     # Create CEL file to store results, if missing
     verbose && enter(verbose, "Creating CEL file for results, if missing");
-    createFrom(df, filename=pathname, path=NULL, verbose=less(verbose));
+    createFrom(df, filename=pathnameT, path=NULL, verbose=less(verbose));
     verbose && exit(verbose);
 
     verbose && enter(verbose, "Writing normalized intensities");
-    updateCel(pathname, indices=subsetToUpdate, intensities=x);
+    updateCel(pathnameT, indices=subsetToUpdate, intensities=x);
 
     # Not needed anymore
-    # Not needed anymore
     x <- NULL;
+
+    # Rename temporary file
+    pathname <- popTemporaryFile(pathnameT, verbose=verbose);
 
     verbose && exit(verbose);
     verbose && exit(verbose);

@@ -18,18 +18,18 @@ setMethodS3("transformAffine", "AffymetrixCelFile", function(this, outPath=file.
   verbose <- Arguments$getVerbose(verbose);
 
   cdf <- getCdf(this);
-  
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Generating output pathname
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   filename <- basename(getPathname(this));
   filename <- gsub("[.]cel$", ".CEL", filename);  # Only output upper case!
-  pathname <- Arguments$getWritablePathname(filename, path=outPath, 
+  pathname <- Arguments$getWritablePathname(filename, path=outPath,
                                          mustNotExist=(!overwrite && !skip));
   pathname <- AffymetrixFile$renameToUpperCaseExt(pathname);
 
   # Already shifted?
-  if (isFile(pathname) && skip) {
+  if (skip && isFile(pathname)) {
     verbose && cat(verbose, "Transformed data file already exists: ", pathname);
     # CDF inheritance
     res <- fromFile(this, pathname);
@@ -57,12 +57,19 @@ setMethodS3("transformAffine", "AffymetrixCelFile", function(this, outPath=file.
   # Write normalized data to file
   verbose && enter(verbose, "Writing transformed probe signals");
 
+  # Write to a temporary file (allow rename of existing one if forced)
+  isFile <- (!skip && isFile(pathname));
+  pathnameT <- pushTemporaryFile(pathname, isFile=isFile, verbose=verbose);
+
   # Create CEL file to store results, if missing
   verbose && enter(verbose, "Creating CEL file for results, if missing");
-  createFrom(this, filename=pathname, path=NULL, verbose=less(verbose));
+  createFrom(this, filename=pathnameT, path=NULL, verbose=less(verbose));
   verbose && exit(verbose);
 
-  updateCel(pathname, intensities=x);
+  updateCel(pathnameT, intensities=x);
+
+  # Rename temporary file
+  pathname <- popTemporaryFile(pathnameT, verbose=verbose);
 
   verbose && exit(verbose);
 

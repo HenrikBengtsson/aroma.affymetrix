@@ -305,15 +305,15 @@ setMethodS3("process", "ArrayExplorer", function(this, arrays=NULL, ..., verbose
   # Update Javascript files
   updateSetupExplorerFile(this, ..., verbose=less(verbose));
 
-  gc <- gc();
-  verbose && print(verbose, gc);
-
   verbose && exit(verbose);
 })
 
 
 ##############################################################################
 # HISTORY:
+# 2013-06-01
+# o SPEEDUP: process() of ArrayExplorer no longer runs the garbage collector
+#   at the end.
 # 2012-10-18
 # o CLEANUP: Drop all usage of 'version' in ArrayExplorer.
 # 2012-03-06

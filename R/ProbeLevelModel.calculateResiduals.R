@@ -271,23 +271,33 @@ setMethodS3("calculateResidualSet", "ProbeLevelModel", function(this, units=NULL
     verbose && print(verbose, gc);
 
     verbose && enter(verbose, "Storing residuals");
+
+    # Write to a temporary file (allow rename of existing one if forced)
+    isFile <- (force && isFile(pathname));
+    pathnameT <- pushTemporaryFile(pathname, isFile=isFile, verbose=verbose);
+
     tryCatch({
       # Create CEL file to store results, if missing
       verbose && enter(verbose, "Creating empty CEL file for results, if missing");
-      createFrom(df, filename=pathname, path=NULL,
+      createFrom(df, filename=pathnameT, path=NULL,
                      methods="create", clear=TRUE, verbose=less(verbose));
       verbose && exit(verbose);
 
       verbose && enter(verbose, "Writing residuals");
-      updateCel(pathname, indices=cells, intensities=eps);
+      updateCel(pathnameT, indices=cells, intensities=eps);
+
       verbose && exit(verbose);
     }, interrupt = function(intr) {
       verbose && print(verbose, intr);
-      file.remove(pathname);
+      file.remove(pathnameT);
     }, error = function(ex) {
       verbose && print(verbose, ex);
-      file.remove(pathname);
+      file.remove(pathnameT);
     })
+
+    # Rename temporary file
+    pathname <- popTemporaryFile(pathnameT, verbose=verbose);
+
     verbose && exit(verbose);
 
 #    verbose && enter(verbose, "Verifying");

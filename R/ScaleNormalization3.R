@@ -251,7 +251,7 @@ setMethodS3("process", "ScaleNormalization3", function(this, ..., skip=FALSE, fo
     pathname <- AffymetrixFile$renameToUpperCaseExt(pathname);
 
     # Already normalized?
-    if (isFile(pathname) && skip) {
+    if (skip && isFile(pathname)) {
       verbose && cat(verbose, "Normalized data file already exists: ",
                                                                    pathname);
       verbose && exit(verbose);

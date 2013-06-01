@@ -324,9 +324,6 @@ setMethodS3("process", "UnitTypeScaleNormalization", function(this, ..., skip=FA
   # Get the output path
   outputPath <- getPath(this);
 
-  # Garbage collection
-  gc <- gc();
-  verbose && print(verbose, gc);
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Normalize each array
@@ -343,7 +340,7 @@ setMethodS3("process", "UnitTypeScaleNormalization", function(this, ..., skip=FA
     pathname <- AffymetrixFile$renameToUpperCaseExt(pathname);
 
     # Already normalized?
-    if (isFile(pathname) && skip) {
+    if (skip && isFile(pathname)) {
       verbose && cat(verbose, "Normalized data file already exists: ",
                                                                    pathname);
       verbose && exit(verbose);

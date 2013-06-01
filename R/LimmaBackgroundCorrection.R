@@ -286,16 +286,23 @@ setMethodS3("process", "LimmaBackgroundCorrection", function(this, ..., force=FA
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     verbose && enter(verbose, "Storing corrected data");
 
+    # Write to a temporary file (allow rename of existing one if forced)
+    isFile <- (force && isFile(pathname));
+    pathnameT <- pushTemporaryFile(pathname, isFile=isFile, verbose=verbose);
+
     # Create CEL file to store results, if missing
     verbose && enter(verbose, "Creating CEL file for results, if missing");
-    createFrom(df, filename=pathname, path=NULL, verbose=less(verbose));
+    createFrom(df, filename=pathnameT, path=NULL, verbose=less(verbose));
     verbose && exit(verbose);
 
     # Write calibrated data to file
     verbose2 <- -as.integer(verbose)-2;
-    updateCel(pathname, indices=cells, intensities=y, verbose=verbose2);
+    updateCel(pathnameT, indices=cells, intensities=y, verbose=verbose2);
     # Not needed anymore
     y <- verbose2 <- NULL;
+
+    # Rename temporary file
+    pathname <- popTemporaryFile(pathnameT, verbose=verbose);
 
     verbose && exit(verbose);
 

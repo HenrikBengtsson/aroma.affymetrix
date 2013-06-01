@@ -79,7 +79,7 @@ setMethodS3("normalizeQuantile", "AffymetrixCelFile", function(this, path=file.p
   pathname <- AffymetrixFile$renameToUpperCaseExt(pathname);
 
   # Already normalized?
-  if (isFile(pathname) && skip) {
+  if (skip && isFile(pathname)) {
     verbose && cat(verbose, "Normalized data file already exists: ", pathname);
     # CDF inheritance
     res <- fromFile(this, pathname);
@@ -112,7 +112,9 @@ setMethodS3("normalizeQuantile", "AffymetrixCelFile", function(this, path=file.p
   verbose && enter(verbose, "Writing normalized probe signals");
 
   # Write to a temporary file
-  pathnameT <- pushTemporaryFile(pathname, verbose=less(verbose,10));
+  # (allow rename of existing one if forced)
+  isFile <- (!skip && isFile(pathname));
+  pathnameT <- pushTemporaryFile(pathname, isFile=isFile, verbose=less(verbose,10));
 
   # Create CEL file to store results, if missing
   verbose && enter(verbose, "Creating CEL file for results, if missing");

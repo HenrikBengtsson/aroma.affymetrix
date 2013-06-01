@@ -160,7 +160,7 @@ setMethodS3("createMonocellCdf", "AffymetrixCdfFile", function(this, chipType=ge
   pathname <- AffymetrixFile$renameToUpperCaseExt(pathname);
   pathname <- Arguments$getWritablePathname(pathname, mustNotExist=TRUE);
 
-  # Write to a temporary file first, and rename it when we know i's complete
+  # Write to a temporary file first, and rename it when we know it's complete
   pathnameT <- pushTemporaryFile(pathname, verbose=verbose);
 
   # Assure source and destination is not identical

@@ -91,7 +91,7 @@ setMethodS3("allocateFromCdf", "AffymetrixCelFile", function(static, cdf, name, 
   celHeader$parameters <- parameters;
 
   # Overwrite existing file?
-  if (isFile(pathname) && overwrite) {
+  if (overwrite && isFile(pathname)) {
     verbose && enter(verbose, "Removing existing file (overwrite=TRUE)");
     file.remove(pathname);
     if (isFile(pathname))

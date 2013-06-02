@@ -10,6 +10,7 @@ import("R.utils")
 
 importFrom("R.cache", "loadCache")
 importFrom("R.cache", "saveCache")
+importFrom("R.cache", "getChecksum")
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -36,7 +36,7 @@ extends \link[aroma.core]{ParametersInterface}\cr
 }
 
 \usage{
-Model(dataSet=NULL, tags="*", ...)
+Model(dataSet=NULL, tags="*", ..., .onUnknownArgs=c("error", "warning", "ignore"))
 }
 
 \arguments{
@@ -44,6 +44,8 @@ Model(dataSet=NULL, tags="*", ...)
   \item{tags}{A \code{\link[base]{character}} \code{\link[base]{vector}} of tags to be appended to the tags of
      the input data set.}
   \item{...}{Not used.}
+  \item{.onUnknownArgs}{A \code{\link[base]{character}} string specifying what should occur
+     if there are unknown arguments in \code{...}.}
 }
 
 \section{Fields and Methods}{

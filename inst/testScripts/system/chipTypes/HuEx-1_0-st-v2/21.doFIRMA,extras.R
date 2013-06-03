@@ -54,5 +54,5 @@ print(resList);
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # PLM weights
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-weightList <- lapply(plmList, FUN=calculateWeightSet, verbose=verbose);
+weightList <- lapply(plmList, FUN=calculateWeights, verbose=verbose);
 print(weightList);

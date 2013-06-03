@@ -17,6 +17,8 @@
 #   \item{tags}{A @character @vector of tags to be appended to the tags of
 #      the input data set.}
 #   \item{...}{Not used.}
+#   \item{.onUnknownArgs}{A @character string specifying what should occur
+#      if there are unknown arguments in \code{...}.}
 # }
 #
 # \section{Fields and Methods}{
@@ -25,7 +27,7 @@
 #
 # @author "HB"
 #*/###########################################################################
-setConstructorS3("Model", function(dataSet=NULL, tags="*", ...) {
+setConstructorS3("Model", function(dataSet=NULL, tags="*", ..., .onUnknownArgs=c("error", "warning", "ignore")) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -37,10 +39,16 @@ setConstructorS3("Model", function(dataSet=NULL, tags="*", ...) {
   # Arguments '...':
   args <- list(...);
   if (length(args) > 0) {
-    argsStr <- paste(names(args), collapse=", ");
-    throw("Unknown arguments: ", argsStr);
+    if (is.element(.onUnknownArgs, c("error", "warning"))) {
+      argsStr <- paste(names(args), collapse=", ");
+      msg <- sprintf("Unknown arguments: %s", argsStr);
+      if (.onUnknownArgs == "error") {
+        throw(msg);
+      } else if (.onUnknownArgs == "warning") {
+        warning(msg);
+      }
+    }
   }
-
 
   this <- extend(Object(), c("Model", uses("ParametersInterface")),
     .dataSet = dataSet,
@@ -531,6 +539,8 @@ setMethodS3("setLabel", "Model", function(this, label, ...) {
 
 ############################################################################
 # HISTORY:
+# 2013-06-02
+# o Added argument '.onUnknownArgs' to Model().
 # 2008-09-03
 # o CLEANUP: Removed 'parSet' argument of Model().
 # 2007-10-11

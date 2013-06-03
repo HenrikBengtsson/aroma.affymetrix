@@ -1,13 +1,15 @@
 Package: aroma.affymetrix
 =========================
 
-Version: 2.9.5 [2013-06-01]
+Version: 2.9.5 [2013-06-02]
 o ROBUSTNESS: Now more methods are creating/writing signals atomically.
+o BUG FIX: calculateConfidenceScores() for CrlmmModel used defunct
+  method isHeterozygote() instead of isHeterozygous().
 o BUG FIX: Certain methods could throw 'Error in UseMethod("getChecksum")
   : no applicable method for 'getChecksum' applied to an object of class
   "list"' if (and only if) R.cache package was not attached.  The same
   bug was fixed on aroma.core v2.9.2 recently.
- 
+
 
 Version: 2.9.4 [2013-05-30]
 o Now it's possible to call aroma.core::doRMA() without first loading

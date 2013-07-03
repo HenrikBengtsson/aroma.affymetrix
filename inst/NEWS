@@ -1,6 +1,11 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 2.9.6 [2013-07-03]
+o Added argument 'flavor' or doRMA() making it easier to replicate the
+  results of other packages, e.g. doRMA(..., flavor="oligo").
+
+
 Version: 2.9.5 [2013-06-02]
 o ROBUSTNESS: Now more methods are creating/writing signals atomically.
 o BUG FIX: Since v2.9.0, doFIRMA() would give "Exception: Unknown

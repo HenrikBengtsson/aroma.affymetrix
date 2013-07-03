@@ -22,6 +22,7 @@
 #  \item{csR, dataSet}{An @see "AffymetrixCelSet" (or the name of an @see "AffymetrixCelSet").}
 #  \item{arrays}{A @integer @vector specifying the subset of arrays
 #   to run RMA on.  If @NULL, all arrays are considered.}
+#  \item{flavor}{A character string specifying what model fitting algorithm to be used, cf. @see "RmaPlm".}
 #  \item{uniquePlm}{If @TRUE, the log-additive probe-summarization model
 #   is done on probeset with \emph{unique} sets of probes.
 #   If @FALSE, the summarization is done on "as-is" probesets as
@@ -45,7 +46,7 @@
 #
 # @author "HB"
 #*/###########################################################################
-setMethodS3("doRMA", "AffymetrixCelSet", function(csR, arrays=NULL, uniquePlm=FALSE, drop=TRUE, verbose=FALSE, ...) {
+setMethodS3("doRMA", "AffymetrixCelSet", function(csR, arrays=NULL, flavor=c("affyPLM", "oligo"), uniquePlm=FALSE, drop=TRUE, verbose=FALSE, ...) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -60,6 +61,9 @@ setMethodS3("doRMA", "AffymetrixCelSet", function(csR, arrays=NULL, uniquePlm=FA
     throw("Not supported. Argument 'arrays' should be NULL.");
     arrays <- Arguments$getIndices(arrays, max=length(csR));
   }
+
+  # Argument 'flavor':
+  flavor <- match.arg(flavor);
 
   # Argument 'uniquePlm':
   uniquePlm <- Arguments$getLogical(uniquePlm);
@@ -124,6 +128,7 @@ setMethodS3("doRMA", "AffymetrixCelSet", function(csR, arrays=NULL, uniquePlm=FA
     tags <- c("RBC");
     tags <- c(tags, "QN");
     tags <- c(tags, "RMA");
+    if (flavor != "affyPLM") tags <- c(tags, flavor);
 
     # Try to load the final TCN data set
     ces <- tryCatch({
@@ -212,7 +217,7 @@ setMethodS3("doRMA", "AffymetrixCelSet", function(csR, arrays=NULL, uniquePlm=FA
     verbose && exit(verbose);
   }
 
-  plm <- RmaPlm(csN);
+  plm <- RmaPlm(csN, flavor=flavor);
   verbose && print(verbose, plm);
   if (length(findUnitsTodo(plm)) > 0) {
     units <- fit(plm, verbose=verbose);
@@ -282,6 +287,8 @@ setMethodS3("doRMA", "default", function(dataSet, ..., verbose=FALSE) {
 
 ############################################################################
 # HISTORY:
+# 2013-07-03
+# o Added argument 'flavor' or doRMA().
 # 2013-05-02
 # o Removed argument 'ram' in favor of aroma option 'memory/ram'.
 # 2013-04-29

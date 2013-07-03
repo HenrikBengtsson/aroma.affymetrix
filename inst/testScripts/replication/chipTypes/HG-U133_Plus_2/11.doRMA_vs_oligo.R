@@ -2,13 +2,13 @@
 # Replication test
 #
 # Description:
-# This test verifies that aroma.affymetrix can reproduce the RMA 
+# This test verifies that aroma.affymetrix can reproduce the RMA
 # chip-effect estimates as estimated by oligo.
 # The setup is the same as in affyPLM,fitPLM.R.
 #
 # Author: Henrik Bengtsson
 # Created: 2008-12-04 (from affyPLM,fitPLM.R)
-# Last modified: 2008-12-04
+# Last modified: 2013-07-03
 ###########################################################################
 
 library("aroma.affymetrix");
@@ -16,35 +16,30 @@ library("oligo");
 
 verbose <- Arguments$getVerbose(-8, timestamp=TRUE);
 
-doPlot <- TRUE;
-saveImg <- TRUE;
+# ----------------------------------
+# Dataset
+# ----------------------------------
+dataSet <- "GSE9890";
+chipType <- "HG-U133_Plus_2";
+
+cdf <- AffymetrixCdfFile$byChipType(chipType);
+csR <- AffymetrixCelSet$byName(dataSet, cdf=cdf);
+print(csR);
+
 
 # ----------------------------------
-# RMA estimates by aroma.affymetrix 
+# RMA estimates by aroma.affymetrix
 # ----------------------------------
 verbose && enter(verbose, "RMA by aroma.affymetrix");
 
-csR <- AffymetrixCelSet$byName("Affymetrix-HeartBrain", 
-                              chipType="HG-U133_Plus_2");
-
-# RMA background correction
-bc <- RmaBackgroundCorrection(csR);
-csB <- process(bc, verbose=verbose);
-
-# RMA quantile normalization
-qn <- QuantileNormalization(csB, typesToUpdate="pm");
-csN <- process(qn, verbose=verbose);
-
-# RMA probe summarization (there are no NAs in this data set)
-plm <- RmaPlm(csN, flavor="oligo");
-fit(plm, verbose=verbose);
+res <- doRMA(csR, flavor="oligo", drop=FALSE, verbose=verbose);
+print(res);
 
 # Extract chip effects on the log2 scale
-ces <- getChipEffectSet(plm);
-theta <- extractMatrix(ces, returnUgcMap=TRUE);
+ces <- res$ces;
+theta <- extractMatrix(ces);
+rownames(theta) <- getUnitNames(cdf);
 theta <- log2(theta);
-ugcMap <- attr(theta, "unitGroupCellMap");
-rownames(theta) <- getUnitNames(getCdf(ces), ugcMap[,"unit"]);
 
 verbose && exit(verbose);
 
@@ -71,43 +66,56 @@ verbose && exit(verbose);
 o <- match(rownames(theta0), rownames(theta));
 theta <- theta[o,];
 
-# (a) Assert correlations
+# Calculate statistics
+rho <- diag(cor(theta, theta0));
+print(rho);
+print(range(rho));
+e <- (theta - theta0);
+print(summary(e));
+
+# (a) Visual comparison
+toPNG(getFullName(csR), tags=c("doRMA_vs_oligo"), width=800, {
+  par(mar=c(5,5,4,2)+0.1, cex.main=2, cex.lab=2, cex.axis=1.5);
+
+  layout(matrix(1:16, ncol=4, byrow=TRUE));
+
+  xlab <- expression(log[2](theta[oligo]));
+  ylab <- expression(log[2](theta[aroma.affymetrix]));
+  for (kk in seq_len(ncol(theta))) {
+    main <- colnames(theta)[kk];
+    plot(theta0[,kk], theta[,kk], pch=".", xlab=xlab, ylab=ylab, main=main);
+    abline(0,1, col="blue");
+    stext(side=3, pos=0, line=-1.1, cex=1.2, substitute(rho==x, list(x=rho[kk])));
+  }
+
+  xlab <- expression(log[2](theta[aroma.affymetrix]/theta[oligo]));
+  plotDensity(e, xlab=xlab);
+});
+
+# (b) Assert correlations
+print(rho);
+print(range(rho));
+stopifnot(all(rho > 0.99995));
+
 cors <- sapply(1:ncol(theta), FUN=function(cc) cor(theta[,cc], theta0[,cc]));
 print(cors);
 print(range(cors));
 stopifnot(all(cors > 0.99995));
 
-# (b) Assert differences
-e <- (theta - theta0);
+# (c) Assert differences
 stopifnot(mean(as.vector(e^2)) < 1e-3);
 stopifnot(sd(as.vector(e^2)) < 1e-3);
 stopifnot(quantile(abs(e), 0.99) < 0.05);
 stopifnot(max(abs(e)) < 0.085);
 
-if (doPlot) {
-  if (saveImg) {
-    pngDev <- findPngDevice();
-    devNew("pngDev", "replication-oligo,fitPLM.png", width=640, height=640);
-  }
 
-  layout(matrix(1:9, ncol=3, byrow=TRUE));
+verbose && print(verbose, sessionInfo());
 
-  xlab <- expression(log[2](theta[oligo]));
-  ylab <- expression(log[2](theta[aroma.affymetrix]));
-  for (kk in seq(length=ncol(theta))) {
-    main <- colnames(theta)[kk];
-    plot(theta0[,kk], theta[,kk], pch=".", xlab=xlab, ylab=ylab, main=main);
-    abline(0,1, col="blue");
-  }
-
-  xlab <- expression(log[2](theta[aroma.affymetrix]/theta[oligo]));
-  plotDensity(e, xlab=xlab);
-
-  devDone();
-}
 
 ###########################################################################
 # HISTORY:
+# 2013-07-03 [HB]
+# o Harmonized with 11.doRMA_vs_affyPLM.R.
 # 2008-12-04 [HB]
 # o Created, but not tested because I miss package 'pd.hg.u133.plus.2'.
 ###########################################################################

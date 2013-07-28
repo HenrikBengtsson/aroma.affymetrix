@@ -14,10 +14,9 @@
 # }
 #
 # \usage{
-#   \method{doCRMAv1}{AffymetrixCelSet}(csR, shift=+300, combineAlleles=TRUE,
-#     lengthRange=NULL, arrays=NULL, drop=TRUE, verbose=FALSE, ...)
-#   \method{doCRMAv1}{default}(dataSet, ..., verbose=FALSE)
-#   \method{doASCRMAv1}{default}(...)
+#   @usage doCRMAv1,AffymetrixCelSet
+#   @usage doCRMAv1,default
+#   @usage doASCRMAv1,default
 # }
 #
 # \arguments{

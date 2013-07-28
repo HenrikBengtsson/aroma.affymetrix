@@ -14,9 +14,8 @@
 # }
 #
 # \usage{
-#   \method{doGCRMA}{AffymetrixCelSet}(csR, arrays=NULL, type=c("fullmodel", "affinities"),
-#     uniquePlm=FALSE, drop=TRUE, verbose=FALSE, ...)
-#   \method{doGCRMA}{default}(dataSet, ..., verbose=FALSE)
+#   @usage doGCRMA,AffymetrixCelSet
+#   @usage doGCRMA,default
 # }
 #
 # \arguments{

@@ -1,6 +1,14 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 2.9.7 [2013-07-28]
+o ROBUSTNESS: byPath() for DChipDcpSet was not decleared static.
+o BUG FIX: In certain cases, calls to static method byPath() would
+  be affected by the NextMethod() '...' bug reported in R-devel thread
+  "Do *not* pass '...' to NextMethod() - it'll do it for you; missing
+  documentation, a bug or just me?" on 2012-10-16.
+
+
 Version: 2.9.6 [2013-07-03]
 o Added argument 'flavor' or doRMA() making it easier to replicate the
   results of other packages, e.g. doRMA(..., flavor="oligo").

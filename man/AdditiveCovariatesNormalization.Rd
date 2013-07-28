@@ -6,15 +6,15 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
- \name{AdditiveCovariatesNormalization}
+\name{AdditiveCovariatesNormalization}
 \docType{class}
 \alias{AdditiveCovariatesNormalization}
 
 
- \title{The AdditiveCovariatesNormalization class}
+\title{The AdditiveCovariatesNormalization class}
 
- \description{
-  Package:  aroma.affymetrix \cr
+\description{
+ Package:  aroma.affymetrix \cr
 \bold{Class AdditiveCovariatesNormalization}\cr
 
 \code{\link[R.oo]{Object}}\cr
@@ -37,31 +37,31 @@ extends \emph{\link[aroma.affymetrix]{ChipEffectTransform}}\cr
 
 
 
-  This class represents a normalization method that corrects for
-  GC-content effects on copy-number chip-effect estimates.
- }
+ This class represents a normalization method that corrects for
+ GC-content effects on copy-number chip-effect estimates.
+}
 
- \usage{
+\usage{
 AdditiveCovariatesNormalization(dataSet=NULL, ..., target=NULL, subsetToFit="-XY",
   shift=0, onMissing=c("median", "ignore"))
 }
 
- \arguments{
-   \item{dataSet}{A \code{\link{SnpChipEffectSet}}.}
-   \item{...}{Additional arguments passed to the constructor of
-     \code{\link{ChipEffectTransform}}.}
-   \item{target}{(Optional) A \code{\link[base]{character}} string or a \code{\link[base]{function}}
-     specifying what to normalize toward.}
-   \item{subsetToFit}{The units from which the normalization curve should
-     be estimated.  If \code{\link[base]{NULL}}, all are considered.}
-   \item{onMissing}{Specifies how to normalize units for which the
-     GC contents are unknown.}
-   \item{shift}{An optional amount the data points should be shifted
-      (translated).}
- }
+\arguments{
+  \item{dataSet}{A \code{\link{SnpChipEffectSet}}.}
+  \item{...}{Additional arguments passed to the constructor of
+    \code{\link{ChipEffectTransform}}.}
+  \item{target}{(Optional) A \code{\link[base]{character}} string or a \code{\link[base]{function}}
+    specifying what to normalize toward.}
+  \item{subsetToFit}{The units from which the normalization curve should
+    be estimated.  If \code{\link[base]{NULL}}, all are considered.}
+  \item{onMissing}{Specifies how to normalize units for which the
+    GC contents are unknown.}
+  \item{shift}{An optional amount the data points should be shifted
+     (translated).}
+}
 
- \section{Fields and Methods}{
-  \bold{Methods:}\cr
+\section{Fields and Methods}{
+ \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{getCdf} \tab  -\cr
  \tab \code{\link[aroma.affymetrix:process.AdditiveCovariatesNormalization]{process}} \tab Normalizes the data set.\cr
@@ -75,7 +75,7 @@ getRootPath
 getOutputDataSet, getOutputFiles
 
  \bold{Methods inherited from AromaTransform}:\cr
-as.character, getAsteriskTags, getExpectedOutputFiles, getExpectedOutputFullnames, getFullName, getInputDataSet, getName, getOutputDataSet, getOutputDataSet0, getOutputFiles, getPath, getRootPath, getTags, isDone, process, setTags
+as.character, findFilesTodo, getAsteriskTags, getExpectedOutputFiles, getExpectedOutputFullnames, getFullName, getInputDataSet, getName, getOutputDataSet, getOutputDataSet0, getOutputFiles, getPath, getRootPath, getTags, isDone, process, setTags
 
  \bold{Methods inherited from ParametersInterface}:\cr
 getParameterSets, getParameters, getParametersAsString
@@ -84,18 +84,18 @@ getParameterSets, getParameters, getParametersAsString
 $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save, asThis
 
 
- }
+}
 
- \details{
-   For SNPs, the normalization function is estimated based on the total
-   chip effects, i.e. the sum of the allele signals.  The normalizing
-   is done by rescale the chip effects on the intensity scale such that
-   the mean of the total chip effects are the same across samples for
-   any given GC content.  For allele-specific estimates, both alleles
-   are always rescaled by the same amount.  Thus, when normalizing
-   allele-specific chip effects, the total chip effects is change, but not
-   the relative allele signal, e.g. the allele B frequency.
- }
+\details{
+  For SNPs, the normalization function is estimated based on the total
+  chip effects, i.e. the sum of the allele signals.  The normalizing
+  is done by rescale the chip effects on the intensity scale such that
+  the mean of the total chip effects are the same across samples for
+  any given GC content.  For allele-specific estimates, both alleles
+  are always rescaled by the same amount.  Thus, when normalizing
+  allele-specific chip effects, the total chip effects is change, but not
+  the relative allele signal, e.g. the allele B frequency.
+}
 
- \author{Henrik Bengtsson, James Bullard, Kasper Hansen, Pierre Neuvial, Elizabeth Purdom, Mark Robinson, Ken Simpson}
+\author{Henrik Bengtsson, James Bullard, Kasper Hansen, Pierre Neuvial, Elizabeth Purdom, Mark Robinson, Ken Simpson}
 \keyword{classes}

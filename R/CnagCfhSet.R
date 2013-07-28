@@ -341,7 +341,9 @@ setMethodS3("byPath", "CnagCfhSet", function(static, path="rawData/", pattern="[
 
   verbose && enter(verbose, "Defining ", class(static)[1], " from files");
 
-  this <- NextMethod("byPath", path=path, pattern=pattern, fileClass=fileClass, verbose=less(verbose));
+  ## Don't explicitly pass the first argument after 'static', otherwise
+  ## it (here argument 'path') may be part of '...' as well. /HB 2013-07-28
+  this <- NextMethod("byPath", pattern=pattern, fileClass=fileClass, verbose=less(verbose));
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Handle duplicates

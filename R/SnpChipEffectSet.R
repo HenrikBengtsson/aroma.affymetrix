@@ -32,7 +32,7 @@ setConstructorS3("SnpChipEffectSet", function(..., mergeStrands="byFirstFile") {
 
 setMethodS3("byPath", "SnpChipEffectSet", function(static, ..., mergeStrands="auto") {
   NextMethod("byPath", mergeStrands=mergeStrands);
-}, protected=TRUE, static=TRUE)
+}, static=TRUE, protected=TRUE)
 
 
 

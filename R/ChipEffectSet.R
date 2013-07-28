@@ -86,8 +86,17 @@ setMethodS3("byPath", "ChipEffectSet", function(static, path="plmData/", pattern
     fileClass <- gsub("Set$", "File", class(static)[1]);
   }
 
-
-  NextMethod("byPath", path=path, pattern=pattern, fileClass=fileClass, cdf=cdf, checkChipType=checkChipType);
+  ## Don't explicitly pass the first argument after 'static', otherwise
+  ## it (here argument 'path') will be part of '...' as well. /HB 2013-07-28
+  ## Example: ChipEffectSet$byPath(path, private=TRUE) gave "## Error in
+  ## list.files(path = path, pattern = pattern, full.names = TRUE,  :
+  ## invalid 'recursive' argument", because 'recursive' was also assigned
+  ## the value of 'path' due to a bug(?) in how NextMethod() handles
+  ## '...', cf. R-devel thread "Do *not* pass '...' to NextMethod() - it'll
+  ## do it for you; missing documentation, a bug or just me?" on 2012-10-16
+  ## [https://stat.ethz.ch/pipermail/r-devel/2012-October/065016.html]
+  ## NB: This is actually the same fix as done in AffymetrixCnChpSet$byPath().
+  NextMethod("byPath", pattern=pattern, fileClass=fileClass, cdf=cdf, checkChipType=checkChipType);
 }, static=TRUE, protected=TRUE)
 
 

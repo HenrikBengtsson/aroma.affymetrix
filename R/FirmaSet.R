@@ -37,7 +37,7 @@ setMethodS3("byPath", "FirmaSet", function(static, ..., pattern=",FIRMAscores[.]
     fileClass <- gsub("Set$", "File", class(static)[1]);
 
   NextMethod("byPath", pattern=pattern, fileClass=fileClass);
-}, protected=TRUE, static=TRUE)
+}, static=TRUE, protected=TRUE)
 
 
 setMethodS3("fromDataSet", "FirmaSet", function(static, dataSet, path, name=getName(dataSet), cdf=NULL, ..., verbose=FALSE) {

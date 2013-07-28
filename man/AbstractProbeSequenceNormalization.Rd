@@ -6,15 +6,15 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
- \name{AbstractProbeSequenceNormalization}
+\name{AbstractProbeSequenceNormalization}
 \docType{class}
 \alias{AbstractProbeSequenceNormalization}
 
 
- \title{The AbstractProbeSequenceNormalization class}
+\title{The AbstractProbeSequenceNormalization class}
 
- \description{
-  Package:  aroma.affymetrix \cr
+\description{
+ Package:  aroma.affymetrix \cr
 \bold{Class AbstractProbeSequenceNormalization}\cr
 
 \code{\link[R.oo]{Object}}\cr
@@ -39,26 +39,26 @@ extends \emph{\link[aroma.affymetrix]{ProbeLevelTransform3}}\cr
 
 
 
-  This abstract class represents a normalization method that corrects for
-  systematic effects in the probe intensities due to differences in
-  probe sequences.
- }
+ This abstract class represents a normalization method that corrects for
+ systematic effects in the probe intensities due to differences in
+ probe sequences.
+}
 
- \usage{
+\usage{
 AbstractProbeSequenceNormalization(..., target=NULL)
 }
 
- \arguments{
-   \item{...}{Arguments passed to the constructor of
-     \code{\link{ProbeLevelTransform3}}.}
-   \item{target}{A \code{\link[base]{character}} string specifying type of "target" used.
-     If \code{"zero"}, all arrays are normalized to have no effects.
-     If \code{\link[base]{NULL}}, all arrays a normalized to have the same effect as
-     the average array has.}
- }
+\arguments{
+  \item{...}{Arguments passed to the constructor of
+    \code{\link{ProbeLevelTransform3}}.}
+  \item{target}{A \code{\link[base]{character}} string specifying type of "target" used.
+    If \code{"zero"}, all arrays are normalized to have no effects.
+    If \code{\link[base]{NULL}}, all arrays a normalized to have the same effect as
+    the average array has.}
+}
 
- \section{Fields and Methods}{
-  \bold{Methods:}\cr
+\section{Fields and Methods}{
+ \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{getTargetFile} \tab  -\cr
  \tab \code{\link[aroma.affymetrix:process.AbstractProbeSequenceNormalization]{process}} \tab Normalizes the data set.\cr
@@ -75,7 +75,7 @@ getRootPath
 getOutputDataSet, getOutputFiles
 
  \bold{Methods inherited from AromaTransform}:\cr
-as.character, getAsteriskTags, getExpectedOutputFiles, getExpectedOutputFullnames, getFullName, getInputDataSet, getName, getOutputDataSet, getOutputDataSet0, getOutputFiles, getPath, getRootPath, getTags, isDone, process, setTags
+as.character, findFilesTodo, getAsteriskTags, getExpectedOutputFiles, getExpectedOutputFullnames, getFullName, getInputDataSet, getName, getOutputDataSet, getOutputDataSet0, getOutputFiles, getPath, getRootPath, getTags, isDone, process, setTags
 
  \bold{Methods inherited from ParametersInterface}:\cr
 getParameterSets, getParameters, getParametersAsString
@@ -84,12 +84,12 @@ getParameterSets, getParameters, getParametersAsString
 $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save, asThis
 
 
- }
+}
 
- \section{Requirements}{
-   This class requires that an \code{\link[aroma.core]{AromaCellSequenceFile}} is
-   available for the chip type.
- }
+\section{Requirements}{
+  This class requires that an \code{\link[aroma.core]{AromaCellSequenceFile}} is
+  available for the chip type.
+}
 
- \author{Henrik Bengtsson, James Bullard, Kasper Hansen, Pierre Neuvial, Elizabeth Purdom, Mark Robinson, Ken Simpson}
+\author{Henrik Bengtsson, James Bullard, Kasper Hansen, Pierre Neuvial, Elizabeth Purdom, Mark Robinson, Ken Simpson}
 \keyword{classes}

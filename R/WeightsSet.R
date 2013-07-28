@@ -69,7 +69,7 @@ setMethodS3("byPath", "WeightsSet", function(static, ..., pattern=",weights[.](c
     fileClass <- gsub("Set$", "File", class(static)[1]);
 
   NextMethod("byPath", pattern=pattern, fileClass=fileClass);
-}, protected=TRUE, static=TRUE)
+}, static=TRUE, protected=TRUE)
 
 
 setMethodS3("fromDataSet", "WeightsSet", function(static, dataSet, path, fullname=getFullName(dataSet), cdf=NULL, ..., verbose=FALSE) {

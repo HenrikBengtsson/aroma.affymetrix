@@ -31,8 +31,7 @@
 \arguments{
   \item{fields}{A \code{\link[base]{character}} \code{\link[base]{vector}} of fields to be cleared.}
   \item{value}{A \code{\link[base]{numeric}} value to be written over the data.}
-  \item{...}{Additional arguments passed to the
-     \code{\link[affxparser]{updateCelUnits}} methods.}
+  \item{...}{Not used.}
   \item{.forSure}{If not \code{\link[base:logical]{TRUE}}, an exception is thrown asking if the
      method was called by mistake.}
   \item{verbose}{A \code{\link[base]{logical}} or \code{\link[R.utils]{Verbose}}.}
@@ -46,6 +45,7 @@
 
 \seealso{
   For more information see \code{\link{AffymetrixCelFile}}.
+  Internally, \code{\link[affxparser]{updateCel}} is used.
 }
 
 

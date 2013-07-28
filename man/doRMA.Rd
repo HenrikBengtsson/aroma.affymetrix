@@ -23,7 +23,8 @@
 }
 
 \usage{
-  \method{doRMA}{AffymetrixCelSet}(csR, arrays=NULL, uniquePlm=FALSE, drop=TRUE, verbose=FALSE, ...)
+  \method{doRMA}{AffymetrixCelSet}(csR, arrays=NULL, flavor=c("affyPLM", "oligo"), uniquePlm=FALSE, drop=TRUE,
+  verbose=FALSE, ...)
   \method{doRMA}{default}(dataSet, ..., verbose=FALSE)
 }
 

@@ -81,7 +81,7 @@ setMethodS3("byPath", "ResidualSet", function(static, ..., pattern=",residuals[.
     setCdf(res, cdf);
 
   res;
-}, protected=TRUE, static=TRUE)
+}, static=TRUE, protected=TRUE)
 
 
 setMethodS3("fromDataSet", "ResidualSet", function(static, dataSet, path, fullname=getFullName(dataSet), cdf=NULL, ..., verbose=FALSE) {

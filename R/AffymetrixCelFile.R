@@ -693,7 +693,7 @@ setMethodS3("updateUnits", "AffymetrixCelFile", function(this, data, ...) {
 #
 # \seealso{
 #   @seeclass
-#   Internally, @see "affxparser::updateCel" is used.}
+#   Internally, @see "affxparser::updateCel" is used.
 # }
 #
 # @keyword IO

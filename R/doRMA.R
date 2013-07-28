@@ -14,8 +14,8 @@
 # }
 #
 # \usage{
-#   \method{doRMA}{AffymetrixCelSet}(csR, arrays=NULL, uniquePlm=FALSE, drop=TRUE, verbose=FALSE, ...)
-#   \method{doRMA}{default}(dataSet, ..., verbose=FALSE)
+#   @usage doRMA,AffymetrixCelSet
+#   @usage doRMA,default
 # }
 #
 # \arguments{

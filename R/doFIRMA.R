@@ -9,8 +9,8 @@
 # }
 #
 # \usage{
-#   \method{doFIRMA}{AffymetrixCelSet}(csR, ..., flavor=c("v1b", "v1a"), drop=TRUE, verbose=FALSE)
-#   \method{doFIRMA}{default}(dataSet, ..., verbose=FALSE)
+#   @usage doFIRMA,AffymetrixCelSet
+#   @usage doFIRMA,default
 # }
 #
 # \arguments{

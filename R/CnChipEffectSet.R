@@ -42,7 +42,7 @@ setMethodS3("hasStrandiness", "CnChipEffectSet", function(this, ...) {
 
 setMethodS3("byPath", "CnChipEffectSet", function(static, ..., combineAlleles="auto") {
   NextMethod("byPath", combineAlleles=combineAlleles);
-}, protected=TRUE, static=TRUE)
+}, static=TRUE, protected=TRUE)
 
 
 setMethodS3("getAverageFile", "CnChipEffectSet", function(this, ...) {

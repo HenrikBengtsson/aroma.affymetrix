@@ -12,11 +12,17 @@ importFrom("R.cache", "loadCache")
 importFrom("R.cache", "saveCache")
 importFrom("R.cache", "getChecksum")
 
+importFrom("matrixStats", "rowMedians")
+importFrom("matrixStats", "colMedians")
+importFrom("matrixStats", "colMaxs")
 importFrom("matrixStats", "rowMads")
 importFrom("matrixStats", "rowSds")
 importFrom("matrixStats", "anyMissing")
 importFrom("matrixStats", "indexByRow")
 
+import("aroma.light")
+## As soon as 'aroma.light' declares all S3 methods
+## (not the case in aroma.light v1.31.3)
 importFrom("aroma.light", "robustSmoothSpline")
 importFrom("aroma.light", "calibrateMultiscan")
 importFrom("aroma.light", "normalizeFragmentLength")

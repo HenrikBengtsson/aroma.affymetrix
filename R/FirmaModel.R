@@ -306,8 +306,6 @@ setMethodS3("calculateResidualSet", "FirmaModel", function(this, ...) {
 # }
 #*/###########################################################################
 setMethodS3("getFitUnitGroupFunction", "FirmaModel", function(this, ...) {
-  colMedians <- matrixStats::colMedians;
-  colMaxs <- matrixStats::colMaxs;
   colQuantiles <- function(y, ...) {
     apply(y, MARGIN=2, FUN=quantile, ...)
   }

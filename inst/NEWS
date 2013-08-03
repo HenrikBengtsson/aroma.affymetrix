@@ -27,8 +27,8 @@ o BUG FIX: Certain methods could throw 'Error in UseMethod("getChecksum")
 
 
 Version: 2.9.4 [2013-05-30]
-o Now it's possible to call aroma.core::doRMA() without first loading
-  package.  Same for all other doNnn() methods, e.g. doCRMAv2(),
+o Now it's possible to call aroma.affymetrix::doRMA() without first 
+  loading package.  Same for all other doNnn() methods, e.g. doCRMAv2(),
   doFIRMA() and doGCRMA().
 
 

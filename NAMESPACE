@@ -14,6 +14,7 @@ importFrom("R.cache", "getChecksum")
 
 importFrom("matrixStats", "rowMads")
 importFrom("matrixStats", "rowSds")
+importFrom("matrixStats", "anyMissing")
 importFrom("matrixStats", "indexByRow")
 
 importFrom("aroma.light", "robustSmoothSpline")

@@ -1,9 +1,13 @@
 Package: aroma.affymetrix
 =========================
 
-Version: 2.9.8 [2013-08-03]
+Version: 2.10.0 [2013-08-03]
 o CLEANUP: The formal package dependancy on 'affxparser' has been relaxed.
-o CLEANUP: Package now only imports R.oo, R.filesets and aroma.apd.
+o CLEANUP: Package now only imports matrixStats, aroma.light, R.oo,
+  R.filesets and aroma.apd.
+o Bumped version for CRAN submission.
+o Updated package dependences.
+o Package passes all redundancy tests.
 
 
 Version: 2.9.7 [2013-07-28]

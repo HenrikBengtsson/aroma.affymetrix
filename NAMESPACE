@@ -15,6 +15,15 @@ importFrom("R.cache", "getChecksum")
 importFrom("aroma.apd", "readApd")
 importFrom("aroma.apd", "writeApd")
 
+importFrom("matrixStats", "rowMads")
+importFrom("matrixStats", "rowSds")
+importFrom("matrixStats", "indexByRow")
+
+importFrom("aroma.light", "robustSmoothSpline")
+importFrom("aroma.light", "calibrateMultiscan")
+importFrom("aroma.light", "normalizeFragmentLength")
+importFrom("aroma.light", "normalizeQuantileSpline")
+
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # EXPORTS

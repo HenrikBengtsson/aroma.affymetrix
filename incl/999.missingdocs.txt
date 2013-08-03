@@ -732,3 +732,5 @@ clearData
 bgAdjustOptical.AffymetrixCelSet  bgAdjustRma.AffymetrixCelSet
 calculateAffinities calculateAffinities.GcRmaBackgroundCorrection
 getParameterSet getParameterSet.Model
+averageQuantile normalizeQuantile plotDensity plotMvsA plotXYCurve
+getParameter

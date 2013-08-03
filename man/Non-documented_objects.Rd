@@ -1398,6 +1398,12 @@
 \alias{calculateAffinities.GcRmaBackgroundCorrection}
 \alias{getParameterSet}
 \alias{getParameterSet.Model}
+\alias{averageQuantile}
+\alias{normalizeQuantile}
+\alias{plotDensity}
+\alias{plotMvsA}
+\alias{plotXYCurve}
+\alias{getParameter}
 
 \description{
   This page contains aliases for all "non-documented" objects that

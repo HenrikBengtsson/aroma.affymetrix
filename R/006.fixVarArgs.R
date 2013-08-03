@@ -1,12 +1,11 @@
 # Added '...' to some base functions. These will later be
 # turned into default functions by setMethodS3().
 
-# affxparser::writeCdf()
-writeCdf <- appendVarArgs(writeCdf);
-
 
 ############################################################################
 # HISTORY:
+# 2013-08-03 [HB]
+# o CLEANUP: Removed appendVarArgs(writeCdf).
 # 2012-08-30 [HB]
 # o CLEANUP: No longer a need for appendVarArgs(write).
 # o CLEANUP: No longer a need for appendVarArgs(boxplot.stats).

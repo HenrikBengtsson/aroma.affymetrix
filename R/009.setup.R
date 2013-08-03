@@ -5,8 +5,20 @@
   # None at the moment.
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Customize affxparser
+  # affxparser
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # require("affxparser") and install if missing
+  .requireAffxparser(getName(pkg));
+
+  # Make sure 'affxparser' is after 'aroma.affymetrix' on the search path
+  from <- "package:affxparser";
+  to <- "package:aroma.affymetrix";
+  fromIdx <- match(from, search());
+  toIdx <- match(to, search());
+  if (all(is.finite(c(fromIdx, toIdx))) && fromIdx < toIdx) {
+    moveInSearchPath(from=from, to=to, where="after");
+  }
+
   # Add custom findCdf() function to affxparser.  This is need to be
   # able to locate CDFs in annotationData/chipTypes/<chipType>/.
   setCustomFindCdf(function(...) {
@@ -26,6 +38,7 @@
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   patchPackage("aroma.affymetrix");
 
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Fix the search path every time a package is loaded
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -33,22 +46,69 @@
     # Fix the search path
     pkgs <- fixSearchPath(aroma.affymetrix);
     if (length(pkgs) > 0) {
-      warning("Packages reordered in search path: ", 
+      warning("Packages reordered in search path: ",
                                             paste(pkgs, collapse=", "));
     }
   }, action="append");
 } # .setupAromaAffymetrix()
 
 
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# affxparser related
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+.requireAffxparser <- function(pkgname="aroma.affymetrix", ...) {
+  # Trick 'R CMD check' to not generate NOTEs.
+  requireX <- base::require;
+  catX <- base::cat;
+
+  reqPkgName <- "affxparser";
+  res <- suppressWarnings({
+    requireX(reqPkgName, character.only=TRUE);
+  });
+
+  # Not installed?
+  if (!res) {
+    if (interactive()) {
+      # Trick 'R CMD check' to not generate NOTEs.
+      catX("Package 'affxparser' is not available or could not be loaded. Will now try to install it from Bioconductor (requires working internet connection):\n");
+      # To please R CMD check
+      biocLite <- NULL; rm(list="biocLite");
+      source("http://www.bioconductor.org/biocLite.R");
+      biocLite(reqPkgName);
+      # Assert that the package can be successfully loaded
+      res <- requireX(reqPkgName, character.only=TRUE);
+      if (!res) {
+        throw("Package 'affxparser' could not be loaded. Please install it from Bioconductor, cf. http://www.bioconductor.org/");
+      }
+    } else {
+      warning("Package 'affxparser' could not be loaded. Without it ", pkgname, " will not work. Please install it from Bioconductor, cf. http://www.bioconductor.org/");
+    }
+  }
+} # .requireAffxparser()
+
+
+# Instead of asking users to write affxparser::writeCdf() when
+# aroma.affymetrix is loaded...
+writeCdf.default <- function(...) {
+  ns <- loadNamespace("affxparser");
+  `affxparser::writeCdf` <- get("writeCdf", envir=ns, mode="function");
+  `affxparser::writeCdf`(...)
+}
+
 
 ############################################################################
 # HISTORY:
+# 2013-08-03
+# o Added writeCdf.default() which loads namespace 'affxparser' and calls
+#   writeCdf() of affxparser, i.e. effectively affxparser::writeCdf().
+# o Added .requireAffxparser() which basically require("affxparser"),
+#   but will also try to install 'affxparser' if its missing.
 # 2009-02-22
 # o Removed code checking for package updates. Was never called.
 # 2009-02-21
 # o Added setting memory$ram=1.
 # 2008-02-14
-# o Renamed existing threshold hold to 'timestampsThreshold', 
+# o Renamed existing threshold hold to 'timestampsThreshold',
 #   'medianPolishThreshold', and 'skipThreshold'.
 # 2008-02-12
 # o Added default values for settings 'models$RmaPlm$...'.
@@ -60,7 +120,7 @@
 # o Added settings for 'checkForPatches' and 'checkInterval'.
 # o Now the settings are set according to a tempate, if missing.
 # 2007-08-30
-# o Added "patch" to make sure that there is rowMedians() supporting 
+# o Added "patch" to make sure that there is rowMedians() supporting
 #   missing values.
 # 2007-07-04
 # o Removed the patch for digest(); digest v0.3.0 solved the problem.

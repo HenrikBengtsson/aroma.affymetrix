@@ -12,6 +12,9 @@ importFrom("R.cache", "loadCache")
 importFrom("R.cache", "saveCache")
 importFrom("R.cache", "getChecksum")
 
+importFrom("aroma.apd", "readApd")
+importFrom("aroma.apd", "writeApd")
+
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # EXPORTS

@@ -1,6 +1,11 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 2.9.8 [2013-08-03]
+o CLEANUP: The formal package dependancy on 'affxparser' has been relaxed.
+o CLEANUP: Package now only imports R.oo, R.filesets and aroma.apd.
+
+
 Version: 2.9.7 [2013-07-28]
 o ROBUSTNESS: byPath() for DChipDcpSet was not decleared static.
 o BUG FIX: In certain cases, calls to static method byPath() would

@@ -19,15 +19,18 @@ setMethodS3("fixSearchPath", "AromaAffymetrix", function(this, ...) {
   # 2011-06-07:
   # o ggplot2 must be after aroma.affymetrix, otherwise the former
   #   overrides generic rescale().
+  # 2013-08-03:
+  # o affxparser should be after aroma.affymetrix so that the
+  #   generic writeCdf() of aroma.affymetrix is found.
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Figure out which of our packages (aroma.core, aroma.light etc.) is
   # last on the search path.
   aheadPkgs <- c("aroma.affymetrix", "aroma.light", "R.huge", "R.oo");
 
   # Problematic package that must be after the packages on the search path
-  behindPkgs <- c("affy", "affyPLM", "EBImage", "oligo", "ggplot2");
+  behindPkgs <- c("affxparser", "affy", "affyPLM", "EBImage", "oligo", "ggplot2");
 
-  res <- fixSearchPathInternal(this, aheadPkgs=aheadPkgs, 
+  res <- fixSearchPathInternal(this, aheadPkgs=aheadPkgs,
                                            behindPkgs=behindPkgs, ...);
 
   # Make rescale() for numeric:s compatible for ggplot2 users.
@@ -40,7 +43,7 @@ setMethodS3("fixSearchPath", "AromaAffymetrix", function(this, ...) {
   }
 
   # Return the package actually moved
-  invisible(res); 
+  invisible(res);
 })
 
 
@@ -61,7 +64,7 @@ setMethodS3("update", "AromaAffymetrix", function(object, patch=TRUE, ..., verbo
 
   verbose && enter(verbose, "Checking for and install updates");
   verbose && cat(verbose, "Package: ", getName(this));
-  verbose && printf(verbose, "Current version: v%s (%s)\n", 
+  verbose && printf(verbose, "Current version: v%s (%s)\n",
                                         getVersion(this), getDate(this));
 
 
@@ -119,7 +122,7 @@ setMethodS3("patch", "AromaAffymetrix", function(this, ..., verbose=FALSE) {
 
   verbose && enter(verbose, "Checking for and install patches");
   verbose && cat(verbose, "Package: ", getName(this));
-  verbose && printf(verbose, "Current version: v%s (%s)\n", 
+  verbose && printf(verbose, "Current version: v%s (%s)\n",
                                         getVersion(this), getDate(this));
 
 
@@ -136,7 +139,7 @@ setMethodS3("patch", "AromaAffymetrix", function(this, ..., verbose=FALSE) {
   })
 
   verbose && cat(verbose, "Package has been patched.");
-  
+
   verbose && exit(verbose);
 
   invisible(state);
@@ -165,7 +168,7 @@ setMethodS3("getDefaultSettings", "AromaAffymetrix", function(this, ...) {
     ),
 
     models = list(
-      RmaPlm = list( 
+      RmaPlm = list(
        # Number of cells *and* arrays for using median polish
         medianPolishThreshold  = c( 500, 6),
        # Number of cells *and* arrays for skipping unit group
@@ -181,6 +184,8 @@ setMethodS3("getDefaultSettings", "AromaAffymetrix", function(this, ...) {
 
 ############################################################################
 # HISTORY:
+# 2013-08-03
+# o Now affxparser is moved behind aroma.affymetrix on the search path.
 # 2011-06-07
 # o Now the search path is adjusted such that 'ggplot2' comes after
 #   'aroma.affymetrix', because the former overrides the generic

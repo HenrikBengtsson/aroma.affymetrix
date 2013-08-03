@@ -5,10 +5,13 @@
   # None at the moment.
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # affxparser
+  # Bioconductor packages aroma.light and affxparser
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # require("affxparser") and install if missing
-  .requireAffxparser(getName(pkg));
+  # require("aroma.light") - install if missing
+  .requireBioCPackage("aroma.light", neededBy=getName(pkg));
+
+  # require("affxparser") - install if missing
+  .requireBioCPackage("affxparser", neededBy=getName(pkg));
 
   # Make sure 'affxparser' is after 'aroma.affymetrix' on the search path
   from <- "package:affxparser";
@@ -54,39 +57,42 @@
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# affxparser related
+# Bioconductor related
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-.requireAffxparser <- function(pkgname="aroma.affymetrix", ...) {
+ .requireBioCPackage <- function(package, neededBy="aroma.affymetrix", ...) {
   # Trick 'R CMD check' to not generate NOTEs.
   requireX <- base::require;
   catX <- base::cat;
 
-  reqPkgName <- "affxparser";
   res <- suppressWarnings({
-    requireX(reqPkgName, character.only=TRUE);
+    requireX(package, character.only=TRUE);
   });
 
   # Not installed?
   if (!res) {
     if (interactive()) {
       # Trick 'R CMD check' to not generate NOTEs.
-      catX("Package 'affxparser' is not available or could not be loaded. Will now try to install it from Bioconductor (requires working internet connection):\n");
+      catX("Package '", package, "' is not available or could not be loaded. Will now try to install it from Bioconductor (requires working internet connection):\n");
+
       # To please R CMD check
       biocLite <- NULL; rm(list="biocLite");
       source("http://www.bioconductor.org/biocLite.R");
-      biocLite(reqPkgName);
+      biocLite(package);
       # Assert that the package can be successfully loaded
-      res <- requireX(reqPkgName, character.only=TRUE);
+      res <- requireX(package, character.only=TRUE);
       if (!res) {
         throw("Package 'affxparser' could not be loaded. Please install it from Bioconductor, cf. http://www.bioconductor.org/");
       }
     } else {
-      warning("Package 'affxparser' could not be loaded. Without it ", pkgname, " will not work. Please install it from Bioconductor, cf. http://www.bioconductor.org/");
+      warning("Package '", package, "' could not be loaded. Without it ", neededBy, " will not work. Please install it from Bioconductor, cf. http://www.bioconductor.org/");
     }
   }
-} # .requireAffxparser()
+} # .requireBioCPackage()
 
 
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# affxparser related
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Instead of asking users to write affxparser::writeCdf() when
 # aroma.affymetrix is loaded...
 writeCdf.default <- function(...) {
@@ -94,6 +100,7 @@ writeCdf.default <- function(...) {
   `affxparser::writeCdf` <- get("writeCdf", envir=ns, mode="function");
   `affxparser::writeCdf`(...)
 }
+
 
 
 ############################################################################

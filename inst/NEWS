@@ -1,12 +1,14 @@
 Package: aroma.affymetrix
 =========================
 
-Version: 2.10.0 [2013-08-03]
+Version: 2.10.0 [2013-08-04]
 o CLEANUP: The formal package dependancy on Bioconductor packages
   'aroma.light' and 'affxparser' has been relaxed so the package
-  can install without them.
+  can be installed without them.
 o CLEANUP: Package now only imports matrixStats, R.oo, R.filesets
   and aroma.apd.
+o CLEANUP: Removed since-long defunct methods.  Made deprecated
+  methods defunct.
 o Bumped version for CRAN submission.
 o Updated package dependences.
 o Package passes all redundancy tests.
@@ -38,7 +40,7 @@ o BUG FIX: Certain methods could throw 'Error in UseMethod("getChecksum")
 
 
 Version: 2.9.4 [2013-05-30]
-o Now it's possible to call aroma.affymetrix::doRMA() without first 
+o Now it's possible to call aroma.affymetrix::doRMA() without first
   loading package.  Same for all other doNnn() methods, e.g. doCRMAv2(),
   doFIRMA() and doGCRMA().
 

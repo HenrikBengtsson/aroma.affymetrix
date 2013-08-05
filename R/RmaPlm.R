@@ -645,7 +645,7 @@ setMethodS3("getFitUnitGroupFunction", "RmaPlm", function(this, ..., verbose=FAL
     fcnList <- RmaPlm$getRlmFitFunctions(withPriors=hasPriors, verbose=less(verbose));
     verbose && str(verbose, fcnList);
     # To please R CMD check
-    rlm <- wrlm <- NULL; rm(rlm, wrlm);
+    rlm <- wrlm <- NULL; rm(list=c("rlm", "wrlm"));
     attachLocally(fcnList);
     rmaModel <- rmaModelAffyPlm;
   } else if (flavor == "oligo") {

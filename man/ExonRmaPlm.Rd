@@ -63,7 +63,6 @@ ExonRmaPlm(..., mergeGroups=TRUE)
 \tabular{rll}{
  \tab \code{getCellIndices} \tab  -\cr
  \tab \code{getChipEffectSet} \tab  -\cr
- \tab \code{getChipEffects} \tab  -\cr
  \tab \code{getProbeAffinityFile} \tab  -\cr
  \tab \code{setMergeGroups} \tab  -\cr
 }

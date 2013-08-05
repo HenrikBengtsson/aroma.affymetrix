@@ -334,7 +334,7 @@ setMethodS3("getFitUnitGroupFunction", "ExonRmaPlm", function(this, ..., verbose
   fcnList <- RmaPlm$getRlmFitFunctions(verbose=less(verbose));
   verbose && str(verbose, fcnList);
   # To please R CMD check
-  rlm <- wrlm <- NULL; rm(rlm, wrlm);
+  rlm <- wrlm <- NULL; rm(list=c("rlm", "wrlm"));
   attachLocally(fcnList);
   rmaModel <- exonRmaModel;
   verbose && str(verbose, rmaModel);

@@ -91,5 +91,5 @@ $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCa
   available for the chip type.
 }
 
-\author{Henrik Bengtsson, James Bullard, Kasper Hansen, Pierre Neuvial, Elizabeth Purdom, Mark Robinson, Ken Simpson}
+\author{Henrik Bengtsson}
 \keyword{classes}

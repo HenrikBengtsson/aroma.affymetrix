@@ -97,5 +97,5 @@ $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCa
   the relative allele signal, e.g. the allele B frequency.
 }
 
-\author{Henrik Bengtsson, James Bullard, Kasper Hansen, Pierre Neuvial, Elizabeth Purdom, Mark Robinson, Ken Simpson}
+\author{Henrik Bengtsson}
 \keyword{classes}

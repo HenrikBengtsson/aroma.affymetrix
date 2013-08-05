@@ -34,7 +34,7 @@
  Returns a \code{\link[base]{double}} \code{\link[base]{vector}}.
 }
 
-\author{Henrik Bengtsson, James Bullard, Kasper Hansen, Pierre Neuvial, Elizabeth Purdom, Mark Robinson, Ken Simpson}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{AbstractProbeSequenceNormalization}}.

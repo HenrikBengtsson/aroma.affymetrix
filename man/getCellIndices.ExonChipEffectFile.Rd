@@ -38,7 +38,7 @@
   If argument \code{unlist=TRUE} is passed, an \code{\link[base]{integer}} \code{\link[base]{vector}} is returned.
 }
 
-\author{Henrik Bengtsson, James Bullard, Kasper Hansen, Pierre Neuvial, Elizabeth Purdom, Mark Robinson, Ken Simpson}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{ExonChipEffectFile}}.

@@ -2,12 +2,6 @@ Package: aroma.affymetrix
 =========================
 
 Version: 2.10.0 [2013-08-04]
-o Updated the default chromosome annotation data file for the Human genome.
-  The new data gives slightly longer chromosomes.  This was done since for
-  some chip types there were data points outside of the visible genome range,
-  e.g. in ChromosomeExplorer plots.  It is possible to override this default
-  by adding your own to your own to annotationData/genomes/Human/.
-  Thanks to Keith Ching at ConsultChing for reporting on this.
 o CLEANUP: The formal package dependancy on Bioconductor packages
   'aroma.light' and 'affxparser' has been relaxed so the package
   can be installed without them.

@@ -12,6 +12,10 @@ importFrom("R.cache", "loadCache")
 importFrom("R.cache", "saveCache")
 importFrom("R.cache", "getChecksum")
 
+import("R.filesets")
+
+import("aroma.core")
+
 importFrom("matrixStats", "rowMedians")
 importFrom("matrixStats", "colMedians")
 importFrom("matrixStats", "colMaxs")

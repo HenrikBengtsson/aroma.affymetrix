@@ -1,6 +1,14 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 2.10.2 [2013-09-16]
+o Updated package dependences.
+
+
+Version: 2.10.1 [2013-08-21]
+o Now explicitly importing R.filesets and aroma.core in NAMESPACE.
+
+
 Version: 2.10.0 [2013-08-04]
 o CLEANUP: The formal package dependancy on Bioconductor packages
   'aroma.light' and 'affxparser' has been relaxed so the package

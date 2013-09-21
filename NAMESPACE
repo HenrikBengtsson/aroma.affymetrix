@@ -3,7 +3,17 @@
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 importFrom("R.methodsS3", "setMethodS3")
 importFrom("R.methodsS3", "throw")
+
 import("R.oo")
+## importFrom("R.oo", "setConstructorS3")
+## importFrom("R.oo", "extend")
+## importFrom("R.oo", "load")
+## importFrom("R.oo", "save")
+## importFrom("R.oo", "attachLocally")
+## importFrom("R.oo", "Package")
+## importFrom("R.oo", "startupMessage")
+## importFrom("R.oo", "getPosition")
+## importFrom("R.oo", "getChecksum")
 
 # importFrom(R.utils, cat)
 import("R.utils")
@@ -13,8 +23,10 @@ importFrom("R.cache", "saveCache")
 importFrom("R.cache", "getChecksum")
 
 import("R.filesets")
+## importFrom("R.filesets", "getChecksum")
 
 import("aroma.core")
+## importFrom("aroma.core", "append")
 
 importFrom("matrixStats", "rowMedians")
 importFrom("matrixStats", "colMedians")

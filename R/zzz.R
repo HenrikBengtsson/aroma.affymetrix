@@ -6,16 +6,7 @@
 # version of R devel, which automatically add namespaces to packages
 # who do not have one, we explicitly have specify the following.
 # /HB 2011-07-27
-# R.utils:
-##cat <- R.utils::cat;
-##getOption <- R.utils::getOption;
-##lapply <- R.utils::lapply;
-
-# R.filesets:
 append <- R.filesets::append;
-##sapply <- R.filesets::sapply;
-
-# aroma.core:
 apply <- aroma.core::apply;
 colMeans <- aroma.core::colMeans;
 colSums <- aroma.core::colSums;
@@ -24,9 +15,15 @@ require <- aroma.core::require;
 .Machine <- aroma.core::.Machine;
 
 
-.onAttach <- function(libname, pkgname) {
+.onLoad <- function(libname, pkgname) {
+  ns <- getNamespace(pkgname);
   pkg <- AromaAffymetrix(pkgname);
-  assign(pkgname, pkg, pos=getPosition(pkg));
+  assign(pkgname, pkg, envir=ns);
+} # .onLoad()
+
+
+.onAttach <- function(libname, pkgname) {
+  pkg <- get(pkgname, envir=getNamespace(pkgname));
 
   # Setup package
   .setupAromaAffymetrix(pkg);

@@ -1,7 +1,9 @@
 Package: aroma.affymetrix
 =========================
 
-Version: 2.10.2 [2013-09-16]
+Version: 2.10.2 [2013-09-28]
+o Now the 'aroma.affymetrix' Package object is also available when the
+  package is only loaded (but not attached).
 o Updated package dependences.
 
 

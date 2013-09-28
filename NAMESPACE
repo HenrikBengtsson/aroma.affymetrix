@@ -12,7 +12,6 @@ import("R.oo")
 ## importFrom("R.oo", "attachLocally")
 ## importFrom("R.oo", "Package")
 ## importFrom("R.oo", "startupMessage")
-## importFrom("R.oo", "getPosition")
 ## importFrom("R.oo", "getChecksum")
 
 # importFrom(R.utils, cat)
@@ -36,20 +35,14 @@ importFrom("matrixStats", "rowSds")
 importFrom("matrixStats", "anyMissing")
 importFrom("matrixStats", "indexByRow")
 
-import("aroma.apd")
-## As soon as 'aroma.apd' declares all S3 methods
-## (not the case in aroma.apd v0.3.0)
-## importFrom("aroma.apd", "readApd")
-## importFrom("aroma.apd", "writeApd")
+importFrom("aroma.apd", "readApd")
+importFrom("aroma.apd", "writeApd")
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # FUTURE IMPORTS, but from now we don't import these packages
 # because they are not available on CRAN.
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-## import("aroma.light")
-## ## As soon as 'aroma.light' declares all S3 methods
-## ## (not the case in aroma.light v1.31.3)
 ## importFrom("aroma.light", "robustSmoothSpline")
 ## importFrom("aroma.light", "calibrateMultiscan")
 ## importFrom("aroma.light", "normalizeFragmentLength")

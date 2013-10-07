@@ -12,11 +12,11 @@ verbose && enter(verbose, "Downloading raw data");
 #    GSM249671.CEL, ..., GSM249680.CEL [10]
 #
 # Overall design:
-#  [Ten] cervival cancer cell lines were hybridized to Affymetrix 
-#  Focus arrays in duplicate. Correlations were made with copynumber 
+#  [Ten] cervival cancer cell lines were hybridized to Affymetrix
+#  Focus arrays in duplicate. Correlations were made with copynumber
 #  profiles from arrayCGH and SNP arrays.
 #
-# URL: http://www.ncbi.nlm.nih.gov/projects/geo/query/acc.cgi?acc=GSE8605
+# URL: http://www.ncbi.nlm.nih.gov/projects/geo/query/acc.cgi?acc=GSE9890
 ##########################################################################
 dataSet <- "GSE9890";
 chipType <- "HG-U133_Plus_2";

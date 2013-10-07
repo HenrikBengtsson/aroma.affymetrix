@@ -1,6 +1,15 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 2.10.3 [2013-10-07]
+o CLEANUP: Package no longer apply downloaded package patches.
+o CLEANUP: Deprecated patch() for AromaAffymetrix.
+o CLEANUP: Now explicitly importing only what is needed in NAMESPACE.
+o BACKWARD COMPATIBILITY: For R (< 3.0.2) only the maximum of 500 
+  S3 methods are declared in NAMESPACE.
+o Updated package dependences.
+
+
 Version: 2.10.2 [2013-09-28]
 o Now the 'aroma.affymetrix' Package object is also available when the
   package is only loaded (but not attached).

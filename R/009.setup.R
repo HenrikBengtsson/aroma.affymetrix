@@ -37,12 +37,6 @@
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Apply downloaded patches
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  patchPackage("aroma.affymetrix");
-
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Fix the search path every time a package is loaded
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   setHook("base::library:onLoad", function(...) {

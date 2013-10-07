@@ -109,6 +109,8 @@ setMethodS3("update", "AromaAffymetrix", function(object, patch=TRUE, ..., verbo
 
 
 setMethodS3("patch", "AromaAffymetrix", function(this, ..., verbose=FALSE) {
+  .Deprecated(msg="Package patching is deprecated. Use update.packages()");
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -143,7 +145,7 @@ setMethodS3("patch", "AromaAffymetrix", function(this, ..., verbose=FALSE) {
   verbose && exit(verbose);
 
   invisible(state);
-})
+}, protected=TRUE, deprecated=TRUE)
 
 
 

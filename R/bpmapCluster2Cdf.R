@@ -30,7 +30,7 @@
 #  \item{minNbrOfProbes}{A positive @integer specifying the minimum number
 #    of probes required in a CDF unit.  If fewer, those probes are dropped.}
 #  \item{groupName}{A @character string specifying which BPMAP sequences
-#     to keep.  Sequence with this group name is kept, all others are 
+#     to keep.  Sequence with this group name is kept, all others are
 #     excluded.}
 #  \item{field}{A @character string.}
 #  \item{stringRemove}{An (optional) regular expression.}
@@ -62,16 +62,15 @@
 #   Henrik Bengtsson adopted from Mark Robinson standalone/online version
 #   as of July 11, 2011.
 # }
-# 
+#
 # @keyword "internal"
 #*/###########################################################################
 setMethodS3("bpmapCluster2Cdf", "default", function(pathname, chipType, tags=NULL, rows, cols, maxProbeDistance=3000L, minNbrOfProbes=30L, groupName=gsub("_.*", "", chipType), field="fullname", stringRemove=sprintf("%s:.*;", groupName), ..., flavor=c("v2", "v1"), path="*", verbose=-10) {
   require("affxparser") || throw("Package not loaded: affxparser");
-  require("R.utils") || throw("Package not loaded: R.utils");
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local functions
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   getRangeX <- function(bpmapList) {
     pos <- lapply(bpmapList, FUN=.subset, c("mmx", "pmx"));
     pos <- unlist(pos, use.names=FALSE);
@@ -119,9 +118,9 @@ setMethodS3("bpmapCluster2Cdf", "default", function(pathname, chipType, tags=NUL
   } # bpmapUnit2df()
 
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validating arguments
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'filename':
   pathname <- Arguments$getReadablePathname(pathname);
 
@@ -366,7 +365,7 @@ setMethodS3("bpmapCluster2Cdf", "default", function(pathname, chipType, tags=NUL
     stopifnot(all(is.finite(starts)));
     stopifnot(all(is.finite(ends)));
     stopifnot(all(counts > 0L));
-   
+
     # Dropping probesets with too few probes
     if (flavor == "v2") {
       keep <- (counts >= minNbrOfProbes);
@@ -411,10 +410,10 @@ setMethodS3("bpmapCluster2Cdf", "default", function(pathname, chipType, tags=NUL
 
       if (isPmOnly) {
         # PM only
-        unitGroups[[1L]] <- list(x=pmx[idxsJJ], y=pmy[idxsJJ], pbase=rep("A", times=nbrOfProbesJJ), tbase=rep("T", times=nbrOfProbesJJ), atom=atom, indexpos=indexpos, groupdirection="sense", natoms=nbrOfProbesJJ, ncellsperatom=1L); 
+        unitGroups[[1L]] <- list(x=pmx[idxsJJ], y=pmy[idxsJJ], pbase=rep("A", times=nbrOfProbesJJ), tbase=rep("T", times=nbrOfProbesJJ), atom=atom, indexpos=indexpos, groupdirection="sense", natoms=nbrOfProbesJJ, ncellsperatom=1L);
       } else {
         # PM+MM
-        unitGroups[[1L]] <- list(x=c(pmx[idxsJJ],mmx[idxsJJ]), y=c(pmy[idxsJJ],mmy[idxsJJ]), pbase=rep("A", times=2*nbrOfProbesJJ), tbase=rep(c("T","A"), each=nbrOfProbesJJ), atom=rep(atom, times=2), indexpos=rep(indexpos, times=2), groupdirection="sense", natoms=nbrOfProbesJJ, ncellsperatom=2L); 
+        unitGroups[[1L]] <- list(x=c(pmx[idxsJJ],mmx[idxsJJ]), y=c(pmy[idxsJJ],mmy[idxsJJ]), pbase=rep("A", times=2*nbrOfProbesJJ), tbase=rep(c("T","A"), each=nbrOfProbesJJ), atom=rep(atom, times=2), indexpos=rep(indexpos, times=2), groupdirection="sense", natoms=nbrOfProbesJJ, ncellsperatom=2L);
       }
 
       groupNames <- sprintf("%sFROM%sTO%s", chrII, spJJ[1L], spJJ[nbrOfProbesJJ]);
@@ -475,7 +474,7 @@ setMethodS3("bpmapCluster2Cdf", "default", function(pathname, chipType, tags=NUL
 
   # Write to a temporary file
   pathnameT <- pushTemporaryFile(cdfPathname, verbose=verbose);
- 
+
   writeCdf(pathnameT, cdfheader=cdfHeader, cdf=cdfList, cdfqc=NULL, overwrite=TRUE, verbose=verbose);
 
   # Rename temporary file
@@ -519,7 +518,7 @@ setMethodS3("bpmapCluster2Cdf", "default", function(pathname, chipType, tags=NUL
 # 2011-08-30 [HB]
 # o Now bpmapCluster2Cdf() returns the pathname to the created CDF.
 # 2011-08-29 [HB]
-# o Replaced argument 'cdfName' with 'chipType' and 'tags'.  This 
+# o Replaced argument 'cdfName' with 'chipType' and 'tags'.  This
 #   simplifies adding custom tags to the CDF.
 #   It will also allow us (later) to write the CDF to the correct
 #   annotationData/ directory.
@@ -527,9 +526,9 @@ setMethodS3("bpmapCluster2Cdf", "default", function(pathname, chipType, tags=NUL
 #   to a temporary file which is then renamed.
 # o GENERALIZATION/ROBUSTNESS: Now the method precount the number of
 #   CDF units so it can allocate a CDF tree structure of the correct size.
-# o GENERALIZATION: Now the default value of argument 'groupName' is 
+# o GENERALIZATION: Now the default value of argument 'groupName' is
 #   more general.  Before it was hardcoded to "Hs".
-# o GENERALIZATION: Now the default value of argument 'stringRemove' is 
+# o GENERALIZATION: Now the default value of argument 'stringRemove' is
 #   more general.  Before it was hardcoded to a particular BPMAP file.
 # o DOCUMENTATION: Added some basic Rdoc documentation.
 # o Added more verbose progress output.

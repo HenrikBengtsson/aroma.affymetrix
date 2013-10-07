@@ -1,6 +1,12 @@
 setMethodS3("extractTheta", "SnpCnvQSet", function(this, ..., transform=function(y, ...) { 2^y }, addNames=TRUE, verbose=FALSE) {
   eSet <- this;
 
+  # To please R CMD check
+  ns <- loadNamespace("oligo");
+  thetaA <- get("thetaA", mode="function", envir=ns);
+  thetaB <- get("thetaB", mode="function", envir=ns);
+
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -9,12 +15,12 @@ setMethodS3("extractTheta", "SnpCnvQSet", function(this, ..., transform=function
   if (verbose) {
     pushState(verbose);
     on.exit(popState(verbose));
-  } 
+  }
 
 
   nbrOfUnits <- nrow(eSet);
   nbrOfSamples <- ncol(eSet);
-  nbrOfGroups <- 2;  # (thetaA, thetaB)
+  nbrOfGroups <- 2L;  # (thetaA, thetaB)
 
   # Extract sample names
   sampleNames <- sampleNames(eSet);
@@ -27,13 +33,13 @@ setMethodS3("extractTheta", "SnpCnvQSet", function(this, ..., transform=function
   # Allocate result object
   naValue <- as.double(NA);
   theta <- array(naValue, dim=c(nbrOfUnits, nbrOfGroups, nbrOfSamples));
-  dimnames(theta)[[3]] <- sampleNames;
+  dimnames(theta)[[3L]] <- sampleNames;
   if (addNames)
-    dimnames(theta)[[1]] <- snpNames;
+    dimnames(theta)[[1L]] <- snpNames;
 
   # Populate with estimates
-  theta[,1,] <- transform(oligo:::thetaA(eSet));
-  theta[,2,] <- transform(oligo:::thetaB(eSet));
+  theta[,1L,] <- transform(thetaA(eSet));
+  theta[,2L,] <- transform(thetaB(eSet));
 
   theta;
 })

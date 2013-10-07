@@ -304,6 +304,19 @@ setMethodS3("findUnitsTodo", "CrlmmModel", function(this, units=NULL, safe=TRUE,
 setMethodS3("fit", "CrlmmModel", function(this, units="remaining", force=FALSE, ram=NULL, ..., verbose=FALSE) {
   require("oligo") || throw("Package not loaded: oligo");
 
+  # To please R CMD check
+  ns <- loadNamespace("oligo");
+  fitAffySnpMixture <- get("fitAffySnpMixture", mode="function", envir=ns);
+  getInitialAffySnpCalls <- get("getInitialAffySnpCalls", mode="function", envir=ns);
+  getAffySnpGenotypeRegionParams <- get("getAffySnpGenotypeRegionParams", mode="function", envir=ns);
+  getGenotypeRegionParams <- get("getGenotypeRegionParams", mode="function", envir=ns);
+  updateAffySnpParams <- get("updateAffySnpParams", mode="function", envir=ns);
+  replaceAffySnpParams <- get("replaceAffySnpParams", mode="function", envir=ns);
+  getAffySnpDistance <- get("getAffySnpDistance", mode="function", envir=ns);
+  getAffySnpCalls <- get("getAffySnpCalls", mode="function", envir=ns);
+  getAffySnpConfidence <- get("getAffySnpConfidence", mode="function", envir=ns);
+  getAffySnpGenotypeRegionParams <- get("getAffySnpGenotypeRegionParams", mode="function", envir=ns);
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local functions
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -326,6 +339,11 @@ setMethodS3("fit", "CrlmmModel", function(this, units="remaining", force=FALSE, 
   } else {
     # For oligo v1.11.x and older
 
+    # To please R CMD check
+    ns <- loadNamespace("oligo");
+    thetaA <- get("thetaA", mode="function", envir=ns);
+    thetaB <- get("thetaB", mode="function", envir=ns);
+
     extractESet <- function(..., hasQuartets=TRUE) {
       if (hasQuartets) {
         eSet <- extractSnpQSet(...);
@@ -336,7 +354,7 @@ setMethodS3("fit", "CrlmmModel", function(this, units="remaining", force=FALSE, 
     } # extractESet()
 
     extractLogRatios <- function(eSet, ...) {
-      M <- oligo:::thetaA(eSet) - oligo:::thetaB(eSet);
+      M <- thetaA(eSet) - thetaB(eSet);
       M;
     } # extractLogRatios()
   }
@@ -521,7 +539,7 @@ setMethodS3("fit", "CrlmmModel", function(this, units="remaining", force=FALSE, 
     verbose && exit(verbose);
 
     verbose && enter(verbose, "Fitting SNP mixtures");
-    correction <- oligo:::fitAffySnpMixture(eSet, verbose=as.logical(verbose));
+    correction <- fitAffySnpMixture(eSet, verbose=as.logical(verbose));
     verbose && str(verbose, correction);
     verbose && cat(verbose, "SNR per array:");
     verbose && str(verbose, as.vector(correction$snr));
@@ -539,7 +557,7 @@ setMethodS3("fit", "CrlmmModel", function(this, units="remaining", force=FALSE, 
         # default to sqsClass="SnpQSet" regardless of the class of 'eSet'.
         # See oligo:::justCRLMMv3() of oligo v1.12.0. /HB 2010-05-06
         verbose && str(verbose, correction);
-        calls[index,] <- oligo:::getInitialAffySnpCalls(correction, subset=index, verbose=as.logical(verbose));
+        calls[index,] <- getInitialAffySnpCalls(correction, subset=index, verbose=as.logical(verbose));
       } else {
         throw("Not implemented for GWS chip types");
       }
@@ -552,10 +570,10 @@ setMethodS3("fit", "CrlmmModel", function(this, units="remaining", force=FALSE, 
       # NOTE: Do not specify sqsClass=class(eSet). Instead it should
       # default to sqsClass="SnpQSet" regardless of the class of 'eSet'.
       # See oligo:::justCRLMMv3() of oligo v1.12.0. /HB 2010-05-06
-      rparams <- oligo:::getAffySnpGenotypeRegionParams(eSet, initialcalls=calls, f=correction$fs, subset=index, verbose=as.logical(verbose));
+      rparams <- getAffySnpGenotypeRegionParams(eSet, initialcalls=calls, f=correction$fs, subset=index, verbose=as.logical(verbose));
     } else {
       M <- extractLogRatios(eSet);
-      rparams <- oligo:::getGenotypeRegionParams(M, calls, correction$fs, verbose=as.logical(verbose));
+      rparams <- getGenotypeRegionParams(M, calls, correction$fs, verbose=as.logical(verbose));
     }
     verbose && exit(verbose);
 
@@ -570,16 +588,16 @@ setMethodS3("fit", "CrlmmModel", function(this, units="remaining", force=FALSE, 
       for (ss in 1:2) {
         oneStrand[is.na(M[,ss])] <- ss;
       }
-      rparams <- oligo:::updateAffySnpParams(rparams, priors, oneStrand, verbose=as.logical(verbose));
-      params  <- oligo:::replaceAffySnpParams(params, rparams, index);
-      dist <- oligo:::getAffySnpDistance(eSet, params, correction$fs);
+      rparams <- updateAffySnpParams(rparams, priors, oneStrand, verbose=as.logical(verbose));
+      params  <- replaceAffySnpParams(params, rparams, index);
+      dist <- getAffySnpDistance(eSet, params, correction$fs);
       dist[,,-2,] <- balance*dist[,,-2,];
       verbose && exit(verbose);
     } else {
       verbose && enter(verbose, "Updating genotype regions");
-      rparams <- oligo:::updateAffySnpParams(rparams, priors, verbose=as.logical(verbose));
-      params  <- oligo:::replaceAffySnpParams(params, rparams, index);
-      dist <- oligo:::getAffySnpDistance(eSet, params, correction$fs);
+      rparams <- updateAffySnpParams(rparams, priors, verbose=as.logical(verbose));
+      params  <- replaceAffySnpParams(params, rparams, index);
+      dist <- getAffySnpDistance(eSet, params, correction$fs);
       dist[,,-2] <- balance*dist[,,-2];
       verbose && exit(verbose);
     }
@@ -590,8 +608,8 @@ setMethodS3("fit", "CrlmmModel", function(this, units="remaining", force=FALSE, 
     # NOTE: Do not specify sqsClass=class(eSet). Instead it should
     # default to sqsClass="SnpQSet" regardless of the class of 'eSet'.
     # See oligo:::justCRLMMv3() of oligo v1.12.0. /HB 2010-05-06
-    calls <- oligo:::getAffySnpCalls(dist, indexX, maleIndex, verbose=as.logical(verbose));
-    llr <- oligo:::getAffySnpConfidence(dist, calls, indexX, maleIndex, verbose=as.logical(verbose));
+    calls <- getAffySnpCalls(dist, indexX, maleIndex, verbose=as.logical(verbose));
+    llr <- getAffySnpConfidence(dist, calls, indexX, maleIndex, verbose=as.logical(verbose));
 
     if (recalibrate) {
       verbose && enter(verbose, "Recalibrating");
@@ -606,12 +624,12 @@ setMethodS3("fit", "CrlmmModel", function(this, units="remaining", force=FALSE, 
       # Why exactly 3.675?!? /HB 2009-01-12
       calls[,(correction$snr < 3.675)] <- naValue;
 
-      rparams <- oligo:::getAffySnpGenotypeRegionParams(eSet, calls, correction$fs, verbose=as.logical(verbose));
+      rparams <- getAffySnpGenotypeRegionParams(eSet, calls, correction$fs, verbose=as.logical(verbose));
       # Not needed anymore
       calls <- NULL;
 
-      rparams <- oligo:::updateAffySnpParams(rparams, priors, oneStrand);
-      dist <- oligo:::getAffySnpDistance(eSet, rparams, correction$fs, verbose=as.logical(verbose));
+      rparams <- updateAffySnpParams(rparams, priors, oneStrand);
+      dist <- getAffySnpDistance(eSet, rparams, correction$fs, verbose=as.logical(verbose));
       if (hasQuartets) {
         dist[,,-2,] <- balance*dist[,,-2,];
       } else {
@@ -619,8 +637,8 @@ setMethodS3("fit", "CrlmmModel", function(this, units="remaining", force=FALSE, 
       }
       # Not needed anymore
       oneStrand <- NULL;
-      calls <- oligo:::getAffySnpCalls(dist, indexX, maleIndex, verbose=as.logical(verbose));
-      llr <- oligo:::getAffySnpConfidence(dist, calls, indexX, maleIndex, verbose=as.logical(verbose));
+      calls <- getAffySnpCalls(dist, indexX, maleIndex, verbose=as.logical(verbose));
+      llr <- getAffySnpConfidence(dist, calls, indexX, maleIndex, verbose=as.logical(verbose));
       verbose && exit(verbose);
     } # if (recalibrate)
 

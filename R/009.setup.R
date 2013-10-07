@@ -1,4 +1,8 @@
 .setupAromaAffymetrix <- function(pkg, ...) {
+  # To please R CMD check
+  ns <- getNamespace("aroma.core");
+  .requireBiocPackage <- get(".requireBiocPackage", mode="function", envir=ns);
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Patches
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -8,10 +12,10 @@
   # Bioconductor packages aroma.light and affxparser
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # require("aroma.light") - install if missing
-  aroma.core:::.requireBiocPackage("aroma.light", neededBy=getName(pkg));
+  .requireBiocPackage("aroma.light", neededBy=getName(pkg));
 
   # require("affxparser") - install if missing
-  aroma.core:::.requireBiocPackage("affxparser", neededBy=getName(pkg));
+  .requireBiocPackage("affxparser", neededBy=getName(pkg));
 
   # Make sure 'affxparser' is after 'aroma.affymetrix' on the search path
   from <- "package:affxparser";

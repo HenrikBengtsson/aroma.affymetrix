@@ -2,11 +2,11 @@ Package: aroma.affymetrix
 =========================
 
 Version: 2.10.3 [2013-10-07]
+o CLEANUP: No longer need to attach R.utils for backward compatibility.
 o CLEANUP: Package no longer apply downloaded package patches.
 o CLEANUP: Deprecated patch() for AromaAffymetrix.
 o CLEANUP: Now explicitly importing only what is needed in NAMESPACE.
-o BACKWARD COMPATIBILITY: For R (< 3.0.2) only the maximum of 500 
-  S3 methods are declared in NAMESPACE.
+o CLEANUP: No longer uses ':::' for accessing 'oligo' functions.
 o Updated package dependences.
 
 

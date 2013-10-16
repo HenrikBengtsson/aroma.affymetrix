@@ -33,7 +33,7 @@
 # @author "HB, KS"
 #
 # \seealso{
-#   @see "aroma.light::normalizeQuantile.numeric"
+#   @see "aroma.light::normalizeQuantile"
 #   @seeclass
 # }
 #*/###########################################################################

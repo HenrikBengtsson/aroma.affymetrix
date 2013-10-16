@@ -1,6 +1,11 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 2.11.0 [2013-10-16]
+o Updated package dependences.
+o Package now requires R (>= 2.15.0) [and Bioc (>= 2.10.0)].
+
+
 Version: 2.10.3 [2013-10-07]
 o CLEANUP: No longer need to attach R.utils for backward compatibility.
 o CLEANUP: Package no longer apply downloaded package patches.

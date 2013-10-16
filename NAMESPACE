@@ -208,7 +208,6 @@ importFrom("R.filesets", "getSets")
 importFrom("R.filesets", "hasTag")
 importFrom("R.filesets", "indexOf")
 importFrom("R.filesets", "readColumns")
-importFrom("R.filesets", "readLines") ## Multi-sources: R.filesets, base
 importFrom("R.filesets", "readRawHeader")
 importFrom("R.filesets", "renameTo")
 importFrom("R.filesets", "setAttributesBy")
@@ -216,7 +215,6 @@ importFrom("R.filesets", "setAttributesByTags")
 importFrom("R.methodsS3", "appendVarArgs")
 importFrom("R.oo", "attachLocally")
 importFrom("R.oo", "equals")
-importFrom("R.oo", "gc") ## Multi-sources: R.oo, base
 importFrom("R.oo", "getDate")
 importFrom("R.oo", "getEnvironment")
 importFrom("R.oo", "getKnownSubclasses")
@@ -249,7 +247,6 @@ importFrom("R.utils", "getThreshold")
 importFrom("R.utils", "hasOption")
 importFrom("R.utils", "hpaste")
 importFrom("R.utils", "increase")
-importFrom("R.utils", "inherits") ## Multi-sources: R.utils, base
 importFrom("R.utils", "insert")
 importFrom("R.utils", "isDirectory")
 importFrom("R.utils", "isDone")
@@ -262,7 +259,6 @@ importFrom("R.utils", "loadObject")
 importFrom("R.utils", "loadToEnv")
 importFrom("R.utils", "more")
 importFrom("R.utils", "moveInSearchPath")
-importFrom("R.utils", "parse") ## Multi-sources: R.utils, base
 importFrom("R.utils", "popState")
 importFrom("R.utils", "popTemporaryFile")
 importFrom("R.utils", "printf")
@@ -277,14 +273,24 @@ importFrom("R.utils", "stext")
 importFrom("R.utils", "subplots")
 importFrom("R.utils", "toAsciiRegExprPattern")
 importFrom("R.utils", "toCamelCase")
-importFrom("R.utils", "warnings") ## Multi-sources: R.utils, base
 importFrom("R.utils", "wrap")
 importFrom("R.utils", "writeRaw")
+
+## Manually adjusted
+## Cannot import explicitly from 'base';
+## importFrom("base", "parse") ## Multi-sources: R.utils, R.rsp, base
+## importFrom("base", "readLines") ## Multi-sources: R.filesets, base
+## importFrom("base", "gc") ## Multi-sources: R.oo, base
+## importFrom("base", "warnings") ## Multi-sources: R.utils, base
+## importFrom("inherits", "inherits") ## Multi-sources: R.utils, base
 
 ## Manual imports
 importFrom("R.utils", "Arguments")
 importFrom("R.filesets", "append")
-
+if (packageVersion("R.utils") < "1.27.5") {
+  importFrom("R.utils", "cat.default")
+  importFrom("R.utils", "getOption.default")
+}
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Several packages are only optional or suggested for now, so
@@ -366,9 +372,6 @@ if (FALSE) {
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # EXPORTS
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# Object that must exported explicitly
-export(.conflicts.OK)
-
 # Export all public methods, that is, those without a preceeding dot
 # in their names.
 exportPattern("^[^\\.]")

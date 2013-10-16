@@ -47,7 +47,7 @@
 \author{Henrik Bengtsson, Ken Simpson}
 
 \seealso{
-  \code{\link[aroma.light]{normalizeQuantile.numeric}}
+  \code{\link[aroma.light]{normalizeQuantile}}
   For more information see \code{\link{AffymetrixCelFile}}.
 }
 \keyword{internal}

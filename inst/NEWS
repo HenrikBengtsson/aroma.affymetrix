@@ -1,7 +1,7 @@
 Package: aroma.affymetrix
 =========================
 
-Version: 2.11.0 [2013-10-16]
+Version: 2.11.0 [2013-10-17]
 o Updated package dependences.
 o Package now requires R (>= 2.15.0) [and Bioc (>= 2.10.0)].
 

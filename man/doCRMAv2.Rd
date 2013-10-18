@@ -39,10 +39,10 @@
  \item{lengthRange}{An optional \code{\link[base]{numeric}} vector of length two passed
   to \code{\link{FragmentLengthNormalization}}.}
  \item{arrays}{A \code{\link[base]{integer}} \code{\link[base]{vector}} specifying the subset of arrays
-  to run RMA on.  If \code{\link[base]{NULL}}, all arrays are considered.}
+  to process.  If \code{\link[base]{NULL}}, all arrays are considered.}
  \item{plm}{A \code{\link[base]{character}} string specifying which type of
   probe-summarization model to used.}
- \item{drop}{If \code{\link[base:logical]{TRUE}}, the RMA summaries are returned, otherwise
+ \item{drop}{If \code{\link[base:logical]{TRUE}}, the summaries are returned, otherwise
   a named \code{\link[base]{list}} of all intermediate and final results.}
  \item{verbose}{See \code{\link{Verbose}}.}
  \item{...}{Additional arguments used to set up \code{\link{AffymetrixCelSet}} (when argument \code{dataSet} is specified).}
@@ -50,7 +50,7 @@
 
 \value{
   Returns a named \code{\link[base]{list}}, iff \code{drop == FALSE}, otherwise
-  only \code{\link{ChipEffectSet}} object (containing the RMA summaries).
+  only \code{\link{ChipEffectSet}} object.
 }
 
 \section{Allele-specific or only total-SNP signals}{

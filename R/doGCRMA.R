@@ -21,7 +21,7 @@
 # \arguments{
 #  \item{csR, dataSet}{An @see "AffymetrixCelSet" (or the name of an @see "AffymetrixCelSet").}
 #  \item{arrays}{A @integer @vector specifying the subset of arrays
-#   to run RMA on.  If @NULL, all arrays are considered.}
+#   to process.  If @NULL, all arrays are considered.}
 #  \item{type}{A @character string specifying what type of model to
 #   use for the GCRMA background correction.
 #   For more details, see @see "GcRmaBackgroundCorrection".}
@@ -29,7 +29,7 @@
 #   is done on probeset with \emph{unique} sets of probes.
 #   If @FALSE, the summarization is done on "as-is" probesets as
 #   specified by the CDF.}
-#  \item{drop}{If @TRUE, the RMA summaries are returned, otherwise
+#  \item{drop}{If @TRUE, the summaries are returned, otherwise
 #   a named @list of all intermediate and final results.}
 #  \item{verbose}{See @see "Verbose".}
 #  \item{...}{Additional arguments used to set up @see "AffymetrixCelSet" (when argument \code{dataSet} is specified).}
@@ -37,7 +37,7 @@
 #
 # \value{
 #   Returns a named @list, iff \code{drop == FALSE}, otherwise
-#   only @see "ChipEffectSet" object (containing the RMA summaries).
+#   only @see "ChipEffectSet" object.
 # }
 #
 # \references{

@@ -28,8 +28,8 @@
 #  \item{lengthRange}{An optional @numeric vector of length two passed
 #   to @see "FragmentLengthNormalization".}
 #  \item{arrays}{A @integer @vector specifying the subset of arrays
-#   to run RMA on.  If @NULL, all arrays are considered.}
-#  \item{drop}{If @TRUE, the RMA summaries are returned, otherwise
+#   to process.  If @NULL, all arrays are considered.}
+#  \item{drop}{If @TRUE, the summaries are returned, otherwise
 #   a named @list of all intermediate and final results.}
 #  \item{verbose}{See @see "Verbose".}
 #  \item{...}{Additional arguments used to set up @see "AffymetrixCelSet" (when argument \code{dataSet} is specified).}
@@ -37,7 +37,7 @@
 #
 # \value{
 #   Returns a named @list, iff \code{drop == FALSE}, otherwise
-#   only @see "ChipEffectSet" object (containing the RMA summaries).
+#   only @see "ChipEffectSet" object.
 # }
 #
 #

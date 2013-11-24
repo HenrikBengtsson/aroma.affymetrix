@@ -77,7 +77,6 @@ setMethodS3("as.character", "ResidualFile", function(x, ...) {
 
   s <- NextMethod("as.character");
   s <- c(s, sprintf("Parameters: %s", getParametersAsString(this)));
-  class(s) <- "GenericSummary";
   s;
 }, protected=TRUE)
 

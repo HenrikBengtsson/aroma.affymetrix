@@ -56,7 +56,6 @@ setMethodS3("as.character", "DChipQuantileNormalization", function(x, ...) {
   n <- nbrOfCells(getCdf(getInputDataSet(this)));
   s <- c(s, sprintf("Number of cells excluded (when fitting): %d (%.1f%%)",
                                                          nExcl, 100*nExcl/n));
-  class(s) <- "GenericSummary";
   s;
 }, protected=TRUE)
 

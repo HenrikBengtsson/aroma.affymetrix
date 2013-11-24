@@ -28,12 +28,10 @@ setMethodS3("as.character", "AffymetrixCnChpFile", function(x, ...) {
   this <- x;
 
   s <- NextMethod("as.character");
-  class <- class(s);
   s <- c(s, sprintf("File format: %s", getFileFormat(this)));
   s <- c(s, sprintf("Chip type: %s", getChipType(getCdf(this))));
   s <- c(s, sprintf("Timestamp: %s", as.character(getTimestamp(this))));
   s <- c(s, sprintf("Unit read map: %s", capture.output(str(getUnitReadMap(this)))));
-  class(s) <- class;
   s;
 }, protected=TRUE)
 

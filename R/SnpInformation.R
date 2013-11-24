@@ -36,7 +36,6 @@ setMethodS3("as.character", "SnpInformation", function(x, ...) {
   s <- NextMethod("as.character");
   s <- c(s, sprintf("Chip type: %s", getChipType(this)));
   s <- c(s, sprintf("Number of enzymes: %s", nbrOfEnzymes(this)));
-  class(s) <- "GenericSummary";
   s;
 }, protected=TRUE)
 

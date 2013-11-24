@@ -37,13 +37,10 @@ setMethodS3("as.character", "DChipCdfBinFile", function(x, ...) {
   this <- x;
 
   s <- NextMethod("as.character");
-  class <- class(s);
   s <- c(s, sprintf("Chip type: %s", getChipType(this)));
   s <- c(s, sprintf("File format: %s", getFileFormat(this)));
   s <- c(s, sprintf("Number of cells: %s", nbrOfCells(this)));
   s <- c(s, sprintf("Number of units: %s", nbrOfUnits(this)));
-
-  class(s) <- class;
   s;
 }, protected=TRUE)
 

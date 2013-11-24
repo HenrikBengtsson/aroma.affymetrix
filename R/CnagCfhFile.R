@@ -62,7 +62,6 @@ setMethodS3("as.character", "CnagCfhFile", function(x, ...) {
   s <- NextMethod("as.character");
   s <- c(s, sprintf("Chip type: %s", getChipType(getCdf(this))));
   s <- c(s, sprintf("Timestamp: %s", as.character(getTimestamp(this))));
-  class(s) <- "GenericSummary";
   s;
 }, protected=TRUE)
 

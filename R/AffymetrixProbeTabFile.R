@@ -58,8 +58,6 @@ setMethodS3("as.character", "AffymetrixProbeTabFile", function(x, ...) {
   this <- x;
 
   s <- NextMethod("as.character");
-  class <- class(s);
-
 #  s <- sprintf("%s:", class(this)[1]);
 #  s <- c(s, sprintf("Name: %s", getName(this)));
 #  tags <- getTags(this);
@@ -71,8 +69,6 @@ setMethodS3("as.character", "AffymetrixProbeTabFile", function(x, ...) {
 #  s <- c(s, sprintf("RAM: %.2fMB", objectSize(this)/1024^2));
   cdf <- getCdf(this);
   s <- c(s, as.character(cdf));
-
-  class(s) <- class;
   s;
 }, protected=TRUE)
 

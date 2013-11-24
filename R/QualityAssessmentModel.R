@@ -50,8 +50,7 @@ setMethodS3("as.character", "QualityAssessmentModel", function(x, ...) {
   s <- c(s, "Chip-effect set:");
   s <- c(s, paste("   ", as.character(getChipEffectSet(this))));
   s <- c(s, sprintf("RAM: %.2fMB", objectSize(this)/1024^2));
-  class(s) <- "GenericSummary";
-  s;
+  GenericSummary(s);
 }, protected=TRUE)
 
 

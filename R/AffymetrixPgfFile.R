@@ -61,14 +61,10 @@ setMethodS3("as.character", "AffymetrixPgfFile", function(x, ...) {
   this <- x;
 
   s <- NextMethod("as.character");
-  class <- class(s);
-
   s <- c(s, sprintf("Dimension: %s", paste(getDimension(this), collapse="x")));
   s <- c(s, sprintf("Number of cells: %d", nbrOfCells(this)));
   s <- c(s, sprintf("Number of units: %d", nbrOfUnits(this)));
   s <- c(s, sprintf("Cells per unit: %.2f", nbrOfCells(this)/nbrOfUnits(this)));
-  class(s) <- class;
-
   s;
 }, protected=TRUE)
 

@@ -59,7 +59,6 @@ setMethodS3("as.character", "SmoothMultiarrayModel", function(x, ...) {
   s <- NextMethod("as.character");
   s <- c(s, sprintf("Kernel: %s", this$.kernel));
   s <- c(s, sprintf("Bandwidth: %.2fkb", getBandwidth(this)/1e3));
-  class(s) <- "GenericSummary";
   s;
 }, protected=TRUE)
 

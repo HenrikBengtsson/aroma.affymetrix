@@ -117,7 +117,6 @@ setMethodS3("as.character", "AffymetrixCelFile", function(x, ...) {
   s <- c(s, sprintf("Platform: %s", getPlatform(this)));
   s <- c(s, sprintf("Chip type: %s", getChipType(this)));
   s <- c(s, sprintf("Timestamp: %s", as.character(getTimestamp(this))));
-  class(s) <- "GenericSummary";
   s;
 }, protected=TRUE)
 

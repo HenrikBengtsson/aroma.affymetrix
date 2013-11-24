@@ -57,8 +57,7 @@ setMethodS3("as.character", "ArrayExplorer", function(x, ...) {
   s <- c(s, paste("Color maps:", colorMaps));
   s <- c(s, sprintf("Main path: %s", getMainPath(this)));
   s <- c(s, sprintf("RAM: %.2fMB", objectSize(this)/1024^2));
-  class(s) <- "GenericSummary";
-  s;
+  GenericSummary(s);
 }, protected=TRUE)
 
 

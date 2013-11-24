@@ -76,8 +76,7 @@ setMethodS3("as.character", "Model", function(x, ...) {
   s <- c(s, sprintf("Parameters: %s", getParametersAsString(this)));
   s <- c(s, sprintf("Path: %s", getPath(this)));
   s <- c(s, sprintf("RAM: %.2fMB", objectSize(this)/1024^2));
-  class(s) <- "GenericSummary";
-  s;
+  GenericSummary(s);
 }, protected=TRUE)
 
 

@@ -82,8 +82,6 @@ setMethodS3("as.character", "AffymetrixCdfFile", function(x, ...) {
   this <- x;
 
   s <- NextMethod("as.character");
-  class <- class(s);
-
   s <- c(s, sprintf("File format: %s", getFileFormat(this)));
   s <- c(s, sprintf("Dimension: %s", paste(getDimension(this), collapse="x")));
   s <- c(s, sprintf("Number of cells: %d", nbrOfCells(this)));
@@ -95,8 +93,6 @@ setMethodS3("as.character", "AffymetrixCdfFile", function(x, ...) {
   # Requires that unit names are read:
 #  s <- c(s, sprintf("Number of AFFX- units: %d", length(indexOf(this, "^AFFX-"))));
   s <- c(s, sprintf("Number of QC units: %d", nbrOfQcUnits(this)));
-  class(s) <- class;
-
   s;
 }, protected=TRUE)
 

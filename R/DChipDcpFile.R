@@ -41,20 +41,16 @@ setMethodS3("as.character", "DChipDcpFile", function(x, ...) {
   this <- x;
 
   s <- NextMethod("as.character");
-  class <- class(s);
   s <- c(s, sprintf("File format: %s", getFileFormat(this)));
   s <- c(s, sprintf("Number of cells: %s", nbrOfCells(this)));
   s <- c(s, sprintf("Number of units: %s", nbrOfUnits(this)));
   s <- c(s, sprintf("Has normalized data: %s", hasNormalizedData(this)));
   s <- c(s, sprintf("Has MBEI estimates: %s", hasMbeiData(this)));
-
   # Has CDF?
 #  cdf <- getCdf(this);
 #  if (!is.null(cdf)) {
 #    s <- c(s, sprintf("Chip type: %s", getChipType(cdf)));
 #  }
-
-  class(s) <- class;
   s;
 }, protected=TRUE)
 

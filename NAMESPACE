@@ -287,10 +287,7 @@ importFrom("R.utils", "writeRaw")
 ## Manual imports
 importFrom("R.utils", "Arguments")
 importFrom("R.filesets", "append")
-if (packageVersion("R.utils") < "1.27.5") {
-  importFrom("R.utils", "cat.default")
-  importFrom("R.utils", "getOption.default")
-}
+
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Several packages are only optional or suggested for now, so

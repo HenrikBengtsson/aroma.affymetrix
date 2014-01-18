@@ -122,8 +122,6 @@ print(ugp);
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # WHAT'S NEW:
 #
-# o na32 -> na33 (hg19, dbSNP 132 -> dbSNP 137)
-#   No differences.
 # o na31 -> na32 (hg19, dbSNP 131 -> dbSNP 132)
 #   89 SNPs have jumped chromosomes. 422 SNPs have moved within
 #   chromosomes.  This is most likely due to updates in dbSNP.
@@ -143,21 +141,11 @@ print(ugp);
 #   - an additional 23 loci changed positions, of which only 17 moved
 #     more than 2 base pairs.
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-ugp <- AromaUgpFile$byChipType("GenomeWideSNP_6,Full", tags="na33");
-ugp0 <- AromaUgpFile$byChipType("GenomeWideSNP_6,Full", tags="na32");
+ugp <- AromaUgpFile$byChipType("GenomeWideSNP_6,Full", tags="na32");
+ugp0 <- AromaUgpFile$byChipType("GenomeWideSNP_6,Full", tags="na31");
 
 print(table(ugp[,1], exclude=NULL));
 print(table(ugp0[,1], exclude=NULL));
-
-## GenomeWideSNP_6,Full,na33,hg19,dbSNP137,HB20140117
-##      1      2      3      4      5      6      7      8
-## 146458 153641 127776 120351 115709 112858 100828  98274
-##      9     10     11     12     13     14     15     16
-##  82178  93627  89604  87336  66091  57118  53554  54181
-##     17     18     19     20     21     22     23     24
-##  46590  52103  30362  43647  25091  24405  87102   9442
-##     25   <NA>
-##    411   2678
 
 ## GenomeWideSNP_6,Full,na32,hg19,dbSNP132,HB20140118
 ##      1      2      3      4      5      6      7      8
@@ -180,11 +168,16 @@ print(table(ugp0[,1], exclude=NULL));
 ##    455   1928
 
 
-
 units <- whichVector(ugp[,1] != ugp0[,1]);
 str(units);
-## int(0)
+## int [1:89] 21988 82781 87809 126538 136736 177753 229045 245246 ...
+table(getUnitTypes(cdf, units))
+##  2
+## 89
 
 units <- whichVector(ugp[,2] != ugp0[,2]);
 str(units);
-## int(0)
+## int [1:422] 494846 494847 494848 494849 494850 494851 494852 494853 ...
+table(getUnitTypes(cdf, units))
+##   2
+## 422

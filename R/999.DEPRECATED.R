@@ -20,20 +20,6 @@ setMethodS3("[[", "AffymetrixCelFile", function(this, unit=NULL) {
 }, protected=TRUE, deprecated=TRUE)
 
 
-setMethodS3("[", "AffymetrixCelSet", function(this, units=NULL, ..., drop=FALSE) {
-  .Defunct("readUnits");
-  res <- readUnits(this, units=units, ...);
-  if (drop && length(res) == 1)
-    res <- res[[1]];
-  res;
-}, protected=TRUE, deprecated=TRUE)
-
-setMethodS3("[[", "AffymetrixCelSet", function(this, units=NULL, ...) {
-  .Defunct("readUnits");
-  this[units=units, ..., drop=TRUE];
-}, protected=TRUE, deprecated=TRUE)
-
-
 setMethodS3("[", "CnagCfhFile", function(this, units=NULL, alleles=NULL, drop=FALSE) {
   .Defunct("readUnits");
   data <- readUnits(this, units=units);
@@ -50,21 +36,6 @@ setMethodS3("[[", "CnagCfhFile", function(this, unit=NULL) {
   .Defunct("readUnits");
   this[units=unit, drop=TRUE];
 }, protected=TRUE, deprecated=TRUE)
-
-
-setMethodS3("[", "CnagCfhSet", function(this, units=NULL, ..., drop=FALSE) {
-  .Defunct("readUnits");
-  res <- readUnits(this, units=units, ...);
-  if (drop && length(res) == 1)
-    res <- res[[1]];
-  res;
-}, protected=TRUE, deprecated=TRUE)
-
-setMethodS3("[[", "CnagCfhSet", function(this, units=NULL, ...) {
-  .Defunct("readUnits");
-  this[units=units, ..., drop=TRUE];
-}, protected=TRUE, deprecated=TRUE)
-
 
 
 setMethodS3("getParameterSet", "Model", function(this, ...) {
@@ -177,6 +148,9 @@ setMethodS3("getData", "AffymetrixCelFile", function(this, ...) {
 
 ############################################################################
 # HISTORY:
+# 2014-01-04
+# o Dropped defunct '[' and '[[' for AffymetrixCelSet and CnagCfhSet,
+#   making ditto for super classes to be used.
 # 2013-04-29
 # o CLEANUP: Made several deprecated methods defunct.
 # 2012-11-20

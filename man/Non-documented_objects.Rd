@@ -13,13 +13,9 @@
 
 % Other missing docs
 \alias{[.AffymetrixCelFile}
-\alias{[.AffymetrixCelSet}
 \alias{[.CnagCfhFile}
-\alias{[.CnagCfhSet}
 \alias{[[.AffymetrixCelFile}
-\alias{[[.AffymetrixCelSet}
 \alias{[[.CnagCfhFile}
-\alias{[[.CnagCfhSet}
 \alias{addColorMap}
 \alias{addColorMap.ArrayExplorer}
 \alias{addColorMap.SpatialReporter}

@@ -1,6 +1,11 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 2.11.2 [2014-01-04]
+o CLEANUP: Dropped defunct methods '[' and '[[' for AffymetrixCelSet 
+  and CnagCfhSet (which have been defunct since 2013-04-29).
+
+
 Version: 2.11.1 [2013-10-17]
 o DOCUMENTATION: Minor tweaks to the help for the doNNN() methods.
 

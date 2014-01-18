@@ -1,5 +1,5 @@
-  [.AffymetrixCelFile [.AffymetrixCelSet [.CnagCfhFile [.CnagCfhSet
-  [[.AffymetrixCelFile [[.AffymetrixCelSet [[.CnagCfhFile [[.CnagCfhSet
+  [.AffymetrixCelFile [.CnagCfhFile
+  [[.AffymetrixCelFile [[.CnagCfhFile 
   addColorMap addColorMap.ArrayExplorer addColorMap.SpatialReporter
   addExclCells addExclCells.DChipQuantileNormalization
   AffymetrixAptSummaryFile AffymetrixCnChpFile AffymetrixCsvFile

@@ -42,7 +42,7 @@ stopifnot(!anyMissing(unitMap));
 # Allocate UFL and UGP for the default CDF
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 naTag <- sprintf("na%s", naVersion);
-tags <- sprintf("%s,%s,dbSNP%d, %s%s", naTag, genomeVersion, dbSNPVersion, user, datestamp);
+tags <- sprintf("%s,%s,dbSNP%d,%s%s", naTag, genomeVersion, dbSNPVersion, user, datestamp);
 
 ufl <- AromaUflFile$byChipType(getChipType(cdf), tags=naTag);
 uflD <- AromaUflFile$allocateFromCdf(cdfD, tags=tags, nbrOfEnzymes=nbrOfEnzymes(ufl));

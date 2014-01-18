@@ -60,7 +60,7 @@ print(csvList);
 
 genomeVersion <- getHeaderAttributes(csvList[[1]])[["genome-version"]];
 genomeVersion <- Arguments$getCharacter(genomeVersion, nchar=4, length=c(1,1));
-dbSNPVersion <- getHeaderAttributes(csvList[[1]])[["dbSNP_version"]];
+dbSNPVersion <- getHeaderAttributes(csvList[[1]])[["dbSNP-version"]];
 dbSNPVersion <- Arguments$getInteger(dbSNPVersion);
 
 

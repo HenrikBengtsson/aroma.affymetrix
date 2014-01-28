@@ -19,7 +19,7 @@ cat("==========================================================\n");
 cat("BEGIN OF SESSION:\n");
 
 cat("Command line arguments:\n");
-args <- commandArgs(asValues=TRUE, excludeReserved=TRUE, excludeEnvVars=TRUE);
+args <- cmdArgs();
 print(args);
 
 printf("Hostname: %s\n", System$getHostname());
@@ -53,7 +53,7 @@ while (kk < 10L) {
   tryCatch({
     library("aroma.affymetrix");
     break;
-  }, error = function(ex) { 
+  }, error = function(ex) {
     print(traceback());
     print(ex);
     # Sleep for a while and try again
@@ -64,10 +64,11 @@ while (kk < 10L) {
 } # while()
 if (kk >= 10L) throw("Failed to load aroma.affymetrix.");
 
-path <- system.file(package="aroma.affymetrix");
-path <- Arguments$getReadablePath(path);
-
-path <- file.path(path, "testScripts/R");
+path <- Arguments$getReadablePath("testScripts/R", mustExist=FALSE);
+if (!isDirectory(path)) {
+  path <- system.file(package="aroma.affymetrix");
+  path <- file.path(path, "testScripts", "R");
+}
 path <- Arguments$getReadablePath(path);
 
 pathname <- file.path(path, "launchUtils.R");
@@ -80,8 +81,8 @@ do.call(launchTestGroups, args);
 
 cat("==========================================================\n");
 cat("END OF SESSION:\n");
-# Override default settings with command line arguments  
-args <- commandArgs(asValues=TRUE, excludeReserved=TRUE, excludeEnvVars=TRUE);
+# Override default settings with command line arguments
+args <- commandArgs(asValues=TRUE);
 print(args);
 
 printf("Hostname: %s\n", System$getHostname());
@@ -110,6 +111,12 @@ cat("==========================================================\n");
 
 ############################################################################
 # HISTORY:
+# 2014-01-28
+# o Now the testScripts/launch.R script looks for a "local"
+#   ./testScripts/R/ directory first before turning to ditto in the
+#   installed packages.
+# o BUG FIX: Using R.utils::cmdArgs(), which also drops the R executable,
+#   which R.utils::commandArgs() used before did not.
 # 2012-11-30
 # o Now outputting session information useful for debugging.
 # 2012-11-21

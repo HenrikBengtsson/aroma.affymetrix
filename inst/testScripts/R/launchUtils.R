@@ -15,7 +15,7 @@ sourceTestScript <- function(pathname, devel=FALSE, ...) {
     on.exit({
       setOption(aromaSettings, key, oopts);
     }, add=TRUE);
-    # Print settings  
+    # Print settings
     print(getOption(aromaSettings, key));
   }
 
@@ -134,7 +134,7 @@ sourceTestGroups <- function(groups, pattern=".*", order=c("auto", "asis", "reve
 
 
 launchTestGroups <- function(groups="system", ...) {
-  sourceTestGroups(groups, ...);
+  sourceTestGroups(groups=groups, ...);
 } # launchTestGroups()
 
 

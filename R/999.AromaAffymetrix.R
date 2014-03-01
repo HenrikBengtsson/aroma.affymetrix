@@ -108,47 +108,6 @@ setMethodS3("update", "AromaAffymetrix", function(object, patch=TRUE, ..., verbo
 
 
 
-setMethodS3("patch", "AromaAffymetrix", function(this, ..., verbose=FALSE) {
-  .Deprecated(msg="Package patching is deprecated. Use update.packages()");
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Validate arguments
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
-  if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
-  }
-
-
-  verbose && enter(verbose, "Checking for and install patches");
-  verbose && cat(verbose, "Package: ", getName(this));
-  verbose && printf(verbose, "Current version: v%s (%s)\n",
-                                        getVersion(this), getDate(this));
-
-
-  state <- 0;
-
-  verbose && enter(verbose, "Trying to download patches");
-  tryCatch({
-    downloadPackagePatch(getName(this), verbose=verbose);
-    state <- 1;
-    verbose && exit(verbose);
-  }, error = function(ex) {
-    verbose && exit(verbose, suffix="failed");
-    throw(ex);
-  })
-
-  verbose && cat(verbose, "Package has been patched.");
-
-  verbose && exit(verbose);
-
-  invisible(state);
-}, protected=TRUE, deprecated=TRUE)
-
-
-
 setMethodS3("getDefaultSettings", "AromaAffymetrix", function(this, ...) {
   defaults <- list(
     memory = list(

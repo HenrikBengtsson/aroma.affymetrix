@@ -1,118 +1,41 @@
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# [() and [[() should be used to extract files (and nothing else)
-#
-# 2012-11-20
-# o CLEANUP: Deprecated "[" and "[[" for AffymetrixCelFile,
-#   AffymetrixCelSet CnagCfhFile, and CnagCfhSet, because they
-#   should be used to subset files (and not units).
+# DEFUNCT (since 2014-02-28)
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-setMethodS3("[", "AffymetrixCelFile", function(this, units=NULL, drop=FALSE) {
-  .Defunct("readUnits");
-  data <- readUnits(this, units=units);
-  if (drop && length(data) == 1)
-    data <- data[[1]];
-  data;
+setMethodS3("patch", "AromaAffymetrix", function(this, ..., verbose=FALSE) {
+  .Defunct(msg="Package patching is deprecated. Use update.packages()");
 }, protected=TRUE, deprecated=TRUE)
 
-setMethodS3("[[", "AffymetrixCelFile", function(this, unit=NULL) {
-  .Defunct("readUnits");
-  this[units=unit, drop=TRUE];
+setMethodS3("getMonoCell", "AffymetrixCdfFile", function(this, ...) {
+  .Defunct("getMonocellCdf");
 }, protected=TRUE, deprecated=TRUE)
 
-
-setMethodS3("[", "CnagCfhFile", function(this, units=NULL, alleles=NULL, drop=FALSE) {
-  .Defunct("readUnits");
-  data <- readUnits(this, units=units);
-  if (!is.null(alleles)) {
-    data <- data[, alleles, drop=drop];
-  } else {
-    if (drop && length(data) == 1)
-      data <- data[[1]];
-  }
-  data;
-}, protected=TRUE, deprecated=TRUE)
-
-setMethodS3("[[", "CnagCfhFile", function(this, unit=NULL) {
-  .Defunct("readUnits");
-  this[units=unit, drop=TRUE];
+setMethodS3("getMatrixChipEffectFiles", "CopyNumberChromosomalModel", function(...) {
+  .Defunct("getDataFileMatrix");
 }, protected=TRUE, deprecated=TRUE)
 
 
+setMethodS3("calculateResiduals", "ProbeLevelModel", function(this, ...) {
+  .Defunct("calculateResidualSet");
+}, private=TRUE, deprecated=TRUE)
+
+
+setMethodS3("calculateResiduals", "FirmaModel", function(this, ...) {
+  .Defunct("calculateResidualSet");
+}, private=TRUE, deprecated=TRUE)
+
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# DEPRECATED
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 setMethodS3("getParameterSet", "Model", function(this, ...) {
   .Deprecated("getParameters");
   getParameters(this, ...);
-}, protected=TRUE)
-
-
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# Misc.
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-setMethodS3("bgAdjustOptical", "AffymetrixCelSet", function(this, ...) {
-  .Defunct("OpticalBackgroundCorrection");
-}, private=TRUE, deprecated=TRUE)
-
-setMethodS3("bgAdjustRma", "AffymetrixCelSet", function(this, ...) {
-  .Defunct("RmaBackgroundCorrection");
-}, private=TRUE, deprecated=TRUE)
-
+}, protected=TRUE, deprecated=TRUE)
 
 setMethodS3("getUnitSizes", "AffymetrixCdfFile", function(this, ...) {
   .Deprecated("nbrOfGroupsPerUnit");
   nbrOfGroupsPerUnit(this, ...);
 }, protected=TRUE, deprecated=TRUE)
-
-
-# 2013-04-29 [HB]
-# o Made getUnique(), createUnique(), createMonoCell(), doCRMA() defunct.
-# 2011-04-15 [HB]
-# o DEPRECATED: getUnique() and createUnique() are deprecated.
-#   Use getUniqueCdf() and createUniqueCdf() instead.
-setMethodS3("getUnique", "AffymetrixCdfFile", function(this, ...) {
-  .Defunct("getUniqueCdf");
-}, protected=TRUE, deprecated=TRUE)
-
-
-setMethodS3("createUnique", "AffymetrixCdfFile", function(this, ...) {
-  .Defunct("createUniqueCdf");
-}, protected=TRUE, deprecated=TRUE)
-
-
-setMethodS3("getMonoCell", "AffymetrixCdfFile", function(this, ...) {
-  .Deprecated("getMonocellCdf");
-}, protected=TRUE, deprecated=TRUE)
-
-
-setMethodS3("createMonoCell", "AffymetrixCdfFile", function(this, ...) {
-  .Defunct("createMonocellCdf");
-}, protected=TRUE, deprecated=TRUE)
-
-
-setMethodS3("getMatrixChipEffectFiles", "CopyNumberChromosomalModel", function(...) {
-  .Deprecated("getDataFileMatrix");
-  getDataFileMatrix(...);
-}, protected=TRUE, deprecated=TRUE)
-
-
-setMethodS3("calculateResiduals", "ProbeLevelModel", function(this, ...) {
-  .Deprecated("calculateResidualSet");
-  calculateResidualSet(this, ...);
-}, private=TRUE)
-
-
-setMethodS3("calculateResiduals", "FirmaModel", function(this, ...) {
-  .Deprecated("calculateResidualSet");
-  calculateResidualSet(this, ...);
-}, private=TRUE)
-
-
-# 2011-11-19
-# o Deprecated doCRMA().  Use doCRMAv1() or doCRMAv2() instead.
-setMethodS3("doCRMA", "default", function(dataSet, chipTypes=NULL, ..., logName=NULL, ram=NULL, verbose=-8) {
-  .Defunct("doCRMAv1");
-}, protected=TRUE, deprecated=TRUE)
-
-
 
 setMethodS3("getExpectedOutputFiles", "MatSmoothing", function(this, ...) {
   .Deprecated("getExpectedOutputFullnames");
@@ -123,17 +46,6 @@ setMethodS3("getExpectedOutputFiles", "MatSmoothing", function(this, ...) {
 
   filenames;
 }, protected=TRUE, deprecated=TRUE)
-
-
-# 2013-04-29
-# o Made PdInfo2Cdf() defunct.
-# 2012-03-23
-# o CLEANUP: Deprecated PdInfo2Cdf() in favor (identical) pdInfo2Cdf(),
-#   because the former does not follow the Aroma naming conventions.
-PdInfo2Cdf <- function(...) {
-  .Defunct("pdInfo2Cdf");
-} # PdInfo2Cdf()
-
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -148,6 +60,12 @@ setMethodS3("getData", "AffymetrixCelFile", function(this, ...) {
 
 ############################################################################
 # HISTORY:
+# 2014-02-28
+# o Remove previously defunct methods.
+# o CLEANUP: Defuncted deprecated patch() for AromaAffymetrix
+#   and getMonoCell() for AffymetrixCdfFile.
+# 2013-10-07
+# o CLEANUP: Deprecated patch() for AromaAffymetrix.
 # 2014-01-04
 # o Dropped defunct '[' and '[[' for AffymetrixCelSet and CnagCfhSet,
 #   making ditto for super classes to be used.

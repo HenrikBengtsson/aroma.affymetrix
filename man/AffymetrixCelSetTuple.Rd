@@ -54,7 +54,7 @@ AffymetrixCelSetTuple(..., .setClass="AffymetrixCelSet")
 
 
  \bold{Methods inherited from AromaMicroarrayDataSetTuple}:\cr
-as, as.AromaMicroarrayDataSetTuple, byPath, getAsteriskTags, getChipTypes, getFullNames, getSets, getTags, indexOf, nbrOfArrays, nbrOfChipTypes
+as, as.AromaMicroarrayDataSetTuple, byPath, getAsteriskTags, getChipTypes, getFullNames, getSets, getTags, indexOf, nbrOfChipTypes
 
  \bold{Methods inherited from GenericDataFileSetList}:\cr
 as, as.GenericDataFileSetList, as.character, as.data.frame, as.list, assertDuplicates, clone, extract, getAsteriskTags, getDefaultFullName, getFileList, getFileListClass, getFullNames, getNames, getSet, getSets, getTags, indexOf, length, nbrOfFiles, nbrOfSets, setTags
@@ -63,7 +63,7 @@ as, as.GenericDataFileSetList, as.character, as.data.frame, as.list, assertDupli
 appendFullNameTranslator, appendFullNameTranslatorByNULL, appendFullNameTranslatorByTabularTextFile, appendFullNameTranslatorByTabularTextFileSet, appendFullNameTranslatorBycharacter, appendFullNameTranslatorBydata.frame, appendFullNameTranslatorByfunction, appendFullNameTranslatorBylist, clearFullNameTranslator, clearListOfFullNameTranslators, getDefaultFullName, getFullName, getFullNameTranslator, getListOfFullNameTranslators, getName, getTags, hasTag, hasTags, resetFullName, setFullName, setFullNameTranslator, setListOfFullNameTranslators, setName, setTags, updateFullName
 
  \bold{Methods inherited from Object}:\cr
-$, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, save, asThis
+$, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, save, asThis
 
 
 }

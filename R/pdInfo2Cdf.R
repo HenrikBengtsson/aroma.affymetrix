@@ -1,6 +1,5 @@
-###########################################################################/** 
+###########################################################################/**
 # @RdocFunction pdInfo2Cdf
-# @alias PdInfo2Cdf
 #
 # @title "Generates an Affymetrix CDF file from a Platform Design (PD) package and a auxillary CEL file for the same chip type"
 #
@@ -10,7 +9,7 @@
 #
 #   \emph{Disclaimer: This is a user-contributed function.}
 #
-#   \emph{Instead of using this method, we recommend to use 
+#   \emph{Instead of using this method, we recommend to use
 #   \code{\link[=writeCdf.AffyGenePDInfo]{writeCdf}()}
 #   for the \code{AffyGenePDInfo} class.}
 # }
@@ -48,13 +47,13 @@
 # }
 #
 # \seealso{
-#   Instead of using this method, we recommend to use 
+#   Instead of using this method, we recommend to use
 #   \code{\link[=writeCdf.AffyGenePDInfo]{writeCdf}()}
 #   for the \code{AffyGenePDInfo} class.
 # }
 #
 # @keyword internal
-#*/########################################################################### 
+#*/###########################################################################
 pdInfo2Cdf <- function(pdpkg, celfile, overwrite=FALSE, verbose=TRUE, ...) {
   require("affxparser") || throw("Package not loaded: affxparser");
   require("oligo") || throw("Package not loaded: oligo");
@@ -103,7 +102,7 @@ pdInfo2Cdf <- function(pdpkg, celfile, overwrite=FALSE, verbose=TRUE, ...) {
   verbose && cat(verbose, "CDF file to be generated: ", filename);
 
   # Loading the required PD package.
-  require(pdpkg, character.only=TRUE) || 
+  require(pdpkg, character.only=TRUE) ||
                  throw("Platform Design (PD) package not loaded: ", pdpkg);
 
 
@@ -170,10 +169,10 @@ pdInfo2Cdf <- function(pdpkg, celfile, overwrite=FALSE, verbose=TRUE, ...) {
   verbose && enter(verbose, "Setting up CDF tree structure");
 
   verbose && enter(verbose, "Setting CDF header");
-  newCdfHeader <- list(ncols=ncols, nrows=nrows, nunits=nbrOfUnits, 
-                       nqcunits=0, refseq="", chiptype=pdName, 
-                       filename=filename, rows=nrows, 
-                       cols=ncols, probesets=nbrOfUnits, 
+  newCdfHeader <- list(ncols=ncols, nrows=nrows, nunits=nbrOfUnits,
+                       nqcunits=0, refseq="", chiptype=pdName,
+                       filename=filename, rows=nrows,
+                       cols=ncols, probesets=nbrOfUnits,
                        qcprobesets=0, reference="");
   verbose && exit(verbose);
 
@@ -213,13 +212,13 @@ pdInfo2Cdf <- function(pdpkg, celfile, overwrite=FALSE, verbose=TRUE, ...) {
 # o Added more verbose output.
 # o DOCUMENTATION: Added more Rd documentation.
 # o BUG FIX: Local variable 'pdName' of pdInfo2Cdf() was used before it
-#   was defined.  Thanks to Guido Hooiveld at the Wageningen University, 
+#   was defined.  Thanks to Guido Hooiveld at the Wageningen University,
 #   Netherlands, for reporting this.
 # 2010-05-20 [HB]
 # o Renamed PdInfo2Cdf() to pdInfo2Cdf().  Keeping old one for backward
 #   compatibility for a while.
 # 2010-05-19 [HB]
-# o BUG FIX: PdInfo2Cdf() would write dimension (rows,rows) in the CDF 
+# o BUG FIX: PdInfo2Cdf() would write dimension (rows,rows) in the CDF
 #   header instead of (rows,cols).  Thanks Kasper Daniel Hansen for
 #   reporting this.
 # 2009-10-16 [HB]
@@ -228,9 +227,9 @@ pdInfo2Cdf <- function(pdpkg, celfile, overwrite=FALSE, verbose=TRUE, ...) {
 # o Added some validation of arguments.
 # o Tidied up the code structure.
 # 2009-01-13 [MR]
-# o Added. "This script has been written to generate a .cdf-file from an 
+# o Added. "This script has been written to generate a .cdf-file from an
 #   "pd.XXXX" package, such as those build with pdInfoBuilder.
-#   The original was written by Samuel Wuest, modified by Mark Robinson 
+#   The original was written by Samuel Wuest, modified by Mark Robinson
 #   (around 12 Jan 2009) to be generic."
 # 2008-??-?? [SW]
 # o Created by Samuel Wuest.

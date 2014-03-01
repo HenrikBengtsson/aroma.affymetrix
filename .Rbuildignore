@@ -1,5 +1,7 @@
 ^Makefile$
 ^incl
-^NAMESPACE,.*.txt$
 ^inst/doc/[.].*[.]rsp$
+^NAMESPACE,.*.txt$
+^nohup
 .HIDE
+

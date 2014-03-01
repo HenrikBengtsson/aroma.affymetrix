@@ -1,6 +1,11 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 2.11.3 [2014-02-28]
+o Now methods that supports searching sibling root directories do so by
+  default.  Previously this had to be explicitly enabled via an option.
+
+
 Version: 2.11.2 [2014-01-04]
 o CLEANUP: Dropped defunct methods '[' and '[[' for AffymetrixCelSet 
   and CnagCfhSet (which have been defunct since 2013-04-29).

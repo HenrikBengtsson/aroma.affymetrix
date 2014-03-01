@@ -293,7 +293,7 @@ setMethodS3("getTargetDistributionPathname", "QuantileNormalization", function(t
   ds <- getInputDataSet(this);
   path <- getPath(ds);
 
-  if (getOption(aromaSettings, "devel/dropRootPathTags", FALSE)) {
+  if (getOption(aromaSettings, "devel/dropRootPathTags", TRUE)) {
     path <- dropRootPathTags(path, depth=2, verbose=less(verbose, 5));
   }
   verbose && cat(verbose, "Path without root-path tags: ", path);
@@ -329,7 +329,7 @@ setMethodS3("findTargetDistributionFile", "QuantileNormalization", function(this
   ds <- getInputDataSet(this);
   path <- getPath(ds);
 
-  if (getOption(aromaSettings, "devel/dropRootPathTags", FALSE)) {
+  if (getOption(aromaSettings, "devel/dropRootPathTags", TRUE)) {
     path <- dropRootPathTags(path, depth=2, verbose=less(verbose, 5));
   }
 

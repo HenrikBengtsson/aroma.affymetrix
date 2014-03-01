@@ -162,7 +162,7 @@ setMethodS3("getAverageFile", "AffymetrixCelSet", function(this, name=NULL, pref
     paths <- c(path);
 
     # Drop tags from root path?
-    if (getOption(aromaSettings, "devel/dropRootPathTags", FALSE)) {
+    if (getOption(aromaSettings, "devel/dropRootPathTags", TRUE)) {
       path <- dropRootPathTags(path, depth=2, verbose=less(verbose, 5));
       paths <- c(paths, path);
       paths <- unique(paths);

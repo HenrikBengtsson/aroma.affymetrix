@@ -843,7 +843,7 @@ setMethodS3("getAverageFile", "CnagCfhSet", function(this, name=NULL, prefix="av
     paths <- c(path);
 
     # Drop tags from root path?
-    if (getOption(aromaSettings, "devel/dropRootPathTags", FALSE)) {
+    if (getOption(aromaSettings, "devel/dropRootPathTags", TRUE)) {
       path <- dropRootPathTags(path, depth=2, verbose=less(verbose, 5));
       paths <- c(paths, path);
       paths <- unique(paths);

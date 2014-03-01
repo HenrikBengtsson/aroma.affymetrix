@@ -95,7 +95,7 @@ toPNG(getFullName(csR), tags=c("doRMA_vs_oligo"), width=800, {
 # (b) Assert correlations
 print(rho);
 print(range(rho));
-stopifnot(all(rho > 0.99990));
+stopifnot(all(rho > 0.99985));
 
 cors <- sapply(1:ncol(theta), FUN=function(cc) cor(theta[,cc], theta0[,cc]));
 print(cors);

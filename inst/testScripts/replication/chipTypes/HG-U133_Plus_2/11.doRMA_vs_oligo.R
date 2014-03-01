@@ -100,7 +100,7 @@ stopifnot(all(rho > 0.99985));
 cors <- sapply(1:ncol(theta), FUN=function(cc) cor(theta[,cc], theta0[,cc]));
 print(cors);
 print(range(cors));
-stopifnot(all(cors > 0.99995));
+stopifnot(all(cors > 0.99985));
 
 # (c) Assert differences
 stopifnot(mean(as.vector(e^2)) < 1e-3);

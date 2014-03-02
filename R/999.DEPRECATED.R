@@ -24,17 +24,17 @@ setMethodS3("calculateResiduals", "FirmaModel", function(this, ...) {
 }, private=TRUE, deprecated=TRUE)
 
 
+setMethodS3("getUnitSizes", "AffymetrixCdfFile", function(this, ...) {
+  .Defunct("nbrOfGroupsPerUnit");
+}, protected=TRUE, deprecated=TRUE)
+
+
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # DEPRECATED
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 setMethodS3("getParameterSet", "Model", function(this, ...) {
   .Deprecated("getParameters");
   getParameters(this, ...);
-}, protected=TRUE, deprecated=TRUE)
-
-setMethodS3("getUnitSizes", "AffymetrixCdfFile", function(this, ...) {
-  .Deprecated("nbrOfGroupsPerUnit");
-  nbrOfGroupsPerUnit(this, ...);
 }, protected=TRUE, deprecated=TRUE)
 
 setMethodS3("getExpectedOutputFiles", "MatSmoothing", function(this, ...) {
@@ -62,8 +62,8 @@ setMethodS3("getData", "AffymetrixCelFile", function(this, ...) {
 # HISTORY:
 # 2014-02-28
 # o Remove previously defunct methods.
-# o CLEANUP: Defuncted deprecated patch() for AromaAffymetrix
-#   and getMonoCell() for AffymetrixCdfFile.
+# o CLEANUP: Defuncted deprecated patch() for AromaAffymetrix and
+#   getMonoCell() & getUnitSizes() for AffymetrixCdfFile.
 # 2013-10-07
 # o CLEANUP: Deprecated patch() for AromaAffymetrix.
 # 2014-01-04

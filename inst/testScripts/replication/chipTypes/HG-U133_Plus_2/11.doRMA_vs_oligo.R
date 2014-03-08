@@ -104,10 +104,10 @@ stopifnot(all(cors > 0.99985));
 
 # (c) Assert differences
 print(mean(as.vector(e^2)));
-stopifnot(mean(as.vector(e^2)) < 1e-3);
+stopifnot(mean(as.vector(e^2)) < 0.0015);
 
 print(sd(as.vector(e^2)));
-stopifnot(sd(as.vector(e^2)) < 1e-3);
+stopifnot(sd(as.vector(e^2)) < 0.001);
 
 print(quantile(abs(e), 0.99));
 stopifnot(quantile(abs(e), 0.99) < 0.05);

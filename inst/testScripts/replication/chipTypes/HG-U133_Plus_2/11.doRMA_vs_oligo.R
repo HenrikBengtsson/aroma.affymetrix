@@ -107,7 +107,7 @@ print(mean(as.vector(e^2)));
 stopifnot(mean(as.vector(e^2)) < 0.0015);
 
 print(sd(as.vector(e^2)));
-stopifnot(sd(as.vector(e^2)) < 0.001);
+stopifnot(sd(as.vector(e^2)) < 0.0025);
 
 print(quantile(abs(e), 0.99));
 stopifnot(quantile(abs(e), 0.99) < 0.05);

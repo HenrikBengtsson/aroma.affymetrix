@@ -15,7 +15,7 @@ print(csR);
 # (a) AS-CRMAv2
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Process arrays in random order
-subset <- sample(1:nbrOfArrays(csR));
+subset <- sample(seq_along(csR));
 res <- doASCRMAv2(csR, arrays=subset, drop=FALSE, verbose=verbose);
 print(res);
 

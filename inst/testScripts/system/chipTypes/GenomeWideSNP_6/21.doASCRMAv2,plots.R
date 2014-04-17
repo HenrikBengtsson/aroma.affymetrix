@@ -22,7 +22,7 @@ print(res);
 # Plot (TCN,BAF) on Chr2:75-90Mb in Array #1
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 cesN <- res$cesN;
-ce <- getFile(cesN, 1);
+ce <- cesN[[1]];
 sampleName <- getName(ce);
 
 # Calculate reference signals
@@ -232,7 +232,7 @@ toPNG(getFullName(cesN), tags=c("ASCN"), {
     smoothScatter(X, xlim=Clim, ylim=Clim, xlab=CAlab, ylab=CBlab);
     abline(h=0:3, lty=3, lwd=1);
     abline(v=0:3, lty=3, lwd=1);
-  
+
     # Plot centers
     fit <- kmeans(X, centers=centers);
     print(fit$centers);
@@ -257,7 +257,7 @@ toPNG(getFullName(cesN), tags=c("TCNvsBAF"), {
     smoothScatter(X, xlim=c(0,1), ylim=Clim, xlab=xlab, ylab=Clab);
     abline(h=0:3, lty=3, lwd=1);
     abline(v=0:2/2, lty=3, lwd=1);
-  
+
     # Plot centers
     fit <- kmeans(X, centers=centers);
     print(fit$centers);

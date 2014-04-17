@@ -58,11 +58,11 @@ setFullNamesTranslator(csU, function(names, ...) { sampleNamesMap[names] });
 csList <- list(csM, csU);
 for (ii in seq_along(csU)) {
   yList <- lapply(csList, FUN=function(cs) {
-    cf <- getFile(cs, ii);
+    cf <- cs[[ii]];
     cdf <- getCdf(cf);
     units <- indexOf(cdf, "^chr1F");
-    cells <- getCellIndices(cdf, units=units, stratifyBy="pm", 
-                                            unlist=TRUE, useNames=FALSE); 
+    cells <- getCellIndices(cdf, units=units, stratifyBy="pm",
+                                            unlist=TRUE, useNames=FALSE);
     y <- extractMatrix(cf, cells=cells, drop=TRUE);
     y;
   });
@@ -88,11 +88,11 @@ cells <- whichVector(acpU[,1,drop=TRUE] == chr);
 str(cells);
 
 # Get the chromosomal positions of these cells
-pos <- acpU[cells,2,drop=TRUE]; 
+pos <- acpU[cells,2,drop=TRUE];
 
 yR <- extractMatrix(cfR, cells=cells, drop=TRUE, verbose=verbose);
 for (ii in seq_along(csU)) {
-  cf <- getFile(csU, ii);
+  cf <- csU[[ii]];
   sampleName <- getName(cf);
 
   toPNG(getFullName(csU), tags=c(sampleName, "tracks"), aspectRatio=1/2, {

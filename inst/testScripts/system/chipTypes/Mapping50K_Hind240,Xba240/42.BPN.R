@@ -52,7 +52,7 @@ for (what in whats) {
   } else if (what == "bcn") {
     cs <- csN;
   }
-  cf <- getFile(cs, ff);
+  cf <- cs[[ff]];
   cfR <- getAverageFile(cs, verbose=log);
   yR <- readRawData(cfR, fields="intensities", drop=TRUE);
   y <- readRawData(cf, fields="intensities", drop=TRUE);
@@ -62,7 +62,7 @@ for (what in whats) {
 } # for (what ...)
 
 
-# Estimate standard deviations for log-ratios  
+# Estimate standard deviations for log-ratios
 print(sapply(Ms, FUN=function(M) { mad(diff(M), na.rm=TRUE) }));
 
 Mlim <- c(-1,1);
@@ -74,9 +74,9 @@ par(mar=c(5,4,2,1)+0.1);
 for (what in names(Ms)) {
   M <- Ms[[what]];
 
-  for (bb in c("A", "C", "G", "T")) { 
+  for (bb in c("A", "C", "G", "T")) {
     xlab <- sprintf("Number of %s:s", bb);
-    boxplot(M ~ counts[,bb], outline=FALSE, 
+    boxplot(M ~ counts[,bb], outline=FALSE,
             ylim=Mlim, xlim=xlim, ylab=Mlab, xlab=xlab);
     stext(side=3, pos=0, getFullName(cf));
     stext(side=3, pos=0.98, line=-1, cex=2, bb);

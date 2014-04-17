@@ -71,7 +71,7 @@ stopifnot(identical(nXY, nXY0));
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # For Chr1-22 and ChrX the copy-neutral ploidy should be two.
 # If the ploidy of a sample is unknown, assume the default is two.
-ceR <- calculateBaseline(cesN, chromosomes=1:23, ploidy=2, 
+ceR <- calculateBaseline(cesN, chromosomes=1:23, ploidy=2,
                                        defaultPloidy=2, verbose=verbose);
 print(ceR);
 
@@ -88,7 +88,7 @@ cbs <- CbsModel(cesN, ceR);
 print(cbs);
 
 M <- NULL;
-for (kk in 1:nbrOfArrays(cbs)) { 
+for (kk in seq_along(cbs)) {
   rawCNs <- extractRawCopyNumbers(cbs, array=kk, chromosome=23);
   rawCNs <- getSignals(rawCNs);
   M <- cbind(M, rawCNs);

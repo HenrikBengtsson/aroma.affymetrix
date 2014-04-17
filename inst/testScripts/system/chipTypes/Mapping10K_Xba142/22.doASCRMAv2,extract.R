@@ -23,7 +23,7 @@ print(res);
 ces <- res$cesN;
 
 # (a) Single array
-ce <- getFile(ces,1);
+ce <- ces[[1]];
 Y <- extractMatrix(ce, verbose=verbose);
 print(head(Y));
 

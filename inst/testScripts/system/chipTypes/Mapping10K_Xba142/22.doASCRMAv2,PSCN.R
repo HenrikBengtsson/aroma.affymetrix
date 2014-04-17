@@ -8,17 +8,17 @@ cesN <- doASCRMAv2(csR, arrays=1:6, drop=FALSE, verbose=verbose)$cesN;
 print(cesN);
 
 ceR <- getAverage(cesN, verbose=verbose);
-ce <- getFile(cesN, 1);
+ce <- cesN[[1]];
 
 ugp <- getAromaUgpFile(csR);
 print(ugp);
 
 for (chr in getChromosomes(ugp)) {
   units <- getUnitsOnChromosome(ugp, chr);
-  pos <- getPositions(ugp, units=units) / 1e6; 
+  pos <- getPositions(ugp, units=units) / 1e6;
   thetaR <- extractTotalAndFreqB(ceR, units=units)[,"total"];
   data <- extractTotalAndFreqB(ce, units=units);
-  data[,"total"] <- 2*data[,"total"] / thetaR;  
+  data[,"total"] <- 2*data[,"total"] / thetaR;
 
   chrTag <- sprintf("Chr%02d", chr);
   toPNG(getFullName(cesN), tags=c(getFullName(ce), chrTag, "TCN"), aspectRatio=1, {

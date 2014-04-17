@@ -2,7 +2,7 @@
 # Replication test
 #
 # Description:
-# This test verifies that aroma.affymetrix can reproduce the SNPRMA 
+# This test verifies that aroma.affymetrix can reproduce the SNPRMA
 # chip-effect estimates as estimated by oligo.
 # It verifies that they give the same results whether or not one
 # is normalizing towards the HapMap reference (as defined by oligo).
@@ -45,7 +45,7 @@ csR <- AffymetrixCelSet$byName(dataSet, cdf=cdf);
 
 # Process only a subset of the arrays.  Since this data set
 # contains many replicates (cf. GEO), they need to be for
-# different samples.  
+# different samples.
 sampleNamesMap <- c(
   GSM337641="HCC1143_GLEYS_A02",
 #  GSM337646="HCC1143_TRIBE_H11",
@@ -72,7 +72,7 @@ print(csR);
 # Assert that the file header of the first CEL file in
 # truly a GenomeWideSNP_6 (and not GenomeWideEx_6 because
 # oligo::justSNPRMA() cannot handle chip type aliases)
-stopifnot(getHeader(getFile(csR,1))$chiptype == chipType);
+stopifnot(getHeader(csR[[1]])$chiptype == chipType);
 
 # Assert that the correct Platform Design package is installed
 pdPkgName <- cleanPlatformName(chipType);
@@ -86,8 +86,8 @@ for (normalizeToHapmap in c(FALSE, TRUE)) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   eSet <- justSNPRMA(csR, normalizeToHapmap=normalizeToHapmap, verbose=verbose);
   print(eSet);
-  
-  
+
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # SNPRMA according to oligo
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -102,8 +102,8 @@ for (normalizeToHapmap in c(FALSE, TRUE)) {
       file.remove(filename);
     }
   }
-  
- 
+
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Compare
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -23,8 +23,8 @@ print(res);
 dsA <- res$cesN;     # CnChipEffectSet
 dsB <- res$dsNList;  # AromaUnitTotalCnBinarySet
 
-dfA <- getFile(dsA,1);
-dfB <- getFile(dsB,1);
+dfA <- dsA[[1]];
+dfB <- dsB[[1]];
 
 # (a) Single array
 yA <- extractMatrix(dfA, verbose=verbose);
@@ -33,7 +33,7 @@ print(head(yA));
 yB <- extractMatrix(dfB, verbose=verbose);
 print(head(yB));
 
-stopifnot(all.equal(yB, yA, 
+stopifnot(all.equal(yB, yA,
           check.attributes=(packageVersion("R.filesets") >= "1.1.6")));
 
 # (b) Multiple arrays

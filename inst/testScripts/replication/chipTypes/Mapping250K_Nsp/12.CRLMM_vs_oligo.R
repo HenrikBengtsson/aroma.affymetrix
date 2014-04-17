@@ -141,10 +141,10 @@ toPNG(getFullName(ces), tags=c(chrTag, "TCN,BAF"), aspectRatio=0.5*nbrOfArrays(c
   par(mar=c(3.5,4,1.5,1), mgp=c(1.8,0.5,0), pch=".");
 
   for (ii in seq_along(ces)) {
-    ce <- getFile(ces, ii);
-    gc <- getFile(callSet, ii);
+    ce <- ces[[ii]];
+    gc <- callSet[[ii]];
     sampleName <- getName(ce);
-  
+
     data <- extractTotalAndFracB(ce, units=units, drop=TRUE);
     colnames(data) <- c("total", "fracB");
     calls <- extractGenotypes(gc, units=units, drop=TRUE);

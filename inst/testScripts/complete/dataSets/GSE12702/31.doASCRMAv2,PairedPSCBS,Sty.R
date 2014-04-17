@@ -55,9 +55,9 @@ names(dsList) <- sampleNames;
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Extract (single) tumor-normal pairs
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-dfTList <- lapply(dsList, FUN=function(dsList) { getFile(dsList$T, 1) });
+dfTList <- lapply(dsList, FUN=function(dsList) { dsList$T[[1]] });
 dsT <- newInstance(dsList[[1]]$T, dfTList);
-dfNList <- lapply(dsList, FUN=function(dsList) { getFile(dsList$N, 1) });
+dfNList <- lapply(dsList, FUN=function(dsList) { dsList$N[[1]] });
 dsN <- newInstance(dsList[[1]]$T, dfNList);
 
 
@@ -90,7 +90,7 @@ setOption("PSCBS::reports/pscnSegmentationTransitions", TRUE);
 
 # Generate reports for tumor-normal pairs
 for (ii in 1:min(length(scs),5)) {
-  df <- getFile(scs, ii);
+  df <- scs[[ii]];
   fit <- loadObject(df);
   pathname <- report(fit, studyName=getFullName(dsT), verbose=verbose);
   print(pathname);

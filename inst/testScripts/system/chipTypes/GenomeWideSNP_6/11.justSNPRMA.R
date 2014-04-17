@@ -12,7 +12,7 @@ csR <- AffymetrixCelSet$byName(dataSet, cdf=cdf);
 
 # Process only a subset of the arrays.  Since this data set
 # contains many replicates (cf. GEO), they need to be for
-# different samples.  
+# different samples.
 sampleNamesMap <- c(
   GSM337641="HCC1143_GLEYS_A02",
 #  GSM337646="HCC1143_TRIBE_H11",
@@ -39,7 +39,7 @@ print(csR);
 # Assert that the file header of the first CEL file in
 # truly a GenomeWideSNP_6 (and not GenomeWideEx_6 because
 # oligo::justSNPRMA() cannot handle chip type aliases)
-stopifnot(getHeader(getFile(csR,1))$chiptype == chipType);
+stopifnot(getHeader(csR[[1]])$chiptype == chipType);
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

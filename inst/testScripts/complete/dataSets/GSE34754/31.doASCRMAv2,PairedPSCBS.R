@@ -82,7 +82,7 @@ for (key in names(dsList)) {
   dsT <- extract(dsT, !dups);
   dsN <- extract(dsN, !dups);
   stopifnot(length(dsT) == length(dsN));
-  
+
   dsList2[[key]] <- list(T=dsT, N=dsN);
 } # for kk ...)
 
@@ -119,7 +119,7 @@ setOption("PSCBS::reports/pscnSegmentationTransitions", TRUE);
 
 # Generate reports for tumor-normal pairs
 for (ii in 1:min(length(sms),5)) {
-  df <- getFile(sms, ii);
+  df <- sms[[ii]];
   fit <- loadObject(df);
   sampleName <- getFullName(df);
   pathname <- report(fit, sampleName=sampleName, studyName=getFullName(dsT), verbose=verbose);

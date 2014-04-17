@@ -32,8 +32,8 @@ addColorMap(reporter, "log2center,rainbow");
 process(reporter, zrange=c(-2,2), verbose=verbose);
 
 ylab <- expression(log[2](y/y[R]));
-for (ii in 1:nbrOfArrays(csR)) {
-  df <- getFile(csR, ii);
+for (ii in seq_along(csR)) {
+  df <- csR[[ii]];
 
   toPNG(getFullName(df), tags="spatial,rowMedians", width=300, aspectRatio=8/3, {
     plotMargins(reporter, array=ii, ylim=c(-1,1)*0.2, ylab=ylab, margins="rows", rotate=90);

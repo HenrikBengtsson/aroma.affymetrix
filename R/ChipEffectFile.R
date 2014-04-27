@@ -285,7 +285,7 @@ setMethodS3("findUnitsTodo", "ChipEffectFile", function(this, units=NULL, ..., f
 
       verbose && enter(verbose, "Extracting first CDF group for each unit");
       # Save memory 100% -> 94% -> 5% (all the nested named lists costs!)
-      idxsChunk <- base::lapply(idxsChunk, FUN=function(unit) {
+      idxsChunk <- lapply(idxsChunk, FUN=function(unit) {
         groups <- .subset2(unit, "groups");
         fields <- .subset2(groups, 1);
         .subset2(fields, 1);
@@ -456,7 +456,7 @@ setMethodS3("getUnitGroupCellMap", "ChipEffectFile", function(this, units=NULL, 
     unitNames <- names(cells);
 
     # Get the number of groups per unit
-    unitSizes <- base::lapply(cells, FUN=function(unit) {
+    unitSizes <- lapply(cells, FUN=function(unit) {
       length(.subset2(unit, "groups"));
     });
     unitSizes <- unlist(unitSizes, use.names=FALSE);
@@ -489,7 +489,7 @@ setMethodS3("getUnitGroupCellMap", "ChipEffectFile", function(this, units=NULL, 
       chunk <- NULL;
       unitNames[idxs] <- names(cells0);
       names(cells0) <- NULL;
-      unitSizes0 <- base::lapply(cells0, FUN=function(unit) {
+      unitSizes0 <- lapply(cells0, FUN=function(unit) {
         length(.subset2(unit, "groups"));
       });
       unitSizes[idxs] <- unlist(unitSizes0, use.names=FALSE);

@@ -74,7 +74,7 @@ setMethodS3("byPath", "AffymetrixCelSetTuple", function(static, path, ..., verbo
 
   # Define CEL sets for each directory
   verbose && enter(verbose, "Defining list of ", className, ":s");
-  csList <- base::lapply(dirs, FUN=function(dir) {
+  csList <- lapply(dirs, FUN=function(dir) {
     clazz$byPath(dir, ..., verbose=less(verbose));
   })
   names(csList) <- basename(names(csList));

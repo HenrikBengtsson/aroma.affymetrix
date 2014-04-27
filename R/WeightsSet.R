@@ -185,7 +185,7 @@ setMethodS3("updateUnits", "WeightsSet", function(this, units=NULL, cdf=NULL, da
 
     verbose <- less(verbose, 50);
     verbose && enter(verbose, "Extracting estimates");  # 3-4s
-    dataOne <- base::lapply(data, FUN=base::lapply, function(group) {
+    dataOne <- lapply(data, FUN=lapply, function(group) {
       # wts = group$wts[,ii] = ...
       list(
         wts=.subset(.subset2(group, "wts"), ii)

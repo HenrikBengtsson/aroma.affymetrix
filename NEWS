@@ -1,11 +1,25 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 2.12.2 [2014-04-27]
+o doCRMAv2(..., drop=FALSE) and hence doASCRMAv2(..., drop=FALSE), did
+  not *return* the base-position normalization step, although it was
+  done and its outcome was part of all downstream steps.
+
+
+Version: 2.12.1 [2014-04-26]
+o SPEEDUP: Minor speedup by replacing repetive <ns>::<fcn>() calls
+  with repetive <fcn>() calls; the '::' operator is fairly expensive.
+  You should expect a small speed improvement when using MatSmoothing(),
+  RmaPlm(..., flavor="oligo") and when calculating weights using
+  ExonRmaPlm and QualityAssessmentModel, to name a few examples.
+
+
 Version: 2.12.0 [2014-03-07]
 o Bumped version for CRAN submission.
 o Updated package dependencies.
 o Package passes all redundancy tests.
- 
+
 
 Version: 2.11.3 [2014-02-28]
 o Now methods that supports searching sibling root directories do so by

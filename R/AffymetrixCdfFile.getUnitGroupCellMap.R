@@ -2,11 +2,11 @@ setMethodS3("getUnitGroupCellMap", "AffymetrixCdfFile", function(this, units=NUL
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local functions
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  flattenCellIndices <- function(cells, ..., retNames=FALSE, verbose=FALSE) { 
+  flattenCellIndices <- function(cells, ..., retNames=FALSE, verbose=FALSE) {
     # Returning indices or names?
     if (!retNames) {
       verbose && enter(verbose, "Renaming group names to group indices");
-      cells <- base::lapply(cells, FUN=function(unit) {
+      cells <- lapply(cells, FUN=function(unit) {
         groups <- .subset2(unit, 1);
         names(groups) <- seq_len(length(groups));
         list(groups=groups);
@@ -16,7 +16,7 @@ setMethodS3("getUnitGroupCellMap", "AffymetrixCdfFile", function(this, units=NUL
       verbose && exit(verbose);
     }
 
-    # Flatten cell data 
+    # Flatten cell data
     verbose && enter(verbose, "Flattening cell data");
     cells <- unlist(cells, use.names=TRUE);
     names <- names(cells);
@@ -27,7 +27,7 @@ setMethodS3("getUnitGroupCellMap", "AffymetrixCdfFile", function(this, units=NUL
     verbose && exit(verbose);
 
     verbose && enter(verbose, "Extract unit and group names");
-    # Do some tricks to clean up the names 
+    # Do some tricks to clean up the names
     names <- gsub("([.]groups|indices*)", "", names);
     pattern <- "^(.*)[.](.*)[.](.*)$";
 
@@ -43,8 +43,8 @@ setMethodS3("getUnitGroupCellMap", "AffymetrixCdfFile", function(this, units=NUL
       groups <- as.integer(groups);
     }
     verbose && exit(verbose);
-  
-    # Return data 
+
+    # Return data
     map <- data.frame(unit=units, group=groups, cell=cells);
     class(map) <- c("UnitGroupCellMap", class(map));
 
@@ -70,19 +70,19 @@ setMethodS3("getUnitGroupCellMap", "AffymetrixCdfFile", function(this, units=NUL
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Check for cached results
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  chipType <- getChipType(this); 
+  chipType <- getChipType(this);
 
-  # Look for results in file cache 
+  # Look for results in file cache
   verbose && enter(verbose, "Checking cache");
-  key <- list(method="getUnitGroupCellMap", class=class(this)[1], 
-                   chipType=chipType, units=units, retNames=retNames, ...); 
+  key <- list(method="getUnitGroupCellMap", class=class(this)[1],
+                   chipType=chipType, units=units, retNames=retNames, ...);
   if (getOption(aromaSettings, "devel/useCacheKeyInterface", FALSE)) {
     key <- getCacheKey(this, method="getUnitGroupCellMap", chipType=chipType, units=units, retNames=retNames, ...);
   }
-  dirs <- c("aroma.affymetrix", chipType); 
+  dirs <- c("aroma.affymetrix", chipType);
   map <- NULL;
-  if (!force) 
-     map <- loadCache(key=key, dirs=dirs); 
+  if (!force)
+     map <- loadCache(key=key, dirs=dirs);
   if (is.null(map)) {
     verbose && exit(verbose, suffix="...miss");
   } else {
@@ -98,30 +98,30 @@ setMethodS3("getUnitGroupCellMap", "AffymetrixCdfFile", function(this, units=NUL
     cells <- getCellIndices(this, units=units, ..., verbose=less(verbose));
     nbrOfUnits <- length(cells);
     verbose && printf(verbose, "Read %d units\n", nbrOfUnits);
-  
+
     if (!retNames) {
       # Convert unit names to unit indices
       if (is.null(units))
         units <- seq_len(nbrOfUnits);
       names(cells) <- units;
-  
+
       # Garbage collect
       gc <- gc();
       verbose && print(verbose, gc);
     }
-  
+
     verbose && enter(verbose, "Flattening cell indices to create cell map");
     map <- flattenCellIndices(cells, retNames=retNames, verbose=less(verbose));
     verbose && str(verbose, map);
     verbose && exit(verbose);
-  
+
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Save to cache
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Save only results > 50kB
     if (object.size(map) > 50e3) {
-      saveCache(map, key=key, dirs=dirs); 
+      saveCache(map, key=key, dirs=dirs);
       verbose && cat(verbose, "Saved to file cache");
     }
   } # if (is.null(map))
@@ -137,11 +137,11 @@ setMethodS3("getUnitGroupCellMap", "AffymetrixCdfFile", function(this, units=NUL
 ##    keep <- (mapUnits %in% units);
 ##    map <- map[keep,,drop=FALSE];
 ##  }
-  
+
   verbose && printf(verbose, "RAM: %.2fMB\n", object.size(map)/1024^2);
   verbose && exit(verbose);
 
-  map; 
+  map;
 }, protected=TRUE)  # getUnitGroupCellMap()
 
 
@@ -149,7 +149,7 @@ setMethodS3("getUnitGroupCellMap", "AffymetrixCdfFile", function(this, units=NUL
 setMethodS3("getUnitGroupCellChromosomePositionMap", "AffymetrixCdfFile", function(this, units=NULL, chromosomes=NULL, orderByPosition=TRUE, ..., force=FALSE, verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'units':
   ugcMap <- NULL;
   if (is.null(units)) {
@@ -170,7 +170,7 @@ setMethodS3("getUnitGroupCellChromosomePositionMap", "AffymetrixCdfFile", functi
     allChromosomes <- getChromosomes(gi);
     unknown <- chromosomes[!(chromosomes %in% allChromosomes)];
     if (length(unknown) > 0) {
-      throw("Argument 'chromosomes' contains unknown values: ", 
+      throw("Argument 'chromosomes' contains unknown values: ",
                                  paste(unknown, collapse=", "));
     }
   }
@@ -188,19 +188,19 @@ setMethodS3("getUnitGroupCellChromosomePositionMap", "AffymetrixCdfFile", functi
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Check for cached results
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Look for results in file cache 
+  # Look for results in file cache
   verbose && enter(verbose, "Checking cache");
-  chipType <- getChipType(this); 
-  key <- list(method="getUnitGroupCellChromosomePositionMap", 
-              class=class(this)[1], 
-              chipType=chipType, units=units, ugcMap=ugcMap, 
+  chipType <- getChipType(this);
+  key <- list(method="getUnitGroupCellChromosomePositionMap",
+              class=class(this)[1],
+              chipType=chipType, units=units, ugcMap=ugcMap,
               chromosomes=chromosomes, orderByPosition=orderByPosition);
   if (getOption(aromaSettings, "devel/useCacheKeyInterface", FALSE)) {
     key <- getCacheKey(this, method="getUnitGroupCellChromosomePositionMap", chipType=chipType, units=units, ugcMap=ugcMap, chromosomes=chromosomes, orderByPosition=orderByPosition);
   }
   dirs <- c("aroma.affymetrix", chipType);
   if (!force) {
-    map <- loadCache(key=key, dirs=dirs); 
+    map <- loadCache(key=key, dirs=dirs);
     if (!is.null(map)) {
       verbose && cat(verbose, "Found cached results");
       verbose && exit(verbose);
@@ -234,7 +234,7 @@ setMethodS3("getUnitGroupCellChromosomePositionMap", "AffymetrixCdfFile", functi
   }
 
   # Get the (chromosome, position) map
-  cpMap <- getData(gi, units=ugcMap[,"unit"], force=force, 
+  cpMap <- getData(gi, units=ugcMap[,"unit"], force=force,
                                               verbose=less(verbose, 10));
   verbose && cat(verbose, "(chromosome, position) map:");
   verbose && str(verbose, cpMap);
@@ -261,13 +261,13 @@ setMethodS3("getUnitGroupCellChromosomePositionMap", "AffymetrixCdfFile", functi
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Save only results > 50kB
   if (object.size(map) > 50e3) {
-    saveCache(map, key=key, dirs=dirs); 
+    saveCache(map, key=key, dirs=dirs);
     verbose && cat(verbose, "Saved to file cache");
   }
 
   verbose && exit(verbose);
 
-  map;  
+  map;
 }, protected=TRUE)
 
 

@@ -135,7 +135,7 @@ setMethodS3("getFitUnitFunction", "CnPlm", function(this, ...) {
           );
         } else {
           # For all other cases, fit each group individually
-          base::lapply(groups, FUN=function(group) {
+          lapply(groups, FUN=function(group) {
             y <- .subset2(group, 1);
             y <- y[1,,] - y[2,,];  # PM-MM
             fitfcn(y);
@@ -193,7 +193,7 @@ setMethodS3("getFitUnitFunction", "CnPlm", function(this, ...) {
           );
         } else {
           # For all other cases, fit each group individually
-          base::lapply(groups, FUN=function(group) {
+          lapply(groups, FUN=function(group) {
             y <- .subset2(group, 1);
             y <- y[1,,] - y[2,,];  # PM-MM
             y[y < 1] <- 1;         # min1(PM-MM)=min(PM-MM,1)
@@ -246,7 +246,7 @@ setMethodS3("getFitUnitFunction", "CnPlm", function(this, ...) {
           );
         } else {
           # For all other cases, fit each group individually
-          base::lapply(groups, FUN=function(group) {
+          lapply(groups, FUN=function(group) {
             y <- .subset2(group, 1);
             y <- y[1,,] + y[2,,];  # PM+MM
             fitfcn(y);
@@ -292,7 +292,7 @@ setMethodS3("getFitUnitFunction", "CnPlm", function(this, ...) {
           );
         } else {
           # For all other cases, fit each group individually
-          base::lapply(groups, FUN=function(group) {
+          lapply(groups, FUN=function(group) {
             y <- .subset2(group, 1);
             fitfcn(y);
           })

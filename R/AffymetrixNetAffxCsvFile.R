@@ -188,7 +188,7 @@ setMethodS3("readDataUnitFragmentLength", "AffymetrixNetAffxCsvFile", function(t
 
     verbose && enter(verbose, "Splitting into subunits and padding with NAs");
     keep <- 1:nbrOfEnzymes;
-    fln <- base::lapply(fln, FUN=function(unit) {
+    fln <- lapply(fln, FUN=function(unit) {
        # Pad missing enzymes with trailing NAs
        unit <- .subset(unit, keep);
        # Split values
@@ -200,8 +200,8 @@ setMethodS3("readDataUnitFragmentLength", "AffymetrixNetAffxCsvFile", function(t
 
     # Extract the name for each enzyme
     verbose && enter(verbose, "Extracting enzyme names");
-    enzymeIdxs <- base::lapply(fln, FUN=function(unit) {
-      base::sapply(unit, FUN=.subset, 1, USE.NAMES=FALSE);
+    enzymeIdxs <- lapply(fln, FUN=function(unit) {
+      sapply(unit, FUN=.subset, 1, USE.NAMES=FALSE);
     });
     enzymeIdxs <- unlist(enzymeIdxs, use.names=FALSE);
     # Replace '---' with NAs
@@ -267,8 +267,8 @@ setMethodS3("readDataUnitFragmentLength", "AffymetrixNetAffxCsvFile", function(t
 
     # Extract the fragment length for each enzyme
     verbose && enter(verbose, "Extracting fragment lengths");
-    fln <- base::lapply(fln, FUN=function(unit) {
-      base::sapply(unit, FUN=.subset, offset, USE.NAMES=FALSE);
+    fln <- lapply(fln, FUN=function(unit) {
+      sapply(unit, FUN=.subset, offset, USE.NAMES=FALSE);
     });
     fln <- unlist(fln, use.names=FALSE);
     fln <- as.integer(fln);
@@ -316,11 +316,11 @@ setMethodS3("readDataUnitFragmentLength", "AffymetrixNetAffxCsvFile", function(t
     nbrOfEnzymes <- length(enzymes);
     # Extract the fragment length for each enzyme
     verbose && enter(verbose, "Extracting fragment lengths");
-    fln <- base::lapply(fln, FUN=function(unit) {
+    fln <- lapply(fln, FUN=function(unit) {
       # Keep only requested enzymes
       unit <- .subset(unit, enzymes);
       parts <- strsplit(unit, split=",", fixed=TRUE);
-      base::sapply(parts, FUN=.subset, 1, USE.NAMES=FALSE);
+      sapply(parts, FUN=.subset, 1, USE.NAMES=FALSE);
     });
     verbose && exit(verbose);
 

@@ -196,7 +196,7 @@ setMethodS3("getResiduals", "QualityAssessmentModel", function(this, units=NULL,
     thetaL <- .subset2(chipEffectList, kk);
     phiL <- .subset2(probeAffinityList, kk);
     nbrOfGroups <- length(yL);
-    res <- base::lapply(seq_len(nbrOfGroups), FUN=function(gg) {
+    res <- lapply(seq_len(nbrOfGroups), FUN=function(gg) {
       y <- .subset2(.subset2(yL, gg), "intensities");
       theta <- .subset2(.subset2(thetaL, gg), "theta")[1,];
       phi <- .subset2(.subset2(phiL, gg), "phi");
@@ -342,7 +342,7 @@ setMethodS3("getResiduals", "QualityAssessmentModel", function(this, units=NULL,
       # Back-transform data to intensity scale and encode as CEL structure
       verbose && enter(verbose, "Encode as CEL structure");
       data <- lapply(residualsList, FUN=function(groups) {
-        base::lapply(groups, FUN=function(group) {
+        lapply(groups, FUN=function(group) {
           eps <- .subset2(group, "eps")[,kk];
           ones <- rep(1, length=length(eps));
           list(intensities=eps, stdvs=ones, pixels=ones);
@@ -411,12 +411,15 @@ setMethodS3("getWeights", "QualityAssessmentModel", function(this, path=NULL, na
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local functions
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Lookup MASS::psi.huber() once; '::' is expensive
+  MASS_psi.huber <- MASS::psi.huber;
+
   resFcn <- function(kk) {
     yL <- .subset2(rawDataList, kk);
     thetaL <- .subset2(chipEffectList, kk);
     phiL <- .subset2(probeAffinityList, kk);
     nbrOfGroups <- length(yL);
-    res <- base::lapply(nbrOfGroups, FUN=function(gg) {
+    res <- lapply(nbrOfGroups, FUN=function(gg) {
       y <- .subset2(.subset2(yL, gg), "intensities");
       theta <- .subset2(.subset2(thetaL, gg), "theta")[1,];
       phi <- .subset2(.subset2(phiL, gg), "phi");
@@ -424,7 +427,7 @@ setMethodS3("getWeights", "QualityAssessmentModel", function(this, path=NULL, na
       eps <- (y - yhat);
 #      mad <- 1.4826 * median(abs(yhat));
       mad <- 1.4826 * median(abs(eps));
-      matrix(MASS::psi.huber(eps/mad), ncol=ncol(y));
+      matrix(MASS_psi.huber(eps/mad), ncol=ncol(y));
     })
     res;
   } # resFcn()

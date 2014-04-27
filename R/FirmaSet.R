@@ -159,7 +159,7 @@ setMethodS3("updateUnits", "FirmaSet", function(this, units=NULL, cdf=NULL, data
 
     verbose <- less(verbose, 50);
     verbose && enter(verbose, "Extracting estimates");  # 3-4s
-    dataOne <- base::lapply(data, FUN=base::lapply, function(group) {
+    dataOne <- lapply(data, FUN=lapply, function(group) {
       # theta = group$theta[ii] = ...
       # stdvs = group$sdTheta[ii] = ...
       list(

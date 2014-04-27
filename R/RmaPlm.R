@@ -527,8 +527,10 @@ setMethodS3("getFitUnitGroupFunction", "RmaPlm", function(this, ..., verbose=FAL
       # The API of the native function rma_c_complete_copy()
       # has been updated yet again, but the good thing,
       # there is now a basicRMA() wrapper function.
+      # Lookup oligo::basicRMA() once; '::' is expensive
+      oligo_basicRMA <- oligo::basicRMA;
       fitRma <- function(y, unitNames, nbrOfUnits, ...) {
-        oligo::basicRMA(y, pnVec=unitNames, background=FALSE,
+        oligo_basicRMA(y, pnVec=unitNames, background=FALSE,
                                             normalize=FALSE, verbose=FALSE);
       } # fitRma()
     } else {

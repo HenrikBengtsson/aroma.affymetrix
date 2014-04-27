@@ -39,7 +39,7 @@ setConstructorS3("AffymetrixCelSet", function(files=NULL, ...) {
   if (is.null(files)) {
   } else if (is.list(files)) {
     reqFileClass <- "AffymetrixCelFile";
-    base::lapply(files, FUN=function(df) {
+    lapply(files, FUN=function(df) {
       df <- Arguments$getInstanceOf(df, reqFileClass, .name="files");
     })
   } else if (inherits(files, "AffymetrixCelSet")) {
@@ -1217,8 +1217,8 @@ setMethodS3("range", "AffymetrixCelSet", function(this, ...) {
 setMethodS3("applyToUnitIntensities", "AffymetrixCelSet", function(this, units=NULL, FUN, stratifyBy="pm", verbose=FALSE, ...) {
   y <- getUnitIntensities(this, units=units, stratifyBy=stratifyBy, ...);
 
-  y <- base::lapply(y, FUN=function(unit) {
-    groups <- base::lapply(unit, FUN=function(group) {
+  y <- lapply(y, FUN=function(unit) {
+    groups <- lapply(unit, FUN=function(group) {
       FUN(group[[1]], ...)
     })
     groups;

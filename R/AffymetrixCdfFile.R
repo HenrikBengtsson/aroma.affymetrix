@@ -602,9 +602,9 @@ setMethodS3("getGroupDirections", "AffymetrixCdfFile", function(this, units=NULL
 
       # Remove all 'expos'
       verbose && enter(verbose, "Removing all 'expos'");
-      groupDirections <- base::lapply(groupDirections, FUN=function(unit) {
+      groupDirections <- lapply(groupDirections, FUN=function(unit) {
         groups <- .subset2(unit, 2);
-        groups <- base::lapply(groups, FUN=.subset, 2);
+        groups <- lapply(groups, FUN=.subset, 2);
         list(groups=groups);
       });
 
@@ -621,7 +621,7 @@ setMethodS3("getGroupDirections", "AffymetrixCdfFile", function(this, units=NULL
       verbose && exit(verbose);
 
       verbose && enter(verbose, "Unlisting each unit");
-      groupDirections <- base::lapply(groupDirections, FUN=unlist,
+      groupDirections <- lapply(groupDirections, FUN=unlist,
                                                           use.names=FALSE);
 
       gc <- gc();
@@ -1202,7 +1202,7 @@ setMethodS3("getFirstCellIndices", "AffymetrixCdfFile", function(this, units=NUL
     # For each unit and each group, get the index of the first cell.
     res <- applyCdfGroups(res, function(groups) {
       # For each group, pull out the first cell.
-      base::lapply(groups, FUN=function(group) {
+      lapply(groups, FUN=function(group) {
         # group$indices[1] == group[[1]][1] == ...
         list(indices=.subset(.subset2(group, 1), 1));
       })

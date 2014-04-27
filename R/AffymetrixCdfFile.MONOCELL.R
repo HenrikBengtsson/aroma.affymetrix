@@ -49,7 +49,7 @@ setMethodS3("createMonocellCdf", "AffymetrixCdfFile", function(this, chipType=ge
       group;
     } # rearrangeGroup()
 
-    nbrOfCells <- base::lapply(units, FUN=function(unit) .subset2(unit, "ncells"));
+    nbrOfCells <- lapply(units, FUN=function(unit) .subset2(unit, "ncells"));
     nbrOfCells <- sum(unlist(nbrOfCells, use.names=FALSE));
 
     cells <- seq(from=offset+1, to=offset+nbrOfCells);
@@ -219,7 +219,7 @@ setMethodS3("createMonocellCdf", "AffymetrixCdfFile", function(this, chipType=ge
   destQcUnits <- readCdfQc(src);
   verbose && exit(verbose);
   nbrOfQcUnits <- length(destQcUnits);
-  nbrOfCellsPerQcUnit <- base::lapply(destQcUnits, FUN=.subset2, "ncells");
+  nbrOfCellsPerQcUnit <- lapply(destQcUnits, FUN=.subset2, "ncells");
   nbrOfCellsPerQcUnit <- unlist(nbrOfCellsPerQcUnit, use.names=FALSE);
   nbrOfQcCells <- sum(nbrOfCellsPerQcUnit);
   verbose && printf(verbose,
@@ -424,10 +424,10 @@ setMethodS3("createMonocellCdf", "AffymetrixCdfFile", function(this, chipType=ge
     # with element "groups". /KS
 
     # Precalculate
-    srcUnits <- base::lapply(srcUnits, FUN=function(unit) {
+    srcUnits <- lapply(srcUnits, FUN=function(unit) {
       groups <- .subset2(unit, "groups");
-      groups <- base::lapply(groups, FUN=function(group) {
-        group[fields] <- base::lapply(.subset(group, fields), FUN=.subset, fIdxs);
+      groups <- lapply(groups, FUN=function(group) {
+        group[fields] <- lapply(.subset(group, fields), FUN=.subset, fIdxs);
         group$natoms <- nbrOfCellsPerField;
         group$ncellsperatom <- as.integer(1);
         idxs <- idxOffset + fIdxs;

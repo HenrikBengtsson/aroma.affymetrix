@@ -125,7 +125,7 @@ setMethodS3("getAlleleProbePairs", "AffymetrixCdfFile", function(this, units=NUL
   # Save memory by converting to integers. [44Mb -> 11Mb]
   levels <- as.integer(1:4);
   names(levels) <- c("A", "C", "G", "T");
-  groupNames <- base::lapply(groupNames, FUN=function(s) {
+  groupNames <- lapply(groupNames, FUN=function(s) {
     s <- levels[s];
     names(s) <- NULL;
     s;
@@ -179,10 +179,10 @@ setMethodS3("getAlleleProbePairs", "AffymetrixCdfFile", function(this, units=NUL
 
     # Save memory by flattening structure. [298Mb -> 51Mb(!)]
     # TODO: Add support to do this already in affxparser?! /HB 2006-07-22
-    cdfAll0 <- base::lapply(cdfAll0, FUN=function(unit) {
+    cdfAll0 <- lapply(cdfAll0, FUN=function(unit) {
       groups <- .subset2(unit, 1);
       names(groups) <- NULL;
-      base::lapply(groups, FUN=.subset2, 1);
+      lapply(groups, FUN=.subset2, 1);
     });
 
     gc <- gc();
@@ -228,7 +228,7 @@ setMethodS3("getAlleleProbePairs", "AffymetrixCdfFile", function(this, units=NUL
     basepair <- paste(names(levels)[name[1:2]], collapse="");
     verbose && enter(verbose, sprintf("Allele basepair %s (%d of %d)", basepair, kk, length(uGroupNames)));
 
-    idx <- base::sapply(groupNames, FUN=identical, name);
+    idx <- sapply(groupNames, FUN=identical, name);
     idx <- which(idx);
     if (verbose) {
       bpNames <- matrix(names(levels)[name], nrow=2);
@@ -246,7 +246,7 @@ setMethodS3("getAlleleProbePairs", "AffymetrixCdfFile", function(this, units=NUL
 
     cdf0 <- vector("list", length=length(name));
     for (gg in 1:length(name)) {
-      cdf0[[gg]] <- unlist(base::lapply(cdf, FUN=.subset2, gg), use.names=FALSE);
+      cdf0[[gg]] <- unlist(lapply(cdf, FUN=.subset2, gg), use.names=FALSE);
     }
 
     # Not needed anymore
@@ -331,7 +331,7 @@ setMethodS3("getAlleleProbePairs", "AffymetrixCdfFile", function(this, units=NUL
     probeSets <- NULL;
     gc <- gc();
     pairs <- strsplit(names(probeSets2), split="");
-    pairs <- base::lapply(pairs, FUN=function(x) paste(sort(x), collapse=""));
+    pairs <- lapply(pairs, FUN=function(x) paste(sort(x), collapse=""));
     pairs <- unlist(pairs);
     uPairs <- sort(unique(pairs));
     verbose && cat(verbose, "Probe pairs (ignoring order): ",

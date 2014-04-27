@@ -3,13 +3,16 @@ setMethodS3("calculateWeights", "ProbeLevelModel", function(this, units=NULL, ra
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local functions
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Lookup MASS::psi.huber() once; '::' is expensive
+  MASS_psi.huber <- MASS::psi.huber;
+
   resFcn <- function(unit) {
     nbrOfGroups <- length(unit);
-    res <- base::lapply(1:nbrOfGroups, FUN=function(gg) {
+    res <- lapply(1:nbrOfGroups, FUN=function(gg) {
       y <- .subset2(.subset2(unit, gg), "eps");
       y <- log2(y);
       mad <- 1.4826 * median(abs(y));
-      matrix(MASS::psi.huber(y/mad), ncol=ncol(y));
+      matrix(MASS_psi.huber(y/mad), ncol=ncol(y));
     })
     res;
   } # resFcn()
@@ -72,7 +75,7 @@ setMethodS3("calculateWeights", "ProbeLevelModel", function(this, units=NULL, ra
     residualsList <- readUnits(rs, units=units, verbose=less(verbose), stratifyBy="pm");
 
     verbose && enter(verbose, "Calculating weights");
-    weightsList <- base::lapply(residualsList, FUN=resFcn);
+    weightsList <- lapply(residualsList, FUN=resFcn);
     verbose && exit(verbose);
 
     verbose && enter(verbose, "Storing weights");
@@ -84,8 +87,8 @@ setMethodS3("calculateWeights", "ProbeLevelModel", function(this, units=NULL, ra
 
       verbose && enter(verbose, sprintf("Array #%d ('%s') of %d", ii, getName(wf), length(ds)));
 
-      data <- base::lapply(weightsList, FUN=function(unit) {
-        base::lapply(unit, FUN=function(group) {
+      data <- lapply(weightsList, FUN=function(unit) {
+        lapply(unit, FUN=function(group) {
           nrow <- nrow(group);
           list(
             intensities=2^group[,ii],

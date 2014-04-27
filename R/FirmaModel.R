@@ -378,7 +378,7 @@ setMethodS3("getFitUnitFunction", "FirmaModel", function(this, ...) {
   if(identical(this$operateOn, "residuals")) {
     fitUnit <- function(unit, ...) {
       u.mad <- mad(log2(unlist(unit, use.names=FALSE)), center=0);
-      base::lapply(unit, FUN=function(group) {
+      lapply(unit, FUN=function(group) {
         if (length(group) > 0) {
           y <- .subset2(group, 1); # Get intensities
         } else {
@@ -390,7 +390,7 @@ setMethodS3("getFitUnitFunction", "FirmaModel", function(this, ...) {
     } # fitUnit()
   } else {
     fitUnit <- function(unit, ...) {
-      base::lapply(unit, FUN=function(group) {
+      lapply(unit, FUN=function(group) {
         if (length(group) > 0) {
           y <- .subset2(group, 1); # Get intensities
         } else {
@@ -649,8 +649,8 @@ setMethodS3("fit", "FirmaModel", function(this, units="remaining", ..., ram=NULL
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     verbose && enter(verbose, "Calculating FIRMA scores");
     tFit <- processTime();
-    fit <- base::lapply(y, FUN=fitUnit);
-    #fit <- base::lapply(fit, FUN=normalizeFits);
+    fit <- lapply(y, FUN=fitUnit);
+    #fit <- lapply(fit, FUN=normalizeFits);
     timers$fit <- timers$fit + (processTime() - tFit);
     y <- NULL; # Not needed anymore (to minimize memory usage)
     verbose && str(verbose, fit[1]);
@@ -725,7 +725,7 @@ setMethodS3("fit", "FirmaModel", function(this, units="remaining", ..., ram=NULL
     t <- nbrOfUnits(cdf)*totalTime[3]/nunits;
     printf(verbose, "Total time for complete data set: %.2fmin = %.2fh\n", t/60, t/3600);
     # Get distribution of what is spend where
-    t <- base::lapply(timers, FUN=function(timer) unname(timer[3]));
+    t <- lapply(timers, FUN=function(timer) unname(timer[3]));
     t <- unlist(t);
     t <- 100 * t / t["total"];
     printf(verbose, "Fraction of time spent on different tasks: Fitting: %.1f%%, Reading: %.1f%%, Writing: %.1f%%, Explicit garbage collection: %.1f%%\n", t["fit"], t["read"], t["writeFs"], t["gc"]);

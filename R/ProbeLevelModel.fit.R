@@ -434,10 +434,10 @@ setMethodS3("fit", "ProbeLevelModel", function(this, units="remaining", ..., for
 
       if (hasPriors) {
         verbose && cat(verbose, "Calling fitUnit() via mapply() with prior parameter estimates");
-        fit <- base::mapply(y, priors=priors, FUN=fitUnit, SIMPLIFY=FALSE);
+        fit <- mapply(y, priors=priors, FUN=fitUnit, SIMPLIFY=FALSE);
       } else {
         verbose && cat(verbose, "Calling fitUnit() via lapply()");
-        fit <- base::lapply(y, FUN=fitUnit);
+        fit <- lapply(y, FUN=fitUnit);
       }
 
       timers$fit <- timers$fit + (processTime() - tFit);
@@ -525,7 +525,7 @@ setMethodS3("fit", "ProbeLevelModel", function(this, units="remaining", ..., for
       printf(verbose, "Total time for complete data set: %.2fmin = %.2fh\n", t/60, t/3600);
       # Get distribution of what is spend where
       timers$write <- timers$writePaf + timers$writeCes;
-      t <- base::lapply(timers, FUN=function(timer) unname(timer[3]));
+      t <- lapply(timers, FUN=function(timer) unname(timer[3]));
       t <- unlist(t);
       t <- 100 * t / t["total"];
       printf(verbose, "Fraction of time spent on different tasks: Fitting: %.1f%%, Reading: %.1f%%, Writing: %.1f%% (of which %.2f%% is for encoding/writing chip-effects), Explicit garbage collection: %.1f%%\n", t["fit"], t["read"], t["write"], 100*t["writeCes"]/t["write"], t["gc"]);

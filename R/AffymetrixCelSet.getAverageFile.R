@@ -99,7 +99,7 @@ setMethodS3("getAverageFile", "AffymetrixCelSet", function(this, name=NULL, pref
     # assign mean and sd to an empty environment so that digest() doesn't
     # pick up any "promised" objects from the original environment.
     # A bit ad hoc, but it works for now. /2007-01-03
-    key <- base::lapply(key, FUN=function(x) {
+    key <- lapply(key, FUN=function(x) {
       if (is.function(x))
         environment(x) <- emptyenv();
       x;

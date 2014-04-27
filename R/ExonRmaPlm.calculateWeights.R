@@ -3,14 +3,17 @@ setMethodS3("calculateWeights", "ExonRmaPlm", function(this, units=NULL, ram=NUL
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local functions
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Lookup MASS::psi.huber() once; '::' is expensive
+  MASS_psi.huber <- MASS::psi.huber;
+
   resFcn <- function(unit, mergeGroups) {
     nbrOfGroups <- length(unit);
     if (mergeGroups) {
-      y <- do.call("rbind", base::lapply(unit, FUN=.subset2, "eps"));
+      y <- do.call("rbind", lapply(unit, FUN=.subset2, "eps"));
       y <- log2(y);
       madMerged <- 1.4826 * median(abs(y));
     }
-    res <- base::lapply(1:nbrOfGroups, FUN=function(gg) {
+    res <- lapply(1:nbrOfGroups, FUN=function(gg) {
       y <- .subset2(.subset2(unit, gg), "eps");
       y <- log2(y);
       mad <- 1.4826 * median(abs(y));
@@ -18,9 +21,9 @@ setMethodS3("calculateWeights", "ExonRmaPlm", function(this, units=NULL, ram=NUL
         return(matrix(data=1, nrow=nrow(y), ncol=ncol(y)));
       }
       if (mergeGroups) {
-        return(matrix(MASS::psi.huber(y/madMerged), ncol=ncol(y)));
+        return(matrix(MASS_psi.huber(y/madMerged), ncol=ncol(y)));
       } else {
-        return(matrix(MASS::psi.huber(y/mad), ncol=ncol(y)));
+        return(matrix(MASS_psi.huber(y/mad), ncol=ncol(y)));
       }
     })
     res;
@@ -91,7 +94,7 @@ setMethodS3("calculateWeights", "ExonRmaPlm", function(this, units=NULL, ram=NUL
     residualsList <- readUnits(rs, units=units, verbose=less(verbose), stratifyBy="pm");
 
     verbose && enter(verbose, "Calculating weights");
-    weightsList <- base::lapply(residualsList, FUN=resFcn, mergeGroups=this$mergeGroups);
+    weightsList <- lapply(residualsList, FUN=resFcn, mergeGroups=this$mergeGroups);
     verbose && exit(verbose);
 
     verbose && enter(verbose, "Storing weights");
@@ -103,8 +106,8 @@ setMethodS3("calculateWeights", "ExonRmaPlm", function(this, units=NULL, ram=NUL
 
       verbose && enter(verbose, sprintf("Array #%d ('%s') of %d", ii, getName(wf), length(ds)));
 
-      data <- base::lapply(weightsList, function(unit) {
-        base::lapply(unit, function(group) {
+      data <- lapply(weightsList, function(unit) {
+        lapply(unit, function(group) {
           nrow <- nrow(group);
           list(
             intensities=2^group[,ii],

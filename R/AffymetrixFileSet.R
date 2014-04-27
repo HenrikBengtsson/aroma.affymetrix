@@ -31,7 +31,7 @@ setConstructorS3("AffymetrixFileSet", function(files=NULL, ...) {
   if (is.null(files)) {
   } else if (is.list(files)) {
     reqFileClass <- "AffymetrixFile";
-    base::lapply(files, FUN=function(df) {
+    lapply(files, FUN=function(df) {
       df <- Arguments$getInstanceOf(df, reqFileClass, .name="files");
     })
   } else if (inherits(files, "AffymetrixFileSet")) {

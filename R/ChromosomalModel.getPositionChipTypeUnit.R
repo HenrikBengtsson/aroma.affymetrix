@@ -29,16 +29,16 @@ setMethodS3("getPositionChipTypeUnit", "ChromosomalModel", function(this, chromo
   # Get the UnitNameFile:s
   unfList <- getListOfUnitNamesFiles(this, verbose=less(verbose, 10));
 
-  # Get the genome information files  
-  ugpList <- base::lapply(unfList, FUN=getAromaUgpFile, verbose=less(verbose, 10));
+  # Get the genome information files
+  ugpList <- lapply(unfList, FUN=getAromaUgpFile, verbose=less(verbose, 10));
   verbose && print(verbose, ugpList);
 
-  # Get the genome information files  
-  ugpList <- base::lapply(unfList, FUN=getAromaUgpFile, verbose=less(verbose, 10));
+  # Get the genome information files
+  ugpList <- lapply(unfList, FUN=getAromaUgpFile, verbose=less(verbose, 10));
   verbose && print(verbose, ugpList);
 
   # Get the units on the chromosome of interest
-  unitsList <- base::lapply(ugpList, FUN=function(ugp) {
+  unitsList <- lapply(ugpList, FUN=function(ugp) {
     getUnitsOnChromosome(ugp, chromosome=chromosome, ...);
   });
   verbose && str(verbose, unitsList);

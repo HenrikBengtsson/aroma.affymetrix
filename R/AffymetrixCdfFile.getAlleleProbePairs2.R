@@ -1,4 +1,8 @@
 setMethodS3("getAlleleProbePairs2", "AffymetrixCdfFile", function(this, ..., verbose=FALSE) {
+  # Look up base::apply(); '::' is expensive
+  base_apply <- base::apply;
+
+
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
 
@@ -16,7 +20,7 @@ setMethodS3("getAlleleProbePairs2", "AffymetrixCdfFile", function(this, ..., ver
   uGroupNames <- unique(groupNames);
   verbose && exit(verbose);
 
-  uGroupNames0 <- base::lapply(uGroupNames, FUN=function(x) {
+  uGroupNames0 <- lapply(uGroupNames, FUN=function(x) {
     x <- matrix(x, nrow=2)
     if (ncol(x) == 2) {
       # Take the complement bases for the reverse strand
@@ -26,12 +30,12 @@ setMethodS3("getAlleleProbePairs2", "AffymetrixCdfFile", function(this, ..., ver
 
   })
 
-  uBasepairs0 <- base::lapply(uGroupNames0, FUN=function(x) {
-    base::apply(x, MARGIN=2, FUN=sort);
+  uBasepairs0 <- lapply(uGroupNames0, FUN=function(x) {
+    base_apply(x, MARGIN=2, FUN=sort);
   })
 
-  uBasepairs1 <- base::lapply(uBasepairs0, FUN=function(x) {
-    base::apply(x, MARGIN=2, FUN=paste, collapse="");
+  uBasepairs1 <- lapply(uBasepairs0, FUN=function(x) {
+    base_apply(x, MARGIN=2, FUN=paste, collapse="");
   })
 
   # Get all unique allele basepairs
@@ -66,10 +70,10 @@ setMethodS3("getAlleleProbePairs2", "AffymetrixCdfFile", function(this, ..., ver
     bpIdx <- map[[kk]];
     gIdx <- as.integer(bpIdx);
     sIdx <- round(10*(bpIdx - gIdx));
-    
+
     verbose && cat(verbose, "Located in ", length(unique(gIdx)), " group(s).");
-    
-    idx <- base::lapply(groupNames, FUN=identical, basepair);
+
+    idx <- lapply(groupNames, FUN=identical, basepair);
     idx <- which(unlist(idx, use.names=FALSE));
     cdf <- cdfAll[idx];
 
@@ -94,7 +98,7 @@ setMethodS3("getAlleleProbePairs2", "AffymetrixCdfFile", function(this, ..., ver
 ############################################################################
 # HISTORY:
 # 2008-05-10
-# o ROBUSTNESS: Added backward compatibility for cases when the cached 
+# o ROBUSTNESS: Added backward compatibility for cases when the cached
 #   results has sets$nonSNPs as a list.
 # 2008-03-26
 # o CLEAN UP: getAlleleProbePairs() of AffymetrixCdfFile would print *all*
@@ -138,18 +142,18 @@ setMethodS3("getAlleleProbePairs2", "AffymetrixCdfFile", function(this, ..., ver
 # 2006-03-24
 # o Added references to DM articles and Affymetrix manuals.
 # o Further speed up by improve rearrangement of CDF structure. Now a Hind
-#   chip takes about 11-13 minutes instead.  11 minutes compared with 
+#   chip takes about 11-13 minutes instead.  11 minutes compared with
 #   35 hours is 190 times faster.
 # o After several speed improvements (also in affxparser), estimation of DM
 #   rank scores now takes about 15-18 minutes for the 100K Hind chip.
 #   The first draft took 30-35 hours(!) and yesterday 60-80 minutes.  Note,
-#   the first draft was not "stupid" code; there is always room for 
+#   the first draft was not "stupid" code; there is always room for
 #   improvement.
 # o Defined a local colSums() in getDmRankScores() specialized for matrices.
 #   The overhead of the default colSums() is about 50%.
 # 2006-03-23
 # o Moved all SNP related methods into the new class AffymetrixSnpCelFile.
-# o Added getRelativeAlleleSignals().  Note, it was designed to be used 
+# o Added getRelativeAlleleSignals().  Note, it was designed to be used
 #   with the 10K SNP chips.  These are designed so that there are equal
 #   number of forward and reverse quartets with matching offsets in both
 #   strands.  This is not the case for the 100K chips and above.

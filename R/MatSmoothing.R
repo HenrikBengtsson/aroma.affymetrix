@@ -200,12 +200,14 @@ setMethodS3("process", "MatSmoothing", function(this, ..., units=NULL, force=FAL
   # Local functions
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # internal function to do trimmed mean smoothing
+  # Lookup gsmoothr::tmeanC() once; '::' is expensive
+  gsmoothr_tmeanC <- gsmoothr::tmeanC;
   calcSmoothed <- function(posVector, dataMatrix, probeWindow, nProbes, meanTrim) {
     nc <- ncol(dataMatrix);
     posM <- matrix(posVector, nrow=length(posVector), ncol=nc);
     o <- order(posM);  # calculate ordering
 
-    smoothedScore <- gsmoothr::tmeanC(posM[o], dataMatrix[o],
+    smoothedScore <- gsmoothr_tmeanC(posM[o], dataMatrix[o],
            probeWindow=probeWindow, nProbes=nProbes*nc, trim=meanTrim);
     subsetInd <- seq(from=1, to=length(o), by=nc);
     return(smoothedScore[subsetInd]);
@@ -427,7 +429,7 @@ setMethodS3("process", "MatSmoothing", function(this, ..., units=NULL, force=FAL
     unit$groups[[1]]$indices;
   });
 
-  nRows <- base::sapply(cellsList, FUN=length);
+  nRows <- sapply(cellsList, FUN=length);
   allInds <- unlist(cellsList, use.names=FALSE);
 
   nbrOfUnits <- length(units);
@@ -491,7 +493,7 @@ setMethodS3("process", "MatSmoothing", function(this, ..., units=NULL, force=FAL
     dsII <- NULL;
     verbose && exit(verbose);
 
-    dataList <- base::lapply(dataList, FUN=function(u) {
+    dataList <- lapply(dataList, FUN=function(u) {
       matrix(log2(u[[1]]$intensities), ncol=length(sampsKeep))
     });
 

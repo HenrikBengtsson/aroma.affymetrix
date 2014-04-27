@@ -94,7 +94,7 @@ setMethodS3("getFitUnitFunction", "MultiArrayUnitModel", function(this, ...) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (this$probeModel == "pm-mm") {
     fitUnit <- function(unit, ...) {
-      base::lapply(unit, FUN=function(group) {
+      lapply(unit, FUN=function(group) {
         y <- .subset2(group, 1); # Get intensities
         y <- y[1,,] - y[2,,];  # PM-MM
         fitfcn(y, ...);
@@ -102,7 +102,7 @@ setMethodS3("getFitUnitFunction", "MultiArrayUnitModel", function(this, ...) {
     }
   } else if (this$probeModel == "min1(pm-mm)") {
     fitUnit <- function(unit, ...) {
-      base::lapply(unit, FUN=function(group) {
+      lapply(unit, FUN=function(group) {
         y <- .subset2(group, 1); # Get intensities
         y <- y[1,,] - y[2,,];  # PM-MM
         y[y < 1] <- 1;       # min1(PM-MM)=min(PM-MM,1)
@@ -111,7 +111,7 @@ setMethodS3("getFitUnitFunction", "MultiArrayUnitModel", function(this, ...) {
     }
   } else if (this$probeModel == "pm+mm") {
     fitUnit <- function(unit, ...) {
-      base::lapply(unit, FUN=function(group) {
+      lapply(unit, FUN=function(group) {
         y <- .subset2(group, 1); # Get intensities
         y <- y[1,,] + y[2,,];  # PM+MM
         fitfcn(y, ...);
@@ -119,7 +119,7 @@ setMethodS3("getFitUnitFunction", "MultiArrayUnitModel", function(this, ...) {
     }
   } else {
     fitUnit <- function(unit, ...) {
-      base::lapply(unit, FUN=function(group) {
+      lapply(unit, FUN=function(group) {
         if (length(group) > 0) {
           y <- .subset2(group, 1); # Get intensities
         } else {

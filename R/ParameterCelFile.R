@@ -85,7 +85,7 @@ setMethodS3("setDecodeFunction", "ParameterCelFile", function(this, fcn, ...) {
 setMethodS3("encode", "ParameterCelFile", function(this, units, ...) {
   encodeUnitGroup <- this$encodeFunction;
   if (!is.null(encodeUnitGroup)) {
-    units <- base::lapply(units, FUN=base::lapply, encodeUnitGroup);
+    units <- lapply(units, FUN=lapply, encodeUnitGroup);
   }
   units;
 }, private=TRUE)
@@ -93,7 +93,7 @@ setMethodS3("encode", "ParameterCelFile", function(this, units, ...) {
 setMethodS3("decode", "ParameterCelFile", function(this, units, ...) {
   decodeUnitGroup <- this$decodeFunction;
   if (!is.null(decodeUnitGroup)) {
-    units <- base::lapply(units, FUN=base::lapply, decodeUnitGroup);
+    units <- lapply(units, FUN=lapply, decodeUnitGroup);
   }
   units;
 }, private=TRUE)

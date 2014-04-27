@@ -372,8 +372,8 @@ setMethodS3("getHeaderV3", "AffymetrixCelFile", function(this, ...) {
   header <- trim(header);
   header <- header[nchar(header) > 0];
   header <- strsplit(header, split="=");
-  names <- base::sapply(header, FUN=function(s) s[1]);
-  header <- base::lapply(header, FUN=function(s) s[-1]);
+  names <- sapply(header, FUN=function(s) s[1]);
+  header <- lapply(header, FUN=function(s) s[-1]);
   names(header) <- names;
 
   header;

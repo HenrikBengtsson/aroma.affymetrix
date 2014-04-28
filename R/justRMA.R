@@ -1,3 +1,34 @@
+###########################################################################/**
+# @RdocGeneric justRMA
+# @alias justRMA.AffymetrixCelSet
+#
+# @title "Robust Multichip Analysis (RMA) reproducing the affy package"
+#
+# \description{
+#  @get "title" as far as possible.  The RMA method is described in [1].
+#
+#  The algorithm is processed in bounded memory, meaning a very large
+#  number of arrays can be analyzed on also very limited computer systems.
+#  The only limitation is the amount of memory required to load the final
+#  chip-effect estimates into memory (as a @see "Biobase::ExpressionSet").
+# }
+#
+# \usage{
+#   @usage justRMA,AffymetrixCelSet
+# }
+#
+# \arguments{
+#  \item{csR}{An @see "AffymetrixCelSet".}
+#  \item{flavor}{A @character string specifying the estimators used in
+#   the RMA summarization step.}
+#  \item{...}{Additional arguments passed to @see "doRMA" used internally.}
+#  \item{verbose}{See @see "Verbose".}
+# }
+#
+# \value{
+#   Returns an annotated @see "Biobase::ExpressionSet".
+# }
+#
 # \section{Reproducibility of affy}{
 #   This implementation of the RMA method reproduces @see "affy::justRMA"
 #   in \pkg{affy} package quite well.  It does so by still using a
@@ -6,6 +37,19 @@
 #   \pkg{affy}.  At least 20-50 \emph{times} more samples should be
 #   doable, if not more.
 # }
+#
+# \references{
+#  [1] Irizarry et al.
+#      \emph{Summaries of Affymetrix GeneChip probe level data}.
+#      NAR, 2003, 31, e15.\cr
+# }
+#
+# \seealso{
+#   @see "doRMA".
+# }
+#
+# @author "HB"
+#*/###########################################################################
 setMethodS3("justRMA", "AffymetrixCelSet", function(csR, flavor=c("oligo", "affyPLM"), ..., verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
@@ -53,6 +97,11 @@ setMethodS3("justRMA", "AffymetrixCelSet", function(csR, flavor=c("oligo", "affy
   eset;
 }, protected=TRUE) # justRMA()
 
+
+###########################################################################
 # HISTORY:
+# 2014-04-28
+# o Added Rdoc comments.
 # 2014-04-27
 # o Added  ...finally!
+###########################################################################

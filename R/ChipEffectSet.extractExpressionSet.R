@@ -40,7 +40,7 @@
 # @keyword IO
 # @keyword programming
 #*/###########################################################################
-setMethodS3("extractExpressionSet", "ChipEffectSet", function(this, ..., logBase=2, annotationPkg=NULL, verbose=FALSE) {
+setMethodS3("extractExpressionSet", "ChipEffectSet", function(this, ..., logBase=2, orderUnitsBy=c("asis", "lexicographic"), annotationPkg=NULL, verbose=FALSE) {
   require("Biobase") || throw("Package not loaded: Biobase");
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -50,6 +50,9 @@ setMethodS3("extractExpressionSet", "ChipEffectSet", function(this, ..., logBase
   if (!is.null(logBase)) {
     logBase <- Arguments$getInteger(logBase, range=c(1,Inf));
   }
+
+  # Argument 'orderUnitsBy':
+  orderUnitsBy <- match.arg(orderUnitsBy);
 
   # Argument 'annotationPkg':
   if (!is.null(annotationPkg)) {
@@ -152,18 +155,26 @@ setMethodS3("extractExpressionSet", "ChipEffectSet", function(this, ..., logBase
 
 
   verbose && enter(verbose, "Reading data");
-  Y <- extractMatrix(this, ..., returnUgcMap=TRUE, verbose=less(verbose, 5));
+  Y <- extractMatrix(this, field="theta", drop=FALSE, returnUgcMap=TRUE, ..., verbose=less(verbose, 5));
   ugcMap <- attr(Y, "unitGroupCellMap");
   attr(Y, "unitGroupCellMap") <- NULL;
   verbose && str(verbose, Y);
+
+  # "sdTheta" is actually standard errors, cf. rmaModelAffyPlm().
+  # /HB 2014-04-27
+  Yse <- extractMatrix(this, field="sdTheta", cells=ugcMap$cell, drop=FALSE, ..., returnUgcMap=FALSE, verbose=less(verbose, 5));
+  verbose && str(verbose, Yse);
+
   verbose && str(verbose, ugcMap);
   verbose && exit(verbose);
 
   if (!is.null(logBase)) {
-    verbose && enter(verbose, "Log-transforming signals");
+    verbose && enter(verbose, 'Log-transforming theta signals ("expressions")');
     verbose && cat(verbose, "Log base: ", logBase);
     Y <- log(Y, base=logBase);
     verbose && str(verbose, Y);
+    # Note that affy::justRMA() returns se.exprs on the non-log scale
+    # so don't log those here. /HB 2014-04-27
     verbose && exit(verbose);
   }
 
@@ -185,13 +196,24 @@ setMethodS3("extractExpressionSet", "ChipEffectSet", function(this, ..., logBase
   verbose && exit(verbose);
 
   rownames(Y) <- names;
+  rownames(Yse) <- names;
+
+  if (orderUnitsBy == "lexicographic") {
+    o <- order(names);
+    Y <- Y[o,,drop=FALSE];
+    Yse <- Yse[o,,drop=FALSE];
+    o <- NULL;
+  }
 
   # Not needed anymore
   # Not needed anymore
   names <- ugNames <- ugcMap <- cdf <- NULL;
 
   verbose && enter(verbose, "Allocating ExpressionSet object");
-  eset <- new("ExpressionSet", exprs=Y, annotation=annotation);
+  assayData <- new.env();
+  assayData$exprs <- Y;
+  assayData$se.exprs <- Yse;
+  eset <- ExpressionSet(assayData=assayData, annotation=annotation);
   verbose && print(verbose, eset);
 
   # Not needed anymore
@@ -206,6 +228,11 @@ setMethodS3("extractExpressionSet", "ChipEffectSet", function(this, ..., logBase
 
 ###########################################################################
 # HISTORY:
+# 2014-04-27 [HB]
+# o Added argument 'orderUnitsBy' to extractExpressionSet() for
+#   ChipEffectSet.
+# o Now extractExpressionSet() for ChipEffectSet also returns std. errors.
+# o Updated extractExpressionSet() to use the ExpressionSet constructor.
 # 2013-04-27 [HB]
 # o Added argument 'annotationPkg' to extractExpressionSet() for
 #   ChipEffectSet, which (indirectly) sets the 'annotation' slot

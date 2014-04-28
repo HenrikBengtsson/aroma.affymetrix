@@ -22,7 +22,8 @@
 }
 
 \usage{
-\method{extractExpressionSet}{ChipEffectSet}(this, ..., logBase=2, annotationPkg=NULL, verbose=FALSE)
+\method{extractExpressionSet}{ChipEffectSet}(this, ..., logBase=2, orderUnitsBy=c("asis", "lexicographic"),
+  annotationPkg=NULL, verbose=FALSE)
 }
 
 \arguments{

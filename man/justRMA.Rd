@@ -10,6 +10,7 @@
 \alias{justRMA}
 
 \alias{justRMA.AffymetrixCelSet}
+\alias{justRMA.default}
 
 \title{Robust Multichip Analysis (RMA) reproducing the affy package}
 
@@ -24,6 +25,7 @@
 
 \usage{
   \method{justRMA}{AffymetrixCelSet}(csR, flavor=c("oligo", "affyPLM"), ..., verbose=FALSE)
+  \method{justRMA}{default}(...)
 }
 
 \arguments{

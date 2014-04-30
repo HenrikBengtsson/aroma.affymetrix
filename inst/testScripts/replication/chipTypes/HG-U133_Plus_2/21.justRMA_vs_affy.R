@@ -47,7 +47,7 @@ verbose && exit(verbose);
 # Sample names
 sampleNames0 <- sampleNames(eset0)
 sampleNames <- sampleNames(eset)
-stopifnot(identical(sampleNames, file_path_sans_ext(sampleNames0)))
+stopifnot(identical(sampleNames, tools::file_path_sans_ext(sampleNames0)))
 
 # Feature names
 stopifnot(identical(featureNames(eset), featureNames(eset0)))

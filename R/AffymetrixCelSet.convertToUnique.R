@@ -129,7 +129,7 @@ setMethodS3("convertToUnique", "AffymetrixCelSet", function(this, ..., tags="UNQ
   # Do the conversion from standard CDF to unique CDF
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   for (kk in seq_len(nbrOfArrays)) {
-      df <- getFile(this, kk);
+      df <- this[[kk]];
       verbose && enter(verbose, sprintf("Converting CEL data from standard to unique CDF for sample #%d (%s) of %d", kk, getName(df), nbrOfArrays));
 
       dfFullname <- getFullName(df);

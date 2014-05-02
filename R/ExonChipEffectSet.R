@@ -90,7 +90,7 @@ setMethodS3("findUnitsTodo", "ExonChipEffectSet", function(this, ...) {
   # order, becuase that is updated last.
   names <- getFullNames(this);
   idx <- order(names, decreasing=TRUE)[1];
-  df <- getFile(this, idx);
+  df <- this[[idx]];
   findUnitsTodo(df, ...);
 })
 

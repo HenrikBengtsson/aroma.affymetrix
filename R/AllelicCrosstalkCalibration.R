@@ -761,7 +761,7 @@ setMethodS3("process", "AllelicCrosstalkCalibration", function(this, ..., force=
   verbose && cat(verbose, "Path: ", outputPath);
 
   for (kk in seq_len(nbrOfArrays)) {
-    df <- getFile(ds, kk);
+    df <- ds[[kk]];
     verbose && enter(verbose, sprintf("Array #%d ('%s') of %d",
                                               kk, getName(df), nbrOfArrays));
 
@@ -1116,7 +1116,7 @@ setMethodS3("plotBasepair", "AllelicCrosstalkCalibration", function(this, array,
   }
 
   # Get the data file
-  cf <- getFile(cs, array);
+  cf <- cs[[array]];
   verbose && print(verbose, cf);
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -1218,7 +1218,7 @@ setMethodS3("getDataPairs", "AllelicCrosstalkCalibration", function(this, array,
   verbose && exit(verbose);
 
   verbose && enter(verbose, "Reading all probe intensities");
-  cf <- getFile(cs, array);
+  cf <- cs[[array]];
   yAll <- getData(cf, fields="intensities", ...)$intensities;
   verbose && exit(verbose);
 

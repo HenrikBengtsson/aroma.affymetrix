@@ -274,7 +274,7 @@ setMethodS3("process", "AbstractProbeSequenceNormalization", function(this, ...,
   muT <- NULL;
   seqs <- NULL;
   for (kk in seq_len(nbrOfArrays)) {
-    df <- getFile(ds, kk);
+    df <- ds[[kk]];
     verbose && enter(verbose, sprintf("Array #%d ('%s') of %d",
                                               kk, getName(df), nbrOfArrays));
 

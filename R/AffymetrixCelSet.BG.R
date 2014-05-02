@@ -248,7 +248,7 @@ setMethodS3("bgAdjustGcrma", "AffymetrixCelSet", function(this, path, affinities
   verbose && enter(verbose, "Adjusting ", nbrOfArrays, " arrays");
   dataFiles <- list();
   for (ii in seq_along(this)) {
-    df <- getFile(this, ii);
+    df <- this[[ii]];
     verbose && enter(verbose, sprintf("Array #%d ('%s') of %d", ii, getName(df), nbrOfArrays));
 
     dfD <- bgAdjustGcrma(df, path=path, type=type, indicesNegativeControl=indicesNegativeControl, affinities=affinities, gsbAdjust=gsbAdjust, parametersGsb=parametersGsb, k=k, rho=rho, stretch=stretch, fast=fast, overwrite=overwrite, skip=skip, ..., verbose=less(verbose), .deprecated=.deprecated);

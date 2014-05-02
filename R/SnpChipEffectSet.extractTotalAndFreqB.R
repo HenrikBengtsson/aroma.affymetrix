@@ -1,7 +1,7 @@
 setMethodS3("extractTotalAndFreqB", "CnChipEffectSet", function(this, units=NULL, ..., drop=FALSE, verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   cdf <- getCdf(this);
 
   # Argument 'units':
@@ -30,9 +30,9 @@ setMethodS3("extractTotalAndFreqB", "CnChipEffectSet", function(this, units=NULL
 
   verbose && enter(verbose, "Extracting (total, freqB)");
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Identify possible groups
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (this$combineAlleles && this$mergeStrands) {
     # theta == (theta)
     groups <- 1;
@@ -47,9 +47,9 @@ setMethodS3("extractTotalAndFreqB", "CnChipEffectSet", function(this, units=NULL
     groups <- c(1,2,3,4);
   }
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Get the UGC map
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (is.null(ugcMap)) {
     verbose && enter(verbose, "Getting (unit, group, cell) map");
     ugcMap <- getUnitGroupCellMap(this, units=units, verbose=less(verbose));
@@ -67,17 +67,17 @@ setMethodS3("extractTotalAndFreqB", "CnChipEffectSet", function(this, units=NULL
   verbose && str(verbose, ugcMap);
 
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Read data
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   nbrOfArrays <- length(this);
   dim <- c(nbrOfUnits, 2, nbrOfArrays);
   dimnames <- list(NULL, c("total", "freqB"), getNames(this));
   data <- array(NA, dim=dim, dimnames=dimnames);
 
   for (kk in seq_len(nbrOfArrays)) {
-    ce <- getFile(this, kk);
-    dataKK <- extractTotalAndFreqB(ce, units=ugcMap, ..., 
+    ce <- this[[kk]];
+    dataKK <- extractTotalAndFreqB(ce, units=ugcMap, ...,
                                                 verbose=less(verbose, 5));
     verbose && str(verbose, dataKK);
     data[,,kk] <- dataKK;
@@ -107,7 +107,7 @@ setMethodS3("extractTotalAndFreqB", "CnChipEffectSet", function(this, units=NULL
 setMethodS3("extractTotalAndFreqB", "SnpChipEffectSet", function(this, units=NULL, ..., drop=FALSE, verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   cdf <- getCdf(this);
 
   # Argument 'units':
@@ -137,9 +137,9 @@ setMethodS3("extractTotalAndFreqB", "SnpChipEffectSet", function(this, units=NUL
 
   verbose && enter(verbose, "Extracting (total, freqB)");
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Identify possible groups
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (this$mergeStrands) {
     # theta == (thetaA, thetaB)
     groups <- c(1,2);
@@ -148,9 +148,9 @@ setMethodS3("extractTotalAndFreqB", "SnpChipEffectSet", function(this, units=NUL
     groups <- c(1,2,3,4);
   }
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Get the UGC map
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (is.null(ugcMap)) {
     verbose && enter(verbose, "Getting (unit, group, cell) map");
     ugcMap <- getUnitGroupCellMap(this, units=units, verbose=less(verbose));
@@ -168,17 +168,17 @@ setMethodS3("extractTotalAndFreqB", "SnpChipEffectSet", function(this, units=NUL
   verbose && str(verbose, ugcMap);
 
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Read data
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   nbrOfArrays <- length(this);
   dim <- c(nbrOfUnits, 2, nbrOfArrays);
   dimnames <- list(NULL, c("total", "freqB"), getNames(this));
   data <- array(NA, dim=dim, dimnames=dimnames);
 
   for (kk in seq_len(nbrOfArrays)) {
-    ce <- getFile(this, kk);
-    dataKK <- extractTotalAndFreqB(ce, units=ugcMap, ..., 
+    ce <- this[[kk]];
+    dataKK <- extractTotalAndFreqB(ce, units=ugcMap, ...,
                                                 verbose=less(verbose, 5));
     verbose && str(verbose, dataKK);
     data[,,kk] <- dataKK;

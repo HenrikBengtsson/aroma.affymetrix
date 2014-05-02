@@ -162,7 +162,7 @@ setMethodS3("readUnits", "SingleArrayUnitModel", function(this, array, units=NUL
 
 
   verbose && enter(verbose, "Reading probe intensities from array #", array);
-  df <- getFile(ds, array);
+  df <- ds[[array]];
   verbose && print(verbose, df);
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

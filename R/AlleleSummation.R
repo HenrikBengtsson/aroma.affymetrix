@@ -196,9 +196,9 @@ setMethodS3("process", "AlleleSummation", function(this, ..., verbose=FALSE) {
 
   nbrOfArrays <- length(inputSet);
   for (aa in seq_len(nbrOfArrays)) {
-    inputFile <- getFile(inputSet, aa);
+    inputFile <- inputSet[[aa]];
     verbose && enter(verbose, sprintf("Array #%d ('%s') of %d", aa, getName(inputFile), nbrOfArrays));
-    outputFile <- getFile(outputSet, aa);
+    outputFile <- outputSet[[aa]];
 
     if (length(otherUnits) > 0) {
       verbose && enter(verbose, "Copying signals for non-SNP units");

@@ -100,7 +100,7 @@ setMethodS3("extractMatrix", "AffymetrixCelSet", function(this, cells=NULL, ...,
   verbose && enter(verbose, "Retrieving data");
   for (aa in seq_len(nbrOfArrays)) {
     verbose && printf(verbose, "Array %d,\n", aa);
-    cf <- getFile(this, aa);
+    cf <- this[[aa]];
     df[o,aa] <- getData(cf, indices=cells, fields=field,
                                            verbose=less(verbose))[[field]];
     if (aa %% gcArrayFrequency == 0) {

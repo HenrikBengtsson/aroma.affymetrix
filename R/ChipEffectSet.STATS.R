@@ -22,7 +22,7 @@ setMethodS3("calculateFieldBoxplotStats", "ChipEffectSet", function(this, field=
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   nbrOfArrays <- length(this);
   cdfMono <- getCdf(this);
   nbrOfUnits <- nbrOfUnits(cdfMono);
@@ -53,7 +53,7 @@ setMethodS3("calculateFieldBoxplotStats", "ChipEffectSet", function(this, field=
     on.exit(popState(verbose));
   }
 
-  # Argument 'subset':  
+  # Argument 'subset':
   if (!(is.null(subset))) {
     getFraction <- (length(subset) == 1) && (subset >= 0) && (subset < 1);
     if (!getFraction) {
@@ -69,17 +69,17 @@ setMethodS3("calculateFieldBoxplotStats", "ChipEffectSet", function(this, field=
   # Get the (unit, group, cell) map
   ugcMap <- getUnitGroupCellMap(this, units=units, verbose=less(verbose, 5));
 
-  verbose && enter(verbose, "Calculating '", field, 
+  verbose && enter(verbose, "Calculating '", field,
                   "' statistics for ", nbrOfArrays, " (specified) arrays");
   verbose && cat(verbose, "Using (unit,group,cell) map:");
   verbose && str(verbose, ugcMap);
-  
+
   # For each file, calculate boxplot statistics
   stats <- list();
   for (kk in seq_along(arrays)) {
     array <- arrays[kk];
-    cef <- getFile(this, array);
-    verbose && enter(verbose, sprintf("Array #%d ('%s') of %d", 
+    cef <- this[[array]];
+    verbose && enter(verbose, sprintf("Array #%d ('%s') of %d",
                                           kk, getName(cef), nbrOfArrays));
     data <- extractMatrix(cef, fields=field, units=ugcMap);
     data <- as.vector(data);
@@ -95,7 +95,7 @@ setMethodS3("calculateFieldBoxplotStats", "ChipEffectSet", function(this, field=
   verbose && exit(verbose);
 
   # Merge boxplot stats?
-  if (merge) 
+  if (merge)
     stats <- mergeBoxplotStats(stats);
 
   attr(stats, "type") <- field;
@@ -121,7 +121,7 @@ setMethodS3("calculateRleBoxplotStats", "ChipEffectSet", function(this, arrays=N
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   nbrOfArrays <- length(this);
   cdfMono <- getCdf(this);
   nbrOfUnits <- nbrOfUnits(cdfMono);
@@ -141,7 +141,7 @@ setMethodS3("calculateRleBoxplotStats", "ChipEffectSet", function(this, arrays=N
     on.exit(popState(verbose));
   }
 
-  # Argument 'subset':  
+  # Argument 'subset':
   if (!(is.null(subset))) {
     getFraction <- (length(subset) == 1) && (subset >= 0) && (subset < 1);
     if (!getFraction) {
@@ -163,26 +163,26 @@ setMethodS3("calculateRleBoxplotStats", "ChipEffectSet", function(this, arrays=N
   avg <- getAverageLog(this, field="intensities", verbose=verbose);
   verbose && exit(verbose);
 
-  medianLE <- extractMatrix(avg, field="theta", units=ugcMap, 
+  medianLE <- extractMatrix(avg, field="theta", units=ugcMap,
                                                  verbose=less(verbose, 5));
   medianLE <- log2(as.vector(medianLE));
   # Not needed anymore
   avg <- NULL;
 
-  verbose && enter(verbose, "Calculating RLE statistics for ", nbrOfArrays, 
+  verbose && enter(verbose, "Calculating RLE statistics for ", nbrOfArrays,
                                                     " (specified) arrays");
   verbose && cat(verbose, "Using (unit,group,cell) map:");
   verbose && str(verbose, ugcMap);
-  
+
   # For each file, calculate boxplot statistics
   stats <- list();
   for (kk in seq_along(arrays)) {
     array <- arrays[kk];
-    cef <- getFile(this, array);
-    verbose && enter(verbose, sprintf("Array #%d ('%s') of %d", 
+    cef <- this[[array]];
+    verbose && enter(verbose, sprintf("Array #%d ('%s') of %d",
                                           kk, getName(cef), nbrOfArrays));
 
-    theta <- extractMatrix(cef, field="theta", units=ugcMap, 
+    theta <- extractMatrix(cef, field="theta", units=ugcMap,
                                                 verbose=less(verbose, 5));
     theta <- log2(as.vector(theta));
 
@@ -202,7 +202,7 @@ setMethodS3("calculateRleBoxplotStats", "ChipEffectSet", function(this, arrays=N
   verbose && exit(verbose);
 
   # Merge boxplot stats?
-  if (merge) 
+  if (merge)
     stats <- mergeBoxplotStats(stats);
 
   attr(stats, "type") <- "RLE";
@@ -215,7 +215,7 @@ setMethodS3("calculateRleBoxplotStats", "ChipEffectSet", function(this, arrays=N
 setMethodS3("calculateNuseBoxplotStats", "ChipEffectSet", function(this, arrays=NULL, subset=NULL, ..., merge=FALSE, verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   cdfMono <- getCdf(this);
   nbrOfUnits <- nbrOfUnits(cdfMono);
   nbrOfArrays <- length(this);
@@ -235,7 +235,7 @@ setMethodS3("calculateNuseBoxplotStats", "ChipEffectSet", function(this, arrays=
     on.exit(popState(verbose));
   }
 
-  # Argument 'subset':  
+  # Argument 'subset':
   if (!(is.null(subset))) {
     getFraction <- (length(subset) == 1) && (subset >= 0) && (subset < 1);
     if (!getFraction) {
@@ -258,13 +258,13 @@ setMethodS3("calculateNuseBoxplotStats", "ChipEffectSet", function(this, arrays=
   verbose && exit(verbose);
 
   # Note, the average of the 'stdvs' is stored in the 'theta' field.
-  medianSE <- extractMatrix(avg, field="theta", units=ugcMap, 
+  medianSE <- extractMatrix(avg, field="theta", units=ugcMap,
                                                  verbose=less(verbose, 5));
   # Not needed anymore
   avg <- NULL;
   medianSE <- log2(as.vector(medianSE));
 
-  verbose && enter(verbose, "Calculating NUSE statistics for ", nbrOfArrays, 
+  verbose && enter(verbose, "Calculating NUSE statistics for ", nbrOfArrays,
                                                     " (specified) arrays");
   verbose && cat(verbose, "Using (unit,group,cell) map:");
   verbose && str(verbose, ugcMap);
@@ -273,10 +273,10 @@ setMethodS3("calculateNuseBoxplotStats", "ChipEffectSet", function(this, arrays=
   stats <- list();
   for (kk in seq_along(arrays)) {
     array <- arrays[kk];
-    cef <- getFile(this, array);
-    verbose && enter(verbose, sprintf("Array #%d ('%s') of %d", 
+    cef <- this[[array]];
+    verbose && enter(verbose, sprintf("Array #%d ('%s') of %d",
                                           kk, getName(cef), nbrOfArrays));
-    stdvs <- extractMatrix(cef, field="sdTheta", units=ugcMap, 
+    stdvs <- extractMatrix(cef, field="sdTheta", units=ugcMap,
                                                 verbose=less(verbose, 5));
     stdvs <- log2(as.vector(stdvs));
 
@@ -296,7 +296,7 @@ setMethodS3("calculateNuseBoxplotStats", "ChipEffectSet", function(this, arrays=
   verbose && exit(verbose);
 
   # Merge boxplot stats?
-  if (merge) 
+  if (merge)
     stats <- mergeBoxplotStats(stats);
 
   attr(stats, "type") <- "NUSE";
@@ -317,7 +317,7 @@ setMethodS3("calculateNuseBoxplotStats", "ChipEffectSet", function(this, arrays=
 #   'RLE' and the 'NUSE' stats.  Before getData() was used which is not
 #   "sensitive" to arguments such as 'mergeGroups', 'mergeAlleles' etc.
 # 2008-02-25
-# o Renamed to make it explicit that it is boxplot stats that are 
+# o Renamed to make it explicit that it is boxplot stats that are
 #   calculated.
 # o Now calculate{Nuse|Rle}Stats() returns the list of boxplot stats,
 #   not the combined ones.

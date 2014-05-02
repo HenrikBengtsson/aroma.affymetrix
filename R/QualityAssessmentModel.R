@@ -353,7 +353,7 @@ setMethodS3("getResiduals", "QualityAssessmentModel", function(this, units=NULL,
 
       pathname <- pathnames[kk];
       if (!isFile(pathname)) {
-        df <- getFile(ds, kk);
+        df <- ds[[kk]];
         celHeader <- cdfHeaderToCelHeader(cdfHeader, sampleName=getName(df));
         createCel(pathname, header=celHeader, verbose=less(verbose));
       }
@@ -534,7 +534,7 @@ setMethodS3("getWeights", "QualityAssessmentModel", function(this, path=NULL, na
       # Create CEL file?
       if (!isFile(pathname[kk])) {
         cdfHeader <- getHeader(cdf);
-        dfKK <- getFile(ds, kk);
+        dfKK <- ds[[kk]];
         sampleName <- getName(dfKK);
         celHeader <- cdfHeaderToCelHeader(cdfHeader, sampleName=sampleName);
         createCel(pathname[kk], header=celHeader, verbose=less(verbose));

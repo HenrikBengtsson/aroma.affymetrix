@@ -102,7 +102,7 @@ setMethodS3("calculateWeights", "ExonRmaPlm", function(this, units=NULL, ram=NUL
     cdf <- getCellIndices(getCdf(ds), units=units, stratifyBy="pm", ...);
 
     for (ii in seq_along(ds)) {
-      wf <- getFile(ws, ii);
+      wf <- ws[[ii]];
 
       verbose && enter(verbose, sprintf("Array #%d ('%s') of %d", ii, getName(wf), length(ds)));
 

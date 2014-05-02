@@ -142,7 +142,7 @@ setMethodS3("extractMatrix", "ParameterCelSet", function(this, units=NULL, ..., 
   verbose && enter(verbose, "Retrieving sample thetas");
   for (aa in seq_len(nbrOfArrays)) {
     verbose && printf(verbose, "Array %d,\n", aa);
-    cf <- getFile(this, aa);
+    cf <- this[[aa]];
     df[,aa] <- getDataFlat(cf, units=ugcMap, fields=field,
                                             verbose=less(verbose))[,field];
     if (aa %% gcArrayFrequency == 0) {

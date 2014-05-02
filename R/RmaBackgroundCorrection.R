@@ -140,7 +140,7 @@ setMethodS3("process", "RmaBackgroundCorrection", function(this, ..., force=FALS
   nbrOfArrays <- length(ds);
   verbose && cat(verbose, "Number of arrays: ", nbrOfArrays);
   for (ii in seq_along(ds)) {
-    df <- getFile(ds, ii);
+    df <- ds[[ii]];
     verbose && enter(verbose, sprintf("Array #%d ('%s') of %d", ii, getName(df), nbrOfArrays));
 
     dfD <- bgAdjustRma(df, path=outputPath, pmonly=pmonly, addJitter=addJitter, jitterSd=jitterSd, overwrite=force, verbose=verbose, .deprecated=FALSE);

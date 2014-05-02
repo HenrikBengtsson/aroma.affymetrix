@@ -94,7 +94,7 @@ setMethodS3("normalizeQuantile", "AffymetrixCelSet", function(this, path=NULL, n
   dataFiles <- list();
   for (kk in seq_along(this)) {
     verbose && enter(verbose, "Array #", kk);
-    df <- getFile(this, kk);
+    df <- this[[kk]];
     verbose && print(verbose, df);
     dataFiles[[kk]] <- normalizeQuantile(df, path=path,
                             subsetToUpdate=subsetToUpdate, typesToUpdate=NULL,
@@ -210,7 +210,7 @@ setMethodS3("averageQuantile", "AffymetrixCelSet", function(this, probes=NULL, e
     verbose && enter(verbose, "Array #", cc);
 
     verbose && printf(verbose, "reading...\n");
-    df <- getFile(this, cc);
+    df <- this[[cc]];
     Xcc <- getData(df, indices=probes, fields="intensities", ..., verbose=less(verbose, 2));
     Xcc <- as.vector(Xcc$intensities);
 #    verbose && str(verbose, Xcc);
@@ -311,7 +311,7 @@ setMethodS3("transformAffine", "AffymetrixCelSet", function(this, outPath=file.p
                                " probes on ", length(this), " arrays");
   dataFiles <- list();
   for (kk in seq_along(this)) {
-    df <- getFile(this, kk);
+    df <- this[[kk]];
     verbose && enter(verbose, "Array #", kk, " (", getName(df), ")");
     dataFiles[[kk]] <- transformAffine(df, outPath=outPath,
                   offset=offset, scale=scale, subsetToUpdate=subsetToUpdate,

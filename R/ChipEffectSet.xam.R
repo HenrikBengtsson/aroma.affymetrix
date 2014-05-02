@@ -105,7 +105,7 @@ setMethodS3("getAM", "ChipEffectSet", function(this, other, units=NULL, ..., ver
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   verbose && enter(verbose, "Retrieving sample thetas");
   for (aa in seq_along(this)) {
-    cf <- getFile(this, aa);
+    cf <- this[[aa]];
     theta <- getDataFlat(cf, units=map, fields="theta", verbose=less(verbose))[,"theta"];
     if (!identical(length(theta), nTheta)) {
       verbose && str(verbose, theta);

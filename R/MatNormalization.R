@@ -498,7 +498,7 @@ setMethodS3("process", "MatNormalization", function(this, ..., ram=NULL, force=F
 
     verbose && enter(verbose, "Calculating cross product X'y for each array");
     for (ii in seq_len(nbrOfArrays)) {
-      df <- getFile(ds, ii);
+      df <- ds[[ii]];
       verbose && enter(verbose, sprintf("Array #%d ('%s') of %d",
                                           ii, getName(df), nbrOfArrays));
 
@@ -540,7 +540,7 @@ setMethodS3("process", "MatNormalization", function(this, ..., ram=NULL, force=F
   # Save model fits
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   for (ii in seq_len(nbrOfArrays)) {
-    df <- getFile(ds, ii);
+    df <- ds[[ii]];
     verbose && enter(verbose, sprintf("Array #%d ('%s') of %d",
                                               ii, getName(df), nbrOfArrays));
 
@@ -615,7 +615,7 @@ setMethodS3("process", "MatNormalization", function(this, ..., ram=NULL, force=F
 
     verbose && enter(verbose, "Processing ", nbrOfArrays, " arrays");
     for (ii in seq_len(nbrOfArrays)) {
-      df <- getFile(ds, ii);
+      df <- ds[[ii]];
       verbose && enter(verbose, sprintf("Array #%d ('%s') of %d",
                                               ii, getName(df), nbrOfArrays));
 
@@ -678,7 +678,7 @@ setMethodS3("process", "MatNormalization", function(this, ..., ram=NULL, force=F
 
   for (ii in seq_len(nbrOfArrays)) {
     verbose && enter(verbose, "Binning predicted values, calculating and scaling residuals");
-    df <- getFile(ds, ii);
+    df <- ds[[ii]];
 
     y <- extractMatrix(df, cells=cellsToFit, verbose=verbose);
     y <- log2(y);

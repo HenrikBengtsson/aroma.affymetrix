@@ -14,7 +14,7 @@ setMethodS3("applyAnyOrder", "CopyNumberChromosomalModel", function(this, chipTy
     chipTypes <- allChipTypes[chipTypes];
   } else {
     if (!all(chipTypes %in% allChipTypes)) {
-      throw("Argument 'chipTypes' contains an unknown value: ", 
+      throw("Argument 'chipTypes' contains an unknown value: ",
                                           paste(chipTypes, collapse=", "));
     }
   }
@@ -27,7 +27,7 @@ setMethodS3("applyAnyOrder", "CopyNumberChromosomalModel", function(this, chipTy
     chromosomes <- allChromosomes[chromosomes];
   } else {
     if (!all(chromosomes %in% allChromosomes)) {
-      throw("Argument 'chromosomes' contains an unknown value: ", 
+      throw("Argument 'chromosomes' contains an unknown value: ",
                                         paste(chromosomes, collapse=", "));
     }
   }
@@ -36,9 +36,9 @@ setMethodS3("applyAnyOrder", "CopyNumberChromosomalModel", function(this, chipTy
   if (is.null(arrays)) {
     arrayNames <- allArrays;
     arrays <- seq_along(allArrays);
-  } else if (is.character(arrays)) { 
+  } else if (is.character(arrays)) {
     if (!all(arrays %in% allArrays)) {
-      throw("Argument 'arrays' contains an unknown value: ", 
+      throw("Argument 'arrays' contains an unknown value: ",
                                         paste(arrays, collapse=", "));
     }
     arrayNames <- arrays;
@@ -66,9 +66,9 @@ setMethodS3("applyAnyOrder", "CopyNumberChromosomalModel", function(this, chipTy
 
   verbose && enter(verbose, "applyAnyOrder()");
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Get the test and the reference set tuples
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   verbose && enter(verbose, "Get set tuples");
   cesTuple <- getSetTuple(this);
   verbose && exit(verbose);
@@ -97,8 +97,8 @@ setMethodS3("applyAnyOrder", "CopyNumberChromosomalModel", function(this, chipTy
   # Sanity check
   stopifnot(length(refTuple) == nbrOfArrays);
 
- 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Get the (UGC, chromosome, position) maps
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # (1) Identify one ChipEffectFile from each chip type
@@ -118,7 +118,7 @@ setMethodS3("applyAnyOrder", "CopyNumberChromosomalModel", function(this, chipTy
   names(ceFiles) <- chipTypes;
   for (kk in seq_len(nbrOfChipTypes)) {
     ces <- cesSets[[kk]];
-    ceFiles[[kk]] <- getFile(ces, pair[kk]);
+    ceFiles[[kk]] <- ces[[pair[kk]]];
     # Not needed anymore
     ces <- NULL;
   }
@@ -129,7 +129,7 @@ setMethodS3("applyAnyOrder", "CopyNumberChromosomalModel", function(this, chipTy
   names(maps) <- chipTypes;
   for (kk in seq_len(nbrOfChipTypes)) {
     chipType <- chipTypes[[kk]];
-    verbose && enter(verbose, sprintf("Chip type #%d ('%s') of %d", 
+    verbose && enter(verbose, sprintf("Chip type #%d ('%s') of %d",
                                           kk, chipType, nbrOfChipTypes));
 
     mapsT <- vector("list", nbrOfChromosomes);
@@ -158,20 +158,20 @@ setMethodS3("applyAnyOrder", "CopyNumberChromosomalModel", function(this, chipTy
   # Not needed anymore
   ceFiles <- NULL;
   verbose && cat(verbose, "(UGC, chromosome, position) maps:");
-  verbose && str(verbose, maps);  
+  verbose && str(verbose, maps);
 
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Calculating raw CNs
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   cesSets <- getSets(cesTuple);
   refSets <- getSets(refTuple);
 
   if (order == "cca") {
-    values <- applyCCF0(this, cesSets=cesSets, refSets=refSets, 
+    values <- applyCCF0(this, cesSets=cesSets, refSets=refSets,
                       maps=maps, FUN=FUN, ..., verbose=less(verbose, 5));
   } else if (order == "cac") {
-    values <- applyCFC0(this, cesSets=cesSets, refSets=refSets, 
+    values <- applyCFC0(this, cesSets=cesSets, refSets=refSets,
                       maps=maps, FUN=FUN, ..., verbose=less(verbose, 5));
   } else {
     throw("Unknown order: ", paste(order, collapse=", "));
@@ -199,7 +199,7 @@ setMethodS3("applyCCF0", "CopyNumberChromosomalModel", function(this, cesSets, r
   names(valuesCT) <- chipTypes;
   for (kk in seq_len(nbrOfChipTypes)) {
     chipType <- chipTypes[[kk]];
-    verbose && enter(verbose, sprintf("Chip type #%d ('%s') of %d", 
+    verbose && enter(verbose, sprintf("Chip type #%d ('%s') of %d",
                                           kk, chipType, nbrOfChipTypes));
 
     ces <- cesSets[[kk]];
@@ -223,15 +223,15 @@ setMethodS3("applyCCF0", "CopyNumberChromosomalModel", function(this, cesSets, r
       valuesCT[[kk]][[ll]] <- valuesA;
 
       for (mm in seq_len(nbrOfArrays)) {
-        ce <- getFile(ces, mm);
-        re <- getFile(res, mm);
+        ce <- ces[[mm]];
+        re <- res[[mm]];
         verbose && enter(verbose, sprintf("Array #%d ('%s') of %d",
                                           mm, getName(ce), nbrOfArrays));
 
         # Work around... /HB 2008-03-11
         class(map) <- c("UnitGroupCellMap", class(map));
 
-        value <- FUN(chipType=kk, chromosome=ll, array=mm, map=map, 
+        value <- FUN(chipType=kk, chromosome=ll, array=mm, map=map,
                                      ce=ce, re=re, ..., verbose=verbose);
 
         valuesCT[[kk]][[ll]][[mm]] <- value;
@@ -276,7 +276,7 @@ setMethodS3("applyCFC0", "CopyNumberChromosomalModel", function(this, cesSets, r
 
     for (mm in seq_len(nbrOfArrays)) {
       ces <- cesSets[[1]];
-      ce <- getFile(ces, mm);
+      ce <- ces[[mm]];
       verbose && enter(verbose, sprintf("Array #%d ('%s') of %d",
                                         mm, getName(ce), nbrOfArrays));
       valuesCT <- vector("list", nbrOfChipTypes);
@@ -285,9 +285,9 @@ setMethodS3("applyCFC0", "CopyNumberChromosomalModel", function(this, cesSets, r
 
       for (kk in seq_len(nbrOfChipTypes)) {
         chipType <- chipTypes[[kk]];
-        verbose && enter(verbose, sprintf("Chip type #%d ('%s') of %d", 
+        verbose && enter(verbose, sprintf("Chip type #%d ('%s') of %d",
                                             kk, chipType, nbrOfChipTypes));
-  
+
         ces <- cesSets[[kk]];
         res <- refSets[[kk]];
 
@@ -298,10 +298,10 @@ setMethodS3("applyCFC0", "CopyNumberChromosomalModel", function(this, cesSets, r
         # Work around... /HB 2008-03-11
         class(map) <- c("UnitGroupCellMap", class(map));
 
-        ce <- getFile(ces, mm);
-        re <- getFile(res, mm);
-  
-        value <- FUN(chipType=kk, chromosome=ll, array=mm, map=map, 
+        ce <- ces[[mm]];
+        re <- res[[mm]];
+
+        value <- FUN(chipType=kk, chromosome=ll, array=mm, map=map,
                                      ce=ce, re=re, ..., verbose=verbose);
 
         valuesC[[ll]][[mm]][[kk]] <- value;
@@ -347,15 +347,15 @@ setMethodS3("calcRawCnStats", "default", function(M, ...) {
 
 
 setMethodS3("calcRawCnStats", "CopyNumberChromosomalModel", function(this, ..., verbose=FALSE) {
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local functions
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   myFUN <- function(chipType=NULL, chromosome=NULL, array=NULL, map=NULL, ce=NULL, re=NULL, ..., cumulative=FALSE, verbose=FALSE) {
     theta0  <- extractMatrix(ce, units=map, verbose=less(verbose, 25));
     thetaR0 <- extractMatrix(re, units=map, verbose=less(verbose, 25));
-  
+
     # Cumulative and same chip type?
-    if (cumulative) { 
+    if (cumulative) {
       if (!exists("lastArray", mode="numeric")) {
         lastArray <- NA;
       }
@@ -380,7 +380,7 @@ setMethodS3("calcRawCnStats", "CopyNumberChromosomalModel", function(this, ..., 
       theta <- theta0;
       thetaR <- thetaR0;
     }
-    
+
     # The log-ratios are already ordered along the chromosome
     calcRawCnStats(log2(theta/thetaR));
   } # myFUN()
@@ -389,12 +389,12 @@ setMethodS3("calcRawCnStats", "CopyNumberChromosomalModel", function(this, ..., 
   verbose && enter(verbose, "calcRawCnStats()");
 
   theta <- thetaR <- pos <- NULL;  # Dummies for '<<-' above.
-  values <- applyAnyOrder(this, ..., order="cac", 
+  values <- applyAnyOrder(this, ..., order="cac",
                           FUN=myFUN, cumulative=TRUE, verbose=verbose);
 
   # Extract the cumulative statistics (stored in the last chip type)
   nbrOfChipTypes <- nbrOfChipTypes(this);
-  values <- lapply(values, FUN=function(files) { 
+  values <- lapply(values, FUN=function(files) {
     lapply(files, FUN=.subset2, nbrOfChipTypes);
   });
 #  verbose && str(verbose, values);
@@ -403,7 +403,7 @@ setMethodS3("calcRawCnStats", "CopyNumberChromosomalModel", function(this, ..., 
     sapply(files, FUN=.subset2, "mu");
   }))
   verbose && str(verbose, mu);
-  
+
   sigma <- t(sapply(values, FUN=function(files) {
     sapply(files, FUN=.subset2, "sigma");
   }))

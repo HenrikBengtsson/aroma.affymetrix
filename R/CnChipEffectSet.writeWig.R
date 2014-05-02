@@ -77,7 +77,7 @@ setMethodS3("writeWig", "CnChipEffectSet", function(this, reference=NULL, arrays
   # Open output file?
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (oneFile) {
-    filename <- sprintf("%s,chr%s,log2.wig", getName(this), chrsStr); 
+    filename <- sprintf("%s,chr%s,log2.wig", getName(this), chrsStr);
     pathname <- filePath(path, filename);
     if (gzip) {
       pathname <- paste(pathname, ".gz", sep="");
@@ -103,7 +103,7 @@ setMethodS3("writeWig", "CnChipEffectSet", function(this, reference=NULL, arrays
     # Open output file?
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     if (!oneFile) {
-      filename <- sprintf("%s,chr%s,log2.wig", name, chrsStr); 
+      filename <- sprintf("%s,chr%s,log2.wig", name, chrsStr);
       pathname <- filePath(path, filename);
       if (gzip) {
         pathname <- paste(pathname, ".gz", sep="");
@@ -136,11 +136,11 @@ setMethodS3("writeWig", "CnChipEffectSet", function(this, reference=NULL, arrays
       cat(file=con, sprintf("windowingFunction=mean smoothingWindow=%d", smoothingWindow));
     cat(file=con, "\n");
 
-    ce <- getFile(this, aa);
-  
+    ce <- this[[aa]];
+
     for (chr in chromosomes) {
-      verbose && enter(verbose, 
-                             sprintf("Array %s (#%d of %d) on chromosome %s", 
+      verbose && enter(verbose,
+                             sprintf("Array %s (#%d of %d) on chromosome %s",
                                              name, aa, length(arrays), chr));
 
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -157,16 +157,16 @@ setMethodS3("writeWig", "CnChipEffectSet", function(this, reference=NULL, arrays
       # Order by chromosomal position
       xm <- xm[order(xm[,"x"]),];
       verbose && exit(verbose);
-  
+
 
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       # Write data
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       cat(file=con, sprintf("variableStep\tchrom=chr%s\n", chr));
       write.table(xm, file=con, sep="\t", quote=FALSE, row.names=FALSE, col.names=FALSE);
-  
+
       cat(file=con, "\n");
-  
+
       verbose && exit(verbose);
     }
 
@@ -191,7 +191,7 @@ setMethodS3("writeWig", "CnChipEffectSet", function(this, reference=NULL, arrays
 # o BUG FIX: writeWig() would write NAs, but the UCSC Genome Browser does not
 #   accept missing values.
 # 2006-11-24
-# o Added track arguments 'group' and 'priority' too. Now the arrays are 
+# o Added track arguments 'group' and 'priority' too. Now the arrays are
 #   ordered in the UCSC Genome Browser as they are ordered in the data set.
 # 2006-11-23
 # o Added writeWig().

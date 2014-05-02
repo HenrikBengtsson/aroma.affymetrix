@@ -251,7 +251,7 @@ setMethodS3("process", "DChipQuantileNormalization", function(this, ..., force=F
   dataFiles <- list();
   for (kk in seq_along(ds)) {
     verbose && enter(verbose, "Array #", kk);
-    df <- getFile(ds, kk);
+    df <- ds[[kk]];
     verbose && print(verbose, df);
 
     filename <- basename(getPathname(df));

@@ -144,7 +144,7 @@ setMethodS3("importFromDChip", "AffymetrixCelSet", function(static, path, name=N
   # Import each CEL file
   for (kk in seq_along(cs)) {
     verbose && enter(verbose, "Converting ASCII CEL file to binary CEL file");
-    df <- getFile(cs, kk);
+    df <- cs[[kk]];
 
     src <- getPathname(df);
     dest <- file.path(destPath, basename(src));

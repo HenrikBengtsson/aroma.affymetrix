@@ -39,7 +39,7 @@ setMethodS3("exportTotalCnRatioSet", "AffymetrixCnChpSet", function(this, ..., o
   verbose && cat(verbose, "Output path: ", outPath);
 
   for (kk in seq_along(this)) {
-    ce <- getFile(this, kk);
+    ce <- this[[kk]];
     verbose && enter(verbose, sprintf("File %d ('%s') of %d", kk, getName(ce), nbrOfFiles));
 
 #    # Sanity check

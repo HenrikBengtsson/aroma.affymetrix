@@ -86,7 +86,7 @@ setMethodS3("plotDensity", "AffymetrixCelSet", function(this, subset=NULL, types
   # Plot densities
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   for (kk in seq_len(nbrOfArrays)) {
-    df <- getFile(this, kk);
+    df <- this[[kk]];
     verbose && enter(verbose, sprintf("Array #%d ('%s') of %d", kk,
                                                 getName(df), nbrOfArrays));
 

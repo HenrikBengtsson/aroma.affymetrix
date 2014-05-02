@@ -51,7 +51,7 @@ setMethodS3("fromDataSet", "FirmaSet", function(static, dataSet, path, name=getN
   fs <- vector("list", length(dataSet));
   verbose && cat(verbose, "Data set: ", name);
   for (kk in seq_along(dataSet)) {
-    df <- getFile(dataSet, kk);
+    df <- dataSet[[kk]];
     verbose && enter(verbose,
                      sprintf("Retrieving FIRMA results file #%d of %d (%s)",
                              kk, length(fs), getName(df)));
@@ -155,7 +155,7 @@ setMethodS3("updateUnits", "FirmaSet", function(this, units=NULL, cdf=NULL, data
   for (ii in arrays) {
     verbose && enter(verbose, sprintf("Array #%d of %d: %s",
                                        ii, nbrOfArrays, names[ii]));
-    ff <- getFile(this, ii);
+    ff <- this[[ii]];
 
     verbose <- less(verbose, 50);
     verbose && enter(verbose, "Extracting estimates");  # 3-4s

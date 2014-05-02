@@ -671,7 +671,7 @@ setMethodS3("process", "AdditiveCovariatesNormalization", function(this, ..., fo
   cellMatrixMap <- NULL;
   nbrOfArrays <- length(ces);
   for (kk in seq_len(nbrOfArrays)) {
-    ce <- getFile(ces, kk);
+    ce <- ces[[kk]];
     verbose && enter(verbose, sprintf("Array #%d of %d ('%s')",
                                             kk, nbrOfArrays, getName(ce)));
 

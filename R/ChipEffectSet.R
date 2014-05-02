@@ -119,7 +119,7 @@ setMethodS3("fromDataSet", "ChipEffectSet", function(static, dataSet, path, name
   ces <- vector("list", length(dataSet));
   verbose && cat(verbose, "Data set: ", name);
   for (kk in seq_along(dataSet)) {
-    df <- getFile(dataSet, kk);
+    df <- dataSet[[kk]];
     verbose && enter(verbose, sprintf("Retrieving chip-effect #%d of %d (%s)",
                                                kk, length(ces), getName(df)));
     ce <- clazz$fromDataFile(df, path=path, name=name, cdf=cdf, ...,
@@ -226,7 +226,7 @@ setMethodS3("updateUnits", "ChipEffectSet", function(this, units=NULL, cdf=NULL,
   for (ii in arrays) {
     verbose && enter(verbose, sprintf("Array #%d of %d ('%s')",
                                          ii, nbrOfArrays, names[ii]));
-    ce <- getFile(this, ii);
+    ce <- this[[ii]];
 
     verbose <- less(verbose, 50);
     verbose && enter(verbose, "Extracting estimates");  # 3-4s
@@ -290,7 +290,7 @@ setMethodS3("findUnitsTodo", "ChipEffectSet", function(this, ...) {
   # order, becuase that is updated last.
   names <- getFullNames(this);
   idx <- order(names, decreasing=TRUE)[1];
-  df <- getFile(this, idx);
+  df <- this[[idx]];
   findUnitsTodo(df, ...);
 })
 

@@ -9,10 +9,10 @@ setMethodS3("getFit", "BasePositionNormalization", function(this, array, ...) {
   array <- Arguments$getIndices(array, max=length(inSet));
 
   outSet <- getOutputDataSet(this);
-  outDf <- getFile(outSet, array);
+  outDf <- outSet[[array]];
   path <- getPath(this);
   filename <- sprintf("%s,fit.RData", getFullName(outDf));
-  pathname <- Arguments$getReadablePathname(filename, path=path, mustExist=TRUE);  
+  pathname <- Arguments$getReadablePathname(filename, path=path, mustExist=TRUE);
   res <- loadObject(pathname);
   fit <- res$fit;
   # Not needed anymore

@@ -578,7 +578,7 @@ setMethodS3("process", "ReseqCrosstalkCalibration", function(this, ..., force=FA
   verbose && enter(verbose, "Calibrating ", nbrOfArrays, " arrays");
   verbose && cat(verbose, "Path: ", outputPath);
   for (kk in seq_len(nbrOfArrays)) {
-    df <- getFile(ds, kk);
+    df <- ds[[kk]];
     verbose && enter(verbose, sprintf("Array #%d ('%s') of %d",
                                               kk, getName(df), nbrOfArrays));
 

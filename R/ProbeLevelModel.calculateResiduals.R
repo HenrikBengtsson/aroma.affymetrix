@@ -194,10 +194,10 @@ setMethodS3("calculateResidualSet", "ProbeLevelModel", function(this, units=NULL
   phi <- NULL;
   for (kk in seq_along(ds)) {
     # Get probe-level signals
-    df <- getFile(ds, kk);
+    df <- ds[[kk]];
 
     # Get chip effect estimates
-    cef <- getFile(ces, kk);
+    cef <- ces[[kk]];
 
     verbose && enter(verbose, sprintf("Array #%d ('%s')", kk, getName(df)));
 

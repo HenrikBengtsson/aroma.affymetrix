@@ -665,8 +665,8 @@ setMethodS3("fit", "CrlmmModel", function(this, units="remaining", force=FALSE, 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     verbose && enter(verbose, "Storing CRLMM parameter estimates, confidence scores and genotypes");
     for (kk in seq_along(callSet)) {
-      agc <- getFile(callSet, kk);
-      atb <- getFile(paramSet, kk);
+      agc <- callSet[[kk]];
+      atb <- paramSet[[kk]];
       verbose && enter(verbose, sprintf("Array #%d ('%s') of %d", kk, getName(agc), nbrOfArrays));
 
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -738,7 +738,7 @@ setMethodS3("fit", "CrlmmModel", function(this, units="remaining", force=FALSE, 
   verbose && str(verbose, snrPerArray);
 
   for (kk in seq_along(paramSet)) {
-    pf <- getFile(paramSet, kk);
+    pf <- paramSet[[kk]];
     updateParameter(pf, "snr", snrPerArray[kk], verbose=less(verbose, -20));
   }
 
@@ -846,9 +846,9 @@ setMethodS3("calculateConfidenceScores", "CrlmmModel", function(this, ..., force
   minConf <- 1/3;
 
   for (kk in seq_len(nbrOfArrays)) {
-    cf <- getFile(callSet, kk);
-    pf <- getFile(paramSet, kk);
-    sf <- getFile(confSet, kk);
+    cf <- callSet[[kk]];
+    pf <- paramSet[[kk]];
+    sf <- confSet[[kk]];
 
     verbose && enter(verbose, sprintf("Array #%d ('%s') of %d", kk, getName(cf), nbrOfArrays));
 

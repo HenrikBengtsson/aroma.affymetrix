@@ -7,14 +7,14 @@ setMethodS3("getAsFullCelSet", "ChipEffectSet", function(this, ..., verbose=FALS
   if (verbose) {
     pushState(verbose);
     on.exit(popState(verbose));
-  } 
+  }
 
   verbose && enter(verbose, "Getting chip effect set expanded to the full CDF");
   cells <- NULL;
   files <- list();
   for (kk in seq_along(this)) {
-    cef <- getFile(this, kk);
-    verbose && enter(verbose, sprintf("Array #%d ('%s') %d", 
+    cef <- this[[kk]];
+    verbose && enter(verbose, sprintf("Array #%d ('%s') %d",
                                           kk, getName(cef), length(this)));
 
     cf <- getAsFullCelFile(cef, ..., cells=cells, verbose=less(verbose, 5));

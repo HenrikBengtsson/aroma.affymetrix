@@ -88,7 +88,7 @@ setMethodS3("process", "SpatialRowColumnNormalization", function(this, ..., forc
   dataFiles <- list();
   cells <- NULL;
   for (kk in seq_len(nbrOfArrays)) {
-    df <- getFile(ds, kk);
+    df <- ds[[kk]];
     verbose && enter(verbose, sprintf("Array #%d ('%s') of %d",
                                               kk, getName(df), nbrOfArrays));
 

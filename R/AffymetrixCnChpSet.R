@@ -309,7 +309,7 @@ setMethodS3("extractLogRatios", "AffymetrixCnChpSet", function(this, units=NULL,
   nbrOfArrays <- length(this);
   gcCount <- 0;
   for (kk in seq_len(nbrOfArrays)) {
-    df <- getFile(this, kk);
+    df <- this[[kk]];
     verbose && enter(verbose, sprintf("Array #%d ('%s') of %d", kk, getName(df), nbrOfArrays));
 
     if (!is.null(readMap)) {

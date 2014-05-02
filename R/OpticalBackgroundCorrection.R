@@ -126,7 +126,7 @@ setMethodS3("process", "OpticalBackgroundCorrection", function(this, ..., force=
   nbrOfArrays <- length(ds);
   verbose && cat(verbose, "Number of arrays: ", nbrOfArrays);
   for (ii in seq_along(ds)) {
-    df <- getFile(ds, ii);
+    df <- ds[[ii]];
     verbose && enter(verbose, sprintf("Array #%d ('%s') of %d", ii, getName(df), nbrOfArrays));
 
     dfD <- bgAdjustOptical(df, path=outputPath, subsetToUpdate=subsetToUpdate, typesToUpdate=NULL, minimum=minimum, overwrite=force, verbose=less(verbose), .deprecated=FALSE);

@@ -14,7 +14,7 @@ setMethodS3("fitCnProbes", "UnitModel", function(this, ..., verbose=FALSE) {
   if (verbose) {
     pushState(verbose);
     on.exit(popState(verbose));
-  } 
+  }
 
 
   verbose && enter(verbose, "Estimating single-probe CN units");
@@ -90,7 +90,7 @@ setMethodS3("fitCnProbes", "UnitModel", function(this, ..., verbose=FALSE) {
   if (length(cellsM) != length(units))
     throw("Detected units with more than one cell: ", getChipType(cdfM));
   if (length(cellsM) != length(cells)) {
-    throw("Input 'cells' and output 'cellsM' are of different lengths: ", 
+    throw("Input 'cells' and output 'cellsM' are of different lengths: ",
                                   length(cellsM), " != ", length(cells));
   }
   verbose && exit(verbose);
@@ -100,11 +100,11 @@ setMethodS3("fitCnProbes", "UnitModel", function(this, ..., verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   verbose && enter(verbose, "Fitting ", length(ds), " arrays");
   for (kk in seq_along(ds)) {
-    df <- getFile(ds, kk);
+    df <- ds[[kk]];
     verbose && enter(verbose, sprintf("Array #%d ('%s') of %d", kk, getName(df), length(ds)));
 
     verbose && enter(verbose, "Reading signals");
-    cef <- getFile(ces, kk);
+    cef <- ces[[kk]];
     y <- extractMatrix(df, cells=cells, drop=TRUE);
     stopifnot(length(y) == length(cells));
     verbose && str(verbose, y);

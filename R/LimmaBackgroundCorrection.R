@@ -228,7 +228,7 @@ setMethodS3("process", "LimmaBackgroundCorrection", function(this, ..., force=FA
   dataFiles <- list();
   for (kk in seq_along(ds)) {
     verbose && enter(verbose, sprintf("Array #%d of %d", kk, nbrOfArrays));
-    df <- getFile(ds, kk);
+    df <- ds[[kk]];
     verbose && print(verbose, df);
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

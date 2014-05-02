@@ -41,7 +41,7 @@ setMethodS3("writeSgr", "AffymetrixCelSet", function(this, units=NULL, ..., tags
   verbose && exit(verbose);
 
   for (ii in seq_len(nbrOfArrays)) {
-    cf <- getFile(this, ii);
+    cf <- this[[ii]];
     sampleName <- getName(cf);
 
     verbose && enter(verbose, sprintf("Gathering and writing data for ", sampleName));

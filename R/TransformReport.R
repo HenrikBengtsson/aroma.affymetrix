@@ -335,8 +335,8 @@ setMethodS3("getYY", "TransformReport", function(this, array, transform=NULL, su
   }
 
   outSet <- getOutputDataSet(this);
-  df1 <- getFile(inSet, array);
-  df2 <- getFile(outSet, array);
+  df1 <- inSet[[array]];
+  df2 <- outSet[[array]];
   res <- list(
     array = array,
     y1 = getData(df1, indices=indices, ..., fields=field)[[field]],
@@ -368,7 +368,7 @@ setMethodS3("plotXYCurve", "TransformReport", function(this, arrays=seq_along(th
   for (kk in seq_along(arrays)) {
     array <- arrays[kk];
 
-    df <- getFile(outSet, array);
+    df <- outSet[[array]];
     name <- getName(df);
 
     verbose && enter(verbose, sprintf("Array #%d ('%s')", kk, name));
@@ -439,7 +439,7 @@ setMethodS3("writeImages", "TransformReport", function(this, path=NULL, width=80
   verbose && printf(verbose, "Image dimension: %.0fx%.0f\n", width, height);
 
   for (kk in seq_len(nbrOfArrays)) {
-    df <- getFile(outSet, kk);
+    df <- outSet[[kk]];
     fullname <- getFullName(df);
     verbose && enter(verbose, "Output CEL file: ", fullname);
 

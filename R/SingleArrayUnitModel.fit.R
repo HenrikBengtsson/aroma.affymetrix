@@ -98,8 +98,8 @@ setMethodS3("fitOneArray", "SingleArrayUnitModel", function(this, array="remaini
 
   ces <- getChipEffectSet(this);
 
-  df <- getFile(ds, array);
-  cef <- getFile(ces, array);
+  df <- ds[[array]];
+  cef <- ces[[array]];
 
   # Sanity check
   stopifnot(identical(getFullName(df), getFullName(cef)));

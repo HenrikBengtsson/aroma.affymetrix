@@ -1,6 +1,10 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 2.12.3 [2014-05-02]
+o CLEANUP: Now using ds[[idx]] instead of getFile(ds, idx) where possible.
+
+
 Version: 2.12.2 [2014-04-28]
 o Added justRMA() for AffymetrixCelSet, which with good precision
   reproduces the results of the default setting of justRMA() in the

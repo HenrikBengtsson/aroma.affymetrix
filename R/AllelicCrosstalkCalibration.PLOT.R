@@ -22,9 +22,9 @@ setMethodS3("plotAllelePairs", "AllelicCrosstalkCalibration", function(this, arr
   }
 
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Get data set of interest
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (what == "input") {
     ds <- getInputDataSet(this);
   } else if (what == "output") {
@@ -35,12 +35,12 @@ setMethodS3("plotAllelePairs", "AllelicCrosstalkCalibration", function(this, arr
   }
 
   # Get the array of interest
-  df <- getFile(ds, array);
+  df <- ds[[array]];
 
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Get the sets of cell-index pairs of interest
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   setsOfProbes <- getSetsOfProbes(this, verbose=less(verbose, 5));
   setsOfProbes <- setsOfProbes$snps;
   nbrOfPairs <- length(setsOfProbes);
@@ -50,7 +50,7 @@ setMethodS3("plotAllelePairs", "AllelicCrosstalkCalibration", function(this, arr
     pairs <- Arguments$getIndices(pairs, max=nbrOfPairs);
     nbrOfPairs <- length(pairs);
   }
-  
+
   # Sanity check
   if (nbrOfPairs < 1) {
     throw("No allele pairs to plot");
@@ -60,9 +60,9 @@ setMethodS3("plotAllelePairs", "AllelicCrosstalkCalibration", function(this, arr
   setsOfProbes <- setsOfProbes[pairs];
 
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Plot data
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Set up the plot grid
   layout(matrix(seq_len(nbrOfPairs), nrow=floor(sqrt(nbrOfPairs))));
   par(mar=c(3,3,1,1)+0.1, mgp=c(1.8,0.5,0), oma=c(0,0,3,0));

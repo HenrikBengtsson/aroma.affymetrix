@@ -108,7 +108,7 @@ setMethodS3("plotCovariateEffects", "GcContentNormalization2", function(this, ar
   subplots(nbrOfArrays);
   par(mar=c(4,3,1,0.5)+0.1, mgp=c(2.0, 0.8, 0));
   for (cc in seq_len(nbrOfArrays)) {
-    ce <- getFile(dataSet, cc);
+    ce <- dataSet[[cc]];
     name <- getFullName(ce);
     name <- gsub(",chipEffects", "", name);
     verbose && enter(verbose, sprintf("Array #%d ('%s') of %d", cc, name, nbrOfArrays));

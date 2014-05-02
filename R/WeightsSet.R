@@ -82,7 +82,7 @@ setMethodS3("fromDataSet", "WeightsSet", function(static, dataSet, path, fullnam
   ws <- vector("list", length(dataSet));
   verbose && cat(verbose, "Data set: ", fullname);
   for (kk in seq_along(dataSet)) {
-    df <- getFile(dataSet, kk);
+    df <- dataSet[[kk]];
     verbose && enter(verbose,
                            sprintf("Retrieving weights file #%d of %d (%s)",
                                                kk, length(ws), getName(df)));
@@ -181,7 +181,7 @@ setMethodS3("updateUnits", "WeightsSet", function(this, units=NULL, cdf=NULL, da
   for (ii in arrays) {
     verbose && enter(verbose, sprintf("Array #%d of %d: %s",
                                        ii, nbrOfArrays, names[ii]));
-    wf <- getFile(this, ii);
+    wf <- this[[ii]];
 
     verbose <- less(verbose, 50);
     verbose && enter(verbose, "Extracting estimates");  # 3-4s
@@ -230,7 +230,7 @@ setMethodS3("findUnitsTodo", "WeightsSet", function(this, ...) {
   # order, becuase that is updated last.
   names <- getFullNames(this);
   idx <- order(names, decreasing=TRUE)[1];
-  df <- getFile(this, idx);
+  df <- this[[idx]];
   findUnitsTodo(df, ...);
 })
 

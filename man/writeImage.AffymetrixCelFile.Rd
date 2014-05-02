@@ -43,7 +43,7 @@
 
 \examples{\dontrun{
   yellow.colors <- function(n) { hsv(h=0.15, v=0:(n-1)/(n-1)) }
-  df <- getFile(ds, 1)
+  df <- ds[[1]]
   writeImage(df, tags="gray", palette=gray.colors(256), xrange=c(0,200))
   writeImage(df, tags="yellow", palette=yellow.colors(256), xrange=c(0,200))
   writeImage(df, tags="heat", palette=heat.colors(256), xrange=c(0,200))

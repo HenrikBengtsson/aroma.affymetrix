@@ -1,6 +1,10 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 2.12.4 [2014-05-28]
+o Added 'Recommends' field to DESCRIPTION.
+
+
 Version: 2.12.3 [2014-05-02]
 o CLEANUP: Now using ds[[idx]] instead of getFile(ds, idx) where possible.
 

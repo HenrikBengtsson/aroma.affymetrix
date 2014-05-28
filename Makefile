@@ -264,12 +264,10 @@ cran: cran_setup ../$(R_CRAN_OUTDIR)/$(PKG_NAME),EmailToCRAN.txt
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 # Local repositories
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-ifeq ($(OS), Windows_NT)
-REPOS_PATH = T:/My\ Repositories/braju.com/R
-else
-REPOS_PATH = /tmp/hb/repositories/braju.com/R
-endif
+REPOS_PATH := T:/My\ Repositories/braju.com/R
 REPOS_SRC := $(REPOS_PATH)/src/contrib
+REPOS_WIN := $(REPOS_PATH)/bin/windows/contrib/$(R_VERSION_X_Y)
+REPOS_OSX := $(REPOS_PATH)/bin/macosx/contrib/$(R_VERSION_X_Y)
 
 $(REPOS_SRC):
 	$(MKDIR) "$@"
@@ -277,7 +275,22 @@ $(REPOS_SRC):
 $(REPOS_SRC)/$(PKG_TARBALL): ../$(R_OUTDIR)/$(PKG_TARBALL) $(REPOS_SRC)
 	$(CP) ../$(R_OUTDIR)/$(PKG_TARBALL) $(REPOS_SRC)
 
-repos: $(REPOS_SRC)/$(PKG_TARBALL)
+$(REPOS_SRC)/PACKAGES.gz: $(REPOS_SRC) $(REPOS_SRC)/*.tar.gz
+	$(R_SCRIPT) -e "tools::write_PACKAGES('$(REPOS_SRC)', type='source')"
+
+$(REPOS_WIN):
+	$(MKDIR) "$@"
+
+$(REPOS_WIN)/$(PKG_ZIP): ../$(R_OUTDIR)/$(PKG_ZIP) $(REPOS_WIN)
+	$(CP) ../$(R_OUTDIR)/$(PKG_ZIP) $(REPOS_WIN)
+
+$(REPOS_OSX):
+	$(MKDIR) "$@"
+
+$(REPOS_OSX)/$(PKG_TGZ): ../$(R_OUTDIR)/$(PKG_OSX) $(REPOS_OSX)
+	$(CP) ../$(R_OUTDIR)/$(PKG_OSX) $(REPOS_OSX)
+
+repos: $(REPOS_SRC)/$(PKG_TARBALL) $(REPOS_WIN)/$(PKG_ZIP)
 
 Makefile: $(FILES_MAKEFILE)
 	$(R_SCRIPT) -e "d <- 'Makefile'; s <- '../../Makefile'; if (file_test('-nt', s, d) && (regexpr('Makefile for R packages', readLines(s, n=1L)) != -1L)) file.copy(s, d, overwrite=TRUE)"

@@ -88,7 +88,7 @@ toPNG(getFullName(csR), tags=c("justRMA", "aroma.affymetrix_vs_affy"), width=800
 # (b) Assert correlations
 print(rho);
 print(range(rho));
-stopifnot(all(rho > 0.9999));
+stopifnot(all(rho > 0.9998));
 
 # (c) Assert differences
 stopifnot(mean(as.vector(e^2)) < 0.002);

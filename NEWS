@@ -1,8 +1,13 @@
 Package: aroma.affymetrix
 =========================
 
-Version: 2.12.4 [2014-05-28]
-o Added 'Recommends' field to DESCRIPTION.
+Version: 2.12.4 [2014-06-09]
+o Package now requires R (>= 3.0.0) and BioC (>= 2.13), which were 
+  released April 2013 and are in fact old and it's recommended to
+  use a more recent version of R.
+o Added 'SuggestsNote' field to DESCRIPTION with list of packages
+  that are recommended for the most common use cases.
+o Bumped package dependencies.
 
 
 Version: 2.12.3 [2014-05-02]

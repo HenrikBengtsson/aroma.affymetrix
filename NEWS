@@ -1,6 +1,11 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 2.12.5 [2014-06-24]
+o Added package system tests utilizing example data of Bioconductor
+  package AffymetrixDataTestFiles, iff installed.
+
+
 Version: 2.12.4 [2014-06-09]
 o Package now requires R (>= 3.0.0) and BioC (>= 2.13), which were 
   released April 2013 and are in fact old and it's recommended to

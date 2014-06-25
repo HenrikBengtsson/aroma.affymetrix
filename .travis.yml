@@ -26,6 +26,7 @@ install:
 #  - ./travis-tool.sh install_r_binary r.methodss3 r.oo r.utils
   - ./travis-tool.sh bioc_install aroma.light DNAcopy 
   - ./travis-tool.sh install_deps
+  - ./travis-tool.sh install_github HenrikBengtsson/aroma.core
 
 branches:
   except:

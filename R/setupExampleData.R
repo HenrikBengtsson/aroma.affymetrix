@@ -24,8 +24,6 @@
 # @keyword internal
 #*/###########################################################################
 setMethodS3("setupExampleData", "AromaAffymetrix", function(pkg, dirs=c("annotationData", "rawData"), mustWork=TRUE, validate=FALSE, ...) {
-  use("affxparser")
-
   # Argument 'dirs':
   dirs <- Arguments$getCharacters(dirs);
 
@@ -48,7 +46,6 @@ setMethodS3("setupExampleData", "AromaAffymetrix", function(pkg, dirs=c("annotat
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   pathR <- "annotationData"
   if (is.element(pathR, dirs)) {
-    if (!isPackageInstalled("AffymetrixDataTestFiles")) return(FALSE)
     chipType <- "HG-Focus"
     pathD <- file.path(pathR, "chipTypes", chipType)
     filename <- "HG-Focus.CDF";

@@ -1,5 +1,6 @@
 ###########################################################################/**
-# @RdocFunction setupExampleData
+# @set class=AromaAffymetrix
+# @RdocMethod setupExampleData
 #
 # @title "Setups example data in the current directory"
 #

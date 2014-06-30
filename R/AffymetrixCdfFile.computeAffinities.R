@@ -348,6 +348,8 @@ setMethodS3("getAromaCellSequenceFile", "AffymetrixCdfFile", function(this, ...,
   verbose && enter(verbose, "Locating the aroma cell sequence (ACS) annotation data file");
   chipTypeS <- getChipType(this, fullname=FALSE);
   verbose && cat(verbose, "Chip type: ", chipTypeS);
+  nbrOfCells <- nbrOfCells(this);
+  verbose && cat(verbose, "Number of cells: ", nbrOfCells);
   acs <- AromaCellSequenceFile$byChipType(chipTypeS, nbrOfCells=nbrOfCells);
   verbose && print(verbose, acs);
   verbose && exit(verbose);
@@ -626,6 +628,9 @@ setMethodS3("computeAffinitiesByACS", "AffymetrixCdfFile", function(this, ..., m
 
 ############################################################################
 # HISTORY:
+# 2014-06-29
+# o BUG FIX: getAromaCellSequenceFile() for AffymetrixCdfFile used
+#   undefined variable 'nbrOfCells'.
 # 2010-10-01
 # o Added getAromaCellSequenceFile() and getACSFile() for AffymetrixCdfFile.
 # 2010-09-30

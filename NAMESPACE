@@ -16,6 +16,7 @@ importFrom("R.utils", "ProgressBar")
 importFrom("R.filesets", "GenericDataFile")
 importFrom("R.filesets", "GenericDataFileSet")
 importFrom("R.filesets", "TabularTextFile")
+importFrom("aroma.core", "AromaCellPositionFile")
 importFrom("aroma.core", "AromaCellTabularBinaryFile")
 importFrom("aroma.core", "AromaMicroarrayDataFile")
 importFrom("aroma.core", "AromaMicroarrayDataSet")
@@ -31,6 +32,7 @@ importFrom("aroma.core", "AromaUnitSignalBinarySet")
 importFrom("aroma.core", "AromaUnitTabularBinaryFile")
 importFrom("aroma.core", "ChromosomalModel")
 importFrom("aroma.core", "Explorer")
+importFrom("aroma.core", "SampleAnnotationSet")
 
 ## Importing generics
 importFrom("aroma.core", "allocate")
@@ -195,6 +197,7 @@ importFrom("methods", "new")
 importFrom("R.cache", "getChecksum") ## Multi-sources: R.cache, R.filesets
 importFrom("R.cache", "loadCache")
 importFrom("R.cache", "saveCache")
+importFrom("R.devices", "devDone")
 importFrom("R.filesets", "copyTo")
 importFrom("R.filesets", "dropRootPathTags")
 importFrom("R.filesets", "getFile")
@@ -283,6 +286,9 @@ importFrom("R.utils", "writeRaw")
 ## importFrom("base", "gc") ## Multi-sources: R.oo, base
 ## importFrom("base", "warnings") ## Multi-sources: R.utils, base
 ## importFrom("inherits", "inherits") ## Multi-sources: R.utils, base
+
+## Importing other objects
+importFrom("aroma.core", "aromaSettings")
 
 ## Manual imports
 importFrom("R.utils", "Arguments")

@@ -95,7 +95,7 @@ getUnitTypes, nbrOfUnits
 byChipType, getAromaUflFile, getAromaUgpFile, getChipType, getDefaultExtension, getPlatform, nbrOfUnits
 
  \bold{Methods inherited from AromaPlatformInterface}:\cr
-getAromaPlatform, getAromaUgpFile, getPlatform, getUnitAnnotationDataFile, getUnitNamesFile, getUnitTypesFile, isCompatibleWith
+getAromaPlatform, getAromaUflFile, getAromaUgpFile, getChipType, getPlatform, getUnitAnnotationDataFile, getUnitNamesFile, getUnitTypesFile, isCompatibleWith
 
  \bold{Methods inherited from AromaChipTypeAnnotationFile}:\cr
 as.character, byChipType, byName, findByChipType, fromFile, getChipType, getDefaultExtension, getHeader, getPlatform

@@ -1,6 +1,10 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 2.12.7 [2014-08-27]
+o ROBUSTNESS: Added forgotten NAMESPACE imports.
+
+
 Version: 2.12.6 [2014-06-29]
 o BUG FIX: getAromaCellSequenceFile() for AffymetrixCdfFile used
   undefined variable 'nbrOfCells'.

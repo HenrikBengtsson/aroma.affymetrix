@@ -1,6 +1,14 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 2.12.8 [2014-09-04]
+o ROBUSTNESS/BUG FIX: createFrom(..., mode="copy") for AffymetrixCelFile
+  would give an error on "No permission to modify existing file: ..."
+  iff the source file had read-only permission.  This bug was introduced
+  by changes to base::file.copy() in R (>= 2.13.0) [April 2011].
+  Thanks to Taylor Raborn at Indiana University for reporting on this.
+
+
 Version: 2.12.7 [2014-08-27]
 o ROBUSTNESS: Added forgotten NAMESPACE imports.
 

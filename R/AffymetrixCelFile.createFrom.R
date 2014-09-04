@@ -115,7 +115,7 @@ setMethodS3("createFrom", "AffymetrixCelFile", function(this, filename, path=NUL
       }
 
       # 1. Create a temporary file
-      res <- copyTo(this, filename=pathnameT, path=NULL,
+      res <- copyTo(this, filename=pathnameT, path=NULL, copy.mode=FALSE,
                                              verbose=less(verbose));
 #      verbose && cat(verbose, "Temporary file:");
 #      verbose && print(verbose, res);
@@ -244,6 +244,11 @@ setMethodS3("createFrom", "AffymetrixCelFile", function(this, filename, path=NUL
 
 ############################################################################
 # HISTORY:
+# 2014-09-04
+# o ROBUSTNESS/BUG FIX: createFrom(..., mode="copy") for AffymetrixCelFile
+#   would give an error on "No permission to modify existing file: ..."
+#   iff the source file had read-only permission.  This bug was introduced
+#   by changes to base::file.copy() in R (>= 2.13.0) [April 2011].
 # 2010-03-26
 # o Added argument 'defValue' to createFrom() for AffymetrixCelFile
 #   so that one can specify the default value for cleared elements.

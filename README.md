@@ -4,7 +4,7 @@ To install, or update to, the most recent version of this package and
 all of its commonly used dependencies, do:
 
 ```s
-source('http://aroma-project.org/R/install#aroma.affymetrix')
+source('http://callr.org/install#aroma.affymetrix')
 ```
 
 See [The Aroma Project](http://www.aroma-project.org/) for more

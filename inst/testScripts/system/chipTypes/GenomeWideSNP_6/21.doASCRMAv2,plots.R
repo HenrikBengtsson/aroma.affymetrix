@@ -1,4 +1,5 @@
 library("aroma.affymetrix");
+library("matrixStats"); # rowMedians()
 verbose <- Arguments$getVerbose(-50, timestamp=TRUE);
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

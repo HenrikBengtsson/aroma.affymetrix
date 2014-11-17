@@ -1,4 +1,5 @@
 library("aroma.affymetrix")
+library("matrixStats"); # rowMedians()
 
 # Avoid being masked by affy::plotDensity()
 plotDensity <- aroma.light::plotDensity

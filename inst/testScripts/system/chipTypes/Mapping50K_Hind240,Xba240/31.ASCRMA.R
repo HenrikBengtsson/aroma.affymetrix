@@ -1,4 +1,5 @@
 library("aroma.affymetrix")
+library("matrixStats"); # rowMedians()
 log <- Arguments$getVerbose(-4, timestamp=TRUE);
 
 
@@ -6,7 +7,7 @@ dataSet <- "HapMap,CEU,testset";
 chipType <- "Mapping50K_Xba240";
 
 # Expected sample names
-sampleNames <- c("NA06985", "NA06991", "NA06993", 
+sampleNames <- c("NA06985", "NA06991", "NA06993",
                  "NA06994", "NA07000", "NA07019");
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

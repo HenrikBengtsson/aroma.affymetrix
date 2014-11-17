@@ -1,6 +1,12 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 2.12.9 [2014-11-17]
+o Updated redundancy tests under testScripts/ to find rowMedians() of
+  the matrixStats package.  The matrixStats package used to be attached
+  whenever aroma.light (< 2.1.1) was attached, but no longer.
+
+
 Version: 2.12.8 [2014-09-04]
 o ROBUSTNESS/BUG FIX: createFrom(..., mode="copy") for AffymetrixCelFile
   would give an error on "No permission to modify existing file: ..."

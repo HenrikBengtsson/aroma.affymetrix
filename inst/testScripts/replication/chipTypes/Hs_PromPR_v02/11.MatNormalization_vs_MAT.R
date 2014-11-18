@@ -10,6 +10,7 @@
 # Last modified: 2012-09-02
 ###########################################################################
 library("aroma.affymetrix");
+library("matrixStats"); # colMedians()
 verbose <- Arguments$getVerbose(-20, timestamp=TRUE);
 
 
@@ -57,12 +58,12 @@ setFullNamesTranslator(csU, function(names, ...) { sampleNamesMap[names] });
 # Compare common units with prefix "chr1F".
 cdfU <- getCdf(csU);
 units <- indexOf(cdfU, "^chr1F");
-cells <- getCellIndices(cdfU, units=units, stratifyBy="pm", 
-                        unlist=TRUE, useNames=FALSE); 
+cells <- getCellIndices(cdfU, units=units, stratifyBy="pm",
+                        unlist=TRUE, useNames=FALSE);
 
 # Get the chromosomal positions of these cells
 acp <- AromaCellPositionFile$byChipType(getChipType(cdfU));
-pos <- acp[cells,2,drop=TRUE]; 
+pos <- acp[cells,2,drop=TRUE];
 
 # Order cells by chromsomal position
 o <- order(pos);

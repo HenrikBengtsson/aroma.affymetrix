@@ -44,9 +44,9 @@ setFullNamesTranslator(dsN, df);
 sampleNames <- unique(getNames(dsN));
 
 dsList <- lapply(sampleNames, FUN=function(sampleName) {
-  ds <- extract(dsN, sampleName);
+  ds <- dsN[sampleName];
   lapply(c(T="T", N="N"), FUN=function(type) {
-    extract(ds, sapply(ds, hasTag, type));
+    ds[sapply(ds, hasTag, type)];
   });
 });
 names(dsList) <- sampleNames;

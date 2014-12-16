@@ -36,5 +36,5 @@ ds <- dsList[[1]];
 n23 <- sapply(ds, getAttribute, "n23");
 n24 <- sapply(ds, getAttribute, "n24");
 isFemale <- (n23 == 2 & n24 == 0);
-dsXX <- extract(ds, isFemale);
+dsXX <- ds[isFemale];
 print(dsXX);

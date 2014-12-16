@@ -15,7 +15,7 @@ sampleNames <- c("NA06985", "NA06991", "NA06993",
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 cs <- AffymetrixCelSet$byName(dataSet, chipType=chipType);
 keep <- 1:6;
-cs <- extract(cs, keep);
+cs <- cs[keep];
 sampleNames <- sampleNames[keep];
 print(cs);
 stopifnot(identical(getNames(cs), sampleNames));

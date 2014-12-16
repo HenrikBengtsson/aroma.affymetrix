@@ -18,7 +18,7 @@ csR <- AffymetrixCelSet$byName(dataSet, cdf=cdf);
 # Process only cerebellum and heart
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 types <- c("cerebellum", "heart");
-csR <- extract(csR, indexOf(csR, patterns=types));
+csR <- csR[indexOf(csR, patterns=types)];
 
 setFullName(csR, sprintf("%s,%s", dataSet, paste(types, collapse="+")));
 print(csR);

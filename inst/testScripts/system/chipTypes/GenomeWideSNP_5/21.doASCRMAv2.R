@@ -19,12 +19,12 @@ setFullNamesTranslator(csR, function(names, ...) {
 
 # Drop duplicates
 keep <- !duplicated(getNames(csR));
-csR <- extract(csR, keep);
+csR <- csR[keep];
 
 # Keep only certain samples
 sampleNames <- c("NA06985", "NA06991", "NA06993",
                  "NA07019", "NA07022", "NA07056");
-csR <- extract(csR, sampleNames);
+csR <- csR[sampleNames];
 
 print(csR);
 

@@ -6,14 +6,14 @@ tags <- "ACC,-XY,BPN,-XY,RMA,FLN,-XY";
 chipType <- "Mapping250K_Nsp";
 
 pairs <- matrix(c(
-  "CRL-2325D", "CRL-2324D",  
-  "CRL-5957D", "CRL-5868D",  
-  "CCL-256.1D", "CCL-256D",  
-  "CRL-2319D", "CRL-2320D",  
-  "CRL-2362D", "CRL-2321D",  
-  "CRL-2337D", "CRL-2336D",  
-  "CRL-2339D", "CRL-2338D",  
-  "CRL-2341D", "CRL-2340D",  
+  "CRL-2325D", "CRL-2324D",
+  "CRL-5957D", "CRL-5868D",
+  "CCL-256.1D", "CCL-256D",
+  "CRL-2319D", "CRL-2320D",
+  "CRL-2362D", "CRL-2321D",
+  "CRL-2337D", "CRL-2336D",
+  "CRL-2339D", "CRL-2338D",
+  "CRL-2341D", "CRL-2340D",
   "CRL-2346D", "CRL-2314D"
 ), ncol=2, byrow=TRUE);
 colnames(pairs) <- c("normal", "tumor");
@@ -28,14 +28,14 @@ if (!exists("cesN")) {
   cdfM <- getMonocellCdf(cdf);
   cesN <- SnpChipEffectSet$byName(dataSetName, tags=tags, cdf=cdfM);
   print(cesN);
-  
+
   # Reorder arrays according to 'pairs' matrix
-  cesN <- extract(cesN, indexOf(cesN, pairs));
+  cesN <- cesN[indexOf(cesN, pairs)];
   names <- getNames(cesN);
   dim(names) <- dim(pairs);
   print(names);
-  
-  
+
+
   Blim <- c(0,1);
   Clim <- c(0,4);
   Clab <- expression(C[T]/C[N]);

@@ -8,7 +8,7 @@
 #
 # DATA SET:
 # GEO data set 'GSE12702'. Affymetrix CEL files are available from:
-# 
+#
 #   http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE12702
 #
 # Place them in rawData/GSE12702/Mapping250K_{Nsp|Sty}/*.CEL.  In total
@@ -56,7 +56,7 @@ print(dsList);
 ## -XY/Mapping250K_Nsp
 ## Total file size: 40.05 MB
 ## RAM: 0.04MB
-## 
+##
 ## $Mapping250K_Sty
 ## AromaUnitTotalCnBinarySet:
 ## Name: GSE12702
@@ -164,7 +164,7 @@ fnt <- function(names, ...) {
 }
 dsList <- lapply(dsList, FUN=setFullNamesTranslator, fnt);
 
-# Example without translators; 
+# Example without translators;
 # the names do not pair up across the two chip types
 print(getFullNames(dsList[[1]], translate=FALSE)[1:2])
 print(getFullNames(dsList[[2]], translate=FALSE)[1:2])
@@ -177,7 +177,7 @@ print(getFullNames(dsList[[2]], translate=TRUE)[1:2])
 
 # Order both datasets by <sampleName>,<sampleType>
 names <- gsub(",GSM.*", "", getFullNames(dsList[[1]]));
-dsList <- lapply(dsList, FUN=extract, names);
+dsList <- lapply(dsList, FUN=`[`, names);
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -185,16 +185,16 @@ dsList <- lapply(dsList, FUN=extract, names);
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Extract tumors and normals
 dsTList <- lapply(dsList, FUN=function(ds) {
-  extract(ds, sapply(ds, FUN=hasTag, "T"));
+  ds[sapply(ds, FUN=hasTag, "T")];
 });
 
 dsNList <- lapply(dsList, FUN=function(ds) {
-  extract(ds, sapply(ds, FUN=hasTag, "N"));
+  ds[sapply(ds, FUN=hasTag, "N")];
 });
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# (A) Paired tumor-normal segmentation when the tumors and the normals 
+# (A) Paired tumor-normal segmentation when the tumors and the normals
 #     are hybridized on the same (Mapping250K_Nsp) chip type
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 dsT <- dsTList$Mapping250K_Nsp;
@@ -272,7 +272,7 @@ print(dfRList);
 ## e>median</meanName><sdName>mad</sdName></params>
 ## Platform: Affymetrix
 ## Chip type: Mapping250K_Nsp
-## 
+##
 ## $Mapping250K_Sty
 ## AromaUnitTotalCnBinaryFile:
 ## Name: .average-signals-median-mad
@@ -310,7 +310,7 @@ dsCT <- exportTotalCnRatioSet(dsT, ref=dfRT);
 # samples corresponding to the input data set.  The following does
 # the latter for us, in this particular example (just in case).
 names <- gsub(",GSM.*", "", getFullNames(dsT));
-dsCT <- extract(dsCT, names);
+dsCT <- dsCT[names];
 
 
 # C_N = 2*N/R_N
@@ -319,7 +319,7 @@ dfRN <- dfRList$Mapping250K_Sty;
 dsCN <- exportTotalCnRatioSet(dsN, ref=dfRN);
 # Same workaround
 names <- gsub(",GSM.*", "", getFullNames(dsN));
-dsCN <- extract(dsCN, names);
+dsCN <- dsCN[names];
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -327,21 +327,21 @@ dsCN <- extract(dsCN, names);
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # To bin only one sample, subset dsCT and dsCN here, e.g.
   sampleName <- sad["GSM318736", "sampleName"]; # => Patient45
-  dsCT <- extract(dsCT, sampleName);
-  dsCN <- extract(dsCN, sampleName);
+  dsCT <- dsCT[sampleName];
+  dsCN <- dsCN[sampleName];
 
 # Bin one chip type to the other. If one chip type has many more
 # loci than another, bin the former to the latter to increase the
 # chances for input loci mapping to target bins.
 # NB: Despite this, it is likely that there will be target bins
-# for which no input loci fall within, particularly if the two 
+# for which no input loci fall within, particularly if the two
 # chip types have approximately the same number of loci. For similar
-# reasons, it is likely that for some target bins there will be 
+# reasons, it is likely that for some target bins there will be
 # multiple loci mapping.  In other words, the number of loci averaged
 # will differ between bins.  The more loci averaged over, the
 # more precise the binned estimate will be.  Because of this, these
 # bin counts (or standard error estimates) would ideally be passed
-# on to the segmentation method to give different bin estimates 
+# on to the segmentation method to give different bin estimates
 # different weights in the segmentation.  This is currently not
 # done, mainly because none of the bin counts are recorded by
 # TotalCnBinnedSmoothing.

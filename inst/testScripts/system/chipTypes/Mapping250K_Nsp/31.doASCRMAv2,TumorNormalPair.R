@@ -24,7 +24,7 @@ print(csR);
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Extract tumor-normal pair
 pair <- c(T="GSM318736", N="GSM318737");
-csR <- extract(csR, indexOf(csR, pair));
+csR <- csR[indexOf(csR, pair)];
 print(csR);
 
 

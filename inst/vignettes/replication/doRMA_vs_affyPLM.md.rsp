@@ -10,7 +10,8 @@ This test verifies that `aroma.affymetrix::doRMA()` of aroma.affymetrix can repr
 <%
 library("R.utils")
 use("aroma.affymetrix")
-use("affyPLM")          # fitPLM()
+use("affyPLM")
+use("hgu133plus2cdf")
 verbose <- Arguments$getVerbose(-8, timestamp=TRUE)
 options(digits=4L)
 

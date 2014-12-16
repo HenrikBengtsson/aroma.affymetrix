@@ -11,7 +11,7 @@ This test verifies that `aroma.affymetrix::justRMA()` of aroma.affymetrix can re
 library("R.utils")
 use("aroma.affymetrix")
 use("affy")
-use("hgu133plus2.db")
+use("hgu133plus2cdf")
 verbose <- Arguments$getVerbose(-8, timestamp=TRUE)
 options(digits=4L)
 plotDensity <- aroma.light::plotDensity
@@ -39,7 +39,7 @@ print(eset)
 })%>
 ```
 
-Retrieving chip-effect estimates (on the log2 scale)
+## RMA by affy
 ```r
 <%=withCapture({
 eset0 <- justRMA(filenames=getPathnames(csR))

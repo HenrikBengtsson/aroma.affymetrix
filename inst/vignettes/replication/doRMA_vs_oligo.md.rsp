@@ -49,7 +49,7 @@ head(theta)
 })%>
 ```
 
-## RMA by affyPLM
+## RMA by oligo
 ```r
 <%=withCapture({
 fs <- read.celfiles(filenames=getPathnames(csR))
@@ -58,7 +58,7 @@ eSet <- rma(fs)
 theta0 <- exprs(eSet)
 colnames(theta0) <- gsub("[.]cel", "", colnames(theta0), ignore.case=TRUE)
 
-# Reorder the affyPLM estimates
+# Reordering genes
 o <- match(rownames(theta), rownames(theta0))
 theta0 <- theta0[o,]
 

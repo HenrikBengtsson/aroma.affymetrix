@@ -1,22 +1,20 @@
-<%@meta title="RMA reproducibility: doRMA() versus affyPLM::fitPLM()"%>
+<%@meta title="GCRMA reproducibility: doGCRMA() versus gcrma::gcrma()"%>
 <%@meta author="Henrik Bengtsson, Mark Robinson"%>
 
 # <%@meta name="title"%>
 
 by <%@meta name="author"%>
 
-This test verifies that `aroma.affymetrix::doRMA()` of aroma.affymetrix can reproduce the RMA chip-effect estimates as estimated by `affyPLM::fitPLM()`.
+This test verifies that `aroma.affymetrix::doGCRMA()` of aroma.affymetrix can reproduce the GCRMA chip-effect estimates as estimated by `gcrma::gcrma()`.
 
 <%
 library("R.utils")
 use("aroma.affymetrix")
-use("affyPLM")
+use("gcrma")
+use("hgu133plus2probe")
 use("hgu133plus2cdf")
 verbose <- Arguments$getVerbose(-8, timestamp=TRUE)
 options(digits=4L)
-
-# Avoid being masked by oligo::fitPLM() and affy::plotDensity()
-fitPLM <- affyPLM::fitPLM
 plotDensity <- aroma.light::plotDensity
 %>
 
@@ -33,10 +31,10 @@ csR
 })%>
 ```
 
-## RMA by aroma.affymetrix
+## GCRMA by aroma.affymetrix
 ```r
 <%=withCapture({
-ces <- doRMA(csR, verbose=verbose)
+ces <- doGCRMA(csR, verbose=verbose)
 ces
 })%>
 ```
@@ -50,13 +48,13 @@ head(theta)
 })%>
 ```
 
-## RMA by affyPLM
+## GCRMA by gcrma
 ```r
 <%=withCapture({
 ab <- ReadAffy(filenames=getPathnames(csR))
 ab
-fit <- fitPLM(ab, verbos=9)
-theta0 <- coefs(fit)
+eSet <- gcrma(ab, verbose=TRUE)
+theta0 <- exprs(eSet)
 colnames(theta0) <- gsub("[.]cel", "", colnames(theta0), ignore.case=TRUE)
 
 # Reordering genes
@@ -86,7 +84,7 @@ summary(d)
 })%>
 ```
 
-![](<%=toPNG(dataset, tags=c(chiptype, "doRMA_vs_affyPLM", "pairwise"), aspectRatio=5/2, {
+![](<%=toPNG(dataset, tags=c(chiptype, "doGCRMA_vs_gcrma", "pairwise"), aspectRatio=5/2, {
   par(mar=c(5,5,4,2)+0.1, cex.main=2, cex.lab=2, cex.axis=1.5)
   layout(matrix(seq_along(csR), ncol=2L, byrow=TRUE))
 
@@ -100,17 +98,17 @@ summary(d)
   }
 })%>)
 
-_Figure: Pairwise chip-effect estimates (theta) from `aroma.affymetrix::doRMA()` and `affyPLM::fitPlm()` across <%=length(csR)%> <%=chiptype%> arrays._
+_Figure: Pairwise chip-effect estimates (theta) from `aroma.affymetrix::doGCRMA()` and `gcrma::gcrma()` across <%=length(csR)%> <%=chiptype%> arrays._
 
 
 
-![](<%=toPNG(dataset, tags=c(chiptype, "doRMA_vs_affyPLM", "density_of_differences"), aspectRatio=2/3, {
+![](<%=toPNG(dataset, tags=c(chiptype, "doGCRMA_vs_gcrma", "density_of_differences"), aspectRatio=2/3, {
   par(mar=c(5,5,4,2)+0.1, cex.main=2, cex.lab=2, cex.axis=1.5)
   xlab <- expression(log[2](theta[aroma.affymetrix]/theta[affyPLM]))
   plotDensity(d, xlab=xlab)
 })%>)
 
-_Figure: Empirical density of differences in chip-effect estimates (theta) between `aroma.affymetrix::doRMA()` and `affyPLM::fitPlm()` across <%=length(csR)%> <%=chiptype%> arrays._
+_Figure: Empirical density of differences in chip-effect estimates (theta) between `aroma.affymetrix::doGCRMA()` and `gcrma::gcrma()` across <%=length(csR)%> <%=chiptype%> arrays._
 
 
 <%----

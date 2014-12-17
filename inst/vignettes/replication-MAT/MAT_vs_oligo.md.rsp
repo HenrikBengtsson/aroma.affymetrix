@@ -1,11 +1,11 @@
 <%@meta title="MAT reproducibility: MAT versus external MAT software"%>
-<%@meta author="Henrik Bengtsson"%>
+<%@meta author="Henrik Bengtsson, Mark Robinson"%>
 
 # <%@meta name="title"%>
 
 by <%@meta name="author"%>
 
-This test verifies that aroma.affymetrix can reproduce the estimates of the MAT (Model-based Analysis of Tiling arrays) algorithm as provided by the original MAT software.
+This test verifies that aroma.affymetrix can reproduce the estimates of the MAT (Model-based Analysis of Tiling arrays) algorithm as provided by the original [MAT] software.
 
 <%
 library("R.utils")
@@ -19,7 +19,9 @@ plotDensity <- aroma.light::plotDensity
 ```r
 <%=withCapture({
 use("aroma.affymetrix")
-use("matrixStats")
+use("gsmoothr")         # MatSmoothing
+use("matrixStats")      # colMedians()
+use("limma")            # makeContrast()
 })%>
 ```
 
@@ -44,12 +46,15 @@ csR
 })%>
 ```
 
-## MAT by aroma.affymetrix
+## MAT normalization
+
+### MAT normalization by aroma.affymetrix
 
 Normalize the data using the MAT model:
 ```r
 <%=withCapture({
 mn <- MatNormalization(csR)
+mn
 csM <- process(mn, verbose=more(verbose, 3))
 csM
 })%>
@@ -64,7 +69,7 @@ setFullNamesTranslator(csU, function(names, ...) { sampleNamesMap[names] })
 })%>
 ```
 
-## MAT by the original MAT software
+### MAT normalization by the original MAT software
 
 ```r
 <%=withCapture({
@@ -81,7 +86,7 @@ sampleNames
 })%>
 ```
 
-## Comparisons
+### Comparisons
 ```r
 <%=withCapture({
 # Sanity check
@@ -133,7 +138,7 @@ stopifnot(identical(dim(Y), dim(YMAT)))
 Visual comparison of confidence scores:
 
 <% for (sampleName in sampleNames) { %>
-![](<%=toPNG(getFullName(csU), tags=c(sampleName, "MatNormalization_vs_MAT"), aspectRatio=0.8, { 
+![](<%=toPNG(getFullName(csU), tags=c(sampleName, "MatNormalization_vs_MAT"), aspectRatio=1, { 
   xlab <- expression(log[2](y[MAT]))
   ylab <- expression(log[2](y))
   plot(YMAT[,sampleName], Y[,sampleName], pch=".", xlab=xlab, ylab=ylab)
@@ -162,6 +167,126 @@ stopifnot(all(avgDiff < 0.001));
 ```
 
 
+## Mat smoothing by aroma.affymetrix
+
+### Design #1
+```r
+<%=withCapture({
+sampleNames <- getNames(csU)
+design1 <- makeContrasts(Prec1_MeDNA_IP1-Prec1_MeDNA_Input1, levels=sampleNames)
+colnames(design1) <- "Prec1_IP1_minus_Input"
+design1
+
+ms1 <- MatSmoothing(csU, design=design1, probeWindow=600, tag="singleIP")
+ms1
+csMS1 <- process(ms1, units=NULL, verbose=verbose)
+csMS1
+})%>
+```
+
+
+### Design #2
+```r
+<%=withCapture({
+sampleNames <- getNames(csU)
+design2 <- makeContrasts(Prec1_MeDNA_IP1 + Prec1_MeDNA_IP2-Prec1_MeDNA_Input1, levels=sampleNames)
+colnames(design2) <- "Prec1_IPs_minus_Input"
+
+ms2 <- MatSmoothing(csU, design=design2, probeWindow=800, tag="multipleIP")
+ms2
+csMS2 <- process(ms2, units=NULL,verbose=verbose)
+csMS2
+
+# Read signals
+# Compare common units with prefix "chr1F".
+cdfU <- getCdf(csU)
+units <- indexOf(cdfU, "^chr1F")
+cells <- getCellIndices(cdfU, units=units, stratifyBy="pm",
+                        unlist=TRUE, useNames=FALSE)
+
+# Get the chromosomal positions of these cells
+acp <- AromaCellPositionFile$byChipType(getChipType(cdfU))
+pos <- acp[cells,2,drop=TRUE]
+
+# Order cells by chromsomal position
+o <- order(pos)
+pos <- pos[o]
+cells <- cells[o]
+
+# Extract the corresponding signals (on the log2 scale)
+Y1 <- log2(extractMatrix(csMS1, cells=cells, verbose=verbose))
+Y2 <- log2(extractMatrix(csMS2, cells=cells, verbose=verbose))
+Y <- cbind(Y1, Y2)
+})%>
+```
+
+### MAT smoothing by the original MAT software
+```r
+<%=withCapture({
+# Files with native-MAT summarized signals
+summaryFiles <- c("Prec1_MeDNA_600_IP1-Input.bar.txt",
+                  "Prec1_MeDNA_800_IPs-Input.bar.txt")
+barList <- lapply(summaryFiles, FUN=function(filename) {
+  columnNames <- c("chromosome", "position", "signal")
+  TabularTextFile(filename, path=getPath(csR), columnNames=columnNames)
+})
+barList
+
+# Read signals
+YMAT <- sapply(barList, FUN=function(bar) {
+  columnNames <- c("chromosome", "position", "signal")
+  data <- readDataFrame(bar, colClasses=colClasses("cin"), nrow=435000)
+
+  # Extract the subset available in the aroma.affymetrix estimate
+  data <- subset(data, chromosome == "chr1" & position %in% pos)
+
+  # Order by position
+  o <- order(data$position)
+  data <- data[o,,drop=FALSE]
+
+  # Extract the external estimates
+  y <- data$signal
+
+  # External score that are exactly zero, they are NAs
+  y[y == 0] <- NA_real_
+
+  y
+})
+colnames(YMAT) <- colnames(Y)
+})%>
+```
+
+Visual comparison of confidence scores:
+
+<% for (designName in colnames(Y)) { %>
+![](<%=toPNG(getFullName(csU), tags=c(designName, "MatSmoothing_vs_MAT"), {
+  xlab <- expression(log[2](y[MAT]))
+  ylab <- expression(log[2](y))
+  plot(YMAT[,designName], Y[,designName], pch=".", xlab=xlab, ylab=ylab)
+  abline(a=0, b=1, col="red", lwd=2, lty=3)
+  stext(side=3, pos=0, designName)
+  stext(side=3, pos=1, "Chr01")
+  stext(side=4, pos=1, sprintf("n=%d", nrow(Y)))
+  stext(side=4, pos=0, getFullName(csU))
+})%>)  
+<% } # for (designName ...) %>
+
+_Figure: Pairwise MAT smooth estimates from aroma.affymetrix and the original MAT software for <%=ncol(Y)%> designs._
+
+Average signal differences:
+```r
+<%=withCapture({
+D <- (Y - YMAT)^2
+avgDiff <- colMedians(D, na.rm=TRUE)
+names(avgDiff) <- colnames(D)
+avgDiff
+
+# Sanity check
+stopifnot(all(avgDiff < 0.003))
+})%>
+```
+
+
 ## Appendix
 ```r
 <%=withCapture({
@@ -172,3 +297,6 @@ sessionInfo()
 --------------------------------------------------------------------
 Last generated: <%=format(Sys.time(), "%Y-%m-%d %H:%M:%S UTC%z")%>.
 Powered by [RSP](http://cran.r-project.org/package=R.rsp).
+
+
+[MAT]: http://liulab.dfci.harvard.edu/MAT/ "Model-based Analysis of Tiling-array"

@@ -193,8 +193,12 @@ setMethodS3("getExpectedOutputFullnames", "MatSmoothing", function(this, ..., ve
 # }
 #*/###########################################################################
 setMethodS3("process", "MatSmoothing", function(this, ..., units=NULL, force=FALSE, verbose=FALSE) {
-  # gsmoothr::tmeanC()
-  require("gsmoothr") || throw("Package not loaded: gsmoothr");
+  requireNamespace("affxparser") || throw("Package not loaded: affxparser")
+  updateCel <- affxparser::updateCel
+
+  requireNamespace("gsmoothr") || throw("Package not loaded: gsmoothr")
+  tmeanC <- gsmoothr::tmeanC;
+
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local functions
@@ -219,7 +223,7 @@ setMethodS3("process", "MatSmoothing", function(this, ..., units=NULL, force=FAL
   calcNullDist0 <- function(ch, ps, x) {
     MIN <- -999999
     #inds <-
-    y <- rep(MIN,length(x))
+    y <- rep(MIN, times=length(x))
     n <- length(ch)
     indices <- split(seq_len(n), ch)
     nChr <- length(indices)

@@ -236,9 +236,11 @@ setMethodS3("fitOne", "BaseCountNormalization", function(this, df, ..., verbose=
     model <- match.arg(model);
 
     if (model == "lm") {
-      require("stats") || throw("Package not loaded: stats");
+      requireNamespace("stats") || throw("Package not loaded: stats")
+      lm.fit <- stats::lm.fit
+
       fitFcn <- function(X, y, ...) {
-        fit <- stats::lm.fit(x=X, y=y, ...);
+        fit <- lm.fit(x=X, y=y, ...);
         # Remove redundant parameters
         for (ff in c("residuals", "effects", "fitted.values", "qr")) {
           fit[[ff]] <- NULL;
@@ -246,7 +248,9 @@ setMethodS3("fitOne", "BaseCountNormalization", function(this, df, ..., verbose=
         fit;
       }
     } else if (model == "robustSmoothSpline") {
-      require("aroma.light") || throw("Package not loaded: aroma.light");
+      requireNamespace("aroma.light") || throw("Package not loaded: aroma.light")
+      robustSmoothSpline <- aroma.light::robustSmoothSpline
+
       fitFcn <- function(X, y, ...) {
         fits <- list();
         for (cc in 1:ncol(X)) {

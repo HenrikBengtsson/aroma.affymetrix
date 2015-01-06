@@ -274,7 +274,9 @@ setMethodS3("doGCRMA", "AffymetrixCelSet", function(csR, arrays=NULL, type=c("fu
 
 
 setMethodS3("doGCRMA", "default", function(dataSet, ..., verbose=FALSE) {
-  require("aroma.affymetrix") || throw("Package not loaded: aroma.affymetrix");
+  .require <- require
+  .require("aroma.affymetrix") || throw("Package not loaded: aroma.affymetrix")
+
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments

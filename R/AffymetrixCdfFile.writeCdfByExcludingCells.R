@@ -1,7 +1,13 @@
 setMethodS3("writeCdfByExcludingCells", "AffymetrixCdfFile", function(this, tags=c("filtered"), cellsToExclude, dropEmptyGroups=TRUE, dropEmptyUnits=dropEmptyGroups, ..., overwrite=FALSE, ram=1, verbose=FALSE) {
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  requireNamespace("affxparser") || throw("Package not loaded: affxparser")
+  readCdf <- affxparser::readCdf
+  readCdfHeader <- affxparser::readCdfHeader
+  readCdfQc <- affxparser::readCdfQc
+
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
    maxNbrOfCells <- nbrOfCells(this);
 
   # Argument 'tags':
@@ -79,9 +85,9 @@ setMethodS3("writeCdfByExcludingCells", "AffymetrixCdfFile", function(this, tags
   cdfListF <- vector("list", length=nbrOfUnits);
   names(cdfListF) <- getUnitNames(this);
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Reading CDF, dropping cells, ...
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   nbrOfUnitsLeft <- length(units);
   chunk <- 1L;
   while (nbrOfUnitsLeft > 0) {
@@ -151,9 +157,9 @@ setMethodS3("writeCdfByExcludingCells", "AffymetrixCdfFile", function(this, tags
 
 
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Drop empty units?
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (dropEmptyUnits) {
     verbose && enter(verbose, "Dropping empty units");
 
@@ -175,17 +181,17 @@ setMethodS3("writeCdfByExcludingCells", "AffymetrixCdfFile", function(this, tags
   } # if (dropEmptyUnits)
 
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Writing CDF
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   verbose && enter(verbose, "Writing filtered CDF");
   if (overwrite && isFile(pathnameF)) {
      file.remove(pathnameF);
   }
 
   # Write to a temporary file
-  pathnameT <- pushTemporaryFile(pathnameF, verbose=verbose);  
-  
+  pathnameT <- pushTemporaryFile(pathnameF, verbose=verbose);
+
   writeCdf(pathnameT, cdfheader=cdfHeader, cdf=cdfListF, cdfqc=cdfQcUnits, verbose=verbose2);
 
   # Not needed anymore
@@ -204,9 +210,9 @@ setMethodS3("writeCdfByExcludingCells", "AffymetrixCdfFile", function(this, tags
   verbose && exit(verbose);
 
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Return new CDF
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   cdfF <- newInstance(this, pathnameF);
   verbose && print(verbose, cdfF);
 

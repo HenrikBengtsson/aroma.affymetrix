@@ -1,6 +1,8 @@
 setMethodS3("extractSnpCnvQSet", "SnpChipEffectSet", function(this, units=NULL, sortUnits=TRUE, transform=log2, ..., verbose=FALSE) {
-  require("Biobase") || throw("Package not loaded: Biobase");
-  require("oligo") || throw("Package not loaded: oligo");
+  requireNamespace("Biobase") || throw("Package not loaded: Biobase")
+  requireNamespace("oligo") || throw("Package not loaded: oligo")
+  cleanPlatformName <- oligo::cleanPlatformName
+
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Sanity check
@@ -16,7 +18,7 @@ setMethodS3("extractSnpCnvQSet", "SnpChipEffectSet", function(this, units=NULL, 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   cdf <- getCdf(this);
 
-  # Argument 'units':  
+  # Argument 'units':
   if (is.null(units)) {
   } else {
     units <- Arguments$getIndices(units, max=nbrOfUnits(cdf));
@@ -66,7 +68,7 @@ setMethodS3("extractSnpCnvQSet", "SnpChipEffectSet", function(this, units=NULL, 
   # Allocate and populate SnpCnvQSet
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   verbose && enter(verbose, "Allocate and populate SnpCnvQSet");
-  res <- new("SnpCnvQSet", 
+  res <- new("SnpCnvQSet",
     thetaA = transform(theta[,1,,drop=TRUE]),
     thetaB = transform(theta[,2,,drop=TRUE])
   );
@@ -81,7 +83,7 @@ setMethodS3("extractSnpCnvQSet", "SnpChipEffectSet", function(this, units=NULL, 
   unitNames <- NULL;
 
   # Assign annotation data
-  pdPkgName <- oligo::cleanPlatformName(chipType);
+  pdPkgName <- cleanPlatformName(chipType);
   annotation(res) <- pdPkgName;
 
   # Assign sample names

@@ -1,11 +1,11 @@
 Package: aroma.affymetrix
-Version: 2.12.9
+Version: 2.12.9-1
 Depends: R (>= 3.0.0), R.utils (>= 1.34.0), aroma.core (>= 2.12.6)
 Imports: methods, R.methodsS3 (>= 1.6.1), R.oo (>= 1.18.0), R.cache (>= 0.10.0), R.devices (>= 2.12.0), R.filesets (>= 2.6.0), aroma.apd (>= 0.5.0), MASS, splines, matrixStats (>= 0.10.0)
 Suggests: RColorBrewer (>= 1.0-5), preprocessCore (>= 1.24.0), affyPLM (>= 1.38.0), affy (>= 1.40.0), limma (>= 3.18.13), gcrma (>= 2.34.0), gsmoothr (>= 0.1.7), dChipIO (>= 0.1.1), Biobase (>= 2.22.0), oligo (>= 1.26.6), oligoClasses (>= 1.24.0), DBI (>= 0.3.1), pdInfoBuilder (>= 1.26.0), aroma.light (>= 1.32.0), affxparser (>= 1.34.2), AffymetrixDataTestFiles
 SuggestsNote: Recommended: preprocessCore, affyPLM, aroma.light, affxparser
 Additional_repositories: http://r-forge.r-project.org
-Date: 2014-11-17
+Date: 2015-01-06
 Title: Analysis of Large Affymetrix Microarray Data Sets
 Authors@R: c(
   person("Henrik", "Bengtsson", role=c("aut", "cre", "cph"),
@@ -19,6 +19,6 @@ Authors@R: c(
 Description: This package implements classes for files and sets of files for various Affymetrix file formats, e.g. AffymetrixCdfFile, AffymetrixCelFile, and AffymetrixCelSet.  These are designed to be memory efficient but still being fast.  The idea is to keep all data on file and only read data into memory when needed.  Clever caching mechanisms are used to minimize the overhead of data IO.  All of the above is hidden in the package API and for the developer (and the end user), the data is queried as if it lives in memory.  With this design it is only the disk space that limits the number of arrays that can be analyzed.
 License: LGPL (>= 2.1)
 URL: http://www.aroma-project.org/, https://github.com/HenrikBengtsson/aroma.affymetrix
-BugReports: https://github.com/HenrikBengtsson/aroma.affymetrix/issue/
+BugReports: https://github.com/HenrikBengtsson/aroma.affymetrix/issues
 LazyLoad: TRUE
 biocViews: Infrastructure, ProprietaryPlatforms, ExonArray, Microarray, OneChannel, GUI, DataImport, DataRepresentation, Preprocessing, QualityControl, Visualization, ReportWriting, aCGH, CopyNumberVariants, DifferentialExpression, GeneExpression, SNP, Transcription

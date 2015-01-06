@@ -90,6 +90,12 @@ setMethodS3("setCombineAlleles", "CnChipEffectSet", function(this, status, ...) 
 
 
 setMethodS3("inferParameters", "CnChipEffectSet", function(this, ..., verbose=FALSE) {
+  requireNamespace("affxparser") || throw("Package not loaded: affxparser")
+  readCdfHeader <- affxparser::readCdfHeader
+  readCdfGroupNames <- affxparser::readCdfGroupNames
+  readCdfUnits <- affxparser::readCdfUnits
+
+
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
   if (verbose) {

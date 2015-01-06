@@ -66,7 +66,10 @@
 # @keyword "internal"
 #*/###########################################################################
 setMethodS3("bpmapCluster2Cdf", "default", function(pathname, chipType, tags=NULL, rows, cols, maxProbeDistance=3000L, minNbrOfProbes=30L, groupName=gsub("_.*", "", chipType), field="fullname", stringRemove=sprintf("%s:.*;", groupName), ..., flavor=c("v2", "v1"), path="*", verbose=-10) {
-  require("affxparser") || throw("Package not loaded: affxparser");
+  requireNamespace("affxparser") || throw("Package not loaded: affxparser")
+  readBpmap <- affxparser::readBpmap
+  readBpmapHeader <- affxparser::readBpmapHeader
+
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local functions

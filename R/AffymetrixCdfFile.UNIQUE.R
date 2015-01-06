@@ -47,6 +47,15 @@
 # @keyword IO
 #*/###########################################################################
 setMethodS3("createUniqueCdf", "AffymetrixCdfFile", function(this, chipType=getChipType(this), tags="unique", path=NULL, units=NULL, ..., ram=NULL, verbose=TRUE) {
+  requireNamespace("affxparser") || throw("Package not loaded: affxparser")
+  readCdf <- affxparser::readCdf
+  readCdfHeader <- affxparser::readCdfHeader
+  readCdfGroupNames <- affxparser::readCdfGroupNames
+  readCdfQc <- affxparser::readCdfQc
+  readCdfUnitNames <- affxparser::readCdfUnitNames
+  readCdfCellIndices <- affxparser::readCdfCellIndices
+
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local functions
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

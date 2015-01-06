@@ -49,7 +49,8 @@ setConstructorS3("MbeiPlm", function(...) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   args <- list(...);
   if (length(args) > 0 && !is.null(args[[1]])) {
-    require("affy") || throw("Package not loaded: affy");
+    # Early error, iff package not installed.
+    requireNamespace("affy") || throw("Package not loaded: affy");
   }
 
   this <- extend(ProbeLevelModel(...), "MbeiPlm");
@@ -181,7 +182,9 @@ setMethodS3("getProbeAffinityFile", "MbeiPlm", function(this, ...) {
 #*/###########################################################################
 setMethodS3("getFitUnitGroupFunction", "MbeiPlm", function(this, ...) {
   # To help 'R CMD check' to locate fit.li.wong().
-  require("affy") || throw("Package not loaded: affy");
+  requireNamespace("affy") || throw("Package not loaded: affy");
+  fit.li.wong <- affy::fit.li.wong
+
 
   standardize <- this$standardize;
   shift <- this$shift;

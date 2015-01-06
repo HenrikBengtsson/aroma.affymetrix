@@ -82,6 +82,12 @@ setMethodS3("setMergeStrands", "SnpChipEffectSet", function(this, status, ...) {
 
 
 setMethodS3("inferParameters", "SnpChipEffectSet", function(this, ..., verbose=FALSE) {
+  requireNamespace("affxparser") || throw("Package not loaded: affxparser")
+  readCdfGroupNames <- affxparser::readCdfGroupNames
+  readCdfHeader <- affxparser::readCdfHeader
+  readCelUnits <- affxparser::readCelUnits
+
+
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
   if (verbose) {

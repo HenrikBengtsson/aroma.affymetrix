@@ -36,6 +36,15 @@
 # @keyword IO
 #*/###########################################################################
 setMethodS3("createMonocellCdf", "AffymetrixCdfFile", function(this, chipType=getChipType(this), tags="monocell", path=NULL, nbrOfCellsPerField=1, ..., ram=NULL, verbose=TRUE) {
+  requireNamespace("affxparser") || throw("Package not loaded: affxparser")
+  readCdf <- affxparser::readCdf
+  readCdfGroupNames <- affxparser::readCdfGroupNames
+  readCdfHeader <- affxparser::readCdfHeader
+  readCdfQc <- affxparser::readCdfQc
+  readCdfUnitNames <- affxparser::readCdfUnitNames
+  readCdfCellIndices <- affxparser::readCdfCellIndices
+
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local functions
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

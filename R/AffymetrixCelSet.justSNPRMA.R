@@ -1,6 +1,6 @@
 # @author "HB"
 setMethodS3("justSNPRMA", "character", function(...) {
-  require("oligo") || throw("Package not loaded: oligo");
+  requireNamespace("oligo") || throw("Package not loaded: oligo")
   oligo::justSNPRMA(...);
 })
 

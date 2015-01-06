@@ -55,9 +55,17 @@
 # @keyword internal
 #*/###########################################################################
 pdInfo2Cdf <- function(pdpkg, celfile, overwrite=FALSE, verbose=TRUE, ...) {
-  require("affxparser") || throw("Package not loaded: affxparser");
-  require("oligo") || throw("Package not loaded: oligo");
-  require("pdInfoBuilder") || throw("Package not loaded: pdInfoBuilder");
+  requireNamespace("affxparser") || throw("Package not loaded: affxparser")
+  readCelHeader <- affxparser::readCelHeader
+  writeCdf <- affxparser::writeCdf
+
+  requireNamespace("oligo") || throw("Package not loaded: oligo")
+  read.celfiles <- oligo::read.celfiles
+
+  .require <- require
+  .require("pdInfoBuilder") || throw("Package not loaded: pdInfoBuilder")
+  dbGetQuery <- pdInfoBuilder::dbGetQuery
+
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local functions
@@ -74,6 +82,7 @@ pdInfo2Cdf <- function(pdpkg, celfile, overwrite=FALSE, verbose=TRUE, ...) {
     list(unittype=1, unitdirection=1, groups=g, natoms=nr, ncells=nr,
          ncellsperatom=1, unitnumber=id);
   } # pmFeature2List()
+
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validating arguments
@@ -102,7 +111,7 @@ pdInfo2Cdf <- function(pdpkg, celfile, overwrite=FALSE, verbose=TRUE, ...) {
   verbose && cat(verbose, "CDF file to be generated: ", filename);
 
   # Loading the required PD package.
-  require(pdpkg, character.only=TRUE) ||
+  .require(pdpkg, character.only=TRUE) ||
                  throw("Platform Design (PD) package not loaded: ", pdpkg);
 
 

@@ -38,8 +38,9 @@
 # }
 #*/###########################################################################
 setMethodS3("normalizeQuantile", "AffymetrixCelFile", function(this, path=file.path("normQuantile", getChipType(this)), xTarget, subsetToUpdate=NULL, typesToUpdate=NULL, ..., overwrite=FALSE, skip=!overwrite, verbose=FALSE) {
-  # Load aroma.light::normalizeQuantile()
-  require("aroma.light") || throw("Package aroma.light not loaded.");
+  requireNamespace("aroma.light") || throw("Package aroma.light not loaded.")
+  normalizeQuantile <- aroma.light::normalizeQuantile
+
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments

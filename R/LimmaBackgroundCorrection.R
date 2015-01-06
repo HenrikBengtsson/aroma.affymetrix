@@ -209,9 +209,13 @@ setMethodS3("process", "LimmaBackgroundCorrection", function(this, ..., force=FA
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Try to load the require package
+  # Try to load the required packaged
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  require("limma") || throw("Package not loaded: limma");
+  requireNamespace("affxparser") || throw("Package not loaded: affxparser")
+  updateCel <- affxparser::updateCel
+
+  requireNamespace("limma") || throw("Package not loaded: limma")
+  backgroundCorrect <- limma::backgroundCorrect
 
 
   # Generate random jitter?

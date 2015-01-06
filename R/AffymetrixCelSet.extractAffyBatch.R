@@ -42,8 +42,10 @@
 # @keyword programming
 #*/###########################################################################
 setMethodS3("extractAffyBatch", "AffymetrixCelSet", function(this, ..., verbose=FALSE) {
-  # Import cleancdfname() and ReadAffy().
-  require("affy") || throw("Package not loaded: affy");
+  requireNamespace("affy") || throw("Package not loaded: affy")
+  cleancdfname <- affy::cleancdfname
+  ReadAffy <- affy::ReadAffy
+
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
@@ -59,7 +61,8 @@ setMethodS3("extractAffyBatch", "AffymetrixCelSet", function(this, ..., verbose=
   chipType <- getChipType(cdf, fullname=FALSE);
   cdfPkgName <- cleancdfname(chipType);
   suppressWarnings({
-    res <- require(cdfPkgName, character.only=TRUE);
+    .require <- require # To please R CMD check
+    res <- .require(cdfPkgName, character.only=TRUE);
   });
   if (!res) {
     warning("CDF enviroment package '", cdfPkgName, "' not installed. The 'affy' package will later try to download it from Bioconductor and install it.");

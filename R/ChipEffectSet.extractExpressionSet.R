@@ -41,7 +41,8 @@
 # @keyword programming
 #*/###########################################################################
 setMethodS3("extractExpressionSet", "ChipEffectSet", function(this, ..., logBase=2, orderUnitsBy=c("asis", "lexicographic"), annotationPkg=NULL, verbose=FALSE) {
-  require("Biobase") || throw("Package not loaded: Biobase");
+  .require <- require
+  .require("Biobase") || throw("Package not loaded: Biobase");
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
@@ -100,7 +101,7 @@ setMethodS3("extractExpressionSet", "ChipEffectSet", function(this, ..., logBase
 
     verbose && enter(verbose, "Loading annotation package");
     verbose && cat(verbose, "Annotation package: ", annotationPkg);
-    require(annotationPkg, character.only=TRUE) || throw("Bioconductor annotation package not available: ", annotationPkg);
+    .require(annotationPkg, character.only=TRUE) || throw("Bioconductor annotation package not available: ", annotationPkg);
     verbose && exit(verbose);
 
     ns <- asNamespace(annotationPkg);

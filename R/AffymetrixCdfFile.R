@@ -129,6 +129,10 @@ setMethodS3("as.character", "AffymetrixCdfFile", function(x, ...) {
 # @keyword programming
 #*/###########################################################################
 setMethodS3("fromFile", "AffymetrixCdfFile", function(static, filename, path=NULL, ...) {
+  requireNamespace("affxparser") || throw("Package not loaded: affxparser")
+  readCdfHeader <- affxparser::readCdfHeader
+
+
   # Arguments 'filename' and 'path':
   pathname <- Arguments$getReadablePathname(filename, path=path,
                                                               mustExist=TRUE);
@@ -295,6 +299,10 @@ setMethodS3("findByChipType", "AffymetrixCdfFile", function(static, chipType, ta
 # @keyword IO
 #*/###########################################################################
 setMethodS3("getHeader", "AffymetrixCdfFile", function(this, ...) {
+  requireNamespace("affxparser") || throw("Package not loaded: affxparser")
+  readCdfHeader <- affxparser::readCdfHeader
+
+
   if (is.null(header <- this$.header))
     header <- this$.header <- readCdfHeader(getPathname(this));
   header;
@@ -379,6 +387,10 @@ setMethodS3("nbrOfColumns", "AffymetrixCdfFile", function(this, ...) {
 # @keyword IO
 #*/###########################################################################
 setMethodS3("getUnitNames", "AffymetrixCdfFile", function(this, units=NULL, ...) {
+  requireNamespace("affxparser") || throw("Package not loaded: affxparser")
+  readCdfUnitNames <- affxparser::readCdfUnitNames
+
+
   names <- this$.unitNames;
 
   if (is.null(names)) {
@@ -463,6 +475,10 @@ setMethodS3("hasUnitTypes", "AffymetrixCdfFile", function(this, types, ..., verb
 # @keyword IO
 #*/###########################################################################
 setMethodS3("getUnitTypes", "AffymetrixCdfFile", function(this, units=NULL, ..., force=FALSE, .cache=TRUE, verbose=FALSE) {
+  requireNamespace("affxparser") || throw("Package not loaded: affxparser")
+  readCdf <- affxparser::readCdf
+
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local function
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -563,6 +579,10 @@ setMethodS3("getUnitTypes", "AffymetrixCdfFile", function(this, units=NULL, ...,
 
 
 setMethodS3("getGroupDirections", "AffymetrixCdfFile", function(this, units=NULL, ..., force=FALSE, verbose=FALSE) {
+  requireNamespace("affxparser") || throw("Package not loaded: affxparser")
+  readCdfUnits <- affxparser::readCdfUnits
+
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -687,6 +707,10 @@ setMethodS3("getGroupDirections", "AffymetrixCdfFile", function(this, units=NULL
 # @keyword IO
 #*/###########################################################################
 setMethodS3("getCellIndices", "AffymetrixCdfFile", function(this, units=NULL, ..., useNames=TRUE, unlist=FALSE, force=FALSE, cache=TRUE, verbose=FALSE) {
+  requireNamespace("affxparser") || throw("Package not loaded: affxparser")
+  readCdfCellIndices <- affxparser::readCdfCellIndices
+
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local functions
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -944,6 +968,10 @@ setMethodS3("getRestructor", "AffymetrixCdfFile", function(this, ...) {
 #*/###########################################################################
 # NOTE: getUnits() does not work because an S4 class stole it!!!
 setMethodS3("readUnits", "AffymetrixCdfFile", function(this, units=NULL, ..., verbose=FALSE) {
+  requireNamespace("affxparser") || throw("Package not loaded: affxparser")
+  readCdfUnits <- affxparser::readCdfUnits
+
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -1002,6 +1030,10 @@ setMethodS3("readUnits", "AffymetrixCdfFile", function(this, units=NULL, ..., ve
 # @keyword IO
 #*/###########################################################################
 setMethodS3("isPm", "AffymetrixCdfFile", function(this, units=NULL, force=FALSE, cache=TRUE, ..., verbose=FALSE) {
+  requireNamespace("affxparser") || throw("Package not loaded: affxparser")
+  readCdfIsPm <- affxparser::readCdfIsPm
+
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

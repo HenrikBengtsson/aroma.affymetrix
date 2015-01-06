@@ -41,7 +41,9 @@
 # }
 #*/###########################################################################
 setMethodS3("plotDensity", "AffymetrixCelFile", function(this, subset=NULL, types=NULL, ..., xlim=c(0,16), xlab=NULL, ylab="density (integrates to one)", log=TRUE, annotate=TRUE, verbose=FALSE) {
-  require("aroma.light") || throw("Package not loaded: aroma.light");
+  ## aroma.light::plotDensity()
+  requireNamespace("aroma.light") || throw("Package aroma.light not loaded.")
+
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments

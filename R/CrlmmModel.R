@@ -302,7 +302,8 @@ setMethodS3("findUnitsTodo", "CrlmmModel", function(this, units=NULL, safe=TRUE,
 
 
 setMethodS3("fit", "CrlmmModel", function(this, units="remaining", force=FALSE, ram=NULL, ..., verbose=FALSE) {
-  require("oligo") || throw("Package not loaded: oligo");
+  # Early error
+  requireNamespace("oligo") || throw("Package not loaded: oligo");
 
   # To please R CMD check
   ns <- loadNamespace("oligo");

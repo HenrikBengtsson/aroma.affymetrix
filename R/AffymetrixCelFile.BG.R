@@ -206,7 +206,9 @@ setMethodS3("bgAdjustGcrma", "AffymetrixCelFile", function(this, path, type=c("f
     throw("DEPRECATED: bgAdjustGcrma() must not be called with affinities=NULL.");
   }
 
-  # require("gcrma") || throw("Package not loaded: gcrma");
+  requireNamespace("gcrma") || throw("Package not loaded: gcrma")
+  bg.adjust.fullmodel <- gcrma::bg.adjust.fullmodel
+
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
@@ -334,7 +336,7 @@ setMethodS3("bgAdjustGcrma", "AffymetrixCelFile", function(this, path, type=c("f
     verbose && cat(verbose, "Number of PMs: ", length(pm));
     verbose && cat(verbose, "Number of MMs: ", length(mm));
 
-    pm <- gcrma::bg.adjust.fullmodel(pms=pm, mms=mm, ncs=ncs, apm=apm, amm=amm, anc=anc,
+    pm <- bg.adjust.fullmodel(pms=pm, mms=mm, ncs=ncs, apm=apm, amm=amm, anc=anc,
                       index.affinities=seq_len(length(pm)), k=k, rho=rho, fast=fast);
 
     verbose && exit(verbose);
@@ -536,7 +538,8 @@ setMethodS3("bgAdjustRma", "AffymetrixCelFile", function(this, path, pmonly=TRUE
   }
 
   # Load required packages
-  require("affy") || throw("Package not loaded: affy");
+  requireNamespace("affy") || throw("Package not loaded: affy")
+  bg.adjust <- affy::bg.adjust
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

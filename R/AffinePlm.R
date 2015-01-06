@@ -54,7 +54,8 @@ setConstructorS3("AffinePlm", function(..., background=TRUE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   args <- list(...);
   if (length(args) > 0 && !is.null(args[[1]])) {
-    require("aroma.light") || throw("Package not loaded: aroma.light");
+    # Early error, iff package is missing
+    requireNamespace("aroma.light") || throw("Package not loaded: aroma.light");
   }
 
   this <- extend(ProbeLevelModel(...), "AffinePlm",

@@ -1,12 +1,7 @@
 # Gets PLASQ probe types from an AffymetrixCdfFile.
 setMethodS3("readPlasqTypes", "AffymetrixCdfFile", function(this, ..., verbose=FALSE) {
-readCdf
-  requireNamespace("affxparser") || throw("Package not loaded: affxparser")
-  readCdf <- affxparser::readCdf
-
-
   pathname <- getPathname(this);
-  cdf <- readCdf(pathname, ..., readUnitDirection=TRUE, readGroupDirection=TRUE, readXY=FALSE, readIndexpos=FALSE, readIsPm=TRUE, readAtoms=FALSE, readUnitAtomNumbers=FALSE, readGroupAtomNumbers=FALSE);
+  cdf <- .readCdf(pathname, ..., readUnitDirection=TRUE, readGroupDirection=TRUE, readXY=FALSE, readIndexpos=FALSE, readIsPm=TRUE, readAtoms=FALSE, readUnitAtomNumbers=FALSE, readGroupAtomNumbers=FALSE);
   cdf <- getPlasqTypes(cdf);
   cdf;
 }, private=TRUE)

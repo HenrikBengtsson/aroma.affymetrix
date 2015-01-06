@@ -220,10 +220,6 @@ setMethodS3("isCompatibleWithCdf", "SnpInformation", function(this, cdf, ...) {
 # }
 #*/###########################################################################
 setMethodS3("getData", "SnpInformation", function(this, units=NULL, fields=c("fragmentLength", "start", "stop"), orderBy=NULL, ..., force=FALSE, verbose=FALSE) {
-  requireNamespace("affxparser") || throw("Package not loaded: affxparser")
-  readCdfUnitNames <- affxparser::readCdfUnitNames
-
-
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
 
@@ -237,7 +233,7 @@ setMethodS3("getData", "SnpInformation", function(this, units=NULL, fields=c("fr
     cdfFile <- AffymetrixCdfFile$findByChipType(chipType);
     if (is.null(cdfFile))
       throw("Could not located CDF file: ", chipType);
-    targetUnitNames <- readCdfUnitNames(cdfFile);
+    targetUnitNames <- .readCdfUnitNames(cdfFile);
     verbose && exit(verbose);
 
     # Now read the SNP information data

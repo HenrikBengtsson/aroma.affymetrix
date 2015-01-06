@@ -712,10 +712,6 @@ setMethodS3("getTargetFunctions", "FragmentLengthNormalization", function(this, 
 # }
 #*/###########################################################################
 setMethodS3("process", "FragmentLengthNormalization", function(this, ..., force=FALSE, verbose=FALSE) {
-  requireNamespace("aroma.light") || throw("Package not loaded: aroma.light")
-  normalizeFragmentLength <- aroma.light::normalizeFragmentLength
-
-
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -897,7 +893,7 @@ setMethodS3("process", "FragmentLengthNormalization", function(this, ..., force=
 
     verbose && cat(verbose, "Log2 signals:");
     verbose && str(verbose, y);
-    yN <- normalizeFragmentLength(y, fragmentLengths=fl,
+    yN <- .normalizeFragmentLength(y, fragmentLengths=fl,
                     targetFcns=targetFcns, subsetToFit=subset,
                     onMissing=onMissing, ...);
     verbose && cat(verbose, "Normalized log2 signals:");

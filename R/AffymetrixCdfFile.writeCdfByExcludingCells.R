@@ -1,10 +1,4 @@
 setMethodS3("writeCdfByExcludingCells", "AffymetrixCdfFile", function(this, tags=c("filtered"), cellsToExclude, dropEmptyGroups=TRUE, dropEmptyUnits=dropEmptyGroups, ..., overwrite=FALSE, ram=1, verbose=FALSE) {
-  requireNamespace("affxparser") || throw("Package not loaded: affxparser")
-  readCdf <- affxparser::readCdf
-  readCdfHeader <- affxparser::readCdfHeader
-  readCdfQc <- affxparser::readCdfQc
-
-
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -52,10 +46,10 @@ setMethodS3("writeCdfByExcludingCells", "AffymetrixCdfFile", function(this, tags
   verbose && cat(verbose, "Path: ", path);
 
   # Get CDF header (to be reused when writing the new CDF)
-  cdfHeader <- readCdfHeader(pathname);
+  cdfHeader <- .readCdfHeader(pathname);
 
   # Get CDF QC units (to be reused when writing the new CDF)
-  cdfQcUnits <- readCdfQc(pathname);
+  cdfQcUnits <- .readCdfQc(pathname);
 
   verbose2 <- as.logical(verbose);
 
@@ -109,7 +103,7 @@ setMethodS3("writeCdfByExcludingCells", "AffymetrixCdfFile", function(this, tags
     stopifnot(length(unitsChunk) > 0);
 
     verbose && enter(verbose, "Reading subset of units from source CDF");
-    cdfListChunk <- readCdf(pathname, readIndices=TRUE, units=unitsChunk);
+    cdfListChunk <- .readCdf(pathname, readIndices=TRUE, units=unitsChunk);
     verbose && exit(verbose);
 
     verbose && enter(verbose, "Dropping cells");
@@ -192,7 +186,7 @@ setMethodS3("writeCdfByExcludingCells", "AffymetrixCdfFile", function(this, tags
   # Write to a temporary file
   pathnameT <- pushTemporaryFile(pathnameF, verbose=verbose);
 
-  writeCdf(pathnameT, cdfheader=cdfHeader, cdf=cdfListF, cdfqc=cdfQcUnits, verbose=verbose2);
+  .writeCdf(pathnameT, cdfheader=cdfHeader, cdf=cdfListF, cdfqc=cdfQcUnits, verbose=verbose2);
 
   # Not needed anymore
   cdfHeader <- cdfListF <- NULL; # Not needed anymore

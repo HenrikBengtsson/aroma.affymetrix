@@ -473,7 +473,7 @@ setMethodS3("bpmapCluster2Cdf", "default", function(pathname, chipType, tags=NUL
   # Write to a temporary file
   pathnameT <- pushTemporaryFile(cdfPathname, verbose=verbose);
 
-  writeCdf(pathnameT, cdfheader=cdfHeader, cdf=cdfList, cdfqc=NULL, overwrite=TRUE, verbose=verbose);
+  .writeCdf(pathnameT, cdfheader=cdfHeader, cdf=cdfList, cdfqc=NULL, overwrite=TRUE, verbose=verbose);
 
   # Rename temporary file
   pathname <- popTemporaryFile(pathnameT, verbose=verbose);

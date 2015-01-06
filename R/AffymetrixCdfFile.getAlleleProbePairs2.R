@@ -16,7 +16,7 @@ setMethodS3("getAlleleProbePairs2", "AffymetrixCdfFile", function(this, ..., ver
   units <- which(types == 2);
 
   # Read group names for the SNPs
-  groupNames <- readCdfGroupNames(cdfFile, units=units);
+  groupNames <- .readCdfGroupNames(cdfFile, units=units);
   uGroupNames <- unique(groupNames);
   verbose && exit(verbose);
 
@@ -56,7 +56,7 @@ setMethodS3("getAlleleProbePairs2", "AffymetrixCdfFile", function(this, ..., ver
 
   # Read all of the CDF file
   verbose && enter(verbose, "Loading cell indices for all probepairs");
-  cdfAll <- readCdfCellIndices(cdfFile, units=units, stratifyBy="pm");
+  cdfAll <- .readCdfCellIndices(cdfFile, units=units, stratifyBy="pm");
   # Not needed anymore
   units <- NULL;
   verbose && exit(verbose);

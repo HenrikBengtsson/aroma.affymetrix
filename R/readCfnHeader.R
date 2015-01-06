@@ -1,8 +1,4 @@
 setMethodS3("readCfnHeader", "default", function(pathname, ..., verbose=FALSE) {
-  requireNamespace("affxparser") || throw("Package not loaded: affxparser")
-  readCdfUnitNames <- affxparser::readCdfUnitNames
-
-
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local functions
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -102,7 +98,7 @@ setMethodS3("readCfnHeader", "default", function(pathname, ..., verbose=FALSE) {
   cdfPathname <- .findCdf(chipType);
   if (is.null(cdfPathname))
     throw("Could not locate CDF for this chip type: ", chipType);
-  isSnp <- (regexpr("SNP_", readCdfUnitNames(cdfPathname)) != -1);
+  isSnp <- (regexpr("SNP_", .readCdfUnitNames(cdfPathname)) != -1);
   nbrOfSnps <- sum(isSnp);
   # Not needed anymore
   isSnp <- NULL;

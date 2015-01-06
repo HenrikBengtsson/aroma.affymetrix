@@ -150,10 +150,6 @@ setMethodS3("excludeChrXFromFit", "DChipQuantileNormalization", function(this, .
 # }
 #*/###########################################################################
 setMethodS3("process", "DChipQuantileNormalization", function(this, ..., force=FALSE, skip=TRUE, verbose=FALSE) {
-  requireNamespace("aroma.light") || throw("Package not loaded: aroma.light")
-  normalizeQuantileSpline <- aroma.light::normalizeQuantileSpline
-
-
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -287,7 +283,7 @@ setMethodS3("process", "DChipQuantileNormalization", function(this, ..., force=F
     # TO DO: Add function to "expand" 'xTarget' if of different length
     # than 'x' and 'w'.  /HB 2007-04-11, 2008-02-23
 
-    x <- normalizeQuantileSpline(x, w=w, xTarget=xTarget,
+    x <- .normalizeQuantileSpline(x, w=w, xTarget=xTarget,
                                        sortTarget=FALSE, robust=robust, ...);
 
     # Garbage collect

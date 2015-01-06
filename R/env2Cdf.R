@@ -96,7 +96,7 @@ env2Cdf <- function(env, celfile, overwrite=FALSE, verbose=TRUE, ...) {
   # Write to a temporary file
   pathnameT <- pushTemporaryFile(pathname, verbose=verbose);
 
-  res <- writeCdf(pathnameT, cdfheader=newCdfHeader, cdf=newCdfList,
+  res <- .writeCdf(pathnameT, cdfheader=newCdfHeader, cdf=newCdfList,
            cdfqc=NULL, overwrite=overwrite, verbose=verbose);
 
   # Rename temporary file

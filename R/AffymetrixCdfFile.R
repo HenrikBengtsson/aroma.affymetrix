@@ -129,16 +129,12 @@ setMethodS3("as.character", "AffymetrixCdfFile", function(x, ...) {
 # @keyword programming
 #*/###########################################################################
 setMethodS3("fromFile", "AffymetrixCdfFile", function(static, filename, path=NULL, ...) {
-  requireNamespace("affxparser") || throw("Package not loaded: affxparser")
-  readCdfHeader <- affxparser::readCdfHeader
-
-
   # Arguments 'filename' and 'path':
   pathname <- Arguments$getReadablePathname(filename, path=path,
                                                               mustExist=TRUE);
 
   # Assert that it is a CDF file
-  header <- readCdfHeader(pathname);
+  header <- .readCdfHeader(pathname);
 
   NextMethod("fromFile", filename=pathname);
 }, static=TRUE, protected=TRUE)
@@ -299,12 +295,8 @@ setMethodS3("findByChipType", "AffymetrixCdfFile", function(static, chipType, ta
 # @keyword IO
 #*/###########################################################################
 setMethodS3("getHeader", "AffymetrixCdfFile", function(this, ...) {
-  requireNamespace("affxparser") || throw("Package not loaded: affxparser")
-  readCdfHeader <- affxparser::readCdfHeader
-
-
   if (is.null(header <- this$.header))
-    header <- this$.header <- readCdfHeader(getPathname(this));
+    header <- this$.header <- .readCdfHeader(getPathname(this));
   header;
 }, private=TRUE)
 
@@ -387,14 +379,10 @@ setMethodS3("nbrOfColumns", "AffymetrixCdfFile", function(this, ...) {
 # @keyword IO
 #*/###########################################################################
 setMethodS3("getUnitNames", "AffymetrixCdfFile", function(this, units=NULL, ...) {
-  requireNamespace("affxparser") || throw("Package not loaded: affxparser")
-  readCdfUnitNames <- affxparser::readCdfUnitNames
-
-
   names <- this$.unitNames;
 
   if (is.null(names)) {
-    names <- readCdfUnitNames(getPathname(this), ...);
+    names <- .readCdfUnitNames(getPathname(this), ...);
     this$.unitNames <- names;
   }
 
@@ -475,10 +463,6 @@ setMethodS3("hasUnitTypes", "AffymetrixCdfFile", function(this, types, ..., verb
 # @keyword IO
 #*/###########################################################################
 setMethodS3("getUnitTypes", "AffymetrixCdfFile", function(this, units=NULL, ..., force=FALSE, .cache=TRUE, verbose=FALSE) {
-  requireNamespace("affxparser") || throw("Package not loaded: affxparser")
-  readCdf <- affxparser::readCdf
-
-
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local function
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -538,7 +522,7 @@ setMethodS3("getUnitTypes", "AffymetrixCdfFile", function(this, units=NULL, ...,
 ## WORKAROUND: Use readCdf() which return unit type strings.
 ## Requires: affxparser v1.13.5 or newer.
 
-        types <- readCdf(getPathname(this), readXY=FALSE, readBases=FALSE, readIndexpos=FALSE, readAtoms=FALSE, readUnitType=TRUE, readUnitDirection=FALSE, readUnitNumber=FALSE, readUnitAtomNumbers=FALSE, readGroupAtomNumbers=FALSE, readGroupDirection=FALSE, readIndices=FALSE, readIsPm=FALSE);
+        types <- .readCdf(getPathname(this), readXY=FALSE, readBases=FALSE, readIndexpos=FALSE, readAtoms=FALSE, readUnitType=TRUE, readUnitDirection=FALSE, readUnitNumber=FALSE, readUnitAtomNumbers=FALSE, readGroupAtomNumbers=FALSE, readGroupDirection=FALSE, readIndices=FALSE, readIsPm=FALSE);
         types <- unlist(types, use.names=FALSE);
 
         # Sanity check
@@ -564,7 +548,7 @@ setMethodS3("getUnitTypes", "AffymetrixCdfFile", function(this, units=NULL, ...,
     }
   } else {
 ## ISSUE: types <- readCdfUnits(getPathname(this), units=units, readType=TRUE, readDirection=FALSE, readIndices=FALSE, readXY=FALSE, readBases=FALSE, readExpos=FALSE);
-    types <- readCdf(getPathname(this), readXY=FALSE, readBases=FALSE, readIndexpos=FALSE, readAtoms=FALSE, readUnitType=TRUE, readUnitDirection=FALSE, readUnitNumber=FALSE, readUnitAtomNumbers=FALSE, readGroupAtomNumbers=FALSE, readGroupDirection=FALSE, readIndices=FALSE, readIsPm=FALSE);
+    types <- .readCdf(getPathname(this), readXY=FALSE, readBases=FALSE, readIndexpos=FALSE, readAtoms=FALSE, readUnitType=TRUE, readUnitDirection=FALSE, readUnitNumber=FALSE, readUnitAtomNumbers=FALSE, readGroupAtomNumbers=FALSE, readGroupDirection=FALSE, readIndices=FALSE, readIsPm=FALSE);
     types <- unlist(types, use.names=FALSE);
     types <- asUnitTypeIndex(types);
   }
@@ -579,10 +563,6 @@ setMethodS3("getUnitTypes", "AffymetrixCdfFile", function(this, units=NULL, ...,
 
 
 setMethodS3("getGroupDirections", "AffymetrixCdfFile", function(this, units=NULL, ..., force=FALSE, verbose=FALSE) {
-  requireNamespace("affxparser") || throw("Package not loaded: affxparser")
-  readCdfUnits <- affxparser::readCdfUnits
-
-
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -613,7 +593,7 @@ setMethodS3("getGroupDirections", "AffymetrixCdfFile", function(this, units=NULL
     if (is.null(groupDirections)) {
       verbose && enter(verbose, "Reading directions for *all* unit groups");
       # Have to read some group field in order to get group directions
-      groupDirections <- readCdfUnits(getPathname(this), readExpos=TRUE,
+      groupDirections <- .readCdfUnits(getPathname(this), readExpos=TRUE,
         readBases=FALSE, readXY=FALSE, readType=FALSE, readDirection=TRUE);
 
       gc <- gc();
@@ -707,16 +687,12 @@ setMethodS3("getGroupDirections", "AffymetrixCdfFile", function(this, units=NULL
 # @keyword IO
 #*/###########################################################################
 setMethodS3("getCellIndices", "AffymetrixCdfFile", function(this, units=NULL, ..., useNames=TRUE, unlist=FALSE, force=FALSE, cache=TRUE, verbose=FALSE) {
-  requireNamespace("affxparser") || throw("Package not loaded: affxparser")
-  readCdfCellIndices <- affxparser::readCdfCellIndices
-
-
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local functions
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   getCellIndicesChunk <- function(pathname, ..., verbose=FALSE) {
     verbose && enter(verbose, "Querying CDF file");
-    cdfChunk <- readCdfCellIndices(pathname, ...);
+    cdfChunk <- .readCdfCellIndices(pathname, ...);
     verbose && exit(verbose);
 
     # Garbage collect
@@ -968,10 +944,6 @@ setMethodS3("getRestructor", "AffymetrixCdfFile", function(this, ...) {
 #*/###########################################################################
 # NOTE: getUnits() does not work because an S4 class stole it!!!
 setMethodS3("readUnits", "AffymetrixCdfFile", function(this, units=NULL, ..., verbose=FALSE) {
-  requireNamespace("affxparser") || throw("Package not loaded: affxparser")
-  readCdfUnits <- affxparser::readCdfUnits
-
-
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -982,8 +954,7 @@ setMethodS3("readUnits", "AffymetrixCdfFile", function(this, units=NULL, ..., ve
     on.exit(popState(verbose));
   }
 
-#  cdf <- readCdfUnits(getPathname(this), units=units, ...);
-  cdf <- doCall("readCdfUnits", filename=getPathname(this), units=units, ...);
+  cdf <- .readCdfUnits(filename=getPathname(this), units=units, ...);
 
   # Always call restruct() after a readCdfNnn()!
   restruct(this, cdf, verbose=less(verbose, 5));
@@ -1030,10 +1001,6 @@ setMethodS3("readUnits", "AffymetrixCdfFile", function(this, units=NULL, ..., ve
 # @keyword IO
 #*/###########################################################################
 setMethodS3("isPm", "AffymetrixCdfFile", function(this, units=NULL, force=FALSE, cache=TRUE, ..., verbose=FALSE) {
-  requireNamespace("affxparser") || throw("Package not loaded: affxparser")
-  readCdfIsPm <- affxparser::readCdfIsPm
-
-
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -1048,13 +1015,13 @@ setMethodS3("isPm", "AffymetrixCdfFile", function(this, units=NULL, force=FALSE,
   if (force || is.null(isPm)) {
     if (cache) {
       # If caching, read all units
-      cdf <- readCdfIsPm(getPathname(this));
+      cdf <- .readCdfIsPm(getPathname(this));
       # Always call restruct() after a readCdfNnn()!
       cdf <- restruct(this, cdf, verbose=less(verbose, 5));
       isPm <- this$.isPm <- cdf;
     } else {
       # ...otherwise, read only a subset of units
-      cdf <- readCdfIsPm(getPathname(this), units=units);
+      cdf <- .readCdfIsPm(getPathname(this), units=units);
       # Always call restruct() after a readCdfNnn()!
       cdf <- restruct(this, cdf, verbose=less(verbose, 5));
       isPm <- cdf;

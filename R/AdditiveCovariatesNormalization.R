@@ -602,10 +602,6 @@ setMethodS3("getTargetFunctions", "AdditiveCovariatesNormalization", function(th
 # }
 #*/###########################################################################
 setMethodS3("process", "AdditiveCovariatesNormalization", function(this, ..., force=FALSE, verbose=FALSE) {
-  requireNamespace("aroma.light") || throw("Package not loaded: aroma.light")
-  normalizeFragmentLength <- aroma.light::normalizeFragmentLength
-
-
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -772,7 +768,7 @@ setMethodS3("process", "AdditiveCovariatesNormalization", function(this, ..., fo
 
     verbose && cat(verbose, "Log2 signals:");
     verbose && str(verbose, y);
-    yN <- normalizeFragmentLength(y, fragmentLengths=X,
+    yN <- .normalizeFragmentLength(y, fragmentLengths=X,
                     targetFcns=targetFcns, subsetToFit=subset,
                     onMissing=onMissing, ...);
     verbose && cat(verbose, "Normalized log2 signals:");

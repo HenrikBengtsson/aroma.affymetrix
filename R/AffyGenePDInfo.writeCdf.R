@@ -57,9 +57,7 @@
 #*/###########################################################################
 setMethodS3("writeCdf", "AffyGenePDInfo", function(this, tags=c("*"), unitsBy=c("transcript", "exon"), namesBy=c("fsetid", "id"), path=NULL, overwrite=FALSE, verbose=TRUE, ...) {
   # Early error, iff package is missing
-  requireNamespace("affxparser") || throw("Package not loaded: affxparser")
   requireNamespace("pdInfoBuilder") || throw("Package not loaded: pdInfoBuilder")
-  writeCdf <- affxparser::writeCdf
   db <- pdInfoBuilder::db
   dbGetQuery <- pdInfoBuilder::dbGetQuery
   dbListTables <- pdInfoBuilder::dbListTables
@@ -291,7 +289,7 @@ setMethodS3("writeCdf", "AffyGenePDInfo", function(this, tags=c("*"), unitsBy=c(
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Writing CDF file
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  pathname <- writeCdf(ffs, pathname=pathname, overwrite=overwrite, verbose=less(verbose));
+  pathname <- .writeCdf(ffs, pathname=pathname, overwrite=overwrite, verbose=less(verbose));
 
   verbose && exit(verbose);
 
@@ -302,11 +300,6 @@ setMethodS3("writeCdf", "AffyGenePDInfo", function(this, tags=c("*"), unitsBy=c(
 
 
 setMethodS3("writeCdf", "PDInfoList", function(ffs, pathname, overwrite=FALSE, ..., verbose=TRUE) {
-  # Early error, iff package is missing
-  requireNamespace("affxparser") || throw("Package not loaded: affxparser")
-  writeCdf <- affxparser::writeCdf
-
-
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local functions
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -400,7 +393,7 @@ setMethodS3("writeCdf", "PDInfoList", function(ffs, pathname, overwrite=FALSE, .
   }
   pathnameT <- pushTemporaryFile(pathname, verbose=verbose);
 
-  writeCdf(pathnameT, cdfheader=cdfHeader, cdf=cdfList,
+  .writeCdf(pathnameT, cdfheader=cdfHeader, cdf=cdfList,
                   cdfqc=NULL, verbose=verbose, overwrite=overwrite);
 
   # Rename temporary file

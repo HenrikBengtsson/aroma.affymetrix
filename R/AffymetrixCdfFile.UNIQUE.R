@@ -47,15 +47,6 @@
 # @keyword IO
 #*/###########################################################################
 setMethodS3("createUniqueCdf", "AffymetrixCdfFile", function(this, chipType=getChipType(this), tags="unique", path=NULL, units=NULL, ..., ram=NULL, verbose=TRUE) {
-  requireNamespace("affxparser") || throw("Package not loaded: affxparser")
-  readCdf <- affxparser::readCdf
-  readCdfHeader <- affxparser::readCdfHeader
-  readCdfGroupNames <- affxparser::readCdfGroupNames
-  readCdfQc <- affxparser::readCdfQc
-  readCdfUnitNames <- affxparser::readCdfUnitNames
-  readCdfCellIndices <- affxparser::readCdfCellIndices
-
-
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local functions
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -184,7 +175,7 @@ setMethodS3("createUniqueCdf", "AffymetrixCdfFile", function(this, chipType=getC
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Get the number of groups per units
   verbose && enter(verbose, "Reading CDF group names");
-  nbrOfGroupsPerUnit <- readCdfGroupNames(src);
+  nbrOfGroupsPerUnit <- .readCdfGroupNames(src);
   verbose && exit(verbose);
 
   names(nbrOfGroupsPerUnit) <- NULL;
@@ -204,7 +195,7 @@ setMethodS3("createUniqueCdf", "AffymetrixCdfFile", function(this, chipType=getC
   # Q: Why is readCdf(..., stratifyBy=<vector>) not throwing?
   #    Error in match.arg(stratifyBy) : 'arg' must be of length 1
   #    /HB 2011-04-15
-  cdfLite <- readCdf(src, units=units,
+  cdfLite <- .readCdf(src, units=units,
               readXY=FALSE, readBases=FALSE,
               readIndexpos=FALSE, readAtoms=FALSE,
               readUnitType=FALSE, readUnitDirection=FALSE,
@@ -234,7 +225,7 @@ setMethodS3("createUniqueCdf", "AffymetrixCdfFile", function(this, chipType=getC
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Keep all QC units
   verbose && enter(verbose, "Reading CDF QC units");
-  destQcUnits <- readCdfQc(src);
+  destQcUnits <- .readCdfQc(src);
   verbose && exit(verbose);
   nbrOfQcUnits <- length(destQcUnits);
   nbrOfCellsPerQcUnit <- lapply(destQcUnits, FUN=.subset2, "ncells");
@@ -274,7 +265,7 @@ setMethodS3("createUniqueCdf", "AffymetrixCdfFile", function(this, chipType=getC
 
   # Get template header
   verbose && enter(verbose, "Reading CDF header");
-  destHeader <- readCdfHeader(src);
+  destHeader <- .readCdfHeader(src);
   verbose && exit(verbose);
 
   # Update CDF header dimension
@@ -283,7 +274,7 @@ setMethodS3("createUniqueCdf", "AffymetrixCdfFile", function(this, chipType=getC
 
   # Get unit names
   verbose && enter(verbose, "Reading CDF unit names");
-  unitNames <- readCdfUnitNames(src);
+  unitNames <- .readCdfUnitNames(src);
   verbose && exit(verbose);
 
   if (nbrOfUnits > 0) {
@@ -329,7 +320,7 @@ setMethodS3("createUniqueCdf", "AffymetrixCdfFile", function(this, chipType=getC
   });
 
   # Allocate/write CDF header
-  writeCdfHeader(con=con, destHeader, unitNames=unitNames,
+  .writeCdfHeader(con=con, destHeader, unitNames=unitNames,
                     qcUnitLengths=qcUnitLengths, unitLengths=unitLengths,
                                                         verbose=verbose2);
   # Not needed anymore
@@ -356,7 +347,7 @@ setMethodS3("createUniqueCdf", "AffymetrixCdfFile", function(this, chipType=getC
   verbose && exit(verbose);
 
   # Write QC units
-  writeCdfQcUnits(con=con, destQcUnits, verbose=verbose2);
+  .writeCdfQcUnits(con=con, destQcUnits, verbose=verbose2);
   # Not needed anymore
   destQcUnits <- NULL; # Not needed anymore
 
@@ -415,7 +406,7 @@ setMethodS3("createUniqueCdf", "AffymetrixCdfFile", function(this, chipType=getC
 
     # Read CDF structure
     verbose && enter(verbose, "Reading CDF list structure");
-    srcUnits <- readCdf(src, units=units, readGroupDirection=TRUE);
+    srcUnits <- .readCdf(src, units=units, readGroupDirection=TRUE);
     verbose && exit(verbose);
 
     # Sanity check
@@ -471,7 +462,7 @@ setMethodS3("createUniqueCdf", "AffymetrixCdfFile", function(this, chipType=getC
 #    verbose && str(verbose, srcUnits[1]);
 
     # Write regular units
-    writeCdfUnits(con=con, srcUnits, verbose=verbose2);
+    .writeCdfUnits(con=con, srcUnits, verbose=verbose2);
     # Not needed anymore
     srcUnits <- units <- NULL; # Not needed anymore
 
@@ -505,7 +496,7 @@ setMethodS3("createUniqueCdf", "AffymetrixCdfFile", function(this, chipType=getC
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   verbose && enter(verbose, "Verifying the written CDF");
   # Checking header
-  header <- readCdfHeader(pathnameT);
+  header <- .readCdfHeader(pathnameT);
 
   # Validation array dimension
   if ((header$nrows != nrows) || (header$ncols != ncols)) {
@@ -521,7 +512,7 @@ setMethodS3("createUniqueCdf", "AffymetrixCdfFile", function(this, chipType=getC
     verbose && printf(verbose, "Chunk %d of %d\n", kk, nbrOfChunks);
     from <- (kk-1)*chunkSize+1;
     to <- min(from+chunkSize, nbrOfUnits);
-    cells <- readCdfCellIndices(pathnameT, units=from:to);
+    cells <- .readCdfCellIndices(pathnameT, units=from:to);
     cells <- unlist(cells, use.names=FALSE);
     cells <- diff(cells);
     cells <- unique(cells);
@@ -560,7 +551,7 @@ setMethodS3("createUniqueCdf", "AffymetrixCdfFile", function(this, chipType=getC
   stopifnot(identical(nbrOfGroupsPerUnit(cdfU), nbrOfGroupsPerUnit(this)));
 
   verbose && cat(verbose, "Groups names per unit");
-  stopifnot(identical(readCdfGroupNames(getPathname(cdfU)), readCdfGroupNames(getPathname(this))));
+  stopifnot(identical(.readCdfGroupNames(getPathname(cdfU)), .readCdfGroupNames(getPathname(this))));
 
   verbose && cat(verbose, "Number of cells per unit group");
   stopifnot(identical(nbrOfCellsPerUnitGroup(cdfU), nbrOfCellsPerUnitGroup(this)));

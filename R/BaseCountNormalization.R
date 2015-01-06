@@ -248,9 +248,6 @@ setMethodS3("fitOne", "BaseCountNormalization", function(this, df, ..., verbose=
         fit;
       }
     } else if (model == "robustSmoothSpline") {
-      requireNamespace("aroma.light") || throw("Package not loaded: aroma.light")
-      robustSmoothSpline <- aroma.light::robustSmoothSpline
-
       fitFcn <- function(X, y, ...) {
         fits <- list();
         for (cc in 1:ncol(X)) {
@@ -261,7 +258,7 @@ setMethodS3("fitOne", "BaseCountNormalization", function(this, df, ..., verbose=
           } else {
             # Note: 'X' may be a "raw" matrix (to save memory)
             Xcc <- as.double(X[,cc]);
-            fit <- robustSmoothSpline(x=Xcc, y=y, ...);
+            fit <- .robustSmoothSpline(x=Xcc, y=y, ...);
 ##            # Remove redundant parameters (although really small here)
 ##            for (ff in c("x", "y", "w", "yin", "lev")) {
 ##              fit[[ff]] <- NULL;
@@ -472,7 +469,7 @@ setMethodS3("fitOne", "BaseCountNormalization", function(this, df, ..., verbose=
     verbose && enter(verbose, "Creating final fit");
     for (kk in seq(from=2, to=length(fit))) {
       fitKK <- fit[[kk]];
-      fitKK <- robustSmoothSpline(x=fitKK$x, y=fitKK$y);
+      fitKK <- .robustSmoothSpline(x=fitKK$x, y=fitKK$y);
       fit[[kk]] <- fitKK;
     }
     verbose && exit(verbose);

@@ -57,7 +57,6 @@
 pdInfo2Cdf <- function(pdpkg, celfile, overwrite=FALSE, verbose=TRUE, ...) {
   requireNamespace("affxparser") || throw("Package not loaded: affxparser")
   readCelHeader <- affxparser::readCelHeader
-  writeCdf <- affxparser::writeCdf
 
   requireNamespace("oligo") || throw("Package not loaded: oligo")
   read.celfiles <- oligo::read.celfiles
@@ -201,7 +200,7 @@ pdInfo2Cdf <- function(pdpkg, celfile, overwrite=FALSE, verbose=TRUE, ...) {
   verbose && enter(verbose, "Writing (binary) CDF file");
   pathname <- newCdfHeader$filename;
   verbose && cat(verbose, "Pathname: ", pathname);
-  res <- writeCdf(pathname, cdfheader=newCdfHeader, cdf=newCdfList,
+  res <- .writeCdf(pathname, cdfheader=newCdfHeader, cdf=newCdfList,
                   cdfqc=NULL, verbose=verbose, overwrite=overwrite);
   verbose && exit(verbose);
 

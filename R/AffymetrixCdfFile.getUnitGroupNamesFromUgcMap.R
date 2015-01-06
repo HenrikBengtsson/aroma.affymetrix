@@ -23,7 +23,7 @@ setMethodS3("getUnitGroupNamesFromUgcMap", "AffymetrixCdfFile", function(this, u
 
   verbose && enter(verbose, "Reading all group names for units of interest");
   uniqueUnits <- unique(allUnits);
-  groupNames <- readCdfGroupNames(getPathname(this), units=uniqueUnits);
+  groupNames <- .readCdfGroupNames(getPathname(this), units=uniqueUnits);
   verbose && cat(verbose, "First unit:");
   verbose && str(verbose, groupNames[1]);
   verbose && exit(verbose);
@@ -43,7 +43,7 @@ setMethodS3("getUnitGroupNamesFromUgcMap", "AffymetrixCdfFile", function(this, u
     # Extract the group names for unit with 'unitSize' groups as a matrix
     idxs <- which(unitSizes == unitSize);
     units <- uniqueUnits[idxs];
-    verbose && cat(verbose, "Number of units with ", unitSize, 
+    verbose && cat(verbose, "Number of units with ", unitSize,
                                             " group(s): ", length(units));
 
     if (length(units) > 0) {  # Isn't this always the case? /HB 2008-04-28

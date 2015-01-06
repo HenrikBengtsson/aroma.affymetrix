@@ -97,12 +97,6 @@
 # @keyword internal
 #*/###########################################################################
 setMethodS3("createExonByTranscriptCdf", "AffymetrixCdfFile", function(cdf, csv, tags=c("*"), path=getPath(cdf), type=c("all", "core", "extended", "full", "main", "control", "cds"), subsetBy=NULL, within=NULL, ..., overwrite=FALSE, verbose=FALSE) {
-  requireNamespace("affxparser") || throw("Package not loaded: affxparser")
-  readCdf <- affxparser::readCdf
-  readCdfHeader <- affxparser::readCdfHeader
-  readCdfQc <- affxparser::readCdfQc
-
-
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local functions
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -112,7 +106,7 @@ setMethodS3("createExonByTranscriptCdf", "AffymetrixCdfFile", function(cdf, csv,
     getCdfUnits <- function(units) {
       if (is.null(cdfTree)) {
         verbose && enter(verbose, "Reading the complete CDF");
-        cdfTree <<- readCdf(cdfPathname);
+        cdfTree <<- .readCdf(cdfPathname);
         verbose && exit(verbose);
       }
       cdfTree[units];
@@ -121,7 +115,7 @@ setMethodS3("createExonByTranscriptCdf", "AffymetrixCdfFile", function(cdf, csv,
     getCdfUnits <- function(units) {
       ## SLOW iff units by units!  /HB 2011-09-09
       # (Actually, not that much slower. /HB 2011-09-10)
-      readCdf(cdfPathname, units=units);
+      .readCdf(cdfPathname, units=units);
     } # getCdfUnits()
   }
 
@@ -411,8 +405,8 @@ setMethodS3("createExonByTranscriptCdf", "AffymetrixCdfFile", function(cdf, csv,
 
   verbose && enter(verbose, "Setting up CDF header");
   # Copy header and QC info from original CDF
-  qc <- readCdfQc(cdfPathname);
-  hdr <- readCdfHeader(cdfPathname);
+  qc <- .readCdfQc(cdfPathname);
+  hdr <- .readCdfHeader(cdfPathname);
   hdr$chiptype <- chipTypeF;
   hdr$filename <- pathname;
   hdr$probesets <- nbrOfExons;
@@ -430,7 +424,7 @@ setMethodS3("createExonByTranscriptCdf", "AffymetrixCdfFile", function(cdf, csv,
 
   # Write to a temporary file
   pathnameT <- pushTemporaryFile(pathname, verbose=verbose);
-  writeCdf(pathnameT, cdfheader=hdr, cdf=cdfList, cdfqc=qc, overwrite=TRUE, verbose=10);
+  .writeCdf(pathnameT, cdfheader=hdr, cdf=cdfList, cdfqc=qc, overwrite=TRUE, verbose=10);
 
   # Rename temporary file
   pathname <- popTemporaryFile(pathnameT, verbose=verbose);

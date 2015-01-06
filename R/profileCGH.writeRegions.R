@@ -1,8 +1,4 @@
 setMethodS3("writeRegions" ,"profileCGH", function(this, filename, path=NULL, append=FALSE, ...) {
-  requireNamespace("affxparser") || throw("Package not loaded: affxparser")
-  readCdfUnitNames <- affxparser::readCdfUnitNames
-
-
   # Argument 'filename' and 'path':
   pathname <- Arguments$getWritablePathname(filename, path=path);
 
@@ -22,7 +18,7 @@ setMethodS3("writeRegions" ,"profileCGH", function(this, filename, path=NULL, ap
       if (is.null(cdfFile))
         throw("Cannot located CDF file for chip type: ", cc);
       idxs <- which(chipType == cc);
-      unitNames[idxs] <- readCdfUnitNames(cdfFile, units=pv$units[idxs]);
+      unitNames[idxs] <- .readCdfUnitNames(cdfFile, units=pv$units[idxs]);
     }
   }
   snpNames <- NULL;

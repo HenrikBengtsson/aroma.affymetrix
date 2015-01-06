@@ -362,10 +362,6 @@ setMethodS3("calculateMargins", "SpatialReporter", function(this, unshift=TRUE, 
 
 
 setMethodS3("plotMargins", "SpatialReporter", function(this, array, margins=c("rows", "columns"), ..., pch=20, cex=0.7, ylim=NULL, ylab=NULL, rotate=0, verbose=FALSE) {plotMargins
-  requireNamespace("aroma.light") || throw("Package not loaded: aroma.light")
-  robustSmoothSpline <- aroma.light::robustSmoothSpline
-
-
   # Argument 'margins':
 #  if (!all(margins %in% formals(plotMargins.SpatialReporter)$margins)) {
 #    throw("Unknown value(s) in argument 'margins': ", paste(margins));
@@ -408,8 +404,8 @@ setMethodS3("plotMargins", "SpatialReporter", function(this, array, margins=c("r
     }
 
     fit <- list();
-    fit[[1]] <- robustSmoothSpline(x, y, spar=0.3);
-    fit[[2]] <- robustSmoothSpline(x, y, spar=0.9);
+    fit[[1]] <- .robustSmoothSpline(x, y, spar=0.3);
+    fit[[2]] <- .robustSmoothSpline(x, y, spar=0.9);
 
     if (rotate == 0) {
       plot(x, y, pch=pch, cex=cex, ylim=ylim, xlab=xlab, ylab=ylab);

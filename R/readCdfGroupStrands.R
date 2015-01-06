@@ -1,8 +1,4 @@
 readCdfGroupStrands <- function(..., what=c("probe", "target")) {
-  requireNamespace("affxparser") || throw("Package not loaded: affxparser")
-  readCdf <- affxparser::readCdf
-
-
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -13,7 +9,7 @@ readCdfGroupStrands <- function(..., what=c("probe", "target")) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Read the strand information from the CDF file
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  cdf <- readCdf(..., readUnitDirection=TRUE, readGroupDirection=TRUE,
+  cdf <- .readCdf(..., readUnitDirection=TRUE, readGroupDirection=TRUE,
          readXY=FALSE, readBases=FALSE, readIndexpos=FALSE, readIsPm=FALSE,
                                       readAtoms=FALSE, readUnitType=FALSE);
 

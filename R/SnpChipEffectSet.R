@@ -83,8 +83,6 @@ setMethodS3("setMergeStrands", "SnpChipEffectSet", function(this, status, ...) {
 
 setMethodS3("inferParameters", "SnpChipEffectSet", function(this, ..., verbose=FALSE) {
   requireNamespace("affxparser") || throw("Package not loaded: affxparser")
-  readCdfGroupNames <- affxparser::readCdfGroupNames
-  readCdfHeader <- affxparser::readCdfHeader
   readCelUnits <- affxparser::readCelUnits
 
 
@@ -101,7 +99,7 @@ setMethodS3("inferParameters", "SnpChipEffectSet", function(this, ..., verbose=F
   # Identify units with quartets
   cdf <- getCdf(this);
   cdfPathname <- getPathname(cdf);
-  nbrOfUnits <- readCdfHeader(cdfPathname)$nunits;
+  nbrOfUnits <- .readCdfHeader(cdfPathname)$nunits;
   allUnits <- seq_len(nbrOfUnits);
 
   ce <- getOneFile(this, mustExist=TRUE);
@@ -119,7 +117,7 @@ setMethodS3("inferParameters", "SnpChipEffectSet", function(this, ..., verbose=F
     uu <- NULL;
 
     # Identify units that are quartets
-    unitSizes <- readCdfGroupNames(cdfPathname, units=units);
+    unitSizes <- .readCdfGroupNames(cdfPathname, units=units);
     names(unitSizes) <- NULL;
     unitSizes <- sapply(unitSizes, FUN=length);
     units <- units[unitSizes == 4L];

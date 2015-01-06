@@ -91,9 +91,7 @@ setMethodS3("setCombineAlleles", "CnChipEffectSet", function(this, status, ...) 
 
 setMethodS3("inferParameters", "CnChipEffectSet", function(this, ..., verbose=FALSE) {
   requireNamespace("affxparser") || throw("Package not loaded: affxparser")
-  readCdfHeader <- affxparser::readCdfHeader
-  readCdfGroupNames <- affxparser::readCdfGroupNames
-  readCdfUnits <- affxparser::readCdfUnits
+  readCelUnits <- affxparser::readCelUnits
 
 
   # Argument 'verbose':
@@ -109,7 +107,7 @@ setMethodS3("inferParameters", "CnChipEffectSet", function(this, ..., verbose=FA
   # Identify units with quartets
   cdf <- getCdf(this);
   cdfPathname <- getPathname(cdf);
-  nbrOfUnits <- readCdfHeader(cdfPathname)$nunits;
+  nbrOfUnits <- .readCdfHeader(cdfPathname)$nunits;
   allUnits <- seq_len(nbrOfUnits);
 
   ce <- getOneFile(this);
@@ -127,7 +125,7 @@ setMethodS3("inferParameters", "CnChipEffectSet", function(this, ..., verbose=FA
     uu <- NULL;
 
     # Identify units that are quartets
-    unitSizes <- readCdfGroupNames(cdfPathname, units=units);
+    unitSizes <- .readCdfGroupNames(cdfPathname, units=units);
     names(unitSizes) <- NULL;
     unitSizes <- sapply(unitSizes, FUN=length);
     units <- units[unitSizes == 4];

@@ -148,7 +148,7 @@ setMethodS3("createFrom", "AffymetrixCelFile", function(this, filename, path=NUL
       # Setting up CEL header
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       fullname <- getFullName(this);
-      celHeader <- cdfHeaderToCelHeader(getHeader(cdf), sampleName=fullname);
+      celHeader <- .cdfHeaderToCelHeader(getHeader(cdf), sampleName=fullname);
 
       # Add some extra information about what the CEL file is for
       params <- c(Descripion=sprintf("This CEL file contains data saved by the aroma.affymetrix v%s package.", getVersion(aroma.affymetrix)));
@@ -168,7 +168,7 @@ setMethodS3("createFrom", "AffymetrixCelFile", function(this, filename, path=NUL
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       # 1. Create a temporary file
       verbose && enter(verbose, "Creating an empty temporary CEL file");
-      createCel(pathnameT, header=celHeader, overwrite=overwrite, ...,
+      .createCel(pathnameT, header=celHeader, overwrite=overwrite, ...,
                                                         verbose=less(verbose));
       # Not needed anymore
       celHeader <- NULL;

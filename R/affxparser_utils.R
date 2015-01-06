@@ -1,3 +1,33 @@
+.cdfAddPlasqTypes <- function(...) {
+  requireNamespace("affxparser") || throw("Package not loaded: affxparser")
+  affxparser::cdfAddPlasqTypes(...)
+}
+
+.readBpmap <- function(...) {
+  requireNamespace("affxparser") || throw("Package not loaded: affxparser")
+  affxparser::readBpmap(...)
+}
+
+.readBpmapHeader <- function(...) {
+  requireNamespace("affxparser") || throw("Package not loaded: affxparser")
+  affxparser::readBpmapHeader(...)
+}
+
+.createCel <- function(...) {
+  requireNamespace("affxparser") || throw("Package not loaded: affxparser")
+  affxparser::createCel(...)
+}
+
+.compareCdfs <- function(...) {
+  requireNamespace("affxparser") || throw("Package not loaded: affxparser")
+  affxparser::compareCdfs(...)
+}
+
+.cdfHeaderToCelHeader <- function(...) {
+  requireNamespace("affxparser") || throw("Package not loaded: affxparser")
+  affxparser::cdfHeaderToCelHeader(...)
+}
+
 .findCdf <- function(...) {
   requireNamespace("affxparser") || throw("Package not loaded: affxparser")
   affxparser::findCdf(...)

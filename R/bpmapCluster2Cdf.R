@@ -66,11 +66,6 @@
 # @keyword "internal"
 #*/###########################################################################
 setMethodS3("bpmapCluster2Cdf", "default", function(pathname, chipType, tags=NULL, rows, cols, maxProbeDistance=3000L, minNbrOfProbes=30L, groupName=gsub("_.*", "", chipType), field="fullname", stringRemove=sprintf("%s:.*;", groupName), ..., flavor=c("v2", "v1"), path="*", verbose=-10) {
-  requireNamespace("affxparser") || throw("Package not loaded: affxparser")
-  readBpmap <- affxparser::readBpmap
-  readBpmapHeader <- affxparser::readBpmapHeader
-
-
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local functions
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -197,10 +192,10 @@ setMethodS3("bpmapCluster2Cdf", "default", function(pathname, chipType, tags=NUL
 
   verbose && enter(verbose, "Reading BPMAP file");
   verbose && cat(verbose, "Pathname: ", pathname);
-  hdr <- readBpmapHeader(pathname);
+  hdr <- .readBpmapHeader(pathname);
   verbose && cat(verbose, "File version: ", hdr$version);
   verbose && cat(verbose, "Number of sequences: ", hdr$numSequences);
-  bpmapList <- readBpmap(pathname, readMatchScore=TRUE, ...);
+  bpmapList <- .readBpmap(pathname, readMatchScore=TRUE, ...);
   nbrOfSeqs <- length(bpmapList);
   # Sanity check
   stopifnot(nbrOfSeqs <= hdr$numSequences);

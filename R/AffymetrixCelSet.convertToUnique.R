@@ -157,7 +157,7 @@ setMethodS3("convertToUnique", "AffymetrixCelSet", function(this, ..., tags="UNQ
       verbose && exit(verbose);
 
       # Build a valid CEL header
-      celHeader <- cdfHeaderToCelHeader(cdfHeader, sampleName=dfFullname);
+      celHeader <- .cdfHeaderToCelHeader(cdfHeader, sampleName=dfFullname);
       # Not needed anymore
       dfFullname <- NULL;
 
@@ -186,7 +186,7 @@ setMethodS3("convertToUnique", "AffymetrixCelSet", function(this, ..., tags="UNQ
       # Write to a temporary file
       pathnameT <- pushTemporaryFile(pathname, verbose=verbose);
 
-      createCel(pathnameT, header=celHeader);
+      .createCel(pathnameT, header=celHeader);
       verbose && cat(verbose, "Writing values according to unique CDF");
       .updateCelUnits(pathnameT, cdf=cdfUniqueIndices, data=data, verbose=FALSE);
       verbose && exit(verbose);

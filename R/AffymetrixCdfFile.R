@@ -1289,7 +1289,7 @@ setMethodS3("compare", "AffymetrixCdfFile", function(this, other, ...) {
   if (equals(this, other))
     return(TRUE);
 
-  res <- compareCdfs(getPathname(this), getPathname(other), ...);
+  res <- .compareCdfs(getPathname(this), getPathname(other), ...);
 
   res;
 }, private=TRUE)

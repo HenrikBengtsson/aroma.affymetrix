@@ -22,7 +22,7 @@
 
   verbose && enter(verbose, "Reading BPMAP file");
   verbose && cat(verbose, "Pathname: ", srcPathname);
-  bps <- readBpmap(srcPathname);
+  bps <- .readBpmap(srcPathname);
   verbose && exit(verbose);
 
   verbose && enter(verbose, "Saving to ACS file");

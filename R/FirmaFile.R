@@ -257,7 +257,7 @@ setMethodS3("fromDataFile", "FirmaFile", function(static, df=NULL, filename=spri
     cdfHeader <- getHeader(cdf);
 
     # Build a valid CEL header
-    celHeader <- cdfHeaderToCelHeader(cdfHeader, sampleName=name);
+    celHeader <- .cdfHeaderToCelHeader(cdfHeader, sampleName=name);
 
     # Add some extra information about what the CEL file is for
     params <- c(Description="This CEL file contains FIRMA results calculated by the aroma.affymetrix package.");
@@ -274,7 +274,7 @@ setMethodS3("fromDataFile", "FirmaFile", function(static, df=NULL, filename=spri
     pathnameT <- pushTemporaryFile(pathname, verbose=verbose);
 
     # Create the CEL file
-    createCel(pathnameT, header=celHeader, ..., verbose=less(verbose));
+    .createCel(pathnameT, header=celHeader, ..., verbose=less(verbose));
 
     # Rename temporary file
     pathname <- popTemporaryFile(pathnameT, verbose=verbose);

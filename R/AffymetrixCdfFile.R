@@ -1348,7 +1348,7 @@ setMethodS3("convert", "AffymetrixCdfFile", function(this, chipType=getChipType(
   # Convert CDF
   src <- getPathname(this);
   verbose2 <- -getThreshold(verbose);
-  res <- convertCdf(src, dest, ..., verbose=verbose2);
+  res <- .convertCdf(src, dest, ..., verbose=verbose2);
 
   # Return an AffymetrixCdfFile object for the new CDF
   newInstance(this, dest);

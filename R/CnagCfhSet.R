@@ -1000,7 +1000,7 @@ setMethodS3("getAverageFile", "CnagCfhSet", function(this, name=NULL, prefix="av
 
     # Write estimates to result file
     verbose && enter(verbose, "Writing estimates");
-    updateCel(pathname, indices=indices[ii], intensities=mu, stdvs=sigma, pixels=n);
+    .updateCel(pathname, indices=indices[ii], intensities=mu, stdvs=sigma, pixels=n);
     verbose && exit(verbose);
 
     # Not needed anymore

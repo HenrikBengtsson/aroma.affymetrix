@@ -234,6 +234,7 @@ importFrom("R.utils", "callHooks")
 importFrom("R.utils", "capitalize")
 importFrom("R.utils", "capture")
 importFrom("R.utils", "cat") ## Multi-sources: R.utils, base
+importFrom("R.utils", "createLink")
 importFrom("R.utils", "dataFrame")
 importFrom("R.utils", "dimNA<-")
 importFrom("R.utils", "doCall")

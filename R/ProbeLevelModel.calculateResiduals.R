@@ -284,7 +284,7 @@ setMethodS3("calculateResidualSet", "ProbeLevelModel", function(this, units=NULL
       verbose && exit(verbose);
 
       verbose && enter(verbose, "Writing residuals");
-      updateCel(pathnameT, indices=cells, intensities=eps);
+      .updateCel(pathnameT, indices=cells, intensities=eps);
 
       verbose && exit(verbose);
     }, interrupt = function(intr) {

@@ -318,7 +318,7 @@ setMethodS3("getAverageFile", "AffymetrixCelSet", function(this, name=NULL, pref
 
     # Write estimates to result file
     verbose && enter(verbose, "Writing estimates");
-    updateCel(pathname, indices=indices[ii], intensities=mu, stdvs=sigma, pixels=n);
+    .updateCel(pathname, indices=indices[ii], intensities=mu, stdvs=sigma, pixels=n);
     verbose && exit(verbose);
 
     # Not needed anymore

@@ -39,6 +39,10 @@ setConstructorS3("QualityAssessmentFile", function(...) {
 
 
 setMethodS3("findUnitsTodo", "QualityAssessmentFile", function(this, units=NULL, ..., force=FALSE, verbose=FALSE) {
+  requireNamespace("affxparser") || throw("Package not loaded: affxparser")
+  readCelUnits <- affxparser::readCelUnits
+
+
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
 

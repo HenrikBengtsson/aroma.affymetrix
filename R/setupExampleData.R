@@ -25,6 +25,9 @@
 # @keyword internal
 #*/###########################################################################
 setMethodS3("setupExampleData", "AromaAffymetrix", function(pkg, dirs=c("annotationData", "rawData"), mustWork=TRUE, validate=FALSE, ...) {
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Validate arguments
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'dirs':
   dirs <- Arguments$getCharacters(dirs);
 
@@ -64,8 +67,8 @@ setMethodS3("setupExampleData", "AromaAffymetrix", function(pkg, dirs=c("annotat
         # Link
         createLink(link=pathnameD, target=pathnameS)
       } else {
-        # Convert source CDF to
-        convertCdf(pathnameS, pathnameD, .validate=FALSE, verbose=TRUE)
+        # Convert source ASCII CDF to binary CDF
+        .convertCdf(pathnameS, pathnameD, .validate=FALSE, verbose=TRUE)
       }
 
       # Sanity check

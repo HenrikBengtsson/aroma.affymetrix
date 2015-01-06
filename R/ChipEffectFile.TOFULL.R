@@ -4,7 +4,7 @@ setMethodS3("getExpandedCellMap", "ChipEffectFile", function(this, resetFields=N
   if (verbose) {
     pushState(verbose);
     on.exit(popState(verbose));
-  } 
+  }
 
 
   cells <- getCellIndices(this, ..., verbose=verbose);
@@ -28,7 +28,7 @@ setMethodS3("getExpandedCellMap", "ChipEffectFile", function(this, resetFields=N
   verbose && print(verbose, table(resizeFactors));
 
   map <- rep(as.integer(NA), times=nbrOfCells(this));
-  
+
   verbose && cat(verbose, "Unit sizes:");
   verbose && print(verbose, table(unitSizes));
 #  # Not needed anymore
@@ -114,7 +114,7 @@ setMethodS3("writeAsFullCelFile", "ChipEffectFile", function(this, name=getName(
   if (verbose) {
     pushState(verbose);
     on.exit(popState(verbose));
-  } 
+  }
 
   if (!is.null(tags)) {
     tags <- Arguments$getTags(tags, collapse=NULL);
@@ -150,7 +150,7 @@ setMethodS3("writeAsFullCelFile", "ChipEffectFile", function(this, name=getName(
   data <- data[mainCells,,drop=FALSE];
   verbose && str(verbose, data);
 
-  updateCel(pathnameT, indices=mainCells, intensities=data);
+  .updateCel(pathnameT, indices=mainCells, intensities=data);
 
   # Rename from temporary to final filename (see above)
   pathname <- popTemporaryFile(pathnameT, verbose=verbose);
@@ -184,7 +184,7 @@ setMethodS3("getAsFullCelFile", "ChipEffectFile", function(this, name=getName(th
   if (verbose) {
     pushState(verbose);
     on.exit(popState(verbose));
-  } 
+  }
 
   if (!is.null(tags)) {
     tags <- Arguments$getTags(tags, collapse=NULL);
@@ -202,7 +202,7 @@ setMethodS3("getAsFullCelFile", "ChipEffectFile", function(this, name=getName(th
   if (isFile(pathname)) {
     res <- AffymetrixCelFile(pathname);
   } else {
-    res <- writeAsFullCelFile(this, name=name, tags=tags, path=path, ..., 
+    res <- writeAsFullCelFile(this, name=name, tags=tags, path=path, ...,
                                                  verbose=less(verbose, 2));
   }
 

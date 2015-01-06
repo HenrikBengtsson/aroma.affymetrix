@@ -828,7 +828,7 @@ setMethodS3("process", "AdditiveCovariatesNormalization", function(this, ..., fo
 
     verbose2 <- -as.integer(verbose) - 5;
     pathnameN <- getPathname(ceN);
-    updateCel(pathnameN, indices=cells, intensities=data, verbose=verbose2);
+    .updateCel(pathnameN, indices=cells, intensities=data, verbose=verbose2);
     # Not needed anymore
     cells <- data <- NULL;
     verbose && exit(verbose);

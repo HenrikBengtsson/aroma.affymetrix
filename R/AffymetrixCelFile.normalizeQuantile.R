@@ -123,7 +123,7 @@ setMethodS3("normalizeQuantile", "AffymetrixCelFile", function(this, path=file.p
   verbose && exit(verbose);
 
   verbose && enter(verbose, "Writing normalized intensities");
-  updateCel(pathnameT, intensities=x);
+  .updateCel(pathnameT, intensities=x);
   verbose && exit(verbose);
   verbose && exit(verbose);
 

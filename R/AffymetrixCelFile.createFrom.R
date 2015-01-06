@@ -195,7 +195,7 @@ setMethodS3("createFrom", "AffymetrixCelFile", function(this, filename, path=NUL
           gc <- gc();
 
           verbose && enter(verbose, "Writing data to new CEL file");
-          updateCel(pathnameT, indices=cells, intensities=data);
+          .updateCel(pathnameT, indices=cells, intensities=data);
           verbose && exit(verbose);
 
           # Not needed anymore

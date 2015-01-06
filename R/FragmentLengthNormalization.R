@@ -960,7 +960,7 @@ setMethodS3("process", "FragmentLengthNormalization", function(this, ..., force=
 
     verbose2 <- -as.integer(verbose) - 5;
     pathnameN <- getPathname(ceN);
-    updateCel(pathnameN, indices=cells, intensities=data, verbose=verbose2);
+    .updateCel(pathnameN, indices=cells, intensities=data, verbose=verbose2);
     # Not needed anymore
     cells <- data <- ceN <- NULL;
     verbose && exit(verbose);

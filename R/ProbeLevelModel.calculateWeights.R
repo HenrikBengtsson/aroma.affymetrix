@@ -98,7 +98,7 @@ setMethodS3("calculateWeights", "ProbeLevelModel", function(this, units=NULL, ra
         });
       });
 
-      updateCelUnits(getPathname(wf), cdf=cdf, data=data);
+      .updateCelUnits(getPathname(wf), cdf=cdf, data=data);
 
       verbose && exit(verbose);
     } # for (ii ...)

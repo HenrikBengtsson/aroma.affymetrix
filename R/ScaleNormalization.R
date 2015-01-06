@@ -460,7 +460,7 @@ setMethodS3("process", "ScaleNormalization", function(this, ..., skip=FALSE, for
 #    updateDataFlat(ceN, data=data, verbose=less(verbose));
 #    # Not needed anymore
 #    data <- NULL;
-    updateCel(pathnameT, indices=subsetToUpdate, intensities=x);
+    .updateCel(pathnameT, indices=subsetToUpdate, intensities=x);
     # Not needed anymore
     x <- NULL;
 

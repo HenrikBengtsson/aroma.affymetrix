@@ -123,7 +123,7 @@ setMethodS3("bgAdjustOptical", "AffymetrixCelFile", function(this, path, minimum
   verbose && exit(verbose);
 
   verbose && enter(verbose, "Writing adjusted intensities");
-  updateCel(pathnameT, intensities=x);
+  .updateCel(pathnameT, intensities=x);
   verbose && exit(verbose);
 
   # Rename temporary file
@@ -476,7 +476,7 @@ setMethodS3("bgAdjustGcrma", "AffymetrixCelFile", function(this, path, type=c("f
 
   verbose && enter(verbose, "Writing adjusted intensities");
   verbose && cat(verbose, "Number of cells (PMs only): ", length(pmCells));
-  updateCel(pathnameT, indices=pmCells, intensities=pm);
+  .updateCel(pathnameT, indices=pmCells, intensities=pm);
   verbose && exit(verbose);
 
   # Rename temporary file
@@ -626,7 +626,7 @@ setMethodS3("bgAdjustRma", "AffymetrixCelFile", function(this, path, pmonly=TRUE
   verbose && exit(verbose);
 
   verbose && enter(verbose, "Writing adjusted intensities");
-  updateCel(pathnameT, indices=pmCells, intensities=pm);
+  .updateCel(pathnameT, indices=pmCells, intensities=pm);
   verbose && exit(verbose);
 
   # Rename temporary file

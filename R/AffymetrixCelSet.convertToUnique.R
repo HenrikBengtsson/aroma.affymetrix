@@ -1,5 +1,10 @@
 # @author "MR, HB"
 setMethodS3("convertToUnique", "AffymetrixCelSet", function(this, ..., tags="UNQ", force=FALSE, verbose=FALSE) {
+  requireNamespace("affxparser") || throw("Package not loaded: affxparser")
+  readCelUnits <- affxparser::readCelUnits
+  readCdf <- affxparser::readCdf
+
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -183,7 +188,7 @@ setMethodS3("convertToUnique", "AffymetrixCelSet", function(this, ..., tags="UNQ
 
       createCel(pathnameT, header=celHeader);
       verbose && cat(verbose, "Writing values according to unique CDF");
-      updateCelUnits(pathnameT, cdf=cdfUniqueIndices, data=data, verbose=FALSE);
+      .updateCelUnits(pathnameT, cdf=cdfUniqueIndices, data=data, verbose=FALSE);
       verbose && exit(verbose);
 
       # Not needed anymore

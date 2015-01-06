@@ -1,4 +1,8 @@
 setMethodS3("writeRegions" ,"profileCGH", function(this, filename, path=NULL, append=FALSE, ...) {
+  requireNamespace("affxparser") || throw("Package not loaded: affxparser")
+  readCdfUnitNames <- affxparser::readCdfUnitNames
+
+
   # Argument 'filename' and 'path':
   pathname <- Arguments$getWritablePathname(filename, path=path);
 
@@ -79,8 +83,8 @@ setMethodS3("writeRegions" ,"profileCGH", function(this, filename, path=NULL, ap
     gnl <- c("loss", "normal", "gain")[zoneGNL[idx[1]]+2];
 
     # Create one line record
-    args <- list(fmtstr, cc, 
-                 posBase[idx[1]], posBase[idx[2]], diff(posBase[idx]), 
+    args <- list(fmtstr, cc,
+                 posBase[idx[1]], posBase[idx[2]], diff(posBase[idx]),
                  gnl, smoothing[idx[1]], as.integer(diff(idx)+1));
     if (hasUnits) {
       args <- c(args, snpNames[1], snpNames[2]);

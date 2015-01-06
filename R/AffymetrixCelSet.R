@@ -1050,6 +1050,10 @@ setMethodS3("getIntensities", "AffymetrixCelSet", function(this, ...) {
 # }
 #*/###########################################################################
 setMethodS3("getUnitIntensities", "AffymetrixCelSet", function(this, units=NULL, ..., force=FALSE, cache=!is.null(units), verbose=FALSE) {
+  requireNamespace("affxparser") || throw("Package not loaded: affxparser")
+  readCelUnits <- affxparser::readCelUnits
+
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -1105,6 +1109,10 @@ setMethodS3("getUnitIntensities", "AffymetrixCelSet", function(this, units=NULL,
 
 
 setMethodS3("readUnits", "AffymetrixCelSet", function(this, units=NULL, ..., force=FALSE, cache=!is.null(units), verbose=FALSE) {
+  requireNamespace("affxparser") || throw("Package not loaded: affxparser")
+  readCelUnits <- affxparser::readCelUnits
+
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -1,4 +1,8 @@
 setMethodS3("readCfnHeader", "default", function(pathname, ..., verbose=FALSE) {
+  requireNamespace("affxparser") || throw("Package not loaded: affxparser")
+  readCdfUnitNames <- affxparser::readCdfUnitNames
+
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local functions
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -91,7 +95,7 @@ setMethodS3("readCfnHeader", "default", function(pathname, ..., verbose=FALSE) {
   # Base range (non-self)
   nonSelfBaseRange <- integer(2);
   nonSelfBaseRange <- readInt(con, n=2);
-  verbose && cat(verbose, "Base range (NonSelf):", 
+  verbose && cat(verbose, "Base range (NonSelf):",
                                    paste(nonSelfBaseRange, collapse="-"));
 
   # Infer number of SNPs from CDF file

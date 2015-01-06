@@ -193,9 +193,6 @@ setMethodS3("getExpectedOutputFullnames", "MatSmoothing", function(this, ..., ve
 # }
 #*/###########################################################################
 setMethodS3("process", "MatSmoothing", function(this, ..., units=NULL, force=FALSE, verbose=FALSE) {
-  requireNamespace("affxparser") || throw("Package not loaded: affxparser")
-  updateCel <- affxparser::updateCel
-
   requireNamespace("gsmoothr") || throw("Package not loaded: gsmoothr")
   tmeanC <- gsmoothr::tmeanC;
 
@@ -611,7 +608,7 @@ setMethodS3("process", "MatSmoothing", function(this, ..., units=NULL, force=FAL
 
     verbose && enter(verbose, "Updating data file");
     verbose2 <- isVisible(verbose, -50);
-    updateCel(pathnameT, indices=allInds, intensities=matScores,
+    .updateCel(pathnameT, indices=allInds, intensities=matScores,
                                                         verbose=verbose2);
     verbose && exit(verbose);
 

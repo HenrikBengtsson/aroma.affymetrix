@@ -38,6 +38,10 @@
 # }
 #*/###########################################################################
 setMethodS3("getAlleleProbePairs3", "AffymetrixCdfFile", function(this, units=NULL, ignoreOrder=TRUE, force=FALSE, ..., verbose=FALSE) {
+  requireNamespace("affxparser") || throw("Package not loaded: affxparser")
+  readCdf <- affxparser::readCdf
+
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

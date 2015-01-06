@@ -999,7 +999,7 @@ setMethodS3("process", "AllelicCrosstalkCalibration", function(this, ..., force=
 
       # Write calibrated data to file
       verbose2 <- -as.integer(verbose)-2;
-      updateCel(pathnameT, intensities=yAll, verbose=verbose2);
+      .updateCel(pathnameT, intensities=yAll, verbose=verbose2);
 
       # Not needed anymore
       yAll <- verbose2 <- NULL;

@@ -359,7 +359,7 @@ setMethodS3("getResiduals", "QualityAssessmentModel", function(this, units=NULL,
       }
 
       verbose && enter(verbose, "updating file #", kk);
-      updateCelUnits(pathname, cdf=cdfList, data=data);
+      .updateCelUnits(pathname, cdf=cdfList, data=data);
       verbose && exit(verbose);
     } # for (kk ...)
 
@@ -549,7 +549,7 @@ setMethodS3("getWeights", "QualityAssessmentModel", function(this, path=NULL, na
         ))
       });
 
-      updateCelUnits(pathname[kk], cdf=cdfList, data=data);
+      .updateCelUnits(pathname[kk], cdf=cdfList, data=data);
     } # for (kk ...)
 
     unitsToDo <- unitsToDo[-head];

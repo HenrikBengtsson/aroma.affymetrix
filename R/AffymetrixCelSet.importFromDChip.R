@@ -153,7 +153,7 @@ setMethodS3("importFromDChip", "AffymetrixCelSet", function(static, path, name=N
 
     if (!skip || !isFile(dest)) {
       # Convert ASCII CEL file to binary CEL with possible rotation
-      convertCel(src, dest, readMap=readMap);
+      .convertCel(src, dest, readMap=readMap);
 
       # Garbage collect
       gc <- gc();

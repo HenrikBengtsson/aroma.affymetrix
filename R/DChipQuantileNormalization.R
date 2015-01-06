@@ -303,7 +303,7 @@ setMethodS3("process", "DChipQuantileNormalization", function(this, ..., force=F
     verbose && exit(verbose);
 
     verbose && enter(verbose, "Writing normalized intensities");
-    updateCel(pathnameT, indices=subsetToUpdate, intensities=x);
+    .updateCel(pathnameT, indices=subsetToUpdate, intensities=x);
 
     # Not needed anymore
     x <- NULL;

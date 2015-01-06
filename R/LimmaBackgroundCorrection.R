@@ -211,9 +211,6 @@ setMethodS3("process", "LimmaBackgroundCorrection", function(this, ..., force=FA
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Try to load the required packaged
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  requireNamespace("affxparser") || throw("Package not loaded: affxparser")
-  updateCel <- affxparser::updateCel
-
   requireNamespace("limma") || throw("Package not loaded: limma")
   backgroundCorrect <- limma::backgroundCorrect
 
@@ -301,7 +298,7 @@ setMethodS3("process", "LimmaBackgroundCorrection", function(this, ..., force=FA
 
     # Write calibrated data to file
     verbose2 <- -as.integer(verbose)-2;
-    updateCel(pathnameT, indices=cells, intensities=y, verbose=verbose2);
+    .updateCel(pathnameT, indices=cells, intensities=y, verbose=verbose2);
     # Not needed anymore
     y <- verbose2 <- NULL;
 

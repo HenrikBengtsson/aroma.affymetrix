@@ -637,7 +637,7 @@ setMethodS3("process", "MatNormalization", function(this, ..., ram=NULL, force=F
       verbose && exit(verbose);
 
       verbose2 <- as.logical(verbose);
-      updateCel(pathnameT, indices=cellsChunk, intensities=2^mu, verbose=verbose2);
+      .updateCel(pathnameT, indices=cellsChunk, intensities=2^mu, verbose=verbose2);
 
       # Rename temporary file
       pathname <- popTemporaryFile(pathnameT, verbose=verbose);
@@ -711,7 +711,7 @@ setMethodS3("process", "MatNormalization", function(this, ..., ram=NULL, force=F
     verbose && exit(verbose);
 
     verbose2 <- as.logical(verbose);
-    updateCel(pathnameT, indices=cellsToFit, intensities=2^r, verbose=verbose2);
+    .updateCel(pathnameT, indices=cellsToFit, intensities=2^r, verbose=verbose2);
 
     # Not needed anymore
     q <- ss <- ssvar <- v <- r <- y <- NULL;

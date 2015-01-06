@@ -156,7 +156,7 @@ setMethodS3("process", "SpatialRowColumnNormalization", function(this, ..., forc
 
       # Write calibrated data to file
       verbose2 <- -as.integer(verbose)-2;
-      updateCel(pathnameT, indices=cells, intensities=y, verbose=verbose2);
+      .updateCel(pathnameT, indices=cells, intensities=y, verbose=verbose2);
       # Not needed anymore
       y <- verbose2 <- NULL;
 

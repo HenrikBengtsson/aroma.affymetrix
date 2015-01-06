@@ -46,6 +46,10 @@ setConstructorS3("FirmaFile", function(...) {
 
 
 setMethodS3("findUnitsTodo", "FirmaFile", function(this, units=NULL, ..., force=FALSE, verbose=FALSE) {
+  requireNamespace("affxparser") || throw("Package not loaded: affxparser")
+  readCelUnits <- affxparser::readCelUnits
+
+
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
 
@@ -448,7 +452,7 @@ setMethodS3("updateDataFlat", "FirmaFile", function(this, data, ..., verbose=FAL
   data <- data[,keep];
   pathname <- getPathname(this);
   pathname <- Arguments$getWritablePathname(pathname):
-  updateCel(pathname, indices=indices, data, verbose=verbose2);
+  .updateCel(pathname, indices=indices, data, verbose=verbose2);
   verbose && exit(verbose);
 
   verbose && exit(verbose);

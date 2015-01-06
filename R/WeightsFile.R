@@ -459,7 +459,7 @@ setMethodS3("updateDataFlat", "WeightsFile", function(this, data, ..., verbose=F
   data <- data[,keep];
   pathname <- getPathname(this);
   pathname <- Arguments$getWritablePathname(pathname);
-  updateCel(pathname, indices=indices, data, verbose=verbose2);
+  .updateCel(pathname, indices=indices, data, verbose=verbose2);
   verbose && exit(verbose);
 
   verbose && exit(verbose);

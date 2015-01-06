@@ -392,7 +392,7 @@ setMethodS3("importFromDChip", "CnChipEffectSet", function(static, filename, pat
       stdvs <- NULL;
     }
 
-    updateCel(pathnameT, indices=cells, intensities=data[,1], stdvs=stdvs);
+    .updateCel(pathnameT, indices=cells, intensities=data[,1], stdvs=stdvs);
     # Not needed anymore
     data <- stdvs <- NULL;
     verbose && exit(verbose);

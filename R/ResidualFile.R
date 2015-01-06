@@ -463,7 +463,7 @@ setMethodS3("updateDataFlat", "ResidualFile", function(this, data, ..., verbose=
   data <- data[,keep];
   pathname <- getPathname(this);
   pathname <- Arguments$getWritablePathname(pathname);
-  updateCel(pathname, indices=indices, data, verbose=verbose2);
+  .updateCel(pathname, indices=indices, data, verbose=verbose2);
   verbose && exit(verbose);
 
   verbose && exit(verbose);

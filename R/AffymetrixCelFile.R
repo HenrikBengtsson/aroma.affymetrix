@@ -602,8 +602,13 @@ setMethodS3("getPlatform", "AffymetrixCelFile", function(this, ...) {
 # @keyword IO
 #*/###########################################################################
 setMethodS3("readUnits", "AffymetrixCelFile", function(this, units=NULL, cdf=NULL, ..., stratifyBy=NULL, force=FALSE, cache=FALSE, verbose=FALSE) {
+  requireNamespace("affxparser") || throw("Package not loaded: affxparser")
+  readCelUnits <- affxparser::readCelUnits
+
+
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
+
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Retrieve CDF structure
@@ -659,7 +664,7 @@ setMethodS3("readUnits", "AffymetrixCelFile", function(this, units=NULL, cdf=NUL
 setMethodS3("updateUnits", "AffymetrixCelFile", function(this, data, ...) {
   pathname <- getPathname(this);
   pathname <- Arguments$getWritablePathname(pathname);
-  updateCelUnits(pathname, data=data, ...);
+  .updateCelUnits(pathname, data=data, ...);
 }, private=TRUE)
 
 
@@ -698,6 +703,10 @@ setMethodS3("updateUnits", "AffymetrixCelFile", function(this, data, ...) {
 # @keyword IO
 #*/###########################################################################
 setMethodS3("clearData", "AffymetrixCelFile", function(this, fields=c("intensities", "stdvs", "pixels"), value=0, ..., .forSure=FALSE, verbose=TRUE) {
+  requireNamespace("affxparser") || throw("Package not loaded: affxparser")
+  updateCel <- affxparser::updateCel
+
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -735,7 +744,7 @@ setMethodS3("clearData", "AffymetrixCelFile", function(this, fields=c("intensiti
   if ("pixels" %in% fields)
     pixels <- bfr;
 
-  updateCel(pathname, intensities=bfr, stdvs=bfr, pixels=bfr);
+  .updateCel(pathname, intensities=bfr, stdvs=bfr, pixels=bfr);
   verbose && exit(verbose);
 
   invisible(fields);

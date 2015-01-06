@@ -161,7 +161,7 @@ setMethodS3("getFitUnitGroupFunction", "AffinePlm", function(this, ...) {
 
     # NOTE: If center=FALSE => constraint a=0 /HB 2006-09-11
     y <- t(y);
-    f <- calibrateMultiscan(y, center=center, project=TRUE);
+    f <- .calibrateMultiscan(y, center=center, project=TRUE);
     theta <- as.vector(f);
     phi <- as.vector(attr(f, "modelFit")$b);
 

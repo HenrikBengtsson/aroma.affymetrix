@@ -126,6 +126,11 @@
   affxparser::readCcg(...)
 }
 
+.writeCdf <- function(...) {
+  requireNamespace("affxparser") || throw("Package not loaded: affxparser")
+  affxparser::writeCdf(...)
+}
+
 .writeCdfHeader <- function(...) {
   requireNamespace("affxparser") || throw("Package not loaded: affxparser")
   affxparser::writeCdfHeader(...)

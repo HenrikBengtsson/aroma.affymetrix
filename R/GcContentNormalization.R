@@ -313,6 +313,10 @@ setMethodS3("getTargetFunction", "GcContentNormalization", function(this, ..., f
 # }
 #*/###########################################################################
 setMethodS3("process", "GcContentNormalization", function(this, ..., force=FALSE, verbose=FALSE) {
+  requireNamespace("aroma.light") || throw("Package not loaded: aroma.light")
+  normalizeFragmentLength <- aroma.light::normalizeFragmentLength
+
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

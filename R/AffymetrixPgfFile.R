@@ -106,7 +106,7 @@ setMethodS3("fromFile", "AffymetrixPgfFile", function(static, filename, path=NUL
                                                               mustExist=TRUE);
 
   # Assert that it is a PGF file
-  header <- readPgfHeader(pathname);
+  header <- .readPgfHeader(pathname);
 
   NextMethod("fromFile", filename=pathname);
 }, static=TRUE, protected=TRUE)
@@ -239,7 +239,7 @@ setMethodS3("getHeader", "AffymetrixPgfFile", function(this, ...) {
   hdr <- this$.header;
   if (is.null(hdr)) {
     pathname <- getPathname(this);
-    hdr <- readPgfHeader(pathname)$header;
+    hdr <- .readPgfHeader(pathname)$header;
     for (ff in c("rows", "cols", "probesets", "datalines")) {
       hdr[[ff]] <- Arguments$getInteger(hdr[[ff]], .name=ff);
     }
@@ -305,7 +305,7 @@ setMethodS3("readRawData", "AffymetrixPgfFile", function(this, ...) {
   rawData <- this$.rawData;
   if (is.null(rawData)) {
     pathname <- getPathname(this);
-    env <- readPgfEnv(pathname, ...);
+    env <- .readPgfEnv(pathname, ...);
     env$header <- NULL;
 
     keys <- ls(envir=env);

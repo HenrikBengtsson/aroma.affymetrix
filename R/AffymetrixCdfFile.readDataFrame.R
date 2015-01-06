@@ -1,4 +1,8 @@
 setMethodS3("readDataFrame", "AffymetrixCdfFile", function(this, units=NULL, fields="*", ..., force=FALSE, verbose=FALSE) {
+  requireNamespace("affxparser") || throw("Package not loaded: affxparser")
+  readCdfDataFrame <- affxparser::readCdfDataFrame
+
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -22,12 +26,6 @@ setMethodS3("readDataFrame", "AffymetrixCdfFile", function(this, units=NULL, fie
   if (verbose) {
     pushState(verbose);
     on.exit(popState(verbose));
-  }
-
-
-  # Assert existance of necessary functions
-  if (!exists("readCdfDataFrame", mode="function")) {
-    throw("This method requires readCdfDataFrame() in affxparser.");
   }
 
 
@@ -94,13 +92,13 @@ setMethodS3("readDataFrame", "AffymetrixCdfFile", function(this, units=NULL, fie
     if (verbose) {
       dt <- (t1-t0)[3];
       cat(verbose, "Total reading/processing time:");
-      printf(verbose, "Total time: %.0f secs = %.2f mins = %.2f hours\n", 
+      printf(verbose, "Total time: %.0f secs = %.2f mins = %.2f hours\n",
                                                         dt, dt/60, dt/3600);
-      printf(verbose, "Time/unit: %.2f ms = %.2f secs\n", 
+      printf(verbose, "Time/unit: %.2f ms = %.2f secs\n",
                                          1000*dt/nbrOfUnits, dt/nbrOfUnits);
     }
     verbose && exit(verbose);
-  
+
     # Make nucleotide bases in upper case.
     for (field in c("pbase", "tbase")) {
       res[[field]] <- toupper(res[[field]]);
@@ -121,8 +119,8 @@ setMethodS3("readDataFrame", "AffymetrixCdfFile", function(this, units=NULL, fie
   if (length(virtualFields) > 0) {
     verbose && enter(verbose, "Adding virtual fields");
     if ("isPm" %in% virtualFields) {
-      res[["isPm"]] <- with(res, 
-        (tbase == "A" & pbase == "T") | 
+      res[["isPm"]] <- with(res,
+        (tbase == "A" & pbase == "T") |
         (tbase == "T" & pbase == "A") |
         (tbase == "C" & pbase == "G") |
         (tbase == "G" & pbase == "C")

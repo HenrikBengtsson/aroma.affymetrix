@@ -492,7 +492,7 @@ setMethodS3("getTimestamp", "AffymetrixCelFile", function(this, format="%m/%d/%y
 
   if (fileFormat == 1) {
     suppressWarnings({
-      hdr <- readCcgHeader(getPathname(this));
+      hdr <- .readCcgHeader(getPathname(this));
     });
 
     # Get the DAT header
@@ -910,7 +910,7 @@ setMethodS3("range", "AffymetrixCelFile", function(this, ..., na.rm=TRUE) {
 
 setMethodS3("readRawDataRectangle", "AffymetrixCelFile", function(this, xrange=c(0,Inf), yrange=c(0,Inf), fields=c("intensities", "stdvs", "pixels"), ..., drop=FALSE) {
   pathname <- getPathname(this);
-  data <- readCelRectangle(pathname, xrange=xrange, yrange=yrange, readIntensities=("intensities" %in% fields), readStdvs=("stdvs" %in% fields), readPixels=("pixels" %in% fields), readHeader=FALSE, readOutliers=FALSE, readMasked=FALSE);
+  data <- .readCelRectangle(pathname, xrange=xrange, yrange=yrange, readIntensities=("intensities" %in% fields), readStdvs=("stdvs" %in% fields), readPixels=("pixels" %in% fields), readHeader=FALSE, readOutliers=FALSE, readMasked=FALSE);
 
   if (drop && length(data) == 1) {
     data <- data[[1]];

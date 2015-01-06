@@ -8,6 +8,7 @@ importFrom("R.oo", "extend")
 importFrom("R.oo", "uses")
 
 ## Importing Class:es
+importFrom("R.oo", "Class")
 importFrom("R.oo", "Interface")
 importFrom("R.oo", "Object")
 importFrom("R.oo", "Package")

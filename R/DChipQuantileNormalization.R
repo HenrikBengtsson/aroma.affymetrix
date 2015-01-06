@@ -150,6 +150,10 @@ setMethodS3("excludeChrXFromFit", "DChipQuantileNormalization", function(this, .
 # }
 #*/###########################################################################
 setMethodS3("process", "DChipQuantileNormalization", function(this, ..., force=FALSE, skip=TRUE, verbose=FALSE) {
+  requireNamespace("aroma.light") || throw("Package not loaded: aroma.light")
+  normalizeQuantileSpline <- aroma.light::normalizeQuantileSpline
+
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

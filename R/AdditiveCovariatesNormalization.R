@@ -602,6 +602,10 @@ setMethodS3("getTargetFunctions", "AdditiveCovariatesNormalization", function(th
 # }
 #*/###########################################################################
 setMethodS3("process", "AdditiveCovariatesNormalization", function(this, ..., force=FALSE, verbose=FALSE) {
+  requireNamespace("aroma.light") || throw("Package not loaded: aroma.light")
+  normalizeFragmentLength <- aroma.light::normalizeFragmentLength
+
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

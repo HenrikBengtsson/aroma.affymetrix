@@ -712,6 +712,10 @@ setMethodS3("getTargetFunctions", "FragmentLengthNormalization", function(this, 
 # }
 #*/###########################################################################
 setMethodS3("process", "FragmentLengthNormalization", function(this, ..., force=FALSE, verbose=FALSE) {
+  requireNamespace("aroma.light") || throw("Package not loaded: aroma.light")
+  normalizeFragmentLength <- aroma.light::normalizeFragmentLength
+
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

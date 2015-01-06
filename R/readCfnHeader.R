@@ -99,7 +99,7 @@ setMethodS3("readCfnHeader", "default", function(pathname, ..., verbose=FALSE) {
                                    paste(nonSelfBaseRange, collapse="-"));
 
   # Infer number of SNPs from CDF file
-  cdfPathname <- findCdf(chipType);
+  cdfPathname <- .findCdf(chipType);
   if (is.null(cdfPathname))
     throw("Could not locate CDF for this chip type: ", chipType);
   isSnp <- (regexpr("SNP_", readCdfUnitNames(cdfPathname)) != -1);

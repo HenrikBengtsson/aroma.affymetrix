@@ -6,7 +6,7 @@ Suggests: RColorBrewer (>= 1.0-5), preprocessCore (>= 1.24.0), affyPLM (>= 1.38.
 SuggestsNote: Recommended: preprocessCore, affyPLM, aroma.light, affxparser
 Additional_repositories: http://r-forge.r-project.org
 Date: 2014-11-17
-Title: Analysis of large Affymetrix microarray data sets
+Title: Analysis of Large Affymetrix Microarray Data Sets
 Authors@R: c(
   person("Henrik", "Bengtsson", role=c("aut", "cre", "cph"),
                                  email="henrikb@braju.com"),

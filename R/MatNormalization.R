@@ -687,7 +687,7 @@ setMethodS3("process", "MatNormalization", function(this, ..., ram=NULL, force=F
     filename <- sprintf("%s.CEL", fullname);
     pathname <- Arguments$getWritablePathname(filename, path=outputPath, ...);
 
-    mu <- readCel(pathname, indices=cellsToFit, readOutliers=FALSE, readHeader=FALSE, readMasked=FALSE, verbose=less(verbose,10))$intensities;
+    mu <- .readCel(pathname, indices=cellsToFit, readOutliers=FALSE, readHeader=FALSE, readMasked=FALSE, verbose=less(verbose,10))$intensities;
     mu <- log2(mu);
     r <- y - mu;
 

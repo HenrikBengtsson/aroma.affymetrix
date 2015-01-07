@@ -272,7 +272,7 @@ setMethodS3("findUnitsTodo", "WeightsFile", function(this, units=NULL, ..., forc
 
   # Read one cell from each unit
   verbose && enter(verbose, "Reading data for these ", length(idxs), " cells");
-  value <- readCel(getPathname(this), indices=idxs, readIntensities=FALSE,
+  value <- .readCel(getPathname(this), indices=idxs, readIntensities=FALSE,
                    readStdvs=TRUE, readPixels=FALSE)$stdvs;
   verbose && exit(verbose);
 

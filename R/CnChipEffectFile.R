@@ -332,7 +332,7 @@ setMethodS3("getNumberOfFilesAveraged", "CnChipEffectFile", function(this, ..., 
   verbose && str(verbose, cells);
 
   verbose && enter(verbose, "Reading data");
-  data <- readCel(pathname, indices=cells, readIntensities=FALSE,
+  data <- .readCel(pathname, indices=cells, readIntensities=FALSE,
                   readPixels=TRUE);
   verbose && exit(verbose);
 

@@ -699,10 +699,6 @@ setMethodS3("updateUnits", "AffymetrixCelFile", function(this, data, ...) {
 # @keyword IO
 #*/###########################################################################
 setMethodS3("clearData", "AffymetrixCelFile", function(this, fields=c("intensities", "stdvs", "pixels"), value=0, ..., .forSure=FALSE, verbose=TRUE) {
-  requireNamespace("affxparser") || throw("Package not loaded: affxparser")
-  updateCel <- affxparser::updateCel
-
-
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

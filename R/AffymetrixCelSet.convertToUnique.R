@@ -1,9 +1,5 @@
 # @author "MR, HB"
 setMethodS3("convertToUnique", "AffymetrixCelSet", function(this, ..., tags="UNQ", force=FALSE, verbose=FALSE) {
-  requireNamespace("affxparser") || throw("Package not loaded: affxparser")
-  readCelUnits <- affxparser::readCelUnits
-
-
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -152,7 +148,7 @@ setMethodS3("convertToUnique", "AffymetrixCelSet", function(this, ..., tags="UNQ
       # Read data
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       verbose && enter(verbose, "Reading intensity values according to standard CDF");
-      data <- readCelUnits(getPathname(df), cdf=cdfStandard, dropArrayDim=TRUE);
+      data <- .readCelUnits(getPathname(df), cdf=cdfStandard, dropArrayDim=TRUE);
       verbose && exit(verbose);
 
       # Build a valid CEL header

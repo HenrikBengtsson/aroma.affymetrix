@@ -39,10 +39,6 @@ setConstructorS3("QualityAssessmentFile", function(...) {
 
 
 setMethodS3("findUnitsTodo", "QualityAssessmentFile", function(this, units=NULL, ..., force=FALSE, verbose=FALSE) {
-  requireNamespace("affxparser") || throw("Package not loaded: affxparser")
-  readCelUnits <- affxparser::readCelUnits
-
-
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
 
@@ -55,7 +51,7 @@ setMethodS3("findUnitsTodo", "QualityAssessmentFile", function(this, units=NULL,
 
   # Read 'pixels' from each unit
   verbose && enter(verbose, "Reading data for these ", length(units), " units");
-  value <- readCelUnits(getPathname(this), units=units, readIntensities=FALSE,
+  value <- .readCelUnits(getPathname(this), units=units, readIntensities=FALSE,
                         readStdvs=FALSE, readPixels=TRUE, dropArrayDim=TRUE);
   verbose && exit(verbose);
 

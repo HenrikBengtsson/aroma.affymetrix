@@ -305,10 +305,6 @@ setMethodS3("calculateResidualSet", "FirmaModel", function(this, ...) {
 # }
 #*/###########################################################################
 setMethodS3("getFitUnitGroupFunction", "FirmaModel", function(this, ...) {
-  colQuantiles <- function(y, ...) {
-    apply(y, MARGIN=2, FUN=quantile, ...)
-  }
-
   if(this$operateOn == "weights") {
     if (this$summaryMethod == "upperQuartile") {
       fitfcn <- function(y, ...) {

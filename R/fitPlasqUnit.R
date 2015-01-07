@@ -194,7 +194,7 @@ setMethodS3("fitPlasqUnit", "matrix", function(ly, ptype, maxIter=1000, acc=0.1,
     # Appendix p17:
     #   \hat{p}_{j0} = \frac{1}{N} \sum_{i=1}^N z_{ij_0l}
     # Proportion of samples with genotypes (BB, AB, AA)
-    ps <- apply(zs, MARGIN=1, FUN=sum) / nbrOfSamples;
+    ps <- .rowSums(zs) / nbrOfSamples;
 
 #    verfy(ps, key=list(iter=rr, "ps"));
 

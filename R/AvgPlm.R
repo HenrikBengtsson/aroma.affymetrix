@@ -229,7 +229,7 @@ setMethodS3("getFitUnitGroupFunction", "AvgPlm", function(this, ...) {
         theta <- rowMedians(y, na.rm=TRUE);
         sdTheta <- rowMads(y, centers=theta, na.rm=TRUE);
       } else if (flavor == "mean") {
-        theta <- rowMeans(y, na.rm=TRUE);
+        theta <- .rowMeans(y, na.rm=TRUE);
         sdTheta <- rowSds(y, mean=theta, na.rm=TRUE);
       }
     }

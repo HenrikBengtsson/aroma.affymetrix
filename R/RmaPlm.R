@@ -361,7 +361,7 @@ setMethodS3("getFitUnitGroupFunction", "RmaPlm", function(this, ..., verbose=FAL
       hasNAs <- any(isNA);
       if (hasNAs) {
         if (treatNAsAs == "weights") {
-          badCells <- apply(isNA, MARGIN=2, FUN=all);
+          badCells <- colAlls(isNA);
           if (any(badCells)) {
             return(list(theta=rep(NA, I),
                         sdTheta=rep(NA, I),
@@ -380,7 +380,7 @@ setMethodS3("getFitUnitGroupFunction", "RmaPlm", function(this, ..., verbose=FAL
           hasNAs <- FALSE;
         } else if (treatNAsAs == "NA") {
           K0 <- K;  # Number of cells
-          okCells <- !apply(isNA, MARGIN=1, FUN=any);
+          okCells <- !rowAnys(isNA);
           # Analyze only valid cells
           y <- y[okCells,,drop=FALSE];
           nasRemoved <- TRUE;

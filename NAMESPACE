@@ -202,6 +202,7 @@ importFrom("aroma.core", "writeFooter")
 importFrom("matrixStats", "anyMissing") ## Multi-sources: matrixStats, Biobase
 importFrom("matrixStats", "colMaxs")
 importFrom("matrixStats", "colMedians")
+importFrom("matrixStats", "colQuantiles")
 importFrom("matrixStats", "indexByRow")
 importFrom("matrixStats", "rowMads")
 importFrom("matrixStats", "rowMedians") ## Multi-sources: matrixStats, Biobase

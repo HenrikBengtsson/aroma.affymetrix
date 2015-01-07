@@ -142,7 +142,7 @@ setMethodS3("inferParameters", "CnChipEffectSet", function(this, ..., verbose=FA
       verbose && cat(verbose, "Values quartets:");
       verbose && print(verbose, values[,seq_len(min(ncol(values),6)),drop=FALSE]);
       if (ncol(values) > 0) {
-        t <- rowMeans(values);
+        t <- .rowMeans(values);
         if (length(t) > 0) {
           isZero <- isZero(t);
           if (!all(isZero)) {

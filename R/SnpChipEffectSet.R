@@ -139,7 +139,7 @@ setMethodS3("inferParameters", "SnpChipEffectSet", function(this, ..., verbose=F
       verbose && cat(verbose, "Values quartets:");
       verbose && print(verbose, values[,seq_len(min(ncol(values),6)),drop=FALSE]);
       if (ncol(values) > 0L) {
-        t <- rowMeans(values);
+        t <- .rowMeans(values);
         if (length(t) > 0L) {
           isZero <- isZero(t);
           if (!all(isZero)) {

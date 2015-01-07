@@ -118,7 +118,7 @@ setMethodS3("extractTotalAndFreqB", "CnChipEffectFile", function(this, units=NUL
   nbrOfUnits <- nrow(theta);
 
   # Calculating total chip effect
-  thetaTotal <- .rowSums(theta, na.rm=TRUE);
+  thetaTotal <- .rowSums(theta, m=nrow(theta), n=ncol(theta), na.rm=TRUE);
 
   # Calculating Allele B frequency
   if (this$combineAlleles) {
@@ -129,7 +129,7 @@ setMethodS3("extractTotalAndFreqB", "CnChipEffectFile", function(this, units=NUL
     if (ncol(theta) == 2) {
       thetaB <- theta[,2];
     } else if (ncol(theta) == 4) {
-      thetaB <- .rowSums(theta[,c(2,4)], na.rm=TRUE);
+      thetaB <- .rowSums(theta[,c(2,4)], m=nrow(theta), n=2L, na.rm=TRUE);
     }
     # Not needed anymore
     theta <- NULL;
@@ -228,13 +228,13 @@ setMethodS3("extractTotalAndFracB", "SnpChipEffectFile", function(this, units=NU
   nbrOfUnits <- nrow(theta);
 
   # Calculating total chip effect
-  thetaTotal <- .rowSums(theta, na.rm=TRUE);
+  thetaTotal <- .rowSums(theta, m=nrow(theta), n=ncol(theta), na.rm=TRUE);
 
   # Calculating Allele B frequencies
   if (ncol(theta) == 2) {
     thetaB <- theta[,2];
   } else if (ncol(theta) == 4) {
-    thetaB <- .rowSums(theta[,c(2,4)], na.rm=TRUE);
+    thetaB <- .rowSums(theta[,c(2,4)], m=nrow(theta), n=2L, na.rm=TRUE);
   }
   # Not needed anymore
   theta <- NULL;

@@ -150,11 +150,13 @@ setMethodS3("getDesignMatrix", "MatNormalization", function(this, cells=NULL, mo
   verbose && exit(verbose);
 
   verbose && enter(verbose, "Constructing design matrix");
-  nT <- .rowSums(sm == "T");
+  nrow <- nrow(sm);
+  ncol <- ncol(sm);
+  nT <- .rowSums(sm == "T", m=nrow, n=ncol);
   G <- (sm == "G")+0;
   A <- (sm == "A")+0;
   C <- (sm == "C")+0;
-  designMatrix <- cbind(nT, A, C, G, .rowSums(A)^2, .rowSums(C)^2, .rowSums(G)^2, nT^2, log(as.integer(ms[,1])));
+  designMatrix <- cbind(nT, A, C, G, .rowSums(A, m=nrow, n=ncol)^2, .rowSums(C, m=nrow, n=ncol)^2, .rowSums(G, m=nrow, n=ncol)^2, nT^2, log(as.integer(ms[,1])));
 
   # Garbage collect
   # Not needed anymore

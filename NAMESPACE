@@ -204,6 +204,8 @@ importFrom("matrixStats", "colMaxs")
 importFrom("matrixStats", "colMedians")
 importFrom("matrixStats", "colQuantiles")
 importFrom("matrixStats", "indexByRow")
+importFrom("matrixStats", "colAlls")
+importFrom("matrixStats", "rowAnys")
 importFrom("matrixStats", "rowMads")
 importFrom("matrixStats", "rowMedians") ## Multi-sources: matrixStats, Biobase
 importFrom("matrixStats", "rowSds")

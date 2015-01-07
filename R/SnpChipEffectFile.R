@@ -179,7 +179,7 @@ setMethodS3("getCellIndices", "SnpChipEffectFile", function(this, units=NULL, ..
     #    (same but single-stranded SNP)   #groups=2, #chip effects=2
     if (mergeStrands) {
       verbose && enter(verbose, "Merging strands");
-      cells <- applyCdfGroups(cells, function(groups) {
+      cells <- .applyCdfGroups(cells, function(groups) {
         ngroups <- length(groups);
         if (ngroups == 4L) {
           .subset(groups, c(1L,2L));

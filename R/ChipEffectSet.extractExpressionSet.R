@@ -91,7 +91,7 @@ setMethodS3("extractExpressionSet", "ChipEffectSet", function(this, ..., logBase
       } else if (is.element(annotationPkg, c("cdf"))) {
         annotationPkg <- affy::cleancdfname(chipType);
       } else if (is.element(annotationPkg, c("PDInfo"))) {
-        annotationPkg <- oligo::cleanPlatformName(chipType);
+        annotationPkg <- .cleanPlatformName(chipType);
       }
 
       verbose && cat(verbose, "Inferred annotation package name: ", annotationPkg);
@@ -114,7 +114,7 @@ setMethodS3("extractExpressionSet", "ChipEffectSet", function(this, ..., logBase
       }
 
       # Sanity checks
-      dim <- geometry(db);
+      dim <- .geometry(db);
       cdfM <- getCdf(this);
       cdf <- getMainCdf(cdfM);
       dim0 <- getDimension(cdf);
@@ -122,7 +122,7 @@ setMethodS3("extractExpressionSet", "ChipEffectSet", function(this, ..., logBase
         throw(sprintf("The chip dimension of the requested annotation package ('%s') does not match the CDF: (%s) != (%s)", annotationPkg, paste(dim, collapse=", "), paste(dim0, collapse=", ")));
       }
 
-      annotation <- annotation(db);
+      annotation <- .annotation(db);
       # Not needed anymore
       db <- dim <- dim0 <- NULL; # Not needed anymore
     } else if (regexpr("cdf$", annotationPkg) != -1L) {

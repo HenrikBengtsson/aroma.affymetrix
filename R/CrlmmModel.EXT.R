@@ -1,4 +1,8 @@
 setMethodS3("getPlatformDesignDB", "CrlmmModel", function(this, ..., verbose=FALSE) {
+  requireNamespace("oligoClasses") || throw("Package not loaded: oligoClasses")
+  db <- oligoClasses::db
+
+
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
   if (verbose) {
@@ -12,10 +16,12 @@ setMethodS3("getPlatformDesignDB", "CrlmmModel", function(this, ..., verbose=FAL
   cdf <- getCdf(ds);
   chipType <- getChipType(cdf, fullname=FALSE);
   verbose && cat(verbose, "Chip type: ", chipType);
-  pdPkgName <- oligo::cleanPlatformName(chipType);
+  pdPkgName <- .cleanPlatformName(chipType);
   verbose && cat(verbose, "Plaform Design package: ", pdPkgName);
+
   require(pdPkgName, character.only=TRUE) || throw("Package not loaded: ", pdPkgName);
-  pdDB <- oligoClasses::db(get(pdPkgName, mode="S4"));
+
+  pdDB <- db(get(pdPkgName, mode="S4"));
   verbose && print(verbose, pdDB);
   verbose && exit(verbose);
   pdDB;
@@ -65,7 +71,7 @@ setMethodS3("getCrlmmPriors", "CrlmmModel", function(this, ..., verbose=FALSE) {
   if (is.null(res)) {
     verbose && enter(verbose, "Querying PD package");
 
-    pdPkgName <- oligo::cleanPlatformName(chipType);
+    pdPkgName <- .cleanPlatformName(chipType);
     verbose && cat(verbose, "Platform Design (PD) package: ", pdPkgName);
 
     # Load target from PD package
@@ -98,6 +104,10 @@ setMethodS3("getCrlmmPriors", "CrlmmModel", function(this, ..., verbose=FALSE) {
 
 
 setMethodS3("getCrlmmSNPs", "CrlmmModel", function(this, flavor=c("oligoPD", "oligoCDF"), ..., verbose=FALSE) {
+  requireNamespace("DBI") || throw("Package not loaded: DBI")
+  dbGetQuery <- DBI::dbGetQuery
+
+
   # Argument 'flavor':
   flavor <- match.arg(flavor);
 
@@ -147,7 +157,7 @@ setMethodS3("getCrlmmSNPs", "CrlmmModel", function(this, flavor=c("oligoPD", "ol
       pdDB <- getPlatformDesignDB(this, verbose=less(verbose,1));
       verbose && print(verbose, pdDB);
 
-      res <- DBI::dbGetQuery(pdDB, "SELECT man_fsetid FROM featureSet WHERE man_fsetid LIKE 'SNP%' ORDER BY man_fsetid")[[1]];
+      res <- dbGetQuery(pdDB, "SELECT man_fsetid FROM featureSet WHERE man_fsetid LIKE 'SNP%' ORDER BY man_fsetid")[[1]];
       verbose && str(verbose, res);
       verbose && exit(verbose);
     }
@@ -171,6 +181,10 @@ setMethodS3("getCrlmmSNPs", "CrlmmModel", function(this, flavor=c("oligoPD", "ol
 
 
 setMethodS3("getCrlmmSNPsOnChrX", "CrlmmModel", function(this, flavor=c("oligoPD", "oligoCDF"), ..., verbose=FALSE) {
+  requireNamespace("DBI") || throw("Package not loaded: DBI")
+  dbGetQuery <- DBI::dbGetQuery
+
+
   # Argument 'flavor':
   flavor <- match.arg(flavor);
 
@@ -273,7 +287,7 @@ setMethodS3("getCrlmmSplineParameters", "CrlmmModel", function(this, flavor=c("o
   if (flavor == "oligoPD") {
     verbose && enter(verbose, "Querying the PD package");
 
-    pdPkgName <- oligo::cleanPlatformName(chipType);
+    pdPkgName <- .cleanPlatformName(chipType);
     verbose && cat(verbose, "Platform Design (PD) package: ", pdPkgName);
 
     # Load target from PD package

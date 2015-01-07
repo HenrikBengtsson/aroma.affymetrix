@@ -1,7 +1,4 @@
 env2Cdf <- function(env, celfile, overwrite=FALSE, verbose=TRUE, ...) {
-  requireNamespace("affxparser") || stop("Package not loaded: affxparser")
-  readCelHeader <- affxparser::readCelHeader
-
   require(env, character.only=TRUE) || stop("Package not loaded: ", env)
 
 
@@ -60,7 +57,7 @@ env2Cdf <- function(env, celfile, overwrite=FALSE, verbose=TRUE, ...) {
     cat("Reading CEL file header.\n");
   }
 
-  celHead <- readCelHeader(celfile);
+  celHead <- .readCelHeader(celfile);
   nrows <- celHead$rows;
   ncols <- celHead$rows;  # <= BUG?!? /HB 2010-05-20
 

@@ -79,7 +79,7 @@ setMethodS3("getAlleleProbePairs2", "AffymetrixCdfFile", function(this, ..., ver
 
     cdf0 <- vector("list", length=4);
     for (gg in 1:4) {
-      cells <- applyCdfGroups(cdf, cdfGetGroups, gg);
+      cells <- .applyCdfGroups(cdf, cdfGetGroups, gg);
       cells <- unlist(cells, use.names=FALSE);
       cdf0[[gg]] <- cells;
     }

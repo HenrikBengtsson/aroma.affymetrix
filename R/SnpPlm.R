@@ -57,7 +57,7 @@ setMethodS3("getCellIndices", "SnpPlm", function(this, ..., verbose=FALSE) {
   # Merge strands?
   if (this$mergeStrands) {
     verbose && enter(verbose, "Merging strands");
-    cells <- applyCdfGroups(cells, cdfMergeStrands);
+    cells <- .applyCdfGroups(cells, cdfMergeStrands);
     verbose && exit(verbose);
   }
 

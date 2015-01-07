@@ -253,7 +253,7 @@ setMethodS3("findUnitsTodo", "WeightsFile", function(this, units=NULL, ..., forc
     verbose && exit(verbose);
 
     verbose && enter(verbose, "Extracting first cell in the first block for each unit");
-    idxs <- applyCdfGroups(idxs, function(groups) {
+    idxs <- .applyCdfGroups(idxs, function(groups) {
       # == groups[[1]]$indices[1];
       .subset(.subset2(.subset2(groups, 1), "indices"), 1)
     });

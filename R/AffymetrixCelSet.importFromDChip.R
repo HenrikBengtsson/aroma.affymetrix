@@ -106,7 +106,7 @@ setMethodS3("importFromDChip", "AffymetrixCelSet", function(static, path, name=N
     y <- (nrow-1):0;
     x <- rep(1:ncol, each=nrow);
     writeMap <- as.vector(y*ncol + x);
-    readMap <- invertMap(writeMap);
+    readMap <- .invertMap(writeMap);
     # Not needed anymore
     x <- y <- h <- nrow <- ncol <- writeMap <- NULL;
   } else {

@@ -1,7 +1,7 @@
 getPlasqTypes <- function(cdf, ...) {
-  cdf <- applyCdfGroups(cdf, .cdfAddPlasqTypes);
-  cdf <- applyCdfGroups(cdf, cdfGetFields, c("plasqType"));
-#  cdf <- applyCdfGroups(cdf, cdfMergeAlleles);
+  cdf <- .applyCdfGroups(cdf, .cdfAddPlasqTypes);
+  cdf <- .applyCdfGroups(cdf, cdfGetFields, c("plasqType"));
+#  cdf <- .applyCdfGroups(cdf, cdfMergeAlleles);
   cdf <- lapply(cdf, FUN=.subset2, "groups");
   cdf;
 }

@@ -79,7 +79,7 @@ setMethodS3("getCellIndices", "ExonRmaPlm", function(this, ...) {
 
   # Merge groups?
   if (this$mergeGroups) {
-    cells <- applyCdfGroups(cells, cdfMergeGroups);
+    cells <- .applyCdfGroups(cells, cdfMergeGroups);
   }
 
   cells;

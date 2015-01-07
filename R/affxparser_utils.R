@@ -1,6 +1,16 @@
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Imports from affxparser
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+.invertMap <- function(...) {
+  requireNamespace("affxparser") || throw("Package not loaded: affxparser")
+  affxparser::invertMap(...)
+}
+
+.applyCdfGroups <- function(...) {
+  requireNamespace("affxparser") || throw("Package not loaded: affxparser")
+  affxparser::applyCdfGroups(...)
+}
+
 .cdfAddPlasqTypes <- function(...) {
   requireNamespace("affxparser") || throw("Package not loaded: affxparser")
   affxparser::cdfAddPlasqTypes(...)
@@ -24,11 +34,6 @@
 .readCdfHeader <- function(...) {
   requireNamespace("affxparser") || throw("Package not loaded: affxparser")
   affxparser::readCdfHeader(...)
-}
-
-.readCdfIsPm <- function(...) {
-  requireNamespace("affxparser") || throw("Package not loaded: affxparser")
-  affxparser::readCdfIsPm(...)
 }
 
 .readCdf <- function(...) {
@@ -56,9 +61,29 @@
   affxparser::readCdfUnitNames(...)
 }
 
+.readCdfIsPm <- function(...) {
+  requireNamespace("affxparser") || throw("Package not loaded: affxparser")
+  affxparser::readCdfIsPm(...)
+}
+
 .readCdfNbrOfCellsPerUnitGroup <- function(...) {
   requireNamespace("affxparser") || throw("Package not loaded: affxparser")
   affxparser::readCdfNbrOfCellsPerUnitGroup(...)
+}
+
+.readCelHeader <- function(...) {
+  requireNamespace("affxparser") || throw("Package not loaded: affxparser")
+  affxparser::readCelHeader(...)
+}
+
+.readCel <- function(...) {
+  requireNamespace("affxparser") || throw("Package not loaded: affxparser")
+  affxparser::readCel(...)
+}
+
+.readCelUnits <- function(...) {
+  requireNamespace("affxparser") || throw("Package not loaded: affxparser")
+  affxparser::readCelUnits(...)
 }
 
 .createCel <- function(...) {
@@ -176,9 +201,37 @@
   aroma.light::robustSmoothSpline(...)
 }
 
+
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# Imports for
+# Imports for BiocGenerics
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+.annotation <- function(...) {
+  requireNamespace("BiocGenerics") || throw("Package not loaded: BiocGenerics")
+  BiocGenerics::annotation(...)
+}
+
+`.annotation<-` <- function(...) {
+  requireNamespace("BiocGenerics") || throw("Package not loaded: BiocGenerics")
+  ns <- getNamespace("BiocGenerics")
+  `annotation<-` <- get("annotation<-", mode="function", envir=ns)
+  `annotation<-`(...)
+}
 
 
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Imports for oligo
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+.cleanPlatformName <- function(...) {
+  requireNamespace("oligo") || throw("Package not loaded: oligo")
+  oligo::cleanPlatformName(...)
+}
 
+.getPlatformDesign <- function(...) {
+  requireNamespace("oligo") || throw("Package not loaded: oligo")
+  oligo::getPlatformDesign(...)
+}
+
+.geometry <- function(...) {
+  requireNamespace("oligo") || throw("Package not loaded: oligo")
+  oligo::geometry(...)
+}

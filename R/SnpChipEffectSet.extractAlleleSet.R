@@ -1,7 +1,5 @@
 setMethodS3("extractAlleleSet", "SnpChipEffectSet", function(this, units=NULL, sortUnits=TRUE, transform=log2, ..., verbose=FALSE) {
   requireNamespace("Biobase") || throw("Package not loaded: Biobase")
-  requireNamespace("oligo") || throw("Package not loaded: oligo")
-  cleanPlatformName <- oligo::cleanPlatformName
 
 
   # Assert oligo version
@@ -187,8 +185,8 @@ setMethodS3("extractAlleleSet", "SnpChipEffectSet", function(this, units=NULL, s
   unitNames <- NULL;
 
   # Assign annotation data
-  pdPkgName <- cleanPlatformName(chipType);
-  annotation(res) <- pdPkgName;
+  pdPkgName <- .cleanPlatformName(chipType);
+  .annotation(res) <- pdPkgName;
 
   # Assign sample names
   filenames <- sapply(this, getFilename);

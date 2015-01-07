@@ -228,15 +228,15 @@ setMethodS3("getCellQuartets", "AffymetrixCdfFile", function(this, units=NULL, m
   verbose && enter(verbose, "Restructuring into a matrices");
 
   # Extract field 'tbase'
-  tbase <- applyCdfGroups(cdfUnits, cdfGetFields, "tbase");
-  tbase <- applyCdfGroups(tbase, function(groups) {
+  tbase <- .applyCdfGroups(cdfUnits, cdfGetFields, "tbase");
+  tbase <- .applyCdfGroups(tbase, function(groups) {
     lapply(groups, FUN=.subset2, 1);
   });
   tbase <- lapply(tbase, FUN=.subset2, "groups");
 
   # Extract field 'cells'
-  cells <- applyCdfGroups(cdfUnits, cdfGetFields, "indices");
-  cells <- applyCdfGroups(cells, function(groups) {
+  cells <- .applyCdfGroups(cdfUnits, cdfGetFields, "indices");
+  cells <- .applyCdfGroups(cells, function(groups) {
     lapply(groups, FUN=.subset2, 1);
   });
   cells <- lapply(cells, FUN=.subset2, "groups");

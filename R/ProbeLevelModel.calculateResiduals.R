@@ -94,7 +94,7 @@ setMethodS3("calculateResidualSet", "ProbeLevelModel", function(this, units=NULL
       gc <- gc();
       verbose && exit(verbose);
       verbose && enter(verbose, "Calculate group sizes");
-      unitGroupSizes <- applyCdfGroups(cdfUnits, lapply, FUN=function(group) {
+      unitGroupSizes <- .applyCdfGroups(cdfUnits, lapply, FUN=function(group) {
         length(.subset2(group, 1));
       });
       unitGroupSizes <- unlist(unitGroupSizes, use.names=FALSE);

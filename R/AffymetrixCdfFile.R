@@ -1199,7 +1199,7 @@ setMethodS3("getFirstCellIndices", "AffymetrixCdfFile", function(this, units=NUL
 
     verbose && enter(verbose, "Extracting the first cell in each unit group");
     # For each unit and each group, get the index of the first cell.
-    res <- applyCdfGroups(res, function(groups) {
+    res <- .applyCdfGroups(res, function(groups) {
       # For each group, pull out the first cell.
       lapply(groups, FUN=function(group) {
         # group$indices[1] == group[[1]][1] == ...

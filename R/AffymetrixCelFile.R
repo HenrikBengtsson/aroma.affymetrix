@@ -353,7 +353,7 @@ setMethodS3("getHeader", "AffymetrixCelFile", function(this, ...) {
   header <- this$.header;
   if (is.null(header)) {
     pathname <- getPathname(this);
-    header <- readCelHeader(pathname);
+    header <- .readCelHeader(pathname);
     this$.header <- header;
   }
   header;
@@ -602,10 +602,6 @@ setMethodS3("getPlatform", "AffymetrixCelFile", function(this, ...) {
 # @keyword IO
 #*/###########################################################################
 setMethodS3("readUnits", "AffymetrixCelFile", function(this, units=NULL, cdf=NULL, ..., stratifyBy=NULL, force=FALSE, cache=FALSE, verbose=FALSE) {
-  requireNamespace("affxparser") || throw("Package not loaded: affxparser")
-  readCelUnits <- affxparser::readCelUnits
-
-
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
 
@@ -624,7 +620,7 @@ setMethodS3("readUnits", "AffymetrixCelFile", function(this, units=NULL, cdf=NUL
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   pathname <- getPathname(this);
   suppressWarnings({
-    res <- readCelUnits(pathname, cdf=cdf, dropArrayDim=TRUE, ...);
+    res <- .readCelUnits(pathname, cdf=cdf, dropArrayDim=TRUE, ...);
   })
 
   res;
@@ -792,6 +788,10 @@ setMethodS3("clearData", "AffymetrixCelFile", function(this, fields=c("intensiti
 # @keyword IO
 #*/###########################################################################
 setMethodS3("readRawData", "AffymetrixCelFile", function(this, indices=NULL, fields=c("xy", "intensities", "stdvs", "pixels"), ..., drop=FALSE, verbose=FALSE) {
+  requireNamespace("affxparser") || throw("Package not loaded: affxparser")
+  readCel <- affxparser::readCel
+
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -848,6 +848,7 @@ setMethodS3("readRawData", "AffymetrixCelFile", function(this, indices=NULL, fie
     ...,
     verbose=cVerbose
   );
+
   fcn <- get("readCel", mode="function");
   keep <- intersect(names(args), names(formals(fcn)));
   args <- args[keep];

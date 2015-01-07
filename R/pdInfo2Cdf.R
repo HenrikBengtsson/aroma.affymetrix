@@ -55,15 +55,14 @@
 # @keyword internal
 #*/###########################################################################
 pdInfo2Cdf <- function(pdpkg, celfile, overwrite=FALSE, verbose=TRUE, ...) {
-  requireNamespace("affxparser") || throw("Package not loaded: affxparser")
-  readCelHeader <- affxparser::readCelHeader
-
   requireNamespace("oligo") || throw("Package not loaded: oligo")
   read.celfiles <- oligo::read.celfiles
 
+  .requireNamespace("DBI") || throw("Package not loaded: DBI")
+  dbGetQuery <- DBI::dbGetQuery
+
   .require <- require
   .require("pdInfoBuilder") || throw("Package not loaded: pdInfoBuilder")
-  dbGetQuery <- pdInfoBuilder::dbGetQuery
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -121,7 +120,7 @@ pdInfo2Cdf <- function(pdpkg, celfile, overwrite=FALSE, verbose=TRUE, ...) {
   verbose && cat(verbose, "Pathname: ", celfile);
 
   verbose && enter(verbose, "Reading CEL file header");
-  hdr <- readCelHeader(celfile);
+  hdr <- .readCelHeader(celfile);
   nrows <- as.integer(hdr$rows);
   ncols <- as.integer(hdr$cols);
   chipType <- hdr$chiptype;
@@ -144,7 +143,7 @@ pdInfo2Cdf <- function(pdpkg, celfile, overwrite=FALSE, verbose=TRUE, ...) {
   # Retrieving information from PD package
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   verbose && enter(verbose, "Retrieving Platform Design database");
-  pd <- getPlatformDesign(cel);
+  pd <- .getPlatformDesign(cel);
   # Not needed anymore
   cel <- NULL;  # Not needed anymore
   verbose && exit(verbose);

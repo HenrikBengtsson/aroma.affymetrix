@@ -78,7 +78,7 @@ setMethodS3("getCellIndices", "SnpProbeAffinityFile", function(this, ..., unlist
 
   # Merge strands?
   if (mergeStrands) {
-    cells <- applyCdfGroups(cells, cdfMergeStrands);
+    cells <- .applyCdfGroups(cells, cdfMergeStrands);
   }
 
 

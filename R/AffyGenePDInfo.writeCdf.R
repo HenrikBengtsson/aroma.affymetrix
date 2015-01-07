@@ -1,4 +1,4 @@
-###########################################################################/**
+b###########################################################################/**
 # @set "class=AffyGenePDInfo"
 # @RdocMethod writeCdf
 # @alias writeCdf.PDInfoList
@@ -57,11 +57,14 @@
 #*/###########################################################################
 setMethodS3("writeCdf", "AffyGenePDInfo", function(this, tags=c("*"), unitsBy=c("transcript", "exon"), namesBy=c("fsetid", "id"), path=NULL, overwrite=FALSE, verbose=TRUE, ...) {
   # Early error, iff package is missing
-  requireNamespace("pdInfoBuilder") || throw("Package not loaded: pdInfoBuilder")
-  db <- pdInfoBuilder::db
-  dbGetQuery <- pdInfoBuilder::dbGetQuery
-  dbListTables <- pdInfoBuilder::dbListTables
+  .requireNamespace("DBI") || throw("Package not loaded: DBI")
+  dbGetQuery <- DBI::dbGetQuery
+  dbListTables <- DBI::dbListTables
 
+  requireNamespace("oligoClasses") || throw("Package not loaded: oligoClasses")
+  db <- oligoClasses::db
+
+  requireNamespace("pdInfoBuilder") || throw("Package not loaded: pdInfoBuilder")
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validating arguments
@@ -104,7 +107,7 @@ setMethodS3("writeCdf", "AffyGenePDInfo", function(this, tags=c("*"), unitsBy=c(
   pkgInfo <- title <- NULL;
 
   # Chip type package name
-  pkgNameT <- cleanPlatformName(chipType);
+  pkgNameT <- .cleanPlatformName(chipType);
 
   # Sanity check
   stopifnot(pkgNameT == pkgName);
@@ -139,7 +142,7 @@ setMethodS3("writeCdf", "AffyGenePDInfo", function(this, tags=c("*"), unitsBy=c(
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Retrieve chip type dimensions
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  dim <- geometry(pd);
+  dim <- .geometry(pd);
   nrows <- dim[1];
   ncols <- dim[2];
   # Not needed anymore
@@ -171,7 +174,7 @@ setMethodS3("writeCdf", "AffyGenePDInfo", function(this, tags=c("*"), unitsBy=c(
   }
   for (need in needs) {
     if (!is.element(need, tables)) {
-      throw(sprintf("Required table '%s' not in database '%s': %s", need, annotation(pd), paste(tables, collapse=", ")));
+      throw(sprintf("Required table '%s' not in database '%s': %s", need, .annotation(pd), paste(tables, collapse=", ")));
     }
   }
 
@@ -410,7 +413,7 @@ setMethodS3("writeCdf", "PDInfoList", function(ffs, pathname, overwrite=FALSE, .
 
 
 setMethodS3("writeCdf", "DBPDInfo", function(this, tags=c("*"), unitsBy=c("transcript", "exon"), namesBy=c("fsetid", "id"), path=NULL, overwrite=FALSE, verbose=TRUE, ...) {
-  throw(sprintf("writeCdf() for '%s' not implemented: %s", class(this)[1L], annotation(this)));
+  throw(sprintf("writeCdf() for '%s' not implemented: %s", class(this)[1L], .annotation(this)));
 })
 
 

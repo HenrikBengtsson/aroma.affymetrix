@@ -1,4 +1,9 @@
 getPlasqTypes <- function(cdf, ...) {
+  requireNamespace("affxparser") || throw("Package not loaded: affxparser")
+  cdfGetFields <- affxparser::cdfGetFields
+#  cdfMergeAlleles <- affxparser::cdfMergeAlleles
+
+
   cdf <- .applyCdfGroups(cdf, .cdfAddPlasqTypes);
   cdf <- .applyCdfGroups(cdf, cdfGetFields, c("plasqType"));
 #  cdf <- .applyCdfGroups(cdf, cdfMergeAlleles);

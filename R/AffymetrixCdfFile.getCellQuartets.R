@@ -165,6 +165,10 @@ setMethodS3("readUnitsByQuartets", "AffymetrixCdfFile", function(this, units=NUL
 
 
 setMethodS3("getCellQuartets", "AffymetrixCdfFile", function(this, units=NULL, mergeGroups=TRUE, ..., force=FALSE, cache=TRUE, verbose=FALSE) {
+  requireNamespace("affxparser") || throw("Package not loaded: affxparser")
+  cdfGetFields <- affxparser::cdfGetFields
+
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

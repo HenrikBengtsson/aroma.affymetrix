@@ -1,4 +1,7 @@
 setMethodS3("getAlleleProbePairs2", "AffymetrixCdfFile", function(this, ..., verbose=FALSE) {
+  requireNamespace("affxparser") || throw("Package not loaded: affxparser")
+  cdfGetGroups <- affxparser::cdfGetGroups
+
   # Look up base::apply(); '::' is expensive
   base_apply <- base::apply;
 

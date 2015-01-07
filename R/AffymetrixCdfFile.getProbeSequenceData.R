@@ -1,4 +1,8 @@
 setMethodS3("getProbeSequenceData", "AffymetrixCdfFile", function(this, paths=NULL, rows=NULL, safe=TRUE, force=FALSE, verbose=FALSE, ...) {
+  requireNamespace("affxparser") || throw("Package not loaded: affxparser")
+  cdfGetFields <- affxparser::cdfGetFields
+
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

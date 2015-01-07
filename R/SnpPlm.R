@@ -46,6 +46,10 @@ setMethodS3("getParameters", "SnpPlm", function(this, ...) {
 
 
 setMethodS3("getCellIndices", "SnpPlm", function(this, ..., verbose=FALSE) {
+  requireNamespace("affxparser") || throw("Package not loaded: affxparser")
+  cdfMergeStrands <- affxparser::cdfMergeStrands
+
+
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
 

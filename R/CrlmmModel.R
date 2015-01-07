@@ -512,7 +512,7 @@ setMethodS3("fit", "CrlmmModel", function(this, units="remaining", force=FALSE, 
     verbose && enter(verbose, "Extracting data");
     eSet <- extractESet(ces, units=unitsChunk, sortUnits=FALSE,
                              hasQuartets=hasQuartets, verbose=verbose);
-    phenoData(eSet) <- phenoData;
+    .phenoData(eSet) <- phenoData;
     verbose && exit(verbose);
 
     unitNames <- .featureNames(eSet);

@@ -210,10 +210,10 @@
   BiocGenerics::annotation(...)
 }
 
-`.annotation<-` <- function(...) {
+`.annotation<-` <- function(..., value) {
   requireNamespace("BiocGenerics") || throw("Package not loaded: BiocGenerics")
   ns <- getNamespace("BiocGenerics")
-  get("annotation<-", mode="function", envir=ns)(...)
+  get("annotation<-", mode="function", envir=ns)(..., value=value)
 }
 
 
@@ -225,15 +225,33 @@
   Biobase::assayData(...)
 }
 
+`.assayData<-` <- function(..., value) {
+  requireNamespace("Biobase") || throw("Package not loaded: Biobase")
+  ns <- getNamespace("Biobase")
+  get("assayData<-", mode="function", envir=ns)(..., value=value)
+}
+
+`.phenoData<-` <- function(..., value) {
+  requireNamespace("Biobase") || throw("Package not loaded: Biobase")
+  ns <- getNamespace("Biobase")
+  get("phenoData<-", mode="function", envir=ns)(..., value=value)
+}
+
+`.protocolData<-` <- function(..., value) {
+  requireNamespace("Biobase") || throw("Package not loaded: Biobase")
+  ns <- getNamespace("Biobase")
+  get("protocolData<-", mode="function", envir=ns)(..., value=value)
+}
+
 .featureNames <- function(...) {
   requireNamespace("Biobase") || throw("Package not loaded: Biobase")
   Biobase::featureNames(...)
 }
 
-`.featureNames<-` <- function(...) {
+`.featureNames<-` <- function(..., value) {
   requireNamespace("Biobase") || throw("Package not loaded: Biobase")
   ns <- getNamespace("Biobase")
-  get("featureNames<-", mode="function", envir=ns)(...)
+  get("featureNames<-", mode="function", envir=ns)(..., value=value)
 }
 
 .sampleNames <- function(...) {
@@ -241,10 +259,10 @@
   Biobase::sampleNames(...)
 }
 
-`.sampleNames<-` <- function(...) {
+`.sampleNames<-` <- function(..., value) {
   requireNamespace("Biobase") || throw("Package not loaded: Biobase")
   ns <- getNamespace("Biobase")
-  get("sampleNames<-", mode="function", envir=ns)(...)
+  get("sampleNames<-", mode="function", envir=ns)(..., value=value)
 }
 
 

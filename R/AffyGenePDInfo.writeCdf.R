@@ -57,7 +57,7 @@
 #*/###########################################################################
 setMethodS3("writeCdf", "AffyGenePDInfo", function(this, tags=c("*"), unitsBy=c("transcript", "exon"), namesBy=c("fsetid", "id"), path=NULL, overwrite=FALSE, verbose=TRUE, ...) {
   # Early error, iff package is missing
-  .requireNamespace("DBI") || throw("Package not loaded: DBI")
+  requireNamespace("DBI") || throw("Package not loaded: DBI")
   dbGetQuery <- DBI::dbGetQuery
   dbListTables <- DBI::dbListTables
 

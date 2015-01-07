@@ -90,7 +90,7 @@ setMethodS3("justRMA", "AffymetrixCelSet", function(csR, flavor=c("oligo", "affy
   data <- data.frame(ScanDate=getTimestamps(csR));
   rownames(data) <- gsub(",chipEffects", "", getFullNames(ces), fixed=TRUE);
   data <- as(data, "AnnotatedDataFrame");
-  protocolData(eset) <- data;
+  .protocolData(eset) <- data;
   data <- NULL;
 
   verbose && print(verbose, eset);

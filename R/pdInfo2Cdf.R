@@ -58,8 +58,11 @@ pdInfo2Cdf <- function(pdpkg, celfile, overwrite=FALSE, verbose=TRUE, ...) {
   requireNamespace("oligo") || throw("Package not loaded: oligo")
   read.celfiles <- oligo::read.celfiles
 
-  .requireNamespace("DBI") || throw("Package not loaded: DBI")
+  requireNamespace("DBI") || throw("Package not loaded: DBI")
   dbGetQuery <- DBI::dbGetQuery
+
+  requireNamespace("oligoClasses") || throw("Package not loaded: oligoClasses")
+  db <- oligoClasses::db
 
   .require <- require
   .require("pdInfoBuilder") || throw("Package not loaded: pdInfoBuilder")

@@ -32,7 +32,7 @@ install:
 #  - ./travis-tool.sh install_r_binary r.methodss3 r.oo r.utils
   - ./travis-tool.sh bioc_install aroma.light DNAcopy affxparser preprocessCore
   - ./travis-tool.sh install_deps
-  - ./travis-tool.sh install_github HenrikBengtsson/aroma.core
+  - ./travis-tool.sh install_github HenrikBengtsson/aroma.core@develop
 
 branches:
   except:

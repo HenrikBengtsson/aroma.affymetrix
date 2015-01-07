@@ -213,8 +213,38 @@
 `.annotation<-` <- function(...) {
   requireNamespace("BiocGenerics") || throw("Package not loaded: BiocGenerics")
   ns <- getNamespace("BiocGenerics")
-  `annotation<-` <- get("annotation<-", mode="function", envir=ns)
-  `annotation<-`(...)
+  get("annotation<-", mode="function", envir=ns)(...)
+}
+
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Imports for Biobase
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+.assayData <- function(...) {
+  requireNamespace("Biobase") || throw("Package not loaded: Biobase")
+  Biobase::assayData(...)
+}
+
+.featureNames <- function(...) {
+  requireNamespace("Biobase") || throw("Package not loaded: Biobase")
+  Biobase::featureNames(...)
+}
+
+`.featureNames<-` <- function(...) {
+  requireNamespace("Biobase") || throw("Package not loaded: Biobase")
+  ns <- getNamespace("Biobase")
+  get("featureNames<-", mode="function", envir=ns)(...)
+}
+
+.sampleNames <- function(...) {
+  requireNamespace("Biobase") || throw("Package not loaded: Biobase")
+  Biobase::sampleNames(...)
+}
+
+`.sampleNames<-` <- function(...) {
+  requireNamespace("Biobase") || throw("Package not loaded: Biobase")
+  ns <- getNamespace("Biobase")
+  get("sampleNames<-", mode="function", envir=ns)(...)
 }
 
 

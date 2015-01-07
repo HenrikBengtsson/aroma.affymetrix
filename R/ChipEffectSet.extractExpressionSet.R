@@ -41,8 +41,9 @@
 # @keyword programming
 #*/###########################################################################
 setMethodS3("extractExpressionSet", "ChipEffectSet", function(this, ..., logBase=2, orderUnitsBy=c("asis", "lexicographic"), annotationPkg=NULL, verbose=FALSE) {
-  .require <- require
-  .require("Biobase") || throw("Package not loaded: Biobase");
+  requireNamespace("Biobase") || throw("Package not loaded: Biobase");
+  ExpressionSet <- Biobase::ExpressionSet
+
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments

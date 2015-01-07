@@ -331,7 +331,7 @@ setMethodS3("fit", "CrlmmModel", function(this, units="remaining", force=FALSE, 
     } # extractESet()
 
     extractLogRatios <- function(eSet, ...) {
-      ad <- assayData(eSet);
+      ad <- .assayData(eSet);
       M <- ad$senseAlleleA - ad$senseAlleleB;
       # Not needed anymore
       ad <- NULL;
@@ -515,7 +515,7 @@ setMethodS3("fit", "CrlmmModel", function(this, units="remaining", force=FALSE, 
     phenoData(eSet) <- phenoData;
     verbose && exit(verbose);
 
-    unitNames <- featureNames(eSet);
+    unitNames <- .featureNames(eSet);
     verbose && cat(verbose, "Unit names:");
     verbose && str(verbose, unitNames);
 

@@ -23,12 +23,12 @@ setMethodS3("extractTheta", "SnpCnvQSet", function(this, ..., transform=function
   nbrOfGroups <- 2L;  # (thetaA, thetaB)
 
   # Extract sample names
-  sampleNames <- sampleNames(eSet);
+  sampleNames <- .sampleNames(eSet);
   sampleNames <- gsub("[.](cel|CEL)$", "", sampleNames);
   sampleNames <- gsub(",.*$", "", sampleNames);
 
   # Extract unit names
-  snpNames <- featureNames(eSet);
+  snpNames <- .featureNames(eSet);
 
   # Allocate result object
   naValue <- as.double(NA);

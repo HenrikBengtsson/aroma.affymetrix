@@ -76,7 +76,7 @@ setMethodS3("extractSnpCnvQSet", "SnpChipEffectSet", function(this, units=NULL, 
   theta <- NULL;
 
   # Assign feature data
-  featureNames(res) <- unitNames;
+  .featureNames(res) <- unitNames;
   # Not needed anymore
   unitNames <- NULL;
 
@@ -88,7 +88,7 @@ setMethodS3("extractSnpCnvQSet", "SnpChipEffectSet", function(this, units=NULL, 
   filenames <- sapply(this, getFilename);
   names(filenames) <- NULL;
   filenames <- gsub(",chipEffects", "", filenames);
-  sampleNames(res) <- filenames;
+  .sampleNames(res) <- filenames;
 
   verbose && exit(verbose);
 

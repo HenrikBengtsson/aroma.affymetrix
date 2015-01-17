@@ -1,6 +1,9 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 2.13.x [2015-01-16]
+
+
 Version: 2.12.10 [2015-01-06]
 o CLEANUP: Major cleanup of namespace imports from suggested packages
   such as affxparser and aroma.light.

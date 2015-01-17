@@ -19,8 +19,9 @@ env:
     - PKGR="./pkg-build.sh"    # r-builder
     - R_BUILD_ARGS="--no-manual"
     - R_CHECK_ARGS="--no-manual --as-cran"
-    # Need LaTeX?
-    - BOOTSTRAP_LATEX=""  ## Very time consuming!
+    - _R_CHECK_FORCE_SUGGESTS_=false
+    # Need LaTeX? (very time consuming to install)
+    - BOOTSTRAP_LATEX=""
     # Skip building vignettes, which iff LaTeX-based are very
     # time consuming because LaTeX needs to be installed
     - R_BUILD_ARGS="--no-build-vignettes ${R_BUILD_ARGS}"
@@ -48,7 +49,7 @@ before_install:
 install:
 #  - $PKGR github_package testthat
 #  - $PKGR github_package assertthat
-  - $PKGR install_bioc_install aroma.light DNAcopy affxparser preprocessCore
+  - $PKGR install_bioc aroma.light DNAcopy affxparser preprocessCore
 #  - $PKGR github_package jimhester/covr
   - $PKGR github_package HenrikBengtsson/covr
   - $PKGR install_deps

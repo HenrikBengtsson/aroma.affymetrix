@@ -28,6 +28,7 @@ environment:
 
 build_script:
   - travis-tool.sh install_bioc aroma.light DNAcopy affxparser preprocessCore 
+  - travis-tool.sh install_bioc AffymetrixDataTestFiles
   - travis-tool.sh install_deps
 
 test_script:

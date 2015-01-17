@@ -47,12 +47,11 @@ before_install:
     fi
 
 install:
-#  - $PKGR github_package testthat
-#  - $PKGR github_package assertthat
   - $PKGR install_bioc aroma.light DNAcopy affxparser preprocessCore
-#  - $PKGR github_package jimhester/covr
-  - $PKGR github_package HenrikBengtsson/covr
+  - $PKGR install_bioc AffymetrixDataTestFiles
   - $PKGR install_deps
+#  - $PKGR github_package jimhester/covr
+#  - $PKGR github_package HenrikBengtsson/covr
 
 script: $PKGR run_tests
 

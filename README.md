@@ -16,6 +16,4 @@ This package is also available via
 
 * R CMD check status:
   <a href="https://travis-ci.org/HenrikBengtsson/aroma.affymetrix"><img src="https://travis-ci.org/HenrikBengtsson/aroma.affymetrix.svg?branch=master" alt="Build status"></a>
-  <a href="https://ci.appveyor.com/project/HenrikBengtsson/aroma-affymetrix/"><img
-  src="https://ci.appveyor.com/api/projects/status/???"
-  alt="Build status"></a> 
+  <a href="https://ci.appveyor.com/project/HenrikBengtsson/aroma-affymetrix/"><img src="https://ci.appveyor.com/api/projects/status/mdli56wvavhcxu2k/branch/develop" alt="Build status"></a> 

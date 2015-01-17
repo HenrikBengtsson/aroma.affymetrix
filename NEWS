@@ -1,7 +1,10 @@
 Package: aroma.affymetrix
 =========================
 
-Version: 2.13.x [2015-01-16]
+Version: 2.13.0 [2015-01-17]
+o Bumped version for CRAN submission.
+o Updated package dependencies.
+o Package passes all redundancy tests.
 
 
 Version: 2.12.10 [2015-01-06]

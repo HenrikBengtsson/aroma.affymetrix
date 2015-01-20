@@ -323,7 +323,7 @@ setMethodS3("findUnitsTodo", "ChipEffectFile", function(this, units=NULL, ..., f
 
   # Read one cell from each unit
   verbose && enter(verbose, "Reading data for these ", length(idxs), " cells");
-  value <- readCel(getPathname(this), indices=idxs, readIntensities=FALSE,
+  value <- .readCel(getPathname(this), indices=idxs, readIntensities=FALSE,
                    readStdvs=TRUE, readPixels=FALSE)$stdvs;
   verbose && exit(verbose);
 
@@ -776,7 +776,7 @@ setMethodS3("updateDataFlat", "ChipEffectFile", function(this, data, ..., verbos
   data <- data[,keep];
   pathname <- getPathname(this);
   pathname <- Arguments$getWritablePathname(pathname);
-  updateCel(pathname, indices=indices, data, verbose=verbose2);
+  .updateCel(pathname, indices=indices, data, verbose=verbose2);
   verbose && exit(verbose);
 
   verbose && exit(verbose);

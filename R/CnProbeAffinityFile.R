@@ -81,7 +81,7 @@ setMethodS3("getCellIndices", "CnProbeAffinityFile", function(this, ..., unlist=
   # In order to improve readability we merge the names of alleles groups
   # combined, e.g. groups 'C' and 'G' become group 'CG'.
   if (combineAlleles) {
-    cells <- applyCdfGroups(cells, function(groups) {
+    cells <- .applyCdfGroups(cells, function(groups) {
       ngroups <- length(groups);
       odds <- seq(from=1L, to=ngroups, by=2L);
       names <- names(groups);

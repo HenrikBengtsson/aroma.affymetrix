@@ -91,14 +91,14 @@ setMethodS3("readCfnHeader", "default", function(pathname, ..., verbose=FALSE) {
   # Base range (non-self)
   nonSelfBaseRange <- integer(2);
   nonSelfBaseRange <- readInt(con, n=2);
-  verbose && cat(verbose, "Base range (NonSelf):", 
+  verbose && cat(verbose, "Base range (NonSelf):",
                                    paste(nonSelfBaseRange, collapse="-"));
 
   # Infer number of SNPs from CDF file
-  cdfPathname <- findCdf(chipType);
+  cdfPathname <- .findCdf(chipType);
   if (is.null(cdfPathname))
     throw("Could not locate CDF for this chip type: ", chipType);
-  isSnp <- (regexpr("SNP_", readCdfUnitNames(cdfPathname)) != -1);
+  isSnp <- (regexpr("SNP_", .readCdfUnitNames(cdfPathname)) != -1);
   nbrOfSnps <- sum(isSnp);
   # Not needed anymore
   isSnp <- NULL;

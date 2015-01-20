@@ -768,7 +768,7 @@ setMethodS3("process", "AdditiveCovariatesNormalization", function(this, ..., fo
 
     verbose && cat(verbose, "Log2 signals:");
     verbose && str(verbose, y);
-    yN <- normalizeFragmentLength(y, fragmentLengths=X,
+    yN <- .normalizeFragmentLength(y, fragmentLengths=X,
                     targetFcns=targetFcns, subsetToFit=subset,
                     onMissing=onMissing, ...);
     verbose && cat(verbose, "Normalized log2 signals:");
@@ -828,7 +828,7 @@ setMethodS3("process", "AdditiveCovariatesNormalization", function(this, ..., fo
 
     verbose2 <- -as.integer(verbose) - 5;
     pathnameN <- getPathname(ceN);
-    updateCel(pathnameN, indices=cells, intensities=data, verbose=verbose2);
+    .updateCel(pathnameN, indices=cells, intensities=data, verbose=verbose2);
     # Not needed anymore
     cells <- data <- NULL;
     verbose && exit(verbose);

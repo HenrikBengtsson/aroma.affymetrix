@@ -79,10 +79,10 @@ setMethodS3("justRMA", "AffymetrixCelSet", function(csR, flavor=c("oligo", "affy
 
   # BACKWARD COMPATIBIILTY/AD HOC:
   # Coerce std errors to missing values in case they are all 1.
-  se.exprs <- assayData(eset)$se.exprs
+  se.exprs <- .assayData(eset)$se.exprs
   if (all(se.exprs == 1)) {
     is.na(se.exprs) <- TRUE;
-    assayData(eset)$se.exprs <- se.exprs;
+    .assayData(eset)$se.exprs <- se.exprs;
   }
   se.exprs <- NULL;
 
@@ -90,7 +90,7 @@ setMethodS3("justRMA", "AffymetrixCelSet", function(csR, flavor=c("oligo", "affy
   data <- data.frame(ScanDate=getTimestamps(csR));
   rownames(data) <- gsub(",chipEffects", "", getFullNames(ces), fixed=TRUE);
   data <- as(data, "AnnotatedDataFrame");
-  protocolData(eset) <- data;
+  .protocolData(eset) <- data;
   data <- NULL;
 
   verbose && print(verbose, eset);

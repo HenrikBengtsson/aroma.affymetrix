@@ -38,9 +38,6 @@
 # }
 #*/###########################################################################
 setMethodS3("normalizeQuantile", "AffymetrixCelFile", function(this, path=file.path("normQuantile", getChipType(this)), xTarget, subsetToUpdate=NULL, typesToUpdate=NULL, ..., overwrite=FALSE, skip=!overwrite, verbose=FALSE) {
-  # Load aroma.light::normalizeQuantile()
-  require("aroma.light") || throw("Package aroma.light not loaded.");
-
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -103,7 +100,7 @@ setMethodS3("normalizeQuantile", "AffymetrixCelFile", function(this, path=file.p
 
   # Normalize intensities
   verbose && enter(verbose, "Normalizing to empirical target distribution");
-  x[subsetToUpdate] <- normalizeQuantile(x[subsetToUpdate], xTarget=xTarget);
+  x[subsetToUpdate] <- .normalizeQuantile(x[subsetToUpdate], xTarget=xTarget);
   # Not needed anymore
   subsetToUpdate <- NULL;
   verbose && exit(verbose);
@@ -122,7 +119,7 @@ setMethodS3("normalizeQuantile", "AffymetrixCelFile", function(this, path=file.p
   verbose && exit(verbose);
 
   verbose && enter(verbose, "Writing normalized intensities");
-  updateCel(pathnameT, intensities=x);
+  .updateCel(pathnameT, intensities=x);
   verbose && exit(verbose);
   verbose && exit(verbose);
 

@@ -209,7 +209,7 @@ setMethodS3("process", "AlleleSummation", function(this, ..., verbose=FALSE) {
       }
       cells <- otherUgcMap[,"cell"];
       if (length(cells) > 0) {
-        data <- readCel(getPathname(inputFile), indices=cells,
+        data <- .readCel(getPathname(inputFile), indices=cells,
                         readIntensities=TRUE, readStdvs=TRUE, readPixels=TRUE);
         data <- as.data.frame(data[c("intensities", "stdvs", "pixels")]);
         verbose && str(verbose, data);
@@ -233,7 +233,7 @@ setMethodS3("process", "AlleleSummation", function(this, ..., verbose=FALSE) {
         verbose && exit(verbose);
       }
       cells <- snpUgcMap[,"cell"];
-      data <- readCel(getPathname(inputFile), indices=cells,
+      data <- .readCel(getPathname(inputFile), indices=cells,
                       readIntensities=TRUE, readStdvs=TRUE, readPixels=FALSE);
       yAB <- data[["intensities"]];
       verbose && cat(verbose, "(yA,yB) signals:");
@@ -246,8 +246,7 @@ setMethodS3("process", "AlleleSummation", function(this, ..., verbose=FALSE) {
       sdAB <- matrix(sdAB, nrow=2);
 
       # Sum the alleles
-      naValue <- as.double(NA);
-      y <- sd <- rep(naValue, ncol(yAB));
+      y <- sd <- rep(NA_real_, ncol(yAB));
       okAB <- !is.na(yAB);
       # (1) No missing data
       ok <- okAB[1,] & okAB[2,];

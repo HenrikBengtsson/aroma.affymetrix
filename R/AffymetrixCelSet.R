@@ -703,7 +703,7 @@ setMethodS3("byPath", "AffymetrixCelSet", function(static, path, cdf=NULL, patte
       verbose && enter(verbose, "Scanning CEL set for used chip types");
       # This takes time if the CEL files are ASCII files.
       chipTypes <- sapply(set, FUN=function(file) {
-        readCelHeader(getPathname(file))$chiptype;
+        .readCelHeader(getPathname(file))$chiptype;
       })
       tChipTypes <- table(chipTypes);
       verbose && print(verbose, tChipTypes);
@@ -1087,7 +1087,7 @@ setMethodS3("getUnitIntensities", "AffymetrixCelSet", function(this, units=NULL,
     cdfUnits <- getCellIndices(cdf, units=units, ...);
   }
 
-  res <- readCelUnits(pathnames, cdf=cdfUnits, readStdvs=FALSE,
+  res <- .readCelUnits(pathnames, cdf=cdfUnits, readStdvs=FALSE,
                               readPixels=FALSE, dropArrayDim=FALSE, ...);
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -1162,7 +1162,7 @@ setMethodS3("readUnits", "AffymetrixCelSet", function(this, units=NULL, ..., for
   verbose && enter(verbose, "Calling readCelUnits() for ",
                                               length(pathnames), " files");
   if (is.list(units)) {
-    res <- readCelUnits(pathnames, cdf=units, dropArrayDim=FALSE, ...);
+    res <- .readCelUnits(pathnames, cdf=units, dropArrayDim=FALSE, ...);
   } else {
     # Always ask for CDF information from the CDF object!
     verbose && enter(verbose, "Retrieving CDF unit information");
@@ -1174,7 +1174,7 @@ setMethodS3("readUnits", "AffymetrixCelSet", function(this, units=NULL, ..., for
     verbose && str(verbose, cdfList[1]);
     verbose && exit(verbose);
     verbose && enter(verbose, "Retrieving CEL units across samples");
-    res <- readCelUnits(pathnames, cdf=cdfList, dropArrayDim=FALSE, ...);
+    res <- .readCelUnits(pathnames, cdf=cdfList, dropArrayDim=FALSE, ...);
     verbose && exit(verbose);
   }
   verbose && exit(verbose);

@@ -152,7 +152,7 @@ setMethodS3("getCellIndices", "ExonChipEffectFile", function(this, ..., unlist=F
   # If merging groups, we only need one chip-effect parameter per unit
   if (mergeGroups) {
     verbose && enter(verbose, "Merging groups");
-    cells <- applyCdfGroups(cells, function(groups) {
+    cells <- .applyCdfGroups(cells, function(groups) {
       .subset(groups, 1L);
     })
     verbose && exit(verbose);

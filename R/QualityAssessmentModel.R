@@ -354,12 +354,12 @@ setMethodS3("getResiduals", "QualityAssessmentModel", function(this, units=NULL,
       pathname <- pathnames[kk];
       if (!isFile(pathname)) {
         df <- ds[[kk]];
-        celHeader <- cdfHeaderToCelHeader(cdfHeader, sampleName=getName(df));
-        createCel(pathname, header=celHeader, verbose=less(verbose));
+        celHeader <- .cdfHeaderToCelHeader(cdfHeader, sampleName=getName(df));
+        .createCel(pathname, header=celHeader, verbose=less(verbose));
       }
 
       verbose && enter(verbose, "updating file #", kk);
-      updateCelUnits(pathname, cdf=cdfList, data=data);
+      .updateCelUnits(pathname, cdf=cdfList, data=data);
       verbose && exit(verbose);
     } # for (kk ...)
 
@@ -536,8 +536,8 @@ setMethodS3("getWeights", "QualityAssessmentModel", function(this, path=NULL, na
         cdfHeader <- getHeader(cdf);
         dfKK <- ds[[kk]];
         sampleName <- getName(dfKK);
-        celHeader <- cdfHeaderToCelHeader(cdfHeader, sampleName=sampleName);
-        createCel(pathname[kk], header=celHeader, verbose=less(verbose));
+        celHeader <- .cdfHeaderToCelHeader(cdfHeader, sampleName=sampleName);
+        .createCel(pathname[kk], header=celHeader, verbose=less(verbose));
       }
 
       data <- lapply(weightsList, FUN=function(x){
@@ -549,7 +549,7 @@ setMethodS3("getWeights", "QualityAssessmentModel", function(this, path=NULL, na
         ))
       });
 
-      updateCelUnits(pathname[kk], cdf=cdfList, data=data);
+      .updateCelUnits(pathname[kk], cdf=cdfList, data=data);
     } # for (kk ...)
 
     unitsToDo <- unitsToDo[-head];

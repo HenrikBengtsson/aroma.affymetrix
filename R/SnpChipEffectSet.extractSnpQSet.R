@@ -1,6 +1,6 @@
 setMethodS3("extractSnpQSet", "SnpChipEffectSet", function(this, units=NULL, sortUnits=TRUE, transform=log2, ..., verbose=FALSE) {
-  require("Biobase") || throw("Package not loaded: Biobase");
-  require("oligo") || throw("Package not loaded: oligo");
+  requireNamespace("Biobase") || throw("Package not loaded: Biobase")
+
 
   # Assert oligo version
   pkg <- Package("oligo");
@@ -23,7 +23,7 @@ setMethodS3("extractSnpQSet", "SnpChipEffectSet", function(this, units=NULL, sor
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   cdf <- getCdf(this);
 
-  # Argument 'units':  
+  # Argument 'units':
   if (is.null(units)) {
     # Identify all SNP_A-* units (as what is returned by oligo)
     units <- indexOf(cdf, pattern="^SNP_A-");
@@ -76,13 +76,13 @@ setMethodS3("extractSnpQSet", "SnpChipEffectSet", function(this, units=NULL, sor
   lens <- sapply(dirs, FUN=length);
   uLens <- unique(lens);
   if (any(!is.element(uLens, c(2,4)))) {
-    throw("Internal error: Unexpected number of unit groups: ", 
+    throw("Internal error: Unexpected number of unit groups: ",
                                               paste(uLens, collapse=", "));
   }
 
   # Extract the direction/strand of the first group
 #  dirs <- lapply(dirs, FUN=function(groups) groups[1]);
-  dirs <- lapply(dirs, FUN=.subset, 1);
+  dirs <- lapply(dirs, FUN=.subset, 1L);
   dirs <- unlist(dirs, use.names=FALSE);
 
   # Identify which to swap from (antisense,sense) to (sense,antisense)
@@ -102,7 +102,7 @@ setMethodS3("extractSnpQSet", "SnpChipEffectSet", function(this, units=NULL, sor
   # Allocate and populate SnpQSet
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   verbose && enter(verbose, "Allocate and populate SnpQSet");
-  res <- new("SnpQSet", 
+  res <- new("SnpQSet",
     senseThetaA     = transform(theta[,1,,drop=TRUE]),
     senseThetaB     = transform(theta[,2,,drop=TRUE]),
     antisenseThetaA = transform(theta[,3,,drop=TRUE]),
@@ -114,19 +114,19 @@ setMethodS3("extractSnpQSet", "SnpChipEffectSet", function(this, units=NULL, sor
   theta <- NULL;
 
   # Assign feature data
-  featureNames(res) <- unitNames;
+  .featureNames(res) <- unitNames;
   # Not needed anymore
   unitNames <- NULL;
 
   # Assign annotation data
-  pdPkgName <- oligo::cleanPlatformName(chipType);
-  annotation(res) <- pdPkgName;
+  pdPkgName <- .cleanPlatformName(chipType);
+  .annotation(res) <- pdPkgName;
 
   # Assign sample names
   filenames <- sapply(this, getFilename);
   names(filenames) <- NULL;
   filenames <- gsub(",chipEffects", "", filenames);
-  sampleNames(res) <- filenames;
+  .sampleNames(res) <- filenames;
 
   verbose && exit(verbose);
 

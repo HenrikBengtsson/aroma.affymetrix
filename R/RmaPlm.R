@@ -228,7 +228,8 @@ setMethodS3("getRlmFitFunctions", "RmaPlm", function(static, withPriors=FALSE, .
   }
 
   if (!is.null(fcnList)) {
-    require(pkg, character.only=TRUE) || throw("Package not loaded: ", pkg);
+    .require <- require
+    .require(pkg, character.only=TRUE) || throw("Package not loaded: ", pkg)
     return(fcnList);
   }
 
@@ -360,7 +361,7 @@ setMethodS3("getFitUnitGroupFunction", "RmaPlm", function(this, ..., verbose=FAL
       hasNAs <- any(isNA);
       if (hasNAs) {
         if (treatNAsAs == "weights") {
-          badCells <- apply(isNA, MARGIN=2, FUN=all);
+          badCells <- colAlls(isNA);
           if (any(badCells)) {
             return(list(theta=rep(NA, I),
                         sdTheta=rep(NA, I),
@@ -379,7 +380,7 @@ setMethodS3("getFitUnitGroupFunction", "RmaPlm", function(this, ..., verbose=FAL
           hasNAs <- FALSE;
         } else if (treatNAsAs == "NA") {
           K0 <- K;  # Number of cells
-          okCells <- !apply(isNA, MARGIN=1, FUN=any);
+          okCells <- !rowAnys(isNA);
           # Analyze only valid cells
           y <- y[okCells,,drop=FALSE];
           nasRemoved <- TRUE;
@@ -518,7 +519,8 @@ setMethodS3("getFitUnitGroupFunction", "RmaPlm", function(this, ..., verbose=FAL
   if (flavor == "oligo") {
     # First, try to see if package is available;
     pkg <- "oligo";
-    require(pkg, character.only=TRUE) || throw("Package not loaded: ", pkg);
+    .require <- require
+    .require(pkg, character.only=TRUE) || throw("Package not loaded: ", pkg)
     pkgDesc <- packageDescription(pkg);
     ver <- pkgDesc$Version;
     verbose && cat(verbose, pkg, " version: ", ver);
@@ -651,7 +653,7 @@ setMethodS3("getFitUnitGroupFunction", "RmaPlm", function(this, ..., verbose=FAL
     attachLocally(fcnList);
     rmaModel <- rmaModelAffyPlm;
   } else if (flavor == "oligo") {
-    require("oligo") || throw("Package not loaded: oligo");
+    requireNamespace("oligo") || throw("Package not loaded: oligo")
     rmaModel <- rmaModelOligo;
   } else {
     throw("Cannot get fit function for RMA PLM. Unknown flavor: ", flavor);

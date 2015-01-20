@@ -236,9 +236,11 @@ setMethodS3("fitOne", "BaseCountNormalization", function(this, df, ..., verbose=
     model <- match.arg(model);
 
     if (model == "lm") {
-      require("stats") || throw("Package not loaded: stats");
+      requireNamespace("stats") || throw("Package not loaded: stats")
+      lm.fit <- stats::lm.fit
+
       fitFcn <- function(X, y, ...) {
-        fit <- stats::lm.fit(x=X, y=y, ...);
+        fit <- lm.fit(x=X, y=y, ...);
         # Remove redundant parameters
         for (ff in c("residuals", "effects", "fitted.values", "qr")) {
           fit[[ff]] <- NULL;
@@ -246,7 +248,6 @@ setMethodS3("fitOne", "BaseCountNormalization", function(this, df, ..., verbose=
         fit;
       }
     } else if (model == "robustSmoothSpline") {
-      require("aroma.light") || throw("Package not loaded: aroma.light");
       fitFcn <- function(X, y, ...) {
         fits <- list();
         for (cc in 1:ncol(X)) {
@@ -257,7 +258,7 @@ setMethodS3("fitOne", "BaseCountNormalization", function(this, df, ..., verbose=
           } else {
             # Note: 'X' may be a "raw" matrix (to save memory)
             Xcc <- as.double(X[,cc]);
-            fit <- robustSmoothSpline(x=Xcc, y=y, ...);
+            fit <- .robustSmoothSpline(x=Xcc, y=y, ...);
 ##            # Remove redundant parameters (although really small here)
 ##            for (ff in c("x", "y", "w", "yin", "lev")) {
 ##              fit[[ff]] <- NULL;
@@ -468,7 +469,7 @@ setMethodS3("fitOne", "BaseCountNormalization", function(this, df, ..., verbose=
     verbose && enter(verbose, "Creating final fit");
     for (kk in seq(from=2, to=length(fit))) {
       fitKK <- fit[[kk]];
-      fitKK <- robustSmoothSpline(x=fitKK$x, y=fitKK$y);
+      fitKK <- .robustSmoothSpline(x=fitKK$x, y=fitKK$y);
       fit[[kk]] <- fitKK;
     }
     verbose && exit(verbose);

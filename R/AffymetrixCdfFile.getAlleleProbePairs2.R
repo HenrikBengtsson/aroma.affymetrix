@@ -1,4 +1,7 @@
 setMethodS3("getAlleleProbePairs2", "AffymetrixCdfFile", function(this, ..., verbose=FALSE) {
+  requireNamespace("affxparser") || throw("Package not loaded: affxparser")
+  cdfGetGroups <- affxparser::cdfGetGroups
+
   # Look up base::apply(); '::' is expensive
   base_apply <- base::apply;
 
@@ -16,7 +19,7 @@ setMethodS3("getAlleleProbePairs2", "AffymetrixCdfFile", function(this, ..., ver
   units <- which(types == 2);
 
   # Read group names for the SNPs
-  groupNames <- readCdfGroupNames(cdfFile, units=units);
+  groupNames <- .readCdfGroupNames(cdfFile, units=units);
   uGroupNames <- unique(groupNames);
   verbose && exit(verbose);
 
@@ -56,7 +59,7 @@ setMethodS3("getAlleleProbePairs2", "AffymetrixCdfFile", function(this, ..., ver
 
   # Read all of the CDF file
   verbose && enter(verbose, "Loading cell indices for all probepairs");
-  cdfAll <- readCdfCellIndices(cdfFile, units=units, stratifyBy="pm");
+  cdfAll <- .readCdfCellIndices(cdfFile, units=units, stratifyBy="pm");
   # Not needed anymore
   units <- NULL;
   verbose && exit(verbose);
@@ -79,7 +82,7 @@ setMethodS3("getAlleleProbePairs2", "AffymetrixCdfFile", function(this, ..., ver
 
     cdf0 <- vector("list", length=4);
     for (gg in 1:4) {
-      cells <- applyCdfGroups(cdf, cdfGetGroups, gg);
+      cells <- .applyCdfGroups(cdf, cdfGetGroups, gg);
       cells <- unlist(cells, use.names=FALSE);
       cdf0[[gg]] <- cells;
     }

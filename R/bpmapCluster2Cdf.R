@@ -66,8 +66,6 @@
 # @keyword "internal"
 #*/###########################################################################
 setMethodS3("bpmapCluster2Cdf", "default", function(pathname, chipType, tags=NULL, rows, cols, maxProbeDistance=3000L, minNbrOfProbes=30L, groupName=gsub("_.*", "", chipType), field="fullname", stringRemove=sprintf("%s:.*;", groupName), ..., flavor=c("v2", "v1"), path="*", verbose=-10) {
-  require("affxparser") || throw("Package not loaded: affxparser");
-
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local functions
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -194,10 +192,10 @@ setMethodS3("bpmapCluster2Cdf", "default", function(pathname, chipType, tags=NUL
 
   verbose && enter(verbose, "Reading BPMAP file");
   verbose && cat(verbose, "Pathname: ", pathname);
-  hdr <- readBpmapHeader(pathname);
+  hdr <- .readBpmapHeader(pathname);
   verbose && cat(verbose, "File version: ", hdr$version);
   verbose && cat(verbose, "Number of sequences: ", hdr$numSequences);
-  bpmapList <- readBpmap(pathname, readMatchScore=TRUE, ...);
+  bpmapList <- .readBpmap(pathname, readMatchScore=TRUE, ...);
   nbrOfSeqs <- length(bpmapList);
   # Sanity check
   stopifnot(nbrOfSeqs <= hdr$numSequences);
@@ -475,7 +473,7 @@ setMethodS3("bpmapCluster2Cdf", "default", function(pathname, chipType, tags=NUL
   # Write to a temporary file
   pathnameT <- pushTemporaryFile(cdfPathname, verbose=verbose);
 
-  writeCdf(pathnameT, cdfheader=cdfHeader, cdf=cdfList, cdfqc=NULL, overwrite=TRUE, verbose=verbose);
+  .writeCdf(pathnameT, cdfheader=cdfHeader, cdf=cdfList, cdfqc=NULL, overwrite=TRUE, verbose=verbose);
 
   # Rename temporary file
   pathname <- popTemporaryFile(pathnameT, verbose=verbose);

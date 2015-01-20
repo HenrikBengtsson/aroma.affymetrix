@@ -429,7 +429,7 @@ setMethodS3("process", "GcContentNormalization", function(this, ..., force=FALSE
     # Extract the values to fit the normalization function
     verbose && enter(verbose, "Normalizing log2 signals");
     y <- log2(data[,"theta"]);
-    y <- normalizeFragmentLength(y, fragmentLengths=gcContents,
+    y <- .normalizeFragmentLength(y, fragmentLengths=gcContents,
                              targetFcn=targetFcn, subsetToFit=subset, ...);
     y <- 2^y;
     verbose && exit(verbose);

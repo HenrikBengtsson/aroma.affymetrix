@@ -18,7 +18,7 @@ setMethodS3("importFromBpMap", "AromaCellMatchScoreFile", function(this, srcPath
 
   verbose && enter(verbose, "Reading BPMAP file");
   verbose && cat(verbose, "Pathname: ", srcPathname);
-  bps <- readBpmap(srcPathname, readMatchScore=TRUE);
+  bps <- .readBpmap(srcPathname, readMatchScore=TRUE);
   verbose && exit(verbose);
 
   verbose && enter(verbose, "Saving scores to ACM file");

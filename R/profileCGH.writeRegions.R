@@ -18,7 +18,7 @@ setMethodS3("writeRegions" ,"profileCGH", function(this, filename, path=NULL, ap
       if (is.null(cdfFile))
         throw("Cannot located CDF file for chip type: ", cc);
       idxs <- which(chipType == cc);
-      unitNames[idxs] <- readCdfUnitNames(cdfFile, units=pv$units[idxs]);
+      unitNames[idxs] <- .readCdfUnitNames(cdfFile, units=pv$units[idxs]);
     }
   }
   snpNames <- NULL;
@@ -79,8 +79,8 @@ setMethodS3("writeRegions" ,"profileCGH", function(this, filename, path=NULL, ap
     gnl <- c("loss", "normal", "gain")[zoneGNL[idx[1]]+2];
 
     # Create one line record
-    args <- list(fmtstr, cc, 
-                 posBase[idx[1]], posBase[idx[2]], diff(posBase[idx]), 
+    args <- list(fmtstr, cc,
+                 posBase[idx[1]], posBase[idx[2]], diff(posBase[idx]),
                  gnl, smoothing[idx[1]], as.integer(diff(idx)+1));
     if (hasUnits) {
       args <- c(args, snpNames[1], snpNames[2]);

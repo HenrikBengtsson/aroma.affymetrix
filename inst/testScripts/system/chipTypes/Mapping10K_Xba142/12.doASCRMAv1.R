@@ -10,7 +10,7 @@ csR <- AffymetrixCelSet$byName(dataSet, chipType=chipType, verbose=verbose);
 
 # Process only the first six arrays (and in reverse order)
 subset <- 6:1;
-csR <- extract(csR, subset);
+csR <- csR[subset];
 print(csR);
 sampleNames <- getNames(csR);
 

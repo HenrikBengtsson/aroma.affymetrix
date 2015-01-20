@@ -12,7 +12,7 @@ ds <- AffymetrixCelSet$fromFiles(path)
 print(ds)
 
 # Keep at most three arrays for this example
-ds <- extract(ds, 1:min(3,nbrOfArrays(ds)))
+ds <- ds[1:min(3,nbrOfArrays(ds))]
 print(ds)
 
 } # for (zzz in 0)

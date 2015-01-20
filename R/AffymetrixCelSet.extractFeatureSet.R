@@ -37,7 +37,9 @@
 # @keyword programming
 #*/###########################################################################
 setMethodS3("extractFeatureSet", "AffymetrixCelSet", function(this, ..., verbose=FALSE) {
-  require("oligo") || throw("Package not loaded: oligo");
+  requireNamespace("oligo") || throw("Package not loaded: oligo");
+  read.celfiles <- oligo::read.celfiles
+
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments

@@ -158,7 +158,7 @@ setMethodS3("getAlleleProbePairs3", "AffymetrixCdfFile", function(this, units=NU
     verbose && str(verbose, unitsChunk);
 
     verbose && enter(verbose, "Reading group names, group directions, and cell indices");
-    cdfData <- readCdf(pathname, units=unitsChunk, readIndices=TRUE, readXY=FALSE, readAtoms=FALSE, readIndexpos=FALSE, readBases=FALSE, readUnitNumber=FALSE, readUnitType=FALSE, readUnitDirection=FALSE, readGroupAtomNumbers=FALSE, stratifyBy="pm");
+    cdfData <- .readCdf(pathname, units=unitsChunk, readIndices=TRUE, readXY=FALSE, readAtoms=FALSE, readIndexpos=FALSE, readBases=FALSE, readUnitNumber=FALSE, readUnitType=FALSE, readUnitDirection=FALSE, readGroupAtomNumbers=FALSE, stratifyBy="pm");
     verbose && exit(verbose);
 
     # Save memory by removing names. [55Mb -> 44Mb]

@@ -1,6 +1,6 @@
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Setup
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 if (interactive()) savehistory();
 library("aroma.affymetrix");
 
@@ -18,7 +18,7 @@ devNew2 <- function(..., width=7, height=width) {
   } else {
     # Rescale for PNG
     c <- 640/7;
-    width <- c*width 
+    width <- c*width
     height <- c*height;
     figPath <- "figures";
     mkdirs(figPath);
@@ -32,27 +32,27 @@ devNew2 <- function(..., width=7, height=width) {
 verbose <- Arguments$getVerbose(-10, timestamp=TRUE);
 
 
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Setup of raw data set
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 if (!exists("cdf")) {
   cdf <- AffymetrixCdfFile$byChipType("Mapping50K_Hind240");
   print(cdf);
-  
+
   gi <- getGenomeInformation(cdf);
   print(gi);
-  
+
   si <- getSnpInformation(cdf);
   print(si);
-  
+
   acs <- AromaCellSequenceFile$byChipType(getChipType(cdf, fullname=FALSE));
   print(acs);
 }
 
 
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Setup of raw data set
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 csR <- AffymetrixCelSet$byName("HapMap,CEU,testSet", cdf=cdf);
 print(getFullNames(csR));
 
@@ -63,11 +63,11 @@ print(getFullNames(csR));
 ## [9] "NA07034_Hind_B1_4000092"  "NA07048_Hind_B3_4000092"
 
 
-# The CEL files downloaded from HapMap has file names such as 
+# The CEL files downloaded from HapMap has file names such as
 # NA07000_Hind_A8_3005533.CEL.  In order for aroma.affymetrix to identify
-# 'NA07000' as the sample name, and 'A8' and '3005533' as tags (ignore 
+# 'NA07000' as the sample name, and 'A8' and '3005533' as tags (ignore
 # the 'Hind' part), we will utilize so called fullname translators that
-# translates the full name to a comma-separated fullname, e.g. 
+# translates the full name to a comma-separated fullname, e.g.
 # 'NA07000_Hind_A8_3005533' to 'NA07000,A8,3005533'.
 
 setFullNamesTranslator(csR, function(names, ...) {
@@ -97,30 +97,30 @@ print(csR);
 ## Names: NA06985, NA06991, ..., NA07048
 ## Time period: 2004-01-14 14:02:08 -- 2004-02-13 11:51:01
 ## Total file size: 244.78MB
-## RAM: 0.01MB  
+## RAM: 0.01MB
 
 
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Verifying ChrX and ChrY ploidies
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Extracting attributes 'n23' and 'n24' from the set
 nXY <- t(sapply(csR, function(cf) getAttributes(cf)[c("n23", "n24")]));
 rownames(nXY) <- getNames(csR);
 print(nXY);
 
 
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Calibration for crosstalk between alleles
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 acc <- AllelicCrosstalkCalibration(csR);
 print(acc);
 csC <- process(acc, verbose=verbose);
 
 
 
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Probe summarization
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 plm <- RmaCnPlm(csC, mergeStrands=TRUE, combineAlleles=TRUE);
 print(plm);
 
@@ -131,9 +131,9 @@ ces <- getChipEffectSet(plm);
 print(ces);
 
 
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Normalize for PCR fragment-length effects
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 fln <- FragmentLengthNormalization(ces);
 print(fln);
 
@@ -146,12 +146,12 @@ rownames(nXY) <- getNames(cesN);
 print(nXY);
 
 
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Calculate sex-chromosome bias-corrected reference signals
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # For Chr1-22 and ChrX the copy-neutral ploidy should be two.
 # If the ploidy of a sample is unknown, assume the default is two.
-ceRef <- calculateBaseline(cesN, chromosomes=1:23, ploidy=2, 
+ceRef <- calculateBaseline(cesN, chromosomes=1:23, ploidy=2,
                                        defaultPloidy=2, verbose=verbose);
 
 # For ChrY the ploidy of the reference should be one.  Currently our model
@@ -165,15 +165,15 @@ ceRef <- getBaseline(cesN);
 print(ceRef);
 
 
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Segmentation using the above copy-netural reference
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 cbs <- CbsModel(cesN, ceRef);
 print(cbs);
 
 # Verify that the ChrX CNs are bias corrected
 M <- NULL;
-for (kk in 1:nbrOfArrays(cbs)) { 
+for (kk in 1:nbrOfArrays(cbs)) {
   rawCNs <- extractRawCopyNumbers(cbs, array=kk, chromosome=23);
   rawCNs <- as.data.frame(rawCNs)$cn;
   M <- cbind(M, rawCNs);
@@ -196,15 +196,15 @@ if (!devIsOpen(fig)) {
 
 
 
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Segmentation without correcting for ChrX biases
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 cbs2 <- CbsModel(cesN);
 print(cbs2);
 
 # Verify that the ChrX CNs are bias corrected
 M2 <- NULL;
-for (kk in 1:nbrOfArrays(cbs2)) { 
+for (kk in 1:nbrOfArrays(cbs2)) {
   rawCNs <- extractRawCopyNumbers(cbs2, array=kk, chromosome=23);
   rawCNs <- as.data.frame(rawCNs)$cn;
   M2 <- cbind(M2, rawCNs);
@@ -221,21 +221,21 @@ if (!devIsOpen(fig)) {
 }
 
 
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Segmentation using only females for the reference
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-cesXX <- extract(cesN, (n23 == 2));
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+cesXX <- cesN[(n23 == 2)];
 stopifnot(all(sapply(cesXX, getAttribute, "n23") == 2));
 ceXX <- getAverageFile(cesXX);
 
-# NOTE: This used the females for all chromosomes - here we only use 
+# NOTE: This used the females for all chromosomes - here we only use
 # it to illustrate the ChrX estimates.
 cbs3 <- CbsModel(cesN, ceXX);
 print(cbs3);
 
 # Verify that the ChrX CNs are bias corrected
 M3 <- NULL;
-for (kk in 1:nbrOfArrays(cbs3)) { 
+for (kk in 1:nbrOfArrays(cbs3)) {
   rawCNs <- extractRawCopyNumbers(cbs3, array=kk, chromosome=23);
   rawCNs <- as.data.frame(rawCNs)$cn;
   M3 <- cbind(M3, rawCNs);

@@ -65,6 +65,10 @@ setConstructorS3("SnpProbeAffinityFile", function(..., mergeStrands=FALSE) {
 # @keyword internal
 #*/###########################################################################
 setMethodS3("getCellIndices", "SnpProbeAffinityFile", function(this, ..., unlist=FALSE) {
+  requireNamespace("affxparser") || throw("Package not loaded: affxparser")
+  cdfMergeStrands <- affxparser::cdfMergeStrands
+
+
   # Argument 'unlist':
   unlist <- Arguments$getLogical(unlist);
 
@@ -78,7 +82,7 @@ setMethodS3("getCellIndices", "SnpProbeAffinityFile", function(this, ..., unlist
 
   # Merge strands?
   if (mergeStrands) {
-    cells <- applyCdfGroups(cells, cdfMergeStrands);
+    cells <- .applyCdfGroups(cells, cdfMergeStrands);
   }
 
 

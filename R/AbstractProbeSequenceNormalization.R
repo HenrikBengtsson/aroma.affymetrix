@@ -480,7 +480,7 @@ setMethodS3("process", "AbstractProbeSequenceNormalization", function(this, ...,
 
       # Write calibrated data to file
       verbose2 <- -as.integer(verbose)-2;
-      updateCel(pathnameT, indices=cellsToUpdateKK, intensities=y, verbose=verbose2);
+      .updateCel(pathnameT, indices=cellsToUpdateKK, intensities=y, verbose=verbose2);
       # Not needed anymore
       y <- cellsToUpdateKK <- verbose2 <- NULL;
       gc <- gc();

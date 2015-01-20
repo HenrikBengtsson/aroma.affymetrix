@@ -160,7 +160,7 @@ setMethodS3("getHeader", "AffymetrixCnChpFile", function(this, ...) {
   if (is.null(header)) {
     pathname <- getPathname(this);
     suppressWarnings({
-      header <- readCcgHeader(pathname);
+      header <- .readCcgHeader(pathname);
     });
     this$.header <- header;
   }
@@ -274,8 +274,8 @@ setMethodS3("readRawData", "AffymetrixCnChpFile", function(this, fields=c("Probe
   verbose && cat(verbose, "Fields: ", paste(fields, collapse=", "));
 
   verbose && enter(verbose, "Reading data from file");
-#  res <- readCcg(pathname, subset=list(CopyNumber=list(rows=..., fields=...));
-  res <- readCcg(pathname);
+#  res <- .readCcg(pathname, subset=list(CopyNumber=list(rows=..., fields=...));
+  res <- .readCcg(pathname);
   verbose && exit(verbose);
 
   res <- res$dataGroups$MultiData$dataSets$CopyNumber$table;

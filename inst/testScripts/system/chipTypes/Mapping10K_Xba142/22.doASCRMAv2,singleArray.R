@@ -22,7 +22,7 @@ print(dsNList);
 # (b) CRMAv2 - single array
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Setup a single array
-csR1 <- extract(csR, 1);
+csR1 <- csR[1];
 
 # Rename data set in order to not pick up existing results
 setFullName(csR1, sprintf("%s,singleArray", getFullName(csR1)));
@@ -32,7 +32,7 @@ print(dsNList1);
 
 
 # Sanity checks
-dsNList0 <- lapply(dsNList, FUN=extract, 1);
+dsNList0 <- lapply(dsNList, FUN=`[`, 1);
 for (key in names(dsNList1)) {
   print(key);
   dsN0 <- dsNList0[[key]];

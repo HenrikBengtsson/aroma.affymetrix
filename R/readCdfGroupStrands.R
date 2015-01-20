@@ -9,7 +9,7 @@ readCdfGroupStrands <- function(..., what=c("probe", "target")) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Read the strand information from the CDF file
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  cdf <- readCdf(..., readUnitDirection=TRUE, readGroupDirection=TRUE, 
+  cdf <- .readCdf(..., readUnitDirection=TRUE, readGroupDirection=TRUE,
          readXY=FALSE, readBases=FALSE, readIndexpos=FALSE, readIsPm=FALSE,
                                       readAtoms=FALSE, readUnitType=FALSE);
 
@@ -26,7 +26,7 @@ readCdfGroupStrands <- function(..., what=c("probe", "target")) {
     unitDirection <- .subset2(unit, "unitdirection");
     strands <- unlist(.subset2(unit, "groups"), use.names=FALSE);
     if (identical(unitDirection, "antisense")) {
-      strands <- c(sense="antisense", antisense="sense")[strands]; 
+      strands <- c(sense="antisense", antisense="sense")[strands];
       swapIdxs <- c(swapIdxs, uu);
     }
 

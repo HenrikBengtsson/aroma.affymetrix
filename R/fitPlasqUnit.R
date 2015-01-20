@@ -1,7 +1,7 @@
 # Gets PLASQ probe types from an AffymetrixCdfFile.
 setMethodS3("readPlasqTypes", "AffymetrixCdfFile", function(this, ..., verbose=FALSE) {
   pathname <- getPathname(this);
-  cdf <- readCdf(pathname, ..., readUnitDirection=TRUE, readGroupDirection=TRUE, readXY=FALSE, readIndexpos=FALSE, readIsPm=TRUE, readAtoms=FALSE, readUnitAtomNumbers=FALSE, readGroupAtomNumbers=FALSE);
+  cdf <- .readCdf(pathname, ..., readUnitDirection=TRUE, readGroupDirection=TRUE, readXY=FALSE, readIndexpos=FALSE, readIsPm=TRUE, readAtoms=FALSE, readUnitAtomNumbers=FALSE, readGroupAtomNumbers=FALSE);
   cdf <- getPlasqTypes(cdf);
   cdf;
 }, private=TRUE)
@@ -30,24 +30,24 @@ plasqGaussian <- function(link="exponential") {
   }
 
  structure(list(
-   family = "gaussian", 
-   link = linktemp, 
+   family = "gaussian",
+   link = linktemp,
    linkfun = stats$linkfun,
    linkinv = stats$linkinv,
    variance = function(mu) {
      rep.int(1, length(mu))
-   }, 
+   },
    dev.resids = function(y, mu, wt) {
      wt * ((y - mu)^2)
-   }, 
+   },
    aic = function(y, n, mu, wt, dev) {
      sum(wt) * (log(dev/sum(wt) * 2 * pi) + 1) + 2
-   }, 
+   },
    mu.eta = stats$mu.eta,
    initialize = expression({
      n <- rep.int(1, nobs)
      mustart <- y
-   }), 
+   }),
    validmu = function(mu) TRUE
  ), class = "family");
 } # plasqGaussian()
@@ -69,8 +69,8 @@ setMethodS3("fitPlasqUnit", "matrix", function(ly, ptype, maxIter=1000, acc=0.1,
   # Indices of different probe types:
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # 'ptype' coding:
-  #   0=MMoBR,  1=MMoBF,  2=MMcBR,  3=MMcBF,  4=MMoAR,  5=MMoAF, 
-  #   6=MMcAR,  7=MMcAF,  8=PMoBR,  9=PMoBF, 10=PMcBR, 11=PMcBF, 
+  #   0=MMoBR,  1=MMoBF,  2=MMcBR,  3=MMcBF,  4=MMoAR,  5=MMoAF,
+  #   6=MMcAR,  7=MMcAF,  8=PMoBR,  9=PMoBF, 10=PMcBR, 11=PMcBF,
   #  12=PMoAR, 13=PMoAF, 14=PMcAR, 15=PMcAF.
   isPm <- (ptype %in% 8:15);
   isA <- (ptype %in% c(4:7,12:15));
@@ -191,10 +191,10 @@ setMethodS3("fitPlasqUnit", "matrix", function(ly, ptype, maxIter=1000, acc=0.1,
     # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
     # M-STEP
     # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
-    # Appendix p17: 
+    # Appendix p17:
     #   \hat{p}_{j0} = \frac{1}{N} \sum_{i=1}^N z_{ij_0l}
     # Proportion of samples with genotypes (BB, AB, AA)
-    ps <- apply(zs, MARGIN=1, FUN=sum) / nbrOfSamples;
+    ps <- rowSums(zs) / nbrOfSamples;
 
 #    verfy(ps, key=list(iter=rr, "ps"));
 
@@ -290,7 +290,7 @@ setMethodS3("fitPlasqUnit", "matrix", function(ly, ptype, maxIter=1000, acc=0.1,
     #   gammaF, alphaF0, betaF0, alphaF1, betaF1,
     #   gammaR, alphaR0, betaR0, alphaR1, betaR1,
     #   0, sigmaF, sigmaR
-    # ) 
+    # )
     params <- c(betasF, betasR, 0, sigF, sigR);
     gamma <- params[gammaIdxs];
     alpha <- params[alphaIdxs];
@@ -306,7 +306,7 @@ setMethodS3("fitPlasqUnit", "matrix", function(ly, ptype, maxIter=1000, acc=0.1,
 
 ##     mu00 <- list(mu0, mu1, mu2);
 ##     mu00 <- lapply(mu00, FUN=unname);
-##     
+##
 ##     # The PLASQ implementation of the above two steps:
 ##     # For each probe, select the four parameters.
 ##     # Input: 16x4 matrix. Output: 4x16 matrix
@@ -314,7 +314,7 @@ setMethodS3("fitPlasqUnit", "matrix", function(ly, ptype, maxIter=1000, acc=0.1,
 ##       params[idxs];
 ##     });
 ##     pMat <- t(pMat);
-## 
+##
 ##     # Appendix p16:
 ##     # Pre-calculate some constants
 ##     mu0 <- log((pMat %*% c(1,0,2,0))[,1]);
@@ -323,7 +323,7 @@ setMethodS3("fitPlasqUnit", "matrix", function(ly, ptype, maxIter=1000, acc=0.1,
 ##     # Not needed anymore
 ##     pMat <- params <- NULL; # Not needed anymore
 ##     mu11 <- list(mu0, mu1, mu2);
-##  
+##
 ##     stopifnot(identical(mu00, mu11));
 
 
@@ -379,9 +379,9 @@ setMethodS3("fitPlasqUnit", "matrix", function(ly, ptype, maxIter=1000, acc=0.1,
   }
 
   list(
-    coeffsF=betasF, 
-    coeffsR=betasR, 
-    sigs=c(sigF, sigR), 
+    coeffsF=betasF,
+    coeffsR=betasR,
+    sigs=c(sigF, sigR),
     z=zs,
     CN=CN,
     converged=converged,
@@ -398,11 +398,11 @@ setMethodS3("fitPlasqUnit", "matrix", function(ly, ptype, maxIter=1000, acc=0.1,
 # 2007-01-11
 # o Replaces argument 'mat' (on intensity scale) with 'ly' (on log scale).
 # 2007-01-01
-# o Verified that this implementation gives identical results to 
+# o Verified that this implementation gives identical results to
 #   PLASQ500K::EMSNP().
 # 2006-12-31
 # o Created fitPlasqUnit() to fit a single CEL unit.  Got code to get the
-#   PLASQ probe types from a CDF too.  This is major requirement for 
+#   PLASQ probe types from a CDF too.  This is major requirement for
 #   implementing PLASQ in aroma.affymetrix. TO DO: Verify correctness.
 # 2006-12-29
 # o Created.

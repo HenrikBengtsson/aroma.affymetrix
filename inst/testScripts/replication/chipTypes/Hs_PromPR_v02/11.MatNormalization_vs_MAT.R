@@ -88,7 +88,7 @@ sampleNames <- gsub("[.]CEL$", "", sampleNames);
 stopifnot(all(is.element(sampleNames, getNames(csU))));
 
 # Corresponding aroma subset
-csUt <- extract(csU, sampleNames);
+csUt <- csU[sampleNames];
 
 
 # Read MAT signals

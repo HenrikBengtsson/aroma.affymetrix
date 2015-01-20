@@ -1,4 +1,8 @@
 setMethodS3("getProbeSequenceData", "AffymetrixCdfFile", function(this, paths=NULL, rows=NULL, safe=TRUE, force=FALSE, verbose=FALSE, ...) {
+  requireNamespace("affxparser") || throw("Package not loaded: affxparser")
+  cdfGetFields <- affxparser::cdfGetFields
+
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -25,7 +29,7 @@ setMethodS3("getProbeSequenceData", "AffymetrixCdfFile", function(this, paths=NU
   chipType <- getChipType(this, fullname=FALSE);
   verbose && cat(verbose, "Chip type: ", chipType);
 
-  ptf <- AffymetrixProbeTabFile$byChipType(chipType=chipType, 
+  ptf <- AffymetrixProbeTabFile$byChipType(chipType=chipType,
                                                  verbose=less(verbose, 100));
   verbose && print(verbose, ptf);
   verbose && exit(verbose);
@@ -38,8 +42,8 @@ setMethodS3("getProbeSequenceData", "AffymetrixCdfFile", function(this, paths=NU
     verbose && enter(verbose, "Validating probe-tab file against CDF");
 
     # Reading the first unit name
-    data <- readDataFrame(ptf, 
-                   colClasses=c("^(unitName|probeSetID)$"="character"), 
+    data <- readDataFrame(ptf,
+                   colClasses=c("^(unitName|probeSetID)$"="character"),
                                           rows=1, verbose=less(verbose, 50));
     verbose && cat(verbose, "Number of records read: ", nrow(data));
     verbose && cat(verbose, "Data read:");
@@ -69,9 +73,9 @@ setMethodS3("getProbeSequenceData", "AffymetrixCdfFile", function(this, paths=NU
     verbose && print(verbose, xySeq);
 
     unitInfo <- readUnits(this, units=unit);
-    x <- applyCdfGroups(unitInfo, cdfGetFields, "x");
+    x <- .applyCdfGroups(unitInfo, cdfGetFields, "x");
     x <- unlist(x, use.names=FALSE);
-    y <- applyCdfGroups(unitInfo, cdfGetFields, "y");
+    y <- .applyCdfGroups(unitInfo, cdfGetFields, "y");
     y <- unlist(y, use.names=FALSE);
 
     # Now, find that (x,y) coordinate in the CDF file
@@ -151,7 +155,7 @@ setMethodS3("getProbeSequenceData", "AffymetrixCdfFile", function(this, paths=NU
 # o KNOWN ISSUES: getProbeSequenceData() for AffymetrixCdfFile requires
 #   that the unit names in the probe-tab file matches the ones in the
 #   CDF.  This may cause issues if custom CDFs with custom unit names
-#   are used.  This is another reason why we should move away from 
+#   are used.  This is another reason why we should move away from
 #   probe-tab files and instead use aroma binary cell sequence files.
 # o Updated getProbeSequenceData() for AffymetrixCdfFile to recognize more
 #   NetAffx probe-tab files.

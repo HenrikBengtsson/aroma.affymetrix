@@ -390,7 +390,7 @@ setMethodS3("writeSignals", "ProbeLevelTransform3", function(this, pathname, cel
   verbose && exit(verbose);
 
   verbose && enter(verbose, "Storing normalized signals");
-  updateCel(pathnameT, indices=cells, ...);
+  .updateCel(pathnameT, indices=cells, ...);
   verbose && exit(verbose);
 
   # Rename temporary file

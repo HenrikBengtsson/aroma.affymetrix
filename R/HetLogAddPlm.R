@@ -91,7 +91,8 @@ setMethodS3("getFitUnitGroupFunction", "HetLogAddPlm", function(this, ..., verbo
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   verbose && enter(verbose, "Getting the PLM fit function");
 
-  require("preprocessCore") || throw("Package not loaded: preprocessCore");
+  # Early error, if package is missing
+  requireNamespace("preprocessCore") || throw("Package not loaded: preprocessCore")
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -104,13 +105,12 @@ setMethodS3("getFitUnitGroupFunction", "HetLogAddPlm", function(this, ..., verbo
   }
   verbose && cat(verbose, "Amount of shift: ", shift);
 
-  naValue <- as.double(NA);
   fitPlm <- function(y, ...) {
     fit <- fitWHLAPLM.matrix(y+shift, ...);
     fit$sdTheta <- fit$seTheta;
     fit$sdPhi <- fit$sePhi;
-    fit$thetaOutliers <- rep(naValue, times=ncol(y));
-    fit$phiOutliers <- rep(naValue, times=nrow(y));
+    fit$thetaOutliers <- rep(NA_real_, times=ncol(y));
+    fit$phiOutliers <- rep(NA_real_, times=nrow(y));
     if (length(fit$sdTheta) != ncol(y)) {
       print(list(y=y, fit=fit));
       throw("Internal error");
@@ -121,6 +121,7 @@ setMethodS3("getFitUnitGroupFunction", "HetLogAddPlm", function(this, ..., verbo
     }
     fit;
   }
+
 
   verbose && str(verbose, fitPlm);
 

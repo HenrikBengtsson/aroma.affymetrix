@@ -78,7 +78,7 @@ setMethodS3("fromDataFile", "ChipEffectFile", function(static, df=NULL, filename
     cdfHeader <- getHeader(cdf);
 
     # Build a valid CEL header
-    celHeader <- cdfHeaderToCelHeader(cdfHeader, sampleName=name);
+    celHeader <- .cdfHeaderToCelHeader(cdfHeader, sampleName=name);
 
     # Add some extra information about what the CEL file is for
     params <- c(Descripion="This CEL file contains chip-effect estimates from the aroma.affymetrix package.");
@@ -95,11 +95,11 @@ setMethodS3("fromDataFile", "ChipEffectFile", function(static, df=NULL, filename
     pathnameT <- pushTemporaryFile(pathname, verbose=verbose);
 
     # Create the CEL file
-    createCel(pathnameT, header=celHeader, ..., verbose=less(verbose));
+    .createCel(pathnameT, header=celHeader, ..., verbose=less(verbose));
 
 ##    # Fill with negative values
 ##    nbrOfProbes <- celHeader$total;
-##    updateCel(pathnameT, indices=1:nbrOfProbes, intensities=rep(-1,nbrOfProbes), verbose=less(verbose));
+##    .updateCel(pathnameT, indices=1:nbrOfProbes, intensities=rep(-1,nbrOfProbes), verbose=less(verbose));
 
     # Rename temporary file
     pathname <- popTemporaryFile(pathnameT, verbose=verbose);

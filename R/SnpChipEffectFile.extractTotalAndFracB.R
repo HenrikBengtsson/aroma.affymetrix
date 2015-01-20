@@ -42,7 +42,7 @@
 setMethodS3("extractTotalAndFreqB", "CnChipEffectFile", function(this, units=NULL, ..., drop=FALSE, verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   cdf <- getCdf(this);
 
   # Argument 'units':
@@ -72,9 +72,9 @@ setMethodS3("extractTotalAndFreqB", "CnChipEffectFile", function(this, units=NUL
 
   verbose && enter(verbose, "Extracting (total, freqB)");
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Identify possible groups
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (this$combineAlleles && this$mergeStrands) {
     # theta == (theta)
     groups <- 1;
@@ -89,9 +89,9 @@ setMethodS3("extractTotalAndFreqB", "CnChipEffectFile", function(this, units=NUL
     groups <- c(1,2,3,4);
   }
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Get the UGC map
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (is.null(ugcMap)) {
     verbose && enter(verbose, "Getting (unit, group, cell) map");
     ugcMap <- getUnitGroupCellMap(this, units=units, verbose=less(verbose));
@@ -110,10 +110,10 @@ setMethodS3("extractTotalAndFreqB", "CnChipEffectFile", function(this, units=NUL
 
 
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Read data
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-  theta <- extractTheta(this, units=ugcMap, groups=groups, ..., 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  theta <- extractTheta(this, units=ugcMap, groups=groups, ...,
                                                  verbose=less(verbose, 5));
   nbrOfUnits <- nrow(theta);
 
@@ -159,7 +159,7 @@ setMethodS3("extractTotalAndFreqB", "CnChipEffectFile", function(this, units=NUL
 setMethodS3("extractTotalAndFracB", "SnpChipEffectFile", function(this, units=NULL, ..., drop=FALSE, verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   cdf <- getCdf(this);
 
   # Argument 'units':
@@ -189,9 +189,9 @@ setMethodS3("extractTotalAndFracB", "SnpChipEffectFile", function(this, units=NU
 
   verbose && enter(verbose, "Extracting (total, freqB)");
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Identify possible groups
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (this$mergeStrands) {
     # theta == (thetaA, thetaB)
     groups <- c(1,2);
@@ -200,9 +200,9 @@ setMethodS3("extractTotalAndFracB", "SnpChipEffectFile", function(this, units=NU
     groups <- c(1,2,3,4);
   }
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Get the UGC map
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (is.null(ugcMap)) {
     verbose && enter(verbose, "Getting (unit, group, cell) map");
     ugcMap <- getUnitGroupCellMap(this, units=units, verbose=less(verbose));
@@ -220,10 +220,10 @@ setMethodS3("extractTotalAndFracB", "SnpChipEffectFile", function(this, units=NU
   verbose && str(verbose, ugcMap);
 
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Read data
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-  theta <- extractTheta(this, units=ugcMap, groups=groups, ..., 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  theta <- extractTheta(this, units=ugcMap, groups=groups, ...,
                                                  verbose=less(verbose, 5));
   nbrOfUnits <- nrow(theta);
 
@@ -272,7 +272,7 @@ setMethodS3("extractTotalAndFreqB", "default", function(this, ...) {
 # 2008-07-16
 # o Added argument 'drop=FALSE' to all extractTotalAndFreqB().
 # 2008-05-11
-# o The (thetaA,thetaB) -> (theta, freqB) is bijective *except* when 
+# o The (thetaA,thetaB) -> (theta, freqB) is bijective *except* when
 #   theta = thetaA+thetaB = 0.  With the assumption that thetaA,thetaB > 0
 #   then it is truly bijective.
 # 2008-05-10

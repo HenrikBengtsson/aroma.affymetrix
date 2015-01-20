@@ -1,4 +1,4 @@
-###########################################################################/** 
+###########################################################################/**
 # @set "class=AffymetrixCdfFile"
 # @RdocMethod createExonByTranscriptCdf
 #
@@ -12,13 +12,13 @@
 # @synopsis
 #
 # \arguments{
-#  \item{cdf}{An @see "aroma.affymetrix::AffymetrixCdfFile" specifying 
+#  \item{cdf}{An @see "aroma.affymetrix::AffymetrixCdfFile" specifying
 #     an "exon-only" CDF, which defines the exon-specific probesets
 #     that will go into the new CDF. For more details, see below.}
-#  \item{csv}{An @see "aroma.affymetrix::AffymetrixNetAffxCsvFile" 
+#  \item{csv}{An @see "aroma.affymetrix::AffymetrixNetAffxCsvFile"
 #     specifying the Affymetrix NetAffx CSV probeset annotation file
 #     that contains the transcript-exon mapping.}
-#  \item{tags}{Additional tags added to the filename of created CDF, 
+#  \item{tags}{Additional tags added to the filename of created CDF,
 #      i.e. <chiptype>,<tags>.cdf.}
 #  \item{path}{The output path where the custom CDF will be written.}
 #  \item{type}{A @character string specifying the type of CDF to be written.}
@@ -28,8 +28,8 @@
 #  \item{within}{A @vector of values accepted for the \code{subsetBy} column.}
 #  \item{...}{Additional arguments passed to \code{readDataFrame()} of
 #     @see "aroma.affymetrix::AffymetrixNetAffxCsvFile", e.g. \code{nrow}.}
-#  \item{overwrite}{If @TRUE, an existing CDF is overwritten.} 
-#  \item{verbose}{...} 
+#  \item{overwrite}{If @TRUE, an existing CDF is overwritten.}
+#  \item{verbose}{...}
 # }
 #
 # \value{
@@ -44,7 +44,7 @@
 #   Such "exon-only" CDFs do not contain information about clustering
 #   exons/probesets into gene transcripts.
 #   The CDF may also contain a number of non-exon probesets corresponding
-#   to control probes, which can contain \emph{very} large numbers of 
+#   to control probes, which can contain \emph{very} large numbers of
 #   probes per probeset. Such units are dropped/ignored by this method.
 # }
 #
@@ -83,8 +83,8 @@
 # print(cdfT);
 #
 # # Create CDF containing the core probesets with 3 or 4 probes:
-# cdfT2 <- createExonByTranscriptCdf(cdf, csv=csv, 
-#             tags=c("*,bySize=3-4,HB20110911"), 
+# cdfT2 <- createExonByTranscriptCdf(cdf, csv=csv,
+#             tags=c("*,bySize=3-4,HB20110911"),
 #             subsetBy="probeCount", within=c("3", "4"));
 # print(cdfT2);
 # }}
@@ -97,7 +97,7 @@
 # @keyword internal
 #*/###########################################################################
 setMethodS3("createExonByTranscriptCdf", "AffymetrixCdfFile", function(cdf, csv, tags=c("*"), path=getPath(cdf), type=c("all", "core", "extended", "full", "main", "control", "cds"), subsetBy=NULL, within=NULL, ..., overwrite=FALSE, verbose=FALSE) {
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local functions
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   inMemory <- FALSE; # Turns out not to make a big difference. /HB 2011-09-10
@@ -106,7 +106,7 @@ setMethodS3("createExonByTranscriptCdf", "AffymetrixCdfFile", function(cdf, csv,
     getCdfUnits <- function(units) {
       if (is.null(cdfTree)) {
         verbose && enter(verbose, "Reading the complete CDF");
-        cdfTree <<- readCdf(cdfPathname);
+        cdfTree <<- .readCdf(cdfPathname);
         verbose && exit(verbose);
       }
       cdfTree[units];
@@ -115,7 +115,7 @@ setMethodS3("createExonByTranscriptCdf", "AffymetrixCdfFile", function(cdf, csv,
     getCdfUnits <- function(units) {
       ## SLOW iff units by units!  /HB 2011-09-09
       # (Actually, not that much slower. /HB 2011-09-10)
-      readCdf(cdfPathname, units=units);
+      .readCdf(cdfPathname, units=units);
     } # getCdfUnits()
   }
 
@@ -168,7 +168,7 @@ setMethodS3("createExonByTranscriptCdf", "AffymetrixCdfFile", function(cdf, csv,
 
     # Return a CDF unit
     list(
-      groups=groups, 
+      groups=groups,
       unittype=unittype,
       unitdirection=unitdirection,
       natoms=natoms,
@@ -179,9 +179,9 @@ setMethodS3("createExonByTranscriptCdf", "AffymetrixCdfFile", function(cdf, csv,
   } # makeTranscriptCdfUnit()
 
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'type':
   type <- match.arg(type);
 
@@ -251,7 +251,7 @@ setMethodS3("createExonByTranscriptCdf", "AffymetrixCdfFile", function(cdf, csv,
       "extended" = c("core", "extended"),
       "full"     = c("core", "extended", "full"),
       "main"     = "main",
-      "control"  = c("control->affx", "control->chip", 
+      "control"  = c("control->affx", "control->chip",
                      "control->bgp->antigenomic", "control->bgp->genomic",
                      "normgene->exon", "normgene->intron"),
       "all"      = NULL,
@@ -259,7 +259,7 @@ setMethodS3("createExonByTranscriptCdf", "AffymetrixCdfFile", function(cdf, csv,
     );
   }
 
-  
+
   if (is.null(subsetBy)) {
     if (type %in% c("core", "extended", "full")) {
       subsetBy <- "level";
@@ -273,9 +273,9 @@ setMethodS3("createExonByTranscriptCdf", "AffymetrixCdfFile", function(cdf, csv,
   }
 
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Read NetAffx CSV file
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   verbose && enter(verbose, "Reading the NetAffx annotation file");
   verbose && print(verbose, csv);
 
@@ -291,9 +291,9 @@ setMethodS3("createExonByTranscriptCdf", "AffymetrixCdfFile", function(cdf, csv,
   verbose && exit(verbose);
 
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Identify subset of probesets to include
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   verbose && enter(verbose, "Identifying subset of probesets to include");
   nbrOfProbesets <- nrow(psData);
 
@@ -352,9 +352,9 @@ setMethodS3("createExonByTranscriptCdf", "AffymetrixCdfFile", function(cdf, csv,
   verbose && exit(verbose);
 
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Build custom CDF list structure
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   verbose && enter(verbose, "Grouping exons into transcripts");
 
   transcriptNames <- unique(psData[,"transcriptClusterId"]);
@@ -395,9 +395,9 @@ setMethodS3("createExonByTranscriptCdf", "AffymetrixCdfFile", function(cdf, csv,
   verbose && exit(verbose);
 
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Write custom CDF to file
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   verbose && enter(verbose, "Writing CDF");
 
   verbose && cat(verbose, "Chip type: ", chipTypeF);
@@ -405,8 +405,8 @@ setMethodS3("createExonByTranscriptCdf", "AffymetrixCdfFile", function(cdf, csv,
 
   verbose && enter(verbose, "Setting up CDF header");
   # Copy header and QC info from original CDF
-  qc <- readCdfQc(cdfPathname);
-  hdr <- readCdfHeader(cdfPathname);
+  qc <- .readCdfQc(cdfPathname);
+  hdr <- .readCdfHeader(cdfPathname);
   hdr$chiptype <- chipTypeF;
   hdr$filename <- pathname;
   hdr$probesets <- nbrOfExons;
@@ -423,11 +423,11 @@ setMethodS3("createExonByTranscriptCdf", "AffymetrixCdfFile", function(cdf, csv,
   }
 
   # Write to a temporary file
-  pathnameT <- pushTemporaryFile(pathname, verbose=verbose);  
-  writeCdf(pathnameT, cdfheader=hdr, cdf=cdfList, cdfqc=qc, overwrite=TRUE, verbose=10);
+  pathnameT <- pushTemporaryFile(pathname, verbose=verbose);
+  .writeCdf(pathnameT, cdfheader=hdr, cdf=cdfList, cdfqc=qc, overwrite=TRUE, verbose=10);
 
   # Rename temporary file
-  pathname <- popTemporaryFile(pathnameT, verbose=verbose); 
+  pathname <- popTemporaryFile(pathnameT, verbose=verbose);
   verbose && exit(verbose);
 
   verbose && exit(verbose);  # "Writing CDF...exit"
@@ -461,7 +461,7 @@ setMethodS3("createExonByTranscriptCdf", "AffymetrixCdfFile", function(cdf, csv,
 # o Now argument 'type' lists all possible values.
 # o Renamed internal getCdfInfo() to makeTranscriptCdfUnit().
 # o ROBUSTNESS: The internal getCdfInfo() assumed that the exon CDF units
-#   have all the same (i) unit types, (ii) unit directions, and (iii) 
+#   have all the same (i) unit types, (ii) unit directions, and (iii)
 #   number of cells per atom.  Now, if CDF that does not meet those
 #   assumption is used, an exception is thrown.
 # 2011-09-09 [HB]
@@ -469,8 +469,8 @@ setMethodS3("createExonByTranscriptCdf", "AffymetrixCdfFile", function(cdf, csv,
 #   once and cache it in memory, instead of read transcript by transcript.
 # o DOCUMENTATION: Created a good stubb of an Rdoc help.
 # o ROBUSTNESS: Now the CDF is written atomically (via a temporary file).
-# o NOTE: The createTranscriptCDF() sorts the groups (=exons) 
-#   lexicographically by name.  This was note the case when 
+# o NOTE: The createTranscriptCDF() sorts the groups (=exons)
+#   lexicographically by name.  This was note the case when
 #   'HuEx-1_0-st-v2,R3,A20071112,EP.zip' was generated (in December 2007).
 # o SPEED UP: Using unlist(...,, use.names=FALSE).
 # o Replaced all cat() with Verbose statements.

@@ -1,12 +1,13 @@
 setMethodS3("extractAlleleSet", "SnpChipEffectSet", function(this, units=NULL, sortUnits=TRUE, transform=log2, ..., verbose=FALSE) {
-  require("Biobase") || throw("Package not loaded: Biobase");
-  require("oligo") || throw("Package not loaded: oligo");
+  requireNamespace("Biobase") || throw("Package not loaded: Biobase")
+
 
   # Assert oligo version
   pkg <- Package("oligo");
-  if (isOlderThan(Package("oligo"), "1.12.0")) {
+  if (isOlderThan(pkg, "1.12.0")) {
     throw("extractAlleleSet() requires oligo v1.12.0 or newer: ", getVersion(pkg));
   }
+
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Sanity check
@@ -18,7 +19,7 @@ setMethodS3("extractAlleleSet", "SnpChipEffectSet", function(this, units=NULL, s
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   cdf <- getCdf(this);
 
-  # Argument 'units':  
+  # Argument 'units':
   if (is.null(units)) {
     # Identify all SNP_A-* units (as what is returned by oligo)
     units <- indexOf(cdf, pattern="^SNP_A-");
@@ -79,27 +80,27 @@ setMethodS3("extractAlleleSet", "SnpChipEffectSet", function(this, units=NULL, s
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (maxGroup == 4) {
     verbose && enter(verbose, "Inferring which unit groups to be swapped to (sense, antisense)");
-  
+
     # Make sure pairs are order as (sense, antisense)
     dirs <- getGroupDirections(cdf, units=units, verbose=less(verbose, 5));
     names(dirs) <- NULL;
-  
+
     gc <- gc();
     verbose && print(verbose, gc);
-  
+
     # Sanity check
     lens <- sapply(dirs, FUN=length);
     uLens <- unique(lens);
     if (any(!is.element(uLens, unique(c(2,maxGroup))))) {
-      throw("Internal error: Unexpected number of unit groups: ", 
+      throw("Internal error: Unexpected number of unit groups: ",
                                                 paste(uLens, collapse=", "));
     }
-  
+
     # Extract the direction/strand of the first group
     # dirs <- lapply(dirs, FUN=function(groups) groups[1]);
-    dirs <- lapply(dirs, FUN=.subset, 1);
+    dirs <- lapply(dirs, FUN=.subset, 1L);
     dirs <- unlist(dirs, use.names=FALSE);
-  
+
     # Identify which to swap from (antisense,sense) to (sense,antisense)
     idxs <- which(dirs == 2);
     # Not needed anymore
@@ -107,7 +108,7 @@ setMethodS3("extractAlleleSet", "SnpChipEffectSet", function(this, units=NULL, s
 
     gc <- gc();
     verbose && print(verbose, gc);
-  
+
     verbose && exit(verbose);
   }
 
@@ -161,12 +162,12 @@ setMethodS3("extractAlleleSet", "SnpChipEffectSet", function(this, units=NULL, s
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   verbose && enter(verbose, "Allocate and populate AlleleSet");
   if (maxGroup == 2) {
-    res <- new("AlleleSet", 
+    res <- new("AlleleSet",
       alleleA = theta[,1,,drop=TRUE],
       alleleB = theta[,2,,drop=TRUE]
     );
   } else if (maxGroup == 4) {
-    res <- new("AlleleSet", 
+    res <- new("AlleleSet",
       antisenseAlleleA = theta[,3,,drop=TRUE],
       senseAlleleA     = theta[,1,,drop=TRUE],
       antisenseAlleleB = theta[,4,,drop=TRUE],
@@ -179,19 +180,19 @@ setMethodS3("extractAlleleSet", "SnpChipEffectSet", function(this, units=NULL, s
   theta <- NULL;
 
   # Assign feature data
-  featureNames(res) <- unitNames;
+  .featureNames(res) <- unitNames;
   # Not needed anymore
   unitNames <- NULL;
 
   # Assign annotation data
-  pdPkgName <- oligo::cleanPlatformName(chipType);
-  annotation(res) <- pdPkgName;
+  pdPkgName <- .cleanPlatformName(chipType);
+  .annotation(res) <- pdPkgName;
 
   # Assign sample names
   filenames <- sapply(this, getFilename);
   names(filenames) <- NULL;
   filenames <- gsub(",chipEffects", "", filenames);
-  sampleNames(res) <- filenames;
+  .sampleNames(res) <- filenames;
 
   verbose && exit(verbose);
 

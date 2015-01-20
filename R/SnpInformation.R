@@ -233,7 +233,7 @@ setMethodS3("getData", "SnpInformation", function(this, units=NULL, fields=c("fr
     cdfFile <- AffymetrixCdfFile$findByChipType(chipType);
     if (is.null(cdfFile))
       throw("Could not located CDF file: ", chipType);
-    targetUnitNames <- readCdfUnitNames(cdfFile);
+    targetUnitNames <- .readCdfUnitNames(cdfFile);
     verbose && exit(verbose);
 
     # Now read the SNP information data

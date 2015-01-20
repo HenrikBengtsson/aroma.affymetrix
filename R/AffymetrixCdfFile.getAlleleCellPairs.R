@@ -32,6 +32,10 @@
 # }
 #*/###########################################################################
 setMethodS3("getAlleleCellPairs", "AffymetrixCdfFile", function(this, units=NULL, stratifyBy=c("pm", "pmmm", "mm"), force=FALSE, ..., verbose=FALSE) {
+  requireNamespace("affxparser") || throw("Package not loaded: affxparser")
+  cdfMergeAlleles <- affxparser::cdfMergeAlleles
+
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

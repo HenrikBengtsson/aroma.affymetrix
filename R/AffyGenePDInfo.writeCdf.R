@@ -1,4 +1,4 @@
-###########################################################################/** 
+###########################################################################/**
 # @set "class=AffyGenePDInfo"
 # @RdocMethod writeCdf
 # @alias writeCdf.PDInfoList
@@ -44,20 +44,27 @@
 #   In order to workaround these limitations, certain CDF entries
 #   are set to predefined/hardwired values.
 #   The 'pbase' and 'tbase' entries of the generated CDF file is
-#   hardwired to "T" and "A", respectively.  
+#   hardwired to "T" and "A", respectively.
 #   Likewise, the 'groupdirection' entry is hardwired to "sense".
 # }
 #
 # \author{
-#   Henrik Bengtsson and Guido Hooiveld adopted from \code{pdInfo2Cdf()} 
+#   Henrik Bengtsson and Guido Hooiveld adopted from \code{pdInfo2Cdf()}
 #   written by Samuel Wuest and Mark Robinson.
 # }
 #
 # @keyword internal
 #*/###########################################################################
 setMethodS3("writeCdf", "AffyGenePDInfo", function(this, tags=c("*"), unitsBy=c("transcript", "exon"), namesBy=c("fsetid", "id"), path=NULL, overwrite=FALSE, verbose=TRUE, ...) {
-  require("affxparser") || throw("Package not loaded: affxparser");
-  require("pdInfoBuilder") || throw("Package not loaded: pdInfoBuilder");
+  # Early error, iff package is missing
+  requireNamespace("DBI") || throw("Package not loaded: DBI")
+  dbGetQuery <- DBI::dbGetQuery
+  dbListTables <- DBI::dbListTables
+
+  requireNamespace("oligoClasses") || throw("Package not loaded: oligoClasses")
+  db <- oligoClasses::db
+
+  requireNamespace("pdInfoBuilder") || throw("Package not loaded: pdInfoBuilder")
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validating arguments
@@ -100,14 +107,14 @@ setMethodS3("writeCdf", "AffyGenePDInfo", function(this, tags=c("*"), unitsBy=c(
   pkgInfo <- title <- NULL;
 
   # Chip type package name
-  pkgNameT <- cleanPlatformName(chipType);
+  pkgNameT <- .cleanPlatformName(chipType);
 
   # Sanity check
   stopifnot(pkgNameT == pkgName);
   # Not needed anymore
   pkgNameT <- NULL;
 
-  
+
   if (is.null(path)) {
     path <- file.path("annotationData", "chipTypes", chipType);
     path <- Arguments$getWritablePath(path);
@@ -135,7 +142,7 @@ setMethodS3("writeCdf", "AffyGenePDInfo", function(this, tags=c("*"), unitsBy=c(
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Retrieve chip type dimensions
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  dim <- geometry(pd);
+  dim <- .geometry(pd);
   nrows <- dim[1];
   ncols <- dim[2];
   # Not needed anymore
@@ -167,7 +174,7 @@ setMethodS3("writeCdf", "AffyGenePDInfo", function(this, tags=c("*"), unitsBy=c(
   }
   for (need in needs) {
     if (!is.element(need, tables)) {
-      throw(sprintf("Required table '%s' not in database '%s': %s", need, annotation(pd), paste(tables, collapse=", ")));
+      throw(sprintf("Required table '%s' not in database '%s': %s", need, .annotation(pd), paste(tables, collapse=", ")));
     }
   }
 
@@ -285,7 +292,7 @@ setMethodS3("writeCdf", "AffyGenePDInfo", function(this, tags=c("*"), unitsBy=c(
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Writing CDF file
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  pathname <- writeCdf(ffs, pathname=pathname, overwrite=overwrite, verbose=less(verbose));
+  pathname <- .writeCdf(ffs, pathname=pathname, overwrite=overwrite, verbose=less(verbose));
 
   verbose && exit(verbose);
 
@@ -296,8 +303,6 @@ setMethodS3("writeCdf", "AffyGenePDInfo", function(this, tags=c("*"), unitsBy=c(
 
 
 setMethodS3("writeCdf", "PDInfoList", function(ffs, pathname, overwrite=FALSE, ..., verbose=TRUE) {
-  require("affxparser") || throw("Package not loaded: affxparser");
-
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local functions
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -308,7 +313,7 @@ setMethodS3("writeCdf", "PDInfoList", function(ffs, pathname, overwrite=FALSE, .
     id <- u$probeset_id[1L];
     g <- list(list(x=u$x[o], y=u$y[o], pbase=rep("T", times=nr), tbase=rep("A", times=nr), atom=v, indexpos=v, groupdirection="sense", natoms=nr, ncellsperatom=1L));
     names(g) <- id;
-    # unittype = 'expression' = 1L, 
+    # unittype = 'expression' = 1L,
     # cf. help("readCdfUnits", package="affxparser")
     list(unittype=1L, unitdirection=1L, groups=g, natoms=nr, ncells=nr, ncellsperatom=1L, unitnumber=0L);
   } # pmFeature2List()
@@ -351,10 +356,10 @@ setMethodS3("writeCdf", "PDInfoList", function(ffs, pathname, overwrite=FALSE, .
   verbose && enter(verbose, "Setting up CDF tree structure");
 
   verbose && enter(verbose, "Setting CDF header");
-  cdfHeader <- list(ncols=ncols, nrows=nrows, nunits=nbrOfUnits, 
-                    nqcunits=0L, refseq="", chiptype=chipType, 
-                    filename=pathname, rows=nrows, 
-                    cols=ncols, probesets=nbrOfUnits, 
+  cdfHeader <- list(ncols=ncols, nrows=nrows, nunits=nbrOfUnits,
+                    nqcunits=0L, refseq="", chiptype=chipType,
+                    filename=pathname, rows=nrows,
+                    cols=ncols, probesets=nbrOfUnits,
                     qcprobesets=0L, reference="");
   verbose && exit(verbose);
 
@@ -391,7 +396,7 @@ setMethodS3("writeCdf", "PDInfoList", function(ffs, pathname, overwrite=FALSE, .
   }
   pathnameT <- pushTemporaryFile(pathname, verbose=verbose);
 
-  affxparser::writeCdf(pathnameT, cdfheader=cdfHeader, cdf=cdfList,
+  .writeCdf(pathnameT, cdfheader=cdfHeader, cdf=cdfList,
                   cdfqc=NULL, verbose=verbose, overwrite=overwrite);
 
   # Rename temporary file
@@ -408,7 +413,7 @@ setMethodS3("writeCdf", "PDInfoList", function(ffs, pathname, overwrite=FALSE, .
 
 
 setMethodS3("writeCdf", "DBPDInfo", function(this, tags=c("*"), unitsBy=c("transcript", "exon"), namesBy=c("fsetid", "id"), path=NULL, overwrite=FALSE, verbose=TRUE, ...) {
-  throw(sprintf("writeCdf() for '%s' not implemented: %s", class(this)[1L], annotation(this)));
+  throw(sprintf("writeCdf() for '%s' not implemented: %s", class(this)[1L], .annotation(this)));
 })
 
 
@@ -435,20 +440,20 @@ setMethodS3("writeCdf", "DBPDInfo", function(this, tags=c("*"), unitsBy=c("trans
 #   An auxillary CEL file is no longer needed to create a CDF from
 #   an PDInfo package.  Moreover, contrary pdInfo2Cdf(), the generated
 #   CDF now gets a correct/formal Affymetrix chip type.
-# 
+#
 # Below history is for pdInfo2Cdf():
 #
 # 2010-12-04 [HB]
 # o Added more verbose output.
 # o DOCUMENTATION: Added more Rd documentation.
 # o BUG FIX: Local variable 'pdName' of pdInfo2Cdf() was used before it
-#   was defined.  Thanks to Guido Hooiveld at the Wageningen University, 
+#   was defined.  Thanks to Guido Hooiveld at the Wageningen University,
 #   Netherlands, for reporting this.
 # 2010-05-20 [HB]
 # o Renamed PdInfo2Cdf() to pdInfo2Cdf().  Keeping old one for backward
 #   compatibility for a while.
 # 2010-05-19 [HB]
-# o BUG FIX: PdInfo2Cdf() would write dimension (rows,rows) in the CDF 
+# o BUG FIX: PdInfo2Cdf() would write dimension (rows,rows) in the CDF
 #   header instead of (rows,cols).  Thanks Kasper Daniel Hansen for
 #   reporting this.
 # 2009-10-16 [HB]
@@ -457,9 +462,9 @@ setMethodS3("writeCdf", "DBPDInfo", function(this, tags=c("*"), unitsBy=c("trans
 # o Added some validation of arguments.
 # o Tidied up the code structure.
 # 2009-01-13 [MR]
-# o Added. "This script has been written to generate a .cdf-file from an 
+# o Added. "This script has been written to generate a .cdf-file from an
 #   "pd.XXXX" package, such as those build with pdInfoBuilder.
-#   The original was written by Samuel Wuest, modified by Mark Robinson 
+#   The original was written by Samuel Wuest, modified by Mark Robinson
 #   (around 12 Jan 2009) to be generic."
 # 2008-??-?? [SW]
 # o Created by Samuel Wuest.

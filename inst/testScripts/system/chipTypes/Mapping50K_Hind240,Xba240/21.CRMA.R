@@ -7,7 +7,7 @@ dataSet <- "HapMap,CEU,testset";
 chipTypes <- c("Mapping50K_Hind240", "Mapping50K_Xba240");
 
 # Expected sample names
-sampleNames <- c("NA06985", "NA06991", "NA06993", 
+sampleNames <- c("NA06985", "NA06991", "NA06993",
                  "NA06994", "NA07000", "NA07019");
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -90,7 +90,7 @@ for (chipType in names(csList)) {
 # one of the sets
 for (kk in seq_along(cesNList)) {
   ces <- cesNList[[kk]];
-  ces <- extract(ces, setdiff(seq_along(ces), length(ces)+1-kk));
+  ces <- ces[setdiff(seq_along(ces), length(ces)+1-kk)];
   cesNList[[kk]] <- ces;
 }
 

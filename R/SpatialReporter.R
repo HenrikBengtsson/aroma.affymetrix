@@ -404,8 +404,8 @@ setMethodS3("plotMargins", "SpatialReporter", function(this, array, margins=c("r
     }
 
     fit <- list();
-    fit[[1]] <- robustSmoothSpline(x, y, spar=0.3);
-    fit[[2]] <- robustSmoothSpline(x, y, spar=0.9);
+    fit[[1]] <- .robustSmoothSpline(x, y, spar=0.3);
+    fit[[2]] <- .robustSmoothSpline(x, y, spar=0.9);
 
     if (rotate == 0) {
       plot(x, y, pch=pch, cex=cex, ylim=ylim, xlab=xlab, ylab=ylab);

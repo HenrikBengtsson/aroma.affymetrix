@@ -353,7 +353,7 @@ setMethodS3("getHeader", "AffymetrixCelFile", function(this, ...) {
   header <- this$.header;
   if (is.null(header)) {
     pathname <- getPathname(this);
-    header <- readCelHeader(pathname);
+    header <- .readCelHeader(pathname);
     this$.header <- header;
   }
   header;
@@ -492,7 +492,7 @@ setMethodS3("getTimestamp", "AffymetrixCelFile", function(this, format="%m/%d/%y
 
   if (fileFormat == 1) {
     suppressWarnings({
-      hdr <- readCcgHeader(getPathname(this));
+      hdr <- .readCcgHeader(getPathname(this));
     });
 
     # Get the DAT header
@@ -605,6 +605,7 @@ setMethodS3("readUnits", "AffymetrixCelFile", function(this, units=NULL, cdf=NUL
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
 
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Retrieve CDF structure
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -619,7 +620,7 @@ setMethodS3("readUnits", "AffymetrixCelFile", function(this, units=NULL, cdf=NUL
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   pathname <- getPathname(this);
   suppressWarnings({
-    res <- readCelUnits(pathname, cdf=cdf, dropArrayDim=TRUE, ...);
+    res <- .readCelUnits(pathname, cdf=cdf, dropArrayDim=TRUE, ...);
   })
 
   res;
@@ -659,7 +660,7 @@ setMethodS3("readUnits", "AffymetrixCelFile", function(this, units=NULL, cdf=NUL
 setMethodS3("updateUnits", "AffymetrixCelFile", function(this, data, ...) {
   pathname <- getPathname(this);
   pathname <- Arguments$getWritablePathname(pathname);
-  updateCelUnits(pathname, data=data, ...);
+  .updateCelUnits(pathname, data=data, ...);
 }, private=TRUE)
 
 
@@ -735,7 +736,7 @@ setMethodS3("clearData", "AffymetrixCelFile", function(this, fields=c("intensiti
   if ("pixels" %in% fields)
     pixels <- bfr;
 
-  updateCel(pathname, intensities=bfr, stdvs=bfr, pixels=bfr);
+  .updateCel(pathname, intensities=bfr, stdvs=bfr, pixels=bfr);
   verbose && exit(verbose);
 
   invisible(fields);
@@ -783,6 +784,10 @@ setMethodS3("clearData", "AffymetrixCelFile", function(this, fields=c("intensiti
 # @keyword IO
 #*/###########################################################################
 setMethodS3("readRawData", "AffymetrixCelFile", function(this, indices=NULL, fields=c("xy", "intensities", "stdvs", "pixels"), ..., drop=FALSE, verbose=FALSE) {
+  requireNamespace("affxparser") || throw("Package not loaded: affxparser")
+  readCel <- affxparser::readCel
+
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -839,6 +844,7 @@ setMethodS3("readRawData", "AffymetrixCelFile", function(this, indices=NULL, fie
     ...,
     verbose=cVerbose
   );
+
   fcn <- get("readCel", mode="function");
   keep <- intersect(names(args), names(formals(fcn)));
   args <- args[keep];
@@ -901,7 +907,7 @@ setMethodS3("range", "AffymetrixCelFile", function(this, ..., na.rm=TRUE) {
 
 setMethodS3("readRawDataRectangle", "AffymetrixCelFile", function(this, xrange=c(0,Inf), yrange=c(0,Inf), fields=c("intensities", "stdvs", "pixels"), ..., drop=FALSE) {
   pathname <- getPathname(this);
-  data <- readCelRectangle(pathname, xrange=xrange, yrange=yrange, readIntensities=("intensities" %in% fields), readStdvs=("stdvs" %in% fields), readPixels=("pixels" %in% fields), readHeader=FALSE, readOutliers=FALSE, readMasked=FALSE);
+  data <- .readCelRectangle(pathname, xrange=xrange, yrange=yrange, readIntensities=("intensities" %in% fields), readStdvs=("stdvs" %in% fields), readPixels=("pixels" %in% fields), readHeader=FALSE, readOutliers=FALSE, readMasked=FALSE);
 
   if (drop && length(data) == 1) {
     data <- data[[1]];

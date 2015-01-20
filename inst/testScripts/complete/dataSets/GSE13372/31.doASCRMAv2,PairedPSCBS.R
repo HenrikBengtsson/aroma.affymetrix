@@ -44,9 +44,9 @@ setFullNamesTranslator(dsN, df);
 sampleNames <- unique(getNames(dsN));
 
 dsList <- lapply(sampleNames, FUN=function(sampleName) {
-  ds <- extract(dsN, sampleName);
+  ds <- dsN[sampleName];
   lapply(c(T="T", N="N"), FUN=function(type) {
-    extract(ds, sapply(ds, hasTag, type));
+    ds[sapply(ds, hasTag, type)];
   });
 });
 names(dsList) <- sampleNames;
@@ -63,12 +63,12 @@ for (key in names(dsList)) {
   dsN <- dsListKK$N;
 
   # (a) Replicated tumor vs same normal
-  dsTa <- extract(dsT, 1:min(length(dsT),R));
-  dsNa <- extract(dsN, rep(1L, times=length(dsTa)));
+  dsTa <- dsT[1:min(length(dsT),R)];
+  dsNa <- dsN[rep(1L, times=length(dsTa))];
 
   # (b) Same tumor vs replicated normals
-  dsNb <- extract(dsN, 1:min(length(dsN),R));
-  dsTb <- extract(dsT, rep(1L, times=length(dsNb)));
+  dsNb <- dsN[1:min(length(dsN),R)];
+  dsTb <- dsT[rep(1L, times=length(dsNb))];
 
   # (c) Merge
   dsT <- append(dsTa, dsTb);
@@ -79,8 +79,8 @@ for (key in names(dsList)) {
   nN <- getFullNames(dsN);
   nP <- paste(nT, nN, sep="_vs_");
   dups <- duplicated(nP);
-  dsT <- extract(dsT, !dups);
-  dsN <- extract(dsN, !dups);
+  dsT <- dsT[!dups];
+  dsN <- dsN[!dups];
   stopifnot(length(dsT) == length(dsN));
 
   dsList2[[key]] <- list(T=dsT, N=dsN);

@@ -95,7 +95,7 @@ setMethodS3("inferParameters", "SnpChipEffectSet", function(this, ..., verbose=F
   # Identify units with quartets
   cdf <- getCdf(this);
   cdfPathname <- getPathname(cdf);
-  nbrOfUnits <- readCdfHeader(cdfPathname)$nunits;
+  nbrOfUnits <- .readCdfHeader(cdfPathname)$nunits;
   allUnits <- seq_len(nbrOfUnits);
 
   ce <- getOneFile(this, mustExist=TRUE);
@@ -113,7 +113,7 @@ setMethodS3("inferParameters", "SnpChipEffectSet", function(this, ..., verbose=F
     uu <- NULL;
 
     # Identify units that are quartets
-    unitSizes <- readCdfGroupNames(cdfPathname, units=units);
+    unitSizes <- .readCdfGroupNames(cdfPathname, units=units);
     names(unitSizes) <- NULL;
     unitSizes <- sapply(unitSizes, FUN=length);
     units <- units[unitSizes == 4L];
@@ -123,7 +123,7 @@ setMethodS3("inferParameters", "SnpChipEffectSet", function(this, ..., verbose=F
       verbose && cat(verbose, "Scanning units:");
       verbose && str(verbose, units);
       # Infer parameters from 'intensities'
-      values <- readCelUnits(cePathname, units=units,
+      values <- .readCelUnits(cePathname, units=units,
                    readIntensities=TRUE, readStdvs=FALSE, dropArrayDim=TRUE);
       # Not needed anymore
       units <- NULL;
@@ -139,7 +139,7 @@ setMethodS3("inferParameters", "SnpChipEffectSet", function(this, ..., verbose=F
       verbose && cat(verbose, "Values quartets:");
       verbose && print(verbose, values[,seq_len(min(ncol(values),6)),drop=FALSE]);
       if (ncol(values) > 0L) {
-        t <- rowMeans(values);
+        t <- .rowMeans(values);
         if (length(t) > 0L) {
           isZero <- isZero(t);
           if (!all(isZero)) {

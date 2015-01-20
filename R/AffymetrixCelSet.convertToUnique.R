@@ -108,11 +108,11 @@ setMethodS3("convertToUnique", "AffymetrixCelSet", function(this, ..., tags="UNQ
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   verbose && enter(verbose, "Reading cell indices from standard CDF");
 
-  cdfStandard <- readCdf(getPathname(cdf), units=NULL, readXY=FALSE, readBases=FALSE, readIndexpos=FALSE, readAtoms=FALSE,readUnitType=FALSE, readUnitDirection=FALSE, readUnitNumber=FALSE, readUnitAtomNumbers=FALSE, readGroupAtomNumbers=FALSE, readGroupDirection=FALSE, readIndices=TRUE, readIsPm=FALSE);
+  cdfStandard <- .readCdf(getPathname(cdf), units=NULL, readXY=FALSE, readBases=FALSE, readIndexpos=FALSE, readAtoms=FALSE,readUnitType=FALSE, readUnitDirection=FALSE, readUnitNumber=FALSE, readUnitAtomNumbers=FALSE, readGroupAtomNumbers=FALSE, readGroupDirection=FALSE, readIndices=TRUE, readIsPm=FALSE);
   verbose && exit(verbose);
 
   verbose && enter(verbose, "Reading cell indices list from unique CDF");
-  cdfUniqueIndices <- readCdf(getPathname(cdfUnique), units=NULL, readXY=FALSE, readBases=FALSE, readIndexpos=FALSE, readAtoms=FALSE,readUnitType=FALSE, readUnitDirection=FALSE, readUnitNumber=FALSE, readUnitAtomNumbers=FALSE, readGroupAtomNumbers=FALSE, readGroupDirection=FALSE, readIndices=TRUE, readIsPm=FALSE);
+  cdfUniqueIndices <- .readCdf(getPathname(cdfUnique), units=NULL, readXY=FALSE, readBases=FALSE, readIndexpos=FALSE, readAtoms=FALSE,readUnitType=FALSE, readUnitDirection=FALSE, readUnitNumber=FALSE, readUnitAtomNumbers=FALSE, readGroupAtomNumbers=FALSE, readGroupDirection=FALSE, readIndices=TRUE, readIsPm=FALSE);
 
   verbose && exit(verbose);
 
@@ -148,11 +148,11 @@ setMethodS3("convertToUnique", "AffymetrixCelSet", function(this, ..., tags="UNQ
       # Read data
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       verbose && enter(verbose, "Reading intensity values according to standard CDF");
-      data <- readCelUnits(getPathname(df), cdf=cdfStandard, dropArrayDim=TRUE);
+      data <- .readCelUnits(getPathname(df), cdf=cdfStandard, dropArrayDim=TRUE);
       verbose && exit(verbose);
 
       # Build a valid CEL header
-      celHeader <- cdfHeaderToCelHeader(cdfHeader, sampleName=dfFullname);
+      celHeader <- .cdfHeaderToCelHeader(cdfHeader, sampleName=dfFullname);
       # Not needed anymore
       dfFullname <- NULL;
 
@@ -181,9 +181,9 @@ setMethodS3("convertToUnique", "AffymetrixCelSet", function(this, ..., tags="UNQ
       # Write to a temporary file
       pathnameT <- pushTemporaryFile(pathname, verbose=verbose);
 
-      createCel(pathnameT, header=celHeader);
+      .createCel(pathnameT, header=celHeader);
       verbose && cat(verbose, "Writing values according to unique CDF");
-      updateCelUnits(pathnameT, cdf=cdfUniqueIndices, data=data, verbose=FALSE);
+      .updateCelUnits(pathnameT, cdf=cdfUniqueIndices, data=data, verbose=FALSE);
       verbose && exit(verbose);
 
       # Not needed anymore

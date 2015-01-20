@@ -1,6 +1,6 @@
 # @author "HB"
 setMethodS3("justSNPRMA", "character", function(...) {
-  require("oligo") || throw("Package not loaded: oligo");
+  requireNamespace("oligo") || throw("Package not loaded: oligo")
   oligo::justSNPRMA(...);
 })
 
@@ -69,7 +69,7 @@ setMethodS3("justSNPRMA", "AffymetrixCelSet", function(this, ..., normalizeToHap
     if (normalizeToHapmap) {
       verbose && enter(verbose, "Loading HapMap reference target quantiles");
 
-      pdPkgName <- oligo::cleanPlatformName(chipType);
+      pdPkgName <- .cleanPlatformName(chipType);
       verbose && cat(verbose, "Platform Design (PD) package: ", pdPkgName);
 
       # Load target from PD package

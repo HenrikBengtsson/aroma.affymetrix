@@ -187,7 +187,7 @@ setMethodS3("getCellIndices", "CnChipEffectFile", function(this, units=NULL, ...
       verbose && enter(verbose, "Combining alleles");
       # Hard-wiring 1, 2 & 4 groups speed things up 3 times!
 
-      cells <- applyCdfGroups(cells, function(groups) {
+      cells <- .applyCdfGroups(cells, function(groups) {
         ngroups <- length(groups);
         names <- names(groups);
         if (ngroups == 4L) {
@@ -332,7 +332,7 @@ setMethodS3("getNumberOfFilesAveraged", "CnChipEffectFile", function(this, ..., 
   verbose && str(verbose, cells);
 
   verbose && enter(verbose, "Reading data");
-  data <- readCel(pathname, indices=cells, readIntensities=FALSE,
+  data <- .readCel(pathname, indices=cells, readIntensities=FALSE,
                   readPixels=TRUE);
   verbose && exit(verbose);
 

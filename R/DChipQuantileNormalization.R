@@ -283,7 +283,7 @@ setMethodS3("process", "DChipQuantileNormalization", function(this, ..., force=F
     # TO DO: Add function to "expand" 'xTarget' if of different length
     # than 'x' and 'w'.  /HB 2007-04-11, 2008-02-23
 
-    x <- normalizeQuantileSpline(x, w=w, xTarget=xTarget,
+    x <- .normalizeQuantileSpline(x, w=w, xTarget=xTarget,
                                        sortTarget=FALSE, robust=robust, ...);
 
     # Garbage collect
@@ -303,7 +303,7 @@ setMethodS3("process", "DChipQuantileNormalization", function(this, ..., force=F
     verbose && exit(verbose);
 
     verbose && enter(verbose, "Writing normalized intensities");
-    updateCel(pathnameT, indices=subsetToUpdate, intensities=x);
+    .updateCel(pathnameT, indices=subsetToUpdate, intensities=x);
 
     # Not needed anymore
     x <- NULL;

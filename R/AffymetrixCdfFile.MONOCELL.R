@@ -183,7 +183,7 @@ setMethodS3("createMonocellCdf", "AffymetrixCdfFile", function(this, chipType=ge
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Get the number of groups per units
   verbose && enter(verbose, "Reading CDF group names");
-  nbrOfGroupsPerUnit <- readCdfGroupNames(src);
+  nbrOfGroupsPerUnit <- .readCdfGroupNames(src);
   verbose && exit(verbose);
 
   names(nbrOfGroupsPerUnit) <- NULL;
@@ -216,7 +216,7 @@ setMethodS3("createMonocellCdf", "AffymetrixCdfFile", function(this, chipType=ge
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Keep all QC units
   verbose && enter(verbose, "Reading CDF QC units");
-  destQcUnits <- readCdfQc(src);
+  destQcUnits <- .readCdfQc(src);
   verbose && exit(verbose);
   nbrOfQcUnits <- length(destQcUnits);
   nbrOfCellsPerQcUnit <- lapply(destQcUnits, FUN=.subset2, "ncells");
@@ -257,7 +257,7 @@ setMethodS3("createMonocellCdf", "AffymetrixCdfFile", function(this, chipType=ge
 
   # Get template header
   verbose && enter(verbose, "Reading CDF header");
-  destHeader <- readCdfHeader(src);
+  destHeader <- .readCdfHeader(src);
   verbose && exit(verbose);
 
   destHeader$nrows <- nrows;
@@ -265,7 +265,7 @@ setMethodS3("createMonocellCdf", "AffymetrixCdfFile", function(this, chipType=ge
 
   # Get unit names
   verbose && enter(verbose, "Reading CDF unit names");
-  unitNames <- readCdfUnitNames(src);
+  unitNames <- .readCdfUnitNames(src);
   verbose && exit(verbose);
 
   if (nbrOfUnits > 0) {
@@ -309,7 +309,7 @@ setMethodS3("createMonocellCdf", "AffymetrixCdfFile", function(this, chipType=ge
       close(con);
     con <- NULL;
   });
-  writeCdfHeader(con=con, destHeader, unitNames=unitNames,
+  .writeCdfHeader(con=con, destHeader, unitNames=unitNames,
                     qcUnitLengths=qcUnitLengths, unitLengths=unitLengths,
                                                         verbose=verbose2);
   # Not needed anymore
@@ -338,7 +338,7 @@ setMethodS3("createMonocellCdf", "AffymetrixCdfFile", function(this, chipType=ge
   verbose && exit(verbose);
 
   # Write QC units
-  writeCdfQcUnits(con=con, destQcUnits, verbose=verbose2);
+  .writeCdfQcUnits(con=con, destQcUnits, verbose=verbose2);
   # Not needed anymore
   destQcUnits <- NULL; # Not needed anymore
 
@@ -401,7 +401,7 @@ setMethodS3("createMonocellCdf", "AffymetrixCdfFile", function(this, chipType=ge
 
 # readGroupDirection is needed in order for writeCdf() to work. /KS 18/12/06
     verbose && enter(verbose, "Reading CDF list structure");
-    srcUnits <- readCdf(src, units=units, readGroupDirection=TRUE);
+    srcUnits <- .readCdf(src, units=units, readGroupDirection=TRUE);
     verbose && exit(verbose);
     if (is.null(srcUnits)) {
       throw(sprintf("Failed to read %d units from CDF file.  This could be because you are running out of memory.  Try decreasing argument 'ram': %s", length(units), src));
@@ -454,7 +454,7 @@ setMethodS3("createMonocellCdf", "AffymetrixCdfFile", function(this, chipType=ge
 #    verbose && str(verbose, srcUnits[1]);
 
     # Write regular units
-    writeCdfUnits(con=con, srcUnits, verbose=verbose2);
+    .writeCdfUnits(con=con, srcUnits, verbose=verbose2);
     # Not needed anymore
     srcUnits <- units <- NULL; # Not needed anymore
 
@@ -488,7 +488,7 @@ setMethodS3("createMonocellCdf", "AffymetrixCdfFile", function(this, chipType=ge
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   verbose && enter(verbose, "Verifying the written CDF");
   # Checking header
-  header <- readCdfHeader(pathnameT);
+  header <- .readCdfHeader(pathnameT);
   if ((header$nrows != nrows) || (header$ncols != ncols)) {
     throw(sprintf("Failed to create a valid mono-cell CDF: The dimension of the written CDF does not match the intended one: (%d,%d) != (%d,%d)", header$nrows, header$ncols, nrows, ncols));
   }
@@ -502,7 +502,7 @@ setMethodS3("createMonocellCdf", "AffymetrixCdfFile", function(this, chipType=ge
     verbose && printf(verbose, "Chunk %d of %d\n", kk, nbrOfChunks);
     from <- (kk-1)*chunkSize+1;
     to <- min(from+chunkSize, nbrOfUnits);
-    cells <- readCdfCellIndices(pathnameT, units=from:to);
+    cells <- .readCdfCellIndices(pathnameT, units=from:to);
     cells <- unlist(cells, use.names=FALSE);
     cells <- diff(cells);
     cells <- unique(cells);

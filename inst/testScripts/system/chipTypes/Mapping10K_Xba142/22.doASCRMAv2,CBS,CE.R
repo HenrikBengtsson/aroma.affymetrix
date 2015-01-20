@@ -30,7 +30,7 @@ process(ce, arrays=1:2, chromosomes=c(1:2,19,23), verbose=verbose);
 # CBS with a common reference
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Use the robust average of the first five arrays as a reference
-dsR <- extract(dsT, 1:5);
+dsR <- dsT[1:5];
 dfR <- getAverageFile(dsR);
 print(dfR);
 

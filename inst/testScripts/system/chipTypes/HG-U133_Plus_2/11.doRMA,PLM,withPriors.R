@@ -6,9 +6,9 @@ chipType <- "HG-U133_Plus_2";
 csR <- AffymetrixCelSet$byName(dataSet, chipType=chipType);
 
 
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # RMA
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 res <- doRMA(csR, drop=FALSE, verbose=verbose);
 print(res);
 
@@ -17,18 +17,18 @@ ces <- res$ces;
 print(ces);
 
 
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Fit "another" sample based on above PLM priors
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Get PLM priors
 plm <- res$plm;
 pf <- getProbeAffinityFile(plm);
 print(pf);
 
-# RMA probe summarization (there are no NAs in this data set) on 
+# RMA probe summarization (there are no NAs in this data set) on
 # a "new" sample based on its background corrected signals
 csN <- res$csN;
-csT <- extract(csN, 1);
+csT <- csN[1];
 print(csT);
 listOfPriors <- list(probeAffinities=pf);
 plmP <- RmaPlm(csT, tags="*,priors", listOfPriors=listOfPriors);
@@ -50,7 +50,7 @@ cesP <- getChipEffectSet(plmP);
 print(cesP);
 
 # Compare
-theta <- extractTheta(extract(ces,1), drop=TRUE);
+theta <- extractTheta(ces[1], drop=TRUE);
 thetaP <- extractTheta(cesP, drop=TRUE);
 
 # The estimates are not identical, ...

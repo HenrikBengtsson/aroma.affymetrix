@@ -254,7 +254,7 @@ setMethodS3("findUnitsTodo", "ResidualFile", function(this, units=NULL, ..., for
     verbose && exit(verbose);
 
     verbose && enter(verbose, "Extracting first cell in the first block for each unit");
-    idxs <- applyCdfGroups(idxs, function(groups) {
+    idxs <- .applyCdfGroups(idxs, function(groups) {
       # == groups[[1]]$indices[1];
       .subset(.subset2(.subset2(groups, 1), "indices"), 1)
     });
@@ -273,7 +273,7 @@ setMethodS3("findUnitsTodo", "ResidualFile", function(this, units=NULL, ..., for
 
   # Read one cell from each unit
   verbose && enter(verbose, "Reading data for these ", length(idxs), " cells");
-  value <- readCel(getPathname(this), indices=idxs, readIntensities=FALSE,
+  value <- .readCel(getPathname(this), indices=idxs, readIntensities=FALSE,
                    readStdvs=TRUE, readPixels=FALSE)$stdvs;
   verbose && exit(verbose);
 
@@ -463,7 +463,7 @@ setMethodS3("updateDataFlat", "ResidualFile", function(this, data, ..., verbose=
   data <- data[,keep];
   pathname <- getPathname(this);
   pathname <- Arguments$getWritablePathname(pathname);
-  updateCel(pathname, indices=indices, data, verbose=verbose2);
+  .updateCel(pathname, indices=indices, data, verbose=verbose2);
   verbose && exit(verbose);
 
   verbose && exit(verbose);

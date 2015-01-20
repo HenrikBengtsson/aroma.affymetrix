@@ -18,8 +18,8 @@ dsList <- doASCRMAv2(dataSet, chipType=chipType, verbose=verbose);
 print(dsList);
 
 # Immitate a paired tumor-normal data set
-dsT <- extract(dsList$total, 1:5);
-dsR <- extract(dsList$total, 6:10);
+dsT <- dsList$total[1:5];
+dsR <- dsList$total[6:10];
 
 dsTCN <- exportTotalCnRatioSet(dsT, dsR, logBase=NULL, verbose=verbose);
 

@@ -77,7 +77,7 @@ setMethodS3("allocateFromCdf", "AffymetrixCelFile", function(static, cdf, name, 
   cdfHeader <- getHeader(cdf);
 
   # Build a valid CEL header
-  celHeader <- cdfHeaderToCelHeader(cdfHeader, sampleName=fullname);
+  celHeader <- .cdfHeaderToCelHeader(cdfHeader, sampleName=fullname);
 
   # Add some extra information about what the CEL file is for
   params <- c(Descripion="This CEL file was created by the aroma.affymetrix package.");
@@ -100,7 +100,7 @@ setMethodS3("allocateFromCdf", "AffymetrixCelFile", function(static, cdf, name, 
   }
 
   # Create the CEL file
-  createCel(pathname, header=celHeader, ..., verbose=less(verbose));
+  .createCel(pathname, header=celHeader, ..., verbose=less(verbose));
 
 ##    # Fill with negative values
 ##    nbrOfProbes <- celHeader$total;

@@ -65,7 +65,7 @@ sampleNamesMap <- c(
 sampleNames <- names(sampleNamesMap);
 
 sampleNames <- rev(sampleNames);
-csR <- extract(csR, sampleNames);
+csR <- csR[sampleNames];
 setFullName(csR, sprintf("%s,crlmmSubset", dataSet));
 print(csR);
 

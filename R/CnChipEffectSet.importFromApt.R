@@ -282,7 +282,7 @@ setMethodS3("importFromApt", "CnChipEffectSet", function(static, filename, path=
     verbose && print(verbose, gc);
 
     verbose && enter(verbose, "Storing chip effects");
-    updateCel(pathnameT, indices=cells, intensities=data);
+    .updateCel(pathnameT, indices=cells, intensities=data);
     # Not needed anymore
     data <- NULL;
     verbose && exit(verbose);

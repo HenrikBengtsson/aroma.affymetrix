@@ -8,7 +8,7 @@ dataSet <- "GSE8605";
 chipType <- "Mapping10K_Xba142";
 
 csR <- AffymetrixCelSet$byName(dataSet, chipType=chipType);
-csR <- extract(csR, 1:6);
+csR <- csR[1:6];
 print(csR);
 
 cesN <- doASCRMAv1(csR, verbose=verbose, drop=FALSE)$cesN;

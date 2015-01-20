@@ -9,7 +9,7 @@ chipType <- "Mapping10K_Xba142";
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 csR <- AffymetrixCelSet$byName(dataSet, chipType=chipType, verbose=log);
 keep <- 1:6;
-csR <- extract(csR, keep);
+csR <- csR[keep];
 print(csR);
 
 

@@ -658,7 +658,7 @@ setMethodS3("readUnits", "CnagCfhSet", function(this, units=NULL, ..., force=FAL
   verbose && enter(verbose, "Calling readCelUnits() for ",
                                               length(pathnames), " files");
   if (is.list(units)) {
-    res <- readCelUnits(pathnames, cdf=units, dropArrayDim=FALSE, ...);
+    res <- .readCelUnits(pathnames, cdf=units, dropArrayDim=FALSE, ...);
   } else {
     # Always ask for CDF information from the CDF object!
     verbose && enter(verbose, "Retrieving CDF unit information");
@@ -668,7 +668,7 @@ setMethodS3("readUnits", "CnagCfhSet", function(this, units=NULL, ..., force=FAL
     verbose && str(verbose, cdf[1]);
     verbose && exit(verbose);
     verbose && enter(verbose, "Retrieving CFH units across samples");
-    res <- readCelUnits(pathnames, cdf=cdf, dropArrayDim=FALSE, ...);
+    res <- .readCelUnits(pathnames, cdf=cdf, dropArrayDim=FALSE, ...);
     verbose && exit(verbose);
   }
   verbose && exit(verbose);
@@ -903,7 +903,7 @@ setMethodS3("getAverageFile", "CnagCfhSet", function(this, name=NULL, prefix="av
   # Identify which indices to use
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (identical(indices, "remaining")) {
-    pixels <- readCel(pathname, readIntensities=FALSE, readStdvs=FALSE,
+    pixels <- .readCel(pathname, readIntensities=FALSE, readStdvs=FALSE,
                       readPixels=TRUE)$pixels;
     indices <- which(pixels == 0);
     # Not needed anymore
@@ -960,7 +960,7 @@ setMethodS3("getAverageFile", "CnagCfhSet", function(this, name=NULL, prefix="av
     naValue <- as.double(NA);
     X <- matrix(naValue, nrow=length(ii), ncol=nbrOfArrays);
     for (kk in seq_len(nbrOfArrays)) {
-      X[,kk] <- readCel(filename = pathnames[kk],
+      X[,kk] <- .readCel(filename = pathnames[kk],
                         indices = indices[ii],
                         readIntensities = readIntensities,
                         readHeader = FALSE,
@@ -1000,7 +1000,7 @@ setMethodS3("getAverageFile", "CnagCfhSet", function(this, name=NULL, prefix="av
 
     # Write estimates to result file
     verbose && enter(verbose, "Writing estimates");
-    updateCel(pathname, indices=indices[ii], intensities=mu, stdvs=sigma, pixels=n);
+    .updateCel(pathname, indices=indices[ii], intensities=mu, stdvs=sigma, pixels=n);
     verbose && exit(verbose);
 
     # Not needed anymore

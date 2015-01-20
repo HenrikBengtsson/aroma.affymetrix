@@ -117,7 +117,7 @@ setMethodS3("calculateWeights", "ExonRmaPlm", function(this, units=NULL, ram=NUL
         });
       });
 
-      updateCelUnits(getPathname(wf), cdf=cdf, data=data);
+      .updateCelUnits(getPathname(wf), cdf=cdf, data=data);
 
       verbose && exit(verbose);
     } # for (ii ...)

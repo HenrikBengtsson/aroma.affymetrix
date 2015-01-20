@@ -87,7 +87,7 @@ setMethodS3("calculateParametersGsb", "AffymetrixCelSet", function(this, nbrOfPm
     # Cells to be read for this array
     idxs <- which(iarray == ii);
     cells <- pmCells.random[idxs];
-    pm.random2[idxs] <- readCel(pathnames[ii], indices=cells,
+    pm.random2[idxs] <- .readCel(pathnames[ii], indices=cells,
                        readIntensities=TRUE, readStdvs=FALSE)$intensities;
     # Not needed anymore
     idxs <- cells <- NULL;

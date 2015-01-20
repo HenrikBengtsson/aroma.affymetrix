@@ -222,7 +222,7 @@ setMethodS3("getAverageFile", "AffymetrixCelSet", function(this, name=NULL, pref
   # Identify which indices to use
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (identical(indices, "remaining")) {
-    pixels <- readCel(pathname, readIntensities=FALSE, readStdvs=FALSE,
+    pixels <- .readCel(pathname, readIntensities=FALSE, readStdvs=FALSE,
                       readPixels=TRUE)$pixels;
     indices <- which(pixels == 0);
     # Not needed anymore
@@ -278,7 +278,7 @@ setMethodS3("getAverageFile", "AffymetrixCelSet", function(this, name=NULL, pref
     # matrix. /HB 2007-01-07
     X <- matrix(as.double(NA), nrow=length(ii), ncol=nbrOfArrays);
     for (kk in seq_len(nbrOfArrays)) {
-      X[,kk] <- readCel(filename = pathnames[kk],
+      X[,kk] <- .readCel(filename = pathnames[kk],
                         indices = indices[ii],
                         readIntensities = readIntensities,
                         readHeader = FALSE,
@@ -318,7 +318,7 @@ setMethodS3("getAverageFile", "AffymetrixCelSet", function(this, name=NULL, pref
 
     # Write estimates to result file
     verbose && enter(verbose, "Writing estimates");
-    updateCel(pathname, indices=indices[ii], intensities=mu, stdvs=sigma, pixels=n);
+    .updateCel(pathname, indices=indices[ii], intensities=mu, stdvs=sigma, pixels=n);
     verbose && exit(verbose);
 
     # Not needed anymore

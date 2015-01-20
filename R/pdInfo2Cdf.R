@@ -55,9 +55,18 @@
 # @keyword internal
 #*/###########################################################################
 pdInfo2Cdf <- function(pdpkg, celfile, overwrite=FALSE, verbose=TRUE, ...) {
-  require("affxparser") || throw("Package not loaded: affxparser");
-  require("oligo") || throw("Package not loaded: oligo");
-  require("pdInfoBuilder") || throw("Package not loaded: pdInfoBuilder");
+  requireNamespace("oligo") || throw("Package not loaded: oligo")
+  read.celfiles <- oligo::read.celfiles
+
+  requireNamespace("DBI") || throw("Package not loaded: DBI")
+  dbGetQuery <- DBI::dbGetQuery
+
+  requireNamespace("oligoClasses") || throw("Package not loaded: oligoClasses")
+  db <- oligoClasses::db
+
+  .require <- require
+  .require("pdInfoBuilder") || throw("Package not loaded: pdInfoBuilder")
+
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local functions
@@ -74,6 +83,7 @@ pdInfo2Cdf <- function(pdpkg, celfile, overwrite=FALSE, verbose=TRUE, ...) {
     list(unittype=1, unitdirection=1, groups=g, natoms=nr, ncells=nr,
          ncellsperatom=1, unitnumber=id);
   } # pmFeature2List()
+
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validating arguments
@@ -102,7 +112,7 @@ pdInfo2Cdf <- function(pdpkg, celfile, overwrite=FALSE, verbose=TRUE, ...) {
   verbose && cat(verbose, "CDF file to be generated: ", filename);
 
   # Loading the required PD package.
-  require(pdpkg, character.only=TRUE) ||
+  .require(pdpkg, character.only=TRUE) ||
                  throw("Platform Design (PD) package not loaded: ", pdpkg);
 
 
@@ -113,7 +123,7 @@ pdInfo2Cdf <- function(pdpkg, celfile, overwrite=FALSE, verbose=TRUE, ...) {
   verbose && cat(verbose, "Pathname: ", celfile);
 
   verbose && enter(verbose, "Reading CEL file header");
-  hdr <- readCelHeader(celfile);
+  hdr <- .readCelHeader(celfile);
   nrows <- as.integer(hdr$rows);
   ncols <- as.integer(hdr$cols);
   chipType <- hdr$chiptype;
@@ -136,7 +146,7 @@ pdInfo2Cdf <- function(pdpkg, celfile, overwrite=FALSE, verbose=TRUE, ...) {
   # Retrieving information from PD package
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   verbose && enter(verbose, "Retrieving Platform Design database");
-  pd <- getPlatformDesign(cel);
+  pd <- .getPlatformDesign(cel);
   # Not needed anymore
   cel <- NULL;  # Not needed anymore
   verbose && exit(verbose);
@@ -192,7 +202,7 @@ pdInfo2Cdf <- function(pdpkg, celfile, overwrite=FALSE, verbose=TRUE, ...) {
   verbose && enter(verbose, "Writing (binary) CDF file");
   pathname <- newCdfHeader$filename;
   verbose && cat(verbose, "Pathname: ", pathname);
-  res <- writeCdf(pathname, cdfheader=newCdfHeader, cdf=newCdfList,
+  res <- .writeCdf(pathname, cdfheader=newCdfHeader, cdf=newCdfList,
                   cdfqc=NULL, verbose=verbose, overwrite=overwrite);
   verbose && exit(verbose);
 

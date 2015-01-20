@@ -32,9 +32,11 @@ keep <- sapply(paths, FUN=isDirectory);
 paths <- paths[keep];
 
 if (length(paths) > 0) {
-  paths <- selectMenu(paths, selected=TRUE, title="Root directories to be removed");
-  verbose && cat(verbose, "Root directories to be removed:");
-  verbose && cat(verbose, paste(paths, collapse="\n"));
+  if (interactive()) {
+    paths <- selectMenu(paths, selected=TRUE, title="Root directories to be removed");
+    verbose && cat(verbose, "Root directories to be removed:");
+    verbose && cat(verbose, paste(paths, collapse="\n"));
+  }
   
   
   for (kk in seq_along(paths)) {

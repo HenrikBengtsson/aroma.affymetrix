@@ -74,7 +74,7 @@ setMethodS3("getCellIndices", "ExonProbeAffinityFile", function(this, ..., unlis
 
   # Merge groups?
   if (mergeGroups) {
-    cells <- applyCdfGroups(cells, cdfMergeGroups);
+    cells <- .applyCdfGroups(cells, cdfMergeGroups);
   }
 
 

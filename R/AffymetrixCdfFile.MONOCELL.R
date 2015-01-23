@@ -35,7 +35,7 @@
 #
 # @keyword IO
 #*/###########################################################################
-setMethodS3("createMonocellCdf", "AffymetrixCdfFile", function(this, chipType=getChipType(this), tags="monocell", path=NULL, nbrOfCellsPerField=1, ..., ram=NULL, verbose=TRUE) {
+setMethodS3("createMonocellCdf", "AffymetrixCdfFile", function(this, chipType=getChipType(this), tags="monocell", path=NULL, nbrOfCellsPerField=1, ..., ram=NULL, overwrite=FALSE, verbose=TRUE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local functions
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -118,6 +118,9 @@ setMethodS3("createMonocellCdf", "AffymetrixCdfFile", function(this, chipType=ge
   # Argument 'ram':
   ram <- getRam(aromaSettings, ram);
 
+  # Argument 'overwrite':
+  overwrite <- Arguments$getLogical(overwrite);
+
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
   if (verbose) {
@@ -158,7 +161,9 @@ setMethodS3("createMonocellCdf", "AffymetrixCdfFile", function(this, chipType=ge
   filename <- sprintf("%s.CDF", name);
   pathname <- Arguments$getWritablePathname(filename, path=path);
   pathname <- AffymetrixFile$renameToUpperCaseExt(pathname);
-  pathname <- Arguments$getWritablePathname(pathname, mustNotExist=TRUE);
+  pathname <- Arguments$getWritablePathname(pathname, mustNotExist=!overwrite);
+
+  if (overwrite && isFile(pathname)) file.remove(pathname)
 
   # Write to a temporary file first, and rename it when we know it's complete
   pathnameT <- pushTemporaryFile(pathname, verbose=verbose);
@@ -533,10 +538,13 @@ setMethodS3("createMonocellCdf", "AffymetrixCdfFile", function(this, chipType=ge
 }, private=TRUE) # createMonocellCdf()
 
 
-setMethodS3("getMonocellCdf", "AffymetrixCdfFile", function(this, ..., verbose=FALSE) {
+setMethodS3("getMonocellCdf", "AffymetrixCdfFile", function(this, ..., force=FALSE, verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Argument 'force':
+  force <- Arguments$getLogical(force);
+
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
   if (verbose) {
@@ -562,9 +570,9 @@ setMethodS3("getMonocellCdf", "AffymetrixCdfFile", function(this, ..., verbose=F
   verbose && cat(verbose, "Pathname: ", pathname);
   verbose && exit(verbose);
 
-  if (is.null(pathname)) {
+  if (force || is.null(pathname)) {
     verbose && enter(verbose, "Could not locate monocell CDF. Will create one for chip type");
-    res <- createMonocellCdf(this, ..., verbose=less(verbose));
+    res <- createMonocellCdf(this, ..., overwrite=force, verbose=less(verbose));
     verbose && exit(verbose);
   } else {
     res <- byChipType(this, chipType=chipType, ...);
@@ -658,6 +666,10 @@ setMethodS3("getUnitGroupCellMapWithMonocell", "AffymetrixCdfFile", function(thi
 
 ############################################################################
 # HISTORY:
+# 2015-01-23
+# o Added argument 'force' to getMonocellCdf() for AffymetrixCdfFile.
+#   If @TRUE and an monocell CDF already exists, then it will be re-created
+#   and overwritten, otherwise an error will be thrown.
 # 2012-10-18
 # o ROBUSTNESS: Now createMonocellCdf() for AffymetrixCdfFile validates
 #   the CDF before trying to create the monocell CDF.  This should catch

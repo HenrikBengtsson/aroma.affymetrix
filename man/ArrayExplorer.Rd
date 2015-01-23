@@ -46,11 +46,11 @@ ArrayExplorer(csTuple=NULL, ...)
 \tabular{rll}{
  \tab \code{addColorMap} \tab  -\cr
  \tab \code{getColorMaps} \tab  -\cr
- \tab \code{\link[aroma.affymetrix:getDataSet.ArrayExplorer]{getDataSet}} \tab Gets the data set.\cr
+ \tab \code{getDataSet} \tab  -\cr
  \tab \code{getSetTuple} \tab  -\cr
  \tab \code{nbrOfChipTypes} \tab  -\cr
- \tab \code{\link[aroma.affymetrix:process.ArrayExplorer]{process}} \tab Generates image files, scripts and dynamic pages for the explorer.\cr
- \tab \code{\link[aroma.affymetrix:setArrays.ArrayExplorer]{setArrays}} \tab Sets the arrays.\cr
+ \tab \code{process} \tab  -\cr
+ \tab \code{setArrays} \tab  -\cr
  \tab \code{setColorMaps} \tab  -\cr
 }
 

@@ -70,7 +70,7 @@ FragmentLengthNormalization(dataSet=NULL, ..., target=targetFunctions, subsetToF
  \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{getCdf} \tab  -\cr
- \tab \code{\link[aroma.affymetrix:process.FragmentLengthNormalization]{process}} \tab Normalizes the data set.\cr
+ \tab \code{process} \tab  -\cr
 }
 
 

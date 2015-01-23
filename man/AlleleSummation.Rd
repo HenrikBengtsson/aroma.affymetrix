@@ -55,7 +55,7 @@ AlleleSummation(dataSet=NULL, ignoreNAs=TRUE, ...)
  \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{findUnitsTodo} \tab  -\cr
- \tab \code{\link[aroma.affymetrix:getChipEffectSet.AlleleSummation]{getChipEffectSet}} \tab Gets the set of chip effects for this model.\cr
+ \tab \code{getChipEffectSet} \tab  -\cr
  \tab \code{process} \tab  -\cr
 }
 

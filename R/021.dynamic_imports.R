@@ -163,8 +163,7 @@
 
 .writeCdfUnits <- function(...) {
   requireNamespace("affxparser") || throw("Package not loaded: affxparser")
-  affxparser::writeCdfUnits
-(...)
+  affxparser::writeCdfUnits(...)
 }
 
 .writeCdfQcUnits <- function(...) {

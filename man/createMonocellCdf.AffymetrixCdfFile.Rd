@@ -24,7 +24,7 @@
 
 \usage{
 \method{createMonocellCdf}{AffymetrixCdfFile}(this, chipType=getChipType(this), tags="monocell", path=NULL,
-  nbrOfCellsPerField=1, ..., ram=NULL, verbose=TRUE)
+  nbrOfCellsPerField=1, ..., ram=NULL, overwrite=FALSE, verbose=TRUE)
 }
 
 \arguments{

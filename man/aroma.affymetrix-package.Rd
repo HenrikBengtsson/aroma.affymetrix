@@ -39,7 +39,8 @@
 
 \section{To get started}{
   To get started, see the online user guides and the vignettes
-  \url{http://www.aroma-project.org/}.
+  \url{http://www.aroma-project.org/,
+https://github.com/HenrikBengtsson/aroma.affymetrix}.
 }
 
 \section{How to cite this package}{

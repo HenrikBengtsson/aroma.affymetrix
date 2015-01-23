@@ -69,7 +69,7 @@ ScaleNormalization(dataSet=NULL, ..., targetAvg=4400, subsetToUpdate=NULL,
 \section{Fields and Methods}{
  \bold{Methods:}\cr
 \tabular{rll}{
- \tab \code{\link[aroma.affymetrix:process.ScaleNormalization]{process}} \tab Normalizes the data set.\cr
+ \tab \code{process} \tab  -\cr
 }
 
 

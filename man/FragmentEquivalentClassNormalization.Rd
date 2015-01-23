@@ -64,7 +64,7 @@ FragmentEquivalentClassNormalization(dataSet=NULL, ..., targetAvgs=NULL,
 \tabular{rll}{
  \tab \code{getAromaUfcFile} \tab  -\cr
  \tab \code{getCdf} \tab  -\cr
- \tab \code{\link[aroma.affymetrix:process.FragmentEquivalentClassNormalization]{process}} \tab Normalizes the data set.\cr
+ \tab \code{process} \tab  -\cr
 }
 
 

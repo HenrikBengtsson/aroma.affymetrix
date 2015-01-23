@@ -61,11 +61,11 @@ ChipEffectSet(..., probeModel=c("pm"))
  \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{boxplotStats} \tab  -\cr
- \tab \code{\link[aroma.affymetrix:extractExpressionSet.ChipEffectSet]{extractExpressionSet}} \tab Extracts an in-memory ExpressionSet object.\cr
+ \tab \code{extractExpressionSet} \tab  -\cr
  \tab \code{extractMatrix} \tab  -\cr
  \tab \code{extractTheta} \tab  -\cr
  \tab \code{findUnitsTodo} \tab  -\cr
- \tab \code{\link[aroma.affymetrix:getAM.ChipEffectSet]{getAM}} \tab Gets the log-intensities and log-ratios of chip effects of the set relative to a reference chip effect file.\cr
+ \tab \code{getAM} \tab  -\cr
  \tab \code{getAverageFile} \tab  -\cr
  \tab \code{getCellIndices} \tab  -\cr
  \tab \code{plotBoxplot} \tab  -\cr

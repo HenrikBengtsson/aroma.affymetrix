@@ -52,7 +52,7 @@ SingleArrayUnitModel(...)
 \section{Fields and Methods}{
  \bold{Methods:}\cr
 \tabular{rll}{
- \tab \code{\link[aroma.affymetrix:fit.SingleArrayUnitModel]{fit}} \tab Estimates the model parameters.\cr
+ \tab \code{fit} \tab  -\cr
 }
 
 

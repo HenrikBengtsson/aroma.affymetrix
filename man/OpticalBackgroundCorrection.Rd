@@ -55,7 +55,7 @@ OpticalBackgroundCorrection(..., minimum=1)
 \section{Fields and Methods}{
  \bold{Methods:}\cr
 \tabular{rll}{
- \tab \code{\link[aroma.affymetrix:process.OpticalBackgroundCorrection]{process}} \tab Performs background correction.\cr
+ \tab \code{process} \tab  -\cr
 }
 
 

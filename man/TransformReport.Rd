@@ -44,12 +44,12 @@ TransformReport(inSet=NULL, outSet=NULL, ...)
  \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{getCdf} \tab  -\cr
- \tab \code{\link[aroma.affymetrix:getFullName.TransformReport]{getFullName}} \tab Gets the full name of the output data set.\cr
- \tab \code{\link[aroma.affymetrix:getInputDataSet.TransformReport]{getInputDataSet}} \tab Gets the source data set.\cr
- \tab \code{\link[aroma.affymetrix:getName.TransformReport]{getName}} \tab Gets the name of the output data set.\cr
- \tab \code{\link[aroma.affymetrix:getOutputDataSet.TransformReport]{getOutputDataSet}} \tab Gets the transformed data set.\cr
- \tab \code{\link[aroma.affymetrix:getPath.TransformReport]{getPath}} \tab Gets the path of the output data set.\cr
- \tab \code{\link[aroma.affymetrix:getTags.TransformReport]{getTags}} \tab Gets the tags of the output data set.\cr
+ \tab \code{getFullName} \tab  -\cr
+ \tab \code{getInputDataSet} \tab  -\cr
+ \tab \code{getName} \tab  -\cr
+ \tab \code{getOutputDataSet} \tab  -\cr
+ \tab \code{getPath} \tab  -\cr
+ \tab \code{getTags} \tab  -\cr
  \tab \code{getUnitNamesFile} \tab  -\cr
  \tab \code{getUnitTypesFile} \tab  -\cr
  \tab \code{getYY} \tab  -\cr

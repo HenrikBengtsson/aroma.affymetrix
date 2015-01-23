@@ -25,4 +25,7 @@ if (setupExampleData(aroma.affymetrix, dataset="FusionSDK_Test3", mustWork=FALSE
 
   md5 <- getChecksumFile(cdf)
   print(md5)
+
+  cdfM <- getMonocellCdf(cdf, verbose=-100)
+  print(cdfM)
 } # if (... "AffymetrixDataTestFiles")

@@ -46,7 +46,7 @@ AffymetrixCelSetReporter(..., .setClass="AffymetrixCelSet")
 \section{Fields and Methods}{
  \bold{Methods:}\cr
 \tabular{rll}{
- \tab \code{\link[aroma.affymetrix:getDataSet.AffymetrixCelSetReporter]{getDataSet}} \tab Gets the data set.\cr
+ \tab \code{getDataSet} \tab  -\cr
 }
 
 

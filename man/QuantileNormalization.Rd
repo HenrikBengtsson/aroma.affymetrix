@@ -68,7 +68,7 @@ QuantileNormalization(..., subsetToUpdate=NULL, typesToUpdate=NULL,
 \section{Fields and Methods}{
  \bold{Methods:}\cr
 \tabular{rll}{
- \tab \code{\link[aroma.affymetrix:process.QuantileNormalization]{process}} \tab Normalizes the data set.\cr
+ \tab \code{process} \tab  -\cr
 }
 
 

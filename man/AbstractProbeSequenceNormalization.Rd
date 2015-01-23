@@ -61,7 +61,7 @@ AbstractProbeSequenceNormalization(..., target=NULL)
  \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{getTargetFile} \tab  -\cr
- \tab \code{\link[aroma.affymetrix:process.AbstractProbeSequenceNormalization]{process}} \tab Normalizes the data set.\cr
+ \tab \code{process} \tab  -\cr
 }
 
 

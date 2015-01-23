@@ -1,6 +1,6 @@
 library("aroma.affymetrix")
 
-if (setupExampleData(aroma.affymetrix, dataset="FusionSDK_Test3", mustWork=FALSE)) {
+if (setupExampleData(aroma.affymetrix, dataset="FusionSDK_Test3", dirs="annotationData", mustWork=FALSE)) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # CDF file
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -26,6 +26,16 @@ if (setupExampleData(aroma.affymetrix, dataset="FusionSDK_Test3", mustWork=FALSE
   md5 <- getChecksumFile(cdf)
   print(md5)
 
-  cdfM <- getMonocellCdf(cdf, verbose=-100)
+  ## Get an existing or create a new onocell CDF
+  cdfM <- getMonocellCdf(cdf, verbose=-10)
   print(cdfM)
+  t0 <- lastModified(getPathname(cdfM))
+  print(t0)
+
+  ## A monocell CDF can be re-created
+  cdfM <- getMonocellCdf(cdf, force=TRUE)
+  print(cdfM)
+  t1 <- lastModified(getPathname(cdfM))
+  print(t1)
+  stopifnot(t1 >= t0)
 } # if (... "AffymetrixDataTestFiles")

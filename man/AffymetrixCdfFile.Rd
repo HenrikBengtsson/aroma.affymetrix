@@ -65,22 +65,22 @@ AffymetrixCdfFile(...)
 \section{Fields and Methods}{
  \bold{Methods:}\cr
 \tabular{rll}{
- \tab \code{\link[aroma.affymetrix:convert.AffymetrixCdfFile]{convert}} \tab Converts a CDF into the same CDF but with another format.\cr
- \tab \code{\link[aroma.affymetrix:createExonByTranscriptCdf.AffymetrixCdfFile]{createExonByTranscriptCdf}} \tab Creates an exon-by-transcript CDF.\cr
+ \tab \code{convert} \tab  -\cr
+ \tab \code{createExonByTranscriptCdf} \tab  -\cr
  \tab \code{getACSFile} \tab  -\cr
  \tab \code{getAromaCellSequenceFile} \tab  -\cr
- \tab \code{\link[aroma.affymetrix:getCellIndices.AffymetrixCdfFile]{getCellIndices}} \tab Gets the cell indices unit by unit.\cr
+ \tab \code{getCellIndices} \tab  -\cr
  \tab \code{getChipType} \tab  -\cr
  \tab \code{getDimension} \tab  -\cr
  \tab \code{getFileFormat} \tab  -\cr
- \tab \code{\link[aroma.affymetrix:getGenomeInformation.AffymetrixCdfFile]{getGenomeInformation}} \tab Gets genome information for this chip type.\cr
+ \tab \code{getGenomeInformation} \tab  -\cr
  \tab \code{getImage} \tab  -\cr
  \tab \code{getPlatform} \tab  -\cr
- \tab \code{\link[aroma.affymetrix:getUnitNames.AffymetrixCdfFile]{getUnitNames}} \tab Gets the names of each unit.\cr
- \tab \code{\link[aroma.affymetrix:getUnitTypes.AffymetrixCdfFile]{getUnitTypes}} \tab Gets the types of a set of units.\cr
+ \tab \code{getUnitNames} \tab  -\cr
+ \tab \code{getUnitTypes} \tab  -\cr
  \tab \code{hasUnitTypes} \tab  -\cr
  \tab \code{isMonocellCdf} \tab  -\cr
- \tab \code{\link[aroma.affymetrix:isPm.AffymetrixCdfFile]{isPm}} \tab Checks which cells (probes) are PMs and not.\cr
+ \tab \code{isPm} \tab  -\cr
  \tab \code{isUniqueCdf} \tab  -\cr
  \tab \code{nbrOfCells} \tab  -\cr
  \tab \code{nbrOfColumns} \tab  -\cr
@@ -88,7 +88,7 @@ AffymetrixCdfFile(...)
  \tab \code{nbrOfRows} \tab  -\cr
  \tab \code{nbrOfUnits} \tab  -\cr
  \tab \code{readDataFrame} \tab  -\cr
- \tab \code{\link[aroma.affymetrix:readUnits.AffymetrixCdfFile]{readUnits}} \tab Reads CDF data unit by unit.\cr
+ \tab \code{readUnits} \tab  -\cr
 }
 
 

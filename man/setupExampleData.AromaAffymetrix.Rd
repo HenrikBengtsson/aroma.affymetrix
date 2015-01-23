@@ -19,12 +19,18 @@
 }
 
 \usage{
-\method{setupExampleData}{AromaAffymetrix}(pkg, dirs=c("annotationData", "rawData"), mustWork=TRUE, validate=FALSE,
-  ...)
+\method{setupExampleData}{AromaAffymetrix}(pkg, dataset=NULL, chipType=NULL, dirs=c("annotationData", "rawData"),
+  mustWork=TRUE, validate=FALSE, ...)
 }
 
 \arguments{
+  \item{dataset, chipType}{\code{\link[base]{character}} strings specifying the data set
+   and the chip type to install.}
   \item{dirs}{A \code{\link[base]{character}} \code{\link[base]{vector}} specifying which directories to setup.}
+  \item{mustWork}{If \code{\link[base:logical]{TRUE}}, an error is thrown if the requested data set
+   could not be installed, otherwise not.}
+  \item{validate}{If \code{\link[base:logical]{TRUE}}, the installed files are also validated,
+   otherwise not.}
   \item{...}{Not used.}
 }
 

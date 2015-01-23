@@ -57,7 +57,7 @@ ChipEffectGroupMerge(dataSet=NULL, fcn=NULL, ...)
 \tabular{rll}{
  \tab \code{getCdf} \tab  -\cr
  \tab \code{getMergeFunction} \tab  -\cr
- \tab \code{\link[aroma.affymetrix:process.ChipEffectGroupMerge]{process}} \tab Normalizes the data set.\cr
+ \tab \code{process} \tab  -\cr
  \tab \code{setMergeFunction} \tab  -\cr
 }
 

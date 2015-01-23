@@ -67,7 +67,7 @@ ReseqCrosstalkCalibration(dataSet=NULL, ..., targetAvg=2200, subsetToAvg=NULL,
 \section{Fields and Methods}{
  \bold{Methods:}\cr
 \tabular{rll}{
- \tab \code{\link[aroma.affymetrix:process.ReseqCrosstalkCalibration]{process}} \tab Calibrates the data set.\cr
+ \tab \code{process} \tab  -\cr
 }
 
 

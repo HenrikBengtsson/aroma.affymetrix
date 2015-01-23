@@ -11,8 +11,13 @@
 # @synopsis
 #
 # \arguments{
-#   \item{dataset}{A @character string specifying the data set to install.}
+#   \item{dataset, chipType}{@character strings specifying the data set
+#    and the chip type to install.}
 #   \item{dirs}{A @character @vector specifying which directories to setup.}
+#   \item{mustWork}{If @TRUE, an error is thrown if the requested data set
+#    could not be installed, otherwise not.}
+#   \item{validate}{If @TRUE, the installed files are also validated,
+#    otherwise not.}
 #   \item{...}{Not used.}
 # }
 #

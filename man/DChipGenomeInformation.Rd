@@ -54,7 +54,7 @@ DChipGenomeInformation(...)
 \section{Fields and Methods}{
  \bold{Methods:}\cr
 \tabular{rll}{
- \tab \code{\link[aroma.affymetrix:byChipType.DChipGenomeInformation]{byChipType}} \tab Defines a DChipGenomeInformation object by chip type.\cr
+ \tab \code{byChipType} \tab  -\cr
  \tab \code{readDataFrame} \tab  -\cr
 }
 

@@ -2,6 +2,8 @@ Package: aroma.affymetrix
 =========================
 
 Version: 2.13.1 [2015-01-23]
+o Now a pre-existing monocell CDF can be recreated and overwritten
+  using getMonocellCdf(cdf, force=TRUE).
 o BUG FIX: getMonocellCdf() for AffymetrixCdfFile would throw
   "Error in (...) : 3 arguments passed to '(' which requires 1".
   This was due to a typo (erroneous newline) introduced in 2.13.0.

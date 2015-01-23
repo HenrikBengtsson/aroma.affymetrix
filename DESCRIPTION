@@ -1,5 +1,5 @@
 Package: aroma.affymetrix
-Version: 2.13.1
+Version: 2.13.0-9001
 Depends: R (>= 3.0.0), R.utils (>= 1.34.0), aroma.core (>= 2.13.0)
 Imports: methods, R.methodsS3 (>= 1.6.1), R.oo (>= 1.18.0), R.cache (>= 0.10.0), R.devices (>= 2.12.0), R.filesets (>= 2.6.0), aroma.apd (>= 0.5.0), MASS, splines, matrixStats (>= 0.13.1)
 Suggests: RColorBrewer (>= 1.0-5), preprocessCore (>= 1.24.0), affyPLM (>= 1.38.0), affy (>= 1.40.0), limma (>= 3.18.13), gcrma (>= 2.34.0), gsmoothr (>= 0.1.7), dChipIO (>= 0.1.1), BiocGenerics (>= 0.8.0), Biobase (>= 2.22.0), oligo (>= 1.26.6), oligoClasses (>= 1.24.0), DBI (>= 0.3.1), pdInfoBuilder (>= 1.26.0), aroma.light (>= 1.32.0), affxparser (>= 1.34.2), AffymetrixDataTestFiles

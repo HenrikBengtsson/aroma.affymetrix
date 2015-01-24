@@ -56,7 +56,7 @@ GcContentNormalization(dataSet=NULL, ..., targetFunction=NULL, subsetToFit=NULL)
  \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{getCdf} \tab  -\cr
- \tab \code{\link[aroma.affymetrix:process.GcContentNormalization]{process}} \tab Normalizes the data set.\cr
+ \tab \code{process} \tab  -\cr
 }
 
 

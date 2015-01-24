@@ -56,7 +56,7 @@ UnitTypeScaleNormalization(..., targetAvg=4400)
 \section{Fields and Methods}{
  \bold{Methods:}\cr
 \tabular{rll}{
- \tab \code{\link[aroma.affymetrix:process.UnitTypeScaleNormalization]{process}} \tab Normalizes the data set.\cr
+ \tab \code{process} \tab  -\cr
 }
 
 

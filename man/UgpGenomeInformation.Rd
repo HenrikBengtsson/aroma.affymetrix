@@ -55,7 +55,7 @@ UgpGenomeInformation(..., .ugp=NULL, .verify=TRUE)
 \section{Fields and Methods}{
  \bold{Methods:}\cr
 \tabular{rll}{
- \tab \code{\link[aroma.affymetrix:byChipType.UgpGenomeInformation]{byChipType}} \tab Defines a UgpGenomeInformation object by chip type.\cr
+ \tab \code{byChipType} \tab  -\cr
  \tab \code{getChipType} \tab  -\cr
  \tab \code{getChromosomes} \tab  -\cr
  \tab \code{getData} \tab  -\cr

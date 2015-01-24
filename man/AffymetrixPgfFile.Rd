@@ -77,7 +77,7 @@ AffymetrixPgfFile(...)
  \tab \code{getChipType} \tab  -\cr
  \tab \code{getDimension} \tab  -\cr
  \tab \code{getPlatform} \tab  -\cr
- \tab \code{\link[aroma.affymetrix:getUnitNames.AffymetrixPgfFile]{getUnitNames}} \tab Gets the names of each unit.\cr
+ \tab \code{getUnitNames} \tab  -\cr
  \tab \code{nbrOfCells} \tab  -\cr
  \tab \code{nbrOfColumns} \tab  -\cr
  \tab \code{nbrOfRows} \tab  -\cr

@@ -51,14 +51,14 @@ Model(dataSet=NULL, tags="*", ..., .onUnknownArgs=c("error", "warning", "ignore"
 \section{Fields and Methods}{
  \bold{Methods:}\cr
 \tabular{rll}{
- \tab \code{\link[aroma.affymetrix:fit.Model]{fit}} \tab Estimates the model parameters.\cr
+ \tab \code{fit} \tab  -\cr
  \tab \code{getAsteriskTags} \tab  -\cr
- \tab \code{\link[aroma.affymetrix:getDataSet.Model]{getDataSet}} \tab Gets the input data set for this model.\cr
- \tab \code{\link[aroma.affymetrix:getFullName.Model]{getFullName}} \tab Gets the full name of the output set.\cr
- \tab \code{\link[aroma.affymetrix:getName.Model]{getName}} \tab Gets the name of the output data set.\cr
- \tab \code{\link[aroma.affymetrix:getPath.Model]{getPath}} \tab Gets the path of this model.\cr
- \tab \code{\link[aroma.affymetrix:getTags.Model]{getTags}} \tab Gets the tags of the output data set.\cr
- \tab \code{\link[aroma.affymetrix:setTags.Model]{setTags}} \tab Sets the tags to be appended.\cr
+ \tab \code{getDataSet} \tab  -\cr
+ \tab \code{getFullName} \tab  -\cr
+ \tab \code{getName} \tab  -\cr
+ \tab \code{getPath} \tab  -\cr
+ \tab \code{getTags} \tab  -\cr
+ \tab \code{setTags} \tab  -\cr
 }
 
 

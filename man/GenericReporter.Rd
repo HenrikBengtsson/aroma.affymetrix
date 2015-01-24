@@ -43,10 +43,10 @@ GenericReporter(tags="*", ...)
  \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{getFullName} \tab  -\cr
- \tab \code{\link[aroma.affymetrix:getName.GenericReporter]{getName}} \tab Gets the name of the explorer.\cr
+ \tab \code{getName} \tab  -\cr
  \tab \code{getPath} \tab  -\cr
- \tab \code{\link[aroma.affymetrix:getTags.GenericReporter]{getTags}} \tab Gets the tags of the reporter.\cr
- \tab \code{\link[aroma.affymetrix:process.GenericReporter]{process}} \tab Generates report.\cr
+ \tab \code{getTags} \tab  -\cr
+ \tab \code{process} \tab  -\cr
  \tab \code{setup} \tab  -\cr
 }
 

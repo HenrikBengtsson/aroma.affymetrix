@@ -63,7 +63,7 @@ MatNormalization(..., unitsToFit=NULL, model=c("lm"), nbrOfBins=200)
 \section{Fields and Methods}{
  \bold{Methods:}\cr
 \tabular{rll}{
- \tab \code{\link[aroma.affymetrix:process.MatNormalization]{process}} \tab Normalizes the data set.\cr
+ \tab \code{process} \tab  -\cr
 }
 
 

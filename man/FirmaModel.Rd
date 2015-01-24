@@ -55,10 +55,10 @@ FirmaModel(rmaPlm=NULL, summaryMethod=c("median", "upperQuartile", "max"),
 \section{Fields and Methods}{
  \bold{Methods:}\cr
 \tabular{rll}{
- \tab \code{\link[aroma.affymetrix:fit.FirmaModel]{fit}} \tab Estimates the model parameters.\cr
+ \tab \code{fit} \tab  -\cr
  \tab \code{getCdf} \tab  -\cr
  \tab \code{getDataSet} \tab  -\cr
- \tab \code{\link[aroma.affymetrix:getFirmaSet.FirmaModel]{getFirmaSet}} \tab Gets the set of FIRMA results for this model.\cr
+ \tab \code{getFirmaSet} \tab  -\cr
  \tab \code{getName} \tab  -\cr
  \tab \code{getPlm} \tab  -\cr
  \tab \code{getTags} \tab  -\cr

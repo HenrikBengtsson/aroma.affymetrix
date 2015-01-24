@@ -58,9 +58,9 @@ AromaChipTypeAnnotationFile(...)
 \section{Fields and Methods}{
  \bold{Methods:}\cr
 \tabular{rll}{
- \tab \code{\link[aroma.affymetrix:byChipType.AromaChipTypeAnnotationFile]{byChipType}} \tab Defines an AromaChipTypeAnnotationFile object by chip type.\cr
+ \tab \code{byChipType} \tab  -\cr
  \tab \code{getChipType} \tab  -\cr
- \tab \code{\link[aroma.affymetrix:getHeader.AromaChipTypeAnnotationFile]{getHeader}} \tab Gets the header of the annotation file.\cr
+ \tab \code{getHeader} \tab  -\cr
  \tab \code{getPlatform} \tab  -\cr
 }
 

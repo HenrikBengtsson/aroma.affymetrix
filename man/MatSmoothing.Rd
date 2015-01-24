@@ -56,7 +56,7 @@ MatSmoothing(..., design=NULL, probeWindow=300, nProbes=10, meanTrim=0.1)
 \section{Fields and Methods}{
  \bold{Methods:}\cr
 \tabular{rll}{
- \tab \code{\link[aroma.affymetrix:process.MatSmoothing]{process}} \tab Processes the data set.\cr
+ \tab \code{process} \tab  -\cr
 }
 
 

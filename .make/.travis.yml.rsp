@@ -22,7 +22,6 @@ deps <- function(what=c("Depends", "Imports", "Suggests", "SuggestsNote")) {
   deps <- gsub("[(].*[)]", "", deps)
   deps <- gsub("[ \n\t]", "", deps)
   deps <- setdiff(deps, c("R", "base", "datasets", "graphics", "grDevices", "methods", "parallel", "splines", "stats", "tcltk", "tools", "utils", "Recommended"))
-message(paste(deps, collapse="; "))
   sort(deps)
 }
 

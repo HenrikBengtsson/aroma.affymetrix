@@ -45,7 +45,7 @@ before_install:
 
 install:
 
- - $RENV install_bioc affxparser affy AffymetrixDataTestFiles affyPLM aroma.light Biobase BiocGenerics gcrma limma oligo oligoClasses pdInfoBuilder preprocessCore
+ - $RENV install_bioc affxparser affy AffymetrixDataTestFiles affyPLM aroma.light Biobase BiocGenerics DNAcopy gcrma limma oligo oligoClasses pdInfoBuilder preprocessCore
  - $RENV install_r aroma.apd aroma.core MASS matrixStats R.cache R.devices R.filesets R.methodsS3 R.oo R.utils
  - $RENV install_r DBI gsmoothr RColorBrewer
 

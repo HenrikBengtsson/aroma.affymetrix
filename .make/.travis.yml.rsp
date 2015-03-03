@@ -15,13 +15,14 @@ pd <- local({
 
 pkg <- function() pd()$Package
 
-deps <- function(what=c("Depends", "Imports", "Suggests")) {
+deps <- function(what=c("Depends", "Imports", "Suggests", "SuggestsNote")) {
   deps <- unlist(pd()[what], use.names=FALSE)
   if (length(deps) == 0) return("")
-  deps <- unlist(strsplit(deps, split=","), use.names=FALSE)
+  deps <- unlist(strsplit(deps, split="[,:]"), use.names=FALSE)
   deps <- gsub("[(].*[)]", "", deps)
   deps <- gsub("[ \n\t]", "", deps)
-  deps <- setdiff(deps, c("R", "base", "datasets", "graphics", "grDevices", "methods", "parallel", "stats", "tcltk", "tools", "utils"))
+  deps <- setdiff(deps, c("R", "base", "datasets", "graphics", "grDevices", "methods", "parallel", "splines", "stats", "tcltk", "tools", "utils", "Recommended"))
+message(paste(deps, collapse="; "))
   sort(deps)
 }
 
@@ -132,9 +133,9 @@ before_install:
 
 install:
 <%= install_bioc(c("Depends", "Imports")) %>
-<%= install_bioc("Suggests") %>
+<%= install_bioc(c("Suggests", "SuggestsNote")) %>
 <%= install_cran(c("Depends", "Imports")) %>
-<%= install_cran("Suggests") %>
+<%= install_cran(c("Suggests", "SuggestsNote")) %>
 
 script:
   - $RENV run_build

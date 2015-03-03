@@ -7,8 +7,11 @@
 # * covr: https://github.com/jimhester/covr
 # * Coveralls: https://coveralls.io/
 #
-# Validate your .appveyor.yml file at ???
+# Validate your .appveyor.yml file at
+# https://ci.appveyor.com/tools/validate-yaml 
 #----------------------------------------------------------------
+environment:
+  _R_CHECK_FORCE_SUGGESTS_: false
 
 # DO NOT CHANGE the "init" and "install" sections below
 
@@ -23,13 +26,11 @@ install:
 
 # Adapt as necessary starting from here
 
-environment:
-  _R_CHECK_FORCE_SUGGESTS_: false
-
 build_script:
-  - travis-tool.sh install_bioc aroma.light DNAcopy affxparser preprocessCore 
-  - travis-tool.sh install_bioc AffymetrixDataTestFiles
-  - travis-tool.sh install_deps
+
+ - travis-tool.sh install_bioc affxparser affy AffymetrixDataTestFiles affyPLM aroma.light Biobase BiocGenerics gcrma limma oligo oligoClasses pdInfoBuilder preprocessCore
+ - travis-tool.sh install_r aroma.apd aroma.core MASS matrixStats R.cache R.devices R.filesets R.methodsS3 R.oo R.utils
+ - travis-tool.sh install_r DBI gsmoothr RColorBrewer
 
 test_script:
   - travis-tool.sh run_tests

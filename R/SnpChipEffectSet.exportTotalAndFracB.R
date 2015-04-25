@@ -76,7 +76,7 @@ setMethodS3("exportTotalAndFracB", "SnpChipEffectSet", function(this, fields=c("
     if (!is.null(ass)) {
       verbose && enter(verbose, "Keep only arrays available in the input set");
       keep <- match(fullnames, getFullNames(ass));
-      ass <- extract(ass, keep);
+      ass <- extract(ass, keep, onDuplicates="error");
       verbose && print(verbose, ass);
 
       # Sanity check?

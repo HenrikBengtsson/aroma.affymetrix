@@ -681,7 +681,7 @@ setMethodS3("byPath", "AffymetrixCelSet", function(static, path, cdf=NULL, patte
           verbose && cat(verbose, "ERROR: ", msg);
           throw(msg);
         } else if (onDuplicates == "exclude") {
-          set <- extract(set, !dups);
+          set <- extract(set, !dups, onDuplicates="error");
           msg <- paste("Excluding ", ndups, " duplicated CEL files (same datestamp): ", dupsStr, sep="");
           verbose && cat(verbose, "WARNING: ", msg);
           warning(msg);

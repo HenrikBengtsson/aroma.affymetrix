@@ -88,8 +88,8 @@ setMethodS3("applyAnyOrder", "CopyNumberChromosomalModel", function(this, chipTy
 
   # Extract the arrays of interest
   verbose && enter(verbose, "Extract arrays of interest");
-  cesTuple <- extract(cesTuple, arrays=arrays);
-  refTuple <- extract(refTuple, arrays=arrays);
+  cesTuple <- extract(cesTuple, arrays=arrays, onDuplicates="error");
+  refTuple <- extract(refTuple, arrays=arrays, onDuplicates="error");
   verbose && exit(verbose);
 
   nbrOfArrays <- length(cesTuple);

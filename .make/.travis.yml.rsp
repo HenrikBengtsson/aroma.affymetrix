@@ -19,10 +19,33 @@ deps <- function(what=c("Depends", "Imports", "Suggests", "SuggestsNote")) {
   deps <- unlist(pd()[what], use.names=FALSE)
   if (length(deps) == 0) return("")
   deps <- unlist(strsplit(deps, split="[,:]"), use.names=FALSE)
-  deps <- gsub("[(].*[)]", "", deps)
   deps <- gsub("[ \n\t]", "", deps)
+  deps <- gsub("[(].*[)]", "", deps)
   deps <- setdiff(deps, c("R", "base", "datasets", "graphics", "grDevices", "methods", "parallel", "splines", "stats", "tcltk", "tools", "utils", "Recommended"))
   sort(deps)
+}
+
+deps_on_R <- function() {
+  deps <- unlist(pd(), use.names=FALSE)
+  if (length(deps) == 0) return("")
+  deps <- unlist(strsplit(deps, split="[,:]"), use.names=FALSE)
+  deps <- gsub("^([ \n\t]+|[ \n\t]+$)", "", deps)
+  deps <- grep("^R[ ]*[(].*[)]$", deps, value=TRUE)
+  if (length(deps) == 0) {
+    op <- ">="
+    ver <- "0.0"
+  } else {
+    pattern <- ".*[(][ ]*([^0-9 ]*)[ ]*(.*)[)]$"
+    op <- gsub(pattern, "\\1", deps)
+    if (nchar(op) == 0L) op <- "=="
+    ver <- gsub(pattern, "\\2", deps)
+  }
+  comp <- eval(parse(text=sprintf("function(ver) { package_version(ver) %s package_version('%s') }", op, ver)))
+  list(op=op, ver=ver, comp=comp)
+}
+
+support_R <- function(ver) {
+  deps_on_R()$comp(ver)
 }
 
 cran <- local({
@@ -114,9 +137,15 @@ env:
 
   # R versions r-builder should test on (ignored by r-travis)
   matrix:
-    - RVERSION=3.0.3
-    - RVERSION=3.1.2
-    - RVERSION=devel _R_CHECK_FULL_=TRUE
+<% 
+rversion <- c(
+  "3.1.3" = "3.1.3",
+  "3.2.0" = "3.2.0",
+  "3.3.0" = "devel _R_CHECK_FULL_=TRUE"
+)
+for (v in names(rversion))
+  if (support_R(v)) cat(sprintf("    - RVERSION=%s\n", rversion[v]))
+%>
 
 
 before_install:

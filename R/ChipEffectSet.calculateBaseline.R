@@ -144,7 +144,7 @@ setMethodS3("calculateBaseline", "ChipEffectSet", function(this, chromosomes=NUL
 
     verbose && enter(verbose, "Extracting subset of samples");
     # Baseline samples
-    csB <- extract(this, which( isBaseline));
+    csB <- extract(this, which( isBaseline), onDuplicates="error");
     verbose && printf(verbose, "Baseline samples (with ploidy %d):\n", ploidy);
     verbose && print(verbose, csB);
     verbose && exit(verbose);
@@ -171,7 +171,7 @@ setMethodS3("calculateBaseline", "ChipEffectSet", function(this, chromosomes=NUL
     if (nM > 0) {
       verbose && enter(verbose, "Processing samples with non-baseline ploidies");
       verbose && enter(verbose, "Extracting subset of samples");
-      csM <- extract(this, which(!isBaseline));
+      csM <- extract(this, which(!isBaseline), onDuplicates="error");
       verbose && cat(verbose, "All other samples:");
       verbose && print(verbose, csM);
       verbose && exit(verbose);

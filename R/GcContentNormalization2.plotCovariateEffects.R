@@ -80,7 +80,7 @@ setMethodS3("plotCovariateEffects", "GcContentNormalization2", function(this, ar
   }
 
   if (!is.null(arrays)) {
-    dataSet <- extract(dataSet, arrays);
+    dataSet <- extract(dataSet, arrays, onDuplicates="error");
   }
 
   if (is.null(xlim)) {

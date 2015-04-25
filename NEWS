@@ -1,6 +1,13 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 2.13.1-9000 [2015-04-25]
+o ROBUSTNESS: Many functions now assert that they don't return file
+  data sets with duplicated entries.
+o Package now requires R (>= 3.1.1) released July 2014. This allows 
+  us to use BioC (>= 3.0) (October 2014).
+
+
 Version: 2.13.1 [2015-01-23]
 o Now a pre-existing monocell CDF can be recreated and overwritten
   using getMonocellCdf(cdf, force=TRUE).

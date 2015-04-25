@@ -136,7 +136,7 @@ setMethodS3("doCRMAv2", "AffymetrixCelSet", function(csR, combineAlleles=TRUE, l
 
   if (!is.null(arrays)) {
     verbose && enter(verbose, "CRMAv2/Extracting subset of arrays");
-    csR <- extract(csR, arrays);
+    csR <- extract(csR, arrays, onDuplicates="error");
     verbose && cat(verbose, "Data subset");
     verbose && print(verbose, csR);
     verbose && exit(verbose);
@@ -194,7 +194,7 @@ setMethodS3("doCRMAv2", "AffymetrixCelSet", function(csR, combineAlleles=TRUE, l
     # Try to load the final TCN data set
     dsT <- tryCatch({
       ds <- AromaUnitTotalCnBinarySet$byName(dataSet, tags=tags, chipType=chipType);
-      extract(ds, fullnames, onMissing="error");
+      extract(ds, fullnames, onMissing="error", onDuplicates="error");
     }, error=function(ex) { NULL });
 
     # Continue?
@@ -211,7 +211,7 @@ setMethodS3("doCRMAv2", "AffymetrixCelSet", function(csR, combineAlleles=TRUE, l
       # Try to load the final BAF data set
       dsB <- tryCatch({
         ds <- AromaUnitFracBCnBinarySet$byName(dataSet, tags=tags, chipType=chipType);
-        extract(ds, fullnames, onMissing="error");
+        extract(ds, fullnames, onMissing="error", onDuplicates="error");
       }, error=function(ex) { NULL });
 
       # Done?

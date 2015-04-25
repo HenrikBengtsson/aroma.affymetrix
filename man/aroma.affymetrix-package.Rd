@@ -23,24 +23,19 @@
 
 \section{Requirements}{
   This package requires several packages from CRAN and Bioconductor.
-  Some of its methods also depend on packages from R-forge and our
-  local braju.com repository.  We are moving more
-  and more of the packages to CRAN and Bioconductor.
 }
 
 \section{Installation and updates}{
 
   The preferred way to install this package is:
   \preformatted{
-   source("http://www.aroma-project.org/hbLite.R")
-   hbInstall("aroma.affymetrix")
+   source("http://callr.org/install#aroma.affymetrix")
   }
 }
 
 \section{To get started}{
   To get started, see the online user guides and the vignettes
-  \url{http://www.aroma-project.org/,
-https://github.com/HenrikBengtsson/aroma.affymetrix}.
+  \url{http://www.aroma-project.org/}.
 }
 
 \section{How to cite this package}{

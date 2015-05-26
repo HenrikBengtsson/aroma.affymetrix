@@ -1,9 +1,10 @@
 Package: aroma.affymetrix
 =========================
 
-Version: 2.13.1-9000 [2015-04-25]
+Version: 2.13.1-9000 [2015-05-26]
 o ROBUSTNESS: Many functions now assert that they don't return file
   data sets with duplicated entries.
+o ROBUSTNESS: Package now declares all S3 methods.
 o Package now requires R (>= 3.1.1) released July 2014. This allows 
   us to use BioC (>= 3.0) (October 2014).
 

@@ -2,15 +2,15 @@ Package: aroma.affymetrix
 Version: 2.13.1-9000
 Depends:
   R (>= 3.1.1),
-  R.utils (>= 2.0.0),
-  aroma.core (>= 2.13.0)
+  R.utils (>= 2.0.2),
+  aroma.core (>= 2.13.1)
 Imports:
   methods,
   R.methodsS3 (>= 1.7.0),
   R.oo (>= 1.19.0),
   R.cache (>= 0.10.0),
   R.devices (>= 2.13.0),
-  R.filesets (>= 2.7.0),
+  R.filesets (>= 2.7.2),
   aroma.apd (>= 0.6.0),
   MASS,
   splines,
@@ -42,7 +42,7 @@ SuggestsNote:
   affxparser,
   DNAcopy
 Additional_repositories: http://r-forge.r-project.org
-Date: 2015-04-25
+Date: 2015-05-26
 Title: Analysis of Large Affymetrix Microarray Data Sets
 Authors@R: c(
   person("Henrik", "Bengtsson", role=c("aut", "cre", "cph"),

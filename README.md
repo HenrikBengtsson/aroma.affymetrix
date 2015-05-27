@@ -1,5 +1,9 @@
 # aroma.affymetrix: Analysis of Large Affymetrix Microarray Data Sets
 
+Please see [The Aroma Project](http://www.aroma-project.org/) for more
+details on how to use the package and for joining the user forum where
+you can ask questions.
+
 
 ## Installation
 R package aroma.affymetrix is available on [CRAN](http://cran.r-project.org/package=aroma.affymetrix) and can be installed in R as:

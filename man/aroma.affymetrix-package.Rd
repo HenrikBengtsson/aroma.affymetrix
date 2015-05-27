@@ -15,14 +15,7 @@
 
 
 \description{
-  This package implements classes for files and sets of files for various Affymetrix file formats, e.g. AffymetrixCdfFile, AffymetrixCelFile, and AffymetrixCelSet.  These are designed to be memory efficient but still being fast.  The idea is to keep all data on file and only read data into memory when needed.  Clever caching mechanisms are used to minimize the overhead of data IO.  All of the above is hidden in the package API and for the developer (and the end user), the data is queried as if it lives in memory.  With this design it is only the disk space that limits the number of arrays that can be analyzed.
-
-  This package should be considered to be in an alpha or beta phase.
-  You should expect the API to be changing over time.
-}
-
-\section{Requirements}{
-  This package requires several packages from CRAN and Bioconductor.
+  A cross-platform R framework that facilitates processing any number of Affymetrix microarray samples regardless of computer system.  The only parameter that limits the number of chips that can be processed is the amount of available disk space.  The Aroma Framework has successfully been used in studies to process tens of thousands of arrays.  This package has actively been used since 2006.
 }
 
 \section{Installation and updates}{

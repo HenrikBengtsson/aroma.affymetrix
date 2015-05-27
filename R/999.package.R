@@ -3,13 +3,6 @@
 #
 # \description{
 #   @eval "getDescription(aroma.affymetrix)"
-#
-#   This package should be considered to be in an alpha or beta phase.
-#   You should expect the API to be changing over time.
-# }
-#
-# \section{Requirements}{
-#   This package requires several packages from CRAN and Bioconductor.
 # }
 #
 # \section{Installation and updates}{
@@ -52,4 +45,3 @@
 #  For a complete list, see \url{http://aroma-project.org/publications/}.
 # }
 #*/#########################################################################
-

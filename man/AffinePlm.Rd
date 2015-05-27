@@ -40,8 +40,7 @@ extends \emph{\link[aroma.affymetrix]{ProbeLevelModel}}\cr
 
 
 
- This class represents affine model in Bengtsson \&
- \enc{Hössjer}{Hossjer} (2006).
+ This class represents affine model in Bengtsson \& Hossjer (2006).
 }
 
 \usage{
@@ -104,6 +103,6 @@ $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCa
 \author{Henrik Bengtsson}
 
 \references{
-  Bengtsson \& \enc{Hössjer}{Hossjer} (2006). \cr
+  Bengtsson \& Hossjer (2006). \cr
 }
 \keyword{classes}

@@ -131,7 +131,7 @@ setMethodS3("doCRMAv1", "AffymetrixCelSet", function(csR, shift=+300, combineAll
 
   if (!is.null(arrays)) {
     verbose && enter(verbose, "CRMAv1/Extracting subset of arrays");
-    csR <- extract(csR, arrays);
+    csR <- extract(csR, arrays, onDuplicates="error");
     verbose && cat(verbose, "Data subset");
     verbose && print(verbose, csR);
     verbose && exit(verbose);

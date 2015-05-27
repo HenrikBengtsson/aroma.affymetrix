@@ -80,7 +80,7 @@ setMethodS3("convertToUnique", "AffymetrixCelSet", function(this, ..., tags="UNQ
     # WORKAROUND/TO BE REMOVED: R.utils (<= 1.19.0) will give an error
     # with extract() if length(fullnames) > length(res). /HB 2012-12-01
     if (length(res) >= length(fullnames)) {
-      res <- extract(res, fullnames, onMissing="drop");
+      res <- extract(res, fullnames, onMissing="drop", onDuplicates="error");
     }
 
     # Is output set complete?
@@ -202,7 +202,7 @@ setMethodS3("convertToUnique", "AffymetrixCelSet", function(this, ..., tags="UNQ
 
   # Extract samples in the same order as they appear in the input
   # data set, and if more were found, drop those.
-  res <- extract(res, fullnames, onMissing="error");
+  res <- extract(res, fullnames, onMissing="error", onDuplicates="error");
 
   verbose && exit(verbose);
 

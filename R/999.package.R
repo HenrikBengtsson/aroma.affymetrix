@@ -3,30 +3,19 @@
 #
 # \description{
 #   @eval "getDescription(aroma.affymetrix)"
-#
-#   This package should be considered to be in an alpha or beta phase.
-#   You should expect the API to be changing over time.
-# }
-#
-# \section{Requirements}{
-#   This package requires several packages from CRAN and Bioconductor.
-#   Some of its methods also depend on packages from R-forge and our
-#   local braju.com repository.  We are moving more
-#   and more of the packages to CRAN and Bioconductor.
 # }
 #
 # \section{Installation and updates}{
 #
 #   The preferred way to install this package is:
 #   \preformatted{
-#    source("http://www.aroma-project.org/hbLite.R")
-#    hbInstall("aroma.affymetrix")
+#    source("http://callr.org/install#aroma.affymetrix")
 #   }
 # }
 #
 # \section{To get started}{
 #   To get started, see the online user guides and the vignettes
-#   \url{@eval "getUrl(aroma.affymetrix)"}.
+#   \url{http://www.aroma-project.org/}.
 # }
 #
 # \section{How to cite this package}{
@@ -56,4 +45,3 @@
 #  For a complete list, see \url{http://aroma-project.org/publications/}.
 # }
 #*/#########################################################################
-

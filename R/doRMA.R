@@ -103,7 +103,7 @@ setMethodS3("doRMA", "AffymetrixCelSet", function(csR, arrays=NULL, flavor=c("af
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (!is.null(arrays)) {
     verbose && enter(verbose, "RMA/Extracting subset of arrays");
-    csR <- extract(csR, arrays);
+    csR <- extract(csR, arrays, onDuplicates="error");
     verbose && cat(verbose, "Data subset");
     verbose && print(verbose, csR);
     verbose && exit(verbose);
@@ -133,7 +133,7 @@ setMethodS3("doRMA", "AffymetrixCelSet", function(csR, arrays=NULL, flavor=c("af
     # Try to load the final TCN data set
     ces <- tryCatch({
       cesT <- ChipEffectSet$byName(dataSet, tags=tags, chipType=chipType);
-      extract(cesT, fullnames, onMissing="error");
+      extract(cesT, fullnames, onMissing="error", onDuplicates="error");
     }, error=function(ex) { NULL });
 
     # Done?

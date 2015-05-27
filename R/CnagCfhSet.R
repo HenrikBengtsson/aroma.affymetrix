@@ -357,7 +357,7 @@ setMethodS3("byPath", "CnagCfhSet", function(static, path="rawData/", pattern="[
         verbose && cat(verbose, "ERROR: ", msg);
         throw(msg);
       } else if (onDuplicates == "exclude") {
-        this <- extract(this, !dups);
+        this <- extract(this, !dups, onDuplicates="error");
         msg <- paste("Excluding ", ndups, " duplicated CFH files (same datestamp): ", dupsStr, sep="");
         verbose && cat(verbose, "WARNING: ", msg);
         warning(msg);

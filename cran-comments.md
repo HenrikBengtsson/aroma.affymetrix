@@ -1,17 +1,21 @@
-# CRAN submission aroma.affymetrix 2.13.0
-on 2015-01-17
+# CRAN submission aroma.affymetrix 2.13.2
+on 2015-05-26
 
-I have verified the package and its 4 reverse-dependent packages(*) using 'R CMD build' and 'R CMD check --as-cran' on
+Package now declares all S3 methods.
 
-* R version 3.0.3 (2014-03-06) [Platform: x86_64-unknown-linux-gnu (64-bit)].
-* R version 3.1.2 Patched (2015-01-14 r67477) [Platform: x86_64-unknown-linux-gnu (64-bit)].
-* R Under development (unstable) (2015-01-16 r67487) [Platform: x86_64-unknown-linux-gnu (64-bit)].
+Thanks in advance
+
+
+## Notes not sent to CRAN
+
+I have verified the package and its 5 reverse-dependent packages(*) using 'R CMD build' and 'R CMD check --as-cran' on
+
+* R version 3.1.3 (2015-03-09) [Platform: x86_64-unknown-linux-gnu (64-bit)].
+* R version 3.2.0 (2015-04-16) [Platform: x86_64-unknown-linux-gnu (64-bit)].
+* R version 3.2.0 Patched (2015-05-25 r68412) [Platform: x86_64-unknown-linux-gnu (64-bit)].
+* R Under development (unstable) (2015-05-25 r68405) [Platform: x86_64-w64-mingw32/x64 (64-bit)]
 
 I have also verified the package using the http://win-builder.r-project.org/ service.
-
-This submission contains changes that are related to updates in R and/or CRAN;
-
- * Now using `Additional_repositories` for packages on non-mainstream repositories.
 
 Thank you,
 
@@ -19,4 +23,4 @@ Henrik Bengtsson
 (maintainer of aroma.affymetrix)
 
 Footnotes:
-(*) The submitted updates cause no issues for any of the following 4 reverse dependencies: ACNE 0.7.0, MPAgenomics 1.1.2, NSA 0.0.32 and Repitools 1.13.1.
+(*) The submitted updates cause no issues for any of the following 5 reverse dependencies on CRAN and Bioconductor: ACNE 0.8.0, MPAgenomics 1.1.2, NSA 0.0.32, Repitools 1.14.0 and TIN 1.0.0.

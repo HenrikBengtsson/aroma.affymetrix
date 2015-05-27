@@ -85,7 +85,7 @@ appveyor <- function() {
   repos <- strsplit(repos, split="/")[[1]]
   repos[2] <- gsub("[.]", "-", tolower(repos[2]))
   repos <- paste(repos, collapse="/")
-  sprintf('<a href="https://ci.appveyor.com/project/%s"><img src="https://ci.appveyor.com/api/projects/status/github/%s" alt="Build status"></a>', repos, github_repos())
+  sprintf('<a href="https://ci.appveyor.com/project/%s"><img src="https://ci.appveyor.com/api/projects/status/github/%s?svg=true" alt="Build status"></a>', repos, github_repos())
 }
 
 covr <- function() {

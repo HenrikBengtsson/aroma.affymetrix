@@ -63,10 +63,7 @@ repos <- function() {
 
 repos_status <- function() {
   if (cran()) {
-    paste(c(
-	  sprintf('<a href="http://cran.r-project.org/package=%s"><img border="0" src="http://www.r-pkg.org/badges/version/%s" alt="CRAN version"></a>', pkg(), pkg()),
-    sprintf('<a href="http://cran.r-project.org/web/checks/check_results_%s.html">status</a>', pkg())
-    ), collapse="<br> ")
+    sprintf('<a href="http://cran.r-project.org/web/checks/check_results_%s.html"><img border="0" src="http://www.r-pkg.org/badges/version/%s" alt="CRAN version"></a>', pkg(), pkg())
   } else if (bioc()) {
     biocURL <- function(type) {
       sprintf('<a href="http://bioconductor.org/checkResults/%s/bioc-LATEST/%s/"><img border="0" src="http://bioconductor.org/shields/build/%s/bioc/%s.svg" alt="Build status"></a> (%s)', type, pkg(), type, pkg(), type)

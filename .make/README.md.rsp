@@ -90,7 +90,7 @@ appveyor <- function() {
 
 covr <- function() {
   if (!file.exists(".covr.R")) return("")
-  sprintf('<a href="https://coveralls.io/r/%s"><img src="https://coveralls.io/repos/%s/badge.png?branch=develop" alt="Coverage Status"/></a>', github_repos(), github_repos())
+  sprintf('<a href="https://coveralls.io/r/%s"><img src="https://coveralls.io/repos/%s/badge.svg?branch=develop" alt="Coverage Status"/></a>', github_repos(), github_repos())
 }
 %>
 # <%=pkg()%>: <%=pkg_title()%>

@@ -227,7 +227,7 @@ setMethodS3("getFitUnitGroupFunction", "AvgPlm", function(this, ...) {
       y <- t(y);
       if (flavor == "median") {
         theta <- rowMedians(y, na.rm=TRUE);
-        sdTheta <- rowMads(y, centers=theta, na.rm=TRUE);
+        sdTheta <- rowMads(y, center=theta, na.rm=TRUE);
       } else if (flavor == "mean") {
         theta <- .rowMeans(y, na.rm=TRUE);
         sdTheta <- rowSds(y, mean=theta, na.rm=TRUE);

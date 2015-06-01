@@ -1,6 +1,12 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 2.13.2-9000 [2015-06-01]
+o AvgPlm, used by for instance doCRMAv2(), would give harmless warning
+  "Argument 'centers' for matrixStats::rowMads() has been renamed to
+  'center'. Please update code accordingly."
+
+
 Version: 2.13.2 [2015-05-26]
 o ROBUSTNESS: Many functions now assert that they don't return file
   data sets with duplicated entries.

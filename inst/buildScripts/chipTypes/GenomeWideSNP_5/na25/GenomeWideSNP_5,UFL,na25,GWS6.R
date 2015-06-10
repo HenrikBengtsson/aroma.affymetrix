@@ -1,8 +1,8 @@
 source("init.R");
 
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Settings
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 naVersion <- "25";
 user <- "HB";
 datestamp <- "20080424";
@@ -12,9 +12,9 @@ cdfTags <- "Full,r2";
 nbrOfEnzymes <- 2;
 
 
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Setup required annotation files
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 if (!exists("cdf")) {
   cdf <- AffymetrixCdfFile$byChipType(chipType, tags=cdfTags);
   rm(csvList);
@@ -34,9 +34,9 @@ if (!exists("csvList", mode="list")) {
 print(csvList);
 
 
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Import UFL from CSV files
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 tags <- sprintf("na%s,%s%s", naVersion, user, datestamp);
 ufl <- NULL;
 tryCatch({
@@ -54,9 +54,9 @@ for (kk in seq(along=csvList)) {
   str(units);
 }
 
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Statistics
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 x <- summaryOfUnits(ufl, enzymes=c("NspI", "StyI"));
 print(x);
 ##                  snp    cnp affxSnp other  total
@@ -66,9 +66,9 @@ print(x);
 ##  missing       60474 104885    3022    69 168450
 ##  total        500568 417269    3022    69 920928
 
-cdf2 <- AffymetrixCdfFile$fromChipType("GenomeWideSNP_6", tags="Full");
+cdf2 <- AffymetrixCdfFile$byChipType("GenomeWideSNP_6", tags="Full");
 tags <- sprintf("na%s,%s%s", naVersion, user);
-ufl2 <- AromaUflFile$fromChipType(getChipType(cdf2), tags=tags);
+ufl2 <- AromaUflFile$byChipType(getChipType(cdf2), tags=tags);
 
 units2 <- match(getUnitNames(cdf), getUnitNames(cdf2));
 keep <- is.finite(units2);

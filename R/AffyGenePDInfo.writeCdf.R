@@ -292,7 +292,7 @@ setMethodS3("writeCdf", "AffyGenePDInfo", function(this, tags=c("*"), unitsBy=c(
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Writing CDF file
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  pathname <- .writeCdf(ffs, pathname=pathname, overwrite=overwrite, verbose=less(verbose));
+  pathname <- writeCdf(ffs, pathname=pathname, overwrite=overwrite, verbose=less(verbose));
 
   verbose && exit(verbose);
 

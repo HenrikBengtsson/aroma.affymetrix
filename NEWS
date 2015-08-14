@@ -1,10 +1,14 @@
 Package: aroma.affymetrix
 =========================
 
-Version: 2.13.2-9000 [2015-06-01]
+Version: 2.13.2-9000 [2015-08-14]
 o AvgPlm, used by for instance doCRMAv2(), would give harmless warning
   "Argument 'centers' for matrixStats::rowMads() has been renamed to
   'center'. Please update code accordingly."
+o BUG FIX: writeCdf() for AffyGenePDInfo gave "Error in 
+  affxparser::writeCdf(...) : unused argument (pathname = ..." due to
+  a bug/typo introduced in 2.13.2.  Thanks to Guillaume Devailly for 
+  reporting on this.
 
 
 Version: 2.13.2 [2015-05-26]

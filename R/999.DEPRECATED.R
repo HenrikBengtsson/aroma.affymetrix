@@ -1,32 +1,6 @@
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# DEFUNCT (since 2014-02-28)
+# DEFUNCT (since 2015-09-18)
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-setMethodS3("patch", "AromaAffymetrix", function(this, ..., verbose=FALSE) {
-  .Defunct(msg="Package patching is deprecated. Use update.packages()");
-}, protected=TRUE, deprecated=TRUE)
-
-setMethodS3("getMonoCell", "AffymetrixCdfFile", function(this, ...) {
-  .Defunct("getMonocellCdf");
-}, protected=TRUE, deprecated=TRUE)
-
-setMethodS3("getMatrixChipEffectFiles", "CopyNumberChromosomalModel", function(...) {
-  .Defunct("getDataFileMatrix");
-}, protected=TRUE, deprecated=TRUE)
-
-
-setMethodS3("calculateResiduals", "ProbeLevelModel", function(this, ...) {
-  .Defunct("calculateResidualSet");
-}, private=TRUE, deprecated=TRUE)
-
-
-setMethodS3("calculateResiduals", "FirmaModel", function(this, ...) {
-  .Defunct("calculateResidualSet");
-}, private=TRUE, deprecated=TRUE)
-
-
-setMethodS3("getUnitSizes", "AffymetrixCdfFile", function(this, ...) {
-  .Defunct("nbrOfGroupsPerUnit");
-}, protected=TRUE, deprecated=TRUE)
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -55,6 +29,12 @@ setMethodS3("getData", "AffymetrixCelFile", function(this, ...) {
 ##  .Deprecated("readRawData");
   readRawData(this, ...);
 }, protected=TRUE, deprecated=TRUE)
+
+
+setMethodS3("nbrOfArrays", "AffymetrixCelSet", function(this, ...) {
+##  .Deprecated("length")
+  length(this, ...)
+}, protected=TRUE)
 
 
 

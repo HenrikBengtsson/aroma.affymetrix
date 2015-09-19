@@ -47,7 +47,7 @@ setMethodS3("fixSearchPath", "AromaAffymetrix", function(this, ...) {
 })
 
 
-setMethodS3("update", "AromaAffymetrix", function(object, patch=TRUE, ..., verbose=FALSE) {
+setMethodS3("update", "AromaAffymetrix", function(object, ..., verbose=FALSE) {
   # To please R CMD check
   this <- object;
 
@@ -96,10 +96,6 @@ setMethodS3("update", "AromaAffymetrix", function(object, patch=TRUE, ..., verbo
   })
 
   verbose && cat(verbose, "Package has been updated.");
-
-  if (patch) {
-    patch(this, ..., verbose=verbose);
-  }
 
   verbose && exit(verbose);
 

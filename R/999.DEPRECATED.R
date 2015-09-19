@@ -22,6 +22,13 @@ setMethodS3("getExpectedOutputFiles", "MatSmoothing", function(this, ...) {
 }, protected=TRUE, deprecated=TRUE)
 
 
+## Since 2015-09-18
+setMethodS3("getUnitSizes", "DChipCdfBinFile", function(...) {
+  .Deprecated("nbrOfGroupsPerUnit")
+  nbrOfGroupsPerUnit(...)
+}, protected=TRUE, deprecated=TRUE)
+
+
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # TODO, but still used alot internally.
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

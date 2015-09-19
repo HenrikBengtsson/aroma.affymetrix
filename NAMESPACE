@@ -308,6 +308,26 @@ importFrom("aroma.core", "aromaSettings")
 importFrom("R.utils", "Arguments")
 importFrom("R.filesets", "append")
 
+importFrom("grDevices",
+           "boxplot.stats", "col2rgb", "gray.colors", "rainbow")
+
+importFrom("graphics",
+           "abline", "axis", "box", "bxp", "image", "layout", "lines",
+           "mtext", "par", "plot", "points", "smoothScatter", "text")
+
+importFrom("methods", "as")
+
+importFrom("stats",
+           "approx", "coef", "coefficients", "density",
+           "dnorm", "glm", "lm", "lowess", "mad", "median",
+           "medpolish", "na.omit", "predict", "quantile", "residuals",
+           "rnorm", "sd", "smooth.spline", "t.test", "var")
+
+importFrom("utils",
+           "capture.output", "compareVersion", "data", "head",
+           "object.size", "packageDescription", "packageVersion",
+           "read.table", "str", "tail", "write.table")
+
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Several packages are only optional or suggested for now, so
@@ -1242,7 +1262,7 @@ S3method("getUnitNamesFile", "AffymetrixPgfFile")
 S3method("getUnitNamesFile", "AffymetrixPlatform")
 S3method("getUnitNamesFile", "TransformReport")
 S3method("getUnitReadMap", "AffymetrixCnChpFile")
-S3method("getUnitSizes", "DChipCdfBinFile")  ## To deprecate
+S3method("getUnitSizes", "DChipCdfBinFile")
 S3method("getUnitTypes", "AffymetrixCdfFile")
 S3method("getUnitTypesFile", "AffymetrixCdfFile")
 S3method("getUnitTypesFile", "AffymetrixCelFile")
@@ -1347,7 +1367,6 @@ S3method("nbrOfEnzymes", "AromaUfcFile")
 S3method("nbrOfEnzymes", "SnpInformation")
 S3method("nbrOfEnzymes", "UflSnpInformation")
 S3method("nbrOfGroupsPerUnit", "AffymetrixCdfFile")
-S3method("nbrOfGroupsPerUnit", "DChipCdfBinFile")
 S3method("nbrOfQcUnits", "AffymetrixCdfFile")
 S3method("nbrOfRows", "AffymetrixCdfFile")
 S3method("nbrOfRows", "AffymetrixPgfFile")

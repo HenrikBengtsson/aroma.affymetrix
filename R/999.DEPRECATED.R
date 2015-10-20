@@ -1,25 +1,19 @@
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# DEFUNCT (since 2015-09-18)
+# DEFUNCT
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+## Defunct since 2015-10-21 (aroma.affymetrix 2.14.0)
+setMethodS3("getParameterSet", "Model", function(this, ...) {
+  .Defunct("getParameters");
+}, protected=TRUE, deprecated=TRUE)
+
+setMethodS3("getExpectedOutputFiles", "MatSmoothing", function(this, ...) {
+  .Defunct("getExpectedOutputFullnames");
+}, protected=TRUE, deprecated=TRUE)
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # DEPRECATED
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-setMethodS3("getParameterSet", "Model", function(this, ...) {
-  .Deprecated("getParameters");
-  getParameters(this, ...);
-}, protected=TRUE, deprecated=TRUE)
-
-setMethodS3("getExpectedOutputFiles", "MatSmoothing", function(this, ...) {
-  .Deprecated("getExpectedOutputFullnames");
-  fullnames <- getExpectedOutputFullnames(this, ...);
-
-  # "Dummy" filenames
-  filenames <- sprintf("%s.CEL", fullnames);
-
-  filenames;
-}, protected=TRUE, deprecated=TRUE)
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

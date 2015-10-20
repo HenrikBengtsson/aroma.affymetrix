@@ -9,7 +9,7 @@ Imports:
   R.methodsS3 (>= 1.7.0),
   R.oo (>= 1.19.0),
   R.cache (>= 0.10.0),
-  R.devices (>= 2.13.0),
+  R.devices (>= 2.13.1),
   R.filesets (>= 2.8.0),
   aroma.apd (>= 0.6.0),
   MASS,

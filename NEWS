@@ -7,6 +7,8 @@ o AvgPlm, used by for instance doCRMAv2(), would give harmless warning
   'center'. Please update code accordingly."
 o ROBUSTNESS: Explicitly importing core R functions.
 o CLEANUP: Removed methods marked as defunct in v2.11.3 (Feb 2014).
+o ROBUSTNESS: fitCnProbes() for UnitModel could in rare cases give an
+  error on one of the internal sanity checks.
 o BUG FIX: extractAlleleSet() for SnpChipEffectSet now needs to
   load namspace 'oligoClasses' explicitly.
 o BUG FIX: writeCdf() for AffyGenePDInfo gave "Error in

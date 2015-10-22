@@ -152,8 +152,6 @@
 \alias{calculateParametersGsb}
 \alias{calculateResidualSet}
 \alias{calculateResidualSet.ProbeLevelModel}
-\alias{calculateResiduals}
-\alias{calculateResiduals.ProbeLevelModel}
 \alias{calculateRleBoxplotStats}
 \alias{calculateRleBoxplotStats.ChipEffectSet}
 \alias{calculateTargetDistribution}
@@ -687,8 +685,6 @@
 \alias{getMainCdf}
 \alias{getMainCdf.AffymetrixCdfFile}
 \alias{getMainPath.GenericReporter}
-\alias{getMatrixChipEffectFiles}
-\alias{getMatrixChipEffectFiles.CopyNumberChromosomalModel}
 \alias{getMergeFunction}
 \alias{getMergeFunction.ChipEffectGroupMerge}
 \alias{getMergeFunction.SnpChipEffectGroupMerge}
@@ -697,8 +693,6 @@
 \alias{getMergeStrands}
 \alias{getMergeStrands.SnpChipEffectSet}
 \alias{getMergeStrands.SnpPlm}
-\alias{getMonoCell}
-\alias{getMonoCell.AffymetrixCdfFile}
 \alias{getMonocellCdf}
 \alias{getMonocellCdf.AffymetrixCdfFile}
 \alias{getName.AffymetrixPlatform}
@@ -1095,7 +1089,6 @@
 \alias{normalizeOneArrayVector}
 \alias{normalizeOneArrayVector.FragmentEquivalentClassNormalization}
 \alias{normalizeQuantile}
-\alias{patch.AromaAffymetrix}
 \alias{plasqGaussian}
 \alias{plotAllelePairs}
 \alias{plotAllelePairs.AllelicCrosstalkCalibration}

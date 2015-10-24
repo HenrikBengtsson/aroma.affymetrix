@@ -11,13 +11,6 @@ R package aroma.affymetrix is available on [CRAN](http://cran.r-project.org/pack
 install.packages('aroma.affymetrix')
 ```
 
-### Pre-release version
-
-To install the pre-release version that is available in branch `develop`, use:
-```r
-source('http://callr.org/install#HenrikBengtsson/aroma.affymetrix@develop')
-```
-This will install the package from source.  
 
 
 

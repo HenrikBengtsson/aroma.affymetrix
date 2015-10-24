@@ -11,10 +11,6 @@
 \alias{nbrOfGroupsPerUnit.AffymetrixCdfFile}
 \alias{AffymetrixCdfFile.nbrOfGroupsPerUnit}
 \alias{nbrOfGroupsPerUnit,AffymetrixCdfFile-method}
-\alias{AffymetrixCdfFile.getUnitSizes}
-\alias{getUnitSizes.AffymetrixCdfFile}
-\alias{getUnitSizes,AffymetrixCdfFile-method}
-
 
 \title{Gets the number of groups in each unit}
 

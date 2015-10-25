@@ -1,12 +1,5 @@
 setMethodS3("extractAlleleSet", "SnpChipEffectSet", function(this, units=NULL, sortUnits=TRUE, transform=log2, ..., verbose=FALSE) {
-  requireNamespace("Biobase") || throw("Package not loaded: Biobase")
-
-
-  # Assert oligo version
-  pkg <- Package("oligo");
-  if (isOlderThan(pkg, "1.12.0")) {
-    throw("extractAlleleSet() requires oligo v1.12.0 or newer: ", getVersion(pkg));
-  }
+  requireNamespace("oligoClasses") || throw("Package not loaded: oligoClasses")
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

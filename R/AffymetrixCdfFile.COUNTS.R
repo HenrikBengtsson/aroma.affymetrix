@@ -14,7 +14,6 @@ setMethodS3("nbrOfQcUnits", "AffymetrixCdfFile", function(this, ...) {
 ###########################################################################/**
 # @set "class=AffymetrixCdfFile"
 # @RdocMethod nbrOfGroupsPerUnit
-# @aliasmethod getUnitSizes
 #
 # @title "Gets the number of groups in each unit"
 #

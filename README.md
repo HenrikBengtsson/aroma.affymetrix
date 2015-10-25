@@ -12,7 +12,9 @@ install.packages('aroma.affymetrix')
 ```
 
 
-## Software quality
+
+
+## Software status
 
 | Resource:     | CRAN        | Travis CI     | Appveyor         |
 | ------------- | ------------------- | ------------- | ---------------- |

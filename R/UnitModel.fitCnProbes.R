@@ -72,6 +72,14 @@ setMethodS3("fitCnProbes", "UnitModel", function(this, ..., verbose=FALSE) {
   units <- units[keep];
   verbose && cat(verbose, "Single-cell units:");
   verbose && str(verbose, units);
+
+  ## Nothing todo?
+  if (length(units) == 0L) {
+    verbose && cat(verbose, "Nothing to do: All copy-number units are fitted")
+    verbose && exit(verbose)
+    return(invisible(units))
+  }
+
   cells <- cells[keep];
   cells <- unlist(cells, use.names=FALSE);
   verbose && cat(verbose, "Cell indices:");

@@ -99,7 +99,6 @@ importFrom("aroma.core", "nbrOfCells")
 importFrom("aroma.core", "nbrOfChipTypes")
 importFrom("aroma.core", "nbrOfEnzymes")
 importFrom("aroma.core", "nbrOfUnits")
-importFrom("aroma.core", "patch")
 importFrom("aroma.core", "process")
 importFrom("aroma.core", "readHeader")
 importFrom("aroma.core", "rescale")
@@ -157,7 +156,6 @@ importFrom("aroma.core", "backtransformGenotypeCone")
 importFrom("aroma.core", "backtransformMultiDimensionalCone")
 importFrom("aroma.core", "countBases")
 importFrom("aroma.core", "display")
-importFrom("aroma.core", "downloadPackagePatch")
 importFrom("aroma.core", "extractGenotypes")
 importFrom("aroma.core", "findAnnotationDataByChipType")
 importFrom("aroma.core", "findPngDevice")
@@ -184,7 +182,6 @@ importFrom("aroma.core", "isHeterozygous")
 importFrom("aroma.core", "lapplyInChunks")
 importFrom("aroma.core", "locallyUnique")
 importFrom("aroma.core", "mergeBoxplotStats")
-importFrom("aroma.core", "patchPackage")
 importFrom("aroma.core", "processTime")
 importFrom("aroma.core", "readFooter")
 importFrom("aroma.core", "readSequenceMatrix")
@@ -310,6 +307,26 @@ importFrom("aroma.core", "aromaSettings")
 ## Manual imports
 importFrom("R.utils", "Arguments")
 importFrom("R.filesets", "append")
+
+importFrom("grDevices",
+           "boxplot.stats", "col2rgb", "gray.colors", "rainbow")
+
+importFrom("graphics",
+           "abline", "axis", "box", "bxp", "image", "layout", "lines",
+           "mtext", "par", "plot", "points", "smoothScatter", "text")
+
+importFrom("methods", "as")
+
+importFrom("stats",
+           "approx", "coef", "coefficients", "density",
+           "dnorm", "glm", "lm", "lowess", "mad", "median",
+           "medpolish", "na.omit", "predict", "quantile", "residuals",
+           "rnorm", "sd", "smooth.spline", "t.test", "var")
+
+importFrom("utils",
+           "capture.output", "compareVersion", "data", "head",
+           "object.size", "packageDescription", "packageVersion",
+           "read.table", "str", "tail", "write.table")
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -543,8 +560,6 @@ S3method("calculateNuseBoxplotStats", "ChipEffectSet")
 S3method("calculateParametersGsb", "AffymetrixCelSet")
 S3method("calculateResidualSet", "FirmaModel")
 S3method("calculateResidualSet", "ProbeLevelModel")
-S3method("calculateResiduals", "FirmaModel")
-S3method("calculateResiduals", "ProbeLevelModel")
 S3method("calculateRleBoxplotStats", "ChipEffectSet")
 S3method("calculateTargetDistribution", "QuantileNormalization")
 S3method("calculateWeights", "ExonRmaPlm")
@@ -1040,13 +1055,11 @@ S3method("getListOfUnitTypesFiles", "AffymetrixCelSetTuple")
 S3method("getListOfUnitTypesFiles", "ArrayExplorer")
 S3method("getMainCdf", "AffymetrixCdfFile")
 S3method("getMainPath", "GenericReporter")
-S3method("getMatrixChipEffectFiles", "CopyNumberChromosomalModel")
 S3method("getMergeFunction", "ChipEffectGroupMerge")
 S3method("getMergeFunction", "SnpChipEffectGroupMerge")
 S3method("getMergeGroups", "ExonChipEffectSet")
 S3method("getMergeStrands", "SnpChipEffectSet")
 S3method("getMergeStrands", "SnpPlm")
-S3method("getMonoCell", "AffymetrixCdfFile")
 S3method("getMonocellCdf", "AffymetrixCdfFile")
 S3method("getName", "AffymetrixPlatform")
 S3method("getName", "FirmaModel")
@@ -1249,7 +1262,6 @@ S3method("getUnitNamesFile", "AffymetrixPgfFile")
 S3method("getUnitNamesFile", "AffymetrixPlatform")
 S3method("getUnitNamesFile", "TransformReport")
 S3method("getUnitReadMap", "AffymetrixCnChpFile")
-S3method("getUnitSizes", "AffymetrixCdfFile")
 S3method("getUnitSizes", "DChipCdfBinFile")
 S3method("getUnitTypes", "AffymetrixCdfFile")
 S3method("getUnitTypesFile", "AffymetrixCdfFile")
@@ -1372,7 +1384,6 @@ S3method("nbrOfUnits", "UgpGenomeInformation")
 S3method("normalizeOneArrayVector", "FragmentEquivalentClassNormalization")
 S3method("normalizeQuantile", "AffymetrixCelFile")
 S3method("normalizeQuantile", "AffymetrixCelSet")
-S3method("patch", "AromaAffymetrix")
 S3method("plotAllelePairs", "AllelicCrosstalkCalibration")
 S3method("plotBasepair", "AllelicCrosstalkCalibration")
 S3method("plotBoxplot", "ChipEffectSet")

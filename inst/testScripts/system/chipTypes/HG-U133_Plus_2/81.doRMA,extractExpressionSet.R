@@ -1,4 +1,5 @@
 library("aroma.affymetrix");
+library("Biobase")
 verbose <- Arguments$getVerbose(-8, timestamp=TRUE);
 
 dataSet <- "GSE9890";

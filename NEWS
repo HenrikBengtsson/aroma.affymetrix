@@ -1,11 +1,27 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 2.14.0 [2015-10-24]
+o AvgPlm, used by for instance doCRMAv2(), would give harmless warning
+  "Argument 'centers' for matrixStats::rowMads() has been renamed to
+  'center'. Please update code accordingly."
+o ROBUSTNESS: Explicitly importing core R functions.
+o CLEANUP: Removed methods marked as defunct in v2.11.3 (Feb 2014).
+o ROBUSTNESS: fitCnProbes() for UnitModel could in rare cases give an
+  error on one of the internal sanity checks.
+o BUG FIX: extractAlleleSet() for SnpChipEffectSet now needs to
+  load namspace 'oligoClasses' explicitly.
+o BUG FIX: writeCdf() for AffyGenePDInfo gave "Error in
+  affxparser::writeCdf(...) : unused argument (pathname = ..." due to
+  a bug/typo introduced in 2.13.2.  Thanks to Guillaume Devailly for
+  reporting on this.
+
+
 Version: 2.13.2 [2015-05-26]
 o ROBUSTNESS: Many functions now assert that they don't return file
   data sets with duplicated entries.
 o ROBUSTNESS: Package now declares all S3 methods.
-o Package now requires R (>= 3.1.1) released July 2014. This allows 
+o Package now requires R (>= 3.1.1) released July 2014. This allows
   us to use BioC (>= 3.0) (October 2014).
 
 

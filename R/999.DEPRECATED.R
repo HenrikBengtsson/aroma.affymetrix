@@ -1,51 +1,19 @@
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# DEFUNCT (since 2014-02-28)
+# DEFUNCT
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-setMethodS3("patch", "AromaAffymetrix", function(this, ..., verbose=FALSE) {
-  .Defunct(msg="Package patching is deprecated. Use update.packages()");
+## Defunct since 2015-10-21 (aroma.affymetrix 2.14.0)
+setMethodS3("getParameterSet", "Model", function(this, ...) {
+  .Defunct("getParameters");
 }, protected=TRUE, deprecated=TRUE)
 
-setMethodS3("getMonoCell", "AffymetrixCdfFile", function(this, ...) {
-  .Defunct("getMonocellCdf");
-}, protected=TRUE, deprecated=TRUE)
-
-setMethodS3("getMatrixChipEffectFiles", "CopyNumberChromosomalModel", function(...) {
-  .Defunct("getDataFileMatrix");
-}, protected=TRUE, deprecated=TRUE)
-
-
-setMethodS3("calculateResiduals", "ProbeLevelModel", function(this, ...) {
-  .Defunct("calculateResidualSet");
-}, private=TRUE, deprecated=TRUE)
-
-
-setMethodS3("calculateResiduals", "FirmaModel", function(this, ...) {
-  .Defunct("calculateResidualSet");
-}, private=TRUE, deprecated=TRUE)
-
-
-setMethodS3("getUnitSizes", "AffymetrixCdfFile", function(this, ...) {
-  .Defunct("nbrOfGroupsPerUnit");
+setMethodS3("getExpectedOutputFiles", "MatSmoothing", function(this, ...) {
+  .Defunct("getExpectedOutputFullnames");
 }, protected=TRUE, deprecated=TRUE)
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # DEPRECATED
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-setMethodS3("getParameterSet", "Model", function(this, ...) {
-  .Deprecated("getParameters");
-  getParameters(this, ...);
-}, protected=TRUE, deprecated=TRUE)
-
-setMethodS3("getExpectedOutputFiles", "MatSmoothing", function(this, ...) {
-  .Deprecated("getExpectedOutputFullnames");
-  fullnames <- getExpectedOutputFullnames(this, ...);
-
-  # "Dummy" filenames
-  filenames <- sprintf("%s.CEL", fullnames);
-
-  filenames;
-}, protected=TRUE, deprecated=TRUE)
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -55,6 +23,12 @@ setMethodS3("getData", "AffymetrixCelFile", function(this, ...) {
 ##  .Deprecated("readRawData");
   readRawData(this, ...);
 }, protected=TRUE, deprecated=TRUE)
+
+
+setMethodS3("nbrOfArrays", "AffymetrixCelSet", function(this, ...) {
+##  .Deprecated("length")
+  length(this, ...)
+}, protected=TRUE)
 
 
 

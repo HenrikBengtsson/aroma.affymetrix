@@ -779,38 +779,6 @@ setMethodS3("byPath", "AffymetrixCelSet", function(static, path, cdf=NULL, patte
 
 
 ###########################################################################/**
-# @RdocMethod nbrOfArrays
-#
-# @title "Gets the number of arrays in the file set"
-#
-# \description{
-#   @get "title".
-#   This is just a wrapper for \code{length()}.
-# }
-#
-# @synopsis
-#
-# \arguments{
-#  \item{...}{Not used.}
-# }
-#
-# \value{
-#   Returns an @integer.
-# }
-#
-# @author "HB"
-#
-# \seealso{
-#   @seeclass
-# }
-#*/###########################################################################
-setMethodS3("nbrOfArrays", "AffymetrixCelSet", function(this, ...) {
-  length(this, ...);
-}, protected=TRUE)
-
-
-
-###########################################################################/**
 # @RdocMethod as.AffymetrixCelSet
 # @alias as.AffymetrixCelSet.list
 # @alias as.AffymetrixCelSet.default
@@ -939,7 +907,7 @@ setMethodS3("getData", "AffymetrixCelSet", function(this, indices=NULL, fields=c
   }
 
 
-  nbrOfArrays <- nbrOfArrays(this);
+  nbrOfArrays <- length(this);
   verbose && enter(verbose, "Getting cell data for ", nbrOfArrays, " arrays.");
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

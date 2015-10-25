@@ -22,7 +22,8 @@
 #
 # \details{
 #   The dChip genome information files for various chip types can be
-#   downloaded from \url{http://www.dchip.org/}.  Put each file in a
+#   downloaded from \url{http://www.hsph.harvard.edu/cli/complab/dchip/}.
+#   Put each file in a
 #   directory named identically as the corresponding chip type under the
 #   \emph{annotations/} directory, e.g.
 #   \emph{annotations/Mapping50K\_Hind240/50k hind genome info AfAm

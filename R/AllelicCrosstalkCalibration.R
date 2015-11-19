@@ -776,7 +776,7 @@ setMethodS3("process", "AllelicCrosstalkCalibration", function(this, ..., force=
       verbose && cat(verbose, "Calibrated data file already exists: ", pathname)
       dfC <- newInstance(df, pathname)
       setCdf(dfC, cdf)
-      res[[ii]] <- dfC
+      res[[kk]] <- dfC
       verbose && exit(verbose)
       next
     }
@@ -789,7 +789,7 @@ setMethodS3("process", "AllelicCrosstalkCalibration", function(this, ..., force=
     verbose && str(verbose, setsOfProbes)
 
 
-    res[[ii]] %<=% {
+    res[[kk]] %<=% {
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       # Reading data
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -1026,7 +1026,7 @@ setMethodS3("process", "AllelicCrosstalkCalibration", function(this, ..., force=
       ## callHooks(sprintf("%s.onExit", hookName), df=df, dfC=dfC, ...);
 
       dfC
-    } ## res[[ii]] %<=% ...
+    } ## res[[kk]] %<=% ...
 
     verbose && exit(verbose);
   } # for (kk in seq_len(nbrOfArrays))

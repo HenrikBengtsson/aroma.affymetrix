@@ -1,5 +1,5 @@
 Package: aroma.affymetrix
-Version: 2.14.0-9000
+Version: 2.14.1-9000
 Depends:
   R (>= 3.1.1),
   R.utils (>= 2.1.0),
@@ -14,7 +14,9 @@ Imports:
   aroma.apd (>= 0.6.0),
   MASS,
   splines,
-  matrixStats (>= 0.15.0)
+  matrixStats (>= 0.15.0),
+  listenv,
+  future
 Suggests:
   DBI (>= 0.3.1),
   gsmoothr (>= 0.1.7),

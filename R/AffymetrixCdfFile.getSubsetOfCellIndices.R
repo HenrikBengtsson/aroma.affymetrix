@@ -44,8 +44,8 @@ setMethodS3("getSubsetOfCellIndices", "AffymetrixCdfFile", function(this, units=
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Check for cached data
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  key <- list(method="getSubsetOfCellIndices", class=class(this)[1], 
-              chipType=getChipType(this), giChecksum=giChecksum, 
+  key <- list(method="getSubsetOfCellIndices", class=class(this)[1],
+              chipType=getChipType(this), giChecksum=giChecksum,
               units=units, stratifyBy=stratifyBy, ...);
   if (getOption(aromaSettings, "devel/useCacheKeyInterface", FALSE)) {
     key <- getCacheKey(this, method="getSubsetOfCellIndices", chipType=getChipType(this), giChecksum=giChecksum, units=units, stratifyBy=stratifyBy, ...);
@@ -84,7 +84,7 @@ setMethodS3("getSubsetOfCellIndices", "AffymetrixCdfFile", function(this, units=
       parts <- strsplit(parts, split="", fixed=TRUE)[[1]];
       parts <- unique(parts);
       chromosomes <- c("X"=23, "Y"=24, "M"=25)[parts];
-      if (anyMissing(chromosomes)) {
+      if (anyNA(chromosomes)) {
         throw("Unknown chromosomes: ", parts[is.na(chromosomes)]);
       }
       chromosomes <- sort(chromosomes);
@@ -130,7 +130,7 @@ setMethodS3("getSubsetOfCellIndices", "AffymetrixCdfFile", function(this, units=
     # All cells but...
     cellsIncl <- NULL;
     verbose && enter(verbose, "Reading cell indices to exclude");
-    cellsExcl <- getCellIndices(this, units=unitsExcl, 
+    cellsExcl <- getCellIndices(this, units=unitsExcl,
                    stratifyBy=stratifyBy, useNames=FALSE, unlist=TRUE);
     verbose && exit(verbose);
   } else if (!is.null(unitsIncl) & is.null(unitsExcl)) {
@@ -152,14 +152,14 @@ setMethodS3("getSubsetOfCellIndices", "AffymetrixCdfFile", function(this, units=
   # Not needed anymore
   unitsIncl <- unitsExcl <- NULL;
 
-  
+
   if (is.null(cellsIncl)) {
     # All types cells of cells?
     if (is.null(stratifyBy)) {
       cellsIncl <- seq_len(nbrOfCells(this));
     } else {
       verbose && enter(verbose, "Reading cell indices to include");
-      cellsIncl <- getCellIndices(this, stratifyBy=stratifyBy, 
+      cellsIncl <- getCellIndices(this, stratifyBy=stratifyBy,
                                             useNames=FALSE, unlist=TRUE);
       verbose && exit(verbose);
     }

@@ -14,7 +14,7 @@ Imports:
   aroma.apd (>= 0.6.0),
   MASS,
   splines,
-  matrixStats (>= 0.14.2)
+  matrixStats (>= 0.15.0)
 Suggests:
   DBI (>= 0.3.1),
   gsmoothr (>= 0.1.7),
@@ -42,7 +42,7 @@ SuggestsNote:
   affxparser,
   DNAcopy
 Additional_repositories: http://r-forge.r-project.org
-Date: 2015-10-24
+Date: 2015-11-19
 Title: Analysis of Large Affymetrix Microarray Data Sets
 Authors@R: c(
   person("Henrik", "Bengtsson", role=c("aut", "cre", "cph"),

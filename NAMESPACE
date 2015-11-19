@@ -196,7 +196,6 @@ importFrom("aroma.core", "updateSequenceMatrix")
 importFrom("aroma.core", "updateSequences")
 importFrom("aroma.core", "updateTargetStrands")
 importFrom("aroma.core", "writeFooter")
-importFrom("matrixStats", "anyMissing") ## Multi-sources: matrixStats, Biobase
 importFrom("matrixStats", "colMaxs")
 importFrom("matrixStats", "colMedians")
 importFrom("matrixStats", "colQuantiles")

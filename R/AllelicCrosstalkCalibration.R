@@ -1013,7 +1013,7 @@ setMethodS3("process", "AllelicCrosstalkCalibration", function(this, ..., force=
       yAll <- verbose2 <- NULL
 
       # Rename temporary file
-      pathname <- popTemporaryFile(pathnameT, verbose=verbose)
+      popTemporaryFile(pathnameT, verbose=verbose)
 
       gc <- gc()
       verbose && print(verbose, gc)
@@ -1038,6 +1038,10 @@ setMethodS3("process", "AllelicCrosstalkCalibration", function(this, ..., force=
 #  clearCache(this);
   gc <- gc();
   verbose && print(verbose, gc);
+
+  ## Force futures to be evaluated
+  res <- as.list(res)
+  res <- NULL ## Not needed anymore
 
   outputDataSet <- getOutputDataSet(this, force=TRUE);
 

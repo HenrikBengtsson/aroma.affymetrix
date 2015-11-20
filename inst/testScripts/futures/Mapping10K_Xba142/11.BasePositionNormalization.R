@@ -3,8 +3,8 @@ library("aroma.affymetrix")
 ovars <- ls(all.names=TRUE)
 
 ## Setup dataset
-dataset <- "GSE13372,testset"
-chipType <- "GenomeWideSNP_6,Full"
+dataset <- "GSE8605"
+chipType <- "Mapping10K_Xba142"
 
 csR <- AffymetrixCelSet$byName(dataset, chipType=chipType)
 csR <- csR[1:2]

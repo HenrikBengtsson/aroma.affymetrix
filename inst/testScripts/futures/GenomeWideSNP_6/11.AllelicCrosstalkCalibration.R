@@ -22,9 +22,9 @@ for (strategy in strategies) {
   tags <- c("*", strategy)
 
   ## (a) Process a single array
-  bpn <- BasePositionNormalization(csR[1], target="zero", tags=c(tags, "one-array"))
-  print(bpn)
-  csC1 <- process(bpn, verbose=-10)
+  acc <- AllelicCrosstalkCalibration(csR[1], model="CRMAv2", tags=c(tags, "one-array"))
+  print(acc)
+  csC1 <- process(acc, verbose=-10)
   print(csC1)
   csC1z <- getChecksumFileSet(csC1)
   print(csC1z[[1]])
@@ -36,9 +36,9 @@ for (strategy in strategies) {
 
 
   ## (b) Process two arrays
-  bpn <- BasePositionNormalization(csR, target="zero", tags=tags)
-  print(bpn)
-  csC <- process(bpn, verbose=-10)
+  acc <- AllelicCrosstalkCalibration(csR, model="CRMAv2", tags=tags)
+  print(acc)
+  csC <- process(acc, verbose=-10)
   print(csC)
   csCz <- getChecksumFileSet(csC)
   print(csCz[[1]])

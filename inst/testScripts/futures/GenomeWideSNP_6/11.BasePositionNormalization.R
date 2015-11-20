@@ -4,6 +4,7 @@ ovars <- ls(all.names=TRUE)
 
 ## Setup dataset
 csC <- AffymetrixCelSet$byName("GSE13372,testset", chipType="GenomeWideSNP_6,Full")
+csC <- csC[1:2]
 print(csC)
 
 strategies <- c("eager", "lazy")

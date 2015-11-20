@@ -46,6 +46,7 @@
 # @author "KS, HB"
 #*/###########################################################################
 setConstructorS3("GcRmaBackgroundCorrection", function(..., indicesNegativeControl=NULL, affinities=NULL, type=c("fullmodel", "affinities"), opticalAdjust=TRUE, gsbAdjust=TRUE, gsbParameters=NULL) {
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -167,20 +168,20 @@ setMethodS3("process", "GcRmaBackgroundCorrection", function(this, ..., force=FA
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  verbose <- Arguments$getVerbose(verbose);
+  verbose <- Arguments$getVerbose(verbose)
   if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
+    pushState(verbose)
+    on.exit(popState(verbose))
   }
 
 
-  verbose && enter(verbose, "Background correcting data set");
+  verbose && enter(verbose, "Background correcting data set")
 
   if (!force && isDone(this)) {
-    verbose && cat(verbose, "Already background corrected");
-    verbose && exit(verbose);
-    outputDataSet <- getOutputDataSet(this);
-    return(outputDataSet);
+    verbose && cat(verbose, "Already background corrected")
+    verbose && exit(verbose)
+    outputDataSet <- getOutputDataSet(this)
+    return(outputDataSet)
   }
 
 
@@ -188,42 +189,96 @@ setMethodS3("process", "GcRmaBackgroundCorrection", function(this, ..., force=FA
   # Setup
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Get input data set
-  ds <- getInputDataSet(this);
+  ds <- getInputDataSet(this)
 
   # Get the output path
-  outputPath <- getPath(this);
+  outputPath <- getPath(this)
 
   # Get algorithm parameters
-  params <- getParameters(this);
+  params <- getParameters(this)
+  opticalAdjust <- params$opticalAdjust
+  gsbAdjust <- params$gsbAdjust
+  type <- params$type
+  indicesNegativeControl <- params$indicesNegativeControl
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Optical background correction?
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  if (opticalAdjust) {
+    obg <- OpticalBackgroundCorrection(ds)
+    dsOBG <- process(obg, ..., verbose=verbose)
+    ds <- dsOBG
+    # Not needed anymore
+    obg <- dsOBG <- NULL
+  }
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Get/calculate affinities
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  affinities <- params$affinities;
+  affinities <- params$affinities
   if (is.null(affinities)) {
-    affinities <- calculateAffinities(this, verbose=less(verbose));
+    affinities <- calculateAffinities(this, verbose=less(verbose))
   }
-  params$affinities <- affinities;
 
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Background correct
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  args <- c(list(ds, path=outputPath, verbose=verbose, overwrite=force), params, .deprecated=FALSE);
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # estimate specific binding (GSB, in gcrma terminology)
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  parametersGsb <- NULL
+  if (gsbAdjust) {
+    verbose && enter(verbose, "Estimating specific binding parameters (data dependent)")
+    parametersGsb <- calculateParametersGsb(ds, affinities=affinities, ..., verbose=verbose)
+    verbose && cat(verbose, "parametersGsb:")
+    verbose && print(verbose, parametersGsb)
+    verbose && exit(verbose)
+  }
 
-  do.call("bgAdjustGcrma", args=args);
 
-  # Garbage collect
-  gc <- gc();
-  verbose && print(verbose, gc);
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # NSB correction for each array
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  nbrOfArrays <- length(ds)
+  verbose && enter(verbose, sprintf("Adjusting %d arrays", nbrOfArrays))
 
-  verbose && exit(verbose);
+  # Background correction parameters
+  fast <- TRUE
+  if (fast) {
+    k <- 6
+    stretch <- 1.15
+  } else {
+    k <- 0.5
+    stretch <- 1
+  }
+  rho <- 0.7
+
+  dataFiles <- listenv()
+  for (ii in seq_along(ds)) {
+    df <- ds[[ii]]
+    verbose && enter(verbose, sprintf("Array #%d ('%s') of %d", ii, getName(df), nbrOfArrays))
+
+    dataFiles[[ii]] %<=% {
+      bgAdjustGcrma(df, path=outputPath, type=type, indicesNegativeControl=indicesNegativeControl, affinities=affinities, gsbAdjust=gsbAdjust, parametersGsb=parametersGsb, k=k, rho=rho, stretch=stretch, fast=fast, overwrite=force, skip=!force, ..., verbose=less(verbose), .deprecated=FALSE)
+    }
+
+    verbose && exit(verbose)
+  } # for (ii ...)
+
+  verbose && exit(verbose)
+
+  ## Resolve futures
+  dataFiles <- as.list(dataFiles)
+
+  ## Garbage collect
+  gc <- gc()
+  verbose && print(verbose, gc)
+
+  verbose && exit(verbose)
 
   # Gets the output data set
-  outputDataSet <- getOutputDataSet(this);
+  outputDataSet <- getOutputDataSet(this)
 
-  outputDataSet;
+  outputDataSet
 })
 
 

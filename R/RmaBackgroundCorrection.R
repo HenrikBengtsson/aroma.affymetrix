@@ -98,71 +98,77 @@ setMethodS3("getParameters", "RmaBackgroundCorrection", function(this, ...) {
 #*/###########################################################################
 setMethodS3("process", "RmaBackgroundCorrection", function(this, ..., force=FALSE, verbose=FALSE) {
 
-  verbose <- Arguments$getVerbose(verbose);
+  verbose <- Arguments$getVerbose(verbose)
   if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
+    pushState(verbose)
+    on.exit(popState(verbose))
   }
 
-  verbose && enter(verbose, "Background correcting data set");
+  verbose && enter(verbose, "Background correcting data set")
 
   if (!force && isDone(this)) {
-    verbose && cat(verbose, "Already background corrected");
-    verbose && exit(verbose);
-    outputDataSet <- getOutputDataSet(this);
-    return(outputDataSet);
+    verbose && cat(verbose, "Already background corrected")
+    verbose && exit(verbose)
+    outputDataSet <- getOutputDataSet(this)
+    return(outputDataSet)
   }
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Setup
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Get input data set
-  ds <- getInputDataSet(this);
+  ds <- getInputDataSet(this)
 
   # Get the output path
-  outputPath <- getPath(this);
+  outputPath <- getPath(this)
 
-  cdf <- getCdf(ds);
+  cdf <- getCdf(ds)
 
   # Get algorithm parameters (including the target distribution)
-  params <- getParameters(this);
+  params <- getParameters(this)
   # 'subsetToUpdate' is not used and 'typesToUpdate' are used via 'pmonly'
-  pmonly <- params$pmonly;
-  addJitter <- params$addJitter;
-  jitterSd <- params$jitterSd;
+  pmonly <- params$pmonly
+  addJitter <- params$addJitter
+  jitterSd <- params$jitterSd
   # Not needed anymore
-  params <- NULL;
+  params <- NULL
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Background correct
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  nbrOfArrays <- length(ds);
-  verbose && cat(verbose, "Number of arrays: ", nbrOfArrays);
+  nbrOfArrays <- length(ds)
+  verbose && cat(verbose, "Number of arrays: ", nbrOfArrays)
+
+  res <- listenv()
+  
   for (ii in seq_along(ds)) {
-    df <- ds[[ii]];
-    verbose && enter(verbose, sprintf("Array #%d ('%s') of %d", ii, getName(df), nbrOfArrays));
+    df <- ds[[ii]]
+    verbose && enter(verbose, sprintf("Array #%d ('%s') of %d", ii, getName(df), nbrOfArrays))
 
-    dfD <- bgAdjustRma(df, path=outputPath, pmonly=pmonly, addJitter=addJitter, jitterSd=jitterSd, overwrite=force, verbose=verbose, .deprecated=FALSE);
-    verbose && print(verbose, dfD);
+    ## FIXME: bgAdjustRma() cache CDF results to file => race conditions /HB 2015-11-19
+    res[[ii]] <- {
+      bgAdjustRma(df, path=outputPath, pmonly=pmonly, addJitter=addJitter, jitterSd=jitterSd,
+                      overwrite=force, verbose=verbose, .deprecated=FALSE)
+    }
 
-    # Not needed anymore
-    # Not needed anymore
-    df <- dfD <- NULL;
-
-    verbose && exit(verbose);
+    verbose && exit(verbose)
   } # for (ii ...)
 
-  # Garbage collect
-  gc <- gc();
-  verbose && print(verbose, gc);
+  ## Resolve futures
+  res <- as.list(res)
+  res <- NULL
+  
+  ## Garbage collect
+  gc <- gc()
+  verbose && print(verbose, gc)
 
   # Get the output data set
-  outputDataSet <- getOutputDataSet(this);
+  outputDataSet <- getOutputDataSet(this)
 
-  verbose && exit(verbose);
+  verbose && exit(verbose)
 
-  outputDataSet;
+  outputDataSet
 })
 
 

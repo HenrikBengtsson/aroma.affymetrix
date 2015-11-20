@@ -101,83 +101,169 @@ setMethodS3("process", "RmaBackgroundCorrection", function(this, ..., force=FALS
   requireNamespace("affy") || throw("Package not loaded: affy")
   bg.adjust <- affy::bg.adjust
 
-  verbose <- Arguments$getVerbose(verbose);
+  verbose <- Arguments$getVerbose(verbose)
   if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
+    pushState(verbose)
+    on.exit(popState(verbose))
   }
 
-  verbose && enter(verbose, "Background correcting data set");
+  verbose && enter(verbose, "Background correcting data set")
 
   if (!force && isDone(this)) {
-    verbose && cat(verbose, "Already background corrected");
-    verbose && exit(verbose);
-    outputDataSet <- getOutputDataSet(this);
-    return(outputDataSet);
+    verbose && cat(verbose, "Already background corrected")
+    verbose && exit(verbose)
+    outputDataSet <- getOutputDataSet(this)
+    return(outputDataSet)
   }
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Setup
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Get input data set
-  ds <- getInputDataSet(this);
+  ds <- getInputDataSet(this)
 
   # Get the output path
-  outputPath <- getPath(this);
+  outputPath <- getPath(this)
 
-  cdf <- getCdf(ds);
+  cdf <- getCdf(ds)
 
   # Get algorithm parameters (including the target distribution)
-  params <- getParameters(this);
+  params <- getParameters(this)
   # 'subsetToUpdate' is not used and 'typesToUpdate' are used via 'pmonly'
-  pmonly <- params$pmonly;
-  addJitter <- params$addJitter;
-  jitterSd <- params$jitterSd;
+  pmonly <- params$pmonly
+  pmCells <- NULL
+  pmJitter <- NULL
+  addJitter <- params$addJitter
+  jitterSd <- params$jitterSd
   # Not needed anymore
-  params <- NULL;
+  params <- NULL
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Background correct
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  nbrOfArrays <- length(ds);
-  verbose && cat(verbose, "Number of arrays: ", nbrOfArrays);
-  for (ii in seq_along(ds)) {
-    df <- ds[[ii]];
-    verbose && enter(verbose, sprintf("Array #%d ('%s') of %d", ii, getName(df), nbrOfArrays));
+  nbrOfArrays <- length(ds)
+  verbose && cat(verbose, "Number of arrays: ", nbrOfArrays)
 
-    filename <- basename(getPathname(this));
+  res <- listenv()
+
+  for (ii in seq_along(ds)) {
+    df <- ds[[ii]]
+    verbose && enter(verbose, sprintf("Array #%d ('%s') of %d", ii, getName(df), nbrOfArrays))
+
+    filename <- basename(getPathname(df))
     filename <- gsub("[.]cel$", ".CEL", filename)
-    pathname <- Arguments$getWritablePathname(filename, path=path,
+    pathname <- Arguments$getWritablePathname(filename, path=outputPath,
                                                         mustNotExist=FALSE)
     if (!force && isFile(pathname)) {
+      verbose && cat(verbose, "Already processed. Skipping.")
+
+      ## Assert validity
+      dfD <- newInstance(df, pathname)
+      setCdf(dfD, cdf)
+
+      res[[ii]] <- pathname
+      verbose && exit(verbose)
+      next
     }
 
-    dfD <- bgAdjustRma(df, path=outputPath, pmonly=pmonly, addJitter=addJitter, jitterSd=jitterSd, overwrite=force, verbose=verbose, .deprecated=FALSE);
-    verbose && print(verbose, dfD);
+    if (pmonly && is.null(pmCells)) {
+      verbose && enter(verbose, "Identifying PM-only probes (pmonly=TRUE)")
+      verbose && print(verbose, cdf)
+      chipType <- getChipType(cdf)
+      key <- list(method="bgAdjustRma", class=class(cdf)[1], chipType=chipType)
+      dirs <- c("aroma.affymetrix", chipType)
+      pmCells <- loadCache(key=key, dirs=dirs)
+      if (is.null(pmCells)) {
+        indices <- getCellIndices(cdf, useNames=FALSE, unlist=TRUE)
+        pmCells <- indices[isPm(cdf)]
+        saveCache(pmCells, key=key, dirs=dirs)
+      }
+      nbrOfPMs <- length(pmCells)
+      verbose && exit(verbose)
+    } else {
+      nbrOfPMs <- nbrOfCells(cdf)
+    }
 
-    # Not needed anymore
-    # Not needed anymore
-    df <- dfD <- NULL;
+    if (addJitter && is.null(pmJitter)) {
+      set.seed(6022007)
+      pmJitter <- rnorm(nbrOfPMs, mean=0, sd=jitterSd)
+    }
+
+    res[[ii]] %<=% {
+      verbose && enter(verbose, "Obtaining signals")
+      pm <- readRawData(df, indices=pmCells, "intensities")$intensities
+      if (addJitter) pm <- pm + pmJitter
+      clearCache(df)
+      verbose && exit(verbose)
+
+      # adjust background - use original affy functions to avoid errors from
+      # re-coding
+      verbose && enter(verbose, "Applying normal+exponential signal model")
+      pm <- bg.adjust(pm)  # From package 'affy' (without a namespace)
+      verbose && exit(verbose)
+
+      # update the PM
+
+      # Write adjusted data to file
+      verbose && enter(verbose, "Writing adjusted probe signals")
+
+      # Write to a temporary file (allow rename of existing one if forced)
+      isFile <- (force && isFile(pathname))
+      pathnameT <- pushTemporaryFile(pathname, isFile=isFile, verbose=verbose)
+
+      # Create CEL file to store results, if missing
+      verbose && enter(verbose, "Creating CEL file for results, if missing")
+      createFrom(df, filename=pathnameT, path=NULL, verbose=less(verbose))
+      verbose && exit(verbose)
+
+      verbose && enter(verbose, "Writing adjusted intensities")
+      .updateCel(pathnameT, indices=pmCells, intensities=pm)
+      verbose && exit(verbose)
+
+      # Rename temporary file
+      popTemporaryFile(pathnameT, verbose=verbose)
+
+      verbose && exit(verbose)
+
+      # Not needed anymore
+      pm <- NULL
+
+      # Garbage collection
+      gc <- gc()
+      verbose && print(verbose, gc)
+
+      pathname
+    } ## %<=%
 
     verbose && exit(verbose)
   } # for (ii ...)
 
-  # Garbage collect
-  gc <- gc();
-  verbose && print(verbose, gc);
+  ## Not needed anymore
+  pmCells <- NULL
+
+  ## Resolve futures
+  res <- as.list(res)
+  res <- NULL
+
+  ## Garbage collect
+  gc <- gc()
+  verbose && print(verbose, gc)
 
   # Get the output data set
-  outputDataSet <- getOutputDataSet(this);
+  outputDataSet <- getOutputDataSet(this)
 
-  verbose && exit(verbose);
+  verbose && exit(verbose)
 
-  outputDataSet;
+  outputDataSet
 })
 
 
 ############################################################################
 # HISTORY:
+# 2015-11-19
+# o CLEANUP: Migrated bgAdjustRma() for AffymetrixCelFile into process().
+# o CLEANUP: Using readRawData() instead of getData().
 # 2012-11-20
 # o CLEANUP: process() for RmaBackgroundCorrection now processes
 #   each file by itself, i.e. it no longer calls bgAdjustRma() for

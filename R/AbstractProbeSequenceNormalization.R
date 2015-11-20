@@ -275,7 +275,7 @@ setMethodS3("process", "AbstractProbeSequenceNormalization", function(this, ...,
   seqs <- NULL;
 
   res <- listenv()
-  
+
   for (kk in seq_len(nbrOfArrays)) {
     df <- ds[[kk]];
     verbose && enter(verbose, sprintf("Array #%d ('%s') of %d",
@@ -374,7 +374,7 @@ setMethodS3("process", "AbstractProbeSequenceNormalization", function(this, ...,
       verbose && print(verbose, gc);
 
       verbose && exit(verbose);
-    } # if (is.null(muT))
+    } ## if (is.null(target) && is.null(muT))
 
 
     if (is.null(seqs)) {
@@ -391,7 +391,7 @@ setMethodS3("process", "AbstractProbeSequenceNormalization", function(this, ...,
       verbose && print(verbose, fit);
       modelFit$fit <- fit;
       verbose && exit(verbose);
-  
+
       verbose && enter(verbose, "Saving model fit");
       # Store fit and parameters (in case someone are interested in looking
       # at them later; no promises of backward compatibility though).
@@ -403,29 +403,29 @@ setMethodS3("process", "AbstractProbeSequenceNormalization", function(this, ...,
       # Not needed anymore
       modelFit <- NULL;
       verbose && exit(verbose);
-  
+
       # Garbage collect
       gc <- gc();
       verbose && print(verbose, gc);
-  
-  
-  
+
+
+
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       # Phase II: Normalize current array toward target
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       verbose && enter(verbose, "Reading probe signals");
       y <- extractMatrix(df, cells=cellsToUpdate, drop=TRUE);
-  
+
       # Shift signals?
       if (shift != 0) {
         y <- y + shift;
         verbose && cat(verbose, "Shifted probe signals: ", shift);
       }
-  
+
       verbose && str(verbose, y);
       verbose && summary(verbose, y);
       verbose && exit(verbose);
-  
+
       verbose && enter(verbose, "Predicting mean log2 probe signals");
       mu <- predictOne(this, fit=fit, params=params, seqs=seqs, verbose=less(verbose, 5));
       # Not needed anymore
@@ -433,10 +433,10 @@ setMethodS3("process", "AbstractProbeSequenceNormalization", function(this, ...,
       verbose && cat(verbose, "mu:");
       verbose && str(verbose, mu);
       verbose && summary(verbose, mu);
-  
+
       verbose && exit(verbose);
-  
-  
+
+
       verbose && enter(verbose, "Discrepancy scale factors towards target");
       verbose && cat(verbose, "Target: ", target);
       if (is.null(target)) {
@@ -446,10 +446,10 @@ setMethodS3("process", "AbstractProbeSequenceNormalization", function(this, ...,
       }
       # Not needed anymore
       mu <- NULL;
-      summary(verbose, rho);
+      verbose && summary(verbose, rho);
       rho <- 2^rho;
-      summary(verbose, rho);
-  
+      verbose && summary(verbose, rho);
+
       # Update only subset with "finite" corrections
       keep <- which(is.finite(rho));
       rho <- rho[keep];
@@ -460,7 +460,7 @@ setMethodS3("process", "AbstractProbeSequenceNormalization", function(this, ...,
       gc <- gc();
       verbose && print(verbose, gc);
       verbose && exit(verbose);
-  
+
       verbose && enter(verbose, "Normalizing probe signals");
       y <- rho * y;
       # Not needed anymore
@@ -468,26 +468,26 @@ setMethodS3("process", "AbstractProbeSequenceNormalization", function(this, ...,
       verbose && str(verbose, y);
       verbose && summary(verbose, y);
       verbose && exit(verbose);
-  
+
       # Garbage collect
       gc <- gc();
       verbose && print(verbose, gc);
-  
-  
+
+
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       # Storing data
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       verbose && enter(verbose, "Storing normalized data");
-  
+
       # Write to a temporary file (allow rename of existing one if forced)
       isFile <- (force && isFile(pathname));
       pathnameT <- pushTemporaryFile(pathname, isFile=isFile, verbose=verbose);
-  
+
       # Create CEL file to store results, if missing
       verbose && enter(verbose, "Creating CEL file for results, if missing");
       createFrom(df, filename=pathnameT, path=NULL, verbose=less(verbose));
       verbose && exit(verbose);
-  
+
       # Write calibrated data to file
       verbose2 <- -as.integer(verbose)-2;
       .updateCel(pathnameT, indices=cellsToUpdateKK, intensities=y, verbose=verbose2);
@@ -495,25 +495,25 @@ setMethodS3("process", "AbstractProbeSequenceNormalization", function(this, ...,
       y <- cellsToUpdateKK <- verbose2 <- NULL;
       gc <- gc();
       verbose && print(verbose, gc);
-  
+
       # Rename temporary file
       popTemporaryFile(pathnameT, verbose=verbose);
-  
+
       verbose && exit(verbose);
-  
+
       # Validating by retrieving calibrated data file
       dfC <- newInstance(df, pathname);
-  
+
       # Not needed anymore
-      df <- dfC <- NULL;
-  
+      dfC <- NULL;
+
       # Garbage collection
       gc <- gc();
       verbose && print(verbose, gc);
 
       pathname
     } ## %<=%
-    
+
     verbose && exit(verbose);
   } # for (kk in ...)
   verbose && exit(verbose);

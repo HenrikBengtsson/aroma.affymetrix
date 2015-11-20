@@ -273,6 +273,9 @@ setMethodS3("process", "AbstractProbeSequenceNormalization", function(this, ...,
   paramsShort <- NULL;
   muT <- NULL;
   seqs <- NULL;
+
+  res <- listenv()
+  
   for (kk in seq_len(nbrOfArrays)) {
     df <- ds[[kk]];
     verbose && enter(verbose, sprintf("Array #%d ('%s') of %d",
@@ -284,92 +287,102 @@ setMethodS3("process", "AbstractProbeSequenceNormalization", function(this, ...,
 
     # Already calibrated?
     if (!force && isFile(pathname)) {
-      verbose && cat(verbose, "Normalized data file already exists: ", pathname);
-    } else {
-      if (is.null(paramsShort)) {
-        # Precalculate some model fit parameters
-        verbose && enter(verbose, "Compressing model parameter to a short format");
-        paramsShort <- params;
-        paramsShort$cellsToFit <- NULL;
-        paramsShort$cellsToUpdate <- NULL;
-##        paramsShort$unitsToFitIntervals <- seqToIntervals(paramsShort$unitsToFit);
-##        paramsShort$unitsToUpdateIntervals <- seqToIntervals(paramsShort$unitsToUpdate);
-        verbose && exit(verbose);
-      }
+      verbose && cat(verbose, "Normalized data file already exists: ", pathname)
+      res[[kk]] <- pathname
+      verbose && exit(verbose)
+      next
+    }
 
 
-      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-      # Setting up model fit parameters
-      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-      modelFit <- list(
+    if (is.null(paramsShort)) {
+      # Precalculate some model fit parameters
+      verbose && enter(verbose, "Compressing model parameter to a short format");
+      paramsShort <- params;
+      paramsShort$cellsToFit <- NULL;
+      paramsShort$cellsToUpdate <- NULL;
+##      paramsShort$unitsToFitIntervals <- seqToIntervals(paramsShort$unitsToFit);
+##      paramsShort$unitsToUpdateIntervals <- seqToIntervals(paramsShort$unitsToUpdate);
+      verbose && exit(verbose);
+    }
+
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    # Setting up model fit parameters
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    modelFit <- list(
+      paramsShort = paramsShort
+    )
+
+
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    # Phase 0: Fit probe-sequence effect for target?
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    if (is.null(target) && is.null(muT)) {
+      verbose && enter(verbose, "Modelling effects of target array");
+
+      modelFitT <- list(
         paramsShort = paramsShort
       );
 
+      dfT <- getTargetFile(this, verbose=less(verbose, 5));
+      fullnameT <- getFullName(dfT);
+      filename <- sprintf("%s,fit.RData", fullnameT);
+      fitPathname <- Arguments$getWritablePathname(filename,
+                                                     path=outputPath, ...);
+      if (isFile(fitPathname)) {
+        verbose && enter(verbose, "Loading already fitted probe-sequence effects for target");
+        verbose && cat(verbose, "Pathname: ", fitPathname);
+        modelFitT <- loadObject(file=fitPathname);
+        fitT <- modelFitT$fit;
+        verbose && exit(verbose);
+      } else {
+        verbose && enter(verbose, "Estimating probe-sequence effects for target");
+        fitT <- fitOne(this, df=dfT, params=params, ram=ram, verbose=less(verbose, 5));
+        verbose && print(verbose, fitT);
+        modelFitT$fit <- fitT;
 
-
-      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-      # Phase 0: Fit probe-sequence effect for target?
-      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-      if (is.null(target) && is.null(muT)) {
-        verbose && enter(verbose, "Modelling effects of target array");
-
-        modelFitT <- list(
-          paramsShort = paramsShort
-        );
-
-        dfT <- getTargetFile(this, verbose=less(verbose, 5));
-        fullnameT <- getFullName(dfT);
-        filename <- sprintf("%s,fit.RData", fullnameT);
-        fitPathname <- Arguments$getWritablePathname(filename,
-                                                       path=outputPath, ...);
-        if (isFile(fitPathname)) {
-          verbose && enter(verbose, "Loading already fitted probe-sequence effects for target");
-          verbose && cat(verbose, "Pathname: ", fitPathname);
-          modelFitT <- loadObject(file=fitPathname);
-          fitT <- modelFitT$fit;
-          verbose && exit(verbose);
-        } else {
-          verbose && enter(verbose, "Estimating probe-sequence effects for target");
-          fitT <- fitOne(this, df=dfT, params=params, ram=ram, verbose=less(verbose, 5));
-          verbose && print(verbose, fitT);
-          modelFitT$fit <- fitT;
-
-          verbose && enter(verbose, "Saving model fit");
-          # Store fit and parameters (in case someone are interested in looking
-          # at them later; no promises of backward compatibility though).
-          saveObject(modelFitT, file=fitPathname);
-          verbose && exit(verbose);
-
-          verbose && exit(verbose);
-        }
-
-        verbose && str(verbose, modelFitT, level=-50);
-        # Not needed anymore
-        dfT <- modelFitT <- NULL;
+        verbose && enter(verbose, "Saving model fit");
+        # Store fit and parameters (in case someone are interested in looking
+        # at them later; no promises of backward compatibility though).
+        saveObject(modelFitT, file=fitPathname);
         verbose && exit(verbose);
 
-
-        verbose && enter(verbose, "Predicting probe affinities");
-        if (is.null(seqs)) {
-          seqs <- readSeqs(this, cells=cellsToUpdate);
-        }
-        muT <- predictOne(this, fit=fitT, params=params, seqs=seqs, verbose=less(verbose, 5));
-        # Not needed anymore
-        fitT <- NULL;
-        verbose && cat(verbose, "muT:");
-        verbose && str(verbose, muT);
-        verbose && summary(verbose, muT);
         verbose && exit(verbose);
+      }
 
-        # Garbage collection
-        gc <- gc();
-        verbose && print(verbose, gc);
-
-        verbose && exit(verbose);
-      } # if (is.null(muT))
-
+      verbose && str(verbose, modelFitT, level=-50);
+      # Not needed anymore
+      dfT <- modelFitT <- NULL;
+      verbose && exit(verbose);
 
 
+      verbose && enter(verbose, "Predicting probe affinities");
+      if (is.null(seqs)) {
+        seqs <- readSeqs(this, cells=cellsToUpdate);
+      }
+      muT <- predictOne(this, fit=fitT, params=params, seqs=seqs, verbose=less(verbose, 5));
+      # Not needed anymore
+      fitT <- NULL;
+      verbose && cat(verbose, "muT:");
+      verbose && str(verbose, muT);
+      verbose && summary(verbose, muT);
+      verbose && exit(verbose);
+
+      # Garbage collection
+      gc <- gc();
+      verbose && print(verbose, gc);
+
+      verbose && exit(verbose);
+    } # if (is.null(muT))
+
+
+    if (is.null(seqs)) {
+      seqs <- readSeqs(this, cells=cellsToUpdate);
+    }
+
+
+    res[[kk]] %<=% {
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       # Phase I: Fit probe-sequence effect for the current array
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -378,7 +391,7 @@ setMethodS3("process", "AbstractProbeSequenceNormalization", function(this, ...,
       verbose && print(verbose, fit);
       modelFit$fit <- fit;
       verbose && exit(verbose);
-
+  
       verbose && enter(verbose, "Saving model fit");
       # Store fit and parameters (in case someone are interested in looking
       # at them later; no promises of backward compatibility though).
@@ -390,43 +403,40 @@ setMethodS3("process", "AbstractProbeSequenceNormalization", function(this, ...,
       # Not needed anymore
       modelFit <- NULL;
       verbose && exit(verbose);
-
+  
       # Garbage collect
       gc <- gc();
       verbose && print(verbose, gc);
-
-
-
+  
+  
+  
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       # Phase II: Normalize current array toward target
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       verbose && enter(verbose, "Reading probe signals");
       y <- extractMatrix(df, cells=cellsToUpdate, drop=TRUE);
-
+  
       # Shift signals?
       if (shift != 0) {
         y <- y + shift;
         verbose && cat(verbose, "Shifted probe signals: ", shift);
       }
-
+  
       verbose && str(verbose, y);
       verbose && summary(verbose, y);
       verbose && exit(verbose);
-
+  
       verbose && enter(verbose, "Predicting mean log2 probe signals");
-      if (is.null(seqs)) {
-        seqs <- readSeqs(this, cells=cellsToUpdate);
-      }
       mu <- predictOne(this, fit=fit, params=params, seqs=seqs, verbose=less(verbose, 5));
       # Not needed anymore
       fit <- NULL;
       verbose && cat(verbose, "mu:");
       verbose && str(verbose, mu);
       verbose && summary(verbose, mu);
-
+  
       verbose && exit(verbose);
-
-
+  
+  
       verbose && enter(verbose, "Discrepancy scale factors towards target");
       verbose && cat(verbose, "Target: ", target);
       if (is.null(target)) {
@@ -439,7 +449,7 @@ setMethodS3("process", "AbstractProbeSequenceNormalization", function(this, ...,
       summary(verbose, rho);
       rho <- 2^rho;
       summary(verbose, rho);
-
+  
       # Update only subset with "finite" corrections
       keep <- which(is.finite(rho));
       rho <- rho[keep];
@@ -450,7 +460,7 @@ setMethodS3("process", "AbstractProbeSequenceNormalization", function(this, ...,
       gc <- gc();
       verbose && print(verbose, gc);
       verbose && exit(verbose);
-
+  
       verbose && enter(verbose, "Normalizing probe signals");
       y <- rho * y;
       # Not needed anymore
@@ -458,26 +468,26 @@ setMethodS3("process", "AbstractProbeSequenceNormalization", function(this, ...,
       verbose && str(verbose, y);
       verbose && summary(verbose, y);
       verbose && exit(verbose);
-
+  
       # Garbage collect
       gc <- gc();
       verbose && print(verbose, gc);
-
-
+  
+  
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       # Storing data
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       verbose && enter(verbose, "Storing normalized data");
-
+  
       # Write to a temporary file (allow rename of existing one if forced)
       isFile <- (force && isFile(pathname));
       pathnameT <- pushTemporaryFile(pathname, isFile=isFile, verbose=verbose);
-
+  
       # Create CEL file to store results, if missing
       verbose && enter(verbose, "Creating CEL file for results, if missing");
       createFrom(df, filename=pathnameT, path=NULL, verbose=less(verbose));
       verbose && exit(verbose);
-
+  
       # Write calibrated data to file
       verbose2 <- -as.integer(verbose)-2;
       .updateCel(pathnameT, indices=cellsToUpdateKK, intensities=y, verbose=verbose2);
@@ -485,30 +495,37 @@ setMethodS3("process", "AbstractProbeSequenceNormalization", function(this, ...,
       y <- cellsToUpdateKK <- verbose2 <- NULL;
       gc <- gc();
       verbose && print(verbose, gc);
-
+  
       # Rename temporary file
       popTemporaryFile(pathnameT, verbose=verbose);
-
+  
       verbose && exit(verbose);
-    }
+  
+      # Validating by retrieving calibrated data file
+      dfC <- newInstance(df, pathname);
+  
+      # Not needed anymore
+      df <- dfC <- NULL;
+  
+      # Garbage collection
+      gc <- gc();
+      verbose && print(verbose, gc);
 
-    # Validating by retrieving calibrated data file
-    dfC <- newInstance(df, pathname);
-
-    # Not needed anymore
-    df <- dfC <- NULL;
-
-    # Garbage collection
-    gc <- gc();
-    verbose && print(verbose, gc);
-
+      pathname
+    } ## %<=%
+    
     verbose && exit(verbose);
   } # for (kk in ...)
   verbose && exit(verbose);
 
-  # Garbage collect
-  # Not needed anymore
+  ## Not needed anymore
   ds <- seqs <- muT <- NULL;
+
+  ## Resolve futures
+  res <- as.list(res)
+  res <- NULL
+
+  ## Garbage collect
 #  clearCache(this);
   gc <- gc();
   verbose && print(verbose, gc);

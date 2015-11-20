@@ -11,6 +11,12 @@ setMethodS3("getExpectedOutputFiles", "MatSmoothing", function(this, ...) {
 }, protected=TRUE, deprecated=TRUE)
 
 
+## Defunct since 2015-11-19 (aroma.affymetrix 2.14.0-9000)
+setMethodS3("bgAdjustRma", "AffymetrixCelFile", function(this, path, pmonly=TRUE, addJitter=FALSE, jitterSd=0.2, overwrite=FALSE, skip=!overwrite, ..., verbose=FALSE, .deprecated=TRUE) {
+  .Defunct("RmaBackgroundCorrection")
+}, private=TRUE, deprecated=TRUE)
+
+
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # DEPRECATED
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

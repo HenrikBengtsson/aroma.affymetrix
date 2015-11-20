@@ -776,7 +776,7 @@ setMethodS3("process", "AllelicCrosstalkCalibration", function(this, ..., force=
       verbose && cat(verbose, "Calibrated data file already exists: ", pathname)
       dfC <- newInstance(df, pathname)
       setCdf(dfC, cdf)
-      res[[kk]] <- dfC
+      res[[kk]] <- pathname
       verbose && exit(verbose)
       next
     }
@@ -1026,22 +1026,24 @@ setMethodS3("process", "AllelicCrosstalkCalibration", function(this, ..., force=
       ## callHooks(sprintf("%s.onExit", hookName), df=df, dfC=dfC, ...);
 
       dfC
-    } ## res[[kk]] %<=% ...
+    } ## %<=%
 
     verbose && exit(verbose);
   } # for (kk in seq_len(nbrOfArrays))
   verbose && exit(verbose);
 
-  # Garbage collect
-  # Not needed anymore
-  ds <- setsOfProbes <- NULL;
+  ## Not needed anymore
+  ds <- setsOfProbes <- NULL
+
+  ## Resolve futures
+  res <- as.list(res)
+  res <- NULL
+
+  ## Garbage collect
 #  clearCache(this);
   gc <- gc();
   verbose && print(verbose, gc);
 
-  ## Force futures to be evaluated
-  res <- as.list(res)
-  res <- NULL ## Not needed anymore
 
   outputDataSet <- getOutputDataSet(this, force=TRUE);
 

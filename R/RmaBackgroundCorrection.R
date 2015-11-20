@@ -97,6 +97,9 @@ setMethodS3("getParameters", "RmaBackgroundCorrection", function(this, ...) {
 # }
 #*/###########################################################################
 setMethodS3("process", "RmaBackgroundCorrection", function(this, ..., force=FALSE, verbose=FALSE) {
+  # Load required packages
+  requireNamespace("affy") || throw("Package not loaded: affy")
+  bg.adjust <- affy::bg.adjust
 
   verbose <- Arguments$getVerbose(verbose);
   if (verbose) {
@@ -143,6 +146,13 @@ setMethodS3("process", "RmaBackgroundCorrection", function(this, ..., force=FALS
     df <- ds[[ii]];
     verbose && enter(verbose, sprintf("Array #%d ('%s') of %d", ii, getName(df), nbrOfArrays));
 
+    filename <- basename(getPathname(this));
+    filename <- gsub("[.]cel$", ".CEL", filename)
+    pathname <- Arguments$getWritablePathname(filename, path=path,
+                                                        mustNotExist=FALSE)
+    if (!force && isFile(pathname)) {
+    }
+
     dfD <- bgAdjustRma(df, path=outputPath, pmonly=pmonly, addJitter=addJitter, jitterSd=jitterSd, overwrite=force, verbose=verbose, .deprecated=FALSE);
     verbose && print(verbose, dfD);
 
@@ -150,7 +160,7 @@ setMethodS3("process", "RmaBackgroundCorrection", function(this, ..., force=FALS
     # Not needed anymore
     df <- dfD <- NULL;
 
-    verbose && exit(verbose);
+    verbose && exit(verbose)
   } # for (ii ...)
 
   # Garbage collect

@@ -16,6 +16,10 @@ setMethodS3("bgAdjustRma", "AffymetrixCelFile", function(this, path, pmonly=TRUE
   .Defunct("RmaBackgroundCorrection")
 }, private=TRUE, deprecated=TRUE)
 
+setMethodS3("bgAdjustOptical", "AffymetrixCelFile", function(this, path, minimum=1, subsetToUpdate=NULL, typesToUpdate=NULL, overwrite=FALSE, skip=!overwrite, verbose=FALSE, ..., .deprecated=TRUE) {
+  .Defunct("OpticalBackgroundCorrection")
+}, private=TRUE, deprecated=TRUE)
+
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # DEPRECATED

@@ -1,6 +1,7 @@
 library("aroma.affymetrix")
 
 ovars <- ls(all.names=TRUE)
+oplan <- future::plan()
 
 ## Setup dataset
 dataset <- "GSE8605"
@@ -50,5 +51,5 @@ for (strategy in strategies) {
 
 
 ## CLEANUP
+future::plan(oplan)
 rm(list=setdiff(ls(all.names=TRUE), ovars))
-future::plan("eager")

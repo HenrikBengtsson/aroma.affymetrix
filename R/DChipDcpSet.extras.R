@@ -139,7 +139,7 @@ setMethodS3("exportTotalAndFracB", "DChipDcpSet", function(this, ..., overwrite=
     data <- asb <- footer <- NULL;
 
     # Rename temporary file
-    pathname <- popTemporaryFile(pathnameT, verbose=verbose);
+    popTemporaryFile(pathnameT, verbose=verbose);
 
     verbose && exit(verbose);
   } # for (kk ...)

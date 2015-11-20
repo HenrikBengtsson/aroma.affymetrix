@@ -124,7 +124,7 @@ setMethodS3("normalizeQuantile", "AffymetrixCelFile", function(this, path=file.p
   verbose && exit(verbose);
 
   # Rename temporary file
-  pathname <- popTemporaryFile(pathnameT, verbose=less(verbose,10));
+  popTemporaryFile(pathnameT, verbose=less(verbose,10));
 
   # Return new normalized data file object
   res <- fromFile(this, pathname);

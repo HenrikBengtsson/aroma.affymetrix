@@ -400,7 +400,7 @@ setMethodS3("writeCdf", "PDInfoList", function(ffs, pathname, overwrite=FALSE, .
                   cdfqc=NULL, verbose=verbose, overwrite=overwrite);
 
   # Rename temporary file
-  pathname <- popTemporaryFile(pathnameT, verbose=verbose);
+  popTemporaryFile(pathnameT, verbose=verbose);
 
   verbose && exit(verbose);
 

@@ -398,7 +398,7 @@ setMethodS3("importFromDChip", "CnChipEffectSet", function(static, filename, pat
     verbose && exit(verbose);
 
     # Rename temporary file
-    pathname <- popTemporaryFile(pathnameT, verbose=verbose);
+    popTemporaryFile(pathnameT, verbose=verbose);
 
     # Garbage collect
     gc <- gc();

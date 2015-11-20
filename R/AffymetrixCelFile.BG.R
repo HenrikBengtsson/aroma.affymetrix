@@ -127,7 +127,7 @@ setMethodS3("bgAdjustOptical", "AffymetrixCelFile", function(this, path, minimum
   verbose && exit(verbose);
 
   # Rename temporary file
-  pathname <- popTemporaryFile(pathnameT, verbose=verbose);
+  popTemporaryFile(pathnameT, verbose=verbose);
 
   verbose && exit(verbose);
 
@@ -480,7 +480,7 @@ setMethodS3("bgAdjustGcrma", "AffymetrixCelFile", function(this, path, type=c("f
   verbose && exit(verbose);
 
   # Rename temporary file
-  pathname <- popTemporaryFile(pathnameT, verbose=verbose);
+  popTemporaryFile(pathnameT, verbose=verbose);
 
   verbose && exit(verbose);
 
@@ -630,7 +630,7 @@ setMethodS3("bgAdjustRma", "AffymetrixCelFile", function(this, path, pmonly=TRUE
   verbose && exit(verbose);
 
   # Rename temporary file
-  pathname <- popTemporaryFile(pathnameT, verbose=verbose);
+  popTemporaryFile(pathnameT, verbose=verbose);
 
   verbose && exit(verbose);
 

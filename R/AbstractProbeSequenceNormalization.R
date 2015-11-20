@@ -487,7 +487,7 @@ setMethodS3("process", "AbstractProbeSequenceNormalization", function(this, ...,
       verbose && print(verbose, gc);
 
       # Rename temporary file
-      pathname <- popTemporaryFile(pathnameT, verbose=verbose);
+      popTemporaryFile(pathnameT, verbose=verbose);
 
       verbose && exit(verbose);
     }

@@ -834,7 +834,7 @@ setMethodS3("process", "AdditiveCovariatesNormalization", function(this, ..., fo
     verbose && exit(verbose);
 
     # Rename temporary file
-    pathname <- popTemporaryFile(pathnameT, verbose=verbose);
+    popTemporaryFile(pathnameT, verbose=verbose);
 
     # Garbage collect
     gc <- gc();

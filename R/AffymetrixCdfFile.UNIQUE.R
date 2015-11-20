@@ -530,7 +530,7 @@ setMethodS3("createUniqueCdf", "AffymetrixCdfFile", function(this, chipType=getC
   verbose && print(verbose, gc);
 
   # Rename temporary file
-  pathname <- popTemporaryFile(pathnameT, verbose=verbose);
+  popTemporaryFile(pathnameT, verbose=verbose);
 
   verbose && cat(verbose, "File pathname: ", pathname);
   verbose && print(verbose, file.info(pathname));

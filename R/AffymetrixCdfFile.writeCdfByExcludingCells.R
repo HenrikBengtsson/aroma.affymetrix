@@ -199,7 +199,7 @@ setMethodS3("writeCdfByExcludingCells", "AffymetrixCdfFile", function(this, tags
   stopifnot(!any(is.element(cellsToExclude, cellsF)));
 
   # Rename temporary file
-  pathnameF <- popTemporaryFile(pathnameT, verbose=verbose);
+  popTemporaryFile(pathnameT, verbose=verbose);
 
   verbose && exit(verbose);
 

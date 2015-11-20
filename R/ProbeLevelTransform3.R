@@ -394,7 +394,7 @@ setMethodS3("writeSignals", "ProbeLevelTransform3", function(this, pathname, cel
   verbose && exit(verbose);
 
   # Rename temporary file
-  pathname <- popTemporaryFile(pathnameT, verbose=verbose);
+  popTemporaryFile(pathnameT, verbose=verbose);
 
   verbose && exit(verbose);
 

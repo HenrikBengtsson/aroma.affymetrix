@@ -273,7 +273,7 @@ setMethodS3("fromDataFile", "FirmaFile", function(static, df=NULL, filename=spri
     .createCel(pathnameT, header=celHeader, ..., verbose=less(verbose));
 
     # Rename temporary file
-    pathname <- popTemporaryFile(pathnameT, verbose=verbose);
+    popTemporaryFile(pathnameT, verbose=verbose);
 
     verbose && exit(verbose);
   }

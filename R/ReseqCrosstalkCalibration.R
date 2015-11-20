@@ -673,7 +673,7 @@ setMethodS3("process", "ReseqCrosstalkCalibration", function(this, ..., force=FA
       yAll <- verbose2 <- NULL;
 
       # Rename temporary file
-      pathname <- popTemporaryFile(pathnameT, verbose=verbose);
+      popTemporaryFile(pathnameT, verbose=verbose);
 
       gc <- gc();
       verbose && print(verbose, gc);

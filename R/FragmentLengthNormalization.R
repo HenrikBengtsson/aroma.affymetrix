@@ -966,7 +966,7 @@ setMethodS3("process", "FragmentLengthNormalization", function(this, ..., force=
     verbose && exit(verbose);
 
     # Rename temporary file
-    pathname <- popTemporaryFile(pathnameT, verbose=verbose);
+    popTemporaryFile(pathnameT, verbose=verbose);
 
     # Garbage collect
     gc <- gc();

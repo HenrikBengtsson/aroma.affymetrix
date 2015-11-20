@@ -161,7 +161,7 @@ setMethodS3("process", "SpatialRowColumnNormalization", function(this, ..., forc
       y <- verbose2 <- NULL;
 
       # Rename temporary file
-      pathname <- popTemporaryFile(pathnameT, verbose=verbose);
+      popTemporaryFile(pathnameT, verbose=verbose);
 
       gc <- gc();
       verbose && print(verbose, gc);

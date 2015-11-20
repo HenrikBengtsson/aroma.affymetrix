@@ -69,7 +69,7 @@ setMethodS3("transformAffine", "AffymetrixCelFile", function(this, outPath=file.
   .updateCel(pathnameT, intensities=x);
 
   # Rename temporary file
-  pathname <- popTemporaryFile(pathnameT, verbose=verbose);
+  popTemporaryFile(pathnameT, verbose=verbose);
 
   verbose && exit(verbose);
 

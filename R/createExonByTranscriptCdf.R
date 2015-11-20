@@ -427,7 +427,7 @@ setMethodS3("createExonByTranscriptCdf", "AffymetrixCdfFile", function(cdf, csv,
   .writeCdf(pathnameT, cdfheader=hdr, cdf=cdfList, cdfqc=qc, overwrite=TRUE, verbose=10);
 
   # Rename temporary file
-  pathname <- popTemporaryFile(pathnameT, verbose=verbose);
+  popTemporaryFile(pathnameT, verbose=verbose);
   verbose && exit(verbose);
 
   verbose && exit(verbose);  # "Writing CDF...exit"

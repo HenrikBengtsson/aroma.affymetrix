@@ -303,7 +303,7 @@ setMethodS3("process", "LimmaBackgroundCorrection", function(this, ..., force=FA
     y <- verbose2 <- NULL;
 
     # Rename temporary file
-    pathname <- popTemporaryFile(pathnameT, verbose=verbose);
+    popTemporaryFile(pathnameT, verbose=verbose);
 
     verbose && exit(verbose);
 

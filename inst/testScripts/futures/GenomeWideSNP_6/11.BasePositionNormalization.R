@@ -29,8 +29,10 @@ for (strategy in strategies) {
 
   ## Assert same results by comparing file checksum
   csB1z <- getChecksumFileSet(csB1)
+  print(csB1z[[1]])
   csBz <- getChecksumFileSet(csB)
-  res <- equals(csBz[[1]], csB1z[[1]])
+  print(csBz[[1]])
+  res <- equals(csB1z[[1]], csBz[[1]])
   if (!res) throw(res)
 
   message(sprintf("*** Using %s futures ... DONE", sQuote(strategy)))

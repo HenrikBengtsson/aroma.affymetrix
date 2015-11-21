@@ -15,6 +15,10 @@ checksum <- NULL
 
 strategies <- c("lazy", "eager")
 if (future::supportsMulticore()) strategies <- c(strategies, "multicore")
+if (require("async")) {
+  strategies <- c(strategies, "batchjobs")
+  async::backend("local")
+}
 
 for (strategy in strategies) {
   message(sprintf("*** Using %s futures ...", sQuote(strategy)))

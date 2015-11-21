@@ -383,6 +383,9 @@ setMethodS3("process", "AbstractProbeSequenceNormalization", function(this, ...,
 
 
     res[[kk]] %<=% {
+      ## Help identifying some globals:
+      modelFit
+
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       # Phase I: Fit probe-sequence effect for the current array
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

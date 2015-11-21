@@ -13,7 +13,7 @@ print(csR)
 
 checksum <- NULL
 
-strategies <- c("eager", "lazy")
+strategies <- c("lazy", "eager")
 if (future::supportsMulticore()) strategies <- c(strategies, "multicore")
 
 for (strategy in strategies) {

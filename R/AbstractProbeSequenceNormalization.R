@@ -245,9 +245,6 @@ setMethodS3("process", "AbstractProbeSequenceNormalization", function(this, ...,
   # Get (and create) the output path
   outputPath <- getPath(this);
 
-  # Get subset of cells to update
-  cellsToUpdate <- params$cellsToUpdate;
-
   # Get target
   target <- params$target;
 
@@ -359,7 +356,7 @@ setMethodS3("process", "AbstractProbeSequenceNormalization", function(this, ...,
 
       verbose && enter(verbose, "Predicting probe affinities");
       if (is.null(seqs)) {
-        seqs <- readSeqs(this, cells=cellsToUpdate);
+        seqs <- readSeqs(this, cells=params$cellsToUpdate);
       }
       muT <- predictOne(this, fit=fitT, params=params, seqs=seqs, verbose=less(verbose, 5));
       # Not needed anymore
@@ -376,15 +373,21 @@ setMethodS3("process", "AbstractProbeSequenceNormalization", function(this, ...,
       verbose && exit(verbose);
     } ## if (is.null(target) && is.null(muT))
 
-
     if (is.null(seqs)) {
-      seqs <- readSeqs(this, cells=cellsToUpdate);
+      seqs <- readSeqs(this, cells=params$cellsToUpdate);
     }
 
 
     res[[kk]] %<=% {
-      ## Help identifying some globals:
+      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      # Future related
+      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      ## Help identifying some globals (required)
       modelFit
+
+      ## Prevent params from being exported as a global (optional)
+      params <- getParameters(this, expand=TRUE)
+
 
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       # Phase I: Fit probe-sequence effect for the current array
@@ -417,7 +420,7 @@ setMethodS3("process", "AbstractProbeSequenceNormalization", function(this, ...,
       # Phase II: Normalize current array toward target
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       verbose && enter(verbose, "Reading probe signals");
-      y <- extractMatrix(df, cells=cellsToUpdate, drop=TRUE);
+      y <- extractMatrix(df, cells=params$cellsToUpdate, drop=TRUE);
 
       # Shift signals?
       if (shift != 0) {
@@ -430,9 +433,12 @@ setMethodS3("process", "AbstractProbeSequenceNormalization", function(this, ...,
       verbose && exit(verbose);
 
       verbose && enter(verbose, "Predicting mean log2 probe signals");
+      if (is.null(seqs)) {
+        seqs <- readSeqs(this, cells=params$cellsToUpdate)
+      }
       mu <- predictOne(this, fit=fit, params=params, seqs=seqs, verbose=less(verbose, 5));
       # Not needed anymore
-      fit <- NULL;
+      fit <- seqs <- NULL
       verbose && cat(verbose, "mu:");
       verbose && str(verbose, mu);
       verbose && summary(verbose, mu);
@@ -457,7 +463,7 @@ setMethodS3("process", "AbstractProbeSequenceNormalization", function(this, ...,
       keep <- which(is.finite(rho));
       rho <- rho[keep];
       y <- y[keep];
-      cellsToUpdateKK <- cellsToUpdate[keep];
+      cellsToUpdateKK <- params$cellsToUpdate[keep];
       # Not needed anymore
       keep <- NULL;
       gc <- gc();

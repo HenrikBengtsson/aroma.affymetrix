@@ -433,9 +433,6 @@ setMethodS3("process", "AbstractProbeSequenceNormalization", function(this, ...,
       verbose && exit(verbose);
 
       verbose && enter(verbose, "Predicting mean log2 probe signals");
-      if (is.null(seqs)) {
-        seqs <- readSeqs(this, cells=params$cellsToUpdate)
-      }
       mu <- predictOne(this, fit=fit, params=params, seqs=seqs, verbose=less(verbose, 5));
       # Not needed anymore
       fit <- seqs <- NULL

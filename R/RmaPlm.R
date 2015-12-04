@@ -199,7 +199,7 @@ setMethodS3("getRlmFitFunctions", "RmaPlm", function(static, withPriors=FALSE, .
       PACKAGE <- "preprocessCore";
       fcnList <- list(
         wrlm = function(y, phi, psiCode, psiK, w, scale=NULL) {
-          # From preprocessCore::rcModelPLM()
+          # From preprocessCore::rcModelWPLM()
           .Call("R_rlm_rma_given_probe_effects",
                 y, phi, psiCode, psiK, w, scale, PACKAGE=PACKAGE);
         },

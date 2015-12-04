@@ -600,6 +600,9 @@ mapToUnitNamesFile mapToUnitNamesFile.DChipCdfBinFile
 mergeGroups mergeGroups.ChipEffectFile mergeStrands
 mergeStrands.CnChipEffectFile mergeStrands.SnpChipEffectFile
 migrateTool migrateTool.CopyNumberSegmentationModel
+nbrOfArrays.CnagCfhSet
+nbrOfArrays.DChipDcpSet
+nbrOfArrays.AffymetrixCnChpSet
 nbrOfArrays.AffymetrixAptSummaryFile
 nbrOfArrays.AffymetrixCelSetReporter
 nbrOfArrays.QualityAssessmentModel nbrOfArrays.TransformReport

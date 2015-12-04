@@ -442,37 +442,6 @@ setMethodS3("byPath", "CnagCfhSet", function(static, path="rawData/", pattern="[
 
 
 
-
-###########################################################################/**
-# @RdocMethod nbrOfArrays
-#
-# @title "Gets the number of arrays in the file set"
-#
-# \description{
-#   @get "title".
-#   This is just a wrapper for \code{length()}.
-# }
-#
-# @synopsis
-#
-# \arguments{
-#  \item{...}{Not used.}
-# }
-#
-# \value{
-#   Returns an @integer.
-# }
-#
-# \seealso{
-#   @seeclass
-# }
-#*/###########################################################################
-setMethodS3("nbrOfArrays", "CnagCfhSet", function(this, ...) {
-  length(this, ...);
-}, protected=TRUE)
-
-
-
 ###########################################################################/**
 # @RdocMethod as.CnagCfhSet
 # @alias as.CnagCfhSet.list

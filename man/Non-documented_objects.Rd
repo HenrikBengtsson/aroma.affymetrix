@@ -1053,6 +1053,9 @@
 \alias{mergeStrands.SnpChipEffectFile}
 \alias{migrateTool}
 \alias{migrateTool.CopyNumberSegmentationModel}
+\alias{nbrOfArrays.CnagCfhSet}
+\alias{nbrOfArrays.DChipDcpSet}
+\alias{nbrOfArrays.AffymetrixCnChpSet}
 \alias{nbrOfArrays.AffymetrixAptSummaryFile}
 \alias{nbrOfArrays.AffymetrixCelSetReporter}
 \alias{nbrOfArrays.QualityAssessmentModel}

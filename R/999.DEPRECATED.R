@@ -47,10 +47,27 @@ setMethodS3("nbrOfArrays", "AffymetrixCelSet", function(this, ...) {
   length(this, ...)
 }, protected=TRUE)
 
+setMethodS3("nbrOfArrays", "AffymetrixCnChpSet", function(this, ...) {
+##  .Deprecated("length")
+  length(this, ...);
+}, protected=TRUE)
+
+setMethodS3("nbrOfArrays", "CnagCfhSet", function(this, ...) {
+##  .Deprecated("length")
+  length(this, ...);
+}, protected=TRUE)
+
+setMethodS3("nbrOfArrays", "DChipDcpSet", function(this, ...) {
+##  .Deprecated("length")
+  length(this, ...);
+}, protected=TRUE)
+
 
 
 ############################################################################
 # HISTORY:
+# 2015-12-04
+# o Moved more nbrOfArrays() methods to here. Still to be deprecated.
 # 2014-02-28
 # o Remove previously defunct methods.
 # o CLEANUP: Defuncted deprecated patch() for AromaAffymetrix and

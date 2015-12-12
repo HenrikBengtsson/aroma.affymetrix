@@ -1013,7 +1013,7 @@ setMethodS3("process", "AllelicCrosstalkCalibration", function(this, ..., force=
       yAll <- verbose2 <- NULL
 
       # Rename temporary file
-      pathname <- popTemporaryFile(pathnameT, verbose=verbose)
+      popTemporaryFile(pathnameT, verbose=verbose)
 
       gc <- gc()
       verbose && print(verbose, gc)

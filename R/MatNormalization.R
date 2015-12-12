@@ -741,9 +741,7 @@ setMethodS3("process", "MatNormalization", function(this, ..., ram=NULL, force=F
       verbose && print(verbose, gc)
 
       # Rename temporary file
-      pathname <- popTemporaryFile(pathnameT, verbose=verbose)
-
-      pathname
+      popTemporaryFile(pathnameT, verbose=verbose)
     } ## %<=%
 
     verbose && exit(verbose)

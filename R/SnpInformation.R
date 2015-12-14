@@ -23,10 +23,11 @@ setConstructorS3("SnpInformation", function(...) {
   this <- extend(GenericDataFile(...), c("SnpInformation"
                                              , uses("FileCacheKeyInterface")),
     "cached:.data" = NULL
-  );
-  if (!is.null(getPathname(this)))
-    verify(this);
-  this;
+  )
+  pathname <- getPathname(this)
+  if (!is.na(pathname) && !is.null(pathname))
+    verify(this)
+  this
 })
 
 setMethodS3("as.character", "SnpInformation", function(x, ...) {

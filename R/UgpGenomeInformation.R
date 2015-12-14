@@ -26,12 +26,13 @@
 setConstructorS3("UgpGenomeInformation", function(..., .ugp=NULL, .verify=TRUE) {
   this <- extend(GenomeInformation(..., .verify=FALSE), "UgpGenomeInformation",
     "cached:.ugp" = .ugp
-  );
+  )
   if (.verify) {
-    if (!is.null(getPathname(this)))
-      verify(this);
+    pathname <- getPathname(this)
+    if (!is.na(pathname) && !is.null(pathname))
+      verify(this)
   }
-  this;
+  this
 })
 
 

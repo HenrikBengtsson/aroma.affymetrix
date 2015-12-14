@@ -3,10 +3,11 @@ setConstructorS3("AffymetrixTsvFile", function(...) {
   this <- extend(AffymetrixFile(...), "AffymetrixTsvFile",
     "cached:.cdf" = NULL,
     "cached:.data" = NULL
-  );
-  if (!is.null(getPathname(this)))
-    verify(this);
-  this;
+  )
+  pathname <- getPathname(this)
+  if (!is.na(pathname) && !is.null(pathname))
+    verify(this)
+  this
 })
 
 setMethodS3("getChipType", "AffymetrixTsvFile", function(this, ...) {

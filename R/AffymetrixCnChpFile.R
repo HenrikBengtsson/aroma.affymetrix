@@ -16,10 +16,10 @@ setConstructorS3("AffymetrixCnChpFile", function(..., cdf=NULL) {
     if (nchar(name) == 0) {
       throw("An ", class(this)[1], " must have a name of at least length one: ", pathname);
     }
-
-    # Parse attributes (all subclasses must call this in the constructor).
-    setAttributesByTags(this);
   }
+
+  # Parse attributes (all subclasses must call this in the constructor).
+  setAttributesByTags(this)
 
   this;
 })

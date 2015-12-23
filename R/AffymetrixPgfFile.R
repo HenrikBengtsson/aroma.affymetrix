@@ -38,9 +38,7 @@ setConstructorS3("AffymetrixPgfFile", function(...) {
   );
 
   # Parse attributes (all subclasses must call this in the constructor).
-  pathname <- getPathname(this)
-  if (!is.null(pathname))
-    setAttributesByTags(this);
+  setAttributesByTags(this)
 
   this;
 })

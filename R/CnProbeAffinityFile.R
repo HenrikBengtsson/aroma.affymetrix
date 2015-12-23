@@ -28,7 +28,8 @@ setConstructorS3("CnProbeAffinityFile", function(..., combineAlleles=FALSE) {
     combineAlleles=combineAlleles
   );
 
-  if (!is.null(this$.pathname))
+  pathname <- getPathname(this)
+  if (!is.null(pathname))
     setAttributesByTags(this);
 
   this;

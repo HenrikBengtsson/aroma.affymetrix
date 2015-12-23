@@ -958,7 +958,6 @@ setMethodS3("getRectangle", "AffymetrixCelFile", function(this, ...) {
 # o Added getUnitTypesFile() for AffymetrixCelFile.
 # 2009-05-19
 # o Now testing for file permissions before trying to update a CEL file.
-# o Using getPathname() instead of this$.pathname everywhere.
 # 2008-06-25
 # o BUG FIX: getChipType() of AffymetrixCelFile did not pass down '...'
 #   causing for instance getChipType(..., fullname=FALSE) to still return

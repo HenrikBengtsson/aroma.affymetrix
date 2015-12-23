@@ -1,13 +1,15 @@
 Package: aroma.affymetrix
 =========================
 
-Version: 2.14.9-9000 [2015-11-19]
+Version: 2.14.9-9000 [2015-12-23]
 o Adding support for parallel/distributed processing via futures.
 o Now also convertToUnique() acknowledge asterisk tags.
 o ROBUSTNESS: MatNormalization did not create CEL files atomically.
 o CLEANUP: Deprecated bgAdjustRma(), bgAdjustGcrma(), bgAdjustOptical()
   for AffymetrixCelFile/AffymetrixCelSet since it they are now
   incorporated in corresponding BackgroundCorrection classes.
+o BUG FIX: convertToUnique() for AffymetrixCelSet would give an error
+  if there was an error while checking if results already exist.
 
 
 Version: 2.14.0-9000 [2015-11-19]

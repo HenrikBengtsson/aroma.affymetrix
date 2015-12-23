@@ -72,12 +72,12 @@ setMethodS3("convertToUnique", "AffymetrixCelSet", function(this, ..., tags="*",
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   verbose && enter(verbose, "Checking if dataset already exists");
 
-  tryCatch({
+  res <- tryCatch({
     # HB: Don't think argument 'checkChipType' makes a difference if
     #     argument 'cdf' is given.
-    res <- AffymetrixCelSet$byName(fullname, cdf=cdfUnique,
-                           checkChipType=FALSE, verbose=less(verbose, 10));
-  }, error = function(ex) {});
+    AffymetrixCelSet$byName(fullname, cdf=cdfUnique,
+                           checkChipType=FALSE, verbose=less(verbose, 10))
+  }, error = function(ex) { NULL })
 
   if (inherits(res, "AffymetrixCelSet")) {
     # Extract samples in the same order as they appear in the input

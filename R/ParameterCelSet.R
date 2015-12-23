@@ -24,12 +24,7 @@
 # @keyword "IO"
 #*/###########################################################################
 setConstructorS3("ParameterCelSet", function(...) {
-  this <- extend(AffymetrixCelSet(...), c("ParameterCelSet", uses("ParametersInterface")));
-
-  # Parse attributes (all subclasses must call this in the constructor).
-  setAttributesByTags(this)
-
-  this;
+  extend(AffymetrixCelSet(...), c("ParameterCelSet", uses("ParametersInterface")))
 })
 
 

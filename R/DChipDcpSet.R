@@ -128,6 +128,7 @@ setMethodS3("byName", "DChipDcpSet", function(static, name, tags=NULL, chipType,
 }, static=TRUE)
 
 
+
 setMethodS3("byPath", "DChipDcpSet", function(static, path="rawData/", pattern="[.](dcp|DCP)$", ..., fileClass="DChipDcpFile", verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
@@ -165,36 +166,6 @@ setMethodS3("byPath", "DChipDcpSet", function(static, path="rawData/", pattern="
   this;
 }, static=TRUE, protected=TRUE)
 
-
-
-
-###########################################################################/**
-# @RdocMethod nbrOfArrays
-#
-# @title "Gets the number of arrays in the file set"
-#
-# \description{
-#   @get "title".
-#   This is just a wrapper for \code{length()}.
-# }
-#
-# @synopsis
-#
-# \arguments{
-#  \item{...}{Not used.}
-# }
-#
-# \value{
-#   Returns an @integer.
-# }
-#
-# \seealso{
-#   @seeclass
-# }
-#*/###########################################################################
-setMethodS3("nbrOfArrays", "DChipDcpSet", function(this, ...) {
-  length(this, ...);
-}, protected=TRUE)
 
 
 

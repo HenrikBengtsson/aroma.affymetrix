@@ -1,7 +1,7 @@
 Package: aroma.affymetrix
 =========================
 
-Version: 2.14.0-9000 [2015-12-22]
+Version: 2.14.0-9000 [2015-12-23]
 o BUG FIX: convertToUnique() for AffymetrixCelSet would give an error
   if there was an error while checking if results already exist.
 

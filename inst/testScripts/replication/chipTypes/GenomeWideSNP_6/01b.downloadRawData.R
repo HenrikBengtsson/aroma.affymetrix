@@ -50,11 +50,10 @@ print(ds);
 ## Path: rawData/GSE13372,testset/GenomeWideSNP_6
 ## Platform: Affymetrix
 ## Chip type: GenomeWideSNP_6
-## Number of arrays: 14
-## Names: GSM337641, GSM337646, GSM337662, ..., GSM337708 [14]
+## Number of arrays: 6
+## Names: GSM337641, GSM337662, GSM337683, ..., GSM337708 [6]
 ## Time period: 2007-05-17 16:13:28 -- 2008-09-11 21:06:39
-## Total file size: 922.29MB
-## RAM: 0.02MB
-
+## Total file size: 395.33MB
+## RAM: 0.01MB
 
 verbose && exit(verbose);

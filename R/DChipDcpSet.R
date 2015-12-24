@@ -168,10 +168,7 @@ setMethodS3("byPath", "DChipDcpSet", function(static, path="rawData/", pattern="
 
 
 
-<<<<<<< HEAD
-=======
 
->>>>>>> develop
 ###########################################################################/**
 # @RdocMethod as.DChipDcpSet
 # @alias as.DChipDcpSet.list

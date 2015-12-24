@@ -443,10 +443,7 @@ setMethodS3("byPath", "CnagCfhSet", function(static, path="rawData/", pattern="[
 
 
 
-<<<<<<< HEAD
-=======
 
->>>>>>> develop
 ###########################################################################/**
 # @RdocMethod as.CnagCfhSet
 # @alias as.CnagCfhSet.list

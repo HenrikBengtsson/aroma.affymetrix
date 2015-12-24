@@ -146,7 +146,6 @@ setMethodS3("convertToUnique", "AffymetrixCelSet", function(this, ..., tags="*",
       isFile <- isFile(pathname)
       if (!force && isFile) {
         verbose && cat(verbose, "Already processed. Skipping.")
-<<<<<<< HEAD
         res[[kk]] <- pathname
         verbose && exit(verbose)
         next
@@ -205,61 +204,6 @@ setMethodS3("convertToUnique", "AffymetrixCelSet", function(this, ..., tags="*",
 
         pathname
       } ## %<=%
-=======
-        verbose && exit(verbose)
-        next
-      }
-
-      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-      # Read data
-      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-      verbose && enter(verbose, "Reading intensity values according to standard CDF")
-      data <- .readCelUnits(getPathname(df), cdf=cdfStandard, dropArrayDim=TRUE)
-      verbose && exit(verbose)
-
-      # Build a valid CEL header
-      celHeader <- .cdfHeaderToCelHeader(cdfHeader, sampleName=dfFullname)
-      # Not needed anymore
-      dfFullname <- NULL
-
-      # Add some extra information about what the CEL file is for
-      params <- c(Descripion="This CEL file was created by the aroma.affymetrix package.")
-      parameters <- gsub(" ", "_", params, fixed=TRUE)
-      names(parameters) <- names(params)
-      parameters <- paste(names(parameters), parameters, sep=":")
-      parameters <- paste(parameters, collapse="")
-      parameters <- paste(celHeader$parameters, parameters, "", sep="")
-      parameters <- gsub(";;", ";", parameters, fixed=TRUE)
-      parameters <- gsub(";$", "", parameters)
-      celHeader$parameters <- parameters
-
-      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-      # Write data
-      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-      # Create CEL file to store results, if missing
-      verbose && enter(verbose, "Creating CEL file for results")
-
-      # Remove existing file
-      if (isFile) {
-        file.remove(pathname)
-      }
-
-      # Write to a temporary file
-      pathnameT <- pushTemporaryFile(pathname, verbose=verbose)
-
-      .createCel(pathnameT, header=celHeader)
-      verbose && cat(verbose, "Writing values according to unique CDF")
-      .updateCelUnits(pathnameT, cdf=cdfUniqueIndices, data=data, verbose=FALSE)
-      verbose && exit(verbose)
-
-      # Not needed anymore
-      data <- NULL
-      gc <- gc()
-      verbose && print(verbose, gc)
-
-      # Rename temporary file
-      pathname <- popTemporaryFile(pathnameT, verbose=verbose)
->>>>>>> develop
 
       verbose && exit(verbose)
   } # for (kk ...)

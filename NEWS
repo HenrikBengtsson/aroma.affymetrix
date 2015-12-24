@@ -11,6 +11,7 @@ o CLEANUP: Deprecated bgAdjustRma(), bgAdjustGcrma(), bgAdjustOptical()
 
 
 Version: 2.14.0-9000 [2015-12-23]
+o ROBUSTNESS: Using getPathname() instead of accessing private field.
 o BUG FIX: convertToUnique() for AffymetrixCelSet would give an error
   if there was an error while checking if results already exist.
 

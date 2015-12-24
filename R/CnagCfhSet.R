@@ -323,6 +323,7 @@ setMethodS3("byName", "CnagCfhSet", function(static, name, tags=NULL, chipType, 
   })
 }, static=TRUE)
 
+
 setMethodS3("byPath", "CnagCfhSet", function(static, path="rawData/", pattern="[.](c|C)(f|F)(h|H)$", checkChipType=TRUE, ..., onDuplicates=c("keep", "exclude", "error"), fileClass="CnagCfhFile", verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
@@ -442,6 +443,10 @@ setMethodS3("byPath", "CnagCfhSet", function(static, path="rawData/", pattern="[
 
 
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> develop
 ###########################################################################/**
 # @RdocMethod as.CnagCfhSet
 # @alias as.CnagCfhSet.list

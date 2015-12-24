@@ -63,7 +63,6 @@ setMethodS3("nbrOfArrays", "DChipDcpSet", function(this, ...) {
 }, protected=TRUE)
 
 
-
 ############################################################################
 # HISTORY:
 # 2015-12-04

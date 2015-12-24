@@ -38,8 +38,7 @@ setConstructorS3("FirmaFile", function(...) {
   })
 
   # Parse attributes (all subclasses must call this in the constructor).
-  if (!is.null(this$.pathname))
-    setAttributesByTags(this);
+  setAttributesByTags(this)
 
   this;
 })

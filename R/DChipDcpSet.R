@@ -128,6 +128,7 @@ setMethodS3("byName", "DChipDcpSet", function(static, name, tags=NULL, chipType,
 }, static=TRUE)
 
 
+
 setMethodS3("byPath", "DChipDcpSet", function(static, path="rawData/", pattern="[.](dcp|DCP)$", ..., fileClass="DChipDcpFile", verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
@@ -167,6 +168,10 @@ setMethodS3("byPath", "DChipDcpSet", function(static, path="rawData/", pattern="
 
 
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> develop
 ###########################################################################/**
 # @RdocMethod as.DChipDcpSet
 # @alias as.DChipDcpSet.list

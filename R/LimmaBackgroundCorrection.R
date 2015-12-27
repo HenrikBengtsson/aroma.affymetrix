@@ -224,18 +224,9 @@ setMethodS3("process", "LimmaBackgroundCorrection", function(this, ..., force=FA
   requireNamespace("limma") || throw("Package not loaded: limma")
   backgroundCorrect <- limma::backgroundCorrect
 
+  ## In case random jitter will be used
+  jitter <- NULL
 
-  # Generate random jitter?
-  if (params$addJitter) {
-    ## Use a temporary random seed?
-    seed <- params$seed
-    if (!is.null(seed)) {
-      randomSeed("set", seed=seed, kind="L'Ecuyer-CMRG")
-      on.exit(randomSeed("reset"), add=TRUE)
-      verbose && printf(verbose, "Random seed temporarily set (seed=%d, kind=\"L'Ecuyer-CMRG\")\n", seed)
-    }
-    jitter <- rnorm(length(y), mean=0, sd=params$jitterSd);
-  }
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # apply normal+exponential model to each array
@@ -272,6 +263,22 @@ setMethodS3("process", "LimmaBackgroundCorrection", function(this, ..., force=FA
     if (is.null(cells)) {
       cells <- getSubsetToUpdate0(this, verbose=less(verbose, 10));
     }
+
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    # Generate random jitter?
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    if (params$addJitter && is.null(jitter)) {
+      ## Use a temporary random seed?
+      seed <- params$seed
+      if (!is.null(seed)) {
+        randomSeed("set", seed=seed, kind="L'Ecuyer-CMRG")
+        on.exit(randomSeed("reset"), add=TRUE)
+        verbose && printf(verbose, "Random seed temporarily set (seed=%d, kind=\"L'Ecuyer-CMRG\")\n", seed)
+      }
+      jitter <- rnorm(length(cells), mean=0, sd=params$jitterSd);
+    }
+
 
     res[[kk]] %<=% {
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

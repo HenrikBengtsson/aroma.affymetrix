@@ -11,6 +11,7 @@ o REPRODUCIBILITY: GcRmaBackgroundCorrection(), LimmaBackgroundCorrection(),
 o CLEANUP: Deprecated bgAdjustRma(), bgAdjustGcrma(), bgAdjustOptical()
   for AffymetrixCelFile/AffymetrixCelSet since it they are now
   incorporated in corresponding BackgroundCorrection classes.
+o BUG FIX: LimmaBackgroundCorrection(..., addJitter=TRUE) gave an error.
 
 
 Version: 2.14.0-9000 [2015-12-23]

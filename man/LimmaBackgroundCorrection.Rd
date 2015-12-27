@@ -44,7 +44,7 @@ extends \emph{\link[aroma.affymetrix]{BackgroundCorrection}}\cr
 }
 
 \usage{
-LimmaBackgroundCorrection(..., args=NULL, addJitter=FALSE, jitterSd=0.2)
+LimmaBackgroundCorrection(..., args=NULL, addJitter=FALSE, jitterSd=0.2, seed=6022007)
 }
 
 \arguments{
@@ -55,6 +55,9 @@ LimmaBackgroundCorrection(..., args=NULL, addJitter=FALSE, jitterSd=0.2)
   \item{addJitter}{If \code{\link[base:logical]{TRUE}}, Zero-mean gaussian noise is added to the
     signals before being background corrected.}
   \item{jitterSd}{Standard deviation of the jitter noise added.}
+  \item{seed}{An (optional) \code{\link[base]{integer}} specifying a temporary random seed
+    to be used for generating the (optional) jitter.  The random seed
+    is set to its original state when done.  If \code{\link[base]{NULL}}, it is not set.}
 }
 
 \section{Fields and Methods}{

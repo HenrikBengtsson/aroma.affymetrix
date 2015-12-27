@@ -18,6 +18,9 @@
 #   \item{addJitter}{If @TRUE, Zero-mean gaussian noise is added to the
 #     signals before being background corrected.}
 #   \item{jitterSd}{Standard deviation of the jitter noise added.}
+#   \item{seed}{An (optional) @integer specifying a temporary random seed
+#     to be used for generating the (optional) jitter.  The random seed
+#     is set to its original state when done.  If @NULL, it is not set.}
 # }
 #
 # \section{Fields and Methods}{
@@ -40,11 +43,17 @@
 #
 # @author "KS, HB"
 #*/###########################################################################
-setConstructorS3("RmaBackgroundCorrection", function(..., addJitter=FALSE, jitterSd=0.2) {
+setConstructorS3("RmaBackgroundCorrection", function(..., addJitter=FALSE, jitterSd=0.2, seed=6022007) {
+  # Argument 'seed':
+  if (!is.null(seed)) {
+    seed <- Arguments$getInteger(seed);
+  }
+
   extend(BackgroundCorrection(..., typesToUpdate="pm"),
     "RmaBackgroundCorrection",
     .addJitter=addJitter,
-    .jitterSd=jitterSd
+    .jitterSd=jitterSd,
+    .seed=seed
   );
 })
 
@@ -59,6 +68,7 @@ setMethodS3("getParameters", "RmaBackgroundCorrection", function(this, ...) {
   params2 <- list(
     addJitter = this$.addJitter,
     jitterSd = this$.jitterSd,
+    seed = this$.seed,
     pmonly = pmOnly
   );
 
@@ -186,7 +196,13 @@ setMethodS3("process", "RmaBackgroundCorrection", function(this, ..., force=FALS
     }
 
     if (addJitter && is.null(pmJitter)) {
-      set.seed(6022007)
+      ## Use a temporary random seed?
+      seed <- params$seed
+      if (!is.null(seed)) {
+        randomSeed("set", seed=seed, kind="L'Ecuyer-CMRG")
+        on.exit(randomSeed("reset"), add=TRUE)
+        verbose && printf(verbose, "Random seed temporarily set (seed=%d, kind=\"L'Ecuyer-CMRG\")\n", seed)
+      }
       pmJitter <- rnorm(nbrOfPMs, mean=0, sd=jitterSd)
     }
 

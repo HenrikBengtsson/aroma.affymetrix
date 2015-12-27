@@ -44,7 +44,7 @@ SuggestsNote:
   affxparser,
   DNAcopy
 Additional_repositories: http://r-forge.r-project.org
-Date: 2015-12-22
+Date: 2015-12-27
 Title: Analysis of Large Affymetrix Microarray Data Sets
 Authors@R: c(
   person("Henrik", "Bengtsson", role=c("aut", "cre", "cph"),

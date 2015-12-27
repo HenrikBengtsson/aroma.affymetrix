@@ -31,6 +31,9 @@
 #       first, utilizing @see "OpticalBackgroundCorrection".}
 #   \item{gsbParameters}{Additional argument passed to the internal
 #       \code{bgAdjustGcrma()} method.}
+#   \item{seed}{An (optional) @integer specifying a temporary random seed
+#     to be used during processing.  The random seed is set to its original
+#     state when done.  If @NULL, it is not set.}
 # }
 #
 # \section{Fields and Methods}{
@@ -45,7 +48,7 @@
 #
 # @author "KS, HB"
 #*/###########################################################################
-setConstructorS3("GcRmaBackgroundCorrection", function(..., indicesNegativeControl=NULL, affinities=NULL, type=c("fullmodel", "affinities"), opticalAdjust=TRUE, gsbAdjust=TRUE, gsbParameters=NULL) {
+setConstructorS3("GcRmaBackgroundCorrection", function(..., indicesNegativeControl=NULL, affinities=NULL, type=c("fullmodel", "affinities"), opticalAdjust=TRUE, gsbAdjust=TRUE, gsbParameters=NULL, seed=NULL) {
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
@@ -71,6 +74,11 @@ setConstructorS3("GcRmaBackgroundCorrection", function(..., indicesNegativeContr
 
   # Argument 'gsbParameters':
 
+  # Argument 'seed':
+  if (!is.null(seed)) {
+    seed <- Arguments$getInteger(seed);
+  }
+
 
   extend(BackgroundCorrection(..., typesToUpdate="pm"), "GcRmaBackgroundCorrection",
     .indicesNegativeControl=indicesNegativeControl,
@@ -78,7 +86,8 @@ setConstructorS3("GcRmaBackgroundCorrection", function(..., indicesNegativeContr
     .type=type,
     .opticalAdjust=opticalAdjust,
     .gsbAdjust=gsbAdjust,
-    .gsbParameters=gsbParameters
+    .gsbParameters=gsbParameters,
+    .seed=seed
   );
 })
 
@@ -94,7 +103,8 @@ setMethodS3("getParameters", "GcRmaBackgroundCorrection", function(this, ...) {
     type = this$.type,
     opticalAdjust = this$.opticalAdjust,
     gsbAdjust = this$.gsbAdjust,
-    gsbParameters = this$.gsbParameters
+    gsbParameters = this$.gsbParameters,
+    seed = this$.seed
   );
 
   # Append the two sets
@@ -204,6 +214,7 @@ setMethodS3("process", "GcRmaBackgroundCorrection", function(this, ..., force=FA
   gsbAdjust <- params$gsbAdjust
   type <- params$type
   indicesNegativeControl <- params$indicesNegativeControl
+  seed <- params$seed
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Optical background correction?
@@ -232,7 +243,7 @@ setMethodS3("process", "GcRmaBackgroundCorrection", function(this, ..., force=FA
   parametersGsb <- NULL
   if (gsbAdjust) {
     verbose && enter(verbose, "Estimating specific binding parameters (data dependent)")
-    parametersGsb <- calculateParametersGsb(ds, affinities=affinities, ..., verbose=verbose)
+    parametersGsb <- calculateParametersGsb(ds, affinities=affinities, seed=seed, ..., verbose=verbose)
     verbose && cat(verbose, "parametersGsb:")
     verbose && print(verbose, parametersGsb)
     verbose && exit(verbose)
@@ -259,7 +270,7 @@ setMethodS3("process", "GcRmaBackgroundCorrection", function(this, ..., force=FA
   cdf <- getCdf(ds)
   chipType <- getChipType(cdf)
   pmCells <- mmCells <- apm <- amm <- anc <- NULL
-  
+
   dataFiles <- listenv()
   for (ii in seq_along(ds)) {
     df <- ds[[ii]]
@@ -291,7 +302,7 @@ setMethodS3("process", "GcRmaBackgroundCorrection", function(this, ..., force=FA
         indices <- getCellIndices(cdf, useNames=FALSE, unlist=TRUE)
         saveCache(indices, key=key, dirs=dirs)
       }
-  
+
       # Identify PM & MM cell indices
       # Ordered according to CEL file [whilst isPm() is ordered as the CDF]
       pmCells <- indices[isPm(cdf)]
@@ -301,7 +312,7 @@ setMethodS3("process", "GcRmaBackgroundCorrection", function(this, ..., force=FA
       indices <- NULL ## Not needed anymore
       verbose && exit(verbose)
     }
-    
+
 
     verbose && enter(verbose, "Retrieving PM and MM affinities")
     apm <- affinities[pmCells]
@@ -328,7 +339,7 @@ setMethodS3("process", "GcRmaBackgroundCorrection", function(this, ..., force=FA
       verbose && cat(verbose, "MM signals:")
       verbose && str(verbose, mm)
       verbose && exit(verbose)
-  
+
       if (!is.null(indicesNegativeControl)) {
         verbose && enter(verbose, "Retrieving negative-control signals")
         ncs <- getData(df, indices=indicesNegativeControl)$intensities
@@ -339,21 +350,21 @@ setMethodS3("process", "GcRmaBackgroundCorrection", function(this, ..., force=FA
       } else {
         ncs <- NULL
       }
-  
-  
+
+
       # adjust background - use original GCRMA functions to avoid errors from
       # re-coding
       if (type == "fullmodel") {
         verbose && enter(verbose, "Full GCRMA model background adjustment")
-        
+
         verbose && cat(verbose, "Number of PMs: ", length(pm))
         verbose && cat(verbose, "Number of MMs: ", length(mm))
         pm <- bg.adjust.fullmodel(pms=pm, mms=mm, ncs=ncs, apm=apm, amm=amm, anc=anc, index.affinities=seq_len(length(pm)), k=k, rho=rho, fast=fast)
-        
+
         verbose && exit(verbose)
       } else if (type == "affinities") {
         verbose && enter(verbose, "Affinity-based GCRMA model background adjustment")
-    
+
         if (is.null(indicesNegativeControl)) {
           verbose && cat(verbose, "Using mismatch probes (MMs) as negative controls")
           ncs <- mm
@@ -375,44 +386,44 @@ setMethodS3("process", "GcRmaBackgroundCorrection", function(this, ..., force=FA
           verbose && cat(verbose, "Using a specified set of negative controls")
           nomm <- TRUE
         }
-        
+
         verbose && enter(verbose, "Dropping perfect-match probes (PMs) with missing signals or missing affinities")
-        
+
         n0 <- length(pm)
         keepA <- (!is.na(pm))
         n <- sum(keepA)
         verbose && printf(verbose, "Number of finite PMs: %d out of %d (%.1f%%)\n", n, n0, 100*n/n0)
-    
+
         keepB <- (!is.na(apm))
         n <- sum(keepB)
         verbose && printf(verbose, "Number of finite PM affinities: %d out of %d (%.1f%%)\n", n, n0, 100*n/n0)
-    
+
         keep <- which(keepA & keepB)
         n <- length(keep)
         verbose && printf(verbose, "Number of PMs kept: %d out of %d (%.1f%%)\n", n, n0, 100*n/n0)
-    
+
         pm <- pm[keep]
         pmCells <- pmCells[keep]
         apm <- apm[keep]
         # Not needed anymore
         keep <- NULL
         verbose && exit(verbose)
-	
-    
+
+
         verbose && enter(verbose, "Dropping negative controls with missing signals or missing affinities")
         n0 <- length(ncs)
         keepA <- (!is.na(ncs))
         n <- sum(keepA)
         verbose && printf(verbose, "Number of finite negative controls: %d out of %d (%.1f%%)\n", n, n0, 100*n/n0)
-    
+
         keepB <- (!is.na(anc))
         n <- sum(keepB)
         verbose && printf(verbose, "Number of finite negative-control affinities: %d out of %d (%.1f%%)\n", n, n0, 100*n/n0)
-    
+
         keep <- which(keepA & keepB)
         n <- length(keep)
         verbose && printf(verbose, "Number of negative controls kept: %d out of %d (%.1f%%)\n", n, n0, 100*n/n0)
-    
+
         ncs <- ncs[keep]
         anc <- anc[keep]
         # Not needed anymore
@@ -422,19 +433,19 @@ setMethodS3("process", "GcRmaBackgroundCorrection", function(this, ..., force=FA
 
         verbose && cat(verbose, "Number of PMs: ", length(pm))
         verbose && cat(verbose, "Number of negative controls: ", length(ncs))
-    
+
         minNbrOfNegControls <- 1L
         if (length(ncs) < minNbrOfNegControls) {
           throw(sprintf("Cannot perform GCRMA background (type=\"affinities\") correction: The number (%d) of negative control is too small.", length(ncs)))
         }
-    
+
         pm <- bg.adjust.affinities(pms=pm, ncs=ncs, apm=apm, anc=anc, index.affinities=seq_len(length(pm)), k=k, fast=fast, nomm=nomm)
-    
+
         verbose && exit(verbose)
       } # if (type == ...)
-  
+
       mm <- NULL  ## Not needed anymore
-  
+
       # if specific binding correction requested, carry it out
       if (gsbAdjust && !is.null(parametersGsb)) {
         verbose && enter(verbose, "Adjusting for specific binding")
@@ -450,9 +461,9 @@ setMethodS3("process", "GcRmaBackgroundCorrection", function(this, ..., force=FA
         pm <- k + 2^(-parametersGsb[2] * (apm - mean(apm, na.rm=TRUE))) * (pm - k)
         verbose && exit(verbose)
       }
-    
+
       apm <- amm <- NULL ## Not needed anymore
-    
+
       # don't understand this, but it was in original bg.adjust.gcrma(), so
       # we will keep it. /KS
       if (stretch != 1) {
@@ -462,30 +473,30 @@ setMethodS3("process", "GcRmaBackgroundCorrection", function(this, ..., force=FA
         pm <- exp(mu + stretch * (log(pm) - mu))
         verbose && exit(verbose)
       }
-    
-    
+
+
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       # Store the adjusted PM signals
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       verbose && enter(verbose, "Writing adjusted probe signals")
-    
+
       # Write to a temporary file (allow rename of existing one if forced)
       isFile <- (force && isFile(pathname))
       pathnameT <- pushTemporaryFile(pathname, isFile=isFile)
-    
+
       # Create CEL file to store results, if missing
       verbose && enter(verbose, "Creating CEL file for results, if missing")
       createFrom(df, filename=pathnameT, path=NULL, verbose=less(verbose))
       verbose && exit(verbose)
-    
+
       verbose && enter(verbose, "Writing adjusted intensities")
       verbose && cat(verbose, "Number of cells (PMs only): ", length(pmCells))
       .updateCel(pathnameT, indices=pmCells, intensities=pm)
       verbose && exit(verbose)
-    
+
       # Rename temporary file
       popTemporaryFile(pathnameT, verbose=verbose)
-      
+
       verbose && exit(verbose)
 
 
@@ -496,7 +507,7 @@ setMethodS3("process", "GcRmaBackgroundCorrection", function(this, ..., force=FA
       pathname
     } ## %<=%
 
-    
+
     verbose && exit(verbose)
   } # for (ii ...)
 

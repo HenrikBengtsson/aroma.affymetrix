@@ -46,7 +46,7 @@ extends \emph{\link[aroma.affymetrix]{BackgroundCorrection}}\cr
 \usage{
 GcRmaBackgroundCorrection(..., indicesNegativeControl=NULL, affinities=NULL,
   type=c("fullmodel", "affinities"), opticalAdjust=TRUE, gsbAdjust=TRUE,
-  gsbParameters=NULL)
+  gsbParameters=NULL, seed=NULL)
 }
 
 \arguments{
@@ -68,6 +68,9 @@ GcRmaBackgroundCorrection(..., indicesNegativeControl=NULL, affinities=NULL,
       first, utilizing \code{\link{OpticalBackgroundCorrection}}.}
   \item{gsbParameters}{Additional argument passed to the internal
       \code{bgAdjustGcrma()} method.}
+  \item{seed}{An (optional) \code{\link[base]{integer}} specifying a temporary random seed
+    to be used during processing.  The random seed is set to its original
+    state when done.  If \code{\link[base]{NULL}}, it is not set.}
 }
 
 \section{Fields and Methods}{

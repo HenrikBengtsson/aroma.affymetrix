@@ -26,9 +26,9 @@
 \arguments{
   \item{nbrOfPms}{The number of random PMs to use in estimation.}
   \item{affinities}{A \code{\link[base]{numeric}} \code{\link[base]{vector}} of probe affinities.}
-  \item{seed}{An (optional) \code{\link[base]{integer}} specifying the random seed to be
-    set before calling the segmentation method.  The random seed is
-    set to its original state when exiting.  If \code{\link[base]{NULL}}, it is not set.}
+  \item{seed}{An (optional) \code{\link[base]{integer}} specifying a temporary random seed
+    to be used during processing.  The random seed is set to its original
+    state when done.  If \code{\link[base]{NULL}}, it is not set.}
   \item{...}{Not used.}
   \item{verbose}{See \code{\link[R.utils]{Verbose}}.}
 }

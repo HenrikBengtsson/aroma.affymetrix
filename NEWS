@@ -6,8 +6,7 @@ o Adding support for parallel/distributed processing via futures.
 o Now also convertToUnique() acknowledge asterisk tags.
 o ROBUSTNESS: MatNormalization did not create CEL files atomically.
 o ROBUSTNESS: Using do.call(fcn) internally instead of do.call("fcn").
-o ROBUSTNESS: calculateParametersGsb() for AffymetrixCelSet gained
-  argument 'seed'.
+o REPRODUCIBILITY: GcRmaBackgroundCorrection() gained argument 'seed'.
 o CLEANUP: Deprecated bgAdjustRma(), bgAdjustGcrma(), bgAdjustOptical()
   for AffymetrixCelFile/AffymetrixCelSet since it they are now
   incorporated in corresponding BackgroundCorrection classes.

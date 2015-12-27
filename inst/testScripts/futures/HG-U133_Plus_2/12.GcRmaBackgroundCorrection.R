@@ -29,9 +29,9 @@ for (strategy in strategies) {
   future::plan(strategy)
   tags <- c("*", strategy)
 
-  bg <- GcRmaBackgroundCorrection(csR, tags=tags)
+  bg <- GcRmaBackgroundCorrection(csR, seed=0xBEEF, tags=tags)
   print(bg)
-  csB <- process(bg, seed=0xBEEF, verbose=verbose)
+  csB <- process(bg, verbose=verbose)
   print(csB)
 
   csBz <- getChecksumFileSet(csB)

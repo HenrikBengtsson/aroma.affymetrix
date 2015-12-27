@@ -263,7 +263,7 @@ setMethodS3("getData", "UgpGenomeInformation", function(this, units=NULL, fields
 
   # Reorder?
   if (!is.null(orderBy)) {
-    o <- do.call("order", args=as.list(data[,orderBy,drop=FALSE]));
+    o <- do.call(order, args=as.list(data[,orderBy,drop=FALSE]));
     data <- data[o,,drop=FALSE];
     # Not needed anymore
     o <- NULL;

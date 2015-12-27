@@ -182,7 +182,7 @@ setMethodS3("getTimestamps", "CnagCfhSet", function(this, ..., force=FALSE) {
   if (force || is.null(ts)) {
     # Get CFH header dates
     ts <- lapply(this, FUN=getTimestamp);
-    ts <- do.call("c", args=ts);
+    ts <- do.call(c, args=ts);
     this$.timestamps <- ts;
   }
 

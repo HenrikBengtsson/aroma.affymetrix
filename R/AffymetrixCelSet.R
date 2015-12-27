@@ -243,7 +243,7 @@ setMethodS3("getTimestamps", "AffymetrixCelSet", function(this, ..., force=FALSE
   if (force || is.null(ts)) {
     # Get CEL header dates
     ts <- lapply(this, FUN=getTimestamp);
-    ts <- do.call("c", args=ts);
+    ts <- do.call(c, args=ts);
     this$.timestamps <- ts;
   }
 

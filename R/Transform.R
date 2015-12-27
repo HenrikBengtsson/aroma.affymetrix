@@ -80,7 +80,7 @@ setMethodS3("getOutputDataSet", "Transform", function(this, ..., verbose=FALSE) 
   verbose && str(verbose, args);
   args$verbose <- less(verbose,1);
 
-  res <- do.call("NextMethod", args);
+  res <- do.call(NextMethod, args);
 
   # Let the set update itself
   if (!is.null(res)) {

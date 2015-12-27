@@ -184,7 +184,7 @@ setMethodS3("findByChipType", "AffymetrixPgfFile", function(static, chipType, ta
     pattern=sprintf("^%s%s$", fullname, extPattern),
     ...
   );
-  pathname <- do.call("findAnnotationDataByChipType", args=args);
+  pathname <- do.call(findAnnotationDataByChipType, args=args);
 
   # If not found, look for Windows shortcuts
   if (is.null(pathname)) {
@@ -194,7 +194,7 @@ setMethodS3("findByChipType", "AffymetrixPgfFile", function(static, chipType, ta
       pattern=sprintf("^%s%s[.]lnk$", fullname, extPattern),
       ...
     );
-    pathname <- do.call("findAnnotationDataByChipType", args=args);
+    pathname <- do.call(findAnnotationDataByChipType, args=args);
     if (!is.null(pathname)) {
       # ..and expand it
       pathname <- Arguments$getReadablePathname(pathname, mustExist=FALSE);

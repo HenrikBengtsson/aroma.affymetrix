@@ -848,7 +848,7 @@ setMethodS3("readRawData", "AffymetrixCelFile", function(this, indices=NULL, fie
   fcn <- get("readCel", mode="function");
   keep <- intersect(names(args), names(formals(fcn)));
   args <- args[keep];
-  cel <- do.call("readCel", args=args);
+  cel <- do.call(readCel, args=args);
 
   # Sanity check
   stopifnot(is.list(cel));

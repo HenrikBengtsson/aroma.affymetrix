@@ -87,7 +87,7 @@ setMethodS3("writeRegions" ,"profileCGH", function(this, filename, path=NULL, ap
       if (!is.null(rsIds))
         args <- c(args, rsIds[1], rsIds[2]);
     }
-    record <- do.call("sprintf", args);
+    record <- do.call(sprintf, args);
     cat(record);
 
     # Append to file

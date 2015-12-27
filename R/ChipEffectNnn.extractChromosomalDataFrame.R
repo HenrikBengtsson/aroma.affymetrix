@@ -1,7 +1,7 @@
 setMethodS3("extractChromosomalDataFrame", "ChipEffectFile", function(this, units=NULL, ..., chromosomes=NULL, orderBy=c("chromosome", "physicalPosition"), decreasing=FALSE, verbose=FALSE) {
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'chromosomes':
   if (!is.null(chromosomes)) {
     chromosomes <- Arguments$getIndices(chromosomes, max=999);
@@ -16,9 +16,9 @@ setMethodS3("extractChromosomalDataFrame", "ChipEffectFile", function(this, unit
   }
 
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Read annotation data
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   verbose && enter(verbose, "Reading (chromosome, position):");
   cdf <- getCdf(this);
   gi <- getGenomeInformation(cdf, verbose=less(verbose, 10));
@@ -27,9 +27,9 @@ setMethodS3("extractChromosomalDataFrame", "ChipEffectFile", function(this, unit
   verbose && exit(verbose);
 
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Subset by chromosomes?
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (!is.null(chromosomes)) {
     verbose && enter(verbose, "Subsetting by chromosome(s)");
     verbose && cat(verbose, "Chromosomes:");
@@ -47,16 +47,16 @@ setMethodS3("extractChromosomalDataFrame", "ChipEffectFile", function(this, unit
   }
 
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Order by?
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (!is.null(orderBy)) {
     verbose && enter(verbose, "Ordering data");
     verbose && cat(verbose, "Order by:");
     verbose && print(verbose, orderBy);
     args <- lapply(orderBy, FUN=function(cc) gp[,cc,drop=FALSE]);
     args <- c(args, decreasing=decreasing);
-    o <- do.call("order", args)
+    o <- do.call(order, args)
     gp <- gp[o,,drop=FALSE];
     if (is.null(units)) {
       units <- o;
@@ -71,9 +71,9 @@ setMethodS3("extractChromosomalDataFrame", "ChipEffectFile", function(this, unit
   }
 
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Read data
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   verbose && enter(verbose, "Reading data");
   verbose && cat(verbose, "Units:");
   verbose && str(verbose, units);
@@ -95,9 +95,9 @@ setMethodS3("extractChromosomalDataFrame", "ChipEffectFile", function(this, unit
   units <- NULL;
 
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Insert (chromosome, position)
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Identify where to insert
   afterColumns <- c("unitName", "groupName", "unit", "group", "cell");
   at <- match(afterColumns, colnames(data));
@@ -109,11 +109,11 @@ setMethodS3("extractChromosomalDataFrame", "ChipEffectFile", function(this, unit
   data <- at <- NULL;
 
   data <- cbind(dataHead, gp, dataTail);
-  
+
   # Not needed anymore
   dataHead <- dataTail <- gp <- NULL;
 
-  data;  
+  data;
 }, protected=TRUE)
 
 

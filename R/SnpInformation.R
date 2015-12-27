@@ -309,7 +309,7 @@ setMethodS3("getData", "SnpInformation", function(this, units=NULL, fields=c("fr
 
   # Reorder?
   if (!is.null(orderBy)) {
-    o <- do.call("order", args=as.list(data[,orderBy]));
+    o <- do.call(order, args=as.list(data[,orderBy]));
     data <- data[o,,drop=FALSE];
     # Not needed anymore
     o <- NULL;

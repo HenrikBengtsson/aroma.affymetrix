@@ -217,7 +217,7 @@ setMethodS3("getOutputDataSet00", "FragmentLengthNormalization", function(this, 
   verbose && str(verbose, args);
 
   args$verbose <- less(verbose, 10);
-  res <- do.call("NextMethod", args);
+  res <- do.call(NextMethod, args);
 
   # Carry over parameters too.  AD HOC for now. /HB 2007-01-07
   if (inherits(res, "SnpChipEffectSet")) {
@@ -789,7 +789,7 @@ setMethodS3("process", "FragmentLengthNormalization", function(this, ..., force=
   nbrOfArrays <- length(ces);
 
   res <- listenv()
-  
+
   for (kk in seq_len(nbrOfArrays)) {
     ce <- ces[[kk]];
     verbose && enter(verbose, sprintf("Array #%d of %d ('%s')",
@@ -815,7 +815,7 @@ setMethodS3("process", "FragmentLengthNormalization", function(this, ..., force=
       setCdf(ceN, cdf)
 
       res[[kk]] <- pathname
-      
+
       verbose && exit(verbose)
       next
     }
@@ -864,7 +864,7 @@ setMethodS3("process", "FragmentLengthNormalization", function(this, ..., force=
       verbose && str(verbose, theta);
       verbose && summary(verbose, theta);
       verbose && exit(verbose);
-  
+
       verbose && enter(verbose, "Calculating total signals");
       # Get the total locus signals?
       if (ncol(theta) > 1) {
@@ -881,25 +881,25 @@ setMethodS3("process", "FragmentLengthNormalization", function(this, ..., force=
       verbose && cat(verbose, "Total thetas:");
       verbose && str(verbose, y);
       verbose && exit(verbose);
-  
+
   #    data <- getDataFlat(ce, units=map, fields="theta", verbose=less(verbose));
   #    verbose && str(verbose, data);
   #    y0 <- data[,"theta",drop=TRUE];
   #    stopifnot(identical(y,y0));
   #    verbose && str(verbose, y);
   #    verbose && exit(verbose);
-  
-  
+
+
       # Extract the values to fit the normalization function
       verbose && enter(verbose, "Normalizing log2 signals");
-  
+
       # Shift?
       if (shift != 0)
         y <- y + shift;
-  
+
       # Fit on the log2 scale
       y <- log2(y);
-  
+
       verbose && cat(verbose, "Log2 signals:");
       verbose && str(verbose, y);
       yN <- .normalizeFragmentLength(y, fragmentLengths=fl,
@@ -907,7 +907,7 @@ setMethodS3("process", "FragmentLengthNormalization", function(this, ..., force=
                       onMissing=onMissing, ...);
       verbose && cat(verbose, "Normalized log2 signals:");
       verbose && summary(verbose, yN);
-  
+
       # Normalization scale factor for each unit (on the log2 scale)
       rho <- y-yN;
       # Not needed anymore
@@ -916,33 +916,33 @@ setMethodS3("process", "FragmentLengthNormalization", function(this, ..., force=
       rho <- 2^rho;
       verbose && cat(verbose, "Normalization scale factors:");
       verbose && summary(verbose, rho);
-  
+
       # Sanity check
       stopifnot(length(rho) == nrow(theta));
-  
+
       # Normalize the theta:s (on the intensity scale)
       ok <- which(is.finite(rho));
       verbose && str(verbose, ok);
       theta[ok,] <- theta[ok,]/rho[ok];
       # Not needed anymore
       ok <- rho <- NULL;
-  
+
       verbose && cat(verbose, "Normalized thetas:");
       verbose && str(verbose, theta);
       verbose && summary(verbose, theta);
-  
+
       verbose && exit(verbose);
-  
+
       # Create CEL file to store results, if missing
       verbose && enter(verbose, "Creating CEL file for results, if missing");
-  
+
       # Write to a temporary file (allow rename of existing one if forced)
       isFile <- isFile(pathname);
       pathnameT <- pushTemporaryFile(pathname, isFile=isFile, verbose=verbose);
-  
+
       ceN <- createFrom(ce, filename=pathnameT, path=NULL, verbose=less(verbose));
       verbose && exit(verbose);
-  
+
       # Carry over parameters too.  AD HOC for now. /HB 2007-01-07
       if (inherits(ce, "SnpChipEffectFile")) {
         ceN$mergeStrands <- ce$mergeStrands;
@@ -950,10 +950,10 @@ setMethodS3("process", "FragmentLengthNormalization", function(this, ..., force=
           ceN$combineAlleles <- ce$combineAlleles;
         }
       }
-  
+
       # CDF inheritance
       setCdf(ceN, cdf);
-  
+
       verbose && enter(verbose, "Storing normalized signals");
   #    data[,"theta"] <- yN;
   #    # Not needed anymore
@@ -966,24 +966,24 @@ setMethodS3("process", "FragmentLengthNormalization", function(this, ..., force=
       data <- theta[ok];
       # Not needed anymore
       ok <- theta <- NULL;
-  
+
       verbose2 <- -as.integer(verbose) - 5;
       pathnameN <- getPathname(ceN);
       .updateCel(pathnameN, indices=cells, intensities=data, verbose=verbose2);
       # Not needed anymore
       cells <- data <- ceN <- NULL;
       verbose && exit(verbose);
-  
+
       # Rename temporary file
       popTemporaryFile(pathnameT, verbose=verbose);
-  
+
       # Garbage collect
       gc <- gc();
       verbose && print(verbose, gc);
 
       pathname
     } ## %<=%
-    
+
     verbose && exit(verbose);
   } # for (kk in ...)
 

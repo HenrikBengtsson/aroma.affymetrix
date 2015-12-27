@@ -226,7 +226,9 @@ setMethodS3("process", "LimmaBackgroundCorrection", function(this, ..., force=FA
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   nbrOfArrays <- length(ds);
   verbose && enter(verbose, "Adjusting ", nbrOfArrays, " arrays");
-  dataFiles <- list();
+
+  res <- listenv()
+
   for (kk in seq_along(ds)) {
     verbose && enter(verbose, sprintf("Array #%d of %d", kk, nbrOfArrays));
     df <- ds[[kk]];
@@ -243,6 +245,7 @@ setMethodS3("process", "LimmaBackgroundCorrection", function(this, ..., force=FA
     if (!force && isFile(pathname)) {
       verbose && cat(verbose, "Output data file already exists: ", pathname);
       verbose && exit(verbose);
+      res[[kk]] <- pathname
       next;
     }
 
@@ -254,64 +257,75 @@ setMethodS3("process", "LimmaBackgroundCorrection", function(this, ..., force=FA
       cells <- getSubsetToUpdate0(this, verbose=less(verbose, 10));
     }
 
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    # Reading data
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    verbose && enter(verbose, "Extracting data");
-    y <- extractMatrix(df, cells=cells, drop=TRUE);
-    verbose && str(verbose, y);
-    verbose && exit(verbose);
+    res[[kk]] %<=% {
+      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      # Reading data
+      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      verbose && enter(verbose, "Extracting data");
+      y <- extractMatrix(df, cells=cells, drop=TRUE);
+      verbose && str(verbose, y);
+      verbose && exit(verbose);
 
 
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    # Add jitter?
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    if (params$addJitter) {
-      y <- y + jitter;
-    }
+      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      # Add jitter?
+      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      if (params$addJitter) {
+        y <- y + jitter;
+      }
 
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    # Correct data
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    verbose && enter(verbose, "Calling backgroundCorrect() of limma");
-    args <- c(list(y), params$args);
-    verbose && str(verbose, args);
-    y <- do.call("backgroundCorrect", args=args);
-    verbose && str(verbose, y);
-    y <- y[,1,drop=TRUE];
-    verbose && str(verbose, y);
-    verbose && exit(verbose);
+      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      # Correct data
+      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      verbose && enter(verbose, "Calling backgroundCorrect() of limma");
+      args <- c(list(y), params$args);
+      verbose && str(verbose, args);
+      y <- do.call(backgroundCorrect, args=args);
+      verbose && str(verbose, y);
+      y <- y[,1,drop=TRUE];
+      verbose && str(verbose, y);
+      verbose && exit(verbose);
 
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    # Storing data
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    verbose && enter(verbose, "Storing corrected data");
+      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      # Storing data
+      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      verbose && enter(verbose, "Storing corrected data");
 
-    # Write to a temporary file (allow rename of existing one if forced)
-    isFile <- (force && isFile(pathname));
-    pathnameT <- pushTemporaryFile(pathname, isFile=isFile, verbose=verbose);
+      # Write to a temporary file (allow rename of existing one if forced)
+      isFile <- (force && isFile(pathname));
+      pathnameT <- pushTemporaryFile(pathname, isFile=isFile, verbose=verbose);
 
-    # Create CEL file to store results, if missing
-    verbose && enter(verbose, "Creating CEL file for results, if missing");
-    createFrom(df, filename=pathnameT, path=NULL, verbose=less(verbose));
-    verbose && exit(verbose);
+      # Create CEL file to store results, if missing
+      verbose && enter(verbose, "Creating CEL file for results, if missing");
+      createFrom(df, filename=pathnameT, path=NULL, verbose=less(verbose));
+      verbose && exit(verbose);
 
-    # Write calibrated data to file
-    verbose2 <- -as.integer(verbose)-2;
-    .updateCel(pathnameT, indices=cells, intensities=y, verbose=verbose2);
-    # Not needed anymore
-    y <- verbose2 <- NULL;
+      # Write calibrated data to file
+      verbose2 <- -as.integer(verbose)-2;
+      .updateCel(pathnameT, indices=cells, intensities=y, verbose=verbose2);
+      # Not needed anymore
+      y <- verbose2 <- NULL;
 
-    # Rename temporary file
-    popTemporaryFile(pathnameT, verbose=verbose);
+      # Rename temporary file
+      popTemporaryFile(pathnameT, verbose=verbose);
 
-    verbose && exit(verbose);
+      verbose && exit(verbose);
+
+      pathname
+    } ## %<=%
 
     # Not needed anymore
     df <- NULL;
     verbose && exit(verbose);
   } # for (kk ...)
   verbose && exit(verbose);
+
+  ## Not needed anymore
+  cells <- jitter <- NULL
+
+  ## Resolve futures
+  res <- as.list(res)
+  res <- NULL
 
   outputDataSet <- getOutputDataSet(this, force=TRUE);
 

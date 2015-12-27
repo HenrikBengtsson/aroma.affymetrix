@@ -31,9 +31,7 @@ for (strategy in strategies) {
 
   bg <- GcRmaBackgroundCorrection(csR, tags=tags)
   print(bg)
-  withSeed({
-    csB <- process(bg, verbose=verbose)
-  }, seed=0xBEEF)
+  csB <- process(bg, seed=0xBEEF, verbose=verbose)
   print(csB)
 
   csBz <- getChecksumFileSet(csB)

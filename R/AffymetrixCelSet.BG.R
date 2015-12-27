@@ -13,8 +13,11 @@
 # \arguments{
 #   \item{nbrOfPms}{The number of random PMs to use in estimation.}
 #   \item{affinities}{A @numeric @vector of probe affinities.}
-#   \item{path}{If an affinities vector is not specified,
-#      gives the path to a file storing the affinities.}
+#   \item{seed}{An (optional) @integer specifying the random seed to be
+#     set before calling the segmentation method.  The random seed is
+#     set to its original state when exiting.  If @NULL, it is not set.}
+#   \item{...}{Not used.}
+#   \item{verbose}{See @see "R.utils::Verbose".}
 # }
 #
 # \details{
@@ -23,7 +26,7 @@
 #
 # @author "KS"
 #*/###########################################################################
-setMethodS3("calculateParametersGsb", "AffymetrixCelSet", function(this, nbrOfPms=25000, affinities=NULL, ..., verbose=FALSE) {
+setMethodS3("calculateParametersGsb", "AffymetrixCelSet", function(this, nbrOfPms=25000, affinities=NULL, seed=NULL, ..., verbose=FALSE) {
   if (is.null(affinities)) {
     throw("DEPRECATED: Argument 'affinities' to calculateParametersGsb() must not be NULL.");
   }
@@ -39,6 +42,11 @@ setMethodS3("calculateParametersGsb", "AffymetrixCelSet", function(this, nbrOfPm
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Argument 'seed':
+  if (!is.null(seed)) {
+    seed <- Arguments$getInteger(seed);
+  }
+
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
   if (verbose) {
@@ -48,6 +56,17 @@ setMethodS3("calculateParametersGsb", "AffymetrixCelSet", function(this, nbrOfPm
 
 
   cdf <- getCdf(this);
+
+  verbose && enter(verbose, "Computing parameters for adjustment of specific binding");
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Set the random seed
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  if (!is.null(seed)) {
+    randomSeed("set", seed=seed, kind="L'Ecuyer-CMRG")
+    on.exit(randomSeed("reset"), add=TRUE)
+    verbose && printf(verbose, "Random seed temporarily set (seed=%d, kind=\"L'Ecuyer-CMRG\")\n", seed)
+  }
 
   verbose && enter(verbose, "Extracting PM indices");
   cells <- getCellIndices(cdf, useNames=FALSE, unlist=TRUE, verbose=less(verbose,2));
@@ -119,6 +138,8 @@ setMethodS3("calculateParametersGsb", "AffymetrixCelSet", function(this, nbrOfPm
   verbose && str(verbose, aff);
   fit1 <- lm(pm.random2 ~ aff);
   verbose && print(verbose, fit1);
+  verbose && exit(verbose);
+
   verbose && exit(verbose);
 
   verbose && exit(verbose);

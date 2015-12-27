@@ -107,38 +107,46 @@ setMethodS3("fitCnProbes", "UnitModel", function(this, ..., verbose=FALSE) {
   # "Fitting"
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   verbose && enter(verbose, "Fitting ", length(ds), " arrays");
+  res <- listenv()
+
   for (kk in seq_along(ds)) {
     df <- ds[[kk]];
+    cef <- ces[[kk]];
     verbose && enter(verbose, sprintf("Array #%d ('%s') of %d", kk, getName(df), length(ds)));
 
-    verbose && enter(verbose, "Reading signals");
-    cef <- ces[[kk]];
-    y <- extractMatrix(df, cells=cells, drop=TRUE);
-    stopifnot(length(y) == length(cells));
-    verbose && str(verbose, y);
-    verbose && exit(verbose);
+    res[[kk]] %<=% {
+      verbose && enter(verbose, sprintf("fitCnProbes(): Array '%s'", getName(df)));
 
-    # Shift?
-    if (shift != 0) {
-      verbose && enter(verbose, "Shifting signals");
-      y <- y + shift;
+      verbose && enter(verbose, "Reading signals");
+      y <- extractMatrix(df, cells=cells, drop=TRUE);
+      stopifnot(length(y) == length(cells));
       verbose && str(verbose, y);
       verbose && exit(verbose);
-    }
 
-    verbose && enter(verbose, "Transforming signals to estimates");
-    sdTheta <- .Machine$float.eps;  # Smallest float > 0.
-    data <- data.frame(cell=cellsM, theta=y, sdTheta=sdTheta, outliers=FALSE);
-    # Not needed anymore
-    y <- NULL;
-    verbose && str(verbose, data);
-    verbose && exit(verbose);
+      # Shift?
+      if (shift != 0) {
+        verbose && enter(verbose, "Shifting signals");
+        y <- y + shift;
+        verbose && str(verbose, y);
+        verbose && exit(verbose);
+      }
 
-    verbose && enter(verbose, "Writing estimates");
-    updateDataFlat(cef, data=data, verbose=verbose);
-    # Not needed anymore
-    data <- NULL;
-    verbose && exit(verbose);
+      verbose && enter(verbose, "Transforming signals to estimates");
+      sdTheta <- .Machine$float.eps;  # Smallest float > 0.
+      data <- data.frame(cell=cellsM, theta=y, sdTheta=sdTheta, outliers=FALSE);
+      # Not needed anymore
+      y <- NULL;
+      verbose && str(verbose, data);
+      verbose && exit(verbose);
+
+      verbose && enter(verbose, "Writing estimates");
+      updateDataFlat(cef, data=data, verbose=verbose);
+      # Not needed anymore
+      data <- NULL;
+      verbose && exit(verbose);
+
+      verbose && exit(verbose);
+    } # %<=%
 
     verbose && exit(verbose);
   } # for (kk ...)

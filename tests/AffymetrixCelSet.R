@@ -1,5 +1,10 @@
 library("aroma.affymetrix")
 
+## Empty CEL set
+ds <- AffymetrixCelSet()
+print(ds)
+
+
 if (setupExampleData(aroma.affymetrix, mustWork=FALSE)) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # CDF file

@@ -58,6 +58,7 @@ setMethodS3("getUnitTypesFile", "AffymetrixCdfFile", function(this, ...) {
 
 setMethodS3("getFileFormat", "AffymetrixCdfFile", function(this, ...) {
   pathname <- getPathname(this);
+  if (!isFile(pathname)) return(NA_character_)
 
   # Read CDF header
   raw <- readBin(pathname, what=raw(), n=10);
@@ -71,8 +72,7 @@ setMethodS3("getFileFormat", "AffymetrixCdfFile", function(this, ...) {
   if (rawToChar(raw[1:5]) == "[CDF]")
     return("v3 (text; ASCII)");
 
-  naValue <- as.character(NA);
-  return(naValue);
+  NA_character_
 })
 
 
@@ -243,7 +243,7 @@ setMethodS3("findByChipType", "AffymetrixCdfFile", function(static, chipType, ta
     pattern=sprintf("^%s%s$", fullname, extPattern),
     ...
   );
-  pathname <- do.call("findAnnotationDataByChipType", args=args);
+  pathname <- do.call(findAnnotationDataByChipType, args=args);
 
   # If not found, look for Windows shortcuts
   if (is.null(pathname)) {
@@ -253,7 +253,7 @@ setMethodS3("findByChipType", "AffymetrixCdfFile", function(static, chipType, ta
       pattern=sprintf("^%s%s[.]lnk$", fullname, extPattern),
       ...
     );
-    pathname <- do.call("findAnnotationDataByChipType", args=args);
+    pathname <- do.call(findAnnotationDataByChipType, args=args);
     if (!is.null(pathname)) {
       # ..and expand it
       pathname <- Arguments$getReadablePathname(pathname, mustExist=FALSE);
@@ -294,9 +294,13 @@ setMethodS3("findByChipType", "AffymetrixCdfFile", function(static, chipType, ta
 # @keyword IO
 #*/###########################################################################
 setMethodS3("getHeader", "AffymetrixCdfFile", function(this, ...) {
-  if (is.null(header <- this$.header))
-    header <- this$.header <- .readCdfHeader(getPathname(this));
-  header;
+  header <- this$.header
+  if (is.null(header)) {
+    if (!isFile(this)) return(NULL)
+    header <- .readCdfHeader(getPathname(this))
+    this$.header <- header
+  }
+  header
 }, private=TRUE)
 
 
@@ -306,6 +310,7 @@ setMethodS3("getPlatform", "AffymetrixCdfFile", function(this, ...) {
 
 
 setMethodS3("getChipType", "AffymetrixCdfFile", function(this, fullname=TRUE, ...) {
+  if (!isFile(this)) return(NA_character_)
   chipType <- getHeader(this)$chiptype;
 
   # Get the main chip type?
@@ -333,6 +338,7 @@ setMethodS3("getChipType", "AffymetrixCdfFile", function(this, fullname=TRUE, ..
 })
 
 setMethodS3("getDimension", "AffymetrixCdfFile", function(this, ...) {
+  if (!isFile(this)) return(c(NA_integer_, NA_integer_))
   header <- getHeader(this);
   c(nbrOfRows=header$rows, nbrOfColumns=header$cols);
 })

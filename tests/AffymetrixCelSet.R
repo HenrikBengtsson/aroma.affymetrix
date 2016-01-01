@@ -4,6 +4,16 @@ library("aroma.affymetrix")
 ds <- AffymetrixCelSet()
 print(ds)
 
+## Extract non-existing subset on empty set
+## FIXME
+##dsT <- extract(ds, "foo", onMissing="NA")
+##print(dsT)
+
+## CEL set with non-existing CEL file
+files <- list(AffymetrixCelFile())
+ds <- AffymetrixCelSet(files)
+print(ds)
+
 
 if (setupExampleData(aroma.affymetrix, mustWork=FALSE)) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

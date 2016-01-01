@@ -8,7 +8,7 @@ setMethodS3("getIdentifier", "AffymetrixFileSet", function(this, ...) {
       # Remove comments
       res <- trim(gsub("#.*", "", trim(res)));
       # Remove empty lines
-      res <- res[nchar(res) > 0];
+      res <- res[nzchar(res)];
       break;
     }
     path <- dirname(path);

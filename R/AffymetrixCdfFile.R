@@ -1637,7 +1637,7 @@ setMethodS3("validate", "AffymetrixCdfFile", function(this, ...) {
   # o HTHGU133A_Hs_ENTREZG.cdf (v 12.0.0) [as above]
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   unitNames <- getUnitNames(this);
-  assertUnits(((ns == 0L) & (nchar(unitNames) == 0L)), "%d unit(s) (i.e. %s) with zero unit groups and empty unit names: %s");
+  assertUnits(((ns == 0L) & (!nzchar(unitNames))), "%d unit(s) (i.e. %s) with zero unit groups and empty unit names: %s");
 
 
   invisible(this);

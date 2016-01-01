@@ -10,7 +10,7 @@ setMethodS3("findByCdf2", "default", function(chipType, tags=NULL, nbrOfUnits=NU
     tags <- Arguments$getCharacters(tags);
     tags <- unlist(strsplit(tags, split=",", fixed=FALSE), use.names=FALSE);
     tags <- trim(tags);
-    tags <- tags[nchar(tags) > 0];
+    tags <- tags[nzchar(tags)];
     if (length(tags) == 0)
       tags <- NULL;
   }
@@ -28,7 +28,7 @@ setMethodS3("findByCdf2", "default", function(chipType, tags=NULL, nbrOfUnits=NU
   if (verbose) {
     pushState(verbose);
     on.exit(popState(verbose));
-  } 
+  }
 
   # Generate all possible fullname 'chipTypes' and search for the existance
   # of a CDF with the longest name.
@@ -53,7 +53,7 @@ setMethodS3("findByCdf2", "default", function(chipType, tags=NULL, nbrOfUnits=NU
         }
       }
     }, error = function(ex) {})
-  
+
     # Found a CDF?
     if (!is.null(cdf)) {
       pathnames <- c(pathnames, getPathname(cdf));

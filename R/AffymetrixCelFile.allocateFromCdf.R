@@ -46,7 +46,7 @@ setMethodS3("allocateFromCdf", "AffymetrixCelFile", function(static, cdf, name, 
   # Argument 'tags':
   tags <- Arguments$getCharacters(tags);
   tags <- trim(tags);
-  tags <- tags[nchar(tags) > 0];
+  tags <- tags[nzchar(tags)];
 
   fullname <- paste(c(name, tags), collapse=",");
   parts <- unlist(strsplit(fullname, split=","));

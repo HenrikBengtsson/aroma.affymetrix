@@ -203,7 +203,7 @@ setMethodS3("getTags", "GenericReporter", function(this, collapse=NULL, ...) {
   tags[tags == "*"] <- getAsteriskTags(this, collapse=",");
 
   # Keep non-empty tags
-  tags <- tags[nchar(tags) > 0];
+  tags <- tags[nzchar(tags)];
 
   tags <- locallyUnique(tags);
 
@@ -258,7 +258,7 @@ setMethodS3("getMainPath", "GenericReporter", function(this, ...) {
 
   # Tags
   tags <- getTags(this, collapse=",");
-  if (length(tags) == 0 || nchar(tags) == 0) {
+  if (length(tags) == 0 || !nzchar(tags)) {
     tags <- "raw";  # Default
   }
 

@@ -6,7 +6,7 @@ setMethodS3("writeCdfByExcludingCells", "AffymetrixCdfFile", function(this, tags
 
   # Argument 'tags':
   tags <- Arguments$getCharacters(tags);
-  tags <- tags[nchar(tags) > 0];
+  tags <- tags[nzchar(tags)];
 
   # Argument 'cellsToExclude':
   cellsToExclude <- Arguments$getIndices(cellsToExclude, max=maxNbrOfCells);

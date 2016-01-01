@@ -48,7 +48,7 @@ setMethodS3("convertToUnique", "AffymetrixCelSet", function(this, ..., tags="*",
   verbose && cat(verbose, "User tags: ", tags);
 
   tags <- c(srcTags, tags);
-  tags <- tags[nchar(tags) > 0];
+  tags <- tags[nzchar(tags)];
   tags <- paste(tags, collapse=",");
   verbose && cat(verbose, "Output tags: ", tags);
 

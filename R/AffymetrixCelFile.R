@@ -54,7 +54,7 @@ setConstructorS3("AffymetrixCelFile", function(..., cdf=NULL) {
   if (!is.null(pathname)) {
     # Make sure the name is non-empty
     name <- getName(this);
-    if (nchar(name) == 0) {
+    if (!nzchar(name)) {
       throw("An ", class(this)[1], " must have a name of at least length one: ", pathname);
     }
   }

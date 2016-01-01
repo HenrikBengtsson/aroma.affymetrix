@@ -1,5 +1,10 @@
 library("aroma.affymetrix")
 
 ## Empty CEL file
-ds <- AffymetrixCelFile()
-print(ds)
+df <- AffymetrixCelFile()
+print(df)
+
+## Missing CEL file
+df <- AffymetrixCelFile(NA_character_, mustExist=FALSE)
+print(df)
+

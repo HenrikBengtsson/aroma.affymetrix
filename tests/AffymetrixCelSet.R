@@ -6,8 +6,11 @@ print(ds)
 
 ## Extract non-existing subset on empty set
 ## FIXME
-##dsT <- extract(ds, "foo", onMissing="NA")
-##print(dsT)
+if (FALSE) {
+  ds <- AffymetrixCelSet()
+  dsT <- extract(ds, "foo", onMissing="NA")
+  print(dsT)
+}
 
 ## CEL set with non-existing CEL file
 if (packageVersion("R.filesets") >= "2.9.0-9000") {

@@ -84,28 +84,30 @@ setMethodS3("getExtensionPattern", "AffymetrixCelFile", function(static, ...) {
 
 
 setMethodS3("getFileFormat", "AffymetrixCelFile", function(this, asString=TRUE, ...) {
-  pathname <- getPathname(this);
+  # Default
+  ver <- NA_integer_
+  verStr <- NA_character_
 
-  # Read CEL header
-  raw <- readBin(pathname, what=raw(), n=10);
+  pathname <- getPathname(this)
+  if (isFile(pathname)) {
+    # Read CEL header
+    raw <- readBin(pathname, what=raw(), n=10)
 
-  if (raw[1] == 59) {
-    ver <- 1;
-    verStr <- "v1 (binary; CC)";
-  } else if (raw[1] == 64) {
-    ver <- 4;
-    verStr <- "v4 (binary; XDA)";
-  } else if (rawToChar(raw[1:5]) == "[CEL]") {
-    ver <- 3;
-    verStr <- "v3 (text; ASCII)";
-  } else {
-    verStr <- ver <- NA;
+    if (raw[1] == 59) {
+      ver <- 1L
+      verStr <- "v1 (binary; CC)"
+    } else if (raw[1] == 64) {
+      ver <- 4L
+      verStr <- "v4 (binary; XDA)"
+    } else if (rawToChar(raw[1:5]) == "[CEL]") {
+      ver <- 3L
+      verStr <- "v3 (text; ASCII)"
+    }
   }
 
-  if (asString)
-    ver <- verStr;
+  if (asString) ver <- verStr
 
-  ver;
+  ver
 })
 
 setMethodS3("as.character", "AffymetrixCelFile", function(x, ...) {
@@ -122,8 +124,10 @@ setMethodS3("as.character", "AffymetrixCelFile", function(x, ...) {
 
 
 setMethodS3("getIdentifier", "AffymetrixCelFile", function(this, ..., force=FALSE) {
-  identifier <- this$.identifier;
+  identifier <- this$.identifier
   if (force || is.null(identifier)) {
+    if (!isFile(this)) return(NA_character_)
+
     # Get header
     hdr <- getHeader(this);
 
@@ -247,6 +251,8 @@ setMethodS3("fromFile", "AffymetrixCelFile", function(static, filename, path=NUL
 setMethodS3("getCdf", "AffymetrixCelFile", function(this, ...) {
   cdf <- this$.cdf;
   if (is.null(cdf)) {
+    if (!isFile(this)) return(AffymetrixCdfFile())
+
     hdr <- getHeader(this);
     chipType <- hdr$chiptype;
     nbrOfCells <- hdr$total;
@@ -339,6 +345,7 @@ setMethodS3("setCdf", "AffymetrixCelFile", function(this, cdf, ..., .checkArgs=T
 #
 # \value{
 #  Returns a @list structure as returned by @see "affxparser::readCelHeader".
+#  If file does not exists, then @NULL is returned.
 # }
 #
 # @author "HB"
@@ -351,7 +358,7 @@ setMethodS3("setCdf", "AffymetrixCelFile", function(this, cdf, ..., .checkArgs=T
 #*/###########################################################################
 setMethodS3("getHeader", "AffymetrixCelFile", function(this, ...) {
   header <- this$.header;
-  if (is.null(header)) {
+  if (is.null(header) && isFile(this)) {
     pathname <- getPathname(this);
     header <- .readCelHeader(pathname);
     this$.header <- header;
@@ -361,6 +368,8 @@ setMethodS3("getHeader", "AffymetrixCelFile", function(this, ...) {
 
 
 setMethodS3("getHeaderV3", "AffymetrixCelFile", function(this, ...) {
+  if (!isFile(this)) return(NULL)
+
   # Get the CEL header
   header <- getHeader(this);
 
@@ -485,6 +494,7 @@ setMethodS3("getTimestamp", "AffymetrixCelFile", function(this, format="%m/%d/%y
   # Argument 'format':
   format <- Arguments$getCharacter(format, length=c(1,1));
 
+  if (!isFile(this)) return(as.POSIXct(NA))
 
   chipType <- getHeader(this)$chiptype;
 
@@ -521,7 +531,9 @@ setMethodS3("getTimestamp", "AffymetrixCelFile", function(this, format="%m/%d/%y
 
 
 setMethodS3("nbrOfCells", "AffymetrixCelFile", function(this, ...) {
-  getHeader(this)$total;
+  hdr <- getHeader(this)
+  if (!is.list(hdr)) return(NA_integer_)
+  hdr$total
 })
 
 
@@ -554,6 +566,7 @@ setMethodS3("nbrOfCells", "AffymetrixCelFile", function(this, ...) {
 #*/###########################################################################
 setMethodS3("getChipType", "AffymetrixCelFile", function(this, ...) {
   unf <- getUnitNamesFile(this);
+  if (!isFile(unf)) return(NA_character_)
   getChipType(unf, ...);
 }, private=TRUE)
 

@@ -1,17 +1,7 @@
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # DEFUNCT
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-## Defunct since 2015-10-21 (aroma.affymetrix 2.14.0)
-setMethodS3("getParameterSet", "Model", function(this, ...) {
-  .Defunct("getParameters");
-}, protected=TRUE, deprecated=TRUE)
-
-setMethodS3("getExpectedOutputFiles", "MatSmoothing", function(this, ...) {
-  .Defunct("getExpectedOutputFullnames");
-}, protected=TRUE, deprecated=TRUE)
-
-
-## Defunct since 2015-11-19 (aroma.affymetrix 2.14.0-9000)
+## Defunct since aroma.affymetrix 3.0.0 (Jan 2016)
 setMethodS3("bgAdjustRma", "AffymetrixCelFile", function(this, path, pmonly=TRUE, addJitter=FALSE, jitterSd=0.2, overwrite=FALSE, skip=!overwrite, ..., verbose=FALSE, .deprecated=TRUE) {
   .Defunct("RmaBackgroundCorrection")
 }, private=TRUE, deprecated=TRUE)

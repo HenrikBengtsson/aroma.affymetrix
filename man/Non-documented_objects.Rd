@@ -572,7 +572,6 @@
 \alias{getExpandedCellMap.ChipEffectFile}
 \alias{getExpandedCellMap.CnChipEffectFile}
 \alias{getExpandedCellMap.SnpChipEffectFile}
-\alias{getExpectedOutputFiles.MatSmoothing}
 \alias{getExpectedOutputFullnames.MatSmoothing}
 \alias{getExtensionPattern.AffymetrixCdfFile}
 \alias{getExtensionPattern.AffymetrixCelFile}
@@ -731,8 +730,6 @@
 \alias{getOutputTuple.SmoothMultiarrayModel}
 \alias{getParameter}
 \alias{getParameter.AffymetrixAptSummaryFile}
-\alias{getParameterSet}
-\alias{getParameterSet.Model}
 \alias{getParameters.AbstractProbeSequenceNormalization}
 \alias{getParameters.AdditiveCovariatesNormalization}
 \alias{getParameters.AllelicCrosstalkCalibration}

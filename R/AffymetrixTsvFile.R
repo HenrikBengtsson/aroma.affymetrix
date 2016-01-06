@@ -4,9 +4,7 @@ setConstructorS3("AffymetrixTsvFile", function(...) {
     "cached:.cdf" = NULL,
     "cached:.data" = NULL
   )
-  pathname <- getPathname(this)
-  if (!is.null(pathname) && !is.na(pathname))
-    verify(this)
+  if (isFile(this)) verify(this)
   this
 })
 

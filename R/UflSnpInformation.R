@@ -2,11 +2,7 @@ setConstructorS3("UflSnpInformation", function(..., .ufl=NULL, .verify=TRUE) {
   this <- extend(SnpInformation(...), "UflSnpInformation",
     .ufl = .ufl
   )
-  if (.verify) {
-    pathname <- getPathname(this)
-    if (!is.null(pathname) && !is.na(pathname))
-      verify(this)
-  }
+  if (.verify && isFile(this)) verify(this)
   this
 })
 

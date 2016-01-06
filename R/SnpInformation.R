@@ -24,9 +24,7 @@ setConstructorS3("SnpInformation", function(...) {
                                              , uses("FileCacheKeyInterface")),
     "cached:.data" = NULL
   )
-  pathname <- getPathname(this)
-  if (!is.null(pathname) && !is.na(pathname))
-    verify(this)
+  if (isFile(this)) verify(this)
   this
 })
 

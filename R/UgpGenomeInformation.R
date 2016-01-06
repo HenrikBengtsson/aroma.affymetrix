@@ -27,11 +27,7 @@ setConstructorS3("UgpGenomeInformation", function(..., .ugp=NULL, .verify=TRUE) 
   this <- extend(GenomeInformation(..., .verify=FALSE), "UgpGenomeInformation",
     "cached:.ugp" = .ugp
   )
-  if (.verify) {
-    pathname <- getPathname(this)
-    if (!is.null(pathname) && !is.na(pathname))
-      verify(this)
-  }
+  if (.verify && isFile(this)) verify(this)
   this
 })
 

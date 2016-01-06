@@ -39,9 +39,7 @@
 #*/###########################################################################
 setConstructorS3("DChipGenomeInformation", function(...) {
   this <- extend(GenomeInformation(...), "DChipGenomeInformation")
-  pathname <- getPathname(this)
-  if (!is.null(pathname) && !is.na(pathname))
-    verify(this)
+  if (isFile(this)) verify(this)
   this
 })
 

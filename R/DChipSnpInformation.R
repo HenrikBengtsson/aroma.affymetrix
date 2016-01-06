@@ -40,9 +40,7 @@
 #*/###########################################################################
 setConstructorS3("DChipSnpInformation", function(...) {
   this <- extend(SnpInformation(...), "DChipSnpInformation")
-  pathname <- getPathname(this)
-  if (!is.null(pathname) && !is.na(pathname))
-    verify(this)
+  if (isFile(this)) verify(this)
   this
 })
 

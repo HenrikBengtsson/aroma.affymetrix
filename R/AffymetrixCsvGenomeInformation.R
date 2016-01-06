@@ -1,9 +1,7 @@
 # @author "HB"
 setConstructorS3("AffymetrixCsvGenomeInformation", function(...) {
   this <- extend(GenomeInformation(...), "AffymetrixCsvGenomeInformation")
-  pathname <- getPathname(this)
-  if (!is.null(pathname) && !is.na(pathname))
-    verify(this)
+  if (isFile(this)) verify(this)
   this
 })
 

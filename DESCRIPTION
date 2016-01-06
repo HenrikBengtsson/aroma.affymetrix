@@ -3,7 +3,7 @@ Version: 2.14.1-9000
 Depends:
   R (>= 3.1.2),
   R.utils (>= 2.2.0),
-  aroma.core (>= 2.14.0)
+  aroma.core (>= 3.0.0)
 Imports:
   methods,
   R.methodsS3 (>= 1.7.0),
@@ -44,7 +44,7 @@ SuggestsNote:
   affxparser,
   DNAcopy
 Additional_repositories: http://r-forge.r-project.org
-Date: 2016-01-05
+Date: 2016-01-06
 Title: Analysis of Large Affymetrix Microarray Data Sets
 Authors@R: c(
   person("Henrik", "Bengtsson", role=c("aut", "cre", "cph"),

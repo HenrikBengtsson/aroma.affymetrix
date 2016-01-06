@@ -10,11 +10,9 @@ dsT <- extract(ds, "foo", onMissing="NA")
 print(dsT)
 
 ## CEL set with non-existing CEL file
-if (packageVersion("R.filesets") >= "2.9.0-9000") {
-  files <- list(AffymetrixCelFile())
-  ds <- AffymetrixCelSet(files)
-  print(ds)
-}
+files <- list(AffymetrixCelFile())
+ds <- AffymetrixCelSet(files)
+print(ds)
 
 
 if (setupExampleData(aroma.affymetrix, mustWork=FALSE)) {

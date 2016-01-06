@@ -12,6 +12,8 @@ o ROBUSTNESS: MatNormalization did not create CEL files atomically.
 o ROBUSTNESS: Using do.call(fcn) internally instead of do.call("fcn").
 o REPRODUCIBILITY: GcRmaBackgroundCorrection(), LimmaBackgroundCorrection(),
   and RmaBackgroundCorrection() gained argument 'seed'.
+o CLEANUP: Warnings on "is.na() applied to non-(list or vector) of 
+  type 'NULL'" are no longer generated.
 o CLEANUP: Formally defunct'ed bgAdjustRma(), bgAdjustGcrma(), 
   bgAdjustOptical() for AffymetrixCelFile/AffymetrixCelSet since they
   have effectively been defunct'ed in the public API for years.  These

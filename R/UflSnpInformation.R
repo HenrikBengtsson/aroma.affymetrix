@@ -4,7 +4,7 @@ setConstructorS3("UflSnpInformation", function(..., .ufl=NULL, .verify=TRUE) {
   )
   if (.verify) {
     pathname <- getPathname(this)
-    if (!is.na(pathname) && !is.null(pathname))
+    if (!is.null(pathname) && !is.na(pathname))
       verify(this)
   }
   this

@@ -40,7 +40,7 @@
 setConstructorS3("DChipGenomeInformation", function(...) {
   this <- extend(GenomeInformation(...), "DChipGenomeInformation")
   pathname <- getPathname(this)
-  if (!is.na(pathname) && !is.null(pathname))
+  if (!is.null(pathname) && !is.na(pathname))
     verify(this)
   this
 })

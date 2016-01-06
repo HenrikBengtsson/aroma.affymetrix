@@ -41,7 +41,7 @@
 setConstructorS3("DChipSnpInformation", function(...) {
   this <- extend(SnpInformation(...), "DChipSnpInformation")
   pathname <- getPathname(this)
-  if (!is.na(pathname) && !is.null(pathname))
+  if (!is.null(pathname) && !is.na(pathname))
     verify(this)
   this
 })

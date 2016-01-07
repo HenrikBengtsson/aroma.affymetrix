@@ -3,7 +3,7 @@
 #
 # Author: Henrik Bengtsson
 # Created on: 2012-06-15
-# Last updated: 2012-09-02
+# Last updated: 2016-01-06
 ##########################################################################
 library("aroma.affymetrix");
 library("calmate");
@@ -17,6 +17,7 @@ dataSet <- "GSE12702";
 chipType <- "Mapping250K_Nsp";
 
 csR <- AffymetrixCelSet$byName(dataSet, chipType=chipType);
+csR <- csR[1:12]
 print(csR);
 
 

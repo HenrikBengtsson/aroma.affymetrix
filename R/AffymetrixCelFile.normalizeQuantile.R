@@ -132,6 +132,9 @@ setMethodS3("normalizeQuantile", "AffymetrixCelFile", function(this, path=file.p
   # CDF inheritance
   setCdf(res, cdf);
 
+  ## Create checksum file
+  resZ <- getChecksumFile(res)
+
   res;
 }, private=TRUE)
 

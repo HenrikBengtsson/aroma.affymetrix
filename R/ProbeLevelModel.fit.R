@@ -538,6 +538,11 @@ setMethodS3("fit", "ProbeLevelModel", function(this, units="remaining", ..., for
     verbose && exit(verbose);
   } # for (tt ...)  # For each unit types...
 
+
+  ## Generate checksum files
+  pafZ <- getChecksumFile(paf)
+  cesZ <- getChecksumFileSet(ces)
+
   verbose && exit(verbose);
 
   invisible(units);

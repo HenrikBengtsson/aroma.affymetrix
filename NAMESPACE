@@ -15,6 +15,7 @@ importFrom("R.oo", "Package")
 importFrom("R.utils", "GenericSummary")
 importFrom("R.utils", "Options")
 importFrom("R.utils", "ProgressBar")
+importFrom("R.filesets", "getChecksumFile")
 importFrom("R.filesets", "GenericDataFile")
 importFrom("R.filesets", "GenericDataFileSet")
 importFrom("R.filesets", "TabularTextFile")
@@ -1598,5 +1599,3 @@ S3method("writeRegions", "profileCGH")
 S3method("writeSgr", "AffymetrixCelSet")
 S3method("writeSignals", "ProbeLevelTransform3")
 S3method("writeWig", "CnChipEffectSet")
-
-

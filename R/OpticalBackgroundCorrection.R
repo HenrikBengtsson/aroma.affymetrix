@@ -193,6 +193,9 @@ setMethodS3("process", "OpticalBackgroundCorrection", function(this, ..., force=
       dfOut <- newInstance(df, pathname)
       setCdf(dfOut, cdf)
 
+      ## Create checksum file
+      dfZ <- getChecksumFile(dfOut)
+
       verbose && exit(verbose)
 
       pathname

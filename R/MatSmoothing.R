@@ -615,6 +615,9 @@ setMethodS3("process", "MatSmoothing", function(this, ..., units=NULL, force=FAL
     # Rename temporary file
     popTemporaryFile(pathnameT, verbose=verbose);
 
+    ## Create checksum file
+    dfZ <- getChecksumFile(pathname)
+
     # Not needed anymore
     filename <- pathnameT <- NULL;
     verbose && exit(verbose);

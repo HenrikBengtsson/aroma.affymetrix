@@ -1023,6 +1023,9 @@ setMethodS3("process", "AllelicCrosstalkCalibration", function(this, ..., force=
       dfC <- newInstance(df, pathname)
       setCdf(dfC, cdf)
 
+      ## Create checksum file
+      dfCZ <- getChecksumFile(dfC)
+
       ## callHooks(sprintf("%s.onExit", hookName), df=df, dfC=dfC, ...);
 
       dfC

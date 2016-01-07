@@ -684,6 +684,9 @@ setMethodS3("process", "ReseqCrosstalkCalibration", function(this, ..., force=FA
     # Test if calibrated data file can be retrieved
     dfC <- newInstance(df, pathname);
 
+    ## Create checksum file
+    dfCZ <- getChecksumFile(dfC)
+
     # Not needed anymore
     df <- NULL; # Not needed anymore
 

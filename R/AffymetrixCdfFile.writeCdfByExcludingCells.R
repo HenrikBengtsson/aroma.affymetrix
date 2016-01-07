@@ -210,6 +210,9 @@ setMethodS3("writeCdfByExcludingCells", "AffymetrixCdfFile", function(this, tags
   cdfF <- newInstance(this, pathnameF);
   verbose && print(verbose, cdfF);
 
+  ## Create checksum file
+  cdfFZ <- getChecksumFile(cdfF)
+
   nbrOfCellsF <- length(cellsF);
   verbose && cat(verbose, "Number of cells in output CDF: %d", nbrOfCellsF);
   verbose && printf(verbose, "Number of cells excluded: %d (%.1f%%) of %d\n", nbrOfCells-nbrOfCellsF, 100*(nbrOfCells-nbrOfCellsF)/nbrOfCells, nbrOfCells);

@@ -741,7 +741,12 @@ setMethodS3("process", "MatNormalization", function(this, ..., ram=NULL, force=F
       verbose && print(verbose, gc)
 
       # Rename temporary file
-      popTemporaryFile(pathnameT, verbose=verbose)
+      pathname <- popTemporaryFile(pathnameT, verbose=verbose)
+
+      ## Create checksum file
+      dfZ <- getChecksumFile(pathname)
+
+      pathname
     } ## %<=%
 
     verbose && exit(verbose)

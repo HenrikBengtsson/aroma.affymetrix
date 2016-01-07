@@ -1323,7 +1323,12 @@ setMethodS3("convert", "AffymetrixCdfFile", function(this, chipType=getChipType(
   res <- .convertCdf(src, dest, ..., verbose=verbose2);
 
   # Return an AffymetrixCdfFile object for the new CDF
-  newInstance(this, dest);
+  cdf <- newInstance(this, dest)
+
+  ## Create checksum
+  cdfZ <- getChecksumFile(cdf)
+
+  cdf
 })
 
 

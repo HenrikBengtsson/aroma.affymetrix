@@ -467,6 +467,9 @@ setMethodS3("process", "ScaleNormalization", function(this, ..., skip=FALSE, for
     # Rename temporary file
     popTemporaryFile(pathnameT, verbose=verbose);
 
+    ## Create checksum file
+    dfZ <- getChecksumFile(pathname)
+
     verbose && exit(verbose);
 
     verbose && exit(verbose);

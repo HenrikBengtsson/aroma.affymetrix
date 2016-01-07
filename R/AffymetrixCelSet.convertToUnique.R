@@ -202,6 +202,9 @@ setMethodS3("convertToUnique", "AffymetrixCelSet", function(this, ..., tags="*",
         # Rename temporary file
         popTemporaryFile(pathnameT, verbose=verbose)
 
+        ## Create checksum file
+        dfZ <- getChecksumFile(pathname)
+
         pathname
       } ## %<=%
 

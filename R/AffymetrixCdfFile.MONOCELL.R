@@ -534,7 +534,12 @@ setMethodS3("createMonocellCdf", "AffymetrixCdfFile", function(this, chipType=ge
   verbose && exit(verbose);
 
   # Return an AffymetrixCdfFile object for the new CDF
-  newInstance(this, pathname);
+  cdfM <- newInstance(this, pathname)
+
+  ## Create checksum file
+  cdfMZ <- getChecksumFile(cdfM)
+
+  cdfM
 }, private=TRUE) # createMonocellCdf()
 
 

@@ -240,6 +240,9 @@ setMethodS3("process", "RmaBackgroundCorrection", function(this, ..., force=FALS
       # Rename temporary file
       popTemporaryFile(pathnameT, verbose=verbose)
 
+      ## Create checksum file
+      dfZ <- getChecksumFile(pathname)
+
       verbose && exit(verbose)
 
       # Not needed anymore

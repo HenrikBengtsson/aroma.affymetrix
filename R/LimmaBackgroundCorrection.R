@@ -332,6 +332,9 @@ setMethodS3("process", "LimmaBackgroundCorrection", function(this, ..., force=FA
       # Rename temporary file
       popTemporaryFile(pathnameT, verbose=verbose);
 
+      ## Create checksum file
+      dfZ <- getChecksumFile(pathname)
+
       verbose && exit(verbose);
 
       pathname

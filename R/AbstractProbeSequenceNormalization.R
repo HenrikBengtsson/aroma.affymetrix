@@ -230,6 +230,7 @@ setMethodS3("process", "AbstractProbeSequenceNormalization", function(this, ...,
     verbose && cat(verbose, "Already normalized");
     verbose && exit(verbose);
     outputDataSet <- getOutputDataSet(this);
+    ## FIXME: outputDataSetZ <- getChecksumFileSet(outputDataSet)
     return(invisible(outputDataSet));
   }
 
@@ -510,8 +511,11 @@ setMethodS3("process", "AbstractProbeSequenceNormalization", function(this, ...,
       # Validating by retrieving calibrated data file
       dfC <- newInstance(df, pathname);
 
+      ## Generate checksum file
+      dfCZ <- getChecksumFile(dfC)
+
       # Not needed anymore
-      dfC <- NULL;
+      dfC <- dfCZ <- NULL
 
       # Garbage collection
       gc <- gc();
@@ -536,7 +540,8 @@ setMethodS3("process", "AbstractProbeSequenceNormalization", function(this, ...,
   gc <- gc();
   verbose && print(verbose, gc);
 
-  outputDataSet <- getOutputDataSet(this, force=TRUE);
+  outputDataSet <- getOutputDataSet(this, force=TRUE)
+  ## FIXME: outputDataSetZ <- getChecksumFileSet(outputDataSet)
 
   verbose && exit(verbose);
 

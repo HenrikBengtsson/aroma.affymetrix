@@ -977,6 +977,9 @@ setMethodS3("process", "FragmentLengthNormalization", function(this, ..., force=
       # Rename temporary file
       popTemporaryFile(pathnameT, verbose=verbose);
 
+      ## Create checksum file
+      dfZ <- getChecksumFile(pathname)
+
       # Garbage collect
       gc <- gc();
       verbose && print(verbose, gc);

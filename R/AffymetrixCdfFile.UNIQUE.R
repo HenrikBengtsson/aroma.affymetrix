@@ -561,6 +561,9 @@ setMethodS3("createUniqueCdf", "AffymetrixCdfFile", function(this, chipType=getC
   stopifnot(length(cells) <= nbrOfCells(cdfU));
   stopifnot(identical(unique(diff(cells)), 1L));
 
+  ## Create checksum file
+  cdfUZ <- getChecksumFile(cdfU)
+
   verbose && exit(verbose);
 
   cdfU;

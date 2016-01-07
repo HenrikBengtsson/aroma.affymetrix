@@ -477,6 +477,10 @@ setMethodS3("bpmapCluster2Cdf", "default", function(pathname, chipType, tags=NUL
 
   # Rename temporary file
   popTemporaryFile(pathnameT, verbose=verbose);
+
+  ## Create checksum file
+  dfZ <- getChecksumFile(cdfPathname)
+
   verbose && exit(verbose);
   verbose && exit(verbose);
 

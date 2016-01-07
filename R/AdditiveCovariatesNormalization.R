@@ -837,7 +837,7 @@ setMethodS3("process", "AdditiveCovariatesNormalization", function(this, ..., fo
     popTemporaryFile(pathnameT, verbose=verbose);
 
     ## Create checksum
-    ceNZ <- getChecksumFile(pathame)
+    ceNZ <- getChecksumFile(pathname)
 
     # Garbage collect
     gc <- gc();

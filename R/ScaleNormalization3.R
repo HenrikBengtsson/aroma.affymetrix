@@ -292,6 +292,9 @@ setMethodS3("process", "ScaleNormalization3", function(this, ..., skip=FALSE, fo
     gc <- gc();
     verbose && print(verbose, gc);
 
+    ## Create checksum file
+    dfZ <- getChecksumFile(pathname)
+
     verbose && exit(verbose);
   } # for (kk ...)
   verbose && exit(verbose);

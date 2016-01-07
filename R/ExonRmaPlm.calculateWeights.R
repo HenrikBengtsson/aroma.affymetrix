@@ -69,6 +69,13 @@ setMethodS3("calculateWeights", "ExonRmaPlm", function(this, units=NULL, ram=NUL
     unitsToDo <- findUnitsTodo(ws, units=units);
   }
 
+  ## Already done?
+  if (length(unitsToDo) == 0) {
+    verbose && cat(verbose, "All weights already calculated. Skipping.")
+    verbose && exit(verbose)
+    return(invisible(ws))
+  }
+
   verbose && printf(verbose, "Number of units: %d\n", nbrOfUnits);
 
   unitsPerChunk <- ram * 100000/length(getDataSet(this));
@@ -133,6 +140,9 @@ setMethodS3("calculateWeights", "ExonRmaPlm", function(this, units=NULL, ram=NUL
   # Garbage collect
   gc <- gc();
   verbose && print(verbose, gc);
+
+  ## Generate checksum files
+  wsZ <- getChecksumFileSet(ws)
 
   verbose && exit(verbose);
 

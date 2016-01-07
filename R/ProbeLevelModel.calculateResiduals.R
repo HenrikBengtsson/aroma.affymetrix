@@ -298,6 +298,9 @@ setMethodS3("calculateResidualSet", "ProbeLevelModel", function(this, units=NULL
     # Rename temporary file
     popTemporaryFile(pathnameT, verbose=verbose);
 
+    ## Generate checksum file
+    dfZ <- getChecksumFile(pathname)
+
     verbose && exit(verbose);
 
 #    verbose && enter(verbose, "Verifying");

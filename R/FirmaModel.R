@@ -727,6 +727,9 @@ setMethodS3("fit", "FirmaModel", function(this, units="remaining", ..., ram=NULL
     printf(verbose, "Fraction of time spent on different tasks: Fitting: %.1f%%, Reading: %.1f%%, Writing: %.1f%%, Explicit garbage collection: %.1f%%\n", t["fit"], t["read"], t["writeFs"], t["gc"]);
   }
 
+  ## Create checksum files
+  fsZ <- getChecksumFileSet(fs)
+
   invisible(units);
 })
 

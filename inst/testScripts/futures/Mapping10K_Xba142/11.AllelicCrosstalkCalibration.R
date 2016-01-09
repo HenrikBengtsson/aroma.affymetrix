@@ -15,6 +15,7 @@ checksum <- NULL
 
 strategies <- list("lazy", "eager")
 if (future::supportsMulticore()) strategies <- c(strategies, "multicore")
+if (packageVersion("future") > "0.10.9") strategies <- c(strategies, "multisession")
 if (require("async")) {
   strategies <- c(strategies, "batchjobs")
   async::backend("local")

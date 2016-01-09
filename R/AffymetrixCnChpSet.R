@@ -217,37 +217,6 @@ setMethodS3("byPath", "AffymetrixCnChpSet", function(static, path, pattern="[.](
 
 
 
-
-###########################################################################/**
-# @RdocMethod nbrOfArrays
-#
-# @title "Gets the number of arrays in the file set"
-#
-# \description{
-#   @get "title".
-#   This is just a wrapper for \code{length()}.
-# }
-#
-# @synopsis
-#
-# \arguments{
-#  \item{...}{Not used.}
-# }
-#
-# \value{
-#   Returns an @integer.
-# }
-#
-# \seealso{
-#   @seeclass
-# }
-#*/###########################################################################
-setMethodS3("nbrOfArrays", "AffymetrixCnChpSet", function(this, ...) {
-  length(this, ...);
-}, protected=TRUE)
-
-
-
 ###########################################################################/**
 # @RdocMethod as.AffymetrixCnChpSet
 # @alias as.AffymetrixCnChpSet.list

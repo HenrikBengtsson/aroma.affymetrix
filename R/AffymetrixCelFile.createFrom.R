@@ -210,7 +210,7 @@ setMethodS3("createFrom", "AffymetrixCelFile", function(this, filename, path=NUL
       }
 
       # 3. Rename the temporary file
-      pathname <- popTemporaryFile(pathnameT, verbose=verbose);
+      popTemporaryFile(pathnameT, verbose=verbose);
 
       res <- newInstance(this, pathname);
 

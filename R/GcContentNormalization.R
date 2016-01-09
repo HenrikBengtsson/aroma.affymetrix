@@ -457,6 +457,10 @@ setMethodS3("process", "GcContentNormalization", function(this, ..., force=FALSE
     updateDataFlat(ceN, data=data, verbose=less(verbose));
     # Not needed anymore
     data <- NULL;
+
+    ## Create checksum file
+    ceNZ <- getChecksumFile(ceN)
+
     verbose && exit(verbose);
 
     # Garbage collect

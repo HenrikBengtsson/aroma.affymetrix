@@ -187,7 +187,7 @@ setMethodS3("getOutputDataSet00", "FragmentEquivalentClassNormalization", functi
   verbose && str(verbose, args);
 
   args$verbose <- less(verbose, 10);
-  res <- do.call("NextMethod", args);
+  res <- do.call(NextMethod, args);
 
   # Carry over parameters too.  AD HOC for now. /HB 2007-01-07
   if (inherits(res, "SnpChipEffectSet")) {
@@ -938,6 +938,10 @@ setMethodS3("process", "FragmentEquivalentClassNormalization", function(this, ..
     updateDataFlat(ceN, data=data, verbose=less(verbose));
     # Not needed anymore
     data <- NULL;
+
+    ## Create checksum file
+    ceNZ <- getChecksumFile(ceN)
+
     verbose && exit(verbose);
 
     # Garbage collect

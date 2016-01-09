@@ -13,8 +13,11 @@
 # \arguments{
 #   \item{nbrOfPms}{The number of random PMs to use in estimation.}
 #   \item{affinities}{A @numeric @vector of probe affinities.}
-#   \item{path}{If an affinities vector is not specified,
-#      gives the path to a file storing the affinities.}
+#   \item{seed}{An (optional) @integer specifying a temporary random seed
+#     to be used during processing.  The random seed is set to its original
+#     state when done.  If @NULL, it is not set.}
+#   \item{...}{Not used.}
+#   \item{verbose}{See @see "R.utils::Verbose".}
 # }
 #
 # \details{
@@ -23,7 +26,7 @@
 #
 # @author "KS"
 #*/###########################################################################
-setMethodS3("calculateParametersGsb", "AffymetrixCelSet", function(this, nbrOfPms=25000, affinities=NULL, ..., verbose=FALSE) {
+setMethodS3("calculateParametersGsb", "AffymetrixCelSet", function(this, nbrOfPms=25000, affinities=NULL, seed=NULL, ..., verbose=FALSE) {
   if (is.null(affinities)) {
     throw("DEPRECATED: Argument 'affinities' to calculateParametersGsb() must not be NULL.");
   }
@@ -39,6 +42,11 @@ setMethodS3("calculateParametersGsb", "AffymetrixCelSet", function(this, nbrOfPm
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Argument 'seed':
+  if (!is.null(seed)) {
+    seed <- Arguments$getInteger(seed);
+  }
+
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
   if (verbose) {
@@ -48,6 +56,17 @@ setMethodS3("calculateParametersGsb", "AffymetrixCelSet", function(this, nbrOfPm
 
 
   cdf <- getCdf(this);
+
+  verbose && enter(verbose, "Computing parameters for adjustment of specific binding");
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Set the random seed
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  if (!is.null(seed)) {
+    randomSeed("set", seed=seed, kind="L'Ecuyer-CMRG")
+    on.exit(randomSeed("reset"), add=TRUE)
+    verbose && printf(verbose, "Random seed temporarily set (seed=%d, kind=\"L'Ecuyer-CMRG\")\n", seed)
+  }
 
   verbose && enter(verbose, "Extracting PM indices");
   cells <- getCellIndices(cdf, useNames=FALSE, unlist=TRUE, verbose=less(verbose,2));
@@ -123,154 +142,11 @@ setMethodS3("calculateParametersGsb", "AffymetrixCelSet", function(this, nbrOfPm
 
   verbose && exit(verbose);
 
+  verbose && exit(verbose);
+
   fit1$coef;
 }, private=TRUE)
 
-
-
-###########################################################################/**
-# @set "class=AffymetrixCelSet"
-# @RdocMethod bgAdjustGcrma
-#
-# @title "Applies probe sequence based background correction to a set of
-# CEL files"
-#
-# \description{
-#  @get "title".
-#
-#  Adapted from @see "gcrma::bg.adjust.gcrma" in the \pkg{gcrma} package.
-# }
-#
-# @synopsis
-#
-# \arguments{
-#   \item{path}{The path where to save the adjusted data files.}
-#   \item{name}{Name of the set containing the background corrected files.}
-#   \item{type}{The type of background correction.  Currently accepted types
-#       are "fullmodel" (the default, uses MMs) and "affinities" (uses
-#       probe sequence only).}
-#   \item{indicesNegativeControl}{Locations of any negative control
-#       probes (e.g., the anti-genomic controls on the human exon array).
-#       If @NULL and type=="affinities", MMs are used as the negative
-#       controls.}
-#   \item{opticalAdjust}{If @TRUE, apply correction for optical effect,
-#       as in @see "gcrma::bg.adjust.optical".}
-#   \item{gsbAdjust}{Should we adjust for specific binding (defaults to
-#        @TRUE)?}
-#   \item{k}{Tuning parameter passed to \code{gcrma::bg.adjust.gcrma}.}
-#   \item{rho}{Tuning parameter passed to \code{gcrma::bg.adjust.gcrma}.}
-#   \item{stretch}{Tuning parameter passed to \code{gcrma::bg.adjust.gcrma}.}
-#   \item{fast}{If @TRUE, an ad hoc transformation of the PM is performed
-#       (\code{gcrma::gcrma.bg.transformation.fast}).}
-#   \item{overwrite}{If @TRUE, already adjusted arrays are overwritten,
-#     unless skipped, otherwise an error is thrown.}
-#   \item{skip}{If @TRUE, the array is not normalized if it already exists.}
-#   \item{verbose}{See @see "R.utils::Verbose".}
-#   \item{.deprecated}{Internal argument.}
-# }
-#
-# \value{
-#  Returns the background adjusted @see "AffymetrixCelFile" object.
-# }
-#
-# @author "KS"
-#
-# \seealso{
-#  @see "gcrma::bg.adjust.gcrma"
-#  @seeclass
-# }
-#*/###########################################################################
-setMethodS3("bgAdjustGcrma", "AffymetrixCelSet", function(this, path, affinities=NULL, type="fullmodel",  indicesNegativeControl=NULL, opticalAdjust=TRUE, gsbAdjust=TRUE, k=6 * fast + 0.5 * (1 - fast), rho=0.7, stretch=1.15*fast + (1-fast), fast=TRUE, overwrite=FALSE, skip=!overwrite, ..., verbose=FALSE, .deprecated=TRUE) {
-  if (.deprecated) {
-    throw("bgAdjustGcrma() is deprecated.  Please use the GcRmaBackgroundCorrection class");
-  }
-
-  if (is.null(path)) {
-    throw("DEPRECATED: Argument 'path' to bgAdjustGcrma() must no longer be NULL.");
-  }
-
-  if (is.null(affinities)) {
-    throw("DEPRECATED: Argument 'affinities' to bgAdjustGcrma() must not be NULL.");
-  }
-
-  args <- list(...);
-  for (key in c("name", "probePath")) {
-    if (is.element(key, names(args))) {
-      throw(sprintf("DEPRECATED: bgAdjustGcrma() no longer takes argument '%s'.", key));
-    }
-  }
-
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Validate arguments
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Argument 'path':
-  path <- Arguments$getWritablePath(path);
-  if (identical(getPath(this), path)) {
-    throw("Cannot calibrate data file. Argument 'path' refers to the same path as the path of the data file to be calibrated: ", path);
-  }
-
-  # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
-  if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
-  }
-
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # optical background correction
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  if (opticalAdjust) {
-    OBG <- OpticalBackgroundCorrection(this);
-    dsOBG <- process(OBG, ..., verbose=verbose);
-    # Not needed anymore
-    OBG <- NULL;
-    this <- dsOBG;
-  }
-
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # estimate specific binding (GSB, in gcrma terminology)
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  if (gsbAdjust) {
-    verbose && enter(verbose, "Estimating specific binding parameters (data dependent)");
-    parametersGsb <- calculateParametersGsb(this, affinities=affinities, ..., verbose=verbose);
-    verbose && cat(verbose, "parametersGsb:");
-    verbose && print(verbose, parametersGsb);
-    verbose && exit(verbose);
-  }
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # NSB correction for each array
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  nbrOfArrays <- length(this);
-  verbose && enter(verbose, "Adjusting ", nbrOfArrays, " arrays");
-  dataFiles <- list();
-  for (ii in seq_along(this)) {
-    df <- this[[ii]];
-    verbose && enter(verbose, sprintf("Array #%d ('%s') of %d", ii, getName(df), nbrOfArrays));
-
-    dfD <- bgAdjustGcrma(df, path=path, type=type, indicesNegativeControl=indicesNegativeControl, affinities=affinities, gsbAdjust=gsbAdjust, parametersGsb=parametersGsb, k=k, rho=rho, stretch=stretch, fast=fast, overwrite=overwrite, skip=skip, ..., verbose=less(verbose), .deprecated=.deprecated);
-    verbose && print(verbose, dfD);
-
-    dataFiles[[ii]] <- dfD;
-    # Not needed anymore
-    df <- dfD <- NULL;
-
-    # Garbage collect
-    gc <- gc();
-    verbose && print(verbose, gc);
-
-    verbose && exit(verbose);
-  } # for (ii ...)
-  verbose && exit(verbose);
-
-  res <- newInstance(this, dataFiles);
-  setCdf(res, getCdf(this));
-
-  res;
-}, private=TRUE) # bgAdjustGcrma()
 
 
 ############################################################################

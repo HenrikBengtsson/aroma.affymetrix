@@ -97,7 +97,7 @@ env2Cdf <- function(env, celfile, overwrite=FALSE, verbose=TRUE, ...) {
            cdfqc=NULL, overwrite=overwrite, verbose=verbose);
 
   # Rename temporary file
-  pathname <- popTemporaryFile(pathnameT, verbose=verbose);
+  popTemporaryFile(pathnameT, verbose=verbose);
 
   invisible(pathname);
 } # env2Cdf()

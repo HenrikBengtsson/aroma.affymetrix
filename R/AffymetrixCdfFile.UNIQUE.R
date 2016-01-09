@@ -530,7 +530,7 @@ setMethodS3("createUniqueCdf", "AffymetrixCdfFile", function(this, chipType=getC
   verbose && print(verbose, gc);
 
   # Rename temporary file
-  pathname <- popTemporaryFile(pathnameT, verbose=verbose);
+  popTemporaryFile(pathnameT, verbose=verbose);
 
   verbose && cat(verbose, "File pathname: ", pathname);
   verbose && print(verbose, file.info(pathname));
@@ -560,6 +560,9 @@ setMethodS3("createUniqueCdf", "AffymetrixCdfFile", function(this, chipType=getC
   cells <- getCellIndices(cdfU, unlist=TRUE, useNames=FALSE);
   stopifnot(length(cells) <= nbrOfCells(cdfU));
   stopifnot(identical(unique(diff(cells)), 1L));
+
+  ## Create checksum file
+  cdfUZ <- getChecksumFile(cdfU)
 
   verbose && exit(verbose);
 

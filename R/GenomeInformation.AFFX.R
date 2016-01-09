@@ -109,7 +109,7 @@ setMethodS3("getData", "GenomeInformation", function(this, units=NULL, fields=c(
     verbose && enter(verbose, "Optimizing default return order");
     # Default ordering
     args <- as.list(data[,fields,drop=FALSE]);
-    o <- do.call("order", args=args);
+    o <- do.call(order, args=args);
     data <- data[o,,drop=FALSE];
     # Not needed anymore
     o <- NULL;
@@ -173,7 +173,7 @@ setMethodS3("getData", "GenomeInformation", function(this, units=NULL, fields=c(
 
   # Reorder?
   if (!is.null(orderBy)) {
-    o <- do.call("order", args=as.list(data[,orderBy,drop=FALSE]));
+    o <- do.call(order, args=as.list(data[,orderBy,drop=FALSE]));
     data <- data[o,,drop=FALSE];
     # Not needed anymore
     o <- NULL;

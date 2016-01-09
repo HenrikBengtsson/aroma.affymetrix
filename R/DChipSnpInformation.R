@@ -39,10 +39,9 @@
 # @author "HB"
 #*/###########################################################################
 setConstructorS3("DChipSnpInformation", function(...) {
-  this <- extend(SnpInformation(...), "DChipSnpInformation");
-  if (!is.null(getPathname(this)))
-    verify(this);
-  this;
+  this <- extend(SnpInformation(...), "DChipSnpInformation")
+  if (isFile(this)) verify(this)
+  this
 })
 
 

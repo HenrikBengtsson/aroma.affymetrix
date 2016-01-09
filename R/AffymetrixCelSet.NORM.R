@@ -90,27 +90,38 @@ setMethodS3("normalizeQuantile", "AffymetrixCelSet", function(this, path=NULL, n
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Normalize each array
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  verbose && enter(verbose, "Normalizing ", length(this), " arrays");
-  dataFiles <- list();
-  for (kk in seq_along(this)) {
-    verbose && enter(verbose, "Array #", kk);
-    df <- this[[kk]];
-    verbose && print(verbose, df);
-    dataFiles[[kk]] <- normalizeQuantile(df, path=path,
-                            subsetToUpdate=subsetToUpdate, typesToUpdate=NULL,
-                                 xTarget=xTarget, ..., verbose=less(verbose));
+  nbrOfArrays <- length(this)
+  verbose && enter(verbose, "Normalizing ", nbrOfArrays, " arrays");
+
+  dataFiles <- listenv()
+
+  for (kk in seq_len(nbrOfArrays)) {
+    df <- this[[kk]]
+    verbose && enter(verbose, sprintf("Array #%d ('%s') of %d", kk, getName(df), nbrOfArrays))
+
+    dataFiles[[kk]] %<=% {
+      verbose && print(verbose, df)
+      normalizeQuantile(df, path=path,
+                        subsetToUpdate=subsetToUpdate, typesToUpdate=NULL,
+                        xTarget=xTarget, ..., verbose=less(verbose))
+    }
 
     # Garbage collect
-    gc();
+    gc()
 
-    verbose && exit(verbose);
+    verbose && exit(verbose)
   }
-  verbose && exit(verbose);
 
-  # CDF inheritance
-  res <- newInstance(this, dataFiles);
-  setCdf(res, cdf);
-  res;
+  ## Resolve futures
+  dataFiles <- as.list(dataFiles)
+
+  verbose && exit(verbose)
+
+  ## Setup output data set
+  res <- newInstance(this, dataFiles)
+  setCdf(res, cdf)
+
+  res
 }, protected=TRUE) # normalizeQuantile()
 
 

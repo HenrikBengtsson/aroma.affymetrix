@@ -190,7 +190,7 @@ setMethodS3("getOutputDataSet00", "AdditiveCovariatesNormalization", function(th
   verbose && str(verbose, args);
 
   args$verbose <- less(verbose, 10);
-  res <- do.call("NextMethod", args);
+  res <- do.call(NextMethod, args);
 
   # Carry over parameters too.  AD HOC for now. /HB 2007-01-07
   if (inherits(res, "SnpChipEffectSet")) {
@@ -834,7 +834,10 @@ setMethodS3("process", "AdditiveCovariatesNormalization", function(this, ..., fo
     verbose && exit(verbose);
 
     # Rename temporary file
-    pathname <- popTemporaryFile(pathnameT, verbose=verbose);
+    popTemporaryFile(pathnameT, verbose=verbose);
+
+    ## Create checksum
+    ceNZ <- getChecksumFile(pathname)
 
     # Garbage collect
     gc <- gc();

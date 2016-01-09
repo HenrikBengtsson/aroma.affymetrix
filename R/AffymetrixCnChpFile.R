@@ -9,16 +9,17 @@ setConstructorS3("AffymetrixCnChpFile", function(..., cdf=NULL) {
   if (!is.null(cdf))
     setCdf(this, cdf);
 
-  if (!is.null(this$.pathname)) {
+  pathname <- getPathname(this)
+  if (!is.null(pathname)) {
     # Make sure the name is non-empty
     name <- getName(this);
-    if (nchar(name) == 0) {
-      throw("An ", class(this)[1], " must have a name of at least length one: ", this$.pathname);
+    if (!nzchar(name)) {
+      throw("An ", class(this)[1], " must have a name of at least length one: ", pathname);
     }
-
-    # Parse attributes (all subclasses must call this in the constructor).
-    setAttributesByTags(this);
   }
+
+  # Parse attributes (all subclasses must call this in the constructor).
+  setAttributesByTags(this)
 
   this;
 })

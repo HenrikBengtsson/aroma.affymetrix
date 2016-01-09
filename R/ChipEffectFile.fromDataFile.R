@@ -102,7 +102,7 @@ setMethodS3("fromDataFile", "ChipEffectFile", function(static, df=NULL, filename
 ##    .updateCel(pathnameT, indices=1:nbrOfProbes, intensities=rep(-1,nbrOfProbes), verbose=less(verbose));
 
     # Rename temporary file
-    pathname <- popTemporaryFile(pathnameT, verbose=verbose);
+    popTemporaryFile(pathnameT, verbose=verbose);
 
     verbose && exit(verbose);
   }

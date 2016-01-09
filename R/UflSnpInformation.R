@@ -1,12 +1,9 @@
 setConstructorS3("UflSnpInformation", function(..., .ufl=NULL, .verify=TRUE) {
   this <- extend(SnpInformation(...), "UflSnpInformation",
     .ufl = .ufl
-  );
-  if (.verify) {
-    if (!is.null(getPathname(this)))
-      verify(this);
-  }
-  this;
+  )
+  if (.verify && isFile(this)) verify(this)
+  this
 })
 
 setMethodS3("getAromaUflFile", "UflSnpInformation", function(this, ..., force=FALSE) {
@@ -46,7 +43,7 @@ setMethodS3("byChipType", "UflSnpInformation", function(static, chipType, tags=N
   # Argument 'nbrOfUnits':
   if (!is.null(nbrOfUnits)) {
     nbrOfUnits <- Arguments$getInteger(nbrOfUnits, range=c(0,Inf));
-  } 
+  }
 
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
@@ -64,7 +61,7 @@ setMethodS3("byChipType", "UflSnpInformation", function(static, chipType, tags=N
   verbose && cat(verbose, "Arguments:");
   verbose && str(verbose, list(...));
 
-  res <- newInstance(static, filename=pathname, path=NULL, .ufl=ufl, 
+  res <- newInstance(static, filename=pathname, path=NULL, .ufl=ufl,
                                                   .verify=FALSE, ...);
   verbose && print(verbose, res);
 
@@ -87,7 +84,7 @@ setMethodS3("verify", "UflSnpInformation", function(this, ...) {
   tryCatch({
     df <- readDataFrame(this, nrow=10);
   }, error = function(ex) {
-    throw("File format error of the UFL SNP information file (", 
+    throw("File format error of the UFL SNP information file (",
                                  ex$message, "): ", getPathname(this));
   })
   invisible(TRUE);
@@ -121,7 +118,7 @@ setMethodS3("getDataColumns", "UflSnpInformation", function(this, ...) {
   names <- gsub("^length", "fragmentLength", names);
   names;
 }, private=TRUE)
-	
+
 setMethodS3("getFields", "UflSnpInformation", function(this, ...) {
   getDataColumns(this, ...);
 }, protected=TRUE)
@@ -162,7 +159,7 @@ setMethodS3("getData", "UflSnpInformation", function(this, units=NULL, fields=ge
     if (length(missing)) {
       throw("Unknown fields: ", paste(missing, collapse=", "));
     }
-  
+
     verbose && enter(verbose, "Reading SNP information data");
     data <- ufl[,,drop=FALSE];
     colnames(data) <- getDataColumns(this);
@@ -175,7 +172,7 @@ setMethodS3("getData", "UflSnpInformation", function(this, units=NULL, fields=ge
     # Garbage collect
     gc <- gc();
     verbose && print(verbose, gc);
-    
+
     verbose && exit(verbose);
   }
 
@@ -209,7 +206,7 @@ setMethodS3("getData", "UflSnpInformation", function(this, units=NULL, fields=ge
 
   # Reorder?
   if (!is.null(orderBy)) {
-    o <- do.call("order", args=as.list(data[,orderBy,drop=FALSE]));
+    o <- do.call(order, args=as.list(data[,orderBy,drop=FALSE]));
     data <- data[o,,drop=FALSE];
     # Not needed anymore
     o <- NULL;
@@ -252,9 +249,9 @@ setMethodS3("getFragmentStops", "UflSnpInformation", function(this, ...) {
 # HISTORY:
 # 2009-02-10
 # o Added optional validation of number of units to byChipType().
-# o Static method byChipType() was not declared static. 
+# o Static method byChipType() was not declared static.
 # 2008-07-23
-# o Now isCompatibleWithCdf() adds attribute 'reason' to FALSE explaining 
+# o Now isCompatibleWithCdf() adds attribute 'reason' to FALSE explaining
 #   why the object is not compatible.
 # 2008-01-20
 # o Made argument 'chipType' and 'tags' explicit for fromChipType().
@@ -264,8 +261,8 @@ setMethodS3("getFragmentStops", "UflSnpInformation", function(this, ...) {
 # o Added nbrOfEnzymes().
 # 2007-09-16
 # o BUG FIX: getFragmentLengths() of UflSnpInformation would thrown an error
-#   reporting "Unknown fields: fragmentLength".  Now getDataColumns() 
+#   reporting "Unknown fields: fragmentLength".  Now getDataColumns()
 #   returns the correct names.
 # 2007-09-11
 # o Created from DChipSnpInformation.R.
-############################################################################  
+############################################################################

@@ -1,5 +1,14 @@
 library("aroma.affymetrix")
 
+## Empty CDF
+cdf <- AffymetrixCdfFile()
+print(cdf)
+
+## Missing CDF
+cdf <- AffymetrixCdfFile(NA_character_, mustExist=FALSE)
+print(cdf)
+
+
 if (setupExampleData(aroma.affymetrix, dataset="FusionSDK_Test3", dirs="annotationData", mustWork=FALSE)) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # CDF file

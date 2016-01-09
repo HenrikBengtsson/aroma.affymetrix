@@ -1,15 +1,22 @@
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # DEFUNCT
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-## Defunct since 2015-10-21 (aroma.affymetrix 2.14.0)
-setMethodS3("getParameterSet", "Model", function(this, ...) {
-  .Defunct("getParameters");
-}, protected=TRUE, deprecated=TRUE)
+## Defunct since aroma.affymetrix 3.0.0 (Jan 2016)
+setMethodS3("bgAdjustRma", "AffymetrixCelFile", function(this, path, pmonly=TRUE, addJitter=FALSE, jitterSd=0.2, overwrite=FALSE, skip=!overwrite, ..., verbose=FALSE, .deprecated=TRUE) {
+  .Defunct("RmaBackgroundCorrection")
+}, private=TRUE, deprecated=TRUE)
 
-setMethodS3("getExpectedOutputFiles", "MatSmoothing", function(this, ...) {
-  .Defunct("getExpectedOutputFullnames");
-}, protected=TRUE, deprecated=TRUE)
+setMethodS3("bgAdjustOptical", "AffymetrixCelFile", function(this, path, minimum=1, subsetToUpdate=NULL, typesToUpdate=NULL, overwrite=FALSE, skip=!overwrite, verbose=FALSE, ..., .deprecated=TRUE) {
+  .Defunct("OpticalBackgroundCorrection")
+}, private=TRUE, deprecated=TRUE)
 
+setMethodS3("bgAdjustGcrma", "AffymetrixCelSet", function(this, path, affinities=NULL, type="fullmodel",  indicesNegativeControl=NULL, opticalAdjust=TRUE, gsbAdjust=TRUE, k=6 * fast + 0.5 * (1 - fast), rho=0.7, stretch=1.15*fast + (1-fast), fast=TRUE, overwrite=FALSE, skip=!overwrite, ..., verbose=FALSE, .deprecated=TRUE) {
+  .Defunct("GcRmaBackgroundCorrection")
+}, private=TRUE, deprecated=TRUE)
+
+setMethodS3("bgAdjustGcrma", "AffymetrixCelFile", function(this, path, type=c("fullmodel", "affinities"), indicesNegativeControl=NULL, affinities=NULL, gsbAdjust=TRUE, parametersGsb=NULL, k=ifelse(fast,6,0.5), rho=0.7, stretch=ifelse(fast,1.15,1), fast=TRUE, overwrite=FALSE, skip=!overwrite, ..., verbose=FALSE, .deprecated=TRUE) {
+  .Defunct("GcRmaBackgroundCorrection")
+}, private=TRUE, deprecated=TRUE)
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # DEPRECATED
@@ -30,10 +37,26 @@ setMethodS3("nbrOfArrays", "AffymetrixCelSet", function(this, ...) {
   length(this, ...)
 }, protected=TRUE)
 
+setMethodS3("nbrOfArrays", "AffymetrixCnChpSet", function(this, ...) {
+##  .Deprecated("length")
+  length(this, ...);
+}, protected=TRUE)
+
+setMethodS3("nbrOfArrays", "CnagCfhSet", function(this, ...) {
+##  .Deprecated("length")
+  length(this, ...);
+}, protected=TRUE)
+
+setMethodS3("nbrOfArrays", "DChipDcpSet", function(this, ...) {
+##  .Deprecated("length")
+  length(this, ...);
+}, protected=TRUE)
 
 
 ############################################################################
 # HISTORY:
+# 2015-12-04
+# o Moved more nbrOfArrays() methods to here. Still to be deprecated.
 # 2014-02-28
 # o Remove previously defunct methods.
 # o CLEANUP: Defuncted deprecated patch() for AromaAffymetrix and

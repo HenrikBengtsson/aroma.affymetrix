@@ -241,7 +241,7 @@ setMethodS3("createOutputTuple", "SmoothMultiarrayModel", function(this, ..., fo
     verbose && str(verbose, args);
     args$verbose <- less(verbose, 30);
     staticFcn <- inSet$fromFiles;
-    outSet <- do.call("staticFcn", args=args);
+    outSet <- do.call(staticFcn, args=args);
     verbose && print(verbose, outSet);
     verbose && exit(verbose);
 

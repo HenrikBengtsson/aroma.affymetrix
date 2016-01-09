@@ -525,7 +525,7 @@ setMethodS3("createMonocellCdf", "AffymetrixCdfFile", function(this, chipType=ge
   verbose && print(verbose, gc);
 
   # Renaming temporary file
-  pathname <- popTemporaryFile(pathnameT, verbose=verbose);
+  popTemporaryFile(pathnameT, verbose=verbose);
 
   verbose && cat(verbose, "File pathname: ", pathname);
   verbose && print(verbose, file.info(pathname));
@@ -534,7 +534,12 @@ setMethodS3("createMonocellCdf", "AffymetrixCdfFile", function(this, chipType=ge
   verbose && exit(verbose);
 
   # Return an AffymetrixCdfFile object for the new CDF
-  newInstance(this, pathname);
+  cdfM <- newInstance(this, pathname)
+
+  ## Create checksum file
+  cdfMZ <- getChecksumFile(cdfM)
+
+  cdfM
 }, private=TRUE) # createMonocellCdf()
 
 

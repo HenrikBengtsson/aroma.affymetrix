@@ -182,7 +182,7 @@ setMethodS3("getTimestamps", "CnagCfhSet", function(this, ..., force=FALSE) {
   if (force || is.null(ts)) {
     # Get CFH header dates
     ts <- lapply(this, FUN=getTimestamp);
-    ts <- do.call("c", args=ts);
+    ts <- do.call(c, args=ts);
     this$.timestamps <- ts;
   }
 
@@ -323,6 +323,7 @@ setMethodS3("byName", "CnagCfhSet", function(static, name, tags=NULL, chipType, 
   })
 }, static=TRUE)
 
+
 setMethodS3("byPath", "CnagCfhSet", function(static, path="rawData/", pattern="[.](c|C)(f|F)(h|H)$", checkChipType=TRUE, ..., onDuplicates=c("keep", "exclude", "error"), fileClass="CnagCfhFile", verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
@@ -440,36 +441,6 @@ setMethodS3("byPath", "CnagCfhSet", function(static, path="rawData/", pattern="[
   this;
 }, static=TRUE, protected=TRUE)
 
-
-
-
-###########################################################################/**
-# @RdocMethod nbrOfArrays
-#
-# @title "Gets the number of arrays in the file set"
-#
-# \description{
-#   @get "title".
-#   This is just a wrapper for \code{length()}.
-# }
-#
-# @synopsis
-#
-# \arguments{
-#  \item{...}{Not used.}
-# }
-#
-# \value{
-#   Returns an @integer.
-# }
-#
-# \seealso{
-#   @seeclass
-# }
-#*/###########################################################################
-setMethodS3("nbrOfArrays", "CnagCfhSet", function(this, ...) {
-  length(this, ...);
-}, protected=TRUE)
 
 
 

@@ -161,7 +161,7 @@ setMethodS3("readDataUnitFragmentLength", "AffymetrixNetAffxCsvFile", function(t
   hasNames <- NA;
   for (kk in seq_along(fln)) {
     unit <- fln[kk];
-    if (nchar(unit) > 0) {
+    if (nzchar(unit)) {
       hasNames <- (regexpr("^([abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ]+|---)", unit) != -1);
       break;
     }

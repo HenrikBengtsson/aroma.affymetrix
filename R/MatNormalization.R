@@ -566,7 +566,43 @@ setMethodS3("process", "MatNormalization", function(this, ..., ram=NULL, force=F
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Calculate residuals
+  # Create output CEL files
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  verbose && enter(verbose, "Creating (temporary) CEL files")
+
+  pathnamesT <- listenv()
+  for (ii in seq_len(nbrOfArrays)) {
+    df <- ds[[ii]]
+    verbose && enter(verbose, sprintf("Array #%d ('%s') of %d",
+                                              ii, getName(df), nbrOfArrays))
+
+    fullname <- getFullName(df)
+    filename <- sprintf("%s.CEL", fullname)
+    pathname <- Arguments$getWritablePathname(filename, path=outputPath, ...)
+
+    # Write to a temporary file (allow rename of existing one if forced)
+    isFile <- isFile(pathname)
+    pathnameT <- pushTemporaryFile(pathname, isFile=isFile, verbose=verbose)
+
+    # Create CEL file to store results, if missing
+    verbose && enter(verbose, "Creating CEL file for results, if missing")
+    createFrom(df, filename=pathnameT, path=NULL, verbose=less(verbose))
+    verbose && exit(verbose)
+
+    # Record temporary filename and reuse below
+    pathnamesT[[ii]] <- pathnameT
+
+    verbose && exit(verbose);
+  } ## for (ii ...)
+  ## Assert proper temporary files
+  pathnamesT <- unlist(pathnamesT)
+  stopifnot(length(pathnamesT) == nbrOfArrays)
+
+  verbose && exit(verbose);
+
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Predict
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   nbrOfCells <- length(cellsToFit);
 
@@ -613,40 +649,26 @@ setMethodS3("process", "MatNormalization", function(this, ..., ram=NULL, force=F
     verbose && enter(verbose, "Calculating model fits");
     xtx <- xtx + crossprod(X);
 
-    verbose && enter(verbose, "Processing ", nbrOfArrays, " arrays");
+    verbose && enter(verbose, "Processing ", nbrOfArrays, " arrays")
     for (ii in seq_len(nbrOfArrays)) {
-      df <- ds[[ii]];
+      df <- ds[[ii]]
       verbose && enter(verbose, sprintf("Array #%d ('%s') of %d",
-                                              ii, getName(df), nbrOfArrays));
+                                              ii, getName(df), nbrOfArrays))
 
-      mu <- X %*% fits[[ii]]$beta;
-      mu <- as.double(mu);
-      verbose && str(verbose, mu);
+      mu <- X %*% fits[[ii]]$beta
+      mu <- as.double(mu)
+      verbose && str(verbose, mu)
 
-      fullname <- getFullName(df);
-      filename <- sprintf("%s.CEL", fullname);
-      pathname <- Arguments$getWritablePathname(filename, path=outputPath, ...);
+      verbose && enter(verbose, "Updating temporary CEL file")
+      pathnameT <- pathnamesT[ii]
+      verbose2 <- as.logical(verbose)
+      .updateCel(pathnameT, indices=cellsChunk, intensities=2^mu, verbose=verbose2)
+      verbose && exit(verbose)
 
-      # Write to a temporary file (allow rename of existing one if forced)
-      isFile <- isFile(pathname);
-      pathnameT <- pushTemporaryFile(pathname, isFile=isFile, verbose=verbose);
-
-      # Create CEL file to store results, if missing
-      verbose && enter(verbose, "Creating CEL file for results, if missing");
-      createFrom(df, filename=pathnameT, path=NULL, verbose=less(verbose));
-      verbose && exit(verbose);
-
-      verbose2 <- as.logical(verbose);
-      .updateCel(pathnameT, indices=cellsChunk, intensities=2^mu, verbose=verbose2);
-
-      # Rename temporary file
-      pathname <- popTemporaryFile(pathnameT, verbose=verbose);
-
-      verbose && exit(verbose);
+      verbose && exit(verbose)
     } # for (ii ...)
-    verbose && exit(verbose);
+    verbose && exit(verbose)
 
-    # Not needed anymore
     # Not needed anymore
     mu <- NULL;
 
@@ -664,75 +686,83 @@ setMethodS3("process", "MatNormalization", function(this, ..., ram=NULL, force=F
 
 
 
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Scale residuals
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  verbose && enter(verbose, "Scaling residuals");
+  verbose && enter(verbose, "Scaling residuals")
 
-  nbrOfBins <- this$.nbrOfBins;
-  verbose && cat(verbose, "Number of bins: ", nbrOfBins);
-  probs <- (0:nbrOfBins) / nbrOfBins;
-  verbose && cat(verbose, "Quantile probabilities:");
-  verbose && str(verbose, probs);
-  cutLabels <- seq_len(nbrOfBins);
+  nbrOfBins <- this$.nbrOfBins
+  verbose && cat(verbose, "Number of bins: ", nbrOfBins)
+  probs <- (0:nbrOfBins) / nbrOfBins
+  verbose && cat(verbose, "Quantile probabilities:")
+  verbose && str(verbose, probs)
+  cutLabels <- seq_len(nbrOfBins)
+
+  res <- listenv()
 
   for (ii in seq_len(nbrOfArrays)) {
-    verbose && enter(verbose, "Binning predicted values, calculating and scaling residuals");
-    df <- ds[[ii]];
+    df <- ds[[ii]]
+    verbose && enter(verbose, "Binning predicted values, calculating and scaling residuals")
+    pathnameT <- pathnamesT[ii]
 
-    y <- extractMatrix(df, cells=cellsToFit, verbose=verbose);
-    y <- log2(y);
+    res[[ii]] %<=% {
+      ## Original probe intensities
+      y <- extractMatrix(df, cells=cellsToFit, verbose=verbose)
+      y <- log2(y)
 
-    fullname <- getFullName(df);
-    filename <- sprintf("%s.CEL", fullname);
-    pathname <- Arguments$getWritablePathname(filename, path=outputPath, ...);
+      ## Prediction
+      mu <- .readCel(pathnameT, indices=cellsToFit, readOutliers=FALSE, readHeader=FALSE, readMasked=FALSE, verbose=less(verbose,10))$intensities
+      mu <- log2(mu)
 
-    mu <- .readCel(pathname, indices=cellsToFit, readOutliers=FALSE, readHeader=FALSE, readMasked=FALSE, verbose=less(verbose,10))$intensities;
-    mu <- log2(mu);
-    r <- y - mu;
+      ## Residuals
+      r <- y - mu
 
-    q <- quantile(mu, probs=probs);
-    cuts <- cut(mu, breaks=q, labels=cutLabels);  # define
-    ss <- split(r, cuts, drop=FALSE);
-    ssvar <- sapply(ss, FUN=var);
-    v <- ssvar[as.character(cuts)];
-    r <- r / sqrt(v);
-    r <- as.double(r);
+      ## Normalize residuals
+      q <- quantile(mu, probs=probs)
+      cuts <- cut(mu, breaks=q, labels=cutLabels)  # define
+      ss <- split(r, cuts, drop=FALSE)
+      ssvar <- sapply(ss, FUN=var)
+      v <- ssvar[as.character(cuts)]
+      r <- r / sqrt(v)
+      r <- as.double(r)
 
-    #return(list(y=y,mu=mu,r=r))
+      #return(list(y=y,mu=mu,r=r))
 
-    # Write to a temporary file (allow rename of existing one if forced)
-    isFile <- isFile(pathname);
-    pathnameT <- pushTemporaryFile(pathname, isFile=isFile, verbose=verbose);
+      verbose && enter(verbose, "Updating temporary CEL file")
+      verbose2 <- as.logical(verbose)
+      .updateCel(pathnameT, indices=cellsToFit, intensities=2^r, verbose=verbose2)
+      verbose && exit(verbose)
 
-    # Create CEL file to store results, if missing
-    verbose && enter(verbose, "Creating CEL file for results, if missing");
-    createFrom(df, filename=pathnameT, path=NULL, verbose=less(verbose));
-    verbose && exit(verbose);
+      # Not needed anymore
+      q <- ss <- ssvar <- v <- r <- y <- NULL
 
-    verbose2 <- as.logical(verbose);
-    .updateCel(pathnameT, indices=cellsToFit, intensities=2^r, verbose=verbose2);
+      gc <- gc()
+      verbose && print(verbose, gc)
 
-    # Not needed anymore
-    q <- ss <- ssvar <- v <- r <- y <- NULL;
+      # Rename temporary file
+      pathname <- popTemporaryFile(pathnameT, verbose=verbose)
 
-    # Rename temporary file
-    pathname <- popTemporaryFile(pathnameT, verbose=verbose);
+      ## Create checksum file
+      dfZ <- getChecksumFile(pathname)
 
-    gc <- gc();
-    verbose && print(verbose, gc);
+      pathname
+    } ## %<=%
 
-    verbose && exit(verbose);
+    verbose && exit(verbose)
   } # for (ii ...)
 
-  verbose && exit(verbose);
+  ## Resolve futures
+  res <- as.list(res)
+  res <- NULL
 
+  verbose && exit(verbose)
 
-  outputDataSet <- getOutputDataSet(this, force=TRUE);
+  outputDataSet <- getOutputDataSet(this, force=TRUE)
 
-  verbose && exit(verbose);
+  verbose && exit(verbose)
 
-  invisible(outputDataSet);
+  invisible(outputDataSet)
 })
 
 

@@ -38,10 +38,9 @@
 # @author "HB"
 #*/###########################################################################
 setConstructorS3("DChipGenomeInformation", function(...) {
-  this <- extend(GenomeInformation(...), "DChipGenomeInformation");
-  if (!is.null(getPathname(this)))
-    verify(this);
-  this;
+  this <- extend(GenomeInformation(...), "DChipGenomeInformation")
+  if (isFile(this)) verify(this)
+  this
 })
 
 

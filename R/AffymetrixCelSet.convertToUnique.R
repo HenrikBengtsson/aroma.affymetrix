@@ -1,8 +1,13 @@
 # @author "MR, HB"
-setMethodS3("convertToUnique", "AffymetrixCelSet", function(this, ..., tags="UNQ", force=FALSE, verbose=FALSE) {
+setMethodS3("convertToUnique", "AffymetrixCelSet", function(this, ..., tags="*", force=FALSE, verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Argument 'tags':
+  if (is.null(tags)) tags <- c("*")
+  tags <- Arguments$getTags(tags, collapse=NULL)
+  tags[tags == "*"] <- "UNQ"
+
   # Argument 'force':
   force <- Arguments$getLogical(force);
 
@@ -27,9 +32,9 @@ setMethodS3("convertToUnique", "AffymetrixCelSet", function(this, ..., tags="UNQ
     return(invisible(this));
   }
 
-  verbose && enter(verbose, "Getting unique CDF");
-  cdfUnique <- getUniqueCdf(cdf);
-  verbose && exit(verbose);
+  verbose && enter(verbose, "Getting unique CDF")
+  cdfUnique <- getUniqueCdf(cdf)
+  verbose && exit(verbose)
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Getting output directory
@@ -43,7 +48,7 @@ setMethodS3("convertToUnique", "AffymetrixCelSet", function(this, ..., tags="UNQ
   verbose && cat(verbose, "User tags: ", tags);
 
   tags <- c(srcTags, tags);
-  tags <- tags[nchar(tags) > 0];
+  tags <- tags[nzchar(tags)];
   tags <- paste(tags, collapse=",");
   verbose && cat(verbose, "Output tags: ", tags);
 
@@ -67,12 +72,12 @@ setMethodS3("convertToUnique", "AffymetrixCelSet", function(this, ..., tags="UNQ
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   verbose && enter(verbose, "Checking if dataset already exists");
 
-  tryCatch({
+  res <- tryCatch({
     # HB: Don't think argument 'checkChipType' makes a difference if
     #     argument 'cdf' is given.
-    res <- AffymetrixCelSet$byName(fullname, cdf=cdfUnique,
-                           checkChipType=FALSE, verbose=less(verbose, 10));
-  }, error = function(ex) {});
+    AffymetrixCelSet$byName(fullname, cdf=cdfUnique,
+                           checkChipType=FALSE, verbose=less(verbose, 10))
+  }, error = function(ex) { NULL })
 
   if (inherits(res, "AffymetrixCelSet")) {
     # Extract samples in the same order as they appear in the input
@@ -106,96 +111,109 @@ setMethodS3("convertToUnique", "AffymetrixCelSet", function(this, ..., tags="UNQ
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Read indices for old and new
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  verbose && enter(verbose, "Reading cell indices from standard CDF");
+  verbose && enter(verbose, "Reading cell indices from standard CDF")
+  cdfStandard <- .readCdf(getPathname(cdf), units=NULL, readXY=FALSE, readBases=FALSE, readIndexpos=FALSE, readAtoms=FALSE,readUnitType=FALSE, readUnitDirection=FALSE, readUnitNumber=FALSE, readUnitAtomNumbers=FALSE, readGroupAtomNumbers=FALSE, readGroupDirection=FALSE, readIndices=TRUE, readIsPm=FALSE)
+  verbose && exit(verbose)
 
-  cdfStandard <- .readCdf(getPathname(cdf), units=NULL, readXY=FALSE, readBases=FALSE, readIndexpos=FALSE, readAtoms=FALSE,readUnitType=FALSE, readUnitDirection=FALSE, readUnitNumber=FALSE, readUnitAtomNumbers=FALSE, readGroupAtomNumbers=FALSE, readGroupDirection=FALSE, readIndices=TRUE, readIsPm=FALSE);
-  verbose && exit(verbose);
+  verbose && enter(verbose, "Reading cell indices list from unique CDF")
+  cdfUniqueIndices <- .readCdf(getPathname(cdfUnique), units=NULL, readXY=FALSE, readBases=FALSE, readIndexpos=FALSE, readAtoms=FALSE,readUnitType=FALSE, readUnitDirection=FALSE, readUnitNumber=FALSE, readUnitAtomNumbers=FALSE, readGroupAtomNumbers=FALSE, readGroupDirection=FALSE, readIndices=TRUE, readIsPm=FALSE)
 
-  verbose && enter(verbose, "Reading cell indices list from unique CDF");
-  cdfUniqueIndices <- .readCdf(getPathname(cdfUnique), units=NULL, readXY=FALSE, readBases=FALSE, readIndexpos=FALSE, readAtoms=FALSE,readUnitType=FALSE, readUnitDirection=FALSE, readUnitNumber=FALSE, readUnitAtomNumbers=FALSE, readGroupAtomNumbers=FALSE, readGroupDirection=FALSE, readIndices=TRUE, readIsPm=FALSE);
-
-  verbose && exit(verbose);
+  verbose && exit(verbose)
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Process all arrays simultaneously
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  nbrOfArrays <- length(this);
+  nbrOfArrays <- length(this)
 
   # Get CDF header
-  cdfHeader <- getHeader(cdfUnique);
+  cdfHeader <- getHeader(cdfUnique)
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Do the conversion from standard CDF to unique CDF
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  for (kk in seq_len(nbrOfArrays)) {
-      df <- this[[kk]];
-      verbose && enter(verbose, sprintf("Converting CEL data from standard to unique CDF for sample #%d (%s) of %d", kk, getName(df), nbrOfArrays));
+  res <- listenv()
 
-      dfFullname <- getFullName(df);
-      filename <- sprintf("%s.CEL", dfFullname);
-      pathname <- Arguments$getWritablePathname(filename, path=outputPath, mustNotExist=FALSE, ...);
+  for (kk in seq_len(nbrOfArrays)) {
+      df <- this[[kk]]
+      verbose && enter(verbose, sprintf("Converting CEL data from standard to unique CDF for sample #%d (%s) of %d", kk, getName(df), nbrOfArrays))
+
+      dfFullname <- getFullName(df)
+      filename <- sprintf("%s.CEL", dfFullname)
+      pathname <- Arguments$getWritablePathname(filename, path=outputPath, mustNotExist=FALSE, ...)
 
       # Skip?
-      isFile <- isFile(pathname);
+      isFile <- isFile(pathname)
       if (!force && isFile) {
-        verbose && cat(verbose, "Already processed. Skipping.");
-        verbose && exit(verbose);
-        next;
+        verbose && cat(verbose, "Already processed. Skipping.")
+        res[[kk]] <- pathname
+        verbose && exit(verbose)
+        next
       }
 
-      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-      # Read data
-      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-      verbose && enter(verbose, "Reading intensity values according to standard CDF");
-      data <- .readCelUnits(getPathname(df), cdf=cdfStandard, dropArrayDim=TRUE);
-      verbose && exit(verbose);
 
-      # Build a valid CEL header
-      celHeader <- .cdfHeaderToCelHeader(cdfHeader, sampleName=dfFullname);
-      # Not needed anymore
-      dfFullname <- NULL;
+      res[[kk]] %<=% {
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        # Read data
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        verbose && enter(verbose, "Reading intensity values according to standard CDF")
+        data <- .readCelUnits(getPathname(df), cdf=cdfStandard, dropArrayDim=TRUE)
+        verbose && exit(verbose)
 
-      # Add some extra information about what the CEL file is for
-      params <- c(Descripion="This CEL file was created by the aroma.affymetrix package.");
-      parameters <- gsub(" ", "_", params, fixed=TRUE);
-      names(parameters) <- names(params);
-      parameters <- paste(names(parameters), parameters, sep=":");
-      parameters <- paste(parameters, collapse=";");
-      parameters <- paste(celHeader$parameters, parameters, "", sep=";");
-      parameters <- gsub(";;", ";", parameters, fixed=TRUE);
-      parameters <- gsub(";$", "", parameters);
-      celHeader$parameters <- parameters;
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        # Write data
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        verbose && enter(verbose, "Creating CEL header")
+        # Build a valid CEL header
+        celHeader <- .cdfHeaderToCelHeader(cdfHeader, sampleName=dfFullname)
 
-      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-      # Write data
-      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-      # Create CEL file to store results, if missing
-      verbose && enter(verbose, "Creating CEL file for results");
+        # Add some extra information about what the CEL file is for
+        params <- c(Descripion="This CEL file was created by the aroma.affymetrix package.")
+        parameters <- gsub(" ", "_", params, fixed=TRUE)
+        names(parameters) <- names(params)
+        parameters <- paste(names(parameters), parameters, sep=":")
+        parameters <- paste(parameters, collapse=";")
+        parameters <- paste(celHeader$parameters, parameters, "", sep=";")
+        parameters <- gsub(";;", ";", parameters, fixed=TRUE)
+        parameters <- gsub(";$", "", parameters)
+        celHeader$parameters <- parameters
+        verbose && exit(verbose)
 
-      # Remove existing file
-      if (isFile) {
-        file.remove(pathname);
-      }
+        # Create CEL file to store results, if missing
+        verbose && enter(verbose, "Creating CEL file for results")
 
-      # Write to a temporary file
-      pathnameT <- pushTemporaryFile(pathname, verbose=verbose);
+        # Remove existing file (=overwrite)?
+        if (isFile) file.remove(pathname)
 
-      .createCel(pathnameT, header=celHeader);
-      verbose && cat(verbose, "Writing values according to unique CDF");
-      .updateCelUnits(pathnameT, cdf=cdfUniqueIndices, data=data, verbose=FALSE);
-      verbose && exit(verbose);
+        # Write to a temporary file
+        pathnameT <- pushTemporaryFile(pathname, verbose=verbose)
 
-      # Not needed anymore
-      data <- NULL;
-      gc <- gc();
-      verbose && print(verbose, gc);
+        .createCel(pathnameT, header=celHeader)
+        verbose && cat(verbose, "Writing values according to unique CDF")
+        .updateCelUnits(pathnameT, cdf=cdfUniqueIndices, data=data, verbose=FALSE)
+        verbose && exit(verbose)
 
-      # Rename temporary file
-      pathname <- popTemporaryFile(pathnameT, verbose=verbose);
+        # Not needed anymore
+        gc <- gc()
+        verbose && print(verbose, gc)
 
-      verbose && exit(verbose);
+        # Rename temporary file
+        popTemporaryFile(pathnameT, verbose=verbose)
+
+        ## Create checksum file
+        dfZ <- getChecksumFile(pathname)
+
+        pathname
+      } ## %<=%
+
+      verbose && exit(verbose)
   } # for (kk ...)
+
+  ## Resolve futures
+  res <- as.list(res)
+  res <- NULL
 
   res <- AffymetrixCelSet$byName(fullname, cdf=cdfUnique,
                                       checkChipType=FALSE, verbose=verbose);
@@ -212,6 +230,8 @@ setMethodS3("convertToUnique", "AffymetrixCelSet", function(this, ..., tags="UNQ
 
 ############################################################################
 # HISTORY:
+# 2015-11-20 [HB]
+# o Now also convertToUnique() acknowledge asterisk tags.
 # 2012-11-30 [HB]
 # o BUG FIX/ROBUSTNESS: convertToUnique() for AffymetrixCelSet would
 #   return all CEL files found in the output directory, not just the ones

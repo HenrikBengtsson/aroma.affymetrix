@@ -9,7 +9,7 @@ setMethodS3("calculateWeights", "ExonRmaPlm", function(this, units=NULL, ram=NUL
   resFcn <- function(unit, mergeGroups) {
     nbrOfGroups <- length(unit);
     if (mergeGroups) {
-      y <- do.call("rbind", lapply(unit, FUN=.subset2, "eps"));
+      y <- do.call(rbind, lapply(unit, FUN=.subset2, "eps"));
       y <- log2(y);
       madMerged <- 1.4826 * median(abs(y));
     }
@@ -67,6 +67,13 @@ setMethodS3("calculateWeights", "ExonRmaPlm", function(this, units=NULL, ram=NUL
     unitsToDo <- units;
   } else {
     unitsToDo <- findUnitsTodo(ws, units=units);
+  }
+
+  ## Already done?
+  if (length(unitsToDo) == 0) {
+    verbose && cat(verbose, "All weights already calculated. Skipping.")
+    verbose && exit(verbose)
+    return(invisible(ws))
   }
 
   verbose && printf(verbose, "Number of units: %d\n", nbrOfUnits);
@@ -133,6 +140,9 @@ setMethodS3("calculateWeights", "ExonRmaPlm", function(this, units=NULL, ram=NUL
   # Garbage collect
   gc <- gc();
   verbose && print(verbose, gc);
+
+  ## Generate checksum files
+  wsZ <- getChecksumFileSet(ws)
 
   verbose && exit(verbose);
 

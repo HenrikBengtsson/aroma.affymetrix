@@ -12,6 +12,10 @@
 
 
 % Other missing docs
+\alias{bgAdjustGcrma.AffymetrixCelFile}
+\alias{bgAdjustGcrma.AffymetrixCelSet}
+\alias{bgAdjustOptical.AffymetrixCelFile}
+\alias{bgAdjustRma.AffymetrixCelFile}
 \alias{ASCRMAv2}
 \alias{AffymetrixAptSummaryFile}
 \alias{AffymetrixCnChpFile}
@@ -568,7 +572,6 @@
 \alias{getExpandedCellMap.ChipEffectFile}
 \alias{getExpandedCellMap.CnChipEffectFile}
 \alias{getExpandedCellMap.SnpChipEffectFile}
-\alias{getExpectedOutputFiles.MatSmoothing}
 \alias{getExpectedOutputFullnames.MatSmoothing}
 \alias{getExtensionPattern.AffymetrixCdfFile}
 \alias{getExtensionPattern.AffymetrixCelFile}
@@ -727,8 +730,6 @@
 \alias{getOutputTuple.SmoothMultiarrayModel}
 \alias{getParameter}
 \alias{getParameter.AffymetrixAptSummaryFile}
-\alias{getParameterSet}
-\alias{getParameterSet.Model}
 \alias{getParameters.AbstractProbeSequenceNormalization}
 \alias{getParameters.AdditiveCovariatesNormalization}
 \alias{getParameters.AllelicCrosstalkCalibration}
@@ -1049,6 +1050,9 @@
 \alias{mergeStrands.SnpChipEffectFile}
 \alias{migrateTool}
 \alias{migrateTool.CopyNumberSegmentationModel}
+\alias{nbrOfArrays.CnagCfhSet}
+\alias{nbrOfArrays.DChipDcpSet}
+\alias{nbrOfArrays.AffymetrixCnChpSet}
 \alias{nbrOfArrays.AffymetrixAptSummaryFile}
 \alias{nbrOfArrays.AffymetrixCelSetReporter}
 \alias{nbrOfArrays.QualityAssessmentModel}

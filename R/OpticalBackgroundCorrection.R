@@ -74,84 +74,153 @@ setMethodS3("getParameters", "OpticalBackgroundCorrection", function(this, ...) 
 #*/###########################################################################
 setMethodS3("process", "OpticalBackgroundCorrection", function(this, ..., force=FALSE, verbose=FALSE) {
 
-  verbose <- Arguments$getVerbose(verbose);
+  verbose <- Arguments$getVerbose(verbose)
   if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
+    pushState(verbose)
+    on.exit(popState(verbose))
   }
 
-  verbose && enter(verbose, "Background correcting data set");
+  verbose && enter(verbose, "Background correcting data set")
 
   if (!force && isDone(this)) {
-    verbose && cat(verbose, "Already background corrected for \"optical\" effects");
-    verbose && exit(verbose);
-    outputDataSet <- getOutputDataSet(this);
-    return(outputDataSet);
+    verbose && cat(verbose, "Already background corrected for \"optical\" effects")
+    verbose && exit(verbose)
+    outputDataSet <- getOutputDataSet(this)
+    return(outputDataSet)
   }
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Setup
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Get input data set
-  ds <- getInputDataSet(this);
+  ds <- getInputDataSet(this)
 
   # Get the output path
-  outputPath <- getPath(this);
+  outputPath <- getPath(this)
 
-  cdf <- getCdf(ds);
+  cdf <- getCdf(ds)
 
   # Get algorithm parameters (including the target distribution)
-  params <- getParameters(this);
-  subsetToUpdate <- params$subsetToUpdate;
-  typesToUpdate <- params$typesToUpdate;
-  minimum <- params$minimum;
+  params <- getParameters(this)
+  subsetToUpdate <- params$subsetToUpdate
+  typesToUpdate <- params$typesToUpdate
+  minimum <- params$minimum
   # Not needed anymore
-  params <- NULL;
+  params <- NULL
 
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Identifying the cells to be updated
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  verbose && enter(verbose, "Identifying cells to be updated");
-  subsetToUpdate <- identifyCells(cdf, indices=subsetToUpdate,
-                                                      types=typesToUpdate);
-  verbose && cat(verbose, "Number of cells: ", length(subsetToUpdate));
-  verbose && str(verbose, subsetToUpdate);
-  verbose && exit(verbose);
-
+  hasSubsetToUpdate <- getFraction <- FALSE
+  nbrOfCells <- nbrOfCells(cdf)
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Background correct
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  nbrOfArrays <- length(ds);
-  verbose && cat(verbose, "Number of arrays: ", nbrOfArrays);
+  nbrOfArrays <- length(ds)
+  verbose && cat(verbose, "Number of arrays: ", nbrOfArrays)
+
+  res <- listenv()
+
   for (ii in seq_along(ds)) {
-    df <- ds[[ii]];
-    verbose && enter(verbose, sprintf("Array #%d ('%s') of %d", ii, getName(df), nbrOfArrays));
+    df <- ds[[ii]]
+    verbose && enter(verbose, sprintf("Array #%d ('%s') of %d", ii, getName(df), nbrOfArrays))
 
-    dfD <- bgAdjustOptical(df, path=outputPath, subsetToUpdate=subsetToUpdate, typesToUpdate=NULL, minimum=minimum, overwrite=force, verbose=less(verbose), .deprecated=FALSE);
-    verbose && print(verbose, dfD);
+    filename <- basename(getPathname(df))
+    filename <- gsub("[.]cel$", ".CEL", filename);  # Only output upper case!
+    pathname <- Arguments$getWritablePathname(filename, path=outputPath,
+                                              mustNotExist=FALSE)
+    pathname <- AffymetrixFile$renameToUpperCaseExt(pathname)
 
-    # Not needed anymore
-    # Not needed anymore
-    df <- dfD <- NULL;
+    # Already processed?
+    if (!force && isFile(pathname)) {
+      verbose && cat(verbose, "Already processed. Skipping.")
+      # Assert valid file
+      dfOut <- newInstance(df, pathname)
+      setCdf(dfOut, cdf)
+      res[[ii]] <- pathname
+      verbose && exit(verbose)
+      next
+    }
 
-    verbose && exit(verbose);
+
+    # Identifying the cells to be updated?
+    if (!hasSubsetToUpdate) {
+      verbose && enter(verbose, "Identifying cells to be updated")
+      subsetToUpdate <- identifyCells(cdf, indices=subsetToUpdate,
+                                                          types=typesToUpdate)
+      verbose && cat(verbose, "Number of cells: ", length(subsetToUpdate))
+      verbose && str(verbose, subsetToUpdate)
+      hasSubsetToUpdate <- TRUE
+      verbose && exit(verbose)
+    }
+
+
+    res[[ii]] %<=% {
+      # Get all probe signals
+      verbose && enter(verbose, "Reading probe intensities")
+      x <- readRawData(df, fields="intensities", verbose=less(verbose,2))
+      x <- x$intensities
+      verbose && exit(verbose)
+
+      # Subtract optical background from selected probes
+      verbose && enter(verbose, "Adjusting background for optical effect")
+      arrayMinimum <- min(x[subsetToUpdate], na.rm=TRUE)
+      verbose && printf(verbose, "Array minimum: %.2f\n", arrayMinimum)
+      xdiff <- (arrayMinimum - minimum)
+      verbose && printf(verbose, "Correction: -(%.2f-%.2f) = %+.2f\n",
+                                             arrayMinimum, minimum, -xdiff)
+      x[subsetToUpdate] <- x[subsetToUpdate] - xdiff
+      verbose && exit(verbose)
+
+      # Write adjusted data to file
+      verbose && enter(verbose, "Writing adjusted probe signals")
+
+      # Write to a temporary file (allow rename of existing one if forced)
+      isFile <- (force && isFile(pathname));
+      pathnameT <- pushTemporaryFile(pathname, isFile=isFile, verbose=verbose)
+
+      # Create CEL file to store results, if missing
+      verbose && enter(verbose, "Creating CEL file for results, if missing")
+      createFrom(df, filename=pathnameT, path=NULL, verbose=less(verbose))
+      verbose && exit(verbose)
+
+      verbose && enter(verbose, "Writing adjusted intensities")
+      .updateCel(pathnameT, intensities=x)
+      verbose && exit(verbose)
+
+      # Rename temporary file
+      popTemporaryFile(pathnameT, verbose=verbose)
+
+      dfOut <- newInstance(df, pathname)
+      setCdf(dfOut, cdf)
+
+      ## Create checksum file
+      dfZ <- getChecksumFile(dfOut)
+
+      verbose && exit(verbose)
+
+      pathname
+    } ## %<=%
+
+    verbose && exit(verbose)
   } # for (ii ...)
 
-  # Not needed anymore
-  subsetToUpdate <- NULL;
+  ## Not needed anymore
+  subsetToUpdate <- NULL
 
-  # Garbage collect
-  gc <- gc();
-  verbose && print(verbose, gc);
+  ## Resolve futures
+  res <- as.list(res)
+  res <- NULL
 
-  # Get the output data set
-  outputDataSet <- getOutputDataSet(this);
+  ## Garbage collect
+  gc <- gc()
+  verbose && print(verbose, gc)
 
-  verbose && exit(verbose);
+  ## Get the output data set
+  outputDataSet <- getOutputDataSet(this)
 
-  outputDataSet;
+  verbose && exit(verbose)
+
+  outputDataSet
 })
 
 

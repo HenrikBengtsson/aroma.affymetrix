@@ -95,7 +95,7 @@ toPNG(getFullName(csR), tags=c("doGCRMA_vs_gcrma"), width=800, {
 })
 
 # (b) Assert correlations
-stopifnot(all(rho > 0.99995))
+stopifnot(all(rho > 0.9999))
 
 # (c) Assert differences
 stopifnot(mean(as.vector(e^2)) < 0.001)

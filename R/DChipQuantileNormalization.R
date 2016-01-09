@@ -309,7 +309,7 @@ setMethodS3("process", "DChipQuantileNormalization", function(this, ..., force=F
     x <- NULL;
 
     # Rename temporary file
-    pathname <- popTemporaryFile(pathnameT, verbose=verbose);
+    popTemporaryFile(pathnameT, verbose=verbose);
 
     verbose && exit(verbose);
     verbose && exit(verbose);

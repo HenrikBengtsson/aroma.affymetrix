@@ -375,6 +375,10 @@ setMethodS3("process", "UnitTypeScaleNormalization", function(this, ..., skip=FA
              intensities=data$y, templateFile=df, verbose=less(verbose));
     # Not needed anymore
     data <- NULL;
+
+    ## Create checksum file
+    dfZ <- getChecksumFile(pathname)
+
     verbose && exit(verbose);
 
     # Garbage collect

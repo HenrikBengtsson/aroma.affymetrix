@@ -30,7 +30,7 @@ setMethodS3("setSettings", "Package", function(this, value=list(), ...) {
   key <- sprintf("%s.settings", getName(this));
   args <- list(value);
   names(args) <- key;
-  do.call("options", args);
+  do.call(options, args);
 })
 
 setMethodS3("updateSettings", "Package", function(this, ...) {
@@ -54,7 +54,7 @@ setMethodS3("updateSettings", "Package", function(this, ...) {
 # HISTORY:
 # 2010-02-22
 # o BUG FIX: The settings in 'aromaSettings' loaded by aroma.core was
-#   overridden by defaults settings of aroma.affymetrix, even if they 
+#   overridden by defaults settings of aroma.affymetrix, even if they
 #   already existed.
 # 2009-02-22
 # o Created.

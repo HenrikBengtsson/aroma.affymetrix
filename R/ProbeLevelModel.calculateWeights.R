@@ -54,6 +54,13 @@ setMethodS3("calculateWeights", "ProbeLevelModel", function(this, units=NULL, ra
 
   unitsToDo <- findUnitsTodo(ws);
 
+  ## Already done?
+  if (length(unitsToDo) == 0) {
+    verbose && cat(verbose, "All weights already calculated. Skipping.")
+    verbose && exit(verbose)
+    return(invisible(ws))
+  }
+
   unitsPerChunk <- ram * 100000/length(getDataSet(this));
   unitsPerChunk <- Arguments$getInteger(unitsPerChunk, range=c(1,Inf));
   nbrOfChunks <- ceiling(nbrOfUnits / unitsPerChunk);
@@ -123,6 +130,9 @@ setMethodS3("calculateWeights", "ProbeLevelModel", function(this, units=NULL, ra
   # Garbage collect
   gc <- gc();
   verbose && print(verbose, gc);
+
+  ## Generate checksum files
+  wsZ <- getChecksumFileSet(ws)
 
   verbose && exit(verbose);
 

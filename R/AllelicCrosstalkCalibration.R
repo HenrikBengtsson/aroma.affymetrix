@@ -760,127 +760,139 @@ setMethodS3("process", "AllelicCrosstalkCalibration", function(this, ..., force=
   verbose && enter(verbose, "Calibrating ", nbrOfArrays, " arrays");
   verbose && cat(verbose, "Path: ", outputPath);
 
-  for (kk in seq_len(nbrOfArrays)) {
-    df <- ds[[kk]];
-    verbose && enter(verbose, sprintf("Array #%d ('%s') of %d",
-                                              kk, getName(df), nbrOfArrays));
+  res <- listenv()
 
-    fullname <- getFullName(df);
-    filename <- sprintf("%s.CEL", fullname);
-    pathname <- Arguments$getWritablePathname(filename, path=outputPath, ...);
+  for (kk in seq_len(nbrOfArrays)) {
+    df <- ds[[kk]]
+    verbose && enter(verbose, sprintf("Array #%d ('%s') of %d",
+                                              kk, getName(df), nbrOfArrays))
+
+    fullname <- getFullName(df)
+    filename <- sprintf("%s.CEL", fullname)
+    pathname <- Arguments$getWritablePathname(filename, path=outputPath, ...)
 
     # Already calibrated?
     if (!force && isFile(pathname)) {
-      verbose && cat(verbose, "Calibrated data file already exists: ", pathname);
-      # Add test to load array here? See todays error report to
-      # the aroma.affymetrix mailing list. /HB 2008-12-16
-    } else {
-      setsOfProbes <- getSetsOfProbes(this, verbose=less(verbose, 1));
-      verbose && cat(verbose, "setsOfProbes:");
-      verbose && str(verbose, setsOfProbes);
+      verbose && cat(verbose, "Calibrated data file already exists: ", pathname)
+      dfC <- newInstance(df, pathname)
+      setCdf(dfC, cdf)
+      res[[kk]] <- pathname
+      verbose && exit(verbose)
+      next
+    }
 
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    # Calculations used by all samples
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    setsOfProbes <- getSetsOfProbes(this, verbose=less(verbose, 1))
+    verbose && cat(verbose, "setsOfProbes:")
+    verbose && str(verbose, setsOfProbes)
+
+
+    res[[kk]] %<=% {
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       # Reading data
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-      verbose && enter(verbose, "Reading all probe intensities");
-      yAll <- getData(df, fields="intensities", ...)$intensities;
-      verbose && exit(verbose);
+      verbose && enter(verbose, "Reading all probe intensities")
+      yAll <- getData(df, fields="intensities", ...)$intensities
+      verbose && exit(verbose)
 
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       # Calibrating
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-#      callHooks(sprintf("%s.onBegin", hookName), df=df, setsOfProbes=setsOfProbes, ...);
+      ## callHooks(sprintf("%s.onBegin", hookName), df=df, setsOfProbes=setsOfProbes, ...);
 
       modelFit <- list(
         paramsShort=paramsShort
-      );
+      )
 
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       # Fitting each allelic basepair
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-      basepairs <- names(setsOfProbes$snps);
-      nbrOfPairs <- length(basepairs);
-      fits <- vector("list", nbrOfPairs);
-      names(fits) <- basepairs;
-      verbose && enter(verbose, "Fitting calibration model");
+      basepairs <- names(setsOfProbes$snps)
+      nbrOfPairs <- length(basepairs)
+      fits <- vector("list", length=nbrOfPairs)
+      names(fits) <- basepairs
+      verbose && enter(verbose, "Fitting calibration model")
+
       for (pp in seq_len(nbrOfPairs)) {
-        name <- basepairs[pp];
-        verbose && enter(verbose, sprintf("Allele probe-pair group #%d ('%s') of %d", pp, name, nbrOfPairs));
-        basepair <- unlist(strsplit(name, split=""));
-        idx <- setsOfProbes$snps[[name]];
+        name <- basepairs[pp]
+        verbose && enter(verbose, sprintf("Allele probe-pair group #%d ('%s') of %d", pp, name, nbrOfPairs))
+        basepair <- unlist(strsplit(name, split=""))
+        idx <- setsOfProbes$snps[[name]]
 
-        verbose && enter(verbose, "Fitting");
-        y <- matrix(yAll[idx], ncol=2, byrow=FALSE);
-        verboseL <- (verbose && isVisible(verbose, -50));
+        verbose && enter(verbose, "Fitting")
+        y <- matrix(yAll[idx], ncol=2, byrow=FALSE)
+        verboseL <- (verbose && isVisible(verbose, -50))
         # Not needed anymore
-        idx <- NULL;
+        idx <- NULL
 
-        verbose && cat(verbose, "Model/algorithm flavor: ", flavor);
+        verbose && cat(verbose, "Model/algorithm flavor: ", flavor)
         if (flavor == "sfit") {
-          alpha <- algorithmParameters$alpha;
-          q <- algorithmParameters$q;
-          Q <- algorithmParameters$Q;
-          verbose & cat(verbose, "Model parameters:");
-          verbose & str(verbose, list(alpha=alpha, q=q, Q=Q));
-          verbose & cat(verbose, "Number of data points: ", nrow(y));
+          alpha <- algorithmParameters$alpha
+          q <- algorithmParameters$q
+          Q <- algorithmParameters$Q
+          verbose & cat(verbose, "Model parameters:")
+          verbose & str(verbose, list(alpha=alpha, q=q, Q=Q))
+          verbose & cat(verbose, "Number of data points: ", nrow(y))
           if (nrow(y) > 10) {
             fit <- fitGenotypeCone(y, flavor=flavor, alpha=alpha, q=q, Q=Q,
-                                                         verbose=verboseL);
+                                                         verbose=verboseL)
           } else {
-            fit <- NULL;
-            verbose & cat(verbose, "Cannot fit model: too few data points. Skipping this group: ", name);
+            fit <- NULL
+            verbose & cat(verbose, "Cannot fit model: too few data points. Skipping this group: ", name)
           }
         } else if (flavor == "expectile") {
-          alpha <- algorithmParameters$alpha;
-          lambda <- algorithmParameters$lambda;
-          verbose & cat(verbose, "Model parameters:");
-          verbose & str(verbose, list(alpha=alpha, lambda=lambda));
-          verbose & cat(verbose, "Number of data points: ", nrow(y));
+          alpha <- algorithmParameters$alpha
+          lambda <- algorithmParameters$lambda
+          verbose & cat(verbose, "Model parameters:")
+          verbose & str(verbose, list(alpha=alpha, lambda=lambda))
+          verbose & cat(verbose, "Number of data points: ", nrow(y))
           fit <- fitGenotypeCone(y, flavor=flavor, alpha=alpha,
-                                        lambda=lambda, verbose=verboseL);
+                                        lambda=lambda, verbose=verboseL)
         }
-        verbose && print(verbose, fit, level=-5);
-        fits[[name]] <- fit;
-        verbose && exit(verbose);
+        verbose && print(verbose, fit, level=-5)
+        fits[[name]] <- fit
+        verbose && exit(verbose)
 
-        callHooks(sprintf("%s.onFitOne", hookName), df=df, y=y, fit=fit, ...);
+        callHooks(sprintf("%s.onFitOne", hookName), df=df, y=y, fit=fit, ...)
 
         # Not needed anymore
-        y <- fit <- NULL; # Not needed anymore
-        gc <- gc();
+        y <- fit <- NULL ## Not needed anymore
+        gc <- gc()
 
-        verbose && exit(verbose);
+        verbose && exit(verbose)
       } # for (pp in seq_len(nbrOfPairs))
-      verbose && exit(verbose);
+      verbose && exit(verbose)
 
 
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       # Estimate offset for non-SNP PM cells
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-      ns <- sapply(fits, FUN=function(fit) fit$dimData[1]);
+      ns <- sapply(fits, FUN=function(fit) fit$dimData[1])
 
       # Alt (1) Weighted average of all offset estimates
-      w <- ns / sum(ns);
-      origins <- sapply(fits, FUN=function(fit) fit$origin);
-      verbose && cat(verbose, "Estimated origins:");
-      verbose && print(verbose, origins);
-      origins <- colMeans(origins, na.rm=TRUE);
-      offset <- sum(w*origins, na.rm=TRUE);
-      verbose && printf(verbose, "Weighted average offset: %.2f\n", offset);
+      w <- ns / sum(ns)
+      origins <- sapply(fits, FUN=function(fit) fit$origin)
+      verbose && cat(verbose, "Estimated origins:")
+      verbose && print(verbose, origins)
+      origins <- colMeans(origins, na.rm=TRUE)
+      offset <- sum(w*origins, na.rm=TRUE)
+      verbose && printf(verbose, "Weighted average offset: %.2f\n", offset)
       # Not needed anymore
-      origins <- w <- NULL;
+      origins <- w <- NULL
 
       fit <- list(
         offset = offset,
         ns = ns,
         dimData = length(setsOfProbes$nonSNPs)
-      );
-      fits[["nonSNPs"]] <- fit;
+      )
+      fits[["nonSNPs"]] <- fit
       # Not needed anymore
-      fit <- ns <- offset <- NULL;
+      fit <- ns <- offset <- NULL
 
       # Store allelic crosstalk model fits
-      modelFit$accFits <- fits;
+      modelFit$accFits <- fits
 
 
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -890,59 +902,55 @@ setMethodS3("process", "AllelicCrosstalkCalibration", function(this, ..., force=
       # the same.  This might be useful if we want to correct other probes
       # not included above such as CN probes on SNP 6.0. /HB 2007-09-05
 
-      callHooks(sprintf("%s.onFit", hookName), df=df, y=y, basepair=basepair, ...);
+      callHooks(sprintf("%s.onFit", hookName), df=df, y=y, basepair=basepair, ...)
 
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       # Backtransforming (calibrating)
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-      verbose && enter(verbose, "Backtransforming (calibrating) data");
+      verbose && enter(verbose, "Backtransforming (calibrating) data")
       for (pp in seq_len(nbrOfPairs)) {
-        name <- basepairs[pp];
-        verbose && enter(verbose, sprintf("Allele basepair #%d ('%s') of %d", pp, name, nbrOfPairs));
+        name <- basepairs[pp]
+        verbose && enter(verbose, sprintf("Allele basepair #%d ('%s') of %d", pp, name, nbrOfPairs))
 
-        idx <- setsOfProbes$snps[[name]];
-        y <- matrix(yAll[idx], ncol=2, byrow=FALSE);
-        fit <- fits[[name]];
+        idx <- setsOfProbes$snps[[name]]
+        y <- matrix(yAll[idx], ncol=2, byrow=FALSE)
+        fit <- fits[[name]]
         if (!is.null(fit)) {
-          yC <- backtransformGenotypeCone(y, fit=fit);
+          yC <- backtransformGenotypeCone(y, fit=fit)
         } else {
-          verbose && cat(verbose, "Cannot do backtransformation because there were to few data points in group to fit anything: ", name);
-          yC <- y;
+          verbose && cat(verbose, "Cannot do backtransformation because there were to few data points in group to fit anything: ", name)
+          yC <- y
         }
-        yAll[idx] <- yC;
+        yAll[idx] <- yC
 
-#        callHooks(sprintf("%s.onUpdated", hookName), df=df, y=y, basepair=basepair, fit=fits[[name]], yC=yC,...);
+        ## callHooks(sprintf("%s.onUpdated", hookName), df=df, y=y, basepair=basepair, fit=fits[[name]], yC=yC,...)
         # Not needed anymore
-        idx <- y <- yC <- NULL;
-        gc <- gc();
+        idx <- y <- yC <- NULL
+        gc <- gc()
 
-        verbose && exit(verbose);
+        verbose && exit(verbose)
       } # for (pp in seq_len(nbrOfPairs))
-      verbose && exit(verbose);
+      verbose && exit(verbose)
 
 
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       # Correcting offset for all non-SNP cells
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-      cells <- setsOfProbes$nonSNPs;
+      cells <- setsOfProbes$nonSNPs
       if (length(cells) > 0) {
-        verbose && enter(verbose, "Correcting offset for all non-SNP cells");
-        verbose && cat(verbose, "Cells:");
-        verbose && str(verbose, cells);
-        offset <- fits[["nonSNPs"]]$offset;
-        verbose && cat(verbose, "Offset: ", offset);
-        yAll[cells] <- yAll[cells] - offset;
-        verbose && exit(verbose);
+        verbose && enter(verbose, "Correcting offset for all non-SNP cells")
+        verbose && cat(verbose, "Cells:")
+        verbose && str(verbose, cells)
+        offset <- fits[["nonSNPs"]]$offset
+        verbose && cat(verbose, "Offset: ", offset)
+        yAll[cells] <- yAll[cells] - offset
+        verbose && exit(verbose)
       }
       # Not needed anymore
-      cells <- NULL;
-
-      # Not needed anymore
-      # Not needed anymore
-      fits <- NULL;
+      cells <- fits <- NULL
 
       # Garbage collect
-      gc <- gc();
+      gc <- gc()
 
 
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -950,17 +958,17 @@ setMethodS3("process", "AllelicCrosstalkCalibration", function(this, ..., force=
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       if (!is.null(params$targetAvg)) {
         yAll <- rescale(this, yAll=yAll, params=params,
-                           setsOfProbes=setsOfProbes, verbose=less(verbose));
-        fit <- attr(yAll, "fit");
-        fit$params <- NULL;
-        fit$paramsShort <- paramsShort;
-        modelFit$rescaleFit <- fit;
+                           setsOfProbes=setsOfProbes, verbose=less(verbose))
+        fit <- attr(yAll, "fit")
+        fit$params <- NULL
+        fit$paramsShort <- paramsShort
+        modelFit$rescaleFit <- fit
         # Not needed anymore
-        fit <- NULL;
+        fit <- NULL
 
         # Garbage collect
-        gc <- gc();
-        verbose && print(verbose, gc);
+        gc <- gc()
+        verbose && print(verbose, gc)
       }
 
 
@@ -970,72 +978,75 @@ setMethodS3("process", "AllelicCrosstalkCalibration", function(this, ..., force=
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       # Store fit and parameters (in case someone are interested in looking
       # at them later; no promises of backward compatibility though).
-      filename <- sprintf("%s,fit.RData", fullname);
-      fitPathname <- Arguments$getWritablePathname(filename, path=outputPath, ...);
+      filename <- sprintf("%s,fit.RData", fullname)
+      fitPathname <- Arguments$getWritablePathname(filename, path=outputPath, ...)
 
-      saveObject(modelFit, file=fitPathname);
-      verbose && str(verbose, modelFit, level=-50);
+      saveObject(modelFit, file=fitPathname)
+      verbose && str(verbose, modelFit, level=-50)
       # Not needed anymore
-      modelFit <- NULL;
+      modelFit <- NULL
 
         # Garbage collect
-      gc <- gc();
-      verbose && print(verbose, gc);
+      gc <- gc()
+      verbose && print(verbose, gc)
 
 
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       # Storing data
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-      verbose && enter(verbose, "Storing calibrated data");
+      verbose && enter(verbose, "Storing calibrated data")
 
       # Write to a temporary file (allow rename of existing one if forced)
-      isFile <- (force && isFile(pathname));
-      pathnameT <- pushTemporaryFile(pathname, isFile=isFile, verbose=verbose);
+      isFile <- (force && isFile(pathname))
+      pathnameT <- pushTemporaryFile(pathname, isFile=isFile, verbose=verbose)
 
       # Create CEL file to store results, if missing
-      verbose && enter(verbose, "Creating CEL file for results, if missing");
-      createFrom(df, filename=pathnameT, path=NULL, verbose=less(verbose));
-      verbose && exit(verbose);
+      verbose && enter(verbose, "Creating CEL file for results, if missing")
+      createFrom(df, filename=pathnameT, path=NULL, verbose=less(verbose))
+      verbose && exit(verbose)
 
       # Write calibrated data to file
-      verbose2 <- -as.integer(verbose)-2;
-      .updateCel(pathnameT, intensities=yAll, verbose=verbose2);
+      verbose2 <- -as.integer(verbose)-2
+      .updateCel(pathnameT, intensities=yAll, verbose=verbose2)
 
       # Not needed anymore
-      yAll <- verbose2 <- NULL;
+      yAll <- verbose2 <- NULL
 
       # Rename temporary file
-      pathname <- popTemporaryFile(pathnameT, verbose=verbose);
+      popTemporaryFile(pathnameT, verbose=verbose)
 
-      gc <- gc();
-      verbose && print(verbose, gc);
-      verbose && exit(verbose);
-    } # if (!force && isFile(pathname))
+      gc <- gc()
+      verbose && print(verbose, gc)
+      verbose && exit(verbose)
 
+      # Assert validity of the calibrated data file
+      dfC <- newInstance(df, pathname)
+      setCdf(dfC, cdf)
 
-    # Assert validity of the calibrated data file
-    dfC <- newInstance(df, pathname);
+      ## Create checksum file
+      dfCZ <- getChecksumFile(dfC)
 
-    # CDF inheritance
-    setCdf(dfC, cdf);
+      ## callHooks(sprintf("%s.onExit", hookName), df=df, dfC=dfC, ...);
 
-#    callHooks(sprintf("%s.onExit", hookName), df=df, dfC=dfC, ...);
-
-    # Record
-
-    # Not needed anymore
-    df <- dfC <- NULL;
+      dfC
+    } ## %<=%
 
     verbose && exit(verbose);
   } # for (kk in seq_len(nbrOfArrays))
   verbose && exit(verbose);
 
-  # Garbage collect
-  # Not needed anymore
-  ds <- setsOfProbes <- NULL;
+  ## Not needed anymore
+  ds <- setsOfProbes <- NULL
+
+  ## Resolve futures
+  res <- as.list(res)
+  res <- NULL
+
+  ## Garbage collect
 #  clearCache(this);
   gc <- gc();
   verbose && print(verbose, gc);
+
 
   outputDataSet <- getOutputDataSet(this, force=TRUE);
 

@@ -557,7 +557,7 @@ setMethodS3("process", "QuantileNormalization", function(this, ..., force=FALSE,
   verbose && cat(verbose, "Calling normalizeQuantile() with arguments:");
   verbose && str(verbose, args);
   args$verbose <- verbose;
-  outputDataSet <- do.call("normalizeQuantile", args=args);
+  outputDataSet <- do.call(normalizeQuantile, args=args);
 
   # Garbage collect
   gc <- gc();

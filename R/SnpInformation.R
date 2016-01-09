@@ -23,10 +23,9 @@ setConstructorS3("SnpInformation", function(...) {
   this <- extend(GenericDataFile(...), c("SnpInformation"
                                              , uses("FileCacheKeyInterface")),
     "cached:.data" = NULL
-  );
-  if (!is.null(getPathname(this)))
-    verify(this);
-  this;
+  )
+  if (isFile(this)) verify(this)
+  this
 })
 
 setMethodS3("as.character", "SnpInformation", function(x, ...) {
@@ -308,7 +307,7 @@ setMethodS3("getData", "SnpInformation", function(this, units=NULL, fields=c("fr
 
   # Reorder?
   if (!is.null(orderBy)) {
-    o <- do.call("order", args=as.list(data[,orderBy]));
+    o <- do.call(order, args=as.list(data[,orderBy]));
     data <- data[o,,drop=FALSE];
     # Not needed anymore
     o <- NULL;

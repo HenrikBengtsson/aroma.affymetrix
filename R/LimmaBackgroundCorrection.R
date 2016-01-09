@@ -20,6 +20,9 @@
 #   \item{addJitter}{If @TRUE, Zero-mean gaussian noise is added to the
 #     signals before being background corrected.}
 #   \item{jitterSd}{Standard deviation of the jitter noise added.}
+#   \item{seed}{An (optional) @integer specifying a temporary random seed
+#     to be used for generating the (optional) jitter.  The random seed
+#     is set to its original state when done.  If @NULL, it is not set.}
 # }
 #
 # \section{Fields and Methods}{
@@ -48,7 +51,7 @@
 # }
 #
 #*/###########################################################################
-setConstructorS3("LimmaBackgroundCorrection", function(..., args=NULL, addJitter=FALSE, jitterSd=0.2) {
+setConstructorS3("LimmaBackgroundCorrection", function(..., args=NULL, addJitter=FALSE, jitterSd=0.2, seed=6022007) {
   # Argument 'args':
   if (!is.null(args)) {
     if (!is.list(args)) {
@@ -62,10 +65,16 @@ setConstructorS3("LimmaBackgroundCorrection", function(..., args=NULL, addJitter
   # Argument 'jitterSd':
   jitterSd <- Arguments$getDouble(jitterSd);
 
+  # Argument 'seed':
+  if (!is.null(seed)) {
+    seed <- Arguments$getInteger(seed);
+  }
+
   extend(BackgroundCorrection(..., typesToUpdate="pm"), "LimmaBackgroundCorrection",
     .args = args,
     .addJitter = addJitter,
-    .jitterSd = jitterSd
+    .jitterSd = jitterSd,
+    .seed = seed
   );
 })
 
@@ -94,7 +103,8 @@ setMethodS3("getParameters", "LimmaBackgroundCorrection", function(this, ...) {
   params2 <- list(
     addJitter = this$.addJitter,
     jitterSd = this$.jitterSd,
-    pmOnly = pmOnly
+    pmOnly = pmOnly,
+    seed = this$.seed
   );
 
   # Algorithm parameters
@@ -214,19 +224,18 @@ setMethodS3("process", "LimmaBackgroundCorrection", function(this, ..., force=FA
   requireNamespace("limma") || throw("Package not loaded: limma")
   backgroundCorrect <- limma::backgroundCorrect
 
+  ## In case random jitter will be used
+  jitter <- NULL
 
-  # Generate random jitter?
-  if (params$addJitter) {
-    set.seed(6022007);
-    jitter <- rnorm(length(y), mean=0, sd=params$jitterSd);
-  }
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # apply normal+exponential model to each array
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   nbrOfArrays <- length(ds);
   verbose && enter(verbose, "Adjusting ", nbrOfArrays, " arrays");
-  dataFiles <- list();
+
+  res <- listenv()
+
   for (kk in seq_along(ds)) {
     verbose && enter(verbose, sprintf("Array #%d of %d", kk, nbrOfArrays));
     df <- ds[[kk]];
@@ -243,6 +252,7 @@ setMethodS3("process", "LimmaBackgroundCorrection", function(this, ..., force=FA
     if (!force && isFile(pathname)) {
       verbose && cat(verbose, "Output data file already exists: ", pathname);
       verbose && exit(verbose);
+      res[[kk]] <- pathname
       next;
     }
 
@@ -254,64 +264,94 @@ setMethodS3("process", "LimmaBackgroundCorrection", function(this, ..., force=FA
       cells <- getSubsetToUpdate0(this, verbose=less(verbose, 10));
     }
 
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    # Reading data
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    verbose && enter(verbose, "Extracting data");
-    y <- extractMatrix(df, cells=cells, drop=TRUE);
-    verbose && str(verbose, y);
-    verbose && exit(verbose);
 
-
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    # Add jitter?
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    if (params$addJitter) {
-      y <- y + jitter;
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    # Generate random jitter?
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    if (params$addJitter && is.null(jitter)) {
+      ## Use a temporary random seed?
+      seed <- params$seed
+      if (!is.null(seed)) {
+        randomSeed("set", seed=seed, kind="L'Ecuyer-CMRG")
+        on.exit(randomSeed("reset"), add=TRUE)
+        verbose && printf(verbose, "Random seed temporarily set (seed=%d, kind=\"L'Ecuyer-CMRG\")\n", seed)
+      }
+      jitter <- rnorm(length(cells), mean=0, sd=params$jitterSd);
     }
 
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    # Correct data
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    verbose && enter(verbose, "Calling backgroundCorrect() of limma");
-    args <- c(list(y), params$args);
-    verbose && str(verbose, args);
-    y <- do.call("backgroundCorrect", args=args);
-    verbose && str(verbose, y);
-    y <- y[,1,drop=TRUE];
-    verbose && str(verbose, y);
-    verbose && exit(verbose);
 
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    # Storing data
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    verbose && enter(verbose, "Storing corrected data");
+    res[[kk]] %<=% {
+      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      # Reading data
+      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      verbose && enter(verbose, "Extracting data");
+      y <- extractMatrix(df, cells=cells, drop=TRUE);
+      verbose && str(verbose, y);
+      verbose && exit(verbose);
 
-    # Write to a temporary file (allow rename of existing one if forced)
-    isFile <- (force && isFile(pathname));
-    pathnameT <- pushTemporaryFile(pathname, isFile=isFile, verbose=verbose);
 
-    # Create CEL file to store results, if missing
-    verbose && enter(verbose, "Creating CEL file for results, if missing");
-    createFrom(df, filename=pathnameT, path=NULL, verbose=less(verbose));
-    verbose && exit(verbose);
+      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      # Add jitter?
+      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      if (params$addJitter) {
+        y <- y + jitter;
+      }
 
-    # Write calibrated data to file
-    verbose2 <- -as.integer(verbose)-2;
-    .updateCel(pathnameT, indices=cells, intensities=y, verbose=verbose2);
-    # Not needed anymore
-    y <- verbose2 <- NULL;
+      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      # Correct data
+      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      verbose && enter(verbose, "Calling backgroundCorrect() of limma");
+      args <- c(list(y), params$args);
+      verbose && str(verbose, args);
+      y <- do.call(backgroundCorrect, args=args);
+      verbose && str(verbose, y);
+      y <- y[,1,drop=TRUE];
+      verbose && str(verbose, y);
+      verbose && exit(verbose);
 
-    # Rename temporary file
-    pathname <- popTemporaryFile(pathnameT, verbose=verbose);
+      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      # Storing data
+      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      verbose && enter(verbose, "Storing corrected data");
 
-    verbose && exit(verbose);
+      # Write to a temporary file (allow rename of existing one if forced)
+      isFile <- (force && isFile(pathname));
+      pathnameT <- pushTemporaryFile(pathname, isFile=isFile, verbose=verbose);
+
+      # Create CEL file to store results, if missing
+      verbose && enter(verbose, "Creating CEL file for results, if missing");
+      createFrom(df, filename=pathnameT, path=NULL, verbose=less(verbose));
+      verbose && exit(verbose);
+
+      # Write calibrated data to file
+      verbose2 <- -as.integer(verbose)-2;
+      .updateCel(pathnameT, indices=cells, intensities=y, verbose=verbose2);
+      # Not needed anymore
+      y <- verbose2 <- NULL;
+
+      # Rename temporary file
+      popTemporaryFile(pathnameT, verbose=verbose);
+
+      ## Create checksum file
+      dfZ <- getChecksumFile(pathname)
+
+      verbose && exit(verbose);
+
+      pathname
+    } ## %<=%
 
     # Not needed anymore
     df <- NULL;
     verbose && exit(verbose);
   } # for (kk ...)
   verbose && exit(verbose);
+
+  ## Not needed anymore
+  cells <- jitter <- NULL
+
+  ## Resolve futures
+  res <- as.list(res)
+  res <- NULL
 
   outputDataSet <- getOutputDataSet(this, force=TRUE);
 

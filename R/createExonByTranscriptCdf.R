@@ -191,7 +191,7 @@ setMethodS3("createExonByTranscriptCdf", "AffymetrixCdfFile", function(cdf, csv,
   if (!is.null(tags)) {
     tags <- Arguments$getCharacters(tags);
     tags <- unlist(strsplit(tags, split=",", fixed=TRUE));
-    tags <- tags[nchar(tags) > 0];
+    tags <- tags[nzchar(tags)];
   }
 
   # Argument 'csv':
@@ -226,7 +226,7 @@ setMethodS3("createExonByTranscriptCdf", "AffymetrixCdfFile", function(cdf, csv,
 ##    naTagB <- format(getNetAffxDate(csv), format="%Y%m%d");
 ##    naTagB <- sprintf("na%s", naTagB);
     asteriskTags <- c(type, naTagA, genomeTag);
-    asteriskTags <- asteriskTags[nchar(asteriskTags) > 0];
+    asteriskTags <- asteriskTags[nzchar(asteriskTags)];
     asteriskTags <- paste(asteriskTags, collapse=",");
     verbose && cat(verbose, "Asterisk tags: ", asteriskTags);
     tags[idxs] <- asteriskTags;
@@ -427,7 +427,7 @@ setMethodS3("createExonByTranscriptCdf", "AffymetrixCdfFile", function(cdf, csv,
   .writeCdf(pathnameT, cdfheader=hdr, cdf=cdfList, cdfqc=qc, overwrite=TRUE, verbose=10);
 
   # Rename temporary file
-  pathname <- popTemporaryFile(pathnameT, verbose=verbose);
+  popTemporaryFile(pathnameT, verbose=verbose);
   verbose && exit(verbose);
 
   verbose && exit(verbose);  # "Writing CDF...exit"

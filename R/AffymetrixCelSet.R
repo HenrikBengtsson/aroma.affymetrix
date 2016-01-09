@@ -62,8 +62,8 @@ setConstructorS3("AffymetrixCelSet", function(files=NULL, ...) {
   if (length(this$files) > 0) {
     # Make sure the set name is non-empty
     name <- getName(this);
-    if (nchar(name) == 0) {
-      throw("An ", class(this)[1], " must have a name of at least length one: ", this$.pathname);
+    if (!nzchar(name)) {
+      throw("An ", class(this)[1], " must have a name of at least length one: ", getPathname(this))
     }
   }
 
@@ -243,7 +243,7 @@ setMethodS3("getTimestamps", "AffymetrixCelSet", function(this, ..., force=FALSE
   if (force || is.null(ts)) {
     # Get CEL header dates
     ts <- lapply(this, FUN=getTimestamp);
-    ts <- do.call("c", args=ts);
+    ts <- do.call(c, args=ts);
     this$.timestamps <- ts;
   }
 

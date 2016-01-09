@@ -294,6 +294,9 @@ setMethodS3("writeCdf", "AffyGenePDInfo", function(this, tags=c("*"), unitsBy=c(
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   pathname <- writeCdf(ffs, pathname=pathname, overwrite=overwrite, verbose=less(verbose));
 
+  ## Create checksum
+  dfZ <- getChecksumFile(pathname)
+
   verbose && exit(verbose);
 
   invisible(pathname);
@@ -400,7 +403,7 @@ setMethodS3("writeCdf", "PDInfoList", function(ffs, pathname, overwrite=FALSE, .
                   cdfqc=NULL, verbose=verbose, overwrite=overwrite);
 
   # Rename temporary file
-  pathname <- popTemporaryFile(pathnameT, verbose=verbose);
+  popTemporaryFile(pathnameT, verbose=verbose);
 
   verbose && exit(verbose);
 

@@ -69,7 +69,7 @@ setMethodS3("getAsteriskTags", "SmoothMultiarrayModel", function(this, collapse=
   kernelTag <- this$.kernel;
   bandwidthTag <- sprintf("b=%d", getBandwidth(this));
   tags <- c(classTag, weightsTag, kernelTag, bandwidthTag);
-  tags <- tags[nchar(tags) > 0];
+  tags <- tags[nzchar(tags)];
 
   # Collapse?
   tags <- paste(tags, collapse=collapse);

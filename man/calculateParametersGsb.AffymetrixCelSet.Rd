@@ -19,14 +19,18 @@
 }
 
 \usage{
-\method{calculateParametersGsb}{AffymetrixCelSet}(this, nbrOfPms=25000, affinities=NULL, ..., verbose=FALSE)
+\method{calculateParametersGsb}{AffymetrixCelSet}(this, nbrOfPms=25000, affinities=NULL, seed=NULL, ...,
+  verbose=FALSE)
 }
 
 \arguments{
   \item{nbrOfPms}{The number of random PMs to use in estimation.}
   \item{affinities}{A \code{\link[base]{numeric}} \code{\link[base]{vector}} of probe affinities.}
-  \item{path}{If an affinities vector is not specified,
-     gives the path to a file storing the affinities.}
+  \item{seed}{An (optional) \code{\link[base]{integer}} specifying a temporary random seed
+    to be used during processing.  The random seed is set to its original
+    state when done.  If \code{\link[base]{NULL}}, it is not set.}
+  \item{...}{Not used.}
+  \item{verbose}{See \code{\link[R.utils]{Verbose}}.}
 }
 
 \details{

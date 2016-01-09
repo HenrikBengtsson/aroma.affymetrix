@@ -217,7 +217,7 @@ setMethodS3("getOutputDataSet00", "FragmentLengthNormalization", function(this, 
   verbose && str(verbose, args);
 
   args$verbose <- less(verbose, 10);
-  res <- do.call("NextMethod", args);
+  res <- do.call(NextMethod, args);
 
   # Carry over parameters too.  AD HOC for now. /HB 2007-01-07
   if (inherits(res, "SnpChipEffectSet")) {
@@ -787,6 +787,9 @@ setMethodS3("process", "FragmentLengthNormalization", function(this, ..., force=
 #  map <- NULL;
   cellMatrixMap <- NULL;
   nbrOfArrays <- length(ces);
+
+  res <- listenv()
+
   for (kk in seq_len(nbrOfArrays)) {
     ce <- ces[[kk]];
     verbose && enter(verbose, sprintf("Array #%d of %d ('%s')",
@@ -795,22 +798,26 @@ setMethodS3("process", "FragmentLengthNormalization", function(this, ..., force=
     filename <- getFilename(ce);
     pathname <- filePath(path, filename);
     if (isFile(pathname)) {
-      verbose && cat(verbose, "Already normalized. Skipping.");
-      ceN <- fromFile(ce, pathname);
+      verbose && cat(verbose, "Already normalized. Skipping.")
+
+      ## Assert validity of file
+      ceN <- fromFile(ce, pathname)
 
       # Carry over parameters too.  AD HOC for now. /HB 2007-01-07
       if (inherits(ce, "SnpChipEffectFile")) {
-        ceN$mergeStrands <- ce$mergeStrands;
+        ceN$mergeStrands <- ce$mergeStrands
         if (inherits(ce, "CnChipEffectFile")) {
-          ceN$combineAlleles <- ce$combineAlleles;
+          ceN$combineAlleles <- ce$combineAlleles
         }
       }
 
       # CDF inheritance
-      setCdf(ceN, cdf);
+      setCdf(ceN, cdf)
 
-      verbose && exit(verbose);
-      next;
+      res[[kk]] <- pathname
+
+      verbose && exit(verbose)
+      next
     }
 
     # Get unit-to-cell? (for optimized reading)
@@ -849,135 +856,147 @@ setMethodS3("process", "FragmentLengthNormalization", function(this, ..., force=
       verbose && exit(verbose);
     }
 
-    # Get target log2 signals for all SNPs to be updated
-    verbose && enter(verbose, "Getting theta estimates");
-    theta <- extractTheta(ce, units=cellMatrixMap, drop=FALSE, verbose=less(verbose, 5));
-    verbose && str(verbose, theta);
-    verbose && summary(verbose, theta);
-    verbose && exit(verbose);
 
-    verbose && enter(verbose, "Calculating total signals");
-    # Get the total locus signals?
-    if (ncol(theta) > 1) {
-      # Row sums with na.rm=TRUE => NAs are treated as zeros.
-      y <- theta;
-      y[is.na(y)] <- 0;
-      for (cc in 2:ncol(y)) {
-        y[,1] <- y[,1] + y[,cc];
+    res[[kk]] %<=% {
+      # Get target log2 signals for all SNPs to be updated
+      verbose && enter(verbose, "Getting theta estimates");
+      theta <- extractTheta(ce, units=cellMatrixMap, drop=FALSE, verbose=less(verbose, 5));
+      verbose && str(verbose, theta);
+      verbose && summary(verbose, theta);
+      verbose && exit(verbose);
+
+      verbose && enter(verbose, "Calculating total signals");
+      # Get the total locus signals?
+      if (ncol(theta) > 1) {
+        # Row sums with na.rm=TRUE => NAs are treated as zeros.
+        y <- theta;
+        y[is.na(y)] <- 0;
+        for (cc in 2:ncol(y)) {
+          y[,1] <- y[,1] + y[,cc];
+        }
+        y <- y[,1,drop=TRUE];
+      } else {
+        y <- theta[,1,drop=TRUE];
       }
-      y <- y[,1,drop=TRUE];
-    } else {
-      y <- theta[,1,drop=TRUE];
-    }
-    verbose && cat(verbose, "Total thetas:");
-    verbose && str(verbose, y);
-    verbose && exit(verbose);
+      verbose && cat(verbose, "Total thetas:");
+      verbose && str(verbose, y);
+      verbose && exit(verbose);
 
-#    data <- getDataFlat(ce, units=map, fields="theta", verbose=less(verbose));
-#    verbose && str(verbose, data);
-#    y0 <- data[,"theta",drop=TRUE];
-#    stopifnot(identical(y,y0));
-#    verbose && str(verbose, y);
-#    verbose && exit(verbose);
+  #    data <- getDataFlat(ce, units=map, fields="theta", verbose=less(verbose));
+  #    verbose && str(verbose, data);
+  #    y0 <- data[,"theta",drop=TRUE];
+  #    stopifnot(identical(y,y0));
+  #    verbose && str(verbose, y);
+  #    verbose && exit(verbose);
 
 
-    # Extract the values to fit the normalization function
-    verbose && enter(verbose, "Normalizing log2 signals");
+      # Extract the values to fit the normalization function
+      verbose && enter(verbose, "Normalizing log2 signals");
 
-    # Shift?
-    if (shift != 0)
-      y <- y + shift;
+      # Shift?
+      if (shift != 0)
+        y <- y + shift;
 
-    # Fit on the log2 scale
-    y <- log2(y);
+      # Fit on the log2 scale
+      y <- log2(y);
 
-    verbose && cat(verbose, "Log2 signals:");
-    verbose && str(verbose, y);
-    yN <- .normalizeFragmentLength(y, fragmentLengths=fl,
-                    targetFcns=targetFcns, subsetToFit=subset,
-                    onMissing=onMissing, ...);
-    verbose && cat(verbose, "Normalized log2 signals:");
-    verbose && summary(verbose, yN);
+      verbose && cat(verbose, "Log2 signals:");
+      verbose && str(verbose, y);
+      yN <- .normalizeFragmentLength(y, fragmentLengths=fl,
+                      targetFcns=targetFcns, subsetToFit=subset,
+                      onMissing=onMissing, ...);
+      verbose && cat(verbose, "Normalized log2 signals:");
+      verbose && summary(verbose, yN);
 
-    # Normalization scale factor for each unit (on the log2 scale)
-    rho <- y-yN;
-    # Not needed anymore
-    y <- yN <- NULL;
-    # On the intensity scale
-    rho <- 2^rho;
-    verbose && cat(verbose, "Normalization scale factors:");
-    verbose && summary(verbose, rho);
+      # Normalization scale factor for each unit (on the log2 scale)
+      rho <- y-yN;
+      # Not needed anymore
+      y <- yN <- NULL;
+      # On the intensity scale
+      rho <- 2^rho;
+      verbose && cat(verbose, "Normalization scale factors:");
+      verbose && summary(verbose, rho);
 
-    # Sanity check
-    stopifnot(length(rho) == nrow(theta));
+      # Sanity check
+      stopifnot(length(rho) == nrow(theta));
 
-    # Normalize the theta:s (on the intensity scale)
-    ok <- which(is.finite(rho));
-    verbose && str(verbose, ok);
-    theta[ok,] <- theta[ok,]/rho[ok];
-    # Not needed anymore
-    ok <- rho <- NULL;
+      # Normalize the theta:s (on the intensity scale)
+      ok <- which(is.finite(rho));
+      verbose && str(verbose, ok);
+      theta[ok,] <- theta[ok,]/rho[ok];
+      # Not needed anymore
+      ok <- rho <- NULL;
 
-    verbose && cat(verbose, "Normalized thetas:");
-    verbose && str(verbose, theta);
-    verbose && summary(verbose, theta);
+      verbose && cat(verbose, "Normalized thetas:");
+      verbose && str(verbose, theta);
+      verbose && summary(verbose, theta);
 
-    verbose && exit(verbose);
+      verbose && exit(verbose);
 
-    # Create CEL file to store results, if missing
-    verbose && enter(verbose, "Creating CEL file for results, if missing");
+      # Create CEL file to store results, if missing
+      verbose && enter(verbose, "Creating CEL file for results, if missing");
 
-    # Write to a temporary file (allow rename of existing one if forced)
-    isFile <- isFile(pathname);
-    pathnameT <- pushTemporaryFile(pathname, isFile=isFile, verbose=verbose);
+      # Write to a temporary file (allow rename of existing one if forced)
+      isFile <- isFile(pathname);
+      pathnameT <- pushTemporaryFile(pathname, isFile=isFile, verbose=verbose);
 
-    ceN <- createFrom(ce, filename=pathnameT, path=NULL, verbose=less(verbose));
-    verbose && exit(verbose);
+      ceN <- createFrom(ce, filename=pathnameT, path=NULL, verbose=less(verbose));
+      verbose && exit(verbose);
 
-    # Carry over parameters too.  AD HOC for now. /HB 2007-01-07
-    if (inherits(ce, "SnpChipEffectFile")) {
-      ceN$mergeStrands <- ce$mergeStrands;
-      if (inherits(ce, "CnChipEffectFile")) {
-        ceN$combineAlleles <- ce$combineAlleles;
+      # Carry over parameters too.  AD HOC for now. /HB 2007-01-07
+      if (inherits(ce, "SnpChipEffectFile")) {
+        ceN$mergeStrands <- ce$mergeStrands;
+        if (inherits(ce, "CnChipEffectFile")) {
+          ceN$combineAlleles <- ce$combineAlleles;
+        }
       }
-    }
 
-    # CDF inheritance
-    setCdf(ceN, cdf);
+      # CDF inheritance
+      setCdf(ceN, cdf);
 
-    verbose && enter(verbose, "Storing normalized signals");
-#    data[,"theta"] <- yN;
-#    # Not needed anymore
-#    yN <- NULL;
-#    updateDataFlat(ceN, data=data, verbose=less(verbose));
-#    # Not needed anymore
-#    data <- NULL;
-    ok <- which(is.finite(cellMatrixMap));
-    cells <- cellMatrixMap[ok];
-    data <- theta[ok];
-    # Not needed anymore
-    ok <- theta <- NULL;
+      verbose && enter(verbose, "Storing normalized signals");
+  #    data[,"theta"] <- yN;
+  #    # Not needed anymore
+  #    yN <- NULL;
+  #    updateDataFlat(ceN, data=data, verbose=less(verbose));
+  #    # Not needed anymore
+  #    data <- NULL;
+      ok <- which(is.finite(cellMatrixMap));
+      cells <- cellMatrixMap[ok];
+      data <- theta[ok];
+      # Not needed anymore
+      ok <- theta <- NULL;
 
-    verbose2 <- -as.integer(verbose) - 5;
-    pathnameN <- getPathname(ceN);
-    .updateCel(pathnameN, indices=cells, intensities=data, verbose=verbose2);
-    # Not needed anymore
-    cells <- data <- ceN <- NULL;
-    verbose && exit(verbose);
+      verbose2 <- -as.integer(verbose) - 5;
+      pathnameN <- getPathname(ceN);
+      .updateCel(pathnameN, indices=cells, intensities=data, verbose=verbose2);
+      # Not needed anymore
+      cells <- data <- ceN <- NULL;
+      verbose && exit(verbose);
 
-    # Rename temporary file
-    pathname <- popTemporaryFile(pathnameT, verbose=verbose);
+      # Rename temporary file
+      popTemporaryFile(pathnameT, verbose=verbose);
 
-    # Garbage collect
-    gc <- gc();
-    verbose && print(verbose, gc);
+      ## Create checksum file
+      dfZ <- getChecksumFile(pathname)
+
+      # Garbage collect
+      gc <- gc();
+      verbose && print(verbose, gc);
+
+      pathname
+    } ## %<=%
 
     verbose && exit(verbose);
   } # for (kk in ...)
 
+  fl <- NULL  ## Not needed anymore
+
+  ## Resolve futures
+  res <- as.list(res)
+  res <- NULL
+
   # Garbage collect
-  # Not needed anymore
-  fl <- NULL;
 #  clearCache(this);
   gc <- gc();
   verbose && print(verbose, gc);

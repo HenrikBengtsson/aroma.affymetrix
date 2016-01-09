@@ -38,8 +38,7 @@ setConstructorS3("FirmaFile", function(...) {
   })
 
   # Parse attributes (all subclasses must call this in the constructor).
-  if (!is.null(this$.pathname))
-    setAttributesByTags(this);
+  setAttributesByTags(this)
 
   this;
 })
@@ -273,7 +272,7 @@ setMethodS3("fromDataFile", "FirmaFile", function(static, df=NULL, filename=spri
     .createCel(pathnameT, header=celHeader, ..., verbose=less(verbose));
 
     # Rename temporary file
-    pathname <- popTemporaryFile(pathnameT, verbose=verbose);
+    popTemporaryFile(pathnameT, verbose=verbose);
 
     verbose && exit(verbose);
   }

@@ -1,3 +1,5 @@
+bgAdjustGcrma.AffymetrixCelFile bgAdjustGcrma.AffymetrixCelSet
+bgAdjustOptical.AffymetrixCelFile bgAdjustRma.AffymetrixCelFile
 ASCRMAv2 AffymetrixAptSummaryFile AffymetrixCnChpFile
 AffymetrixCsvFile AffymetrixCsvGenomeInformation
 AffymetrixNetAffxCsvFile AffymetrixPlatform
@@ -302,7 +304,6 @@ getExclusiveUnitSubsets.FragmentEquivalentClassNormalization
 getExpandedCellMap getExpandedCellMap.ChipEffectFile
 getExpandedCellMap.CnChipEffectFile
 getExpandedCellMap.SnpChipEffectFile
-getExpectedOutputFiles.MatSmoothing
 getExpectedOutputFullnames.MatSmoothing
 getExtensionPattern.AffymetrixCdfFile
 getExtensionPattern.AffymetrixCelFile
@@ -397,8 +398,7 @@ getOutputDataSet00.GcContentNormalization
 getOutputFiles.Transform getOutputIdentifier
 getOutputIdentifier.QuantileNormalization getOutputTuple
 getOutputTuple.SmoothMultiarrayModel getParameter
-getParameter.AffymetrixAptSummaryFile getParameterSet
-getParameterSet.Model
+getParameter.AffymetrixAptSummaryFile
 getParameters.AbstractProbeSequenceNormalization
 getParameters.AdditiveCovariatesNormalization
 getParameters.AllelicCrosstalkCalibration getParameters.AvgPlm
@@ -598,6 +598,9 @@ mapToUnitNamesFile mapToUnitNamesFile.DChipCdfBinFile
 mergeGroups mergeGroups.ChipEffectFile mergeStrands
 mergeStrands.CnChipEffectFile mergeStrands.SnpChipEffectFile
 migrateTool migrateTool.CopyNumberSegmentationModel
+nbrOfArrays.CnagCfhSet
+nbrOfArrays.DChipDcpSet
+nbrOfArrays.AffymetrixCnChpSet
 nbrOfArrays.AffymetrixAptSummaryFile
 nbrOfArrays.AffymetrixCelSetReporter
 nbrOfArrays.QualityAssessmentModel nbrOfArrays.TransformReport

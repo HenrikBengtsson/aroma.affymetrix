@@ -74,7 +74,7 @@ setMethodS3("getSubsetOfUnits", "AffymetrixCdfFile", function(this, units=NULL, 
       parts <- strsplit(parts, split="", fixed=TRUE)[[1]];
       parts <- unique(parts);
       chromosomes <- c("X"=23, "Y"=24, "M"=25)[parts];
-      if (anyMissing(chromosomes)) {
+      if (anyNA(chromosomes)) {
         throw("Unknown chromosomes: ", parts[is.na(chromosomes)]);
       }
       chromosomes <- sort(chromosomes);

@@ -27,6 +27,7 @@
 
 \value{
  Returns a \code{\link[base]{list}} structure as returned by \code{\link[affxparser]{readCelHeader}}.
+ If file does not exists, then \code{\link[base]{NULL}} is returned.
 }
 
 \author{Henrik Bengtsson}

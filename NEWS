@@ -1,6 +1,10 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 3.0.0-9000 [2016-01-09]
+o ...
+
+
 Version: 3.0.0 [2016-01-09]
 o SPEED: Adding support for parallel/distributed processing via futures
   to some of the methods for which it is possible to process each

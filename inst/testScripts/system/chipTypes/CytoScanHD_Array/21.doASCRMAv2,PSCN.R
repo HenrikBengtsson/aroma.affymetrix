@@ -29,7 +29,7 @@ thetaR <- extractMatrix(dfR, drop=TRUE);
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Extract (TCN,BAF) for a single array
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-array <- 7;
+array <- 3;
 dfList <- lapply(dsNList, FUN=getFile, array);
 sampleName <- getFullName(dfList$total);
 

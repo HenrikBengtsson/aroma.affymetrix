@@ -8,7 +8,7 @@ setMethodS3("getUnitGroupCellMap", "AffymetrixCdfFile", function(this, units=NUL
       verbose && enter(verbose, "Renaming group names to group indices");
       cells <- lapply(cells, FUN=function(unit) {
         groups <- .subset2(unit, 1);
-        names(groups) <- seq_len(length(groups));
+        names(groups) <- seq_along(groups);
         list(groups=groups);
       });
 

@@ -359,7 +359,7 @@ setMethodS3("process", "GcRmaBackgroundCorrection", function(this, ..., force=FA
 
         verbose && cat(verbose, "Number of PMs: ", length(pm))
         verbose && cat(verbose, "Number of MMs: ", length(mm))
-        pm <- bg.adjust.fullmodel(pms=pm, mms=mm, ncs=ncs, apm=apm, amm=amm, anc=anc, index.affinities=seq_len(length(pm)), k=k, rho=rho, fast=fast)
+        pm <- bg.adjust.fullmodel(pms=pm, mms=mm, ncs=ncs, apm=apm, amm=amm, anc=anc, index.affinities=seq_along(pm), k=k, rho=rho, fast=fast)
 
         verbose && exit(verbose)
       } else if (type == "affinities") {
@@ -439,7 +439,7 @@ setMethodS3("process", "GcRmaBackgroundCorrection", function(this, ..., force=FA
           throw(sprintf("Cannot perform GCRMA background (type=\"affinities\") correction: The number (%d) of negative control is too small.", length(ncs)))
         }
 
-        pm <- bg.adjust.affinities(pms=pm, ncs=ncs, apm=apm, anc=anc, index.affinities=seq_len(length(pm)), k=k, fast=fast, nomm=nomm)
+        pm <- bg.adjust.affinities(pms=pm, ncs=ncs, apm=apm, anc=anc, index.affinities=seq_along(pm), k=k, fast=fast, nomm=nomm)
 
         verbose && exit(verbose)
       } # if (type == ...)

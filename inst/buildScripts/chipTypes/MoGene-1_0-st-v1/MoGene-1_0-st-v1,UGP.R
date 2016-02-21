@@ -116,7 +116,7 @@ verbose && exit(verbose);
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 srcFileTags <- list();
 srcFiles <- c(list(cdf), list(csv));
-for (kk in seq(along=srcFiles)) {
+for (kk in seq_along(srcFiles)) {
   srcFile <- srcFiles[[kk]];
   tags <- list(
     filename=getFilename(srcFile), 
@@ -132,7 +132,7 @@ footer$createdBy <- list(
   fullname = fullname, 
   email = email
 );
-names(srcFileTags) <- sprintf("srcFile%d", seq(along=srcFileTags));
+names(srcFileTags) <- sprintf("srcFile%d", seq_along(srcFileTags));
 footer$srcFiles <- srcFileTags;
 writeFooter(ugp, footer);
 

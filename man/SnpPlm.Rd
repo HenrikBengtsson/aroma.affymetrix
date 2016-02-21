@@ -135,7 +135,7 @@ if (log) {
 # For each unit...
 for (unit in units) {
   # For all models...
-  for (kk in seq(along=models)) {
+  for (kk in seq_along(models)) {
     ces <- getChipEffects(models[[kk]])
     ceUnit <- ces[unit]
     snpName <- names(ceUnit)[1]

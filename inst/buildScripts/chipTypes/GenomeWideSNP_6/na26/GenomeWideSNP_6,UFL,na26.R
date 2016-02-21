@@ -56,7 +56,7 @@ if (is.null(ufl)) {
 }
 print(ufl);
 
-for (kk in seq(along=csvList)) {
+for (kk in seq_along(csvList)) {
   csv <- csvList[[kk]];
   print(csv);
   units <- importFrom(ufl, csv, verbose=log);
@@ -72,7 +72,7 @@ for (kk in seq(along=csvList)) {
 if (!exists("srcFileTags", mode="list")) {
   srcFileTags <- list();
   srcFiles <- c(list(cdf), csvList);
-  for (kk in seq(along=srcFiles)) {
+  for (kk in seq_along(srcFiles)) {
     srcFile <- srcFiles[[kk]];
     tags <- list(
       filename=getFilename(srcFile), 
@@ -90,7 +90,7 @@ footer$createdBy = list(
   fullname = "Henrik Bengtsson", 
   email = sprintf("%s@%s", "henrik.bengtsson", "aroma-project.org")
 );
-names(srcFileTags) <- sprintf("srcFile%d", seq(along=srcFileTags));
+names(srcFileTags) <- sprintf("srcFile%d", seq_along(srcFileTags));
 footer$srcFiles <- srcFileTags;
 writeFooter(ufl, footer);
 

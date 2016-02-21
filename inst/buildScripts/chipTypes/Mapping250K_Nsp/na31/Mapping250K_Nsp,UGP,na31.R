@@ -66,7 +66,7 @@ str(units);
 if (!exists("srcFileTags", mode="list")) {
   srcFileTags <- list();
   srcFiles <- list(cdf, csv);
-  for (kk in seq(along=srcFiles)) {
+  for (kk in seq_along(srcFiles)) {
     srcFile <- srcFiles[[kk]];
     tags <- list(
       filename=getFilename(srcFile), 
@@ -84,7 +84,7 @@ footer$createdBy = list(
   fullname = "Henrik Bengtsson", 
   email = sprintf("%s@%s", "henrik.bengtsson", "aroma-project.org")
 );
-names(srcFileTags) <- sprintf("srcFile%d", seq(along=srcFileTags));
+names(srcFileTags) <- sprintf("srcFile%d", seq_along(srcFileTags));
 footer$srcFiles <- srcFileTags;
 writeFooter(ugp, footer);
 

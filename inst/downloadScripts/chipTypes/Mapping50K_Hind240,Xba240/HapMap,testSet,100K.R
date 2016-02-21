@@ -48,7 +48,7 @@ dataSet <- "HapMap,testSet";
 chipTypes <- names(files);
 
 dsList <- list();
-for (kk in seq(along=chipTypes)) {
+for (kk in seq_along(chipTypes)) {
   chipType <- chipTypes[kk];
   verbose && enter(verbose, sprintf("Chip type #%d ('%s') of %d", 
                                          kk, chipType, length(chipTypes)));

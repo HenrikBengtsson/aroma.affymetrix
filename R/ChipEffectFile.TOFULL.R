@@ -27,7 +27,7 @@ setMethodS3("getExpandedCellMap", "ChipEffectFile", function(this, resetFields=N
   resizeFactors <- unitSizesX / unitSizes;
   verbose && print(verbose, table(resizeFactors));
 
-  map <- rep(as.integer(NA), times=nbrOfCells(this));
+  map <- rep(NA_integer_, times=nbrOfCells(this));
 
   verbose && cat(verbose, "Unit sizes:");
   verbose && print(verbose, table(unitSizes));
@@ -93,7 +93,7 @@ setMethodS3("getCellMapForMainCdf", "ChipEffectFile", function(this, ..., verbos
   map2 <- getExpandedCellMap(this, verbose=verbose);
   readMap <- map2[readMap];
 
-  readMap2 <- rep(as.integer(NA), length=nbrOfCells(cdf));
+  readMap2 <- rep(NA_integer_, times=nbrOfCells(cdf));
   readMap2[writeMap] <- readMap;
   # Not needed anymore
   readMap <- writeMap <- NULL;

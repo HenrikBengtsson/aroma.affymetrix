@@ -62,7 +62,7 @@ setMethodS3("as.character", "TransformReport", function(x, ...) {
   s <- c(s, sprintf("Number of arrays: %d (%.2fMB)",
                            length(ds), getFileSize(ds)/1024^2));
   s <- c(s, sprintf("Chip type: %s", getChipType(getCdf(ds))));
-  s <- c(s, sprintf("RAM: %.2fMB", objectSize(this)/1024^2));
+
   GenericSummary(s);
 }, protected=TRUE)
 

@@ -171,7 +171,7 @@ setMethodS3("as.character", "CnagCfhSet", function(x, ...) {
   }
   s <- c(s, sprintf("Time period: %s -- %s", ts[1], ts[2]));
   s <- c(s, sprintf("Total file size: %.2fMB", getFileSize(this)/1024^2));
-  s <- c(s, sprintf("RAM: %.2fMB", objectSize(this)/1024^2));
+
   GenericSummary(s);
 }, protected=TRUE)
 

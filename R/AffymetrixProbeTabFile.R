@@ -66,7 +66,7 @@ setMethodS3("as.character", "AffymetrixProbeTabFile", function(x, ...) {
 #  }
 #  s <- c(s, sprintf("Pathname: %s", getPathname(this)));
 #  s <- c(s, sprintf("File size: %.2fMB", getFileSize(this)/1024^2));
-#  s <- c(s, sprintf("RAM: %.2fMB", objectSize(this)/1024^2));
+
   cdf <- getCdf(this);
   s <- c(s, as.character(cdf));
   s;

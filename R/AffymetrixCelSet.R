@@ -232,7 +232,7 @@ setMethodS3("as.character", "AffymetrixCelSet", function(x, ...) {
     s <- c(s, sprintf("Time period: [not reported if more than %.0f arrays]", as.double(maxCount)));
   }
   s <- c(s, sprintf("Total file size: %.2fMB", getFileSize(this)/1024^2));
-  s <- c(s, sprintf("RAM: %.2fMB", objectSize(this)/1024^2));
+
   GenericSummary(s);
 }, protected=TRUE)
 

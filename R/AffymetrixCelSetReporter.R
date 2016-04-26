@@ -38,7 +38,7 @@ setMethodS3("as.character", "AffymetrixCelSetReporter", function(x, ...) {
   s <- c(s, paste("Chip type:", getChipType(this)));
   s <- c(s, paste("Number of arrays:", length(this)));
   s <- c(s, sprintf("Path: %s", getPath(this)));
-  s <- c(s, sprintf("RAM: %.2fMB", objectSize(this)/1024^2));
+
   GenericSummary(s);
 }, protected=TRUE)
 

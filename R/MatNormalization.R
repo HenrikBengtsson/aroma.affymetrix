@@ -706,7 +706,7 @@ setMethodS3("process", "MatNormalization", function(this, ..., ram=NULL, force=F
     verbose && enter(verbose, "Binning predicted values, calculating and scaling residuals")
     pathnameT <- pathnamesT[ii]
 
-    res[[ii]] %<=% {
+    res[[ii]] %<-% {
       ## Original probe intensities
       y <- extractMatrix(df, cells=cellsToFit, verbose=verbose)
       y <- log2(y)
@@ -747,7 +747,7 @@ setMethodS3("process", "MatNormalization", function(this, ..., ram=NULL, force=F
       dfZ <- getChecksumFile(pathname)
 
       pathname
-    } ## %<=%
+    } ## %<-%
 
     verbose && exit(verbose)
   } # for (ii ...)

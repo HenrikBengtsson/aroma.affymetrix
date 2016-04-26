@@ -379,7 +379,7 @@ setMethodS3("process", "AbstractProbeSequenceNormalization", function(this, ...,
     }
 
 
-    res[[kk]] %<=% {
+    res[[kk]] %<-% {
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       # Future related
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -522,7 +522,7 @@ setMethodS3("process", "AbstractProbeSequenceNormalization", function(this, ...,
       verbose && print(verbose, gc);
 
       pathname
-    } ## %<=%
+    } ## %<-%
 
     verbose && exit(verbose);
   } # for (kk in ...)

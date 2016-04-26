@@ -329,7 +329,7 @@ importFrom("utils",
            "read.table", "str", "tail", "write.table")
 
 importFrom("listenv", "listenv")
-importFrom("future", "%<=%")
+importFrom("future", "%<-%")
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Several packages are only optional or suggested for now, so

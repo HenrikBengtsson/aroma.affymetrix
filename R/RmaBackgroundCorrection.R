@@ -206,7 +206,7 @@ setMethodS3("process", "RmaBackgroundCorrection", function(this, ..., force=FALS
       pmJitter <- rnorm(nbrOfPMs, mean=0, sd=jitterSd)
     }
 
-    res[[ii]] %<=% {
+    res[[ii]] %<-% {
       verbose && enter(verbose, "Obtaining signals")
       pm <- readRawData(df, indices=pmCells, "intensities")$intensities
       if (addJitter) pm <- pm + pmJitter
@@ -253,7 +253,7 @@ setMethodS3("process", "RmaBackgroundCorrection", function(this, ..., force=FALS
       verbose && print(verbose, gc)
 
       pathname
-    } ## %<=%
+    } ## %<-%
 
     verbose && exit(verbose)
   } # for (ii ...)

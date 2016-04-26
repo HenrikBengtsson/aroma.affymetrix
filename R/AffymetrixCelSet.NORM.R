@@ -99,7 +99,7 @@ setMethodS3("normalizeQuantile", "AffymetrixCelSet", function(this, path=NULL, n
     df <- this[[kk]]
     verbose && enter(verbose, sprintf("Array #%d ('%s') of %d", kk, getName(df), nbrOfArrays))
 
-    dataFiles[[kk]] %<=% {
+    dataFiles[[kk]] %<-% {
       verbose && print(verbose, df)
       normalizeQuantile(df, path=path,
                         subsetToUpdate=subsetToUpdate, typesToUpdate=NULL,

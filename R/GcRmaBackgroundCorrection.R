@@ -329,7 +329,7 @@ setMethodS3("process", "GcRmaBackgroundCorrection", function(this, ..., force=FA
     verbose && exit(verbose)
 
 
-    dataFiles[[ii]] %<=% {
+    dataFiles[[ii]] %<-% {
       verbose && enter(verbose, "Retrieving PM and MM signals")
       # PM & MM signals
       pm <- getData(df, indices=pmCells)$intensities
@@ -508,7 +508,7 @@ setMethodS3("process", "GcRmaBackgroundCorrection", function(this, ..., force=FA
       setCdf(dfOut, cdf)
 
       pathname
-    } ## %<=%
+    } ## %<-%
 
 
     verbose && exit(verbose)

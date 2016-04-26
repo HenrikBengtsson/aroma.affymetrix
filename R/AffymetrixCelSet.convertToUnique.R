@@ -152,7 +152,7 @@ setMethodS3("convertToUnique", "AffymetrixCelSet", function(this, ..., tags="*",
       }
 
 
-      res[[kk]] %<=% {
+      res[[kk]] %<-% {
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -206,7 +206,7 @@ setMethodS3("convertToUnique", "AffymetrixCelSet", function(this, ..., tags="*",
         dfZ <- getChecksumFile(pathname)
 
         pathname
-      } ## %<=%
+      } ## %<-%
 
       verbose && exit(verbose)
   } # for (kk ...)

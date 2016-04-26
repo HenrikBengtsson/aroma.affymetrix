@@ -280,7 +280,7 @@ setMethodS3("process", "LimmaBackgroundCorrection", function(this, ..., force=FA
     }
 
 
-    res[[kk]] %<=% {
+    res[[kk]] %<-% {
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       # Reading data
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -338,7 +338,7 @@ setMethodS3("process", "LimmaBackgroundCorrection", function(this, ..., force=FA
       verbose && exit(verbose);
 
       pathname
-    } ## %<=%
+    } ## %<-%
 
     # Not needed anymore
     df <- NULL;

@@ -27,13 +27,13 @@ env:
   # R versions r-builder should test on (ignored by r-travis)
   matrix:
     - RVERSION=3.1.3
-    - RVERSION=3.2.2
+    - RVERSION=3.2.4
     - RVERSION=devel _R_COVR_=TRUE _R_CHECK_FULL_=TRUE
 
 
 before_install:
   - echo RENV=$RENV
-  - curl -OL https://raw.githubusercontent.com/HenrikBengtsson/r-builder/master/pkg-build.sh;
+  - curl -OL https://raw.githubusercontent.com/metacran/r-builder/master/pkg-build.sh;
   - chmod 755 $RENV
   - $RENV bootstrap
   - if [ "BOOTSTRAP_LATEX" == "true" ]; then
@@ -50,10 +50,10 @@ before_install:
     fi
 
 install:
- - $RENV install_bioc affxparser affyPLM aroma.light DNAcopy preprocessCore
- - $RENV install_r aroma.apd aroma.core MASS
- - $RENV install_bioc AffymetrixDataTestFiles limma oligo oligoClasses pdInfoBuilder
- - $RENV install_r DBI gsmoothr
+  - $RENV install_r aroma.apd aroma.core MASS
+  - $RENV install_bioc AffymetrixDataTestFiles limma oligo oligoClasses pdInfoBu
+ilder
+  - $RENV install_r DBI gsmoothr
 
 script:
   - $RENV run_build

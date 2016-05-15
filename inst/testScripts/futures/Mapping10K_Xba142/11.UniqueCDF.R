@@ -19,12 +19,11 @@ print(cdfU)
 
 checksum <- NULL
 
-strategies <- c("lazy", "eager")
-if (future::supportsMulticore()) strategies <- c(strategies, "multicore")
-if (packageVersion("future") > "0.10.9") strategies <- c(strategies, "multisession")
-if (require("async")) {
+strategies <- future:::supportedStrategies()
+strategies <- setdiff(strategies, "multiprocess")
+if (require("future.BatchJobs")) {
   strategies <- c(strategies, "batchjobs")
-  async::backend("local")
+  future.BatchJobs::backend("local")
 }
 
 for (strategy in strategies) {

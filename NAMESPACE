@@ -292,6 +292,7 @@ importFrom("R.utils", "toAsciiRegExprPattern")
 importFrom("R.utils", "toCamelCase")
 importFrom("R.utils", "wrap")
 importFrom("R.utils", "writeRaw")
+importFrom("R.utils", "CmdArgsFunction")
 
 ## Manually adjusted
 ## Cannot import explicitly from 'base';

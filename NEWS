@@ -2,6 +2,8 @@ Package: aroma.affymetrix
 =========================
 
 Version: 3.0.0-9000 [2016-04-25]
+o Now doNnn() methods can be called directly from the command line, e.g.
+  Rscript -e aroma.affymetrix::doCRMAv2 --dataSet=HapMap270 --chipType=GenomeWideSNP_6
 o CLEANUP: Objects no longer report on memory (RAM) usage.
 
 

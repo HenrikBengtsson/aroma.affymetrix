@@ -51,8 +51,7 @@ before_install:
 
 install:
   - $RENV install_r aroma.apd aroma.core MASS
-  - $RENV install_bioc AffymetrixDataTestFiles limma oligo oligoClasses pdInfoBu
-ilder
+  - $RENV install_bioc AffymetrixDataTestFiles limma oligo oligoClasses pdInfoBuilder
   - $RENV install_r DBI gsmoothr
 
 script:

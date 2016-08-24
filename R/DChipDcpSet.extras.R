@@ -6,7 +6,7 @@ setMethodS3("getCdfBin", "DChipDcpSet", function(this, force=FALSE, ...) {
     chipType <- basename(getPath(this));
 
     # Sanity check by searching for a matching CDF.bin file
-    pattern <- sprintf("%s.*.cdf.bin", chipType);
+    pattern <- sprintf("%s.*[.]cdf[.]bin$", chipType);
     pathnames <- findAnnotationDataByChipType(chipType,
                                     pattern=pattern, firstOnly=FALSE);
     if (length(pathnames) == 0) {

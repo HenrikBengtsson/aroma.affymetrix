@@ -1,9 +1,11 @@
 Package: aroma.affymetrix
 =========================
 
-Version: 3.0.0-9000 [2016-04-25]
+Version: 3.0.0-9000 [2016-08-24]
 o Now doNnn() methods can be called directly from the command line, e.g.
   Rscript -e aroma.affymetrix::doCRMAv2 --dataSet=HapMap270 --chipType=GenomeWideSNP_6
+o ROBUSTNESS: Some regular expression patterns used for locating files
+  would match any symbol when it intended to match only a period.
 o CLEANUP: Objects no longer report on memory (RAM) usage.
 
 

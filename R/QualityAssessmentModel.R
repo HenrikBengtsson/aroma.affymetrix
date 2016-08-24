@@ -369,7 +369,7 @@ setMethodS3("getResiduals", "QualityAssessmentModel", function(this, units=NULL,
 
   # Return residual set
   res <- QualityAssessmentSet$byPath(path=path, ...,
-                                          pattern=",residuals.[cC][eE][lL]$");
+                                          pattern=",residuals[.][cC][eE][lL]$");
 
   verbose && exit(verbose);
 
@@ -557,7 +557,7 @@ setMethodS3("getWeights", "QualityAssessmentModel", function(this, path=NULL, na
   } # while(...)
 
   # Load output QA data set
-  res <- QualityAssessmentSet$byPath(path=path, pattern=",weights.[cC][eE][lL]$");
+  res <- QualityAssessmentSet$byPath(path=path, pattern=",weights[.][cC][eE][lL]$");
 
   res;
 }) # getWeights()

@@ -73,7 +73,7 @@ setMethodS3("extractTotalAndFreqB", "CnChipEffectSet", function(this, units=NULL
   nbrOfArrays <- length(this);
   dim <- c(nbrOfUnits, 2, nbrOfArrays);
   dimnames <- list(NULL, c("total", "freqB"), getNames(this));
-  data <- array(NA, dim=dim, dimnames=dimnames);
+  data <- array(NA_real_, dim=dim, dimnames=dimnames);
 
   for (kk in seq_len(nbrOfArrays)) {
     ce <- this[[kk]];
@@ -174,7 +174,7 @@ setMethodS3("extractTotalAndFreqB", "SnpChipEffectSet", function(this, units=NUL
   nbrOfArrays <- length(this);
   dim <- c(nbrOfUnits, 2, nbrOfArrays);
   dimnames <- list(NULL, c("total", "freqB"), getNames(this));
-  data <- array(NA, dim=dim, dimnames=dimnames);
+  data <- array(NA_real_, dim=dim, dimnames=dimnames);
 
   for (kk in seq_len(nbrOfArrays)) {
     ce <- this[[kk]];

@@ -21,10 +21,7 @@ checksum <- NULL
 
 strategies <- future:::supportedStrategies()
 strategies <- setdiff(strategies, "multiprocess")
-if (require("future.BatchJobs")) {
-  strategies <- c(strategies, "batchjobs")
-  future.BatchJobs::backend("local")
-}
+if (require("future.BatchJobs")) strategies <- c(strategies, "batchjobs_local")
 
 for (strategy in strategies) {
   message(sprintf("*** Using %s futures ...", sQuote(strategy)))

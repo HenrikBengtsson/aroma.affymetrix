@@ -16,10 +16,7 @@ print(acs)
 
 strategies <- future:::supportedStrategies()
 strategies <- setdiff(strategies, "multiprocess")
-if (require("future.BatchJobs")) {
-  strategies <- c(strategies, "batchjobs")
-  future.BatchJobs::backend("local")
-}
+if (require("future.BatchJobs")) strategies <- c(strategies, "batchjobs_local")
 
 checksum <- NULL
 

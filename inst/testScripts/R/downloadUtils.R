@@ -33,7 +33,7 @@ getHapMapUrlPath <- function(chipType=c("Mapping50K_Hind240", "Mapping50K_Xba240
             "GenomeWideSNP_6"="hapmap3_affy6.0");
   dir <- dirs[chipType];
 
-  sprintf("http://hapmap.ncbi.nlm.nih.gov/downloads/raw_data/%s", dir);
+  sprintf("ftp://ftp.ncbi.nlm.nih.gov/hapmap/raw_data/%s", dir)
 } # getHapMapUrlPath()
  
 

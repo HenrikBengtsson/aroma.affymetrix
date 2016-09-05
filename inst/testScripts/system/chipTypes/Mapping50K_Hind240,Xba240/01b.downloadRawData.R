@@ -13,7 +13,7 @@ verbose && enter(verbose, "Downloading raw data");
 #   Mapping50K_Xba240/
 #    CEU_NA06985_XBA.CEL, ..., CEU_NA07019_XBA.CEL [6 files]
 #
-# URL: http://hapmap.ncbi.nlm.nih.gov/downloads/raw_data/affy100k/
+# URL: ftp://ftp.ncbi.nlm.nih.gov/hapmap/raw_data/affy100k/
 ##########################################################################
 dataSet <- "HapMap,CEU,testset";
 chipTypes <- c("Mapping50K_Hind240", "Mapping50K_Xba240");

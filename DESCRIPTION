@@ -14,11 +14,11 @@ Imports:
   aroma.apd (>= 0.6.0),
   MASS,
   splines,
-  matrixStats (>= 0.50.2),
+  matrixStats (>= 0.51.0),
   listenv,
   future
 Suggests:
-  DBI (>= 0.3.1),
+  DBI (>= 0.5-1),
   gsmoothr (>= 0.1.7),
   RColorBrewer (>= 1.1-2),
   Biobase (>= 2.28.0),

@@ -2,14 +2,14 @@ Package: aroma.affymetrix
 Version: 3.0.0-9000
 Depends:
   R (>= 3.1.2),
-  R.utils (>= 2.3.0),
+  R.utils (>= 2.5.0),
   aroma.core (>= 3.0.0)
 Imports:
   methods,
   R.methodsS3 (>= 1.7.1),
-  R.oo (>= 1.20.0),
+  R.oo (>= 1.21.0),
   R.cache (>= 0.12.0),
-  R.devices (>= 2.14.0),
+  R.devices (>= 2.15.1),
   R.filesets (>= 2.10.0),
   aroma.apd (>= 0.6.0),
   MASS,

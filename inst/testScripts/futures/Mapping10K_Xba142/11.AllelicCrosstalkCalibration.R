@@ -17,6 +17,13 @@ strategies <- future:::supportedStrategies()
 strategies <- setdiff(strategies, "multiprocess")
 if (require("future.BatchJobs")) strategies <- c(strategies, "batchjobs_local")
 
+message("Future strategies: ", paste(sQuote(strategies), collapse = ", "))
+mprint(future::sessionDetails())
+mprint(list(
+  availableCores = future::availableCores(which = "all"),
+  availableWorkers = future::availableWorkers(which = "all")
+))
+
 for (strategy in strategies) {
   message(sprintf("*** Using %s futures ...", sQuote(strategy)))
 

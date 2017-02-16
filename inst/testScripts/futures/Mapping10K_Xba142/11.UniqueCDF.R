@@ -31,6 +31,8 @@ if (require("future.batchtools")) {
   strategies <- c(strategies, "batchtools_local")
   if (any(grepl("PBS_", names(Sys.getenv())))) {
     strategies <- c(strategies, "batchtools_torque")
+  } else if (any(grepl("SGE_", names(Sys.getenv())))) {
+    strategies <- c(strategies, "batchtools_sge")
   }
 }
 

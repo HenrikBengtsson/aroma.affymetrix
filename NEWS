@@ -26,7 +26,13 @@ BUG FIXES:
 
  o ROBUSTNESS: Some regular expression patterns used for locating files
    would match any symbol when it intended to match only a period.
-   
+
+DEPRECATED AND DEFUNCT:
+
+ o Methods bgAdjustRma(), bgAdjustOptical() and bgAdjustGcrma() for
+   AffymetrixCelFile ass well as bgAdjustGcrma() for AffymetrixCelSet
+   are now defunct.
+
 
 Version: 3.0.0 [2016-01-09]
 o SPEED: Adding support for parallel/distributed processing via futures

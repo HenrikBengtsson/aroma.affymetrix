@@ -1,5 +1,3 @@
-bgAdjustGcrma.AffymetrixCelFile bgAdjustGcrma.AffymetrixCelSet
-bgAdjustOptical.AffymetrixCelFile bgAdjustRma.AffymetrixCelFile
 ASCRMAv2 AffymetrixAptSummaryFile AffymetrixCnChpFile
 AffymetrixCsvFile AffymetrixCsvGenomeInformation
 AffymetrixNetAffxCsvFile AffymetrixPlatform

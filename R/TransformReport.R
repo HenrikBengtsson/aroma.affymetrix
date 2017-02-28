@@ -59,8 +59,8 @@ setMethodS3("as.character", "TransformReport", function(x, ...) {
   s <- c(s, sprintf("Input data set: %s", getFullName(ds)));
   ds <- getOutputDataSet(this);
   s <- c(s, sprintf("Output data set: %s", getFullName(ds)));
-  s <- c(s, sprintf("Number of arrays: %d (%.2fMB)",
-                           length(ds), getFileSize(ds)/1024^2));
+  s <- c(s, sprintf("Number of arrays: %d (%s)",
+           length(ds), hsize(getFileSize(ds), digits = 2L, standard = "IEC")))
   s <- c(s, sprintf("Chip type: %s", getChipType(getCdf(ds))));
 
   GenericSummary(s);

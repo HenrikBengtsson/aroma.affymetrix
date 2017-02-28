@@ -33,7 +33,7 @@ setMethodS3("getImage", "AromaUnitTabularBinaryFile", function(this, transforms=
   # Not needed anymore
   values <- ugcMap <- NULL;
   verbose && summary(verbose, as.vector(z));
-  verbose && printf(verbose, "RAM: %.1fMB\n", object.size(z)/1024^2);
+  verbose && printf(verbose, "RAM: %s\n", hsize(object.size(z), digits = 2L, standard = "IEC"))
   verbose && exit(verbose);
 
   verbose && enter(verbose, "Transforming data");

@@ -190,7 +190,7 @@ setMethodS3("createFrom", "AffymetrixCelFile", function(this, filename, path=NUL
           verbose && enter(verbose, "Reading subset of data from source CEL file");
           data <- .readCel(getPathname(this), indices=cells, readIntensities=TRUE, readStdvs=TRUE, readPixels=TRUE);
           verbose && str(verbose, data, level=-50);
-          verbose && printf(verbose, "RAM: %.2fMB\n", object.size(data)/1024^2, level=-40);
+          verbose && printf(verbose, "RAM: %s\n", hsize(object.size(data), digits = 2L, standard = "IEC"), level=-40);
           verbose && exit(verbose);
           gc <- gc();
 

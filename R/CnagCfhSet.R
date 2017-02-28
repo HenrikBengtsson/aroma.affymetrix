@@ -170,7 +170,7 @@ setMethodS3("as.character", "CnagCfhSet", function(x, ...) {
     ts[ok] <- format(ts[ok], "%Y-%m-%d %H:%M:%S");
   }
   s <- c(s, sprintf("Time period: %s -- %s", ts[1], ts[2]));
-  s <- c(s, sprintf("Total file size: %.2fMB", getFileSize(this)/1024^2));
+  s <- c(s, sprintf("Total file size: %s", hsize(getFileSize(this), digits = 2L, standard = "IEC")))
 
   GenericSummary(s);
 }, protected=TRUE)

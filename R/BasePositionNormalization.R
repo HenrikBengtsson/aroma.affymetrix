@@ -156,7 +156,7 @@ setMethodS3("getDesignMatrix", "BasePositionNormalization", function(this, cells
 
   verbose && cat(verbose, "Design matrix:");
   verbose && str(verbose, X);
-  verbose && cat(verbose, "RAM: ", object.size(X));
+  verbose && cat(verbose, "RAM: %s", hsize(object.size(X), digits = 2L, standard = "IEC"))
   verbose && exit(verbose);
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

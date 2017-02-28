@@ -1,18 +1,32 @@
 Package: aroma.affymetrix
 =========================
 
-Version: 3.0.0-9000 [2016-09-04]
-o Now doNnn() methods can be called directly from the command line, e.g.
-  Rscript -e aroma.affymetrix::doCRMAv2 --dataSet=HapMap270 --chipType=GenomeWideSNP_6
-o ROBUSTNESS: Some regular expression patterns used for locating files
-  would match any symbol when it intended to match only a period.
-o FIX: The International HapMap Project (http://www.hapmap.org/) is being
-  retired.  System test scripts was updated to download HapMap CEL
-  files from the FTP server (ftp://ftp.ncbi.nlm.nih.gov/hapmap/raw_data/)
-  rather than via the now decommisioned HTTP server
-  (http://hapmap.ncbi.nlm.nih.gov/downloads/raw_data/).
-o CLEANUP: Objects no longer report on memory (RAM) usage.
+Version: 3.0.0-9000 [2017-02-28]
 
+NEW FEATURES:
+
+ o Now file and object sizes are reported using IEC binary prefixes,
+   i.e. bytes, KiB, MiB, GiB, TiB, ..., YiB.
+
+ o Now doNnn() methods can be called directly from the command line, e.g.
+   Rscript -e aroma.affymetrix::doCRMAv2 --dataSet=HapMap270
+   --chipType=GenomeWideSNP_6
+
+ o FIX: The International HapMap Project (http://www.hapmap.org/) is being
+   retired.  System test scripts was updated to download HapMap CEL
+   files from the FTP server (ftp://ftp.ncbi.nlm.nih.gov/hapmap/raw_data/)
+   rather than via the now decommisioned HTTP server
+   (http://hapmap.ncbi.nlm.nih.gov/downloads/raw_data/).
+
+CLEANUP:
+
+ o Objects no longer report on memory (RAM) usage.
+
+BUG FIXES:
+
+ o ROBUSTNESS: Some regular expression patterns used for locating files
+   would match any symbol when it intended to match only a period.
+   
 
 Version: 3.0.0 [2016-01-09]
 o SPEED: Adding support for parallel/distributed processing via futures

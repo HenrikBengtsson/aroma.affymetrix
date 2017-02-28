@@ -141,7 +141,7 @@ setMethodS3("calculateAffinities", "GcRmaBackgroundCorrection", function(this, .
     affinities <- computeAffinities(cdf, ..., verbose=less(verbose));
   }
 
-  verbose && printf(verbose, "RAM: %.2fMB\n", object.size(affinities)/1024^2);
+  verbose && printf(verbose, "RAM: %s\n", hsize(object.size(affinities), digits = 2L, standard = "IEC"))
 
   verbose && exit(verbose);
 

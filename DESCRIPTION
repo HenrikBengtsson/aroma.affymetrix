@@ -10,7 +10,7 @@ Imports:
   R.oo (>= 1.21.0),
   R.cache (>= 0.12.0),
   R.devices (>= 2.15.1),
-  R.filesets (>= 2.10.0),
+  R.filesets (>= 2.11.0),
   aroma.apd (>= 0.6.0),
   MASS,
   splines,

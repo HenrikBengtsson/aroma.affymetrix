@@ -13,7 +13,7 @@ NEW FEATURES:
    --chipType=GenomeWideSNP_6
 
  o FIX: The International HapMap Project (http://www.hapmap.org/) is being
-   retired.  System test scripts was updated to download HapMap CEL
+   retired.  System test scripts were updated to download HapMap CEL
    files from the FTP server (ftp://ftp.ncbi.nlm.nih.gov/hapmap/raw_data/)
    rather than via the now decommisioned HTTP server
    (http://hapmap.ncbi.nlm.nih.gov/downloads/raw_data/).

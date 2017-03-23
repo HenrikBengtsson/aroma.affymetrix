@@ -14,6 +14,10 @@ NEW FEATURES:
 
  o Objects no longer report on memory (RAM) usage.
 
+REFACTORIZATION:
+
+ o Used partial element name 'coef' instead of 'coefficients' for lm() fit.
+ 
 BUG FIXES:
 
  o Package used %<=% internally with was deprecated in future (>= 1.4.0).

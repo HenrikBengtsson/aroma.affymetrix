@@ -144,7 +144,7 @@ setMethodS3("calculateParametersGsb", "AffymetrixCelSet", function(this, nbrOfPm
 
   verbose && exit(verbose);
 
-  fit1$coef;
+  fit1$coefficients
 }, private=TRUE)
 
 

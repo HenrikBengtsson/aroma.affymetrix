@@ -8,6 +8,8 @@ verbose && enter(verbose, "Downloading raw data");
 ##########################################################################
 # Data set:
 # GSE8605/
+#   HG-Focus/
+#    GSM226867.CEL, ..., GSM226876.CEL [10 files]
 #   Mapping10K_Xba142/
 #    GSM226867.CEL, ..., GSM226876.CEL [10 files]
 #
@@ -24,7 +26,7 @@ chipType <- "Mapping10K_Xba142";
 verbose && cat(verbose, "Data set: ", dataSet);
 
 ds <- downloadGeoRawDataSet(dataSet, chipType=chipType,
-                            chipTypeAliases=c("Focus"="HG-Focus"));
+                            chipTypeAliases=c("Focus"="HG-Focus"))
 verbose && print(verbose, ds);
 ## AffymetrixCelSet:
 ## Name: GSE8605

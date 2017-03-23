@@ -19,4 +19,7 @@ verbose && cat(verbose, "CDF: ", pathname);
 pathname <- downloadCDF(ar, chipType, tags="fullR3,A20071112,EP");
 verbose && cat(verbose, "CDF: ", pathname);
 
+#pathname <- downloadCDF(ar, chipType, tags="extendedR3,A20071112,EP");
+#verbose && cat(verbose, "CDF: ", pathname);
+
 verbose && exit(verbose);

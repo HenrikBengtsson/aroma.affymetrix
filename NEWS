@@ -12,12 +12,6 @@ NEW FEATURES:
    Rscript -e aroma.affymetrix::doCRMAv2 --dataSet=HapMap270
    --chipType=GenomeWideSNP_6
 
- o FIX: The International HapMap Project (http://www.hapmap.org/) is being
-   retired.  System test scripts were updated to download HapMap CEL
-   files from the FTP server (ftp://ftp.ncbi.nlm.nih.gov/hapmap/raw_data/)
-   rather than via the now decommisioned HTTP server
-   (http://hapmap.ncbi.nlm.nih.gov/downloads/raw_data/).
-
  o Objects no longer report on memory (RAM) usage.
 
 BUG FIXES:
@@ -26,11 +20,16 @@ BUG FIXES:
  
  o ROBUSTNESS: Some regular expression patterns used for locating files
    would match any symbol when it intended to match only a period.
+   
+ o The International HapMap Project (http://www.hapmap.org/) is being retired
+   and HTTP server http://hapmap.ncbi.nlm.nih.gov/downloads/raw_data/ is
+   decomissioned. System test scripts updated to download HapMap CEL files
+   from the FTP server ftp://ftp.ncbi.nlm.nih.gov/hapmap/raw_data/ instead.
 
 DEPRECATED AND DEFUNCT:
 
  o Methods bgAdjustRma(), bgAdjustOptical() and bgAdjustGcrma() for
-   AffymetrixCelFile ass well as bgAdjustGcrma() for AffymetrixCelSet
+   AffymetrixCelFile as well as bgAdjustGcrma() for AffymetrixCelSet
    are now defunct.
 
 

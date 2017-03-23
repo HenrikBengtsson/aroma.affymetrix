@@ -33,8 +33,12 @@ matrix:
       r: devel
     - os: osx
       r: oldrel
+      r_github_packages:
+      - HenrikBengtsson/aroma.core
     - os: osx
       r: release
+      r_github_packages:
+      - HenrikBengtsson/aroma.core
 
 addons:
   apt:

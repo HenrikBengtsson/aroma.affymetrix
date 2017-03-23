@@ -1,7 +1,7 @@
 Package: aroma.affymetrix
 =========================
 
-Version: 3.0.0-9000 [2017-02-28]
+Version: 3.0.0-9000 [2017-03-23]
 
 NEW FEATURES:
 
@@ -18,12 +18,12 @@ NEW FEATURES:
    rather than via the now decommisioned HTTP server
    (http://hapmap.ncbi.nlm.nih.gov/downloads/raw_data/).
 
-CLEANUP:
-
  o Objects no longer report on memory (RAM) usage.
 
 BUG FIXES:
 
+ o Package used %<=% internally with was deprecated in future (>= 1.4.0).
+ 
  o ROBUSTNESS: Some regular expression patterns used for locating files
    would match any symbol when it intended to match only a period.
 
@@ -41,19 +41,25 @@ SIGNIFICANT CHANGES:
  o Package requires R (>= 3.1.2) and BioC (>= 3.0) both released
    in October 2014. 
 
- o SPEED: Adding support for parallel/distributed processing via futures
-   to some of the methods for which it is possible to process each
-   sample independently, e.g. background and crosstalk correction methods.
+NEW FEATURES:
+
+ o REPRODUCIBILITY: GcRmaBackgroundCorrection(), LimmaBackgroundCorrection(),
+   and RmaBackgroundCorrection() gained argument 'seed'.
   
  o REPRODUCIBILITY: Several of the methods now generate *.md5 checksum 
    files for the data files they output.
   
  o Now also convertToUnique() acknowledge asterisk tags.
+  
+PERFORMANCE:
+
+ o SPEED: Adding support for parallel/distributed processing via futures
+   to some of the methods for which it is possible to process each
+   sample independently, e.g. background and crosstalk correction methods.
+
+REFACTORIZATION:
 
  o ROBUSTNESS: Using do.call(fcn) internally instead of do.call("fcn").
-  
- o REPRODUCIBILITY: GcRmaBackgroundCorrection(), LimmaBackgroundCorrection(),
-   and RmaBackgroundCorrection() gained argument 'seed'.
   
  o CLEANUP: Warnings on "is.na() applied to non-(list or vector) of 
    type 'NULL'" are no longer generated.

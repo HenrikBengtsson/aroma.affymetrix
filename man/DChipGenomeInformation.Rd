@@ -82,7 +82,7 @@ $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCa
 
 \details{
   The dChip genome information files for various chip types can be
-  downloaded from \url{http://www.hsph.harvard.edu/cli/complab/dchip/}.
+  downloaded from \url{https://sites.google.com/site/dchipsoft/}.
   Put each file in a
   directory named identically as the corresponding chip type under the
   \emph{annotations/} directory, e.g.

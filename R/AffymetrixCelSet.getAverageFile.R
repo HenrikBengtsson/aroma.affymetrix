@@ -255,14 +255,14 @@ setMethodS3("getAverageFile", "AffymetrixCelSet", function(this, name=NULL, pref
   nbrOfArrays <- length(pathnames);
 
   if (!na.rm)
-    n <- rep(nbrOfArrays, length=cellsPerChunk);
+    n <- rep(nbrOfArrays, times=cellsPerChunk);
   count <- 1;
   while (length(idxs) > 0) {
     verbose && enter(verbose, "Fitting chunk #", count, " of ", nbrOfChunks);
     if (length(idxs) < cellsPerChunk) {
       head <- 1:length(idxs);
       if (!na.rm)
-        n <- rep(nbrOfArrays, length=length(idxs));
+        n <- rep(nbrOfArrays, times=length(idxs));
     }
 
     # The indices to be used in this chunk

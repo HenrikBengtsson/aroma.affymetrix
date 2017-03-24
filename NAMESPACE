@@ -263,6 +263,7 @@ importFrom("R.utils", "getParent")
 importFrom("R.utils", "getThreshold")
 importFrom("R.utils", "hasOption")
 importFrom("R.utils", "hpaste")
+importFrom("R.utils", "hsize")
 importFrom("R.utils", "increase")
 importFrom("R.utils", "insert")
 importFrom("R.utils", "isDirectory")
@@ -292,6 +293,7 @@ importFrom("R.utils", "toAsciiRegExprPattern")
 importFrom("R.utils", "toCamelCase")
 importFrom("R.utils", "wrap")
 importFrom("R.utils", "writeRaw")
+importFrom("R.utils", "CmdArgsFunction")
 
 ## Manually adjusted
 ## Cannot import explicitly from 'base';
@@ -329,7 +331,7 @@ importFrom("utils",
            "read.table", "str", "tail", "write.table")
 
 importFrom("listenv", "listenv")
-importFrom("future", "%<=%")
+importFrom("future", "%<-%")
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Several packages are only optional or suggested for now, so
@@ -511,10 +513,6 @@ S3method("as.character", "WeightsFile")
 S3method("as.character", "WeightsSet")
 S3method("assertAnnotationData", "ASCRMAv2")
 S3method("averageQuantile", "AffymetrixCelSet")
-S3method("bgAdjustGcrma", "AffymetrixCelFile")
-S3method("bgAdjustGcrma", "AffymetrixCelSet")
-S3method("bgAdjustOptical", "AffymetrixCelFile")
-S3method("bgAdjustRma", "AffymetrixCelFile")
 S3method("boxplotStats", "ChipEffectSet")
 S3method("bpmapCluster2Cdf", "default")
 S3method("byChipType", "AffymetrixCsvGenomeInformation")

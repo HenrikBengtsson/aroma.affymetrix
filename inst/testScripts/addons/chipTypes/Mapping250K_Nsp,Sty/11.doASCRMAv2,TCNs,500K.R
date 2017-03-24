@@ -30,9 +30,6 @@ library("aroma.affymetrix");
 library("aroma.cn");
 verbose <- Arguments$getVerbose(-8, timestamp=TRUE);
 
-# This script requires aroma.cn v1.2.2 or beyond
-stopifnot(packageVersion("aroma.cn") >= "1.2.2");
-
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # AS-CRMAv2

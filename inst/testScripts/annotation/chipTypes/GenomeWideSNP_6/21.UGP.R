@@ -59,7 +59,7 @@ ugp <- AromaUgpFile$allocateFromCdf(cdf, tags=tags, overwrite=TRUE);
 print(ugp);
 
 
-for (kk in seq(along=csvList)) {
+for (kk in seq_along(csvList)) {
   csv <- csvList[[kk]];
   print(csv);
   units <- importFrom(ugp, csv, verbose=verbose);
@@ -74,7 +74,7 @@ for (kk in seq(along=csvList)) {
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 srcFileTags <- list();
 srcFiles <- c(list(cdf), csvList);
-for (kk in seq(along=srcFiles)) {
+for (kk in seq_along(srcFiles)) {
   srcFile <- srcFiles[[kk]];
   tags <- list(
     filename=getFilename(srcFile), 
@@ -90,7 +90,7 @@ footer$createdBy <- list(
   fullname = fullname, 
   email = email
 );
-names(srcFileTags) <- sprintf("srcFile%d", seq(along=srcFileTags));
+names(srcFileTags) <- sprintf("srcFile%d", seq_along(srcFileTags));
 footer$srcFiles <- srcFileTags;
 writeFooter(ugp, footer);
 

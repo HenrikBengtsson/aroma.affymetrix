@@ -14,12 +14,19 @@ cdf <- getCdf(csR)
 acs <- getAromaCellSequenceFile(cdf)
 print(acs)
 
-strategies <- c("lazy", "eager")
-if (future::supportsMulticore()) strategies <- c(strategies, "multicore")
-if (packageVersion("future") > "0.10.9") strategies <- c(strategies, "multisession")
-if (require("async")) {
-  strategies <- c(strategies, "batchjobs")
-  async::backend("local")
+strategies <- future:::supportedStrategies()
+strategies <- setdiff(strategies, "multiprocess")
+if (require("future.BatchJobs")) {
+  strategies <- c(strategies, "batchjobs_local")
+  if (any(grepl("PBS_", names(Sys.getenv())))) {
+    strategies <- c(strategies, "batchjobs_torque")
+  }
+}
+if (require("future.batchtools")) {
+  strategies <- c(strategies, "batchtools_local")
+  if (any(grepl("PBS_", names(Sys.getenv())))) {
+    strategies <- c(strategies, "batchtools_torque")
+  }
 }
 
 checksum <- NULL

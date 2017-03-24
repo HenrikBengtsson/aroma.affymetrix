@@ -170,8 +170,8 @@ setMethodS3("as.character", "CnagCfhSet", function(x, ...) {
     ts[ok] <- format(ts[ok], "%Y-%m-%d %H:%M:%S");
   }
   s <- c(s, sprintf("Time period: %s -- %s", ts[1], ts[2]));
-  s <- c(s, sprintf("Total file size: %.2fMB", getFileSize(this)/1024^2));
-  s <- c(s, sprintf("RAM: %.2fMB", objectSize(this)/1024^2));
+  s <- c(s, sprintf("Total file size: %s", hsize(getFileSize(this), digits = 2L, standard = "IEC")))
+
   GenericSummary(s);
 }, protected=TRUE)
 
@@ -907,14 +907,14 @@ setMethodS3("getAverageFile", "CnagCfhSet", function(this, name=NULL, prefix="av
   nbrOfArrays <- length(pathnames);
 
   if (!na.rm)
-    n <- rep(nbrOfArrays, length=cellsPerChunk);
+    n <- rep(nbrOfArrays, times=cellsPerChunk);
   count <- 1;
   while (length(idxs) > 0) {
     verbose && enter(verbose, "Fitting chunk #", count, " of ", nbrOfChunks);
     if (length(idxs) < cellsPerChunk) {
       head <- 1:length(idxs);
       if (!na.rm)
-        n <- rep(nbrOfArrays, length=length(idxs));
+        n <- rep(nbrOfArrays, times=length(idxs));
     }
 
     # The indices to be used in this chunk

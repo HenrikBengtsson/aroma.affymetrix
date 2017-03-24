@@ -904,7 +904,7 @@ setMethodS3("readRawData", "AffymetrixCelFile", function(this, indices=NULL, fie
     cel <- cel[[1]];
   } else {
     # Return as data frame
-    attr(cel, "row.names") <- seq_len(length(cel[[1]]));
+    attr(cel, "row.names") <- seq_along(cel[[1]]);
     class(cel) <- "data.frame";
   }
 

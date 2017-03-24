@@ -55,7 +55,7 @@ setMethodS3("as.character", "SpatialReporter", function(x, ...) {
     colorMaps <- "<no color maps; set before processing>";
   s <- c(s, paste("Color maps:", paste(colorMaps, collapse="; ")));
   s <- c(s, sprintf("Path: %s", getPath(this)));
-  s <- c(s, sprintf("RAM: %.2fMB", objectSize(this)/1024^2));
+
   GenericSummary(s);
 }, protected=TRUE)
 

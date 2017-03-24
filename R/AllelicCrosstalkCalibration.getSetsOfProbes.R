@@ -80,7 +80,7 @@ setMethodS3("getSetsOfProbes", "AllelicCrosstalkCalibration", function(this, ...
       snps <- setsOfProbes$snps;
       for (kk in seq_along(snps)) {
         cells <- snps[[kk]][3:4,,drop=FALSE];
-        o <- order(cells[1,]); 
+        o <- order(cells[1,]);
         cells <- cells[,o,drop=FALSE];
         snps[[kk]] <- cells;
         # Not needed anymore
@@ -98,11 +98,11 @@ setMethodS3("getSetsOfProbes", "AllelicCrosstalkCalibration", function(this, ...
       unitTypes <- getUnitTypes(cdf, verbose=verbose);
       units <- which(unitTypes != 2);
       # Not needed anymore
-      unitTypes <- NULL; 
+      unitTypes <- NULL;
       verbose && enter(verbose, "Non-SNP units:");
       verbose && str(verbose, units);
       if (length(units) > 0) {
-        nonSNPs <- getCellIndices(cdf, units=units, 
+        nonSNPs <- getCellIndices(cdf, units=units,
                        useNames=FALSE, unlist=TRUE, verbose=verbose);
       } else {
         nonSNPs <- NULL;
@@ -118,7 +118,7 @@ setMethodS3("getSetsOfProbes", "AllelicCrosstalkCalibration", function(this, ...
       shifts <- -(S-1):(S-1);
       verbose && cat(verbose, "Probe shifts:");
       verbose && print(verbose, shifts);
-      snps <- groupBySnpNucleotides(acs, cells=cells, shifts=shifts, 
+      snps <- groupBySnpNucleotides(acs, cells=cells, shifts=shifts,
                                                      verbose=verbose);
       # Not needed anymore
       cells <- shifts <- NULL;
@@ -180,8 +180,7 @@ setMethodS3("getSetsOfProbes", "AllelicCrosstalkCalibration", function(this, ...
         }
 
         # Identify the location of the SNP position for each probe pair
-        naValue <- as.integer(NA);
-        snpPositions <- rep(naValue, length=dim[1]);
+        snpPositions <- rep(NA_integer_, times=dim[1]);
         possibleShifts <- as.integer(seq(from=-4, to=+4));  # Hardwired!
         possiblePositions <- 13 + possibleShifts;
         for (pos in possiblePositions) {
@@ -223,7 +222,7 @@ setMethodS3("getSetsOfProbes", "AllelicCrosstalkCalibration", function(this, ...
       } # for (gg ...)
       verbose && exit(verbose);
     }
-    
+
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Fake symmetry by flipping every 2nd (A,B) to (B,A)?
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -281,7 +280,7 @@ setMethodS3("getSetsOfProbes", "AllelicCrosstalkCalibration", function(this, ...
 #   are very similar for allele A and allele B.  The estimated backtransform
 #   matrix 'Winv' is also quite symmetric.
 # 2008-09-06
-# o BUG FIX: getSetsOfProbes() for version 4 would return 'nonSNPs' 
+# o BUG FIX: getSetsOfProbes() for version 4 would return 'nonSNPs'
 #   as units, not cells.  Arghh...
 # 2008-09-05
 # o BUG FIX: getSetsOfProbes() would return 'nonSNPs' in a sublist.  This
@@ -294,7 +293,7 @@ setMethodS3("getSetsOfProbes", "AllelicCrosstalkCalibration", function(this, ...
 # o BUG FIX: The allele pairs identified was not correct for GWS arrays.
 # o Updated AllelicCrosstalkCalibration to support flavor 'expectile' too.
 # 2008-08-30
-# o Added argument 'mergeShifts=TRUE' and 'B=1'.  Currently B=0 and B=1 
+# o Added argument 'mergeShifts=TRUE' and 'B=1'.  Currently B=0 and B=1
 #   is supported.
 # 2008-08-29
 # o Added protected getSetsOfProbes().  By overriding this method, other
@@ -302,12 +301,12 @@ setMethodS3("getSetsOfProbes", "AllelicCrosstalkCalibration", function(this, ...
 #   user specified function generating the sets.
 # 2008-08-04
 # o Added support to fit the genotype "cone" using the 'expectile' package
-#   instead of the 'sfit' package. This is controlled by the 'flavor' 
+#   instead of the 'sfit' package. This is controlled by the 'flavor'
 #   argument of the constructor.
 # 2008-07-14
 # o Now explicitly using matrix(..., byrow=FALSE).
 # 2008-05-30
-# o BUG FIX: The constructor of AllelicCrosstalkCalibration used 
+# o BUG FIX: The constructor of AllelicCrosstalkCalibration used
 #   non-defined variable 'verbose'.
 # 2008-02-21
 # o Now SNPs and CN probes are infered from getUnitTypes(cdf) and no longer
@@ -319,7 +318,7 @@ setMethodS3("getSetsOfProbes", "AllelicCrosstalkCalibration", function(this, ...
 # o BUG FIX: The AllelicCrosstalkCalibration introduced in previous version
 #   was broken for 10K (maybe 100K and 500K as well).
 # o Now 'subsetToAvg' of AllelicCrosstalkCalibration accepts '-XY' (and
-#   '-X' and '-Y') for automatic look up of all units and exclude those 
+#   '-X' and '-Y') for automatic look up of all units and exclude those
 #   that are on ChrX and ChrY.  Note, '-XY' will work on all chip types,
 #   also older ones for which there are no ChrY units.
 # o The new constructor argument 'rescaleBy' now sets a "subtag", e.g.
@@ -335,7 +334,7 @@ setMethodS3("getSetsOfProbes", "AllelicCrosstalkCalibration", function(this, ...
 # 2007-09-09
 # o Added alpha version of plotBasepair() to AllelicCrosstalkCalibration.
 # 2007-09-08
-# o Now AllelicCrosstalkCalibration corrects also non-SNP PM cells by 
+# o Now AllelicCrosstalkCalibration corrects also non-SNP PM cells by
 #   substracting a global offset and rescaling towards target average.
 #   The global offset is calculated as the weighted average of all
 #   allelic offsets.  This is the simplest way to incorporate a calibration
@@ -345,7 +344,7 @@ setMethodS3("getSetsOfProbes", "AllelicCrosstalkCalibration", function(this, ...
 #   for all cells, which got some overhead.  Hopefully the simpler version
 #   is good enough.
 # 2007-09-05
-# o Now the rescaling can be done either on (yA,yB) separately or on 
+# o Now the rescaling can be done either on (yA,yB) separately or on
 #   y=yA+yB.  If targetAvg has two values the former, otherwise the latter.
 # o Now AllelicCrosstalkCalibration recognizes argument 'subsetToAvg'.
 # o Now process() stores the crosstalk settings and estimated parameters
@@ -369,8 +368,8 @@ setMethodS3("getSetsOfProbes", "AllelicCrosstalkCalibration", function(this, ...
 # o Now this pre-processor output results to probeData/.
 # o Renamed from AllelicCrosstalkCalibrator.
 # 2006-11-18
-# o Removed version and subversion tags, and related functions. 
-#   Now getTags() returns the tags of the input data set plus any tags 
+# o Removed version and subversion tags, and related functions.
+#   Now getTags() returns the tags of the input data set plus any tags
 #   of this instance.
 # 2006-11-02
 # o Created from QuantileNormalizer.R.

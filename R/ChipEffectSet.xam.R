@@ -77,7 +77,7 @@ setMethodS3("getAM", "ChipEffectSet", function(this, other, units=NULL, ..., ver
   arrayNames <- getNames(this);
   dimnames <- list(map[,"unit"], arrayNames, c("A", "M"));
   dim <- sapply(dimnames, FUN=length);
-  am <- array(NA, dim=dim, dimnames=dimnames);
+  am <- array(NA_real_, dim=dim, dimnames=dimnames);
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Get thetas from the other

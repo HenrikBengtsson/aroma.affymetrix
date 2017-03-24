@@ -154,7 +154,7 @@ setMethodS3("process", "OpticalBackgroundCorrection", function(this, ..., force=
     }
 
 
-    res[[ii]] %<=% {
+    res[[ii]] %<-% {
       # Get all probe signals
       verbose && enter(verbose, "Reading probe intensities")
       x <- readRawData(df, fields="intensities", verbose=less(verbose,2))
@@ -199,7 +199,7 @@ setMethodS3("process", "OpticalBackgroundCorrection", function(this, ..., force=
       verbose && exit(verbose)
 
       pathname
-    } ## %<=%
+    } ## %<-%
 
     verbose && exit(verbose)
   } # for (ii ...)

@@ -482,7 +482,7 @@ setMethodS3("getUnitGroupCellMap", "ChipEffectFile", function(this, units=NULL, 
       chunk <- chunks[[kk]];
       chunks[[kk]] <- NA;
       cells0 <- getCellIndices(this, units=chunk, force=force, .cache=FALSE, verbose=less(verbose));
-      idxs <- offset + seq_len(length(chunk));
+      idxs <- offset + seq_along(chunk);
       offset <- offset + length(chunk);
       # Not needed anymore
       chunk <- NULL;

@@ -789,7 +789,7 @@ setMethodS3("process", "AllelicCrosstalkCalibration", function(this, ..., force=
     verbose && str(verbose, setsOfProbes)
 
 
-    res[[kk]] %<=% {
+    res[[kk]] %<-% {
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       # Reading data
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -1029,7 +1029,7 @@ setMethodS3("process", "AllelicCrosstalkCalibration", function(this, ..., force=
       ## callHooks(sprintf("%s.onExit", hookName), df=df, dfC=dfC, ...);
 
       dfC
-    } ## %<=%
+    } ## %<-%
 
     verbose && exit(verbose);
   } # for (kk in seq_len(nbrOfArrays))

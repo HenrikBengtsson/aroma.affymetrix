@@ -12,10 +12,6 @@
 
 
 % Other missing docs
-\alias{bgAdjustGcrma.AffymetrixCelFile}
-\alias{bgAdjustGcrma.AffymetrixCelSet}
-\alias{bgAdjustOptical.AffymetrixCelFile}
-\alias{bgAdjustRma.AffymetrixCelFile}
 \alias{ASCRMAv2}
 \alias{AffymetrixAptSummaryFile}
 \alias{AffymetrixCnChpFile}

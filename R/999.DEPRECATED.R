@@ -1,22 +1,6 @@
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # DEFUNCT
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-## Defunct since aroma.affymetrix 3.0.0 (Jan 2016)
-setMethodS3("bgAdjustRma", "AffymetrixCelFile", function(this, path, pmonly=TRUE, addJitter=FALSE, jitterSd=0.2, overwrite=FALSE, skip=!overwrite, ..., verbose=FALSE, .deprecated=TRUE) {
-  .Defunct("RmaBackgroundCorrection")
-}, private=TRUE, deprecated=TRUE)
-
-setMethodS3("bgAdjustOptical", "AffymetrixCelFile", function(this, path, minimum=1, subsetToUpdate=NULL, typesToUpdate=NULL, overwrite=FALSE, skip=!overwrite, verbose=FALSE, ..., .deprecated=TRUE) {
-  .Defunct("OpticalBackgroundCorrection")
-}, private=TRUE, deprecated=TRUE)
-
-setMethodS3("bgAdjustGcrma", "AffymetrixCelSet", function(this, path, affinities=NULL, type="fullmodel",  indicesNegativeControl=NULL, opticalAdjust=TRUE, gsbAdjust=TRUE, k=6 * fast + 0.5 * (1 - fast), rho=0.7, stretch=1.15*fast + (1-fast), fast=TRUE, overwrite=FALSE, skip=!overwrite, ..., verbose=FALSE, .deprecated=TRUE) {
-  .Defunct("GcRmaBackgroundCorrection")
-}, private=TRUE, deprecated=TRUE)
-
-setMethodS3("bgAdjustGcrma", "AffymetrixCelFile", function(this, path, type=c("fullmodel", "affinities"), indicesNegativeControl=NULL, affinities=NULL, gsbAdjust=TRUE, parametersGsb=NULL, k=ifelse(fast,6,0.5), rho=0.7, stretch=ifelse(fast,1.15,1), fast=TRUE, overwrite=FALSE, skip=!overwrite, ..., verbose=FALSE, .deprecated=TRUE) {
-  .Defunct("GcRmaBackgroundCorrection")
-}, private=TRUE, deprecated=TRUE)
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # DEPRECATED

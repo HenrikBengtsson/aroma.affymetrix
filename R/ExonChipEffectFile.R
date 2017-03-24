@@ -132,8 +132,8 @@ setMethodS3("getCellIndices", "ExonChipEffectFile", function(this, ..., unlist=F
     }
     if (!is.null(res)) {
       size <- object.size(res);
-      verbose && printf(verbose, "Returning value cached %s: %.1fMB\n",
-                                                   where, size/1024^2);
+      verbose && printf(verbose, "Returning value cached %s: %s\n",
+                        where, hsize(size, digits = 2L, standard = "IEC"))
       verbose && exit(verbose);
       return(res);
     }

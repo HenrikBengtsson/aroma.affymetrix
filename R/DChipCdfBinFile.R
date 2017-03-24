@@ -92,7 +92,7 @@ setMethodS3("findByChipType", "DChipCdfBinFile", function(this, chipType, tags=N
   parts <- strsplit(fullname, split=",")[[1]];
   chipType <- parts[1];
   tags <- parts[-1];
-  pattern <- sprintf("^%s.cdf.bin$", fullname);
+  pattern <- sprintf("^%s[.]cdf[.]bin$", fullname);
   pathname <- findAnnotationDataByChipType(chipType, pattern=pattern);
 
   pathname;

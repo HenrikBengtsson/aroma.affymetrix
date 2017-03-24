@@ -22,7 +22,7 @@
 library("R.filesets");
 verbose <- Arguments$getVerbose(-5, timestamp=TRUE);
 
-urlPath <- "http://hapmap.ncbi.nlm.nih.gov/downloads/raw_data/affy100k/";
+urlPath <- "ftp://ftp.ncbi.nlm.nih.gov/hapmap/raw_data/affy100k/";
 
 files <- list(
   "Mapping50K_Hind240" = c(
@@ -48,7 +48,7 @@ dataSet <- "HapMap,testSet";
 chipTypes <- names(files);
 
 dsList <- list();
-for (kk in seq(along=chipTypes)) {
+for (kk in seq_along(chipTypes)) {
   chipType <- chipTypes[kk];
   verbose && enter(verbose, sprintf("Chip type #%d ('%s') of %d", 
                                          kk, chipType, length(chipTypes)));

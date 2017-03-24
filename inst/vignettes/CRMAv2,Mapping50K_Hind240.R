@@ -139,12 +139,12 @@ str(cells)
 # types="pmmm" uses all PM & MM probes, types="pm" only the PM probes etc.
 # Internally, the stats::density() function is used.
 height <- 0.618*width
-cols <- seq(along=types)
+cols <- seq_along(types)
 
 fig <- "plotDensity,raw"
 if (!devIsOpen(fig) && FALSE) {
   devNew2(width=width, height=height, label=fig)
-  for (kk in seq(along=types)) {
+  for (kk in seq_along(types)) {
     plotDensity(csR, types=types[kk], col=cols[kk], subset=NULL,
                 lwd=2, ylim=c(0,0.45), add=(kk > 1))
   }

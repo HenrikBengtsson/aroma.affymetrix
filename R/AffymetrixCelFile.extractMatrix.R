@@ -32,7 +32,7 @@ setMethodS3("extractMatrix", "AffymetrixCelFile", function(this, cells=NULL, ...
   df <- matrix(naValue, nrow=ncells, ncol=1);
   colnames(df) <- getName(this);
   verbose && str(verbose, df);
-  verbose && printf(verbose, "RAM: %.2fMB\n", object.size(df)/1024^2);
+  verbose && printf(verbose, "RAM: %s\n", hsize(object.size(df), digits = 2L, standard = "IEC"))
   verbose && exit(verbose);
 
   if (!is.null(cells)) {

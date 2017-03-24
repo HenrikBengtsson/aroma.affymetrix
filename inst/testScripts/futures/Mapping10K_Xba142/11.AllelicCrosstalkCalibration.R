@@ -13,13 +13,29 @@ print(csR)
 
 checksum <- NULL
 
-strategies <- list("lazy", "eager")
-if (future::supportsMulticore()) strategies <- c(strategies, "multicore")
-if (packageVersion("future") > "0.10.9") strategies <- c(strategies, "multisession")
-if (require("async")) {
-  strategies <- c(strategies, "batchjobs")
-  async::backend("local")
+strategies <- future:::supportedStrategies()
+strategies <- setdiff(strategies, "multiprocess")
+if (require("future.BatchJobs")) {
+  strategies <- c(strategies, "batchjobs_local")
+  if (any(grepl("PBS_", names(Sys.getenv())))) {
+    strategies <- c(strategies, "batchjobs_torque")
+  }
 }
+if (require("future.batchtools")) {
+  strategies <- c(strategies, "batchtools_local")
+  if (any(grepl("PBS_", names(Sys.getenv())))) {
+    strategies <- c(strategies, "batchtools_torque")
+  } else if (any(grepl("SGE_", names(Sys.getenv())))) {
+    strategies <- c(strategies, "batchtools_sge")
+  }
+}
+
+message("Future strategies: ", paste(sQuote(strategies), collapse = ", "))
+mprint(future::sessionDetails())
+mprint(list(
+  availableCores = future::availableCores(which = "all"),
+  availableWorkers = future::availableWorkers(which = "all")
+))
 
 for (strategy in strategies) {
   message(sprintf("*** Using %s futures ...", sQuote(strategy)))

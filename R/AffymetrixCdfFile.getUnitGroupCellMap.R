@@ -8,7 +8,7 @@ setMethodS3("getUnitGroupCellMap", "AffymetrixCdfFile", function(this, units=NUL
       verbose && enter(verbose, "Renaming group names to group indices");
       cells <- lapply(cells, FUN=function(unit) {
         groups <- .subset2(unit, 1);
-        names(groups) <- seq_len(length(groups));
+        names(groups) <- seq_along(groups);
         list(groups=groups);
       });
 
@@ -86,7 +86,7 @@ setMethodS3("getUnitGroupCellMap", "AffymetrixCdfFile", function(this, units=NUL
   if (is.null(map)) {
     verbose && exit(verbose, suffix="...miss");
   } else {
-    verbose && printf(verbose, "RAM: %.2fMB\n", object.size(map)/1024^2);
+    verbose && printf(verbose, "RAM: %s\n", hsize(object.size(map), digits = 2L, standard = "IEC"))
     verbose && exit(verbose, suffix="...hit");
   }
 
@@ -138,7 +138,7 @@ setMethodS3("getUnitGroupCellMap", "AffymetrixCdfFile", function(this, units=NUL
 ##    map <- map[keep,,drop=FALSE];
 ##  }
 
-  verbose && printf(verbose, "RAM: %.2fMB\n", object.size(map)/1024^2);
+  verbose && printf(verbose, "RAM: %s\n", hsize(object.size(map), digits = 2L, standard = "IEC"))
   verbose && exit(verbose);
 
   map;

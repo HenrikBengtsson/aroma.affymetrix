@@ -51,7 +51,7 @@ setMethodS3("as.character", "AromaChipTypeAnnotationFile", function(x, ...) {
   s <- c(s, sprintf("File size: %s", fileSize));
 
   s <- c(s, sprintf("Chip type: %s", getChipType(this)));
-  s <- c(s, sprintf("RAM: %.2fMB", objectSize(this)/1024^2));
+
   GenericSummary(s);
 }, protected=TRUE)
 

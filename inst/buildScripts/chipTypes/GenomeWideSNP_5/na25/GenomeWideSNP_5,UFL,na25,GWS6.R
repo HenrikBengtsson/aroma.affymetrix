@@ -47,7 +47,7 @@ if (is.null(ufl)) {
 }
 print(ufl);
 
-for (kk in seq(along=csvList)) {
+for (kk in seq_along(csvList)) {
   csv <- csvList[[kk]];
   print(csv);
   units <- importFrom(ufl, csv, verbose=log);

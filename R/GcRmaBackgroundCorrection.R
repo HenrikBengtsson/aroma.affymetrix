@@ -141,7 +141,7 @@ setMethodS3("calculateAffinities", "GcRmaBackgroundCorrection", function(this, .
     affinities <- computeAffinities(cdf, ..., verbose=less(verbose));
   }
 
-  verbose && printf(verbose, "RAM: %.2fMB\n", object.size(affinities)/1024^2);
+  verbose && printf(verbose, "RAM: %s\n", hsize(object.size(affinities), digits = 2L, standard = "IEC"))
 
   verbose && exit(verbose);
 
@@ -329,7 +329,7 @@ setMethodS3("process", "GcRmaBackgroundCorrection", function(this, ..., force=FA
     verbose && exit(verbose)
 
 
-    dataFiles[[ii]] %<=% {
+    dataFiles[[ii]] %<-% {
       verbose && enter(verbose, "Retrieving PM and MM signals")
       # PM & MM signals
       pm <- getData(df, indices=pmCells)$intensities
@@ -359,7 +359,7 @@ setMethodS3("process", "GcRmaBackgroundCorrection", function(this, ..., force=FA
 
         verbose && cat(verbose, "Number of PMs: ", length(pm))
         verbose && cat(verbose, "Number of MMs: ", length(mm))
-        pm <- bg.adjust.fullmodel(pms=pm, mms=mm, ncs=ncs, apm=apm, amm=amm, anc=anc, index.affinities=seq_len(length(pm)), k=k, rho=rho, fast=fast)
+        pm <- bg.adjust.fullmodel(pms=pm, mms=mm, ncs=ncs, apm=apm, amm=amm, anc=anc, index.affinities=seq_along(pm), k=k, rho=rho, fast=fast)
 
         verbose && exit(verbose)
       } else if (type == "affinities") {
@@ -439,7 +439,7 @@ setMethodS3("process", "GcRmaBackgroundCorrection", function(this, ..., force=FA
           throw(sprintf("Cannot perform GCRMA background (type=\"affinities\") correction: The number (%d) of negative control is too small.", length(ncs)))
         }
 
-        pm <- bg.adjust.affinities(pms=pm, ncs=ncs, apm=apm, anc=anc, index.affinities=seq_len(length(pm)), k=k, fast=fast, nomm=nomm)
+        pm <- bg.adjust.affinities(pms=pm, ncs=ncs, apm=apm, anc=anc, index.affinities=seq_along(pm), k=k, fast=fast, nomm=nomm)
 
         verbose && exit(verbose)
       } # if (type == ...)
@@ -508,7 +508,7 @@ setMethodS3("process", "GcRmaBackgroundCorrection", function(this, ..., force=FA
       setCdf(dfOut, cdf)
 
       pathname
-    } ## %<=%
+    } ## %<-%
 
 
     verbose && exit(verbose)

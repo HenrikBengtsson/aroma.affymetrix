@@ -857,7 +857,7 @@ setMethodS3("process", "FragmentLengthNormalization", function(this, ..., force=
     }
 
 
-    res[[kk]] %<=% {
+    res[[kk]] %<-% {
       # Get target log2 signals for all SNPs to be updated
       verbose && enter(verbose, "Getting theta estimates");
       theta <- extractTheta(ce, units=cellMatrixMap, drop=FALSE, verbose=less(verbose, 5));
@@ -985,7 +985,7 @@ setMethodS3("process", "FragmentLengthNormalization", function(this, ..., force=
       verbose && print(verbose, gc);
 
       pathname
-    } ## %<=%
+    } ## %<-%
 
     verbose && exit(verbose);
   } # for (kk in ...)

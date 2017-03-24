@@ -76,14 +76,14 @@ as.character, clone, compareChecksum, copyTo, equals, fromFile, getAttribute, ge
 appendFullNameTranslator, appendFullNameTranslatorByNULL, appendFullNameTranslatorByTabularTextFile, appendFullNameTranslatorByTabularTextFileSet, appendFullNameTranslatorBycharacter, appendFullNameTranslatorBydata.frame, appendFullNameTranslatorByfunction, appendFullNameTranslatorBylist, clearFullNameTranslator, clearListOfFullNameTranslators, getDefaultFullName, getFullName, getFullNameTranslator, getListOfFullNameTranslators, getName, getTags, hasTag, hasTags, resetFullName, setFullName, setFullNameTranslator, setListOfFullNameTranslators, setName, setTags, updateFullName
 
  \bold{Methods inherited from Object}:\cr
-$, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, save, asThis
+$, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, names, objectSize, print, save, asThis
 
 
 }
 
 \details{
   The dChip SNP information files for various chip types can be
-  downloaded from \url{http://www.hsph.harvard.edu/cli/complab/dchip/}.
+  downloaded from \url{https://sites.google.com/site/dchipsoft/}.
   Put each file in a
   directory named identically as the corresponding chip type under the
   \emph{annotations/} directory, e.g.

@@ -24,7 +24,7 @@ setMethodS3("importFromBpMap", "AromaCellMatchScoreFile", function(this, srcPath
   verbose && enter(verbose, "Saving scores to ACM file");
   verbose && cat(verbose, "Pathname: ", getPathname(this));
 
-  for(kk in seq_len(length(bps))) {
+  for(kk in seq_along(bps)) {
     bp <- bps[[kk]];
     verbose && enter(verbose, "Updating ", bp$seqInfo$fullname[1]);
 

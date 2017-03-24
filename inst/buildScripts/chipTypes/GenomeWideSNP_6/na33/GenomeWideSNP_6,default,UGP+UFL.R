@@ -59,7 +59,7 @@ print(ugpD);
 for (what in c("ufl", "ugp")) {
   af <- get(what);
   afD <- get(sprintf("%sD", what));
-  for (cc in seq(length=nbrOfColumns(afD))) {
+  for (cc in seq_len(nbrOfColumns(afD))) {
     afD[,cc] <- af[unitMap,cc];
   }
 }
@@ -89,7 +89,7 @@ for (what in c("ufl", "ugp")) {
   );
   keep <- (names(srcFileTags) %in% c("cdfD", "cdf", what));
   srcFileTagsT <- srcFileTags[keep];
-  names(srcFileTagsT) <- sprintf("srcFile%d", seq(along=srcFileTagsT));
+  names(srcFileTagsT) <- sprintf("srcFile%d", seq_along(srcFileTagsT));
   footer$srcFiles <- srcFileTagsT;
   writeFooter(afD, footer);
 }

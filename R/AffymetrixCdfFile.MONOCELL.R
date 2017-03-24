@@ -228,8 +228,9 @@ setMethodS3("createMonocellCdf", "AffymetrixCdfFile", function(this, chipType=ge
   nbrOfCellsPerQcUnit <- unlist(nbrOfCellsPerQcUnit, use.names=FALSE);
   nbrOfQcCells <- sum(nbrOfCellsPerQcUnit);
   verbose && printf(verbose,
-                        "Number of QC cells: %d in %d QC units (%.1fMB)\n",
-              nbrOfQcCells, nbrOfQcUnits, object.size(destQcUnits)/1024^2);
+             "Number of QC cells: %d in %d QC units (%s)\n",
+             nbrOfQcCells, nbrOfQcUnits,
+             hsize(object.size(destQcUnits), digits = 2L, standard = "IEC"));
 
 
 
@@ -417,7 +418,7 @@ setMethodS3("createMonocellCdf", "AffymetrixCdfFile", function(this, chipType=ge
     }
 
     if (verbose && isVisible(verbose)) {
-      cat(sprintf(" => RAM: %.fMB\n", object.size(srcUnits)/1024^2));
+      cat(sprintf(" => RAM: %s\n", hsize(object.size(srcUnits), digits = 2L, standard = "IEC")))
     }
 
     if (length(srcUnits) == 0) {

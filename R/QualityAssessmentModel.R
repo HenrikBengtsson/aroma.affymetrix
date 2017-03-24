@@ -49,7 +49,7 @@ setMethodS3("as.character", "QualityAssessmentModel", function(x, ...) {
   s <- c(s, paste("Path:", getPath(this)));
   s <- c(s, "Chip-effect set:");
   s <- c(s, paste("   ", as.character(getChipEffectSet(this))));
-  s <- c(s, sprintf("RAM: %.2fMB", objectSize(this)/1024^2));
+
   GenericSummary(s);
 }, protected=TRUE)
 
@@ -344,7 +344,7 @@ setMethodS3("getResiduals", "QualityAssessmentModel", function(this, units=NULL,
       data <- lapply(residualsList, FUN=function(groups) {
         lapply(groups, FUN=function(group) {
           eps <- .subset2(group, "eps")[,kk];
-          ones <- rep(1, length=length(eps));
+          ones <- rep(1, times=length(eps));
           list(intensities=eps, stdvs=ones, pixels=ones);
         })
       })
@@ -369,7 +369,7 @@ setMethodS3("getResiduals", "QualityAssessmentModel", function(this, units=NULL,
 
   # Return residual set
   res <- QualityAssessmentSet$byPath(path=path, ...,
-                                          pattern=",residuals.[cC][eE][lL]$");
+                                          pattern=",residuals[.][cC][eE][lL]$");
 
   verbose && exit(verbose);
 
@@ -516,7 +516,7 @@ setMethodS3("getWeights", "QualityAssessmentModel", function(this, path=NULL, na
     verbose && printf(verbose, "Chunk #%d of %d (%d units)\n",
                                         count, nbrOfChunks, length(units));
 
-    logTransform <- rep(list(log2), length(this));
+    logTransform <- rep(list(log2), times=length(this));
 
     rawDataList <- readUnits(ds, units=units, transforms=logTransform, verbose=less(verbose), stratifyBy="pm");
     chipEffectList <- readUnits(ces, units=units, transforms=logTransform, verbose=less(verbose));
@@ -557,7 +557,7 @@ setMethodS3("getWeights", "QualityAssessmentModel", function(this, path=NULL, na
   } # while(...)
 
   # Load output QA data set
-  res <- QualityAssessmentSet$byPath(path=path, pattern=",weights.[cC][eE][lL]$");
+  res <- QualityAssessmentSet$byPath(path=path, pattern=",weights[.][cC][eE][lL]$");
 
   res;
 }) # getWeights()

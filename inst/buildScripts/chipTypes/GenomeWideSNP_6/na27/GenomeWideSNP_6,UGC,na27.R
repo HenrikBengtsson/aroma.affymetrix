@@ -30,7 +30,7 @@ for (csv in csvList) {
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 srcFileTags <- list();
 srcFiles <- c(list(cdf), csvList);
-for (kk in seq(along=srcFiles)) {
+for (kk in seq_along(srcFiles)) {
   srcFile <- srcFiles[[kk]];
   tags <- list(
     filename=getFilename(srcFile), 
@@ -47,7 +47,7 @@ footer$createdBy = list(
   fullname = "Henrik Bengtsson", 
   email = sprintf("%s@%s", "henrik.bengtsson", "aroma-project.org")
 );
-names(srcFileTags) <- sprintf("srcFile%d", seq(along=srcFileTags));
+names(srcFileTags) <- sprintf("srcFile%d", seq_along(srcFileTags));
 footer$srcFiles <- srcFileTags;
 footer$gcBinWidth <- as.integer(500e3);
 writeFooter(ugc, footer);

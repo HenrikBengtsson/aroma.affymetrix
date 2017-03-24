@@ -90,8 +90,8 @@ setMethodS3("as.character", "AffymetrixCnChpSet", function(x, ...) {
   s <- c(s, sprintf("Number of arrays: %d", n));
   names <- getNames(this);
   s <- c(s, sprintf("Names: %s [%d]", hpaste(names), n));
-  s <- c(s, sprintf("Total file size: %.2fMB", getFileSize(this)/1024^2));
-  s <- c(s, sprintf("RAM: %.2fMB", objectSize(this)/1024^2));
+  s <- c(s, sprintf("Total file size: %s", hsize(getFileSize(this), digits = 2L, standard = "IEC")))
+
   GenericSummary(s);
 }, protected=TRUE)
 

@@ -3,7 +3,6 @@
 ##########################################################################
 library("aroma.affymetrix");
 library("aroma.cn");  # PairedPscbsModel
-stopifnot(packageVersion("aroma.cn") >= "1.2.4");
 verbose <- Arguments$getVerbose(-8, timestamp=TRUE);
 
 

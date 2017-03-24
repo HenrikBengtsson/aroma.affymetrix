@@ -588,7 +588,7 @@ setMethodS3("getImage", "AffymetrixCelFile", function(this, other=NULL, transfor
   y <- readRectFcn(this, other=other, xrange=xrange, yrange=yrange, ...);
   verbose && str(verbose, y);
   verbose && summary(verbose, as.vector(y[is.finite(y) & (y != 0)]));
-  verbose && printf(verbose, "RAM: %.1fMB\n", object.size(y)/1024^2);
+  verbose && printf(verbose, "RAM: %s\n", hsize(object.size(y), digits = 2L, standard = "IEC"))
   verbose && exit(verbose);
 
   verbose && enter(verbose, "Creating Image");

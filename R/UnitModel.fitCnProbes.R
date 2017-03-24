@@ -114,7 +114,7 @@ setMethodS3("fitCnProbes", "UnitModel", function(this, ..., verbose=FALSE) {
     cef <- ces[[kk]];
     verbose && enter(verbose, sprintf("Array #%d ('%s') of %d", kk, getName(df), length(ds)));
 
-    res[[kk]] %<=% {
+    res[[kk]] %<-% {
       verbose && enter(verbose, sprintf("fitCnProbes(): Array '%s'", getName(df)));
 
       verbose && enter(verbose, "Reading signals");
@@ -146,7 +146,7 @@ setMethodS3("fitCnProbes", "UnitModel", function(this, ..., verbose=FALSE) {
       verbose && exit(verbose);
 
       verbose && exit(verbose);
-    } # %<=%
+    } # %<-%
 
     verbose && exit(verbose);
   } # for (kk ...)

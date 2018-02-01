@@ -88,7 +88,7 @@ setMethodS3("importFromAffymetrixTabularFile", "AromaUfcFile", function(this, at
   t <- system.time({
     # Read annotation data
     data0 <- readDataFrame(atf, colClasses=colClasses);
-  });
+  }, gcFirst = FALSE);
 
   verbose && printf(verbose, "Reading time: %.1fs\n", t[3]);
   verbose && exit(verbose);

@@ -1,10 +1,15 @@
 Package: aroma.affymetrix
 =========================
 
-Version: 3.1.0-9000 [2017-03-24]
+Version: 3.1.0-9000 [2018-02-16]
 
  o ...
 
+CODE REFACTORING:
+
+ o Using indexByRow(dim(x)) internally since indexByRow(x) will soon be
+   deprecated in matrixStats.
+ 
 
 Version: 3.1.0 [2017-03-23]
 

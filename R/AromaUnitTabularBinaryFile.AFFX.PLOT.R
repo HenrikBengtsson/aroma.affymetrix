@@ -29,7 +29,7 @@ setMethodS3("getImage", "AromaUnitTabularBinaryFile", function(this, transforms=
 #  verbose && str(verbose, values);
   z <- vector(mode=mode(values), 1);
   z <- matrix(z, nrow=nbrOfRows(cdf), ncol=nbrOfColumns(cdf));
-  z[indexByRow(z, ugcMap[,"cell"])] <- values[ugcMap[,"unit"]];
+  z[indexByRow(dim(z), ugcMap[,"cell"])] <- values[ugcMap[,"unit"]];
   # Not needed anymore
   values <- ugcMap <- NULL;
   verbose && summary(verbose, as.vector(z));

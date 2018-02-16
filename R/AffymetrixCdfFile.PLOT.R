@@ -29,7 +29,7 @@ setMethodS3("getImage", "AffymetrixCdfFile", function(this, xrange=c(0,Inf), yra
   verbose && str(verbose, data);
   z <- vector(mode=mode(data[[field]]), 1);
   z <- matrix(z, nrow=nbrOfRows(this), ncol=nbrOfColumns(this));
-  z[indexByRow(z, data[,"cell"])] <- data[[field]];
+  z[indexByRow(dim(z), data[,"cell"])] <- data[[field]];
   # Not needed anymore
   data <- NULL;
   verbose && summary(verbose, as.vector(z));

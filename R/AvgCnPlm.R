@@ -41,12 +41,3 @@ setMethodS3("getAsteriskTags", "AvgCnPlm", function(this, collapse=NULL, ...) {
 
   tags;
 }, protected=TRUE)
-
-
-############################################################################
-# HISTORY:
-# 2007-12-06
-# o Added getAsteriskTag() for AvgSnpPlm.
-# 2007-09-08
-# o Created from MbeiCnPlm.R.
-############################################################################

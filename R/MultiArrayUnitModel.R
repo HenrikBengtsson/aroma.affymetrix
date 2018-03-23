@@ -282,23 +282,3 @@ setMethodS3("readPriorsByUnits", "MultiArrayUnitModel", function(this, units=NUL
 
   res2;
 }, private=TRUE)
-
-
-
-
-
-############################################################################
-# HISTORY:
-# 2012-01-14
-# o Now the fit function returned by getFitUnitFunction() for
-#   MultiArrayUnitModel passes '...'.
-# o Now validate() for MultiArrayUnitModel accepts single-array data sets,
-#   iff priors are set.
-# o Added argument 'listOfPriors' to MultiArrayUnitModel().
-# 2008-12-08
-# o Added readPriorsByUnits().
-# 2008-09-03
-# o Added getFitUnitGroupFunction() model, which is a better name than
-#   getFitFunction().
-# o Created from ProbeLevelModel.R.
-############################################################################

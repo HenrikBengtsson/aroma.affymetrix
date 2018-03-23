@@ -413,17 +413,3 @@ setMethodS3("extractLogRatios", "AffymetrixCnChpFile", function(this, units=NULL
   data <- data[,"Log2Ratio"];
   data;
 })
-
-
-############################################################################
-# HISTORY:
-# 2009-07-08
-# o Added getUnitTypesFile() for AffymetrixCnChpFile.
-# 2008-08-22
-# o Added extractLogRatios().
-# 2008-05-18
-# o Added support for UnitNamesFile.
-# 2008-01-16
-# o Created.
-############################################################################
-

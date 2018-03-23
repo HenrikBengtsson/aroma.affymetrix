@@ -32,10 +32,3 @@ setMethodS3("plotBoxplot", "ChipEffectSet", function(this, type, transform=NULL,
 
   invisible(stats);
 })
-
-
-##########################################################################
-# HISTORY:
-# 2008-02-25
-# o Created from EPs code.
-##########################################################################

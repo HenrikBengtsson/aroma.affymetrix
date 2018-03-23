@@ -307,17 +307,3 @@ setMethodS3("doFIRMA", "default", function(dataSet, ..., verbose=FALSE) {
 
   res;
 }) # doFIRMA()
-
-
-############################################################################
-# HISTORY:
-# 2013-06-02
-# o BUG FIX: doFIRMA() would give <simpleError in UseMethod("setCdf"):
-#   no applicable method for 'setCdf' applied to an object of class
-#   "NULL"> - a bug introduced in v2.9.3.
-# 2013-05-02
-# o Removed argument 'ram' in favor of aroma option 'memory/ram'.
-# 2011-11-10
-# o Added Rdoc comments.
-# o Created from doGCRMA.R.
-############################################################################

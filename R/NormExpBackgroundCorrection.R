@@ -67,13 +67,3 @@ setMethodS3("getParameters", "NormExpBackgroundCorrection", function(this, ...) 
 
   params;
 }, protected=TRUE)
-
-
-############################################################################
-# HISTORY:
-# 2009-04-16
-# o Added redundancy test that the default NormExpBackgroundCorrection
-#   gives identical results to older RmaBackgroundCorrection.
-# o Created NormExpBackgroundCorrection which extends more generic
-#   LimmaBackgroundCorrection.
-############################################################################

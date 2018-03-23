@@ -262,21 +262,3 @@ setMethodS3("extractTotalAndFracB", "SnpChipEffectFile", function(this, units=NU
 setMethodS3("extractTotalAndFreqB", "default", function(this, ...) {
   extractTotalAndFracB(this, ...);
 })
-
-
-
-############################################################################
-# HISTORY:
-# 2009-01-10
-# o Added extractTotalAndFracB().
-# 2008-07-16
-# o Added argument 'drop=FALSE' to all extractTotalAndFreqB().
-# 2008-05-11
-# o The (thetaA,thetaB) -> (theta, freqB) is bijective *except* when
-#   theta = thetaA+thetaB = 0.  With the assumption that thetaA,thetaB > 0
-#   then it is truly bijective.
-# 2008-05-10
-# o Now extractTotalAndFreqB() takes and UGC map via argument 'units'.
-# 2008-05-09
-# o Created.
-############################################################################

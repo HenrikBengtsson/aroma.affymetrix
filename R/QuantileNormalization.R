@@ -572,33 +572,3 @@ setMethodS3("process", "QuantileNormalization", function(this, ..., force=FALSE,
 
   outputDataSet;
 })
-
-############################################################################
-# HISTORY:
-# 2011-02-24
-# o Added findTargetDistributionFile() to QuantileNormalization for
-#   locating an existing target-distribution file.  The previously used
-#   getTargetDistributionPathname(), which returns a hardwired pathname,
-#   is now only used for creating a target-distribution file.
-# 2008-07-03
-# o Now process() calls normalizeQuantileRank(), which is the new updated
-#   name for normalizeQuantile().
-# 2007-04-19
-# o BUG FIX: Added missing getExclCells() to QuantileNormalization.
-#   Thanks Elizabeth Purdom for the report.
-# 2007-04-11
-# o Added clearCache() for this class.
-# 2007-02-04
-# o Now QuantileNormalization() takes an AffymetrixCelFile as a target
-#   distribution too, cf argument 'targetDistribution'.
-# 2006-12-08
-# o Now this class inherits from the ProbePreprocessor class.
-# o Now this pre-processor output results to probeData/.
-# o Renamed from QuantileNormalizer.
-# 2006-11-18
-# o Removed version and subversion tags, and related functions.
-#   Now getTags() returns the tags of the input data set plus any tags
-#   of this instance.
-# 2006-10-30
-# o Created.
-############################################################################

@@ -158,17 +158,3 @@ setMethodS3("fitCnProbes", "UnitModel", function(this, ..., verbose=FALSE) {
 
   invisible(units);
 }, private=TRUE) # fitCnProbes()
-
-
-############################################################################
-# HISTORY:
-# 2009-05-20
-# o Updated fitCnProbes() of UnitModel to identify single-cell CN units,
-#   and ignore multi-cell CN units, which will be process like the other
-#   units.  By not assuming single-cell CN units, this methods should also
-#   apply to other CDFs, e.g. the new Cytogenetics_Array.
-# 2008-12-01
-# o Now fitCnProbes() of UnitModel only fits non-fitted CN units.
-# 2008-09-05
-# o Created.
-############################################################################

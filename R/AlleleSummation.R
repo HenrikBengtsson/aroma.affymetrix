@@ -290,23 +290,3 @@ setMethodS3("process", "AlleleSummation", function(this, ..., verbose=FALSE) {
 
   outputSet;
 })
-
-
-
-############################################################################
-# HISTORY:
-# 2008-12-18
-# o BUG FIX: process() of AlleleSummation used verbose but had no such
-#   argument causing it to use the global one.
-# 2008-12-13
-# o More verbose output.
-# 2008-12-10
-# o Now process() returns immediately if already done.
-# o Now process() only processes non-summed units.
-# o Added findUnitsTodo() to AlleleSummation.
-# o Now AlleleSummation is also estimating the pooled standard deviation.
-# o BUG FIX: AlleleSummation would not work for chip types containing
-#   exclusively SNP units.  It expected some non-SNP units.
-# 2008-02-20
-# o Created.
-############################################################################

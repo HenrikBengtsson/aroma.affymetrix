@@ -322,37 +322,3 @@ setMethodS3("readMouse430", "DChipGenomeInformation", function(this, ...) {
 
   tableData;
 }, private=TRUE)
-
-
-
-############################################################################
-# HISTORY:
-# 2008-12-29
-# o Added argument 'units' to readDataFrame().
-# 2007-08-12
-# o Added support for dChip's 'snp6.0 genome info hg18.txt' file.  Note,
-#   this only contains informations for SNPs, not CN probes.
-# 2007-03-23
-# o It turns out that KS's readMouse430() was a bit too hardwired.  I've
-#   updated it according to his explanations, but I have not tested.
-# 2007-03-19 [KS]
-# o Added private readMouse430() to the list of read methods that readData()
-#   is using to parse DChip genome information files.
-# 2007-01-22
-# o Rename argument 'path' to 'rootPath' and added argument 'pattern' to
-#   method fromChipType().
-# o Made fromChipType() identify genome information files more robustly,
-#   e.g. the exact chip type does not have to be part of the prefix.
-#   Indeed, it now accepts the default dChip filenames for the 10K, the
-#   50K and the 250K SNP chips.
-# o Made readData() to support also unknown chip types. That is, if a chip
-#   type is not among the hardwired ones, the method will still try to read
-#   it using one of the known read functions.  For instance, the genome info
-#   file for 10K chips have the same format as the one for the 100K chips.
-# 2006-09-15
-# o Created from DChip.R in old(!) aroma.snp.
-# 2005-11-15
-# o Added support for skipping header in readSampleInformationFile().
-# 2005-10-31
-# o Created.
-############################################################################

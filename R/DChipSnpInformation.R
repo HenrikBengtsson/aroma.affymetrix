@@ -244,19 +244,3 @@ setMethodS3("read10K", "DChipSnpInformation", function(this, ..., exclude=c("dbS
   );
   readTableInternal(this, pathname=getPathname(this), colClasses=colClasses, exclude=exclude, fill=fill, ...);
 }, private=TRUE)
-
-
-############################################################################
-# HISTORY:
-# 2007-01-22
-# o Rename argument 'path' to 'rootPath' and added argument 'pattern' to
-#   method fromChipType().
-# o Just like for genome information file, fromChipType() and readData()
-#   were updated to better locate and read dChip SNP information files.
-# o Made readData() to support also unknown chip types. That is, if a chip
-#   type is not among the hardwired ones, the method will still try to read
-#   it using one of the known read functions.  For instance, the genome info
-#   file for 10K chips have the same format as the one for the 100K chips.
-# 2006-09-17
-# o Created from DChipGenomeInformation.R.
-############################################################################

@@ -307,24 +307,3 @@ setMethodS3("doGCRMA", "default", function(dataSet, ..., verbose=FALSE) {
 
   res;
 })
-
-
-############################################################################
-# HISTORY:
-# 2013-05-02
-# o Removed argument 'ram' in favor of aroma option 'memory/ram'.
-# 2011-11-10
-# o ROBUSTNESS: doGCRMA() is now guaranteed to undo any changes of
-#   the CDF of the data set, e.g. if there is a user interrupt.
-# 2011-04-07
-# o Added argument 'drop'.
-# o Added argument 'uniquePlm'.
-# 2010-09-26
-# o Now doGCRMA() automagically makes sure that the default CDF is used
-#   in the GcRmaBackgroundCorrection step, while use a custom CDF
-#   everywhere else if set.
-# o Added argument 'type' to doGCRMA() which is passed to
-#   QuantileNormalization().
-# 2010-08-14
-# o Created from doRMA.R.
-############################################################################

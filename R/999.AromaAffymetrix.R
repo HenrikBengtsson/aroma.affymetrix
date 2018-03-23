@@ -136,30 +136,3 @@ setMethodS3("getDefaultSettings", "AromaAffymetrix", function(this, ...) {
 
   defaults;
 }, protected=TRUE)
-
-
-
-############################################################################
-# HISTORY:
-# 2013-08-03
-# o Now affxparser is moved behind aroma.affymetrix on the search path.
-# 2011-06-07
-# o Now the search path is adjusted such that 'ggplot2' comes after
-#   'aroma.affymetrix', because the former overrides the generic
-#   rescale() function of the latter with a non-generic function.
-# 2010-06-07
-# o Added setting 'rules/allowDChipAnnotationFiles'. Still to be asserted
-#   by the code.
-# 2009-05-16
-# o Updated fitSearchPath() to utilize new fitSearchPathInternal().
-# o Now AromaAffymetrix inherits from AromaPackage.
-# 2009-01-10
-# o Now the oligo package is forced to be after aroma.affymetrix.
-# 2008-08-27
-# o Now the affy, affyPLM, and EBImage packages are forced to be after all
-#   of aroma.affymetrix, aroma.light, and R.huge on the search() path.
-# 2007-12-13
-# o Added update() and patch() to the AromaAffymetrix Package class.
-# 2007-03-06
-# o Created.
-############################################################################

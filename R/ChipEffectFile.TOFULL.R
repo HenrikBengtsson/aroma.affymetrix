@@ -208,12 +208,3 @@ setMethodS3("getAsFullCelFile", "ChipEffectFile", function(this, name=getName(th
 
   res;
 }, protected=TRUE);
-
-
-############################################################################
-# HISTORY:
-# 2008-03-31
-# o Now getAsFullCelFile() writes to probeData/.
-# 2008-03-18
-# o Added getAsFullCelFile() and writeAsFullCelFile() for ChipEffectFile.
-############################################################################

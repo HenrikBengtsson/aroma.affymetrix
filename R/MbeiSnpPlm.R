@@ -41,12 +41,3 @@ setMethodS3("getAsteriskTags", "MbeiSnpPlm", function(this, collapse=NULL, ...) 
 
   tags;
 }, protected=TRUE)
-
-
-############################################################################
-# HISTORY:
-# 2007-12-06
-# o Added getAsteriskTag() for MbeiSnpPlm.
-# 2006-09-11
-# o Created from the RmaSnpPlm.
-############################################################################

@@ -230,17 +230,3 @@ setMethodS3("getOrderedFragmentPairs", "AromaUfcFile", function(this, units=NULL
 
   ufe;
 })
-
-
-############################################################################
-# HISTORY:
-# 2008-04-14
-# o Renamed readData() to readDataFrame() for AromaTabularBinaryFile.
-# 2008-01-20
-# o Added getOrderedFragmentPairs() and getOrderedFragmentPairMap().
-# 2007-12-19
-# o See private Google Document for details.
-# o Added importFromAffymetrixTabularFile() for recording how data was
-#   imported.
-# o Created from AromaUflFile.R.
-############################################################################

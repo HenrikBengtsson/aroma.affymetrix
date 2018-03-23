@@ -301,11 +301,3 @@ setMethodS3("setup", "GenericReporter", abstract=TRUE);
 # }
 #*/###########################################################################
 setMethodS3("process", "GenericReporter", abstract=TRUE);
-
-
-
-##############################################################################
-# HISTORY:
-# 2008-04-12
-# o Created from AffymetrixCelSetReporter.R.
-##############################################################################

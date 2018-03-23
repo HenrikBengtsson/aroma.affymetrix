@@ -239,35 +239,3 @@ setMethodS3("getFitUnitGroupFunction", "MbeiPlm", function(this, ...) {
 
   liWong;
 }, protected=TRUE)
-
-
-
-############################################################################
-# HISTORY:
-# 2012-03-23
-# o Now getFitUnitGroupFunction() for MbeiPlm helps 'R CMD check' to
-#   locate fit.li.wong() by explicitly requiring 'affy'.
-# 2012-01-14
-# o ROBUSTNESS: Now the fit functions of RmaPlm and MbeiPlm give an
-#   error whenever trying to use prior parameters, which are yet
-#   not supported.
-# 2006-12-18
-# o Now the fit function of the MBEI model treats single-probe unit groups
-#   specially; the affy::fit.li.wong() handled it already before, but
-#   generated a warning for each call.
-# o BUG FIX: The encoding/decoding of probe affinities assumed at least two
-#   probes per unit group, but this is not true for all chip types, e.g.
-#   the 500K SNP chips.
-# 2006-09-10
-# o Updated getFitFunction() to return required fields.
-# 2006-08-24
-# o Added Rdoc comments.
-# 2006-08-23
-# o Added getProbeAffinities() and the corrsponding cached fields.
-# o Now fit() does not re-read data just updated.
-# 2006-08-19
-# o After all the bug fixes in updateCel() I think this function finally
-#   works correctly.
-# 2006-08-17
-# o Created.
-############################################################################

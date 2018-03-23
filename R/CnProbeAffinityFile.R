@@ -109,12 +109,3 @@ setMethodS3("getCellIndices", "CnProbeAffinityFile", function(this, ..., unlist=
 setMethodS3("setCombineAlleles", "CnProbeAffinityFile", function(this, status, ...) {
   this$combineAlleles <- status;
 }, protected=TRUE)
-
-
-############################################################################
-# HISTORY:
-# 2006-09-12
-# o Updated.
-# 2006-09-11
-# o Created.
-############################################################################

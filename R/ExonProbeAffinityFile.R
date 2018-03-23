@@ -93,11 +93,3 @@ setMethodS3("getCellIndices", "ExonProbeAffinityFile", function(this, ..., unlis
 setMethodS3("setMergeGroups", "ExonProbeAffinityFile", function(this, status, ...) {
   this$mergeGroups <- status;
 }, protected=TRUE)
-
-
-############################################################################
-# HISTORY:
-# 2007-02-07
-# o Created (based on SnpProbeAffinityFile.R following chat with HB on
-#   2007-02-07).
-############################################################################

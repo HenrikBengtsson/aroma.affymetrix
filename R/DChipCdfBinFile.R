@@ -170,11 +170,3 @@ setMethodS3("readDataFrame", "DChipCdfBinFile", function(this, units=NULL, field
 
   data;
 })
-
-##############################################################################
-# HISTORY:
-# 2009-02-13
-# o Added argument fullname=TRUE to getChipType() of DChipCdfBinFile.
-# 2008-08-20
-# o Created.
-##############################################################################

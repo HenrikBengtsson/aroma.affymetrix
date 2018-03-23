@@ -191,23 +191,3 @@ setMethodS3("getFitUnitGroupFunction", "AffinePlm", function(this, ...) {
 
   affineFit;
 }, protected=TRUE)
-
-
-
-############################################################################
-# HISTORY:
-# 2007-12-06
-# o The tag for the affine PLM is now 'AFF' (before it was APLM).
-# 2007-10-06
-# o Now the asterisk tag ('*') is no longer assigned in the constructor,
-#   but in getTags().
-# 2007-09-16
-# o Renamed the variables such that index I is for samples and K is for
-#   probes, as in the paper.
-# 2007-03-29
-# o Changed tag 'linear' to 'lin'.
-# 2006-09-11
-# o Added argument 'background' to fit background or not.
-# 2006-08-28
-# o Created from the Li & Wong model.
-############################################################################

@@ -312,14 +312,3 @@ setMethodS3("readUnits", "ExonChipEffectFile", function(this, ..., force=FALSE, 
 ##
 ##   value;
 ## })
-
-
-############################################################################
-# HISTORY:
-# 2007-08-17 /HB
-# o Removed findUnitsTodo() from ExonChipEffectFile, because it gave the
-#   same result as in the one in superclass ChipEffectFile.
-# 2007-02-08 /KS
-# o Created (based on SnpChipEffectFile.R following chat with HB on
-#   2007-02-07).
-############################################################################

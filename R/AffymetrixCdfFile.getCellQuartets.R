@@ -292,20 +292,3 @@ setMethodS3("getCellQuartets", "AffymetrixCdfFile", function(this, units=NULL, m
 
   cells;
 }, protected=TRUE)
-
-
-############################################################################
-# HISTORY:
-# 2008-09-29
-# o ROBUSTNESS: Now readUnitsByQuartets() for AffymetrixCdfFile translates
-#   lower-case pbase and tbase letter to upper case.  It also asserts that
-#   order of the 'tbase' is consistent with the expectations.
-#   TODO: This method should be renamed to indicate that it is intended
-#   for the resequencing arrays.
-# 2008-08-29
-# o Added argument 'mergeGroups' to getCellQuartets().
-# 2008-08-18
-# BUG FIX: Used non-existing 'cdf' instead of 'this'.
-# 2008-08-10
-# o Created.
-############################################################################

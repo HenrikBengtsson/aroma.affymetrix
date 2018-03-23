@@ -196,13 +196,3 @@ setMethodS3("process", "SpatialRowColumnNormalization", function(this, ..., forc
 
   invisible(outputDataSet);
 })
-
-
-############################################################################
-# HISTORY:
-# 2008-04-02
-# o Note: Normalizing log-ratios and then transforming back to chip effects
-#   might not do.  See my PPT notes from today.
-# 2008-03-19
-# o Created.
-############################################################################

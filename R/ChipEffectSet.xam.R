@@ -255,13 +255,3 @@ setMethodS3("getXAM", "ChipEffectSet", function(this, other, chromosome, units=N
 
   xam;
 }, protected=TRUE) # getXAM()
-
-
-############################################################################
-# HISTORY:
-# 2009-11-22
-# o Now get[X]AM() accepts other=NULL.
-# 2007-03-04
-# o Added getAM().
-# o Created from ChipEffectFile.xam.R.
-############################################################################

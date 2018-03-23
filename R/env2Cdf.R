@@ -104,24 +104,3 @@ env2Cdf <- function(env, celfile, overwrite=FALSE, verbose=TRUE, ...) {
 
 # For backward compatibility
 Env2Cdf <- env2Cdf
-
-
-############################################################################
-# HISTORY:
-# 2011-08-30 [HB]
-# o Now env2Cdf() returns the pathname to the written CDF.
-# 2010-09-29 [HB]
-# o ROBUSTNESS: Now the writing of the CDF file is atomic by first writing
-#   to a temporary file which is then renamed.
-# 2010-05-20 [HB]
-# o Renamed Env2Cdf() to env2Cdf().  Keeping old one for backward
-#   compatibility.
-# o Some basic code clean up.
-# 2009-01-13 [MR]
-# o Added. "This script has been written to generate a .cdf-file from an
-#   "XXXXcdf" package, such as the Bioconductor 'metadata' packages.
-#   The original was written by Samuel Wuest, modified by Mark Robinson
-#   (around 12 Jan 2009) to be generic."
-# 2008-??-?? [SW]
-# o Created by Samuel Wuest.
-############################################################################

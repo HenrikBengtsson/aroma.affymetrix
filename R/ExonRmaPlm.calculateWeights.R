@@ -148,13 +148,3 @@ setMethodS3("calculateWeights", "ExonRmaPlm", function(this, units=NULL, ram=NUL
 
   invisible(ws);
 }, protected=TRUE)
-
-
-##########################################################################
-# HISTORY:
-# 2011-03-01 [HB]
-# o Harmonized the verbose output.
-# 2007-02-15
-# o Based on ProbeLevelModel.calculateResiduals
-#   and QualityAssessmentModel.getWeights
-##########################################################################

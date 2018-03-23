@@ -99,10 +99,3 @@ setMethodS3("getPath", "AffymetrixCelSetReporter", function(this, ...) {
 
   path;
 }, protected=TRUE)
-
-
-##############################################################################
-# HISTORY:
-# 2007-03-19
-# o Created from ArrayExplorer.R.
-##############################################################################

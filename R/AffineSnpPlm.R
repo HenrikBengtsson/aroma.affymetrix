@@ -42,12 +42,3 @@ setMethodS3("getAsteriskTags", "AffineSnpPlm", function(this, collapse=NULL, ...
 
   tags;
 }, protected=TRUE)
-
-
-############################################################################
-# HISTORY:
-# 2007-12-06
-# o Added getAsteriskTag() for AffineSnpPlm.
-# 2006-09-11
-# o Created from the MbeiSnpPlm.
-############################################################################

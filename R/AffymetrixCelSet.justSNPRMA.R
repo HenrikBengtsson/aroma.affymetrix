@@ -201,26 +201,3 @@ setMethodS3("justSNPRMA", "AffymetrixCelSet", function(this, ..., normalizeToHap
   # Return result
   res;
 })
-
-
-############################################################################
-# HISTORY:
-# 2011-11-20
-# o BUG FIX: Internally, justSNPRMA() would pass argument 'verbose=log'
-#   instead of 'verbose=verbose', which would throw an error unless
-#   'log' was assigned to be a logical value or a Verbose object.
-# 2010-05-09
-# o Made justSNPRMA(..., normalizeSNPsOnly="auto") for AffymetrixCelSet
-#   the default.
-# 2010-05-06
-# o Now justSNPRMA(..., returnESet=TRUE) for AffymetrixCelSet returns an
-#   AlleleSet due to updates of classes in oligo v1.12.0.
-# 2009-05-10
-# o BUG FIX: In the most recent version of oligo, its justSNPRMA() requires
-#   that oligo is loaded.  Updated justSNPRMA() for character
-#   to assert this.
-# 2009-01-10
-# o Added argument 'normalizeSNPsOnly'.
-# 2008-12-05
-# o Created.
-############################################################################

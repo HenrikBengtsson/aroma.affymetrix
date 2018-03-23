@@ -90,28 +90,3 @@ setMethodS3("importFromAffymetrixNetAffxCsvFile", "AromaUflFile", function(this,
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # END: AFFX
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-
-############################################################################
-# HISTORY:
-# 2008-09-15
-# o Added argument 'enzymesToUpdate' to importFromAffymetrixNetAffxCsvFile()
-#   in order to make it possible to specify both which enzymes to read 
-#   and to update.
-# 2008-04-24
-# o Updated importFromAffymetrixNetAffxCsvFile() to read the unit names,
-#   then identify the ones that are in the CDF, and the only read the data
-#   for the corresponding rows.  This was done so that one can see from the
-#   verbose output that by excluding the extra units the remaining ones are
-#   sound.
-# 2008-04-14
-# o Renamed readData() to readDataFrame() for AromaTabularBinaryFile.
-# 2007-12-08
-# o BUG FIX: importFromAffymetrixNetAffxCsvFile() of AromaUflFile failed
-#   to import one of two enzymes.
-# 2007-09-14
-# o Added support for multiple fragment lengths, in case multiple enzymes
-#   were used for the same assay.
-# 2007-09-11
-# o Created.
-############################################################################

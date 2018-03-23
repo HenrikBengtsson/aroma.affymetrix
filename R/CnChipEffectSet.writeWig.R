@@ -180,20 +180,3 @@ setMethodS3("writeWig", "CnChipEffectSet", function(this, reference=NULL, arrays
 
   invisible(pathnames);
 }) # writeWig()
-
-
-
-##############################################################################
-# HISTORY:
-# 2007-06-11
-# o writeWig() of CnChipEffectSet used non-existing 'ces' (instead of 'this').
-# 2006-11-27
-# o BUG FIX: writeWig() would write NAs, but the UCSC Genome Browser does not
-#   accept missing values.
-# 2006-11-24
-# o Added track arguments 'group' and 'priority' too. Now the arrays are
-#   ordered in the UCSC Genome Browser as they are ordered in the data set.
-# 2006-11-23
-# o Added writeWig().
-# o Created.
-##############################################################################

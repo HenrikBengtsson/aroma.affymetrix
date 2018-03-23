@@ -44,10 +44,3 @@ setMethodS3("importFromBpMap", "AromaCellMatchScoreFile", function(this, srcPath
 
   invisible(this);
 })
-
-
-############################################################################
-# HISTORY:
-# 2008-10-xx [MR]
-# o Created.
-############################################################################

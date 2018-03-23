@@ -52,13 +52,3 @@ setMethodS3("extractTheta", "SnpQSet", function(this, ..., transform=function(y,
 
   theta;
 })
-
-
-############################################################################
-# HISTORY:
-# 2013-10-07
-# o ROBUSTNESS: Now extractTheta() for SnpQSet gives an informative error
-#   message that it only applies with older version of 'oligo'.
-# 2008-12-05
-# o Created.
-############################################################################

@@ -184,13 +184,3 @@ setMethodS3("readUnits", "SingleArrayUnitModel", function(this, array, units=NUL
 
   res;
 }, private=TRUE)
-
-
-
-
-
-############################################################################
-# HISTORY:
-# 2008-09-03
-# o Created from MultiArrayUnitModel.R.
-############################################################################

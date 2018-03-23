@@ -138,13 +138,3 @@ setMethodS3("calculateWeights", "ProbeLevelModel", function(this, units=NULL, ra
 
   invisible(ws);
 }, protected=TRUE)
-
-
-##########################################################################
-# HISTORY:
-# 2011-03-01 [HB]
-# o Harmonized the verbose output.
-# 2007-02-15
-# o Based on ProbeLevelModel.calculateResiduals
-#   and QualityAssessmentModel.getWeights
-##########################################################################

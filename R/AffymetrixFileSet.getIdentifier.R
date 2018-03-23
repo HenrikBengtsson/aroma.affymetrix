@@ -20,19 +20,3 @@ setMethodS3("getIdentifier", "AffymetrixFileSet", function(this, ...) {
 
   res;
 }, private=TRUE)
-
-
-############################################################################
-# HISTORY:
-# 2008-05-10
-# o Removed getDescription().
-# 2006-11-20
-# o Made getDescription() protected.
-# 2006-10-30
-# o Added getDescription() which search and parse all DESCRIPTION files in
-#   the data-set directory tree.
-# o Added getIdentifier() which returns a 32-character long hexadecimal
-#   hashcode for the "Identifier" string returned by getDescription().
-#   If no such string exists, NULL is returned.  This will allow users
-#   to specify their own identifiers.
-############################################################################

@@ -178,13 +178,3 @@ setMethodS3("getAlleleCellPairs", "AffymetrixCdfFile", function(this, units=NULL
 
   cells;
 }, protected=TRUE) # getAlleleCellPairs()
-
-
-
-############################################################################
-# HISTORY:
-# 2008-09-02
-# o Added getAlleleCellPairs() for AffymetrixCdfFile.
-# o Created.
-############################################################################
-

@@ -144,12 +144,3 @@ setMethodS3("getSubsetOfUnits", "AffymetrixCdfFile", function(this, units=NULL, 
 
   units;
 }, protected=TRUE)  # getSubsetOfUnits()
-
-
-############################################################################
-# HISTORY:
-# 2008-07-26
-# o No need to cache results; fast enough.
-# o Added support to filter by unit types.
-# o Created from getSubsetOfCellIndices().
-############################################################################

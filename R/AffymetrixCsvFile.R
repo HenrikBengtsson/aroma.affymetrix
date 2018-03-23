@@ -24,13 +24,3 @@ setMethodS3("getExtensionPattern", "AffymetrixCsvFile", function(static, ...) {
 setMethodS3("findByChipType", "AffymetrixCsvFile", function(static, chipType, pattern=sprintf("^%s.*%s", chipType, getExtensionPattern(static)), ...) {
   NextMethod("findByChipType", chipType=chipType, pattern=pattern);
 }, static=TRUE, protected=TRUE)
-
-
-
-############################################################################
-# HISTORY:
-# 2011-11-19
-# o Added getDefaultExtension() to AffymetrixCsvFile.
-# 2007-09-10
-# o Created from AffymetrixCsvGenomeInformation.R.
-############################################################################

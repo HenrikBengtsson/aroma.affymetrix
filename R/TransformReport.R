@@ -516,23 +516,3 @@ setMethodS3("writeImageCombined", "TransformReport", function(this, path=NULL, w
 
   verbose && exit(verbose);
 })
-
-
-
-
-############################################################################
-# HISTORY:
-# 2011-11-07
-# o Replaced dev.off() with devDone().
-# 2009-07-08
-# o Added getUnitTypesFile() for TransformReport.
-# 2008-05-18
-# o Made class less platform specific by utilizing UnitNamesFile interface.
-# 2007-03-24
-# o BUG FIX: getPath() created the root path before trying to expand
-#   Windows shortcuts.
-# 2007-02-06
-# o Updated the path to <rootPath>/<dataSetName>/<tags>/<chipType>/<set>/.
-# 2007-02-04
-# o Created.
-############################################################################

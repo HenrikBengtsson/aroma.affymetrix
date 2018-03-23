@@ -402,10 +402,3 @@ setMethodS3("process", "UnitTypeScaleNormalization", function(this, ..., skip=FA
 
   outputDataSet;
 })
-
-
-############################################################################
-# HISTORY:
-# 2008-07-26
-# o Created from ScaleNormalization3.R.
-############################################################################

@@ -68,10 +68,3 @@ setMethodS3("importFromAffymetrixNetAffxCsvFile", "AromaUnitGcContentFile", func
 
   invisible(units);
 })
-
-
-############################################################################
-# HISTORY:
-# 2009-03-22
-# o Created from AromaUflFile.R.
-############################################################################

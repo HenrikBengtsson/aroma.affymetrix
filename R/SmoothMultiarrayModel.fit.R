@@ -443,24 +443,3 @@ setMethodS3("fitOneChromosome", "SmoothMultiarrayModel", function(this, chromoso
 
   invisible(outTuple);
 }, protected=TRUE)
-
-
-############################################################################
-# HISTORY:
-# 2009-01-26
-# o Updated getPositionChipTypeUnit() of SmoothMultiarrayModel to utilize
-#   the UnitNamesFile Interface instead of assuming an AffymetrixCdfFile.
-#   This requires aroma.core v1.0.1.
-# 2007-09-26
-# o Renamed to SmoothMultiarrayModel (from SrmaModel).
-# o Added support for prior weights as the inverse of the log-ratio
-#   variances.
-# 2007-09-25
-# o Renamed to SrmaModel (from CsrmaModel).
-# o For now fit() calls fitOneChromosome(), but all this should go in a
-#   different model class.
-# o Added fitOneChromosome().
-# o Added createOuputTuple().
-# 2007-09-20
-# o Created from GladModel.fitOne.R.
-############################################################################

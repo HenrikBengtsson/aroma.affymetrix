@@ -396,21 +396,3 @@ setMethodS3("getFragmentStops", "SnpInformation", function(this, enzymes=seq_len
   dim(fl) <- dim;
   fl;
 })
-
-
-
-############################################################################
-# HISTORY:
-# 2008-04-14
-# o Renamed readData() to readDataFrame() for SnpInformation.
-# 2007-11-19
-# o Now getFragmentLength/Starts/Stops() of SnpInformation return a matrix
-#   where each column correspond to an enzyme. This is was added because
-#   the new SNP chips have two enzymes. Added nbrOfEnzymes().
-# 2007-01-22
-# o BUG FIX: getData() did not support the dChip SNP information file for
-#   the Mapping10K_Xba142 chip type, because yet again it used a slightly
-#   different format compared with the 100K and the 500K files.
-# 2006-09-17
-# o Created from GenomeInformation.R.
-############################################################################

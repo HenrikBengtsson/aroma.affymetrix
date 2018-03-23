@@ -301,15 +301,3 @@ setMethodS3("extractTheta", "DChipDcpFile", function(this, units=NULL, ..., drop
 # setMethodS3("nbrOfUnits", "DChipDcpFile", function(this, ...) {
 #   length(getUnitMap(this, ...));
 # })
-
-
-
-##############################################################################
-# HISTORY:
-# 2008-08-20
-# o Updated DChipDcpFile to utilize the new dChipIO package.
-# 2008-05-09
-# o Now DChipDcpFile inherits from GenericDataFile.
-# 2008-01-30
-# o Created.
-##############################################################################

@@ -312,13 +312,3 @@ setMethodS3("process", "ChipEffectGroupMerge", function(this, ..., force=FALSE, 
 
   outputSet;
 })
-
-############################################################################
-# HISTORY:
-# 2007-02-21
-# o BUG FIX: When identifying units of certain sizes, previously used units
-#   where not excluded resulting in groups =K, >=K-1, ..., >=1 rather than
-#   =K, =K-1, ..., =1.
-# 2007-02-20
-# o Created.
-############################################################################

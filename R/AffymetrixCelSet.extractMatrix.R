@@ -120,26 +120,3 @@ setMethodS3("extractMatrix", "AffymetrixCelSet", function(this, cells=NULL, ...,
 
   df;
 }) # extractMatrix()
-
-
-############################################################################
-# HISTORY:
-# 2008-12-03
-# o Remove one internal gc().
-# o SPEED UP: The reordering the cell indices in extractMatrix() for
-#   optimizing the reading speed was slow.  It is much faster to use
-#   sort(..., method="quick", return.index=TRUE) than order(...).
-# 2008-07-20
-# o Updated the following methods to preallocate matrixes with the correct
-#   data type to avoid coercing later: extractMatrix().
-# 2008-07-09
-# o Added argument drop=FALSE to extractMatrix().
-# 2008-07-07 [MR; Mark Robinson, WEHI]
-# o BUG FIX: extractMatrix() of AffymetrixCelSet returned cells in a
-#   different than requested.
-# 2008-03-11
-# o BUG FIX: extractMatrix(..., cells=NULL), the default, would throw
-#   'Error in order(cells) : argument 1 is not a vector'.
-# 2007-03-29
-# o Created from ChipEffectSet.extractMatrix.R.
-############################################################################

@@ -150,15 +150,3 @@ setMethodS3("readDataFrame", "AffymetrixCdfFile", function(this, units=NULL, fie
 
   res;
 })
-
-
-############################################################################
-# HISTORY:
-# 2008-08-12
-# o Adding more verbose output.
-# 2008-04-13
-# o Now readDataFrame() of AffymetrixCdfFile adds "virtual" fields, e.g.
-#   the field 'isPm' is inferred and generated from 'pbase' and 'tbase'.
-# 2008-04-03
-# o Created.
-############################################################################

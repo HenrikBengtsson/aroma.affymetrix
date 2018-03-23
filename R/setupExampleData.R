@@ -160,14 +160,3 @@ setMethodS3("setupExampleData", "AromaAffymetrix", function(pkg, dataset=NULL, c
 
   invisible(TRUE)
 }, protected=TRUE) # setupExampleData()
-
-
-############################################################################
-# HISTORY:
-# 2015-01-23
-# o Added support for dataset='FusionSDK_Test3' in addition to the already
-#   supported dataset='FusionSDK_HG-Focus'.
-# o Added arguments 'dataset' and 'chipType'.
-# 2014-06-24
-# o Created from aroma.seq ditto.
-############################################################################

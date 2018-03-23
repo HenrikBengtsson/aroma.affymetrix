@@ -314,23 +314,3 @@ setMethodS3("getCrlmmSplineParameters", "CrlmmModel", function(this, flavor=c("o
 
   res;
 }, private=TRUE)
-
-
-############################################################################
-# HISTORY:
-# 2009-01-12
-# o Added getCrlmmSplineParameters().
-# o Warnings about missing (optional) oligoParams is no longer reported.
-# 2009-01-10
-# o Now data in oligoParams is used, if installed.
-# o Updated to work with latest aroma.core and aroma.affymetrix.
-# 2009-01-07
-# o Overriding getAsteriskTags() and getRootPath().
-# 2008-12-08
-# o Now setup is much more like fit() for ProbeLevelModel.
-# 2008-12-07
-# o Starting to make use of AromaCrlmmBinarySet.
-# o Created CrlmmModel from justCRLMMv2().
-# 2008-12-05
-# o Created from justCRLMMv2() of oligo v1.7.3.
-############################################################################

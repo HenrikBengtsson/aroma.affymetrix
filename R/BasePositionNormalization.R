@@ -187,37 +187,3 @@ setMethodS3("getSignalTransform", "BasePositionNormalization", function(this, ..
 
   transform;
 }, protected=TRUE);
-
-
-
-############################################################################
-# HISTORY:
-# 2008-11-29
-# o Extracted the LinearModelProbeSequenceNormalization class from this
-#   class.
-# o Now fitOne() takes an argument 'ram' which is passed from process().
-# o The predictOne() method is looping over probe positions, which is
-#   fairly memory efficient.  For this reason, we leave it as it.  We
-#   can now fit a GenomeWideSNP_6 array with approx 1GB of RAM (instead
-#   of 5-6GB before)!
-# o Now getNormalEquations() is done in chunks. For GenomeWideSNP_6 we can
-#   now generate normal equations with approx 500MB of RAM.
-# o Added first step toward supporting fitting the linear model in
-#   bounded memory.  This is done by setting up the normal equations and
-#   using solve(xtx, xty) to estimate the parameters.  TEST: modelMethod
-#   "lm.fit" and "solve" created all.equal() == TRUE output.
-#   NEXT: Build up the NE incrementally.  Already without this, the memory
-#   usage went down dramatically.  For a Mapping50K_Hind240 fit, the peak
-#   memory usage went down from 1000MB to 380MB.  However, it is still not
-#   possible to fit a GenomeWideSNP_6 on Windows Vista 32-bit.
-# o Dropped the bootstrapping framework.
-# 2008-07-29
-# o Added support for specifying the degrees of freedom ('df') of the model.
-# 2008-07-28
-# o Updated to work with newer ProbeLevelTransform3.
-# 2008-07-21
-# o BENCHMARKING: For a GenomeWideSNP_6,Full, the BPN peaks at 5.9GB RAM.
-#   This happens while fitting the model.  Prediction peaks at 3.2GB RAM.
-# o Now getDesignMatrix() caches results to file.
-# o Created from BaseCountNormalization.R.
-############################################################################

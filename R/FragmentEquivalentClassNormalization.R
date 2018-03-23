@@ -958,18 +958,3 @@ setMethodS3("process", "FragmentEquivalentClassNormalization", function(this, ..
 
   outputSet;
 })
-
-############################################################################
-# HISTORY:
-# 2008-09-19
-# o BUG FIX: process() of FragmentEquivalentClassNormalization did not
-#   return a data set for which the sample attributes has been updated
-#   according to optional sample annotation files (SAFs).
-# o MEMORY OPTIMIZATION: process() no longer records each normalized array.
-# o CLEANUP: process() no longer sets (unused) .outputSet field.
-# 2008-07-20
-# o Updated the following methods to preallocate matrixes with the correct
-#   data type to avoid coercing later: normalizeOneArrayVector().
-# 2008-01-20
-# o Created from FragmentLengthNormalization.R.
-############################################################################

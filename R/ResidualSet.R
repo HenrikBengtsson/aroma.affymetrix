@@ -252,23 +252,3 @@ setMethodS3("findUnitsTodo", "ResidualSet", function(this, ...) {
   df <- this[[idx]];
   findUnitsTodo(df, ...);
 })
-
-
-############################################################################
-# HISTORY:
-# 2012-11-29
-# o ROBUSTNESS: updateUnits() for ResidualSet did not update the files
-#   in lexicographic order.
-# 2010-05-08
-# o Now all findUnitsTodo() for data sets checks the data file that comes
-#   last in a lexicographic ordering.  This is now consistent with how
-#   the summarization methods updates the files.  Before it was use to be
-#   the one that is last in the data set.
-# o Now updateUnits() updates the data files in lexicographic order.
-# 2008-05-08
-# o Made fromFiles() protected.
-# 2007-12-08
-# o Added argument 'cdf' to fromFiles() of ResidualSet.
-# 2007-02-12
-# o Created from ChipEffectSet.R.
-############################################################################

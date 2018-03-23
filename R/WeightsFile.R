@@ -473,32 +473,3 @@ setMethodS3("getImage", "WeightsFile", function(this, zrange=c(-1,1)*15, transfo
 setMethodS3("writeImage", "WeightsFile", function(this, ..., tags=c("*", "log2", "rainbow")) {
   NextMethod("writeImage", tags=tags);
 })
-
-
-############################################################################
-# HISTORY:
-# 2012-11-28
-# o MEMORY: readUnits() for WeightsFile no longer cache results by default.
-# 2009-05-19
-# o Now testing for file permissions for creat-/writ-/updating files/dirs.
-# 2008-07-20
-# o Updated the following methods to preallocate matrixes with the correct
-#   data type to avoid coercing later: getUnitGroupCellMap().
-# 2008-05-08
-# o BUG FIX: getUnitGroupCellMap() gave an error if argument 'units' had
-#   zero length (non-NULL).
-# 2008-04-21
-# o getCellMap() is now defunct.
-# 2007-08-09
-# o WeightFile$fromDataFile() now creates CEL files with upper-case
-#   filename extension "*.CEL", not "*.cel".  The reason for this is that
-#   some software don't recognize lower case filename extensions :(
-# 2007-04-12
-# o BUG FIX: fromDataFile() of ResidualFile returned an AffymetrixCelFile
-#   but not a ResidualFile.  This caused getResidualSet() of ProbeLevelModel
-#   to return a ResidualSet containing AffymetrixCelFile:s.  The same
-#   bug was found for the WeightFile class.  This problem was reported on
-#   the mailing list on 2007-04-06.
-# 2007-02-15
-# o Created from ResidualFile.R.
-############################################################################

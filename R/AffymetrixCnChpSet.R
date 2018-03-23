@@ -362,15 +362,3 @@ setMethodS3("setCdf", "AffymetrixCnChpSet", function(this, cdf, verbose=FALSE, .
 
   invisible(this);
 })
-
-
-############################################################################
-# HISTORY:
-# 2011-02-24
-# o Expanded the searched root paths to be chpData(|,.*)/
-# 2009-08-12
-# o Now findByName() of AffymetrixCnChpSet utilizes ditto of
-#   AffymetrixCelSet, because its code was identical to the latter.
-# 2008-08-22
-# o Created.
-############################################################################

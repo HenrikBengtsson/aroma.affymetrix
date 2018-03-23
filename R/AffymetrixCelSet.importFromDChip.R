@@ -178,13 +178,3 @@ setMethodS3("importFromDChip", "AffymetrixCelSet", function(static, path, name=N
   # Return the imported data
   res;
 }, static=TRUE, private=TRUE)
-
-
-############################################################################
-# HISTORY:
-# 2007-03-28
-# o Further memory optimization.
-# 2007-02-03
-# o Verified for Mapping250K_Nsp arrays.
-# o Created.
-############################################################################

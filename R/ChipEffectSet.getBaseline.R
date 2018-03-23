@@ -124,27 +124,3 @@ setMethodS3("getBaseline", "CnChipEffectSet", function(this, ...) {
   res$combineAlleles <- getCombineAlleles(this);
   res;
 }, protected=TRUE)
-
-
-
-
-############################################################################
-# HISTORY:
-# 2011-02-28
-# o Now getBaseline() first tries to locate an existing result file
-#   in multiple root paths.  If not found, it creates a new one.
-# 2011-02-24
-# o GENERALIZATION: Now getBaseline() for ChipEffectSet drops all tags
-#   from the output root path (if 'devel/dropRootPathTags' setting is TRUE).
-# 2007-08-09
-# o getBaseLine() of CnChipEffectSet now creates CEL files with upper-case
-#   filename extension "*.CEL", not "*.cel".  The reason for this is that
-#   some software don't recognize lower case filename extensions :(
-# 2007-03-22
-# o TO DO: Estimate standard errors just like getAverage() does.
-# o Added getBaseline().
-# o First working version of calculateBaseline(). Method now creates a CEL
-#   files to store the estimates.
-# 2007-03-16
-# o Created.  See ploidy4.ps paper.
-############################################################################

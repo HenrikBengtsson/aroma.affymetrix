@@ -80,10 +80,3 @@ setMethodS3("migrateTool", "CopyNumberSegmentationModel", function(static, what=
     } # for (cc ...)
   } # if (what == "addMissingAsteriskTag")
 }, static=TRUE) # migrateTool()
-
-
-##############################################################################
-# HISTORY:
-# 2007-09-05
-# o Added static migrateTool() for CopyNumberSegmentationModel.
-##############################################################################

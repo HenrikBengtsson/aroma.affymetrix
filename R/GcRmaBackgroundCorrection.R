@@ -531,25 +531,3 @@ setMethodS3("process", "GcRmaBackgroundCorrection", function(this, ..., force=FA
 
   outputDataSet
 })
-
-
-
-############################################################################
-# HISTORY:
-# 2012-11-20
-# o Now process() calculates affinities.
-# o Added calculateAffinities() to GcRmaBackgroundCorrection.
-# 2010-10-01
-# o Now GcRmaBackgroundCorrection tries to calculate probe affinites based
-#   on ACS annotation files and then as a backup/backward compatibility
-#   it uses Affymetrix probe-tab files.
-# 2010-09-26
-# o Added explicit descriptions to the arguments list of the Rdocs.
-# o ROBUSTNESS: Added more validation of the arguments passed to
-#   the GcRmaBackgroundCorrection constructor.
-# 2007-08-24
-# o BUG FIX: Forgot to pass argument '.deprecated=FALSE' to bgAdjustGcrma()
-#   because the latter is deprecated at the user-API level.
-# 2007-03-21
-# o Created.
-############################################################################

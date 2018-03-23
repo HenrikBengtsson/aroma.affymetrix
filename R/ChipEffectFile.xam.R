@@ -256,24 +256,3 @@ setMethodS3("getXAM", "ChipEffectFile", function(this, other, chromosome, units=
 
   xam;
 }, protected=TRUE) # getXAM()
-
-
-############################################################################
-# HISTORY:
-# 2009-11-22
-# o Now get[X]AM() accepts other=NULL.
-# 2007-03-15
-# o Replaced "SNPs" with "units" in error messages.
-# 2007-01-16
-# o BUG FIX: getAM() and getXAM() required that argument 'other' was an
-#   CnChipEffectFile; ChipEffectFile is enough.
-# 2006-12-02
-# o BUG FIX: getAM() did not handle units=NULL.
-# 2006-11-28
-# o Now getAM() is making use of the new getCellMap() and getDataFlat()
-#   functions to speed up the reading.
-# 2006-10-31
-# o Added Rdoc comments.
-# 2006-09-26
-# o Created.
-############################################################################

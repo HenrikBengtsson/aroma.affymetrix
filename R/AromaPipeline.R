@@ -36,11 +36,3 @@ setMethodS3("process", "AromaPipeline", function(this, ..., verbose=FALSE) {
 
   ds;
 })
-
-
-##############################################################################
-# HISTORY:
-# 2009-12-21
-# o Added class AromaPipeline.
-# o Created.
-##############################################################################

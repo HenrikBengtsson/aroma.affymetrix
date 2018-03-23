@@ -67,9 +67,3 @@ setMethodS3("mapToUnitNamesFile", "DChipCdfBinFile", function(this, unf=NULL, ..
 
   units;
 }, protected=TRUE)
-
-############################################################################
-# HISTORY:
-# 2009-02-13
-# o Created.
-############################################################################

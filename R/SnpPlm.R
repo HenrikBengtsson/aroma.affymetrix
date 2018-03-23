@@ -105,17 +105,3 @@ setMethodS3("setMergeStrands", "SnpPlm", function(this, status, ...) {
 
   invisible(oldStatus);
 })
-
-
-############################################################################
-# HISTORY:
-# 2009-02-03
-# o BUG FIX: setMergeStrands() of SnpPlm did not update the setting of the
-#   SnpPlm itself, only the underlying parameter files.
-# o Added getMergeStrands() to SnpPlm.
-# 2006-09-11
-# o The intention is to use SnpPlm as an interface class (that is a class
-#   that must not have any fields!) but any class "implementing" this class
-#   (by adding it to its list of classes), will have these methods too.
-# o Created from the RmaSnpPlm.
-############################################################################

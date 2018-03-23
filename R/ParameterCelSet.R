@@ -267,35 +267,3 @@ setMethodS3("extractDataFrame", "ParameterCelSet", function(this, addNames=FALSE
 
   data;
 }) # extractDataFrame()
-
-
-
-############################################################################
-# HISTORY:
-# 2012-11-20
-# o Added getParametersAsString() to ParameterCelSet.  Used to be in
-#   direct subclasses.
-# o Added getParameters() to ParameterCelSet, which calls ditto of
-#   the first file.  Used to be in direct subclasses.
-# 2008-07-20
-# o Updated the following methods to preallocate matrixes with the correct
-#   data type to avoid coercing later: extractMatrix().
-# 2008-07-16
-# o Added argument drop=FALSE to extractDataFrame().
-# 2008-07-09
-# o Added argument drop=FALSE to extractMatrix().
-# 2008-02-28
-# o Now argument 'units' also can be a UnitGroupCellMap.
-# 2008-02-22
-# o Created for the main purpose of putting extractMatrix() here, which
-#   is currently common for ChipEffectSet and FirmaSet.
-# o Moved extractDataFrame() from ChipEffectSet to ParameterCelSet.
-# 2008-02-12
-# o Added arguments 'addNames' and 'addUgcMap' to extractDataFrame().
-# 2008-02-05
-# o Created extractDataFrame() for ChipEffectSet.
-# 2007-05-26
-# o Updated the Rdocs for extractMatrix().
-# 2007-03-04
-# o Created extractMatrix().
-############################################################################

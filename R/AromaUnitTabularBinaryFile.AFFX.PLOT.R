@@ -63,14 +63,3 @@ setMethodS3("getImage", "AromaUnitTabularBinaryFile", function(this, transforms=
 
   img;
 })
-
-
-############################################################################
-# HISTORY:
-# 2011-01-30
-# o CLEAN UP: getImage() for AromaUnitTabularBinaryFile no longer explicitly
-#   require the EBImage but instead calls aroma.core's getImage(). 
-#   The latter method depends on EBimage for now.
-# 2008-04-14
-# o Created from AffymetrixCdfFile.PLOT.R.
-############################################################################

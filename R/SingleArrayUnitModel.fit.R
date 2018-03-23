@@ -234,12 +234,3 @@ setMethodS3("fit", "SingleArrayUnitModel", function(this, arrays=NULL, units="re
 
   invisible(units);
 })
-
-
-
-
-############################################################################
-# HISTORY:
-# 2008-09-03
-# o Created from ProbeLevelModel.fit.R.
-############################################################################

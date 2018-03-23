@@ -388,22 +388,3 @@ setMethodS3("fitPlasqUnit", "matrix", function(ly, ptype, maxIter=1000, acc=0.1,
     nbrOfIterations=rr
   );
 }, private=TRUE) # fitPlasqUnit()
-
-
-############################################################################
-# HISTORY:
-# 2008-07-20
-# o Updated the following methods to preallocate matrixes with the correct
-#   data type to avoid coercing later: fitPlasqUnit().
-# 2007-01-11
-# o Replaces argument 'mat' (on intensity scale) with 'ly' (on log scale).
-# 2007-01-01
-# o Verified that this implementation gives identical results to
-#   PLASQ500K::EMSNP().
-# 2006-12-31
-# o Created fitPlasqUnit() to fit a single CEL unit.  Got code to get the
-#   PLASQ probe types from a CDF too.  This is major requirement for
-#   implementing PLASQ in aroma.affymetrix. TO DO: Verify correctness.
-# 2006-12-29
-# o Created.
-############################################################################

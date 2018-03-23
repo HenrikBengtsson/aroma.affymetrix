@@ -33,10 +33,3 @@ setMethodS3("isUnitGroupCellMap", "data.frame", function(this, ...) {
 setMethodS3("isUnitGroupCellMap", "default", function(this, ...) {
   FALSE;
 })
-
-
-############################################################################
-# HISTORY:
-# 2008-03-11
-# o Created.
-############################################################################

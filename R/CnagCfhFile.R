@@ -436,30 +436,3 @@ setMethodS3("range", "CnagCfhFile", function(this, ..., na.rm=TRUE) {
   x <- readDataFrame(this, ...);
   range(x, na.rm=na.rm);
 }, protected=TRUE)
-
-
-
-############################################################################
-# HISTORY:
-# 2013-05-22
-# o CLEANUP: Now getIdentifier() for CnagCfhFile utilizes getChecksum()
-#   for the GenericDataFile class.
-# 2012-11-20
-# o CLEANUP: Deprecated "[" and "[[", because they should be used to
-#   subset files and not units.
-# 2011-02-24
-# o BACKWARD COMPATILITY: getIdentifier() for CnagCfhFile generates
-#   a checksum id based on the relative pathname.  For now, we simply
-#   drop any tags from the root path such that it is compatible with
-#   earlier version of aroma.*.
-# 2008-07-20
-# o Updated the following methods to preallocate matrixes with the correct
-#   data type to avoid coercing later: readUnits().
-# 2008-05-09
-# o Now CnagCfhFile inherits from AromaMicroarrayDataFile.
-# 2007-06-11
-# o BUG FIX: readUnits() of CnagCfhFile was broken because it used the
-#   non-existing variable 'nbrOfBytes'.
-# 2007-04-05
-# o Created.
-############################################################################

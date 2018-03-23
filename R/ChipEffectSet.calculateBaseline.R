@@ -301,30 +301,3 @@ setMethodS3("calculateBaseline", "ChipEffectSet", function(this, chromosomes=NUL
 
   csBaseline;
 }, protected=TRUE) # calculateBaseline()
-
-
-
-
-############################################################################
-# HISTORY:
-# 2008-04-17
-# o Now calling getUnitsOnChromosome() with argument 'chromosomes'.
-# 2007-06-11
-# o Removed never used 'muRs'.
-# 2007-03-30
-# o BUG FIX: Sometimes cell indices would become NAs.
-# 2007-03-24
-# o Now the average of non-genomic cells are also calculated if 'all=TRUE'.
-#   Thus, if all samples have baseline ploidy, calculateBaseline() and
-#   getAverage() should give the same results.
-# 2007-03-22
-# o TO DO: Estimate standard errors just like getAverage() does.
-# o Unless 'force=TRUE', only cells for which the average has not already
-#   been estimate are estimated.  This way calculateBaseline() is faster
-#   if called multiple times.
-# o Added getBaseline().
-# o First working version of calculateBaseline(). Method now creates a CEL
-#   files to store the estimates.
-# 2007-03-16
-# o Created.  See ploidy4.ps paper.
-############################################################################

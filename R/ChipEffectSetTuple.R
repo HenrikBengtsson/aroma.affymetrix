@@ -22,12 +22,3 @@ setMethodS3("as.ChipEffectSetTuple", "ChipEffectSetTuple", function(this, ...) {
 setMethodS3("as.ChipEffectSetTuple", "default", function(this, ...) {
   ChipEffectSetTuple(this, ...);
 })
-
-
-##############################################################################
-# HISTORY:
-# 2009-11-18
-# o Added as.ChipEffectSetTuple().
-# 2007-03-19
-# o Created.
-##############################################################################

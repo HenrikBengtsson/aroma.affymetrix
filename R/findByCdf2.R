@@ -68,12 +68,3 @@ setMethodS3("findByCdf2", "default", function(chipType, tags=NULL, nbrOfUnits=NU
 
   pathnames;
 }) # findByCdf2()
-
-
-############################################################################
-# HISTORY:
-# 2009-02-11
-# o Added argument 'nbrOfUnits' to fromCdf2().
-# 2008-01-19
-# o Created from fromCdf() in AromaUnitTabularBinaryFile.R.
-############################################################################

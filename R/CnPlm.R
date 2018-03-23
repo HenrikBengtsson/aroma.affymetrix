@@ -345,25 +345,3 @@ setMethodS3("setCombineAlleles", "CnPlm", function(this, status, ...) {
 
   invisible(oldStatus);
 })
-
-
-############################################################################
-# HISTORY:
-# 2009-02-03
-# o BUG FIX: setCombineAlleles() of CnPlm did not update the setting of the
-#   CnPlm itself, only the underlying parameter files.
-# o Added getCombineAlleles() to CnPlm.
-# 2008-02-22
-# o UPDATE: Now a CnPlm with combineAlleles=TRUE also handles SNPs with
-#   six groups; they occur at least once in a custom CDF.
-# 2007-03-28
-# o BUG FIX: getFitUnitFunction() of CnPlm did not handle probe
-#   model "min1(pm-mm)".
-# o BUG FIX: getFitUnitFunction() of CnPlm was broken for PM-MM probe
-#   models for single group units, e.g. AFFX units, resulting in an error
-#   "Argument 'y' must have two dimensions: 3".
-# 2006-12-10
-# o Added support to fit PLM to MM or (PM+MM).
-# 2006-09-11
-# o Recreated.
-############################################################################

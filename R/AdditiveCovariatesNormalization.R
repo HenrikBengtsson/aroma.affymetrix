@@ -853,13 +853,3 @@ setMethodS3("process", "AdditiveCovariatesNormalization", function(this, ..., fo
 
   outputSet;
 })
-
-############################################################################
-# HISTORY:
-# 2013-06-01
-# o Argument process(..., force=TRUE) for AdditiveCovariatesNormalization
-#   did not force reprocessing.
-# 2009-03-22
-# o Generalized by creating abstract getCovariates() method.
-# o Created from FragmentLengthNormalization.R.
-############################################################################

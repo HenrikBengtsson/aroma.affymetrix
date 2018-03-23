@@ -344,34 +344,3 @@ setMethodS3("process", "DChipQuantileNormalization", function(this, ..., force=F
 
   outputDataSet;
 })
-
-
-############################################################################
-# HISTORY:
-# 2008-02-23
-# o BUG FIX: When excluding cells from the fit, we would get an error saying
-#   the length of the target distribution is not the same as the data to
-#   be normalized. I had put this up on the todo list already 2007-04-11,
-#   but it is first now I got around to fix it.
-# 2007-09-06
-# o Made excludeChrXFromFit() more memory efficient, because it's using
-#   the new unlist feature in getCellIndices() of AffymetrixCdfFile.
-# 2007-04-08
-# o Added argument 'robust' to the constructor.
-# 2007-03-28
-# o Added getParameters() so that excluded cells are also excluded when
-#   the target distribution is calculated by the average.
-# 2007-03-22
-# o Added test code for excluding some cells by giving them weight zero
-#   when fitting the normalization function.
-# o TO DO: Add code to exclude non-diploid data points from the estimation
-#   of the normalization function, e.g. male chromosome X signals should
-#   not included if the target distribution was calculated for females only.
-#   To simplify it, we could exclude all chromosome X signals regardless
-#   of ploidy.  In that we don't have to know the ploidy. The those should
-#   also be excluded when estimating the target distribution.
-#   Potential problems: If the majority of the signals are from chrX, then
-#   it does not work.
-# 2006-12-11
-# o Created to immitate the oligo package.
-############################################################################

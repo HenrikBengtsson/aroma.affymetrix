@@ -87,12 +87,3 @@ setMethodS3("plotAllelePairs", "AllelicCrosstalkCalibration", function(this, arr
   } # for (kk ...)
   invisible(list(setsOfProbes=setsOfProbes, df=df));
 }, protected=TRUE) # plotAllelePairs()
-
-
-
-############################################################################
-# HISTORY:
-# 2008-12-10
-# o Added plotAllelePairs() for AllelicCrosstalkCalibration.
-# o Created.
-############################################################################

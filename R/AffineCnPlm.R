@@ -41,13 +41,3 @@ setMethodS3("getAsteriskTags", "AffineCnPlm", function(this, collapse=NULL, ...)
 
   tags;
 }, protected=TRUE)
-
-
-
-############################################################################
-# HISTORY:
-# 2007-12-06
-# o Added getAsteriskTag() for AffineCnPlm.
-# 2007-01-07
-# o Created from MbeiCnPlm.R.
-############################################################################

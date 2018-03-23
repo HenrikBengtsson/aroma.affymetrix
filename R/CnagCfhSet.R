@@ -1014,36 +1014,3 @@ setMethodS3("range", "CnagCfhSet", function(this, ...) {
 setMethodS3("getDefaultFullName", "CnagCfhSet", function(this, parent=1L, ...) {
   NextMethod("getDefaultFullName", parent=parent);
 }, protected=TRUE)
-
-
-
-############################################################################
-# HISTORY:
-# 2012-11-20
-# o CLEANUP: Deprecated "[" and "[[", because they should be used to
-#   subset files and not units.
-# 2011-03-03
-# o GENERALIZATION: Now CnagCfhSet locates sample annotation files and
-#   sets the attributes following the new aroma search convention.
-# 2011-02-28
-# o Now getAverageFile() first tries to locate an existing result file
-#   in multiple root paths.  If not found, it creates a new one.
-# 2011-02-24
-# o GENERALIZATION: Now getAverageFile() for CnagCfhSet drops tags
-#   from the output root path (if 'devel/dropRootPathTags' setting is TRUE).
-# o Expanded the searched root paths to be cnagData(|,.*)/.
-# 2009-08-12
-# o Now findByName() of CnagCfhSet utilizes ditto of AffymetrixCelSet,
-#   because its code was identical to the latter.
-# 2008-07-21
-# o Now findByName() assert that the data set name is not empty.
-# 2008-07-20
-# o Updated the following methods to preallocate matrixes with the correct
-#   data type to avoid coercing later: getData() and getAverageFile().
-# 2008-05-08
-# o If paths=NULL in findByName(), it becomes the default argument value.
-# 2007-08-10
-# o Now getAverageFile() utilizes Biobase::rowMedians(), if available.
-# 2007-04-06
-# o Created from AffymetrixCelSet.R
-############################################################################

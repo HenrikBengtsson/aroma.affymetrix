@@ -303,26 +303,3 @@ setMethodS3("calculateNuseBoxplotStats", "ChipEffectSet", function(this, arrays=
 
   stats;
 }, protected=TRUE) # calculateNuseStats()
-
-
-##########################################################################
-# HISTORY:
-# 2012-08-30 [HB]
-# o Now calculateFieldBoxplotStats() and calculateRleBoxplotStats()
-#   calls boxplot.stats() via a local boxplotStats() functions that
-#   automatically drops unused arguments.
-# 2008-02-28 [EP]
-# o Now '...' are passed to boxplot.stats().
-# o BUG FIX: Now extractMatrix() is used internally to calculate the
-#   'RLE' and the 'NUSE' stats.  Before getData() was used which is not
-#   "sensitive" to arguments such as 'mergeGroups', 'mergeAlleles' etc.
-# 2008-02-25
-# o Renamed to make it explicit that it is boxplot stats that are
-#   calculated.
-# o Now calculate{Nuse|Rle}Stats() returns the list of boxplot stats,
-#   not the combined ones.
-# o Added boxplotStats() and support calculate{Nuse|Rle}BoxplotStats()
-#   adopted from EPs code.
-# 2008-02-22
-# o Generalized from the QualityAssessmentModel.
-##########################################################################

@@ -69,12 +69,3 @@ setMethodS3("findUnitsTodo", "QualityAssessmentFile", function(this, units=NULL,
 
   value;
 })
-
-
-############################################################################
-# HISTORY:
-# 2007-02-12 /HB
-# o Updated the verbose output for findUnitsTodo().
-# 2007-01-12
-# o Created.
-############################################################################

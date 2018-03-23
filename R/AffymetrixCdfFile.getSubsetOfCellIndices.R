@@ -195,12 +195,3 @@ setMethodS3("getSubsetOfCellIndices", "AffymetrixCdfFile", function(this, units=
 
   cells;
 }, protected=TRUE)
-
-
-############################################################################
-# HISTORY:
-# 2008-12-03
-# o getSubsetOfCellIndices() stored in memoization in the root cache path.
-# 2008-07-16
-# o Created.
-############################################################################

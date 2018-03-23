@@ -23,19 +23,3 @@ setMethodS3("getListOfGenomeInformations", "ChromosomalModel", function(this, ..
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 # END: AFFX specific
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-
-
-
-##############################################################################
-# HISTORY:
-# 2009-07-08
-# o Added getListOfUnitTypesFiles() for ChromosomalModel.
-# 2009-01-26
-# o Removed get[]ListOfCdfs() from ChromosomalModel.
-# o Removed deprectated get[]ListOfChipEffects() from ChromosomalModel.
-# o Added getListOfAromaUgpFiles() to ChromosomalModel.
-# o Added getListOfUnitNamesFiles() to ChromosomalModel.
-# 2007-09-25
-# o Extracted ChromosomalModel from CopyNumberSegmentationModel.  For 
-#   previous HISTORY, see that class.
-##############################################################################

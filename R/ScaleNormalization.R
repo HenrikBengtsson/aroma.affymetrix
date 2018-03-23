@@ -496,14 +496,3 @@ setMethodS3("process", "ScaleNormalization", function(this, ..., skip=FALSE, for
 
   outputDataSet;
 })
-
-############################################################################
-# HISTORY:
-# 2008-02-19
-# o Added support for "-X", "-Y" and "-XY" for argument 'subsetToAvg'.
-# o Added support for constructor argument 'shift'.
-# 2007-09-18
-# o Updated all getCellIndices() to use 'unlist=TRUE'.
-# 2007-04-16
-# o Created.
-############################################################################

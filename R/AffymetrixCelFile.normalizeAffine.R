@@ -79,15 +79,3 @@ setMethodS3("transformAffine", "AffymetrixCelFile", function(this, outPath=file.
   setCdf(res, cdf);
   return(res);
 }, private=TRUE) # transformAffine()
-
-
-
-############################################################################
-# HISTORY:
-# 2006-10-06
-# o make sure cdf association is inherited
-# 2006-08-25
-# o Move to class AffymetrixCelFile and output is now CEL files only.
-# 2006-07-28
-# o Added transformAffine().
-############################################################################

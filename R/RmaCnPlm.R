@@ -45,12 +45,3 @@ setMethodS3("getAsteriskTags", "RmaCnPlm", function(this, collapse=NULL, ...) {
 
   tags;
 }, protected=TRUE)
-
-
-############################################################################
-# HISTORY:
-# 2007-12-06
-# o Added getAsteriskTag() for RmaSnpPlm.
-# 2006-09-10
-# o Recreated.
-############################################################################

@@ -336,26 +336,3 @@ setMethodS3("transformAffine", "AffymetrixCelSet", function(this, outPath=file.p
   setCdf(res, cdf);
   res;
 }, private=TRUE) # transformAffine()
-
-
-############################################################################
-# HISTORY:
-# 2012-10-21 [HB]
-# o CLEANUP: Dropped unneeded mkdirs(), because they were all preceeded
-#   by an Arguments$getWritablePath().
-# 2007-04-11
-# o Added more verbose output to averageQuantile() in the case when NAs
-#   are detected.  Added some Rdoc comments on how NAs are handles.
-# 2006-09-15
-# o Modified some argument names for normalizeQuantile().
-# 2006-09-14
-# o Recreated from old AffymetrixDataSet.NORM.R.
-# 2006-07-27
-# o Added transformAffine().
-# o BUG FIX: The 'outPath' argument of normalizeQuantile() in the
-#   AffymetrixDataSet class was not recognized.
-# 2006-05-15
-# o Extracted from AffymetrixDataSet.R.
-# 2006-03-18
-# o Added argument 'subset' to calcAvgProbeSignals() & normalizeQuantile().
-############################################################################

@@ -129,12 +129,3 @@ setMethodS3("extractCNT", "SnpChipEffectFile", function(this, reference, units=N
 }, protected=TRUE)
 
 setMethodS3("extractCNT", "SnpChipEffectSet", extractCNT.SnpChipEffectFile, protected=TRUE)
-
-
-
-############################################################################
-# HISTORY:
-# 2008-12-29
-# o Added extractCNT() and writeCNT().
-# o Created.
-############################################################################

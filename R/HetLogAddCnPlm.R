@@ -45,12 +45,3 @@ setMethodS3("getAsteriskTags", "HetLogAddCnPlm", function(this, collapse=NULL, .
 
   tags;
 }, protected=TRUE)
-
-
-############################################################################
-# HISTORY:
-# 2007-12-06
-# o Added getAsteriskTag() for HetLogAddCnPlm.
-# 2007-10-06
-# o Created.
-############################################################################

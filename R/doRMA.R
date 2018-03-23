@@ -285,22 +285,3 @@ setMethodS3("doRMA", "default", function(dataSet, ..., verbose=FALSE) {
 
   res;
 })
-
-
-############################################################################
-# HISTORY:
-# 2013-07-03
-# o Added argument 'flavor' or doRMA().
-# 2013-05-02
-# o Removed argument 'ram' in favor of aroma option 'memory/ram'.
-# 2013-04-29
-# o SPEEDUP: Now doRMA() returns much quicker, iff already done.
-# o DOCUMENTATION: Added help("doRMA").
-# 2011-04-04
-# o Added argument 'drop' to doRMA().  If FALSE, all intermediate data
-#   sets and models are returned in a named list, otherwise only the
-#   final data set.
-# o Added argument 'uniquePlm' to doRMA().
-# 2010-06-16
-# o Created from doCRMAv1.R.
-############################################################################

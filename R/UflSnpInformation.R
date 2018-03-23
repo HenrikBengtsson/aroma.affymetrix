@@ -243,26 +243,3 @@ setMethodS3("getFragmentStarts", "UflSnpInformation", function(this, ...) {
 setMethodS3("getFragmentStops", "UflSnpInformation", function(this, ...) {
   throw("Not supported.");
 })
-
-
-############################################################################
-# HISTORY:
-# 2009-02-10
-# o Added optional validation of number of units to byChipType().
-# o Static method byChipType() was not declared static.
-# 2008-07-23
-# o Now isCompatibleWithCdf() adds attribute 'reason' to FALSE explaining
-#   why the object is not compatible.
-# 2008-01-20
-# o Made argument 'chipType' and 'tags' explicit for fromChipType().
-# 2007-12-10
-# o Added getChipType() to UflSnpInformation.
-# 2007-11-19
-# o Added nbrOfEnzymes().
-# 2007-09-16
-# o BUG FIX: getFragmentLengths() of UflSnpInformation would thrown an error
-#   reporting "Unknown fields: fragmentLength".  Now getDataColumns()
-#   returns the correct names.
-# 2007-09-11
-# o Created from DChipSnpInformation.R.
-############################################################################

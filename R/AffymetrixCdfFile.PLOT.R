@@ -68,17 +68,3 @@ setMethodS3("getImage", "AffymetrixCdfFile", function(this, xrange=c(0,Inf), yra
 
   img;
 })
-
-
-
-############################################################################
-# HISTORY:
-# 2011-01-30
-# o CLEAN UP: getImage() for AffymetrixCdfFile no longer explicitly
-#   require the EBImage but instead calls aroma.core's getImage(). 
-#   The latter method depends on EBimage for now.
-# 2010-06-22
-# o Dropped argument 'transforms' from getImage() for AffymetrixCdfFile.
-# 2006-09-16
-# o Added getGenomeInformation() and stextChipType().
-############################################################################

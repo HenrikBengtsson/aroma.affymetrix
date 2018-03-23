@@ -117,16 +117,3 @@ setMethodS3("getPositionChipTypeUnit", "ChromosomalModel", function(this, chromo
 
   pcu;
 }, protected=TRUE)
-
-
-############################################################################
-# HISTORY:
-# 2009-01-26
-# o Updated getPositionChipTypeUnit() of ChromosomalModel to utilize
-#   the UnitNamesFile Interface instead of assuming an AffymetrixCdfFile.
-#   This requires aroma.core v1.0.1.
-# 2007-09-25
-# o Moved getPositionChipTypeUnit() to ChromosomalModel.
-# 2007-09-20
-# o Added getPositionChipTypeUnit().
-############################################################################

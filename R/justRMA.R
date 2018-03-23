@@ -103,14 +103,3 @@ setMethodS3("justRMA", "AffymetrixCelSet", function(csR, flavor=c("oligo", "affy
 setMethodS3("justRMA", "default", function(...) {
   affy::justRMA(...);
 }, protected=TRUE) # justRMA()
-
-
-
-###########################################################################
-# HISTORY:
-# 2014-04-28
-# o Added default justRMA() which calls the 'affy' implementation.
-# o Added Rdoc comments.
-# 2014-04-27
-# o Added  ...finally!
-###########################################################################

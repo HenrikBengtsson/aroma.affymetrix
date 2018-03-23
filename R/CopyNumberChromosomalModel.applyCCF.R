@@ -413,10 +413,3 @@ setMethodS3("calcRawCnStats", "CopyNumberChromosomalModel", function(this, ..., 
 
   list(mu=mu, sigma=sigma);
 }, private=TRUE);
-
-
-##############################################################################
-# HISTORY:
-# 2008-03-11
-# o Created.
-##############################################################################

@@ -398,30 +398,3 @@ setMethodS3("inferMmFromPm", "AromaCellSequenceFile", function(this, cdf, units=
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # END: Affymetrix specific
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-
-############################################################################
-# HISTORY:
-# 2011-02-28
-# o STANDARDIZATION: Now the default output path for all allocateFromCdf()
-#   is annotationData/chipTypes/<chipType>/.  Before it was the same
-#   directory as the CDF, which may for instance have been in a deeper
-#   subdirectory, or recently also in a sibling root path.
-# 2010-03-14 [HB]
-# o BUG FIX: allocateFromCdf() of AromaCellPositionFile would drop all
-#   but the first tag.
-# 2009-09-27
-# o Added argument 'keepSequenceLengths' to importFromAffymetrixProbeTabFile()
-#   for AromaCellSequenceFile so that one can drop sequences of incorrect
-#   lengths, cf. HuGene-1_0-st-v1.probe.tab.
-# o Added argument 'onDuplicates' to importFromAffymetrixProbeTabFile() for
-#   AromaCellSequenceFile.  If "error" ("warning"), an exception (warning)
-#   is generated whenever duplicated cell indices are detected in the probe
-#   tab file.  If "ignore", they are ignored, which means that the last
-#   duplicated probe sequence will be what is finally imported.
-# 2008-07-10
-# o Renamed inferMmFromPmSequences() to inferMmFromPm(), because now it also
-#   infers target strandedness.
-# 2008-07-09
-# o Created from AromaProbeSequenceTextFile.AFFX.R.
-############################################################################

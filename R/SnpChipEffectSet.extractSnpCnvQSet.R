@@ -96,13 +96,3 @@ setMethodS3("extractSnpCnvQSet", "SnpChipEffectSet", function(this, units=NULL, 
 
   res;
 }) # extractSnpCnvQSet()
-
-
-############################################################################
-# HISTORY:
-# 2012-09-01
-# o ROBUSTNESS: extractSnpCnvQSet() for SnpChipEffectSet would throw an
-#   exception if the 'Biobase' package was not loaded.
-# 2008-12-05
-# o Created.
-############################################################################

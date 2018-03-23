@@ -132,16 +132,3 @@ setMethodS3("readDataFrame", "AffymetrixCsvGenomeInformation", function(this, ..
 
   df;
 })
-
-
-############################################################################
-# HISTORY:
-# 2011-11-19
-# o Added getDefaultExtension() for AffymetrixCsvGenomeInformation.
-# 2008-04-14
-# o Renamed readData() to readDataFrame() for AffymetrixCsvGenomeInformation.
-# 2007-08-03
-# o BUG FIX: Declared fromChipType() static.
-# 2007-03-02
-# o Created.
-############################################################################

@@ -305,10 +305,3 @@ setMethodS3("importFromApt", "CnChipEffectSet", function(static, filename, path=
 
   ces;
 }, static=TRUE, private=TRUE)
-
-
-############################################################################
-# HISTORY:
-# 2008-01-13
-# o Created from importFromDChip().
-############################################################################

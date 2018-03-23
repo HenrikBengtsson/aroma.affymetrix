@@ -144,14 +144,3 @@ setMethodS3("getFitUnitGroupFunction", "HetLogAddPlm", function(this, ..., verbo
 
   fitPlm;
 }, protected=TRUE)
-
-
-
-############################################################################
-# HISTORY:
-# 2012-08-21
-# o Now getFitUnitGroupFunction() for HetLogAddPlm allocates using
-#   as.double(NA) instead of NA.
-# 2007-10-05
-# o Created from RmaPlm.R.
-############################################################################

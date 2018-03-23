@@ -179,12 +179,3 @@ setMethodS3("writeCNT", "SnpChipEffectSet", function(this, reference, filename=N
 
   invisible(pathname);
 }, protected=TRUE)
-
-
-
-############################################################################
-# HISTORY:
-# 2008-12-29
-# o Added extractCNT() and writeCNT().
-# o Created.
-############################################################################

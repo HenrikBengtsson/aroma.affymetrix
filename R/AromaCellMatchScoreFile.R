@@ -195,15 +195,3 @@ setMethodS3("allocate", "AromaCellMatchScoreFile", function(static, ..., nbrOfCe
   nbrOfColumns <- 1L;
   NextMethod("allocate", nbrOfRows=nbrOfCells, types=rep("integer", times=1L), sizes=rep(1L, times=nbrOfColumns), footer=footer);
 }, static=TRUE)
-
-
-############################################################################
-# HISTORY:
-# 2010-02-18 [MR]
-# o corrected the column names for AromaCellMatchscoreFile class
-# 2009-02-10 [HB]
-# o Added optional validation of number of cells to byChipType().
-# o Static method byChipType() was not declared static.
-# 2008-10-28 [MR]
-# o Created from AromaCellSequenceFile.R.
-############################################################################

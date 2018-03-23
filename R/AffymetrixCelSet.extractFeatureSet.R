@@ -89,14 +89,3 @@ setMethodS3("extractSnpFeatureSet", "AffymetrixCelSet", function(this, ..., verb
 
   res;
 }, protected=TRUE) # extractSnpFeatureSet()
-
-
-############################################################################
-# HISTORY:
-# 2013-04-27
-# o Documented extractFeatureSet() for AffymetrixCelSet.
-# o Renamed extractSnpFeatureSet() to extractFeatureSet().  Keeping
-#   old one for backward compatibility.
-# 2009-10-16
-# o Created.
-############################################################################

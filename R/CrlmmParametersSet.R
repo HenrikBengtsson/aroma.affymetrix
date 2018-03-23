@@ -52,20 +52,3 @@ setMethodS3("findUnitsTodo", "CrlmmParametersSet", function(this, ...) {
   df <- this[[idx]];
   findUnitsTodo(df, ...);
 })
-
-
-
-############################################################################
-# HISTORY:
-# 2011-02-24
-# o Expanded the searched root paths to be crlmmData(|,.*)/.
-# 2010-05-08
-# o Now all findUnitsTodo() for data sets checks the data file that comes
-#   last in a lexicographic ordering.  This is now consistent with how
-#   the summarization methods updates the files.  Before it was use to be
-#   the one that is last in the data set.
-# 2008-12-08
-# o Added findUnitsTodo() and extractCalls().
-# 2008-12-06
-# o Created.
-############################################################################

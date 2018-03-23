@@ -107,13 +107,3 @@ setMethodS3("exportTotalCnRatioSet", "AffymetrixCnChpSet", function(this, ..., o
 
   invisible(res);
 }) # exportTotalCnRatioSet()
-
-
-############################################################################
-# HISTORY:
-# 2010-01-06
-# o CLEAN UP: No need for assign NAs when allocating new files; this is now
-#   always the default way (in aroma.core v1.4.1).
-# 2009-02-14
-# o Created.
-############################################################################

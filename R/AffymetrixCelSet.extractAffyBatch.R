@@ -94,18 +94,3 @@ setMethodS3("extractAffyBatch", "AffymetrixCelSet", function(this, ..., verbose=
 setMethodS3("extractAffyBatch", "ChipEffectSet", function(this, ...) {
   throw("Cannot extract AffyBatch from an ", class(this)[1], " object because it contains estimates that are summarized over sets of probes, whereas an AffyBatch should contain probe-level signals: ", getPath(this));
 }, protected=TRUE)
-
-
-
-############################################################################
-# HISTORY:
-# 2010-11-17
-# o ROBUSTNESS: Now extractAffyBatch() for AffymetrixCelSet asserts that
-#   the sample names are unique, which affy::ReadAffy() requires.
-#   Moreover, the sample names are now the fullnames not just the names.
-# 2010-09-06
-# o ROBUSTNESS: Added extractAffyBatch() for ChipEffectSet that gives an
-#   informative error message explaining why it doesn't make sense to do so.
-# 2006-10-02
-# o Created. A first small step toward an interface to Bioconductor.
-############################################################################

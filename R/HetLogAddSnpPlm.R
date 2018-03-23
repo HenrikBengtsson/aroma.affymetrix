@@ -41,13 +41,3 @@ setMethodS3("getAsteriskTags", "HetLogAddSnpPlm", function(this, collapse=NULL, 
 
   tags;
 }, protected=TRUE)
-
-
-
-############################################################################
-# HISTORY:
-# 2007-12-06
-# o Added getAsteriskTag() for HetLogAddSnpPlm.
-# 2007-10-06
-# o Created.
-############################################################################

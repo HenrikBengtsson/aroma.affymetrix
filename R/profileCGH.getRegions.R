@@ -121,13 +121,3 @@ setMethodS3("getRegions", "profileCGH", function(this, nbrOfSnps=c(1,Inf), smoot
 
   df;
 }, private=TRUE)
-
-##############################################################################
-# HISTORY:
-# 2007-06-11
-# o RS IDs are currently not returned/supported.
-# 2006-12-11
-# o Added SNR column.
-# 2006-11-22
-# o Created from writeRegions.profileCGH.R from 2006-10-31.
-##############################################################################

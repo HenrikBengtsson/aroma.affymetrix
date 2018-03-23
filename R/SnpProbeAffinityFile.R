@@ -100,10 +100,3 @@ setMethodS3("getCellIndices", "SnpProbeAffinityFile", function(this, ..., unlist
 setMethodS3("setMergeStrands", "SnpProbeAffinityFile", function(this, status, ...) {
   this$mergeStrands <- status;
 }, protected=TRUE)
-
-
-############################################################################
-# HISTORY:
-# 2006-09-11
-# o Created.
-############################################################################

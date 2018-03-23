@@ -86,10 +86,3 @@ setMethodS3("getCovariates", "GcContentNormalization2", function(this, units=NUL
 
   X;
 }, protected=TRUE)
-
-
-############################################################################
-# HISTORY:
-# 2009-03-22
-# o Created.
-############################################################################

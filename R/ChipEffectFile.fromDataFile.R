@@ -119,21 +119,3 @@ setMethodS3("fromDataFile", "ChipEffectFile", function(static, df=NULL, filename
 
   res;
 }, static=TRUE, private=TRUE)
-
-
-
-############################################################################
-# HISTORY:
-# 2010-05-12
-# o ROBUSTNESS: When fromDataFile() of ChipEffectFile creates a file, it
-#   is created first as a temporary file which is then renamed.  This
-#   lowers the risk of generating incomplete chip-effect files.
-# 2008-03-18
-# o TO DO: Use new static allocateFromCdf() of AffymetrixCelFile.
-# o Removed the backward compatibility patch from 2007-01-10 that made
-#   fromDataFile() of ChipEffectFile to add missing tags. If anyone still
-#   has such old chip effect files lying around, they have to either add
-#   the tags manually or reanalyze the data if they want the fullnames
-#   of the chip effect files to match the fullnames raw data files.
-# o Extracted/moved from ChipEffectFile.R.
-############################################################################

@@ -222,18 +222,3 @@ setMethodS3("process", "OpticalBackgroundCorrection", function(this, ..., force=
 
   outputDataSet
 })
-
-
-
-############################################################################
-# HISTORY:
-# 2012-11-20
-# o CLEANUP: process() for OpticalBackgroundCorrection now processes
-#   each file by itself, i.e. it no longer calls bgAdjustOptical() for
-#   AffymetrixCelSet (which has been removed).
-# 2007-08-24
-# o BUG FIX: Forgot to pass argument '.deprecated=FALSE' to bgAdjustGcrma()
-#   because the latter is deprecated at the user-API level.
-# 2007-03-22
-# o Created.
-############################################################################

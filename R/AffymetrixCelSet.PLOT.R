@@ -106,19 +106,3 @@ setMethodS3("plotDensity", "AffymetrixCelSet", function(this, subset=NULL, types
     verbose && exit(verbose);
   }
 })
-
-
-
-
-############################################################################
-# HISTORY:
-# 2009-09-17
-# o Now argument 'subset' of plotDensity() of AffymetrixCelSet defaults
-#   to NULL (all probes).  Before it was 1/2 (a fraction).
-# o Added verbose output to plotDensity() to AffymetrixCelSet show what
-#   cells are used.
-# 2007-04-16
-# o Added more verbose output.
-# 2006-05-16
-# o Created.
-############################################################################

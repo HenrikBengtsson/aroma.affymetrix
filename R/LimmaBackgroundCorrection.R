@@ -359,18 +359,3 @@ setMethodS3("process", "LimmaBackgroundCorrection", function(this, ..., force=FA
 
   invisible(outputDataSet);
 })
-
-
-############################################################################
-# HISTORY:
-# 2009-04-16
-# o Made this a limma-only class. Removed the 'flavor' argument.
-# 2009-04-09
-# o Added redundancy test for LimmaBackgroundCorrection.
-# 2009-04-06
-# o Verified that new LimmaBackgroundCorrection and old
-#   RmaBackgroundCorrection gives identical results.
-# o Added support for 'affy' and 'limma' flavor.
-# o Added support to specify and pass any algorithm parameters.
-# o Created from RmaBackgroundCorrection.R.
-############################################################################

@@ -93,19 +93,3 @@ setMethodS3("findUnitsTodo", "ExonChipEffectSet", function(this, ...) {
   df <- this[[idx]];
   findUnitsTodo(df, ...);
 })
-
-
-
-############################################################################
-# HISTORY:
-# 2010-05-08
-# o Now all findUnitsTodo() for data sets checks the data file that comes
-#   last in a lexicographic ordering.  This is now consistent with how
-#   the summarization methods updates the files.  Before it was use to be
-#   the one that is last in the data set.
-# 2008-05-08
-# o Made fromFiles() protected.
-# 2007-02-08
-# o Created (based on SnpChipEffectSet.R following chat with HB on
-#   2007-02-07).
-############################################################################

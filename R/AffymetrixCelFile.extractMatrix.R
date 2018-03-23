@@ -61,18 +61,3 @@ setMethodS3("extractMatrix", "AffymetrixCelFile", function(this, cells=NULL, ...
  
   df;
 }) # extractMatrix()
-
-
-############################################################################
-# HISTORY:
-# 2008-12-03
-# o Removed internal gc().
-# o SPEED UP: The reordering the cell indices in extractMatrix() for
-#   optimizing the reading speed was slow.  It is much faster to use 
-#   sort(..., method="quick", return.index=TRUE) than order(...).
-# 2008-07-20
-# o Updated the following methods to preallocate matrixes with the correct
-#   data type to avoid coercing later: extractMatrix().
-# 2008-07-07
-# o Created from ditto for AffymetrixCelSet.
-############################################################################ 

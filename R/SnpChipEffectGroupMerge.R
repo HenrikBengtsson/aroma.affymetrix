@@ -107,13 +107,3 @@ setMethodS3("getParameters", "SnpChipEffectGroupMerge", function(this, ...) {
 
   params;
 }, protected=TRUE)
-
-
-############################################################################
-# HISTORY:
-# 2007-06-11
-# o BUG FIX: getMergeFunction() of SnpChipEffectGroupMerge used non-existing
-#   'x...' instead of 'x'.
-# 2007-02-20
-# o Created.
-############################################################################

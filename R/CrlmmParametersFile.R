@@ -120,15 +120,3 @@ setMethodS3("updateParameter", "CrlmmParametersFile", function(this, name, value
 
   invisible(res);
 })
-
-
-
-############################################################################
-# HISTORY:
-# 2009-01-12
-# o Added read-/updateParameter().
-# 2008-12-08
-# o Added findUnitsTodo() and extractCalls().
-# 2008-12-05
-# o Created.
-############################################################################

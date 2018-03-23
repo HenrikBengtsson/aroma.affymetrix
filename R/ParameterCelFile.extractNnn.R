@@ -135,24 +135,3 @@ setMethodS3("extractDataFrame", "ParameterCelFile", function(this, addNames=FALS
 
   data;
 }) # extractDataFrame()
-
-
-############################################################################
-# HISTORY:
-# 2008-07-25
-# o BUG FIX: extractMatrix(..., drop=TRUE) did not work.
-# 2008-07-20
-# o Updated the following methods to preallocate matrixes with the correct
-#   data type to avoid coercing later: extractMatrix().
-# 2008-07-09
-# o Added argument drop=FALSE to extractMatrix() and extractDataFrame().
-# 2008-03-11
-# o Removed some gc() to speed things up.
-# 2008-02-28
-# o Now argument 'units' also can be a UnitGroupCellMap.
-# 2008-02-22
-# o Added extractDataFrame() for ParameterCelFile as well.
-# o Generalized to ParameterCelFile and moved into aroma.affymetrix.
-# 2008-02-11 [EP]
-# o Created for ChipEffectFile and FirmaFile.
-############################################################################ 

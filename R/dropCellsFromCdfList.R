@@ -147,17 +147,3 @@ dropCellsFromCdfList <- function(cdfList, maxNbrOfCells, cellsToExclude, ..., ve
 
   cdfList;
 } # dropCellsFromCdfList()
-
-
-############################################################################
-# HISTORY:
-# 2011-09-17
-# o Note that dropCellsFromCdfList() may create empty unit groups.
-# o The dropCellsFromCdfList() method was designed such that it can
-#   be moved to the affxparser package as-is.
-# o Note that the method does not assume that a cell belong to unique unit.
-# o Now also adjusting the counts.
-# 2011-09-15
-# o Added dropCellsFromCdfList() for excluding cells from a CDF list
-#   structure by their cell indices.
-############################################################################

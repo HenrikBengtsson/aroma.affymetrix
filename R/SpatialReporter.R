@@ -448,19 +448,3 @@ setMethodS3("plotMargins", "SpatialReporter", function(this, array, margins=c("r
 
   invisible(yMargins);
 })
-
-
-##############################################################################
-# HISTORY:
-# 2008-08-19
-# o Now writeImages() takes argument 'arrays'.
-# 2008-03-17
-# o Added readRawDataRectangle(), calculateMargins(), plotMargins(). Will
-#   probably be moved elsewhere.
-# o Added support for a reference (file).
-# 2007-08-09
-# o Now getColorMaps(parsed=FALSE) returns a unique sorted set of color maps.
-# 2007-03-19
-# o Updated addColorMap() to accept multiple transforms.
-# o Created from ArrayExplorer.R.
-##############################################################################

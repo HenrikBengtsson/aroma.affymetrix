@@ -357,34 +357,3 @@ setMethodS3("getFitUnitGroupFunction", "ExonRmaPlm", function(this, ..., verbose
 
   rmaModel;
 }, private=TRUE)
-
-
-
-
-##############################################################################
-# HISTORY:
-# 2008-06-03 [HB]
-# o Added getParameterSet() to ExonRmaPlm so that 'mergeGroups' is returned.
-# 2007-12-02
-# o Added mechanism to fit "large" unit groups with median polish (for speed).
-# o Added mechanism to avoid fitting unit groups with ridiculously many cells.
-# 2007-12-06
-# o Added getAsteriskTag() for ExonRmaPlm.
-# 2007-11-07
-# o Now the fit function supports 'shift' too. Before it was ignored.
-# 2007-09-20
-# o Updated getFitFunction() for ExonRmaPlm to deal with compatibility issues
-#   related different versions of affyPLM/preprocessCore.
-# o Added verbose output to getFitFunction().
-# o Renamed the variables such that index I is for samples and K is for
-#   probes, as in the paper.
-# 2007-07-13 /HB
-# o Removed findUnitsTodo() of ExonRmaPlm; it just replicated the superclass.
-# 2007-04-24 /HB+EP
-# o getProbeAffinityFile() of ExonRmaPlm did not return the correct subclass.
-# 2007-04-13 /HB+EP
-# o BUG FIX: getChipEffectSet() and getProbeAffinityFile() did not set the
-#   'mergeStrands' parameter.  Thanks Elizabeth Purdom for the fix.
-# 2006-??-??
-# o Created by Ken Simpson, WEHI.
-##############################################################################

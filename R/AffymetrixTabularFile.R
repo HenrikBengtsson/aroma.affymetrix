@@ -41,21 +41,3 @@ setMethodS3("byChipType", "AffymetrixTabularFile", function(static, chipType, ta
     throw("Failed to located Affymetrix tabular file: ", chipType);
   newInstance(static, pathname, ...);
 }, static=TRUE)
-
-
-
-############################################################################
-# HISTORY:
-# 2008-05-17
-# o Now inherits from TabularTextFile.
-# 2008-04-25
-# o Now byChipType() passes '...' to the constructor, e.g. 'verbose'.
-# 2007-09-16
-# o Now AffymetrixTabularFile reports the translated/cleaned up column
-#   names.  Column names on the file can be retrieved from getHeader().
-# o Now colnames() returns column names in camelCase.
-# 2007-09-14
-# o Now inheriting from GenericTabularFile.
-# 2007-09-10
-# o Created from AffymetrixCsvGenomeInformation.R.
-############################################################################

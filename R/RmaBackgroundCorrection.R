@@ -276,21 +276,3 @@ setMethodS3("process", "RmaBackgroundCorrection", function(this, ..., force=FALS
 
   outputDataSet
 })
-
-
-############################################################################
-# HISTORY:
-# 2015-11-19
-# o CLEANUP: Migrated bgAdjustRma() for AffymetrixCelFile into process().
-# o CLEANUP: Using readRawData() instead of getData().
-# 2012-11-20
-# o CLEANUP: process() for RmaBackgroundCorrection now processes
-#   each file by itself, i.e. it no longer calls bgAdjustRma() for
-#   AffymetrixCelSet (which has been removed).
-# 2007-06-30
-# o Added Rdoc comments about jitter.
-# 2007-05-26
-# o Updated the Rdocs.
-# 2007-03-21
-# o Created.
-############################################################################

@@ -282,27 +282,3 @@ setMethodS3("getUnitsOnChromosome", "UgpGenomeInformation", function(this, ...) 
   ugp <- getAromaUgpFile(this);
   getUnitsAt(ugp, ...);
 })
-
-############################################################################
-# HISTORY:
-# 2009-02-16
-# o Removed argument 'validate' from byChipType().
-# 2008-12-29
-# o Added argument 'units' to readDataFrame().
-# 2008-07-23
-# o Now isCompatibleWithCdf() adds attribute 'reason' to FALSE explaining
-#   why the object is not compatible.
-# 2008-05-20
-# o Added argument 'validate' to byChipType().
-# 2008-01-19
-# o ROBUSTNESS: Added argument 'tags' to fromChipType() for class
-#   UgpGenomeInformation.
-# 2007-12-10
-# o Added getChipType() to UgpGenomeInformation.
-# 2007-12-09
-# o Added nbrOfUnits().
-# 2007-11-20
-# o Added clearCache() to clear cached UGP file.
-# 2007-09-11
-# o Created.
-############################################################################

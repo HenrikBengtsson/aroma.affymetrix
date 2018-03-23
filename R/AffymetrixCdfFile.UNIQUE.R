@@ -691,15 +691,3 @@ setMethodS3("getUnitGroupCellMapWithUnique", "AffymetrixCdfFile", function(this,
 
   mergedMap;
 }, protected=TRUE)
-
-
-
-############################################################################
-# HISTORY:
-# 2011-04-15 [HB]
-# o Added more help to createUniqueCdf() for AffymetrixCdfFile.
-# 2008-11-28 [HB]
-# o BUG FIX: createUniqueCdf() used 'cdf' instead of 'this'.
-# 2008-11-14 [MR]
-# o created from Affymetrix.MONOCELL.R
-############################################################################

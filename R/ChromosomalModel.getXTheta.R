@@ -42,15 +42,3 @@ setMethodS3("getPcuTheta", "ChromosomalModel", function(this, chromosome, reorde
 
   list(pcu=pcu, theta=theta);
 }, protected=TRUE);  # getPcuTheta()
-
-
-##############################################################################
-# HISTORY:
-# 2008-07-20
-# o Updated the following methods to preallocate matrixes with the correct
-#   data type to avoid coercing later: getPcuTheta().
-# 2007-09-25
-# o Moved getPcuTheta() to ChromosomalModel.
-# 2007-09-24
-# o Added getXTheta().
-##############################################################################

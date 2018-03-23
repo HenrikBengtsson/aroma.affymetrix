@@ -119,11 +119,3 @@ setMethodS3("allocateFromCdf", "AffymetrixCelFile", function(static, cdf, name, 
 
   res;
 }, static=TRUE, protected=TRUE)
-
-
-############################################################################
-# HISTORY:
-# 2008-03-18
-# o Extracted from the static fromDataFile() of ChipEffectFile.
-# o Created.
-############################################################################

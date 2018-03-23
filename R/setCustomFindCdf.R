@@ -14,10 +14,3 @@ setCustomFindCdf <- function(fcn, ...) {
 
   invisible(oldFcn);
 } # setCustomFindCdf()
-
-
-############################################################################
-# HISTORY:
-# 2007-02-12
-# o Created. To be added to affxparser later.
-############################################################################  

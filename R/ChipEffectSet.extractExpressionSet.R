@@ -227,22 +227,3 @@ setMethodS3("extractExpressionSet", "ChipEffectSet", function(this, ..., logBase
 
   eset;
 }) # extractExpressionSet()
-
-
-###########################################################################
-# HISTORY:
-# 2014-04-27 [HB]
-# o Added argument 'orderUnitsBy' to extractExpressionSet() for
-#   ChipEffectSet.
-# o Now extractExpressionSet() for ChipEffectSet also returns std. errors.
-# o Updated extractExpressionSet() to use the ExpressionSet constructor.
-# 2013-04-27 [HB]
-# o Added argument 'annotationPkg' to extractExpressionSet() for
-#   ChipEffectSet, which (indirectly) sets the 'annotation' slot
-#   of the returned ExpressionSet.
-# 2011-07-14 [HB]
-# o Added argument 'logBase' to extractExpressionSet().
-# 2011-07-09 [HB]
-# o Added extractExpressionSet() for ChipEffectSet.
-# o Created.
-###########################################################################

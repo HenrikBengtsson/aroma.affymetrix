@@ -194,26 +194,3 @@ setMethodS3("extractMatrix", "FirmaSet", function (this, ..., field=c("intensiti
 
   NextMethod("extractMatrix", field=field);
 })
-
-
-############################################################################
-# HISTORY:
-# 2010-05-11
-# o BUG FIX: Added a stray and erronous verbose statement to updateUnits().
-# 2010-05-08
-# o Now all findUnitsTodo() for data sets checks the data file that comes
-#   last in a lexicographic ordering.  This is now consistent with how
-#   the summarization methods updates the files.  Before it was use to be
-#   the one that is last in the data set.
-# o Now updateUnits() updates the data files in lexicographic order.
-# 2008-05-08
-# o Made fromFiles() protected.
-# 2008-02-22 [HB]
-# o Now ChipEffectSet inherits from ParameterCelSet instead of as before
-#   directly from AffymetrixCelSet.
-# o Added extractMatrix().
-# 2007-12-07 [HB]
-# o Removed argument 'tags' from the FirmaSet constructor.
-# 2007-02-09
-# o Created.
-############################################################################

@@ -177,39 +177,3 @@ setMethodS3("inferParameters", "CnChipEffectSet", function(this, ..., verbose=FA
 setMethodS3("as.CopyNumberDataSetTuple", "CnChipEffectSet", function(this, ...) {
   CnChipEffectSetTuple(this, ...);
 })
-
-
-############################################################################
-# HISTORY:
-# 2009-11-18
-# o Added as.CopyNumberDataSetTuple().
-# 2009-11-17
-# o Now CnChipEffectSet implements CopyNumberDataSet.
-# 2008-05-16
-# o Added support for setCombineAlleles(..., "byFirstFile").
-# 2008-05-08
-# o Made fromFiles() protected.
-# 2007-11-20
-# o BUG FIX: inferParams() would load all units if no units of size four
-#   was found, because units <- units[unitsSizes == 4] => units == NULL.
-# 2007-09-12
-# o BUG FIX: A typo in setCombineAlleles() cause the function to always
-#   return NULL instead of the last value.
-# 2007-03-23
-# o Now inferParameters() are looking at the 'intensity' (==theta) field
-#   instead of 'stdvs'.  The reason for this is that 'stdvs' might be all
-#   zeros, e.g. after a fragment-length normalization.
-# 2007-02-20
-# o BUG FIX: inferParameters() would give an error if some estimates were
-#   NAs.
-# 2007-02-19
-# o BUG FIX: If inferParameters() where called on a chip-effect set where
-#   some units where not yet estimated, an error would be generated.
-# 2007-01-11
-# o Added fromFiles() which now infers 'combineAlleles' from the files.
-# o Added inferParameters().
-# 2006-11-22
-# o Now getAverageFile() finally sets 'combineAlleles'.
-# 2006-09-11
-# o Created.
-############################################################################

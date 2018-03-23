@@ -87,20 +87,3 @@ setMethodS3("getUnitGroupNamesFromUgcMap", "AffymetrixCdfFile", function(this, u
 
   res;
 }, protected=TRUE) # getUnitGroupNamesFromUgcMap()
-
-
-############################################################################
-# HISTORY:
-# 2011-11-18
-# o Now the verbose progress output of getUnitGroupNamesFromUgcMap()
-#   is more informative on what subset in order is currently processed.
-# 2008-04-28
-# o SPEEDUP: Changed the algorithm for getUnitGroupNamesFromUgcMap(). It
-#   was painfully slow for large UGC maps.  Took ~10-14 days(!) for the
-#   GenomeWideSNP_6 chip. Now 50s. The relative overhead for loading/saving
-#   to cache is now so large that it no longer pays off.
-# 2008-02-27
-# o Now getUnitGroupNamesFromUgcMap() caches results to file.
-# 2008-02-05
-# o Created.
-############################################################################

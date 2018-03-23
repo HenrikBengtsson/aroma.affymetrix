@@ -191,18 +191,3 @@ setMethodS3("extractAlleleSet", "SnpChipEffectSet", function(this, units=NULL, s
 
   res;
 })
-
-
-############################################################################
-# HISTORY:
-# 2012-09-01
-# o ROBUSTNESS: extractAlleleSet() for SnpChipEffectSet would throw an
-#   exception if the 'Biobase' package was not loaded.
-# 2010-05-11
-# o BUG FIX: Too early rm(units) in extractAlleleSet().
-# 2010-05-09
-# o Now extractAlleleSet() handles SNP platforms with 2 & 4 unit groups.
-# 2010-05-06
-# o extractAlleleSet() now asserts that oligo v1.12.0 or older is installed.
-# o Created from extractSnpQSet().
-############################################################################

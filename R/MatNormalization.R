@@ -764,29 +764,3 @@ setMethodS3("process", "MatNormalization", function(this, ..., ram=NULL, force=F
 
   invisible(outputDataSet)
 })
-
-
-
-############################################################################
-# HISTORY:
-# 2011-02-15 [HB]
-# o Now we use updateCel(..., verbose=as.logical(verbose)) instead of
-#   always verbose=TRUE.
-# o HARMONIZATION: Renamed argument 'numBins' of MatNormalization to
-#   'nbrOfBins'.
-# o HARMONIZATION: Now MatNormalization utilized the aroma setting 'ram',
-#   which replaced argument 'numChunks' which is now deprecated.
-# o CLEANUP: Tidied up code.
-# 2009-05-23 [HB]
-# o Updated some minor format mistakes in the verbose output.
-# 2008-11-28 [HB]
-# o Added protected getCrossProductXTX().  Still not used.
-# o Modified the first loop over chunks that calculated cross products such
-#   that it is constant in number of arrays.  The processing over chunks is
-#   now also done as we do it elsewhere in the package.
-# o fitOne() and predictOne() are never used?!?
-# o Updated the Rdocs.
-# o Renamed getAromaCellMatchscoreFile() to getAromaCellMatchScoreFile().
-# 2008-10-29 [MR]
-# o Created from BaseCountNormalization.R
-############################################################################

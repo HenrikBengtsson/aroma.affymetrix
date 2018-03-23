@@ -52,10 +52,3 @@ setMethodS3("getRootPath", "SmoothRmaModel", function(this, ...) {
 setMethodS3("getFitUnitGroupFunction", "SmoothRmaModel", function(this, ...) {
   smoothWRMA;
 }, protected=TRUE)
-
-
-##############################################################################
-# HISTORY:
-# 2007-09-20
-# o Created.
-##############################################################################

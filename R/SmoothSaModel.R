@@ -48,10 +48,3 @@ setMethodS3("getAsteriskTags", "SmoothSaModel", function(this, collapse=NULL, ..
 setMethodS3("getFitUnitGroupFunction", "SmoothSaModel", function(this, ...) {
   smoothWSA;
 }, protected=TRUE)
-
-
-##############################################################################
-# HISTORY:
-# 2007-09-20
-# o Created.
-##############################################################################

@@ -210,37 +210,3 @@ pdInfo2Cdf <- function(pdpkg, celfile, overwrite=FALSE, verbose=TRUE, ...) {
 
   invisible(res);
 } # pdInfo2Cdf()
-
-
-
-############################################################################
-# HISTORY:
-# 2012-03-23
-# o Now pdInfo2Cdf() helps 'R CMD check' to locate read.celfiles()
-#   by explicitly requiring 'oligo'.
-# 2010-12-04 [HB]
-# o Added more verbose output.
-# o DOCUMENTATION: Added more Rd documentation.
-# o BUG FIX: Local variable 'pdName' of pdInfo2Cdf() was used before it
-#   was defined.  Thanks to Guido Hooiveld at the Wageningen University,
-#   Netherlands, for reporting this.
-# 2010-05-20 [HB]
-# o Renamed PdInfo2Cdf() to pdInfo2Cdf().  Keeping old one for backward
-#   compatibility for a while.
-# 2010-05-19 [HB]
-# o BUG FIX: PdInfo2Cdf() would write dimension (rows,rows) in the CDF
-#   header instead of (rows,cols).  Thanks Kasper Daniel Hansen for
-#   reporting this.
-# 2009-10-16 [HB]
-# o MEMORY OPTIMIZATION: Cleaning out non needed objects sooner.
-# o Added verbose a'la R.utils.
-# o Added some validation of arguments.
-# o Tidied up the code structure.
-# 2009-01-13 [MR]
-# o Added. "This script has been written to generate a .cdf-file from an
-#   "pd.XXXX" package, such as those build with pdInfoBuilder.
-#   The original was written by Samuel Wuest, modified by Mark Robinson
-#   (around 12 Jan 2009) to be generic."
-# 2008-??-?? [SW]
-# o Created by Samuel Wuest.
-############################################################################

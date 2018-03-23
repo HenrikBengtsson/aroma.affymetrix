@@ -154,29 +154,3 @@ setMethodS3("updateUnits", "ProbeAffinityFile", function(this, units=NULL, cdf=N
 
   res;
 }, private=TRUE)
-
-
-
-
-
-
-############################################################################
-# HISTORY:
-# 2010-02-20
-# o Added verbose output to updateUnits() of ProbeAffinityFile.
-# 2007-05-09
-# o Removed writeSpatial().
-# 2007-01-03
-# o Renamed constructor argument 'model' to 'probeModel'.
-# 2006-09-11
-# o Update read- and updateUnits() to make use of getCellIndices().
-# o Added getCellIndices().
-# 2006-08-26
-# o Added writeSpatial().
-# 2006-08-25
-# o Added findUnitsTodo().
-# o Added getFirstCellIndices(). Since reading all cell indices can take
-#   a while it is cached in memory, but also on file (in case we restart).
-# o Created from LiWongProbeAffinityFile.  The RMA version is almost
-#   identical so I made this a superclass of both.
-############################################################################

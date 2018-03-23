@@ -147,21 +147,3 @@ setMethodS3("getProbeSequenceData", "AffymetrixCdfFile", function(this, paths=NU
 
   data;
 }, private=TRUE)
-
-
-############################################################################
-# HISTORY:
-# 2010-03-31 [HB]
-# o KNOWN ISSUES: getProbeSequenceData() for AffymetrixCdfFile requires
-#   that the unit names in the probe-tab file matches the ones in the
-#   CDF.  This may cause issues if custom CDFs with custom unit names
-#   are used.  This is another reason why we should move away from
-#   probe-tab files and instead use aroma binary cell sequence files.
-# o Updated getProbeSequenceData() for AffymetrixCdfFile to recognize more
-#   NetAffx probe-tab files.
-# 2009-05-09 [HB]
-# o Added private getProbeSequenceData() to AffymetrixCdfFile. This method
-#   will later retrieve probe sequences from the binary ACS file instead
-#   of the probe-tab files.
-# o Created file.
-############################################################################

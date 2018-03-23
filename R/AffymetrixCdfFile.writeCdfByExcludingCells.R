@@ -221,12 +221,3 @@ setMethodS3("writeCdfByExcludingCells", "AffymetrixCdfFile", function(this, tags
 
   cdfF;
 }, protected=TRUE) # writeCdfByExcludingCells()
-
-
-############################################################################
-# HISTORY:
-# 2011-09-17
-# o Now handling empty groups and empty units as well.
-# o Added writeCdfByExcludingCells() for AffymetrixCdfFile.
-# o Created.
-############################################################################

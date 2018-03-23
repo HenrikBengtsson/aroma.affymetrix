@@ -31,21 +31,3 @@ setMethodS3("allocateFromCdf", "AromaCellCpgFile", function(static, cdf, path=NU
   allocate(static, filename=filename, path=path, nbrOfCells=nbrOfCells,
                                  platform=platform, chipType=chipType, ...);
 }, static=TRUE)
-
-
-
-############################################################################
-# HISTORY:
-# 2011-02-28
-# o STANDARDIZATION: Now the default output path for all allocateFromCdf()
-#   is annotationData/chipTypes/<chipType>/.  Before it was the same
-#   directory as the CDF, which may for instance have been in a deeper
-#   subdirectory, or recently also in a sibling root path.
-# 2010-03-14 [HB]
-# o BUG FIX: allocateFromCdf() of AromaCellCpgFile would drop all but the
-#   first tag.
-# 2009-02-22 [HB]
-# o Forgot to make allocateFromCdf() of AromaCellCpgFile static.
-# 2010-02-19 [MR]
-# o Created from AromaCellPositionFile.AFFX.R.
-############################################################################

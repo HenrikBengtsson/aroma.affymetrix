@@ -31,13 +31,3 @@ setMethodS3("getAsFullCelSet", "ChipEffectSet", function(this, ..., verbose=FALS
 
   res;
 }, protected=TRUE);
-
-
-
-############################################################################
-# HISTORY:
-# 2008-03-31
-# o Now the cell map is reused across arrays.
-# 2008-03-20
-# o Created.
-############################################################################

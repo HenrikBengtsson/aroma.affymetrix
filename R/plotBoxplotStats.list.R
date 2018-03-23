@@ -36,12 +36,3 @@ setMethodS3("plotBoxplotStats", "list", function(stats, ylim=NULL, outline=FALSE
 
   invisible(stats);
 })
-
-##########################################################################
-# HISTORY:
-# 2008-02-25
-# o Renamed.
-# 2008-02-22 [EP]
-# o Created.
-##########################################################################
-

@@ -301,34 +301,3 @@ setMethodS3("readUnits", "SnpChipEffectFile", function(this, ..., force=FALSE, c
 
   res;
 })
-
-
-############################################################################
-# HISTORY:
-# 2012-11-29
-# o SPEEDUP: Improved the caching mechanism for getCellIndices() for
-#   SnpChipEffectFile and CnChipEffectFile.
-# o ROBUSTNESS: Added protection for getCellIndices(..., unlist=TRUE)
-#   for SnpChipEffectFile and CnChipEffectFile.
-# o Added Rdoc help for getCellIndices() for SnpChipEffectFile.
-# 2008-02-22
-# o Updated getCellIndices() and mergeStrands() to handle any even-numbered
-#   unit groups beyond two and four groups.
-# 2007-01-20
-# o Added mergeStrands().
-# 2007-01-07
-# o Now getCellIndices() caches large objects to file and small in memory.
-# 2006-12-18
-# o BUG FIX: getCellIndices() would return a single group instead of two,
-#   for a single-stranded SNP when mergeStrands=TRUE.  See for instance
-#   unit SNP_A-1780520 in the Mapping250K_Nsp chip.
-# 2006-11-28
-# o Added readUnits() to override caching mechanism of superclasses.
-# 2006-09-17
-# o Added an in-memory cache for getCellIndices().
-# 2006-09-12
-# o Updated.  Now the names of the groups reflects the allele names as
-#   expected.
-# 2006-09-11
-# o Created.
-############################################################################

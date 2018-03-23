@@ -707,17 +707,3 @@ setMethodS3("process", "ReseqCrosstalkCalibration", function(this, ..., force=FA
 
   invisible(outputDataSet);
 }) # process()
-
-
-
-
-
-############################################################################
-# HISTORY:
-# 2008-08-29
-# o Created fitOne() and calibrateOne().
-# o Added option 'mergeGroups=FALSE'.
-# o Updated according to new getCellQuartets() of AffymetrixCdfFile.
-# 2008-08-10
-# o Created from AllelicCrosstalkCalibration.R.
-############################################################################

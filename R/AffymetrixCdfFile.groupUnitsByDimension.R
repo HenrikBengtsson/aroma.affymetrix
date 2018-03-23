@@ -188,16 +188,3 @@ setMethodS3("groupUnitsByDimension", "AffymetrixCdfFile", function(this, units=N
 
   res;
 }, protected=TRUE) # groupUnitsByDimension()
-
-
-############################################################################
-# HISTORY:
-# 2011-11-18
-# o Added column 'nbrOfCellsPerGroup' containing a list of ragged vectors
-#   to element 'setDimensions' returned by groupUnitsByDimension().
-# 2011-11-10
-# o ROBUSTNESS: Added a sanity check to groupUnitsByDimension() for
-#   AffymetrixCdfFile.
-# 2010-04-21
-# o Created.
-############################################################################

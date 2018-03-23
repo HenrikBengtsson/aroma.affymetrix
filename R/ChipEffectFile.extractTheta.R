@@ -65,18 +65,3 @@ setMethodS3("extractTheta", "CnChipEffectFile", function(this, groups=NULL, ...)
 
   NextMethod("extractTheta", groups=groups);
 }) # extractTheta()
-
-
-
-############################################################################
-# HISTORY:
-# 2008-07-13
-# o Added argument 'drop=FALSE' to extractTheta().
-# 2008-06-09
-# o Added getUnitGroupCellMatrixMap() to ChipEffectFile.  The extractTheta()
-#   methods is now using this method.
-# 2008-05-10
-# o Updated to take an UGC map via argument 'units'.
-# 2008-05-09
-# o Created.
-############################################################################

@@ -32,11 +32,3 @@ setMethodS3("getOutputIdentifier", "QuantileNormalization", function(this, ..., 
 
   id;
 }, private=TRUE)
-
-
-
-############################################################################
-# HISTORY:
-# 2006-12-08
-# o Should getOutputIdentifier() be made deprecated?
-############################################################################

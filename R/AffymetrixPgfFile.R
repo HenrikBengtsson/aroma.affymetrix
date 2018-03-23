@@ -378,10 +378,3 @@ setMethodS3("getUnitNames", "AffymetrixPgfFile", function(this, units=NULL, ...)
   }
   names;
 })
-
-
-############################################################################
-# HISTORY:
-# 2012-06-14
-# o Created from AffymetrixCdfFile.R.
-############################################################################

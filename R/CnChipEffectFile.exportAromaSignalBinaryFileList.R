@@ -14,10 +14,3 @@ setMethodS3("exportAromaSignalBinaryFileList", "CnChipEffectFile", function(this
 
   NextMethod("exportAromaSignalBinaryFileList", whats=whats);
 }, protected=TRUE)
-
-
-############################################################################
-# HISTORY:
-# 2008-06-25
-# o Created.
-############################################################################ 

@@ -575,32 +575,3 @@ setMethodS3("plotRle", "QualityAssessmentModel", function(this, ...) {
   stats <- plotBoxplot(ces, type="RLE", ...);
   invisible(stats);
 })
-
-
-##########################################################################
-# HISTORY:
-# 2012-11-14
-# o CLEANUP: getWeights() for QualityAssessmentModel no longer sets the
-#   alias of the returned data set, because the use aliases is deprecated.
-# 2008-02-25
-# o Added Rdoc comments.
-# o Now plot{Nuse|Rle}() calls plotBoxplot() of ChipEffectSet.
-# 2007-12-10
-# o Added getAsteriskTags() and updated getTags() accordingly.
-# 2007-08-09
-# o getResiduals() and getWeights() of QualityAssessmentModel now creates
-#   CEL files with upper-case filename extension "*.CEL", not "*.cel".
-#   The reason for this is that some software don't recognize lower-case
-#   filename extensions :(
-# 2007-01-31 /HB
-# o Removed any argument 'unitsPerChunk' and renamed 'moreUnits' to 'ram'.
-# o Replaced the usage of getDataSet() with other alternatives, in order
-#   to minimize the requirement for knowing the data set, e.g. we could
-#   reload much of the PLM estimates from files.
-# 2007-01-15
-# o Renamed to QualityAssessmentModel from QcInfo.
-# 2007-01-13
-# o Added getWeights().
-# 2007-01-06
-# o Created.
-##########################################################################

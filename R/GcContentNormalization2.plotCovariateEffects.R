@@ -152,12 +152,3 @@ setMethodS3("plotCovariateEffects", "GcContentNormalization2", function(this, ar
 
   verbose && exit(verbose);
 }) # plotCovariateEffects()
-
-
-############################################################################
-# HISTORY:
-# 2009-09-04
-# o Now smoothScatter() is loaded via aroma.core.
-# 2009-03-22
-# o Created.
-############################################################################

@@ -547,35 +547,3 @@ setMethodS3("process", "AbstractProbeSequenceNormalization", function(this, ...,
 
   invisible(outputDataSet);
 })
-
-
-
-############################################################################
-# HISTORY:
-# 2011-02-15
-# o Added forgot space is two verbose statements.
-# 2010-02-16
-# o Added verbose output to getAromaCellSequenceFile().
-## 2010-02-15
-## o MEMORY OPTIMIZATION: Now process() of AbstractProbeSequenceNormalization
-##   clears the in-memory cache when finished.
-# 2009-07-08
-# o ROBUSTNESS: Updated process() of AbstractProbeSequenceNormalization to
-#   write to a tempory file which is the renamed.  This will lower the risk
-#   for generating corrupt files in case of interrupts.
-# 2008-12-03
-# o SPEED UP: Now the "expanded" algorithm parameters ('params') are passed
-#   to fitOne() and predictOne().  It is up to the implementation of these
-#   two to either use them or not.
-# 2008-11-29
-# o Added argument 'ram' to process().
-# 2008-08-05
-# o Added support for specifying the type of target effects for any
-#   AbstractProbeSequenceNormalization method.
-# 2008-07-28
-# o Now the model fit for the target is also saved to file.
-# 2008-07-21
-# o The process() is rather generic. Subclasses have to implement fitOne()
-#   and predictOne().
-# o Created from BaseCountNormalization.R.
-############################################################################

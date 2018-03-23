@@ -461,37 +461,3 @@ setMethodS3("extractMatrix", "FirmaFile", function (this, ..., field=c("intensit
 
   NextMethod("extractMatrix", field=field);
 })
-
-
-############################################################################
-# HISTORY:
-# 2012-10-14
-# o CLEANUP: createParamCdf() for FirmaFile no longer support
-#   '<chipType>-monocell' filenames.  If detected, an informative
-#   error is thrown.
-# 2010-05-12
-# o ROBUSTNESS: When fromDataFile() of FirmaFile creates a file, it
-#   is created first as a temporary file which is then renamed.  This
-#   lowers the risk of generating incomplete chip-effect files.
-# 2009-05-19
-# o Now testing for file permissions for creat-/writ-/updating files/dirs.
-# 2008-07-20
-# o Updated the following methods to preallocate matrixes with the correct
-#   data type to avoid coercing later: getUnitGroupCellMap().
-# 2008-05-08
-# o BUG FIX: getUnitGroupCellMap() gave an error if argument 'units' had
-#   zero length (non-NULL).
-# 2008-04-21
-# o getCellMap() is now defunct.
-# 2008-02-28 [HB]
-# o Now a (unit,group,cell) map has class UnitGroupCellMap and no longer
-#   ChipEffectFileCellMap.
-# 2008-02-22 [HB]
-# o Added extractMatrix().
-# 2007-08-09
-# o FirmaFile$fromDataFile() now creates CEL files with upper-case
-#   filename extension "*.CEL", not "*.cel".  The reason for this is that
-#   some software don't recognize lower case filename extensions :(
-# 2007-02-09
-# o Created (based on ChipEffectFile.R).
-############################################################################

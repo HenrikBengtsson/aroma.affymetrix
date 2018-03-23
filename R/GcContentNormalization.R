@@ -484,18 +484,3 @@ setMethodS3("process", "GcContentNormalization", function(this, ..., force=FALSE
 
   outputSet;
 })
-
-############################################################################
-# HISTORY:
-# 2012-11-29
-# o getOutputDataSet00() for GcContentNormalization called the global
-#   'verbose'.
-# 2009-03-22
-# o Updated to work with AromaUgcFile:s as well.
-# o Added protected getGcContent() method.
-# 2008-02-21
-# o Now getSubsetToFit() and process() not only processes SNPs but also
-#   CN probes.
-# 2007-04-02
-# o Created from FragmentLengthNormalization.R.
-############################################################################

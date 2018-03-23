@@ -175,34 +175,3 @@ setMethodS3("getFitUnitFunction", "UnitModel", abstract=TRUE, private=TRUE);
 setMethodS3("getFitSingleCellUnitFunction", "UnitModel", function(this, ...) {
   NULL;
 }, protected=TRUE)
-
-
-############################################################################
-# HISTORY:
-# 2008-10-09
-# o Added getFitSingleCellUnitFunction().
-# 2008-09-05
-# o TYPO: The error message for argument 'dataSet' in UnitModel() returned
-#   multiple strings, one per class.
-# 2008-09-03
-# o CLEANUP: Moved the handling of 'probeModel' and 'shift'  to UnitModel
-#   from ProbeLevelModel
-# 2007-01-06
-# o Removed never-used setup() method.
-# 2007-01-01
-# o Created from former UnitGroupsModel with history as follows:
-# 2006-11-19
-# o Started to modify methods of this class to work similar to the
-#   QuantileNormalizer and AllelicCrosstalkCalibrator classes.
-# 2006-09-14
-# o Not cloning the data set anymore.  Each model is responsible for
-#   tranforming the data structure their way.  The advantage with this
-#   approach is that we can cache read data in the data set object.
-# 2006-08-28
-# o Added getLabel(), which defaults to getName(), and setLabel().
-# 2006-08-24
-# o Added some Rdoc comments.
-# 2006-08-17
-# o Created.
-
-############################################################################

@@ -264,26 +264,3 @@ setMethodS3("extractTheta", "DChipDcpSet", function(this, units=NULL, ..., drop=
 
   data;
 })
-
-
-############################################################################
-# HISTORY:
-# 2013-07-28
-# o ROBUSTNESS: byPath() for DChipDcpSet was not decleared static.
-# 2011-02-24
-# o Expanded the searched root paths to be rawData(|,.*)/ and
-#   probeData(|,.*)/.
-# 2009-08-12
-# o Now findByName() of DChipDcpSet utilizes ditto of AffymetrixCelSet,
-#   because its code was identical to the latter.
-# 2008-08-20
-# o Added extractTheta().
-# 2008-07-21
-# o Now findByName() assert that the data set name is not empty.
-# 2008-05-09
-# o Now DChipDcpSet inherits from GenericDataFileSet.
-# 2008-05-08
-# o If paths=NULL in findByName(), it becomes the default argument value.
-# 2008-01-30
-# o Created.
-############################################################################

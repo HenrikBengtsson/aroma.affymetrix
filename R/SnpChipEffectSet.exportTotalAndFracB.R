@@ -120,33 +120,3 @@ setMethodS3("getAromaUnitTotalCnBinarySet", "default", function(this, ...) {
 setMethodS3("getAromaUnitFracBCnBinarySet", "default", function(this, ...) {
   exportTotalAndFracB(this, fields="fracB", ...);
 })
-
-
-
-############################################################################
-# HISTORY:
-# 2010-02-13
-# o BUG FIX: exportTotalAndFracB() of SnpChipEffectSet returned all arrays
-#   in the output data set directory and not only the ones part of the
-#   input data set.
-# o Placed in its own R file.
-# 2009-02-24
-# o BUG FIX: exportTotalAndFracB() of SnpChipEffectFile return an empty
-#   list for chip types with tags.
-# 2009-02-22
-# o Now exportTotalAndFracB() of CnChipEffect{File|Set} does not export
-#   fracB signals if allele-specific chip effects do not exist.
-# o exportTotalAndFracB() of SnpChipEffectFile would write the short
-#   chip type in the file footer, not the full one.  This could lead to
-#   using the wrong annotation files etc.
-# 2009-02-11
-# o Now exported chip effect files no longer contains tag 'chipEffects'.
-# o Renamed all methods.
-# o Added argument 'rootPath'.
-# 2008-09-10
-# o Updated to be compatible with new aroma.core.
-# 2008-07-30
-# o Added getTotalAndFreqBSets() which is a more convenient name.
-# 2008-06-25
-# o Created.
-############################################################################

@@ -294,25 +294,3 @@ setMethodS3("getCalculateResidualsFunction", "AvgPlm", function(static, ...) {
     y - yhat;
   }
 }, static=TRUE, protected=TRUE)
-
-
-
-############################################################################
-# HISTORY:
-# 2008-12-31
-# o Added an ad hoc validate() to AvgPlm to overriden the default test
-#   in MultiarrayUnitModel (yes, because it is still not a true single
-#   array implementation).
-# 2007-10-06
-# o Added getAsteriskTag() to AvgPlm.
-# 2007-09-16
-# o Renamed the variables such that index I is for samples and K is for
-#   probes, as in the paper.
-# 2007-09-12
-# o WORKAROUND: If there is only one probe, the fit function will return
-#   theta=y:s, and sdTheta=0:s.  However, when searching for units to do,
-#   we test (sdTheta <= 0).  The workaround is to store the smallest
-#   float available instead of zero.
-# 2007-09-08
-# o Created from RmaPlm.R.
-############################################################################

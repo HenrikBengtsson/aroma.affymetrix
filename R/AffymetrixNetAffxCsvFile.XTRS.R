@@ -328,20 +328,3 @@ setMethodS3("getNetAffxDate", "AffymetrixNetAffxCsvFile", function(this, ...) {
   res <- as.Date(res);
   res;
 })
-
-
-##############################################################################
-# HISTORY:
-# 2011-09-11
-# o Added getGenomeBuild(), getNetAffxBuild() and getNetAffxDate().
-# o Added getHeaderAttributes() for AffymetrixNetAffxCsvFile.
-# 2011-04-18
-# o Updated readGeneAssignments().
-# 2011-04-07
-# o Now readGeneAssignments() for AffymetrixNetAffxCsvFile handles both
-#   *.probeset.csv (2 fields) and *.transcript.csv (5 fields), at least
-#   for the HuGene-1_0-st-v1 chip type.
-# 2011-04-06
-# o Added readGeneAssignments() for AffymetrixNetAffxCsvFile.
-# o Created.
-##############################################################################

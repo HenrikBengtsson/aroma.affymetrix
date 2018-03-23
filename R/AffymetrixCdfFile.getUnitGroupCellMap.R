@@ -269,16 +269,3 @@ setMethodS3("getUnitGroupCellChromosomePositionMap", "AffymetrixCdfFile", functi
 
   map;
 }, protected=TRUE)
-
-
-############################################################################
-# HISTORY:
-# 2008-04-21
-# o Now getUnitGroupCellMap() always returns a data.frame.
-# o Added class attribute to getUnitGroupCellMap().
-# 2008-03-11
-# o Added getUnitGroupCellChromosomePositionMap();
-# 2007-03-08
-# o Note, getUnitGroupCellMap() is just a test function.
-# o Created.
-############################################################################

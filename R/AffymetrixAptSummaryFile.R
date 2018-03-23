@@ -127,11 +127,3 @@ setMethodS3("getChipType", "AffymetrixAptSummaryFile", function(this, ...) {
 setMethodS3("getQuantificationScale", "AffymetrixAptSummaryFile", function(this, ...) {
   getParameter(this, "affymetrix-algorithm-param-quantification-scale");
 }, protected=TRUE)
-
-
-
-############################################################################
-# HISTORY:
-# 2008-01-13
-# o Created.
-############################################################################

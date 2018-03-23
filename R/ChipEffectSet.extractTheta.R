@@ -114,12 +114,3 @@ setMethodS3("extractTheta", "CnChipEffectSet", function(this, groups=NULL, ...) 
 
   NextMethod("extractTheta", groups=groups);
 })
-
-
-############################################################################
-# HISTORY:
-# 2008-07-13
-# o Added argument 'drop=FALSE' to extractTheta().
-# 2008-05-10
-# o Created.
-############################################################################

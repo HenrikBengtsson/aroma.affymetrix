@@ -165,19 +165,3 @@ setMethodS3("getCdf", "AffymetrixTsvFile", function(this, ...) {
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # END: Methods that requires an Affymetrix CDF file
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-
-############################################################################
-# HISTORY:
-# 2011-11-19
-# o Added getDefaultExtension() to AffymetrixCsvFile.
-# 2008-05-18
-# o Now readDataFrame() and getField() of AffymetrixTsvFile utilize the
-#   UnitNamesFile interface rather than the platform-specific
-#   AffymetrixCdfFile.  This is done in order minimize dependencies for
-#   certain file formats, i.e. not all chip types comes with a CDF.
-# 2008-04-14
-# o Renamed readData() to readDataFrame() for AffymetrixTsvFile.
-# 2007-03-02
-# o Created.
-############################################################################

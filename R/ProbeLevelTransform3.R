@@ -400,17 +400,3 @@ setMethodS3("writeSignals", "ProbeLevelTransform3", function(this, pathname, cel
 
   invisible(pathname);
 }, protected=TRUE)
-
-
-
-############################################################################
-# HISTORY:
-# 2008-07-25
-# o Added protected writeSignals(), which write signals to a CEL file,
-#   which is created from a template CEL file, if missing.  This method
-#   cen then later be designed to be atomic.
-# o Now getSubsetTo() also handles ChipEffectSet, which might use
-#   so called "restructors".
-# 2008-07-20
-# o Extracted from BaseCountNormalization.R.
-############################################################################

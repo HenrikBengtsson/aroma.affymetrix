@@ -378,36 +378,3 @@ setMethodS3("doASCRMAv2", "default", function(...) {
 
   doCRMAv2(..., combineAlleles=FALSE);
 })
-
-
-############################################################################
-# HISTORY:
-# 2014-04-27
-# o doCRMAv2(..., drop=FALSE) and hence doASCRMAv2(..., drop=FALSE), did
-#   not *return* the base-position normalization step, although it was
-#   done and its outcome was part of all downstream steps.
-# 2013-05-02
-# o Removed argument 'ram' in favor of aroma option 'memory/ram'.
-# 2012-09-15
-# o BUG FIX: doCRMAv2() failed to quickly located already available results
-#   if the chip type of the CDF had tags, e.g. 'GenomeWideSNP_6,Full'.
-# 2012-08-24
-# o SPEED UP: Now doCRMAv2() will check upfront if the final results are
-#   already available.  If they are, they will be returned instantaneously.
-# 2011-04-07
-# o Added argument 'drop'.
-# 2011-03-14
-# o doCRMAv2() gained argument 'lengthRange', which is passed to
-#   the constructor of FragmentLengthNormalization.
-# 2010-06-21
-# o Added doASCRMAv2() for a convenient allele-specific CRMAv2 wrapper.
-# 2010-04-04
-# o Added argument 'plm' to doCRMAv2().
-# 2010-02-15
-# o MEMORY OPTIMIZATION: Now doCRMAv2() removes as much as possible.
-# 2010-02-13
-# o Restructured.  Now there is a doCRMAv2() for AffymetrixCelSet:s and
-#   one for character strings.
-# 2009-09-13
-# o (Re)created.
-############################################################################

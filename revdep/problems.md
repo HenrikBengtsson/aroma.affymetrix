@@ -1,55 +1,202 @@
-# Setup
+# ACNE
 
-## Platform
+Version: 0.8.1
 
-|setting  |value                        |
-|:--------|:----------------------------|
-|version  |R version 3.3.3 (2017-03-06) |
-|system   |x86_64, linux-gnu            |
-|ui       |X11                          |
-|language |en                           |
-|collate  |en_US.UTF-8                  |
-|tz       |America/Los_Angeles          |
-|date     |2017-03-23                   |
+## In both
 
-## Packages
+*   checking CRAN incoming feasibility ... WARNING
+    ```
+    Maintainer: ‘Henrik Bengtsson <henrikb@braju.com>’
+    
+    Insufficient package version (submitted: 0.8.1, existing: 0.8.1)
+    
+    The Date field is over a month old.
+    
+    This build time stamp is over a month old.
+    ```
 
-|package                 |*  |version |date       |source          |
-|:-----------------------|:--|:-------|:----------|:---------------|
-|affxparser              |   |1.46.0  |2017-03-10 |cran (@1.46.0)  |
-|affy                    |   |1.52.0  |2017-03-10 |cran (@1.52.0)  |
-|AffymetrixDataTestFiles |   |0.12.0  |2017-03-10 |cran (@0.12.0)  |
-|affyPLM                 |   |1.50.0  |2017-03-10 |cran (@1.50.0)  |
-|aroma.affymetrix        |   |3.0.0   |2016-01-10 |cran (@3.0.0)   |
-|aroma.apd               |   |0.6.0   |2015-02-25 |cran (@0.6.0)   |
-|aroma.core              |   |3.1.0   |2017-03-23 |cran (@3.1.0)   |
-|aroma.light             |   |3.4.0   |2017-03-10 |cran (@3.4.0)   |
-|Biobase                 |   |2.34.0  |2017-03-10 |cran (@2.34.0)  |
-|BiocGenerics            |   |0.20.0  |2017-03-10 |cran (@0.20.0)  |
-|DBI                     |   |0.6     |2017-03-09 |cran (@0.6)     |
-|dChipIO                 |   |0.1.5   |2016-01-13 |cran (@0.1.5)   |
-|future                  |   |1.4.0   |2017-03-13 |cran (@1.4.0)   |
-|gcrma                   |   |2.46.0  |2017-03-10 |cran (@2.46.0)  |
-|gsmoothr                |   |0.1.7   |2014-06-10 |cran (@0.1.7)   |
-|limma                   |   |3.30.13 |2017-03-23 |cran (@3.30.13) |
-|listenv                 |   |0.6.0   |2015-12-28 |cran (@0.6.0)   |
-|matrixStats             |   |0.51.0  |2016-10-09 |cran (@0.51.0)  |
-|oligo                   |   |1.38.0  |2017-03-10 |cran (@1.38.0)  |
-|oligoClasses            |   |1.36.0  |2017-03-10 |cran (@1.36.0)  |
-|pdInfoBuilder           |   |1.38.0  |2017-03-10 |cran (@1.38.0)  |
-|preprocessCore          |   |1.36.0  |2017-03-10 |cran (@1.36.0)  |
-|R.cache                 |   |0.12.0  |2015-11-12 |cran (@0.12.0)  |
-|R.devices               |   |2.15.1  |2016-11-10 |cran (@2.15.1)  |
-|R.filesets              |   |2.11.0  |2017-02-28 |cran (@2.11.0)  |
-|R.methodsS3             |   |1.7.1   |2016-02-16 |cran (@1.7.1)   |
-|R.oo                    |   |1.21.0  |2016-11-01 |cran (@1.21.0)  |
-|R.utils                 |   |2.5.0   |2016-11-07 |cran (@2.5.0)   |
-|RColorBrewer            |   |1.1-2   |2014-12-07 |cran (@1.1-2)   |
+# NSA
 
-# Check results
+Version: 0.0.32
 
-0 packages with problems
+## In both
 
+*   checking CRAN incoming feasibility ... WARNING
+    ```
+    Maintainer: ‘Maria Ortiz-Estevez <mortizest@gmail.com>’
+    
+    Insufficient package version (submitted: 0.0.32, existing: 0.0.32)
+    
+    The Title field should be in title case, current version then in title case:
+    ‘Post-normalization of total copy numbers’
+    ‘Post-Normalization of Total Copy Numbers’
+    
+    The Date field is over a month old.
+    
+    This build time stamp is over a month old.
+    ```
 
+*   checking package dependencies ... NOTE
+    ```
+    Depends: includes the non-default packages:
+      ‘R.methodsS3’ ‘MASS’ ‘matrixStats’ ‘R.oo’ ‘R.utils’ ‘aroma.core’
+      ‘aroma.affymetrix’ ‘DNAcopy’
+    Adding so many packages to the search path is excessive and importing
+    selectively is preferable.
+    ```
 
+*   checking top-level files ... NOTE
+    ```
+    Non-standard file/directory found at top level:
+      ‘incl’
+    ```
+
+*   checking dependencies in R code ... NOTE
+    ```
+    Packages in Depends field not imported from:
+      ‘DNAcopy’ ‘MASS’ ‘R.methodsS3’ ‘R.oo’ ‘aroma.affymetrix’ ‘aroma.core’
+      ‘matrixStats’
+      These packages need to be imported from (in the NAMESPACE file)
+      for when this namespace is loaded but not attached.
+    ```
+
+*   checking S3 generic/method consistency ... NOTE
+    ```
+    Found the following apparent S3 methods exported but not registered:
+      NSAByTotalAndFracB.matrix allocateOutputDataSets.NSANormalization
+      allocateOutputDataSets.SNPsNormalization
+      allocateOutputDataSets.SampleNormalization
+      as.character.NSANormalization as.character.SNPsNormalization
+      as.character.SampleNormalization findArraysTodo.NSANormalization
+      findArraysTodo.SampleNormalization findUnitsTodo.SNPsNormalization
+      fitNSA.matrix fitNSAcnPs.matrix getDataSets.NSANormalization
+      getDataSets.SNPsNormalization getDataSets.SampleNormalization
+      getName.NSANormalization getName.SNPsNormalization
+      getName.SampleNormalization getOutputDataSets.NSANormalization
+      getOutputDataSets.SNPsNormalization
+      getOutputDataSets.SampleNormalization getPath.NSANormalization
+      getPath.SNPsNormalization getPath.SampleNormalization
+      getRootPath.NSANormalization getRootPath.SNPsNormalization
+      getRootPath.SampleNormalization process.NSANormalization
+      process.SNPsNormalization process.SampleNormalization
+      sampleNByTotalAndFracB.numeric snpsNByTotalAndFracB.matrix
+    See section ‘Registering S3 methods’ in the ‘Writing R Extensions’
+    manual.
+    ```
+
+*   checking R code for possible problems ... NOTE
+    ```
+    ...
+      ‘str’
+      (/home/hb/repositories/aroma.affymetrix/revdep/checks/NSA/new/NSA.Rcheck/00_pkg_src/NSA/R/snpsNByTotalAndFracB.R:49)
+    snpsNByTotalAndFracB.matrix: no visible global function definition for
+      ‘rowAlls’
+      (/home/hb/repositories/aroma.affymetrix/revdep/checks/NSA/new/NSA.Rcheck/00_pkg_src/NSA/R/snpsNByTotalAndFracB.R:54)
+    snpsNByTotalAndFracB.matrix: no visible global function definition for
+      ‘str’
+      (/home/hb/repositories/aroma.affymetrix/revdep/checks/NSA/new/NSA.Rcheck/00_pkg_src/NSA/R/snpsNByTotalAndFracB.R:73)
+    Undefined global functions or variables:
+      AffymetrixCdfFile CNA Object approxfun aromaSettings byPath extend
+      extractMatrix findUnitsTodo getAsteriskTags getChipType getFile
+      getFullName getFullNames getGenomeInformation getName getNames
+      getPath getPathname getPathnames getPositions getRam getRootPath
+      getTags getUnitsOnChromosome hist median nbrOfFiles newInstance
+      packageDescription rowAlls rowMedians segment setTags str throw trim
+      verbose
+    Consider adding
+      importFrom("graphics", "hist")
+      importFrom("stats", "approxfun", "median")
+      importFrom("utils", "packageDescription", "str")
+    to your NAMESPACE file.
+    ```
+
+# PECA
+
+Version: 1.14.0
+
+## In both
+
+*   checking CRAN incoming feasibility ... NOTE
+    ```
+    Maintainer: ‘Tomi Suomi <tomi.suomi@utu.fi>’
+    
+    Package duplicated from https://bioconductor.org/packages/3.6/bioc
+    
+    The Title field should be in title case, current version then in title case:
+    ‘Probe-level Expression Change Averaging’
+    ‘Probe-Level Expression Change Averaging’
+    
+    This build time stamp is over a month old.
+    ```
+
+# REIDS
+
+Version: 0.0.1
+
+## In both
+
+*   checking CRAN incoming feasibility ... WARNING
+    ```
+    Maintainer: ‘Marijke Van Moerbeke <marijke.vanmoerbeke@uhasselt.be>’
+    
+    Insufficient package version (submitted: 0.0.1, existing: 0.0.1)
+    
+    The Date field is over a month old.
+    
+    This build time stamp is over a month old.
+    ```
+
+# Repitools
+
+Version: 1.24.0
+
+## In both
+
+*   checking CRAN incoming feasibility ... NOTE
+    ```
+    Maintainer: ‘Mark Robinson <mark.robinson@imls.uzh.ch>’
+    
+    Package duplicated from https://bioconductor.org/packages/3.6/bioc
+    
+    Found the following (possibly) invalid URLs:
+      URL: http://www.bioinformatics.bbsrc.ac.uk/projects/fastqc/
+        From: man/genQC.Rd
+        Status: 403
+        Message: Forbidden
+    
+    The Title field should be in title case, current version then in title case:
+    ‘Epigenomic tools’
+    ‘Epigenomic Tools’
+    
+    The Date field is not in ISO 8601 yyyy-mm-dd format.
+    
+    This build time stamp is over a month old.
+    ```
+
+# TIN
+
+Version: 1.10.0
+
+## In both
+
+*   checking CRAN incoming feasibility ... NOTE
+    ```
+    Maintainer: ‘Bjarne Johannessen <bjajoh@rr-research.no>’
+    
+    Package duplicated from https://bioconductor.org/packages/3.6/bioc
+    
+    The Title field should be in title case, current version then in title case:
+    ‘Transcriptome instability analysis’
+    ‘Transcriptome Instability Analysis’
+    
+    The Date field is over a month old.
+    
+    This build time stamp is over a month old.
+    ```
+
+*   checking top-level files ... NOTE
+    ```
+    Non-standard file/directory found at top level:
+      ‘doc’
+    ```
 

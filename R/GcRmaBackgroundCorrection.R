@@ -55,28 +55,28 @@ setConstructorS3("GcRmaBackgroundCorrection", function(..., indicesNegativeContr
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'indicesNegativeControl':
   if (!is.null(indicesNegativeControl)) {
-    indicesNegativeControl <- Arguments$getIndices(indicesNegativeControl);
+    indicesNegativeControl <- Arguments$getIndices(indicesNegativeControl)
   }
 
   # Argument 'affinities':
   if (!is.null(affinities)) {
-    affinities <- Arguments$getNumerics(affinities);
+    affinities <- Arguments$getNumerics(affinities)
   }
 
   # Argument 'type':
-  type <- match.arg(type);
+  type <- match.arg(type)
 
   # Argument 'opticalAdjust':
-  opticalAdjust <- Arguments$getLogical(opticalAdjust);
+  opticalAdjust <- Arguments$getLogical(opticalAdjust)
 
   # Argument 'gsbAdjust':
-  gsbAdjust <- Arguments$getLogical(gsbAdjust);
+  gsbAdjust <- Arguments$getLogical(gsbAdjust)
 
   # Argument 'gsbParameters':
 
   # Argument 'seed':
   if (!is.null(seed)) {
-    seed <- Arguments$getInteger(seed);
+    seed <- Arguments$getInteger(seed)
   }
 
 
@@ -88,13 +88,13 @@ setConstructorS3("GcRmaBackgroundCorrection", function(..., indicesNegativeContr
     .gsbAdjust=gsbAdjust,
     .gsbParameters=gsbParameters,
     .seed=seed
-  );
+  )
 })
 
 
 setMethodS3("getParameters", "GcRmaBackgroundCorrection", function(this, ...) {
   # Get parameters from super class
-  params <- NextMethod("getParameters");
+  params <- NextMethod("getParameters")
 
   # Get parameters of this class
   params2 <- list(
@@ -105,12 +105,12 @@ setMethodS3("getParameters", "GcRmaBackgroundCorrection", function(this, ...) {
     gsbAdjust = this$.gsbAdjust,
     gsbParameters = this$.gsbParameters,
     seed = this$.seed
-  );
+  )
 
   # Append the two sets
-  params <- c(params, params2);
+  params <- c(params, params2)
 
-  params;
+  params
 }, protected=TRUE)
 
 
@@ -118,34 +118,34 @@ setMethodS3("calculateAffinities", "GcRmaBackgroundCorrection", function(this, .
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  verbose <- Arguments$getVerbose(verbose);
+  verbose <- Arguments$getVerbose(verbose)
   if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
+    pushState(verbose)
+    on.exit(popState(verbose))
   }
 
 
-  verbose && enter(verbose, "Computing probe affinities (independent of data)");
+  verbose && enter(verbose, "Computing probe affinities (independent of data)")
 
-  ds <- getInputDataSet(this);
-  cdf <- getCdf(ds);
+  ds <- getInputDataSet(this)
+  cdf <- getCdf(ds)
 
   # Alternative #1: Using ACS annotation file
-  affinities <- NULL;
+  affinities <- NULL
   tryCatch({
-    affinities <- computeAffinitiesByACS(cdf, ..., verbose=less(verbose));
-  }, error = function(ex) {});
+    affinities <- computeAffinitiesByACS(cdf, ..., verbose=less(verbose))
+  }, error = function(ex) {})
 
   if (is.null(affinities)) {
     # Alternative #2: Using Affymetrix probe-tab files (deprecated)
-    affinities <- computeAffinities(cdf, ..., verbose=less(verbose));
+    affinities <- computeAffinities(cdf, ..., verbose=less(verbose))
   }
 
   verbose && printf(verbose, "RAM: %s\n", hsize(object.size(affinities), digits = 2L, standard = "IEC"))
 
-  verbose && exit(verbose);
+  verbose && exit(verbose)
 
-  affinities;
+  affinities
 }, protected=TRUE)
 
 

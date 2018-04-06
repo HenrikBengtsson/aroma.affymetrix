@@ -30,19 +30,19 @@ setConstructorS3("AffymetrixFileSet", function(files=NULL, ...) {
   # Arguments 'files':
   if (is.null(files)) {
   } else if (is.list(files)) {
-    reqFileClass <- "AffymetrixFile";
+    reqFileClass <- "AffymetrixFile"
     lapply(files, FUN=function(df) {
-      df <- Arguments$getInstanceOf(df, reqFileClass, .name="files");
+      df <- Arguments$getInstanceOf(df, reqFileClass, .name="files")
     })
   } else if (inherits(files, "AffymetrixFileSet")) {
-    return(as.AffymetrixFileSet(files));
+    return(as.AffymetrixFileSet(files))
   } else {
-    throw("Argument 'files' is of unknown type: ", mode(files));
+    throw("Argument 'files' is of unknown type: ", mode(files))
   }
 
 
   extend(AromaMicroarrayDataSet(files=files, ...), c("AffymetrixFileSet",
-                                             uses("AromaPlatformInterface")));
+                                             uses("AromaPlatformInterface")))
 })
 
 
@@ -74,15 +74,15 @@ setConstructorS3("AffymetrixFileSet", function(files=NULL, ...) {
 # }
 #*/###########################################################################
 setMethodS3("as.AffymetrixFileSet", "AffymetrixFileSet", function(object, ...) {
-  object;
+  object
 })
 
 setMethodS3("as.AffymetrixFileSet", "list", function(object, ...) {
-  AffymetrixFileSet(object, ...);
+  AffymetrixFileSet(object, ...)
 })
 
 setMethodS3("as.AffymetrixFileSet", "default", function(object, ...) {
-  throw("Cannot coerce object to an AffymetrixFileSet object: ", mode(object));
+  throw("Cannot coerce object to an AffymetrixFileSet object: ", mode(object))
 })
 
 
@@ -131,10 +131,10 @@ setMethodS3("byPath", "AffymetrixFileSet", function(static, ..., fileClass="Affy
   # stream.  Indeed, here '...' will be passed by byPath() for GenericDataSet
   # to newInstance(static, ...), which will generate an error unless
   # .onUnknownArgs="ignore". /HB 2012-10-18
-  NextMethod("byPath", fileClass=fileClass, .onUnknownArgs="ignore");
+  NextMethod("byPath", fileClass=fileClass, .onUnknownArgs="ignore")
 }, static=TRUE)
 
 
 setMethodS3("getDefaultFullName", "AffymetrixFileSet", function(this, parent=1L, ...) {
-  NextMethod("getDefaultFullName", parent=parent);
+  NextMethod("getDefaultFullName", parent=parent)
 }, protected=TRUE)

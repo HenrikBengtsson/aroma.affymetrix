@@ -66,38 +66,38 @@ setConstructorS3("RmaPlm", function(..., flavor=c("affyPLM", "oligo")) {
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'flavor':
-  flavor <- match.arg(flavor);
+  flavor <- match.arg(flavor)
 
   this <- extend(ProbeLevelModel(...), "RmaPlm",
     .flavor = flavor,
     treatNAsAs = "weights"
-  );
-  validate(this);
-  this;
+  )
+  validate(this)
+  this
 })
 
 
 setMethodS3("getAsteriskTags", "RmaPlm", function(this, collapse=NULL, ...) {
   # Returns 'PLM[,<shift>]'
-  tags <- NextMethod("getAsteriskTags", collapse=NULL);
-  tags[1] <- "RMA";
+  tags <- NextMethod("getAsteriskTags", collapse=NULL)
+  tags[1] <- "RMA"
 
   # Add class specific parameter tags
   if (this$.flavor != "affyPLM")
-    tags <- c(tags, this$.flavor);
+    tags <- c(tags, this$.flavor)
 
   # Collapse
-  tags <- paste(tags, collapse=collapse);
+  tags <- paste(tags, collapse=collapse)
 
-  tags;
+  tags
 }, protected=TRUE)
 
 
 setMethodS3("getParameters", "RmaPlm", function(this, ...) {
-  params <- NextMethod("getParameters");
-  params$flavor <- this$.flavor;
-  params$treatNAsAs <- this$treatNAsAs;
-  params;
+  params <- NextMethod("getParameters")
+  params$flavor <- this$.flavor
+  params$treatNAsAs <- this$treatNAsAs
+  params
 }, protected=TRUE)
 
 
@@ -106,20 +106,20 @@ setMethodS3("getProbeAffinityFile", "RmaPlm", function(this, ...) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Get the probe affinities (and create files etc)
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  paf <- NextMethod("getProbeAffinityFile");
+  paf <- NextMethod("getProbeAffinityFile")
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Update the encode and decode functions
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   setEncodeFunction(paf, function(groupData, ...) {
-    phi <- .subset2(groupData, "phi");
-    stdvs <- .subset2(groupData, "sdPhi");
-    outliers <- .subset2(groupData, "phiOutliers");
+    phi <- .subset2(groupData, "phi")
+    stdvs <- .subset2(groupData, "sdPhi")
+    outliers <- .subset2(groupData, "phiOutliers")
 
     # Encode outliers as the sign of 'pixels'; -1 = TRUE, +1 = FALSE
-    pixels <- sign(0.5 - as.integer(outliers));
+    pixels <- sign(0.5 - as.integer(outliers))
 
-    list(intensities=phi, stdvs=stdvs, pixels=pixels);
+    list(intensities=phi, stdvs=stdvs, pixels=pixels)
   })
 
   setEncodeFunction(paf, function(groupData, ...) {
@@ -128,37 +128,37 @@ setMethodS3("getProbeAffinityFile", "RmaPlm", function(this, ...) {
       stdvs = .subset2(groupData, "sdPhi"),
       # Encode outliers as the sign of 'pixels'; -1 = TRUE, +1 = FALSE
       pixels = ifelse(.subset2(groupData, "phiOutliers"), -1, +1)
-    );
+    )
   })
 
 ##  setEncodeFunction(paf, function(groupData, ...) {
-##    groupData[[3]] <- ifelse(.subset2(groupData, "phiOutliers"), -1, +1);
-##    names(groupData) <- c("phi", "sdPhi", "pixels");
-##    groupData;
+##    groupData[[3]] <- ifelse(.subset2(groupData, "phiOutliers"), -1, +1)
+##    names(groupData) <- c("phi", "sdPhi", "pixels")
+##    groupData
 ##  })
 ##
 ##  setEncodeFunction(paf, function(groupData, ...) {
-##    groupData[[3]] <- -1*.subset2(groupData, 3);
-##    names(groupData) <- c("phi", "sdPhi", "pixels");
-##    groupData;
+##    groupData[[3]] <- -1*.subset2(groupData, 3)
+##    names(groupData) <- c("phi", "sdPhi", "pixels")
+##    groupData
 ##  })
 
   setDecodeFunction(paf,  function(groupData, ...) {
-    intensities <- .subset2(groupData, "intensities");
-    stdvs <- .subset2(groupData, "stdvs");
-    pixels <- .subset2(groupData, "pixels");
+    intensities <- .subset2(groupData, "intensities")
+    stdvs <- .subset2(groupData, "stdvs")
+    pixels <- .subset2(groupData, "pixels")
 
     # Outliers are encoded by the sign of 'pixels'.
-    outliers <- as.logical(1-sign(pixels));
+    outliers <- as.logical(1-sign(pixels))
 
     list(
       phi=intensities,
       sdPhi=stdvs,
       phiOutliers=outliers
-    );
+    )
   })
 
-  paf;
+  paf
 }, private=TRUE)
 
 
@@ -168,76 +168,76 @@ setMethodS3("getRlmFitFunctions", "RmaPlm", function(static, withPriors=FALSE, .
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'withPriors':
-  withPriors <- Arguments$getLogical(withPriors);
+  withPriors <- Arguments$getLogical(withPriors)
 
   # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
+  verbose <- Arguments$getVerbose(verbose)
   if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
+    pushState(verbose)
+    on.exit(popState(verbose))
   }
 
 
-  fcnList <- NULL;
+  fcnList <- NULL
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # First, try the preprocessCore package
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  pkg <- "preprocessCore";
-  pkgDesc <- packageDescription(pkg);
+  pkg <- "preprocessCore"
+  pkgDesc <- packageDescription(pkg)
   if (is.list(pkgDesc)) {
-    ver <- pkgDesc$Version;
-    verbose && cat(verbose, pkg, " version: ", ver);
+    ver <- pkgDesc$Version
+    verbose && cat(verbose, pkg, " version: ", ver)
 
     # Internal sanity check
     if (compareVersion(ver, "1.8.0") < 0) {
-      throw("Requires preprocessCore >= 1.8.0");
+      throw("Requires preprocessCore >= 1.8.0")
     }
 
     if (withPriors) {
       # To please R CMD check
-      PACKAGE <- "preprocessCore";
+      PACKAGE <- "preprocessCore"
       fcnList <- list(
         wrlm = function(y, phi, psiCode, psiK, w, scale=NULL) {
           # From preprocessCore::rcModelWPLM()
           .Call("R_rlm_rma_given_probe_effects",
-                y, phi, psiCode, psiK, w, scale, PACKAGE=PACKAGE);
+                y, phi, psiCode, psiK, w, scale, PACKAGE=PACKAGE)
         },
         rlm = function(y, phi, psiCode, psiK, w, scale=NULL) {
           # From preprocessCore::rcModelPLM()
           .Call("R_rlm_rma_given_probe_effects",
-                y, phi, psiCode, psiK, scale, PACKAGE=PACKAGE);
+                y, phi, psiCode, psiK, scale, PACKAGE=PACKAGE)
         }
-      );
+      )
     } else {
       # To please R CMD check
-      PACKAGE <- "preprocessCore";
+      PACKAGE <- "preprocessCore"
       fcnList <- list(
         wrlm = function(y, psiCode, psiK, w, scale=NULL) {
           # From preprocessCore::rcModelPLM()
           .Call("R_wrlm_rma_default_model",
-                y, psiCode, psiK, w, scale, PACKAGE=PACKAGE);
+                y, psiCode, psiK, w, scale, PACKAGE=PACKAGE)
         },
         rlm = function(y, psiCode, psiK, w, scale=NULL) {
           # From preprocessCore::rcModelPLM()
           .Call("R_rlm_rma_default_model",
-                y, psiCode, psiK, scale, PACKAGE=PACKAGE);
+                y, psiCode, psiK, scale, PACKAGE=PACKAGE)
         }
-      );
+      )
     }
   }
 
   if (!is.null(fcnList)) {
     .require <- require
     .require(pkg, character.only=TRUE) || throw("Package not loaded: ", pkg)
-    return(fcnList);
+    return(fcnList)
   }
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Failure
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  throw("Failed to retrieve RLM fit functions. Please install the 'preprocessCore' package.");
+  throw("Failed to retrieve RLM fit functions. Please install the 'preprocessCore' package.")
 }, static=TRUE, protected=TRUE) # getRlmFitFunctions()
 
 
@@ -276,10 +276,10 @@ setMethodS3("getFitUnitGroupFunction", "RmaPlm", function(this, ..., verbose=FAL
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
+  verbose <- Arguments$getVerbose(verbose)
   if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
+    pushState(verbose)
+    on.exit(popState(verbose))
   }
 
 
@@ -287,12 +287,12 @@ setMethodS3("getFitUnitGroupFunction", "RmaPlm", function(this, ..., verbose=FAL
   # Thresholds for skipping/using median polish
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   skipThreshold <- getOption(aromaSettings,
-                                 "models/RmaPlm/skipThreshold", c(Inf, Inf));
+                                 "models/RmaPlm/skipThreshold", c(Inf, Inf))
 
   medianPolishThreshold <- getOption(aromaSettings,
-                         "models/RmaPlm/medianPolishThreshold", c(Inf, Inf));
+                         "models/RmaPlm/medianPolishThreshold", c(Inf, Inf))
 
-  flavor <- this$.flavor;
+  flavor <- this$.flavor
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -304,9 +304,9 @@ setMethodS3("getFitUnitGroupFunction", "RmaPlm", function(this, ..., verbose=FAL
     # Assert right dimensions of 'y'.
 
     # If input data are dimensionless, return NAs. /KS 2006-01-30
-    dim <- dim(y);
+    dim <- dim(y)
     if (is.null(dim)) {
-      nbrOfArrays <- length(getDataSet(this));
+      nbrOfArrays <- length(getDataSet(this))
       return(list(theta=rep(NA, nbrOfArrays),
                   sdTheta=rep(NA, nbrOfArrays),
                   thetaOutliers=rep(NA, nbrOfArrays),
@@ -314,13 +314,13 @@ setMethodS3("getFitUnitGroupFunction", "RmaPlm", function(this, ..., verbose=FAL
                   sdPhi=c(),
                   phiOutliers=c()
                  )
-            );
+            )
     }
 
     if (length(dim) != 2) {
-      str(y);
+      str(y)
       stop("Argument 'y' must have two dimensions: ",
-                                                paste(dim, collapse="x"));
+                                                paste(dim, collapse="x"))
     }
 
     K <- dim[1];  # Number of probes
@@ -328,9 +328,9 @@ setMethodS3("getFitUnitGroupFunction", "RmaPlm", function(this, ..., verbose=FAL
 
     # Too many probes?
     if (K > skipThreshold[1] && I > skipThreshold[2]) {
-      warning("Ignoring a unit group when fitting probe-level model, because it has a ridiculously large number of data points: ", paste(dim, collapse="x"), " > ", paste(skipThreshold, collapse="x"));
+      warning("Ignoring a unit group when fitting probe-level model, because it has a ridiculously large number of data points: ", paste(dim, collapse="x"), " > ", paste(skipThreshold, collapse="x"))
 
-      naValue <- as.double(NA);
+      naValue <- as.double(NA)
       return(list(theta=rep(naValue, times=I),
                   sdTheta=rep(naValue, times=I),
                   thetaOutliers=rep(naValue, times=I),
@@ -338,7 +338,7 @@ setMethodS3("getFitUnitGroupFunction", "RmaPlm", function(this, ..., verbose=FAL
                   sdPhi=rep(naValue, times=K),
                   phiOutliers=rep(naValue, times=K)
                  )
-            );
+            )
     }
 
 
@@ -346,22 +346,22 @@ setMethodS3("getFitUnitGroupFunction", "RmaPlm", function(this, ..., verbose=FAL
     # Transform data
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Add shift
-    y <- y + shift;
+    y <- y + shift
 
     # Log-additive model
-    y <- log(y, base=2);
+    y <- log(y, base=2)
 
     # Look for cells that have NAs in at least one sample?
-    w <- NULL;
-    nasRemoved <- FALSE;
+    w <- NULL
+    nasRemoved <- FALSE
     if (treatNAsAs == "ignore") {
-      hasNAs <- FALSE;
+      hasNAs <- FALSE
     } else {
-      isNA <- is.na(y);
-      hasNAs <- any(isNA);
+      isNA <- is.na(y)
+      hasNAs <- any(isNA)
       if (hasNAs) {
         if (treatNAsAs == "weights") {
-          badCells <- colAlls(isNA);
+          badCells <- colAlls(isNA)
           if (any(badCells)) {
             return(list(theta=rep(NA, I),
                         sdTheta=rep(NA, I),
@@ -370,21 +370,21 @@ setMethodS3("getFitUnitGroupFunction", "RmaPlm", function(this, ..., verbose=FAL
                         sdPhi=rep(NA, K),
                         phiOutliers=rep(NA, K)
                        )
-                  );
+                  )
           }
-          w <- matrix(1, nrow=K, ncol=I);
-          w[isNA] <- 0;
-          y[isNA] <- 0;
+          w <- matrix(1, nrow=K, ncol=I)
+          w[isNA] <- 0
+          y[isNA] <- 0
         } else if (treatNAsAs == "0") {
-          y[isNA] <- 0;
-          hasNAs <- FALSE;
+          y[isNA] <- 0
+          hasNAs <- FALSE
         } else if (treatNAsAs == "NA") {
           K0 <- K;  # Number of cells
-          okCells <- !rowAnys(isNA);
+          okCells <- !rowAnys(isNA)
           # Analyze only valid cells
-          y <- y[okCells,,drop=FALSE];
-          nasRemoved <- TRUE;
-          hasNAs <- FALSE;
+          y <- y[okCells,,drop=FALSE]
+          nasRemoved <- TRUE
+          hasNAs <- FALSE
 
           # No valid cells left?
           if (nrow(y) == 0) {
@@ -395,7 +395,7 @@ setMethodS3("getFitUnitGroupFunction", "RmaPlm", function(this, ..., verbose=FAL
                         sdPhi=rep(NA, K0),
                         phiOutliers=rep(NA, K0)
                        )
-                  );
+                  )
           }
         }
       } # if (hasNAs)
@@ -405,41 +405,41 @@ setMethodS3("getFitUnitGroupFunction", "RmaPlm", function(this, ..., verbose=FAL
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Fit model
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    hasPriors <- !is.null(priors);
+    hasPriors <- !is.null(priors)
     if (hasPriors) {
-      paf <- priors$probeAffinities[[1]];
+      paf <- priors$probeAffinities[[1]]
       # Sanity check
-      stopifnot(!is.null(paf));
-      phi <- paf$phi;
+      stopifnot(!is.null(paf))
+      phi <- paf$phi
       # Sanity check
-      stopifnot(!is.null(phi));
+      stopifnot(!is.null(phi))
       # Sanity check
-      stopifnot(length(phi) == K);
+      stopifnot(length(phi) == K)
 
-      sdPhi <- paf$sdPhi;
+      sdPhi <- paf$sdPhi
 
       # Log-additive model
-      alpha <- log(phi, base=2);
+      alpha <- log(phi, base=2)
 
       if (!is.null(w)) {
-        fit <- wrlm(y, alpha, psiCode, psiK, w);
+        fit <- wrlm(y, alpha, psiCode, psiK, w)
       } else {
-        fit <- rlm(y, alpha, psiCode, psiK);
+        fit <- rlm(y, alpha, psiCode, psiK)
       }
     } else {
       # Use median polish for large probesets (that doesn't have NAs)?
       if (K > medianPolishThreshold[1] && I > medianPolishThreshold[2] && !hasNAs) {
-        mp <- medpolish(y, trace.iter=FALSE);
+        mp <- medpolish(y, trace.iter=FALSE)
         fit <- list(
           Estimates = c(mp$overall+mp$col, mp$row),
           StdErrors = rep(0, length(c(mp$row, mp$col)))
-        );
+        )
       } else {
         # Fit model using preprocessCore/affyPLM code
         if (!is.null(w)) {
-          fit <- wrlm(y, psiCode, psiK, w);
+          fit <- wrlm(y, psiCode, psiK, w)
         } else {
-          fit <- rlm(y, psiCode, psiK);
+          fit <- rlm(y, psiCode, psiK)
         }
       }
     }
@@ -447,20 +447,20 @@ setMethodS3("getFitUnitGroupFunction", "RmaPlm", function(this, ..., verbose=FAL
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Extract parameters
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    est <- fit$Estimates;
-    se <- fit$StdErrors;
+    est <- fit$Estimates
+    se <- fit$StdErrors
 
     # Chip effects
-    beta <- est[1:I];
+    beta <- est[1:I]
     # On the intensity scale
-    theta <- 2^beta;
+    theta <- 2^beta
 
     # Probe affinities
     if (!hasPriors) {
-      alpha <- est[(I+1):length(est)];
-      alpha[length(alpha)] <- -sum(alpha[1:(length(alpha)-1)]);
+      alpha <- est[(I+1):length(est)]
+      alpha[length(alpha)] <- -sum(alpha[1:(length(alpha)-1)])
       # On the intensity scale
-      phi <- 2^alpha;
+      phi <- 2^alpha
     }
 
     # The RMA model is fitted with constraint sum(alpha) = 0, that is,
@@ -472,42 +472,42 @@ setMethodS3("getFitUnitGroupFunction", "RmaPlm", function(this, ..., verbose=FAL
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     if (is.null(se)) {
       # For affyPLM v1.10.0 (2006-09-26) or older.
-      sdTheta <- rep(1, times=I);
+      sdTheta <- rep(1, times=I)
       if (!hasPriors) {
-        sdPhi <- rep(1, times=K);
+        sdPhi <- rep(1, times=K)
       }
     } else {
       # For affyPLM v1.11.6 (2006-11-01) or newer.
-      sdTheta <- 2^(se[1:I]);
+      sdTheta <- 2^(se[1:I])
       if (!hasPriors) {
-        sdPhi <- 2^(se[(I+1):length(se)]);
+        sdPhi <- 2^(se[(I+1):length(se)])
       }
     }
 
     # Handle NAs?
     if (nasRemoved) {
       if (treatNAsAs == "NA") {
-        naValue <- as.double(NA);
-        phi0 <- rep(naValue, times=K0);
-        phi0[okCells] <- phi;
-        phi <- phi0;
+        naValue <- as.double(NA)
+        phi0 <- rep(naValue, times=K0)
+        phi0[okCells] <- phi
+        phi <- phi0
 
-        sdPhi0 <- rep(naValue, times=K0);
-        sdPhi0[okCells] <- sdPhi;
-        sdPhi <- sdPhi0;
+        sdPhi0 <- rep(naValue, times=K0)
+        sdPhi0[okCells] <- sdPhi
+        sdPhi <- sdPhi0
 
-        K <- K0;
+        K <- K0
       }
     }
 
-    thetaOutliers <- rep(FALSE, times=I);
-    phiOutliers <- rep(FALSE, times=K);
+    thetaOutliers <- rep(FALSE, times=I)
+    phiOutliers <- rep(FALSE, times=K)
 
     # Return data on the intensity scale
     list(theta=theta, sdTheta=sdTheta, thetaOutliers=thetaOutliers,
-         phi=phi, sdPhi=sdPhi, phiOutliers=phiOutliers);
+         phi=phi, sdPhi=sdPhi, phiOutliers=phiOutliers)
   } # rmaModelAffyPlm()
-  attr(rmaModelAffyPlm, "name") <- "rmaModelAffyPlm";
+  attr(rmaModelAffyPlm, "name") <- "rmaModelAffyPlm"
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -517,43 +517,43 @@ setMethodS3("getFitUnitGroupFunction", "RmaPlm", function(this, ..., verbose=FAL
   # Why: To fully imitate CRLMM in oligo.
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (flavor == "oligo") {
-    # First, try to see if package is available;
-    pkg <- "oligo";
+    # First, try to see if package is available
+    pkg <- "oligo"
     .require <- require
     .require(pkg, character.only=TRUE) || throw("Package not loaded: ", pkg)
-    pkgDesc <- packageDescription(pkg);
-    ver <- pkgDesc$Version;
-    verbose && cat(verbose, pkg, " version: ", ver);
+    pkgDesc <- packageDescription(pkg)
+    ver <- pkgDesc$Version
+    verbose && cat(verbose, pkg, " version: ", ver)
     if (compareVersion(ver, "1.7.19") >= 0) {
       # HB 2009-05-09:
       # The API of the native function rma_c_complete_copy()
       # has been updated yet again, but the good thing,
       # there is now a basicRMA() wrapper function.
       # Lookup oligo::basicRMA() once; '::' is expensive
-      oligo_basicRMA <- oligo::basicRMA;
+      oligo_basicRMA <- oligo::basicRMA
       fitRma <- function(y, unitNames, nbrOfUnits, ...) {
         oligo_basicRMA(y, pnVec=unitNames, background=FALSE,
-                                            normalize=FALSE, verbose=FALSE);
+                                            normalize=FALSE, verbose=FALSE)
       } # fitRma()
     } else {
-      throw("Non-supported version (< 1.7.19) of 'oligo' detected. Please update the 'oligo' package: ", ver);
+      throw("Non-supported version (< 1.7.19) of 'oligo' detected. Please update the 'oligo' package: ", ver)
     }
   }
 
   rmaModelOligo <- function(y, priors=NULL, ...) {
     if (!is.null(priors)) {
-      throw("NOT IMPLEMENTED: Internal rmaModelOligo() does not support prior parameters.");
+      throw("NOT IMPLEMENTED: Internal rmaModelOligo() does not support prior parameters.")
     }
 
     # Add shift
-    y <- y + shift;
+    y <- y + shift
 
     # Assert right dimensions of 'y'.
-    dim <- dim(y);
+    dim <- dim(y)
     if (length(dim) != 2) {
-      str(y);
+      str(y)
       stop("Argument 'y' must have two dimensions: ",
-                                                paste(dim, collapse="x"));
+                                                paste(dim, collapse="x"))
     }
 
     K <- dim[1];  # Number of probes
@@ -561,7 +561,7 @@ setMethodS3("getFitUnitGroupFunction", "RmaPlm", function(this, ..., verbose=FAL
 
     # Too many probes?
     if (K > skipThreshold[1] && I > skipThreshold[2]) {
-      warning("Ignoring a unit group when fitting probe-level model, because it has a ridiculously large number of data points: ", paste(dim, collapse="x"), " > ", paste(skipThreshold, collapse="x"));
+      warning("Ignoring a unit group when fitting probe-level model, because it has a ridiculously large number of data points: ", paste(dim, collapse="x"), " > ", paste(skipThreshold, collapse="x"))
 
       return(list(theta=rep(NA, I),
                   sdTheta=rep(NA, I),
@@ -570,7 +570,7 @@ setMethodS3("getFitUnitGroupFunction", "RmaPlm", function(this, ..., verbose=FAL
                   sdPhi=rep(NA, K),
                   phiOutliers=rep(NA, K)
                  )
-            );
+            )
     }
 
     # make factor variables for chip and probe
@@ -578,20 +578,20 @@ setMethodS3("getFitUnitGroupFunction", "RmaPlm", function(this, ..., verbose=FAL
     nbrOfUnits <- as.integer(1); # Only one unit group is fitted
 
     # Each call to fitRma() outputs "Calculating Expression".
-    fit <- fitRma(y, unitNames, nbrOfUnits);
+    fit <- fitRma(y, unitNames, nbrOfUnits)
 
     # Extract probe affinities and chip estimates
     est <- fit[1,,drop=TRUE];  # Only one unit
 
     # Chip effects
-    beta <- est[1:I];
+    beta <- est[1:I]
 
     # Probe affinities
     alpha <- rep(0, K);  # Not returned by fitRma()!
 
     # Estimates on the intensity scale
-    theta <- 2^beta;
-    phi <- 2^alpha;
+    theta <- 2^beta
+    phi <- 2^alpha
 
     # The RMA model is fitted with constraint sum(alpha) = 0, that is,
     # such that prod(phi) = 1.
@@ -600,99 +600,99 @@ setMethodS3("getFitUnitGroupFunction", "RmaPlm", function(this, ..., verbose=FAL
     # A fit function must return: theta, sdTheta, thetaOutliers,
     # phi, sdPhi, phiOutliers.
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    sdTheta <- rep(1, I);
-    thetaOutliers <- rep(FALSE, I);
-    sdPhi <- rep(1, K);
-    phiOutliers <- rep(FALSE, K);
+    sdTheta <- rep(1, I)
+    thetaOutliers <- rep(FALSE, I)
+    sdPhi <- rep(1, K)
+    phiOutliers <- rep(FALSE, K)
 
     # Return data on the intensity scale
     list(theta=theta, sdTheta=sdTheta, thetaOutliers=thetaOutliers,
-         phi=phi, sdPhi=sdPhi, phiOutliers=phiOutliers);
+         phi=phi, sdPhi=sdPhi, phiOutliers=phiOutliers)
   } # rmaModelOligo()
-  attr(rmaModelOligo, "name") <- "rmaModelOligo";
+  attr(rmaModelOligo, "name") <- "rmaModelOligo"
 
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Main
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  verbose && enter(verbose, "Getting the PLM fit function");
+  verbose && enter(verbose, "Getting the PLM fit function")
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Get the flavor of fitting algorithm for the RMA PLM
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  verbose && enter(verbose, "Selecting fit function depending on 'flavor'");
-  verbose && cat(verbose, "Flavor: ", flavor);
+  verbose && enter(verbose, "Selecting fit function depending on 'flavor'")
+  verbose && cat(verbose, "Flavor: ", flavor)
 
-  priors <- getListOfPriors(this);
-  hasPriors <- !is.null(priors);
-  verbose && cat(verbose, "Has priors: ", hasPriors);
+  priors <- getListOfPriors(this)
+  hasPriors <- !is.null(priors)
+  verbose && cat(verbose, "Has priors: ", hasPriors)
   if (hasPriors) {
     # Sanity check
-    stopifnot(is.element("probeAffinities", names(priors)));
+    stopifnot(is.element("probeAffinities", names(priors)))
   }
 
   # Shift signals?
-  shift <- this$shift;
+  shift <- this$shift
   if (is.null(shift))
-    shift <- 0;
-  verbose && cat(verbose, "Amount of shift: ", shift);
+    shift <- 0
+  verbose && cat(verbose, "Amount of shift: ", shift)
 
   # Handle non-positive signals?
-  treatNAsAs <- this$treatNAsAs;
+  treatNAsAs <- this$treatNAsAs
   if (is.null(treatNAsAs))
-    treatNAsAs <- "ignore";
-  verbose && cat(verbose, "treatNAsAs: ", treatNAsAs);
+    treatNAsAs <- "ignore"
+  verbose && cat(verbose, "treatNAsAs: ", treatNAsAs)
 
   if (flavor == "affyPLM") {
-    fcnList <- RmaPlm$getRlmFitFunctions(withPriors=hasPriors, verbose=less(verbose));
-    verbose && str(verbose, fcnList);
+    fcnList <- RmaPlm$getRlmFitFunctions(withPriors=hasPriors, verbose=less(verbose))
+    verbose && str(verbose, fcnList)
     # To please R CMD check
-    rlm <- wrlm <- NULL; rm(list=c("rlm", "wrlm"));
-    attachLocally(fcnList);
-    rmaModel <- rmaModelAffyPlm;
+    rlm <- wrlm <- NULL; rm(list=c("rlm", "wrlm"))
+    attachLocally(fcnList)
+    rmaModel <- rmaModelAffyPlm
   } else if (flavor == "oligo") {
     requireNamespace("oligo") || throw("Package not loaded: oligo")
-    rmaModel <- rmaModelOligo;
+    rmaModel <- rmaModelOligo
   } else {
-    throw("Cannot get fit function for RMA PLM. Unknown flavor: ", flavor);
+    throw("Cannot get fit function for RMA PLM. Unknown flavor: ", flavor)
   }
-  verbose && str(verbose, rmaModel);
-  verbose && exit(verbose);
+  verbose && str(verbose, rmaModel)
+  verbose && exit(verbose)
 
   # Test that it works and is available.
-  verbose && enter(verbose, "Validating the fit function on some dummy data");
-  ok <- FALSE;
+  verbose && enter(verbose, "Validating the fit function on some dummy data")
+  ok <- FALSE
   tryCatch({
-    y <- matrix(1:12+0.1, ncol=3);
+    y <- matrix(1:12+0.1, ncol=3)
     if (hasPriors) {
-      verbose && cat(verbose, "With prior probe affinities");
-      phi <- c(0.7630639, 0.9068485, 1.1208795, 1.2892744);
-      sdPhi <- c(1.101706, 1.091220, 1.091220, 1.094554);
-      priors <- list(probeAffinities=list("foo"=list(phi=phi, sdPhi=sdPhi)));
-      res <- rmaModel(y, priors=priors);
+      verbose && cat(verbose, "With prior probe affinities")
+      phi <- c(0.7630639, 0.9068485, 1.1208795, 1.2892744)
+      sdPhi <- c(1.101706, 1.091220, 1.091220, 1.094554)
+      priors <- list(probeAffinities=list("foo"=list(phi=phi, sdPhi=sdPhi)))
+      res <- rmaModel(y, priors=priors)
     } else {
-      res <- rmaModel(y);
+      res <- rmaModel(y)
     }
-    ok <- TRUE;
+    ok <- TRUE
   }, error = function(ex) {
-    print(ex);
+    print(ex)
   })
   if (!ok) {
-    throw("The fit function for requested RMA PLM flavor failed: ", flavor);
+    throw("The fit function for requested RMA PLM flavor failed: ", flavor)
   }
-  verbose && exit(verbose);
+  verbose && exit(verbose)
 
 
-  verbose && exit(verbose);
+  verbose && exit(verbose)
 
-  rmaModel;
+  rmaModel
 }, private=TRUE) # getFitUnitGroupFunction()
 
 
 setMethodS3("getCalculateResidualsFunction", "RmaPlm", function(static, ...) {
   function(y, yhat) {
-    y/yhat;
+    y/yhat
   }
 }, static=TRUE, protected=TRUE)

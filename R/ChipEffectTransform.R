@@ -33,7 +33,7 @@ setConstructorS3("ChipEffectTransform", function(dataSet=NULL, ...) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'dataSet':
   if (!is.null(dataSet)) {
-    dataSet <- Arguments$getInstanceOf(dataSet, "ChipEffectSet");
+    dataSet <- Arguments$getInstanceOf(dataSet, "ChipEffectSet")
   }
 
   extend(Transform(dataSet=dataSet, ...), "ChipEffectTransform")
@@ -41,5 +41,5 @@ setConstructorS3("ChipEffectTransform", function(dataSet=NULL, ...) {
 
 
 setMethodS3("getRootPath", "ChipEffectTransform", function(this, ...) {
-  "plmData";
+  "plmData"
 }, protected=TRUE)

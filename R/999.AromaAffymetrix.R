@@ -1,5 +1,5 @@
 setConstructorS3("AromaAffymetrix", function(...) {
-  extend(AromaPackage("aroma.affymetrix"), "AromaAffymetrix");
+  extend(AromaPackage("aroma.affymetrix"), "AromaAffymetrix")
 })
 
 setMethodS3("fixSearchPath", "AromaAffymetrix", function(this, ...) {
@@ -25,81 +25,81 @@ setMethodS3("fixSearchPath", "AromaAffymetrix", function(this, ...) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Figure out which of our packages (aroma.core, aroma.light etc.) is
   # last on the search path.
-  aheadPkgs <- c("aroma.affymetrix", "aroma.light", "R.huge", "R.oo");
+  aheadPkgs <- c("aroma.affymetrix", "aroma.light", "R.huge", "R.oo")
 
   # Problematic package that must be after the packages on the search path
-  behindPkgs <- c("affxparser", "affy", "affyPLM", "EBImage", "oligo", "ggplot2");
+  behindPkgs <- c("affxparser", "affy", "affyPLM", "EBImage", "oligo", "ggplot2")
 
   res <- fixSearchPathInternal(this, aheadPkgs=aheadPkgs,
-                                           behindPkgs=behindPkgs, ...);
+                                           behindPkgs=behindPkgs, ...)
 
   # Make rescale() for numeric:s compatible for ggplot2 users.
   if (isPackageLoaded("ggplot2") && !exists("rescale.numeric", mode="function")) {
     # Get ggplot2::rescale() without triggering a R CMD check warning.
-    ggplot2 <- Package("ggplot2");
-    fcn <- get("rescale", mode="function", envir=getEnvironment(ggplot2));
+    ggplot2 <- Package("ggplot2")
+    fcn <- get("rescale", mode="function", envir=getEnvironment(ggplot2))
     # Add the rescale() for numeric
-    assign("rescale.numeric", fcn, envir=getEnvironment(this));
+    assign("rescale.numeric", fcn, envir=getEnvironment(this))
   }
 
   # Return the package actually moved
-  invisible(res);
+  invisible(res)
 })
 
 
 setMethodS3("update", "AromaAffymetrix", function(object, ..., verbose=FALSE) {
   # To please R CMD check
-  this <- object;
+  this <- object
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
+  verbose <- Arguments$getVerbose(verbose)
   if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
+    pushState(verbose)
+    on.exit(popState(verbose))
   }
 
 
-  verbose && enter(verbose, "Checking for and install updates");
-  verbose && cat(verbose, "Package: ", getName(this));
+  verbose && enter(verbose, "Checking for and install updates")
+  verbose && cat(verbose, "Package: ", getName(this))
   verbose && printf(verbose, "Current version: v%s (%s)\n",
-                                        getVersion(this), getDate(this));
+                                        getVersion(this), getDate(this))
 
 
-  state <- 0;
+  state <- 0
 
-  url <- "http://www.braju.com/R/hbLite.R";
-  verbose && enter(verbose, "Trying to download update script");
-  verbose && cat(verbose, "URL: ", url);
-  hbInstall <- NULL;
+  url <- "http://www.braju.com/R/hbLite.R"
+  verbose && enter(verbose, "Trying to download update script")
+  verbose && cat(verbose, "URL: ", url)
+  hbInstall <- NULL
   tryCatch({
     suppressWarnings({
-      source(url);
+      source(url)
     })
-    state <- 1;
-    verbose && exit(verbose);
+    state <- 1
+    verbose && exit(verbose)
   }, error = function(ex) {
-    verbose && exit(verbose, suffix="failed");
-    throw(ex);
+    verbose && exit(verbose, suffix="failed")
+    throw(ex)
   })
 
-  verbose && enter(verbose, "Launching update command");
-  verbose && printf(verbose, "Call: hbInstall(\"%s\")", getName(this));
+  verbose && enter(verbose, "Launching update command")
+  verbose && printf(verbose, "Call: hbInstall(\"%s\")", getName(this))
   tryCatch({
-    hbInstall(getName(this));
-    state <- 2;
+    hbInstall(getName(this))
+    state <- 2
   }, error = function(ex) {
-    verbose && exit(verbose, suffix="failed");
-    throw(ex);
+    verbose && exit(verbose, suffix="failed")
+    throw(ex)
   })
 
-  verbose && cat(verbose, "Package has been updated.");
+  verbose && cat(verbose, "Package has been updated.")
 
-  verbose && exit(verbose);
+  verbose && exit(verbose)
 
-  invisible(state);
+  invisible(state)
 })
 
 
@@ -132,7 +132,7 @@ setMethodS3("getDefaultSettings", "AromaAffymetrix", function(this, ...) {
         skipThreshold          = c(5000, 1)
       )
     )
-  );
+  )
 
-  defaults;
+  defaults
 }, protected=TRUE)

@@ -25,14 +25,14 @@
 # @keyword internal
 #*/###########################################################################
 setMethodS3("plotBoxplotStats", "list", function(stats, ylim=NULL, outline=FALSE, las=2, ...) {
-  bxpStats <- mergeBoxplotStats(stats);
+  bxpStats <- mergeBoxplotStats(stats)
 
   # fix the strange behavior of bxp if outline=FALSE
   if(is.null(ylim) && !outline) {
-    ylim <- range(as.vector(bxpStats[["stats"]]));
+    ylim <- range(as.vector(bxpStats[["stats"]]))
   }
 
-  bxp(bxpStats, ylim=ylim, outline=outline, las=las, ...);
+  bxp(bxpStats, ylim=ylim, outline=outline, las=las, ...)
 
-  invisible(stats);
+  invisible(stats)
 })

@@ -21,5 +21,5 @@
 # @author "KS"
 #*/###########################################################################
 setConstructorS3("QualityAssessmentSet", function(...) {
-  extend(AffymetrixCelSet(...), "QualityAssessmentSet");
+  extend(AffymetrixCelSet(...), "QualityAssessmentSet")
 })

@@ -2,19 +2,19 @@ Package: aroma.affymetrix
 Version: 3.1.0-9000
 Depends:
   R (>= 3.1.2),
-  R.utils (>= 2.5.0),
-  aroma.core (>= 3.1.0)
+  R.utils (>= 2.6.0),
+  aroma.core (>= 3.1.1)
 Imports:
   methods,
   R.methodsS3 (>= 1.7.1),
   R.oo (>= 1.21.0),
-  R.cache (>= 0.12.0),
+  R.cache (>= 0.13.0),
   R.devices (>= 2.15.1),
-  R.filesets (>= 2.11.0),
+  R.filesets (>= 2.12.0),
   aroma.apd (>= 0.6.0),
   MASS,
   splines,
-  matrixStats (>= 0.51.0),
+  matrixStats (>= 0.53.1),
   listenv,
   future
 Suggests:
@@ -43,7 +43,7 @@ SuggestsNote:
   aroma.light,
   affxparser,
   DNAcopy
-Date: 2018-02-16
+Date: 2018-04-05
 Title: Analysis of Large Affymetrix Microarray Data Sets
 Authors@R: c(
   person("Henrik", "Bengtsson", role=c("aut", "cre", "cph"),

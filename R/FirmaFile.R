@@ -100,13 +100,6 @@ setMethodS3("createParamCdf", "FirmaFile", function(static, sourceCdf, ..., verb
     }
   }
 
-  # Warn about deprecated filname <chipType>-monocell.
-  if (!is.null(pathname) && (sep == "-")) {
-    msg <- paste("Deprecated filename of monocell CDF detected (uses dash instead of comma): ", pathname);
-    verbose && cat(verbose, msg);
-    throw(msg);
-  }
-
   if (is.null(pathname)) {
     verbose && cat(verbose, "Pathname: Not found!");
     verbose && cat(verbose, "Will create CDF for the FIRMA results files from the

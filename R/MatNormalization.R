@@ -49,14 +49,6 @@ setConstructorS3("MatNormalization", function(..., unitsToFit=NULL, model=c("lm"
   # Argument 'nbrOfBins':
   nbrOfBins <- Arguments$getInteger(nbrOfBins, range=c(1,Inf));
 
-  args <- list(...);
-  if (is.element("numChunks", names(args))) {
-    throw("Argument 'numChunks' to MatNormalization() is deprecated.  Instead, use the 'ram' option in the aroma settings, cf. http://www.aroma-project.org/settings/");
-  }
-  if (is.element("numBins", names(args))) {
-    throw("Argument 'numBins' is deprecated.  Instead, use argument 'nbrOfBins'.");
-  }
-
   extend(AbstractProbeSequenceNormalization(..., unitsToFit=unitsToFit), "MatNormalization",
     .model = model,
     .scaleResiduals = TRUE,

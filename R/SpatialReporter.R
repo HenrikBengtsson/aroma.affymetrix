@@ -240,6 +240,7 @@ setMethodS3("writeImages", "SpatialReporter", function(this, arrays=NULL, aliase
 
     # Aliases are deprecated
     if (!is.null(aliases)) {
+      .Deprecated(msg = "The use of 'aliases' in SpatialReporter is deprecated")
       setAlias(df, aliases[kk]);
     }
 

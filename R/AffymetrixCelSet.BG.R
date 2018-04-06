@@ -31,14 +31,7 @@ setMethodS3("calculateParametersGsb", "AffymetrixCelSet", function(this, nbrOfPm
     throw("DEPRECATED: Argument 'affinities' to calculateParametersGsb() must not be NULL.");
   }
 
-  args <- list(...);
-  for (key in c("path")) {
-    if (is.element(key, names(args))) {
-      throw(sprintf("DEPRECATED: bgAdjustGcrma() no longer takes argument '%s'.", key));
-    }
-  }
-
-
+  
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

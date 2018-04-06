@@ -15,6 +15,18 @@ CODE REFACTORING:
  o Using indexByRow(dim(x)) internally since indexByRow(x) will soon be
    deprecated in matrixStats.
  
+DEPRECATED AND DEFUNCT:
+
+ o Passing argument 'ram' to any of the doNnn() methods is now defunct and
+   gives an informative error message. It has been given a warning since
+   v2.8.4 (May 2013).  Use setOption(aromaSettings, 'memory/ram', ram).
+
+
+Version: 2.8.4 [2013-05-02]
+
+ o Monocell CDF files named with a very very old "-monocell.cdf" suffix are
+   now ignored.  There has been an informative error that these are defunct
+   since v 2.6.3 (October 2012).
 
 Version: 3.1.0 [2017-03-23]
 

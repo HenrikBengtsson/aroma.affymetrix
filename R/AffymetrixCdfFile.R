@@ -201,34 +201,6 @@ setMethodS3("findByChipType", "AffymetrixCdfFile", function(static, chipType, ta
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Search in annotationData/chipTypes/<chipType>/
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Handle deprecated <chipType>-monocell CDFs specially
-  # (This part of the code will not be updated anymore /HB 2007-12-08)
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  pattern <- "-monocell$";
-  if (regexpr(pattern, chipType) != -1) {
-    newChipType <- gsub("-monocell$", ",monocell", chipType);
-    parentChipType <- gsub("-monocell$", "", chipType);  # Remove tags
-
-    # First, see if there is a new monocell, then use that
-    pattern <- sprintf("^%s%s$", newChipType, extPattern);
-    pathname <- findAnnotationDataByChipType(parentChipType, pattern);
-
-    # Second, see if the old-named monocell is there
-    if (is.null(pathname)) {
-      pattern <- sprintf("^%s%s$", chipType, extPattern);
-      pathname <- findAnnotationDataByChipType(parentChipType, pattern=pattern);
-      if (!is.null(pathname)) {
-        msg <- paste("Deprecated filename of monocell CDF detected. Rename CDF file by replacing dash ('-') after 'monocell' with a comma (','): ", pathname, sep="");
-        throw(msg);
-      }
-    }
-
-    throw("Detected obsolete filename pattern. Monocell CDF should no longer be named '.*-monocell.CDF' but rather '.*,monocell.CDF': ", pattern);
-  }
-
-
   # Create the fullname
   fullname <- paste(c(chipType, tags), collapse=",");
 

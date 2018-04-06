@@ -107,13 +107,7 @@ setMethodS3("doCRMAv1", "AffymetrixCelSet", function(csR, shift=+300, combineAll
   # Backward compatibility
   ram <- list(...)$ram;
   if (!is.null(ram)) {
-    ram <- Arguments$getDouble(ram, range=c(0,Inf));
-    verbose && cat(verbose, "ram: ", ram);
-    warning("Argument 'ram' of doCRMAv1() is deprecated. Instead use setOption(aromaSettings, \"memory/ram\", ram).");
-    oram <- setOption(aromaSettings, "memory/ram", ram);
-    on.exit({
-      setOption(aromaSettings, "memory/ram", oram);
-    });
+    .Defunct("Argument 'ram' of doCRMAv1() is defunct. Instead use setOption(aromaSettings, \"memory/ram\", ram).");
   }
 
   # List of objects to be returned

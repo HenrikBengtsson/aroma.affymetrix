@@ -85,13 +85,7 @@ setMethodS3("doRMA", "AffymetrixCelSet", function(csR, arrays=NULL, flavor=c("af
   # Backward compatibility
   ram <- list(...)$ram;
   if (!is.null(ram)) {
-    ram <- Arguments$getDouble(ram, range=c(0,Inf));
-    verbose && cat(verbose, "ram: ", ram);
-    warning("Argument 'ram' of doRMA() is deprecated. Instead use setOption(aromaSettings, \"memory/ram\", ram).");
-    oram <- setOption(aromaSettings, "memory/ram", ram);
-    on.exit({
-      setOption(aromaSettings, "memory/ram", oram);
-    });
+    .Defunct(msg = "Argument 'ram' of doRMA() is defunct. Instead use setOption(aromaSettings, \"memory/ram\", ram).");
   }
 
   verbose && cat(verbose, "Data set");

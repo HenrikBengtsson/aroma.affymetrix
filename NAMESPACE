@@ -421,21 +421,21 @@ exportPattern("^[^\\.]")
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # DECLARATIONS
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-S3method("doASCRMAv1", "default");
-S3method("doASCRMAv2", "default");
-S3method("doCRMAv1", "default");
-S3method("doCRMAv2", "default");
-S3method("doFIRMA", "default");
-S3method("doGCRMA", "default");
-S3method("doRMA", "default");
+S3method("doASCRMAv1", "default")
+S3method("doASCRMAv2", "default")
+S3method("doCRMAv1", "default")
+S3method("doCRMAv2", "default")
+S3method("doFIRMA", "default")
+S3method("doGCRMA", "default")
+S3method("doRMA", "default")
 
-S3method("doCRMAv1", "AffymetrixCelSet");
-S3method("doCRMAv2", "AffymetrixCelSet");
-S3method("doFIRMA", "AffymetrixCelSet");
-S3method("doGCRMA", "AffymetrixCelSet");
-S3method("doRMA", "AffymetrixCelSet");
+S3method("doCRMAv1", "AffymetrixCelSet")
+S3method("doCRMAv2", "AffymetrixCelSet")
+S3method("doFIRMA", "AffymetrixCelSet")
+S3method("doGCRMA", "AffymetrixCelSet")
+S3method("doRMA", "AffymetrixCelSet")
 
-S3method("justRMA", "AffymetrixCelSet");
+S3method("justRMA", "AffymetrixCelSet")
 
 
 S3method("addColorMap", "ArrayExplorer")

@@ -3,31 +3,31 @@ setMethodS3("getAsFullCelSet", "ChipEffectSet", function(this, ..., verbose=FALS
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
+  verbose <- Arguments$getVerbose(verbose)
   if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
+    pushState(verbose)
+    on.exit(popState(verbose))
   }
 
-  verbose && enter(verbose, "Getting chip effect set expanded to the full CDF");
-  cells <- NULL;
-  files <- list();
+  verbose && enter(verbose, "Getting chip effect set expanded to the full CDF")
+  cells <- NULL
+  files <- list()
   for (kk in seq_along(this)) {
-    cef <- this[[kk]];
+    cef <- this[[kk]]
     verbose && enter(verbose, sprintf("Array #%d ('%s') %d",
-                                          kk, getName(cef), length(this)));
+                                          kk, getName(cef), length(this)))
 
-    cf <- getAsFullCelFile(cef, ..., cells=cells, verbose=less(verbose, 5));
+    cf <- getAsFullCelFile(cef, ..., cells=cells, verbose=less(verbose, 5))
 
-    cells <- attr(cf, "cells");
-    attr(cf, "cells") <- NULL;
+    cells <- attr(cf, "cells")
+    attr(cf, "cells") <- NULL
 
-    files[[kk]] <- cf;
-    verbose && exit(verbose);
+    files[[kk]] <- cf
+    verbose && exit(verbose)
   }
-  verbose && exit(verbose);
+  verbose && exit(verbose)
 
-  res <- AffymetrixCelSet(files);
+  res <- AffymetrixCelSet(files)
 
-  res;
-}, protected=TRUE);
+  res
+}, protected=TRUE)

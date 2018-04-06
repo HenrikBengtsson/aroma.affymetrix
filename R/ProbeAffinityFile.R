@@ -33,7 +33,7 @@ setConstructorS3("ProbeAffinityFile", function(..., probeModel=c("pm", "mm", "pm
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'probeModel':
-  probeModel <- match.arg(probeModel);
+  probeModel <- match.arg(probeModel)
 
   extend(ParameterCelFile(...), "ProbeAffinityFile",
     "cached:.firstCells" = NULL,
@@ -43,19 +43,19 @@ setConstructorS3("ProbeAffinityFile", function(..., probeModel=c("pm", "mm", "pm
 
 setMethodS3("as.character", "ProbeAffinityFile", function(x, ...) {
   # To please R CMD check
-  this <- x;
+  this <- x
 
-  s <- NextMethod("as.character");
-  s <- c(s, sprintf("Parameters: %s", getParametersAsString(this)));
-  s;
+  s <- NextMethod("as.character")
+  s <- c(s, sprintf("Parameters: %s", getParametersAsString(this)))
+  s
 }, protected=TRUE)
 
 
 setMethodS3("getParameters", "ProbeAffinityFile", function(this, ...) {
-  params <- NextMethod("getParameters");
-  params$.firstCells <- NULL;
-  params$probeModel <- this$probeModel;
-  params;
+  params <- NextMethod("getParameters")
+  params$.firstCells <- NULL
+  params$probeModel <- this$probeModel
+  params
 }, protected=TRUE)
 
 
@@ -93,38 +93,38 @@ setMethodS3("getCellIndices", "ProbeAffinityFile", function(this, ..., verbose=F
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
+  verbose <- Arguments$getVerbose(verbose)
   if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
+    pushState(verbose)
+    on.exit(popState(verbose))
   }
 
-  verbose && enter(verbose, "Getting cell indices");
-  verbose && cat(verbose, "Probe model: ", this$probeModel);
+  verbose && enter(verbose, "Getting cell indices")
+  verbose && cat(verbose, "Probe model: ", this$probeModel)
 
-  stratifyBy <- switch(this$probeModel, "pm"="pm", "mm"="mm", "pm-mm"="pm", "min1(pm-mm)"="pm", "pm+mm"="pm");
-  verbose && cat(verbose, "stratifyBy: ", stratifyBy);
+  stratifyBy <- switch(this$probeModel, "pm"="pm", "mm"="mm", "pm-mm"="pm", "min1(pm-mm)"="pm", "pm+mm"="pm")
+  verbose && cat(verbose, "stratifyBy: ", stratifyBy)
 
-  cdf <- getCdf(this);
+  cdf <- getCdf(this)
 
   res <- getCellIndices(cdf, ..., stratifyBy=stratifyBy,
-                                             verbose=less(verbose, 5));
-  verbose && exit(verbose);
+                                             verbose=less(verbose, 5))
+  verbose && exit(verbose)
 
-  res;
+  res
 }, protected=TRUE) # getCellIndices()
 
 
 
 setMethodS3("readUnits", "ProbeAffinityFile", function(this, units=NULL, cdf=NULL, ...) {
   if (is.null(cdf)) {
-    cdf <- getCellIndices(this, units=units);
+    cdf <- getCellIndices(this, units=units)
   }
 
   # Note that the actually call to the decoding is done in readUnits()
   # of the superclass.
-  NextMethod("readUnits", cdf=cdf, readStdvs=TRUE, readPixels=TRUE);
-});
+  NextMethod("readUnits", cdf=cdf, readStdvs=TRUE, readPixels=TRUE)
+})
 
 
 setMethodS3("updateUnits", "ProbeAffinityFile", function(this, units=NULL, cdf=NULL, data, ..., verbose=FALSE) {
@@ -132,25 +132,25 @@ setMethodS3("updateUnits", "ProbeAffinityFile", function(this, units=NULL, cdf=N
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
+  verbose <- Arguments$getVerbose(verbose)
   if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
+    pushState(verbose)
+    on.exit(popState(verbose))
   }
 
-  verbose && enter(verbose, "Updating units of ", class(this)[1]);
-  verbose && cat(verbose, "Units:");
-  verbose && str(verbose, units);
+  verbose && enter(verbose, "Updating units of ", class(this)[1])
+  verbose && cat(verbose, "Units:")
+  verbose && str(verbose, units)
 
   if (is.null(cdf)) {
-    cdf <- getCellIndices(this, units=units, verbose=less(verbose, 1));
+    cdf <- getCellIndices(this, units=units, verbose=less(verbose, 1))
   }
 
   # Note that the actually call to the encoding is done in updateUnits()
   # of the superclass.
-  res <- NextMethod("updateUnits", cdf=cdf, data=data, verbose=less(verbose, 1));
+  res <- NextMethod("updateUnits", cdf=cdf, data=data, verbose=less(verbose, 1))
 
-  verbose && exit(verbose);
+  verbose && exit(verbose)
 
-  res;
+  res
 }, private=TRUE)

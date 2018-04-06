@@ -33,17 +33,17 @@ setConstructorS3("OpticalBackgroundCorrection", function(..., minimum=1) {
 
 setMethodS3("getParameters", "OpticalBackgroundCorrection", function(this, ...) {
   # Get parameters from super class
-  params <- NextMethod("getParameters");
+  params <- NextMethod("getParameters")
 
   # Get parameters of this class
   params2 <- list(
     minimum = this$.minimum
-  );
+  )
 
   # Append the two sets
-  params <- c(params, params2);
+  params <- c(params, params2)
 
-  params;
+  params
 }, protected=TRUE)
 
 
@@ -175,7 +175,7 @@ setMethodS3("process", "OpticalBackgroundCorrection", function(this, ..., force=
       verbose && enter(verbose, "Writing adjusted probe signals")
 
       # Write to a temporary file (allow rename of existing one if forced)
-      isFile <- (force && isFile(pathname));
+      isFile <- (force && isFile(pathname))
       pathnameT <- pushTemporaryFile(pathname, isFile=isFile, verbose=verbose)
 
       # Create CEL file to store results, if missing

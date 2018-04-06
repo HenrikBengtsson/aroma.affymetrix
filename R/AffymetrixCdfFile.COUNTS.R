@@ -1,13 +1,13 @@
 setMethodS3("nbrOfCells", "AffymetrixCdfFile", function(this, ...) {
-  as.integer(prod(getDimension(this, ...)));
+  as.integer(prod(getDimension(this, ...)))
 })
 
 setMethodS3("nbrOfUnits", "AffymetrixCdfFile", function(this, ...) {
-  getHeader(this)$probesets;
+  getHeader(this)$probesets
 })
 
 setMethodS3("nbrOfQcUnits", "AffymetrixCdfFile", function(this, ...) {
-  getHeader(this)$qcprobesets;
+  getHeader(this)$qcprobesets
 })
 
 
@@ -51,47 +51,47 @@ setMethodS3("nbrOfGroupsPerUnit", "AffymetrixCdfFile", function(this, units=NULL
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
+  verbose <- Arguments$getVerbose(verbose)
   if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
+    pushState(verbose)
+    on.exit(popState(verbose))
   }
 
 
-  sizes <- this$.nbrOfGroupsPerUnit;
+  sizes <- this$.nbrOfGroupsPerUnit
 
   if (force || is.null(sizes)) {
     # Check in file cache
-    chipType <- getChipType(this);
+    chipType <- getChipType(this)
     key <- list(method="nbrOfGroupsPerUnit", class=class(this)[1],
-                chipType=chipType);
+                chipType=chipType)
     if (getOption(aromaSettings, "devel/useCacheKeyInterface", FALSE)) {
-      key <- getCacheKey(this, method="nbrOfGroupsPerUnit", chipType=chipType);
+      key <- getCacheKey(this, method="nbrOfGroupsPerUnit", chipType=chipType)
     }
-    dirs <- c("aroma.affymetrix", chipType);
+    dirs <- c("aroma.affymetrix", chipType)
     if (force) {
-      sizes <- NULL;
+      sizes <- NULL
     } else {
-      sizes <- loadCache(key=key, dirs=dirs);
+      sizes <- loadCache(key=key, dirs=dirs)
     }
 
     if (is.null(sizes)) {
-      verbose && enter(verbose, "Reading number of groups for *all* units");
-      sizes <- .readCdfGroupNames(getPathname(this));
-      sizes <- restruct(this, sizes, verbose=less(verbose, 5));
-      sizes <- lapply(sizes, FUN=length);
-      sizes <- unlist(sizes, use.names=FALSE);
-      saveCache(sizes, key=key, dirs=dirs);
-      verbose && exit(verbose);
+      verbose && enter(verbose, "Reading number of groups for *all* units")
+      sizes <- .readCdfGroupNames(getPathname(this))
+      sizes <- restruct(this, sizes, verbose=less(verbose, 5))
+      sizes <- lapply(sizes, FUN=length)
+      sizes <- unlist(sizes, use.names=FALSE)
+      saveCache(sizes, key=key, dirs=dirs)
+      verbose && exit(verbose)
     }
 
-    this$.nbrOfGroupsPerUnit <- sizes;
+    this$.nbrOfGroupsPerUnit <- sizes
   }
 
   if (!is.null(units))
-    sizes <- sizes[units];
+    sizes <- sizes[units]
 
-  sizes;
+  sizes
 }, private=TRUE)
 
 
@@ -100,56 +100,56 @@ setMethodS3("nbrOfCellsPerUnitGroup", "AffymetrixCdfFile", function(this, units=
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
+  verbose <- Arguments$getVerbose(verbose)
   if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
+    pushState(verbose)
+    on.exit(popState(verbose))
   }
 
 
-  chipType <- getChipType(this);
-  verbose && enter(verbose, "Getting the number of cells per unit group");
-  verbose && cat(verbose, "Chip type: ", chipType);
+  chipType <- getChipType(this)
+  verbose && enter(verbose, "Getting the number of cells per unit group")
+  verbose && cat(verbose, "Chip type: ", chipType)
 
   key <- list(method="nbrOfCellsPerUnitGroup", class=class(this)[1],
-              chipType=chipType, useNames=useNames);
+              chipType=chipType, useNames=useNames)
   if (getOption(aromaSettings, "devel/useCacheKeyInterface", FALSE)) {
-    key <- getCacheKey(this, method="nbrOfCellsPerUnitGroup", chipType=chipType, useNames=useNames);
+    key <- getCacheKey(this, method="nbrOfCellsPerUnitGroup", chipType=chipType, useNames=useNames)
   }
-  dirs <- c("aroma.affymetrix", chipType);
+  dirs <- c("aroma.affymetrix", chipType)
   if (force) {
-    counts <- NULL;
+    counts <- NULL
   } else {
-    verbose && enter(verbose, "Checking for cached results");
-    counts <- loadCache(key=key, dirs=dirs);
+    verbose && enter(verbose, "Checking for cached results")
+    counts <- loadCache(key=key, dirs=dirs)
     if (!is.null(counts))
-      verbose && cat(verbose, "Cached results found.");
-    verbose && exit(verbose);
+      verbose && cat(verbose, "Cached results found.")
+    verbose && exit(verbose)
   }
 
   if (is.null(counts)) {
-    verbose && enter(verbose, "Reading cell counts from CDF");
-    counts <- .readCdfNbrOfCellsPerUnitGroup(getPathname(this));
-    verbose && exit(verbose);
+    verbose && enter(verbose, "Reading cell counts from CDF")
+    counts <- .readCdfNbrOfCellsPerUnitGroup(getPathname(this))
+    verbose && exit(verbose)
 
-    counts <- restruct(this, counts, verbose=less(verbose, 5));
+    counts <- restruct(this, counts, verbose=less(verbose, 5))
 
     if (!useNames) {
-      names(counts) <- NULL;
-      counts <- lapply(counts, FUN=function(x) { names(x) <- NULL; x });
+      names(counts) <- NULL
+      counts <- lapply(counts, FUN=function(x) { names(x) <- NULL; x })
     }
 
-    saveCache(counts, key=key, dirs=dirs);
+    saveCache(counts, key=key, dirs=dirs)
   }
 
   # Subset?
   if (!is.null(units)) {
-    counts <- counts[units];
+    counts <- counts[units]
   }
 
-  verbose && exit(verbose);
+  verbose && exit(verbose)
 
-  counts;
+  counts
 }, private=TRUE)
 
 
@@ -159,53 +159,53 @@ setMethodS3("nbrOfCellsPerUnit", "AffymetrixCdfFile", function(this, units=NULL,
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
+  verbose <- Arguments$getVerbose(verbose)
   if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
+    pushState(verbose)
+    on.exit(popState(verbose))
   }
 
-  chipType <- getChipType(this);
-  verbose && enter(verbose, "Getting the number of cells per unit");
-  verbose && cat(verbose, "Chip type: ", chipType);
+  chipType <- getChipType(this)
+  verbose && enter(verbose, "Getting the number of cells per unit")
+  verbose && cat(verbose, "Chip type: ", chipType)
 
   key <- list(method="nbrOfCellsPerUnit", class=class(this)[1],
-              chipType=chipType, useNames=useNames);
+              chipType=chipType, useNames=useNames)
   if (getOption(aromaSettings, "devel/useCacheKeyInterface", FALSE)) {
-    key <- getCacheKey(this, method="nbrOfCellsPerUnit", chipType=chipType, useNames=useNames);
+    key <- getCacheKey(this, method="nbrOfCellsPerUnit", chipType=chipType, useNames=useNames)
   }
-  dirs <- c("aroma.affymetrix", chipType);
+  dirs <- c("aroma.affymetrix", chipType)
   if (force) {
-    counts <- NULL;
+    counts <- NULL
   } else {
-    verbose && enter(verbose, "Checking for cached results");
-    counts <- loadCache(key=key, dirs=dirs);
+    verbose && enter(verbose, "Checking for cached results")
+    counts <- loadCache(key=key, dirs=dirs)
     if (!is.null(counts))
-      verbose && cat(verbose, "Cached results found.");
-    verbose && exit(verbose);
+      verbose && cat(verbose, "Cached results found.")
+    verbose && exit(verbose)
   }
 
   if (is.null(counts)) {
-    verbose && enter(verbose, "Getting number of cells per unit group");
+    verbose && enter(verbose, "Getting number of cells per unit group")
     counts <- nbrOfCellsPerUnitGroup(this, units=NULL, useNames=useNames,
-                                           ..., verbose=less(verbose, 1));
+                                           ..., verbose=less(verbose, 1))
 
-    verbose && enter(verbose, "Summing per unit");
+    verbose && enter(verbose, "Summing per unit")
     # Sum per unit
-    counts <- sapply(counts, FUN=sum);
-    verbose && exit(verbose);
+    counts <- sapply(counts, FUN=sum)
+    verbose && exit(verbose)
 
-    verbose && exit(verbose);
+    verbose && exit(verbose)
 
-    saveCache(counts, key=key, dirs=dirs);
+    saveCache(counts, key=key, dirs=dirs)
   }
 
   # Subset?
   if (!is.null(units)) {
-    counts <- counts[units];
+    counts <- counts[units]
   }
 
-  verbose && exit(verbose);
+  verbose && exit(verbose)
 
-  counts;
+  counts
 }, private=TRUE)

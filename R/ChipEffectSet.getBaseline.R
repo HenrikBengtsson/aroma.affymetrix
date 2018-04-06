@@ -27,100 +27,100 @@ setMethodS3("getBaseline", "ChipEffectSet", function(this, force=FALSE, verbose=
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
+  verbose <- Arguments$getVerbose(verbose)
   if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
+    pushState(verbose)
+    on.exit(popState(verbose))
   }
 
 
-  verbose && enter(verbose, "Getting CEL file to store baseline signals");
-  key <- list(dataset=getFullName(this), samples=getNames(this));
-  id <- getChecksum(key);
-  filename <- sprintf(".baseline,%s.CEL", id);
+  verbose && enter(verbose, "Getting CEL file to store baseline signals")
+  key <- list(dataset=getFullName(this), samples=getNames(this))
+  id <- getChecksum(key)
+  filename <- sprintf(".baseline,%s.CEL", id)
 
 
-  verbose && enter(verbose, "Searching for an existing file");
+  verbose && enter(verbose, "Searching for an existing file")
 
   # Searching for the output file in multiple directories
-  path <- getPath(this);
-  paths <- c(path);
+  path <- getPath(this)
+  paths <- c(path)
 
   # Drop tags from root path?
   if (getOption(aromaSettings, "devel/dropRootPathTags", TRUE)) {
-    path <- dropRootPathTags(path, depth=2, verbose=less(verbose, 5));
-    paths <- c(paths, path);
-    paths <- unique(paths);
+    path <- dropRootPathTags(path, depth=2, verbose=less(verbose, 5))
+    paths <- c(paths, path)
+    paths <- unique(paths)
   }
 
-  verbose && cat(verbose, "Paths:");
-  verbose && print(verbose, paths);
-  verbose && cat(verbose, "Filename: ", filename);
+  verbose && cat(verbose, "Paths:")
+  verbose && print(verbose, paths)
+  verbose && cat(verbose, "Filename: ", filename)
 
-  pathname <- NULL;
+  pathname <- NULL
   for (kk in seq_along(paths)) {
-    path <- paths[kk];
-    verbose && enter(verbose, sprintf("Searching path #%d of %d", kk, length(paths)));
+    path <- paths[kk]
+    verbose && enter(verbose, sprintf("Searching path #%d of %d", kk, length(paths)))
 
-    verbose && cat(verbose, "Path: ", path);
-    pathnameT <- Arguments$getReadablePathname(filename, path=path, mustExist=FALSE);
-    verbose && cat(verbose, "Pathname: ", pathnameT);
+    verbose && cat(verbose, "Path: ", path)
+    pathnameT <- Arguments$getReadablePathname(filename, path=path, mustExist=FALSE)
+    verbose && cat(verbose, "Pathname: ", pathnameT)
     if (isFile(pathnameT)) {
-      pathname <- pathnameT;
-      verbose && cat(verbose, "Found an existing file.");
-      verbose && exit(verbose);
-      break;
+      pathname <- pathnameT
+      verbose && cat(verbose, "Found an existing file.")
+      verbose && exit(verbose)
+      break
     }
 
-    verbose && exit(verbose);
+    verbose && exit(verbose)
   } # for (kk ...)
-  verbose && cat(verbose, "Located pathname: ", pathname);
+  verbose && cat(verbose, "Located pathname: ", pathname)
 
-  verbose && exit(verbose);
+  verbose && exit(verbose)
 
 
   # Get a template CEL file
-  df <- getOneFile(this);
+  df <- getOneFile(this)
 
   if (isFile(pathname)) {
-    verbose && enter(verbose, "Loading existing data file");
-    res <- newInstance(df, pathname);
-    verbose && exit(verbose);
+    verbose && enter(verbose, "Loading existing data file")
+    res <- newInstance(df, pathname)
+    verbose && exit(verbose)
   } else {
-    verbose && enter(verbose, "Allocating empty data file");
+    verbose && enter(verbose, "Allocating empty data file")
 
-    path <- paths[length(paths)];
-    verbose && cat(verbose, "Path: ", path);
-    verbose && cat(verbose, "Filename: ", filename);
-    pathname <- Arguments$getWritablePathname(filename, path=path, mustNotExist=TRUE);
+    path <- paths[length(paths)]
+    verbose && cat(verbose, "Path: ", path)
+    verbose && cat(verbose, "Filename: ", filename)
+    pathname <- Arguments$getWritablePathname(filename, path=path, mustNotExist=TRUE)
 
-    verbose && enter(verbose, "Retrieving CEL file");
+    verbose && enter(verbose, "Retrieving CEL file")
     res <- createFrom(df, filename=pathname, path=NULL, methods="create",
-                         clear=TRUE, force=force, verbose=less(verbose));
-    verbose && print(verbose, res);
-    verbose && exit(verbose);
+                         clear=TRUE, force=force, verbose=less(verbose))
+    verbose && print(verbose, res)
+    verbose && exit(verbose)
 
-    verbose && exit(verbose);
+    verbose && exit(verbose)
   } # if (isFile(pathname))
 
   # Not needed anymore
-  df <- NULL;
-  verbose && exit(verbose);
+  df <- NULL
+  verbose && exit(verbose)
 
-  res;
+  res
 }, protected=TRUE)
 
 
 
 setMethodS3("getBaseline", "SnpChipEffectSet", function(this, ...) {
-  res <- NextMethod("getBaseline");
-  res$mergeStrands <- getMergeStrands(this);
-  res;
+  res <- NextMethod("getBaseline")
+  res$mergeStrands <- getMergeStrands(this)
+  res
 }, protected=TRUE)
 
 
 setMethodS3("getBaseline", "CnChipEffectSet", function(this, ...) {
-  res <- NextMethod("getBaseline");
-  res$combineAlleles <- getCombineAlleles(this);
-  res;
+  res <- NextMethod("getBaseline")
+  res$combineAlleles <- getCombineAlleles(this)
+  res
 }, protected=TRUE)

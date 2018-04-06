@@ -38,85 +38,85 @@ setMethodS3("extractMatrix", "AffymetrixCelSet", function(this, cells=NULL, ...,
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'cells':
-  cdf <- getCdf(this);
+  cdf <- getCdf(this)
   if (is.null(cells)) {
-    ncells <- nbrOfCells(cdf);
+    ncells <- nbrOfCells(cdf)
   } else {
-    cells <- Arguments$getIndices(cells, max=nbrOfCells(cdf));
-    ncells <- length(cells);
+    cells <- Arguments$getIndices(cells, max=nbrOfCells(cdf))
+    ncells <- length(cells)
   }
 
   # Argument 'field':
-  field <- match.arg(field);
+  field <- match.arg(field)
 
   # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
+  verbose <- Arguments$getVerbose(verbose)
   if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
+    pushState(verbose)
+    on.exit(popState(verbose))
   }
 
 
   # Settings
-  gcArrayFrequency <- getOption(aromaSettings, "memory/gcArrayFrequency");
+  gcArrayFrequency <- getOption(aromaSettings, "memory/gcArrayFrequency")
   if (is.null(gcArrayFrequency))
-    gcArrayFrequency <- 10;
+    gcArrayFrequency <- 10
 
 
-  verbose && enter(verbose, "Getting data for the array set");
+  verbose && enter(verbose, "Getting data for the array set")
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Allocate return matrix
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  verbose && enter(verbose, "Allocating matrix");
-  arrayNames <- getNames(this);
-  nbrOfArrays <- length(arrayNames);
+  verbose && enter(verbose, "Allocating matrix")
+  arrayNames <- getNames(this)
+  nbrOfArrays <- length(arrayNames)
   if (field %in% c("pixels")) {
-    naValue <- as.integer(NA);
+    naValue <- as.integer(NA)
   } else {
-    naValue <- as.double(NA);
+    naValue <- as.double(NA)
   }
-  df <- matrix(naValue, nrow=ncells, ncol=nbrOfArrays);
-  colnames(df) <- arrayNames;
-  verbose && str(verbose, df);
+  df <- matrix(naValue, nrow=ncells, ncol=nbrOfArrays)
+  colnames(df) <- arrayNames
+  verbose && str(verbose, df)
   verbose && printf(verbose, "RAM: %s\n", hsize(object.size(df), digits = 2L, standard = "IEC"))
-  verbose && exit(verbose);
+  verbose && exit(verbose)
 
   if (!is.null(cells)) {
-    verbose && enter(verbose, "Optimize reading order");
-    srt <- sort(cells, method="quick", index.return=TRUE);
-    o <- srt$ix;
-    cells <- srt$x;
+    verbose && enter(verbose, "Optimize reading order")
+    srt <- sort(cells, method="quick", index.return=TRUE)
+    o <- srt$ix
+    cells <- srt$x
     # Not needed anymore
-    srt <- NULL;
-    verbose && exit(verbose);
+    srt <- NULL
+    verbose && exit(verbose)
   } else {
-    o <- seq_len(ncells);
+    o <- seq_len(ncells)
   }
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Get thetas from the samples
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  verbose && enter(verbose, "Retrieving data");
+  verbose && enter(verbose, "Retrieving data")
   for (aa in seq_len(nbrOfArrays)) {
-    verbose && printf(verbose, "Array %d,\n", aa);
-    cf <- this[[aa]];
+    verbose && printf(verbose, "Array %d,\n", aa)
+    cf <- this[[aa]]
     df[o,aa] <- getData(cf, indices=cells, fields=field,
-                                           verbose=less(verbose))[[field]];
+                                           verbose=less(verbose))[[field]]
     if (aa %% gcArrayFrequency == 0) {
       # Garbage collect
-      gc <- gc();
-      verbose && print(verbose, gc);
+      gc <- gc()
+      verbose && print(verbose, gc)
     }
   } # for (aa in ...)
-  verbose && exit(verbose);
+  verbose && exit(verbose)
 
   # Drop singleton dimensions?
   if (drop) {
-    df <- drop(df);
+    df <- drop(df)
   }
 
-  verbose && exit(verbose);
+  verbose && exit(verbose)
 
-  df;
+  df
 }) # extractMatrix()

@@ -31,46 +31,46 @@ setConstructorS3("AffymetrixCdfFile", function(...) {
     "cached:.isPm" = NULL,
     "cached:.gi" = NULL,
     "cached:.si" = NULL
-  );
+  )
 
   # Parse attributes (all subclasses must call this in the constructor).
   setAttributesByTags(this)
 
-  this;
+  this
 })
 
 
 setMethodS3("getExtensionPattern", "AffymetrixCdfFile", function(static, ...) {
-  "[.](cdf|CDF)$";
+  "[.](cdf|CDF)$"
 }, static=TRUE, protected=TRUE)
 
 
 
 setMethodS3("getUnitNamesFile", "AffymetrixCdfFile", function(this, ...) {
-  this;
+  this
 }, protected=TRUE)
 
 
 setMethodS3("getUnitTypesFile", "AffymetrixCdfFile", function(this, ...) {
-  this;
+  this
 }, protected=TRUE)
 
 
 setMethodS3("getFileFormat", "AffymetrixCdfFile", function(this, ...) {
-  pathname <- getPathname(this);
+  pathname <- getPathname(this)
   if (!isFile(pathname)) return(NA_character_)
 
   # Read CDF header
-  raw <- readBin(pathname, what=raw(), n=10);
+  raw <- readBin(pathname, what=raw(), n=10)
 
   if (raw[1] == 59)
-    return("v5 (binary; CC)");
+    return("v5 (binary; CC)")
 
   if (raw[1] == 67)
-    return("v4 (binary; XDA)");
+    return("v4 (binary; XDA)")
 
   if (rawToChar(raw[1:5]) == "[CDF]")
-    return("v3 (text; ASCII)");
+    return("v3 (text; ASCII)")
 
   NA_character_
 })
@@ -78,21 +78,21 @@ setMethodS3("getFileFormat", "AffymetrixCdfFile", function(this, ...) {
 
 setMethodS3("as.character", "AffymetrixCdfFile", function(x, ...) {
   # To please R CMD check
-  this <- x;
+  this <- x
 
-  s <- NextMethod("as.character");
-  s <- c(s, sprintf("File format: %s", getFileFormat(this)));
-  s <- c(s, sprintf("Dimension: %s", paste(getDimension(this), collapse="x")));
-  s <- c(s, sprintf("Number of cells: %d", nbrOfCells(this)));
+  s <- NextMethod("as.character")
+  s <- c(s, sprintf("File format: %s", getFileFormat(this)))
+  s <- c(s, sprintf("Dimension: %s", paste(getDimension(this), collapse="x")))
+  s <- c(s, sprintf("Number of cells: %d", nbrOfCells(this)))
   # Requires reading of data:
-#  nbrOfPms <- sum(isPm(this));
-#  s <- c(s, sprintf("Number of PM cells: %d (%.2f%%)", nbrOfPms, 100*nbrOfPms/nbrOfCells(this)));
-  s <- c(s, sprintf("Number of units: %d", nbrOfUnits(this)));
-  s <- c(s, sprintf("Cells per unit: %.2f", nbrOfCells(this)/nbrOfUnits(this)));
+#  nbrOfPms <- sum(isPm(this))
+#  s <- c(s, sprintf("Number of PM cells: %d (%.2f%%)", nbrOfPms, 100*nbrOfPms/nbrOfCells(this)))
+  s <- c(s, sprintf("Number of units: %d", nbrOfUnits(this)))
+  s <- c(s, sprintf("Cells per unit: %.2f", nbrOfCells(this)/nbrOfUnits(this)))
   # Requires that unit names are read:
-#  s <- c(s, sprintf("Number of AFFX- units: %d", length(indexOf(this, "^AFFX-"))));
-  s <- c(s, sprintf("Number of QC units: %d", nbrOfQcUnits(this)));
-  s;
+#  s <- c(s, sprintf("Number of AFFX- units: %d", length(indexOf(this, "^AFFX-"))))
+  s <- c(s, sprintf("Number of QC units: %d", nbrOfQcUnits(this)))
+  s
 }, protected=TRUE)
 
 
@@ -130,19 +130,19 @@ setMethodS3("as.character", "AffymetrixCdfFile", function(x, ...) {
 setMethodS3("fromFile", "AffymetrixCdfFile", function(static, filename, path=NULL, ...) {
   # Arguments 'filename' and 'path':
   pathname <- Arguments$getReadablePathname(filename, path=path,
-                                                              mustExist=TRUE);
+                                                              mustExist=TRUE)
 
   # Assert that it is a CDF file
-  header <- .readCdfHeader(pathname);
+  header <- .readCdfHeader(pathname)
 
-  NextMethod("fromFile", filename=pathname);
+  NextMethod("fromFile", filename=pathname)
 }, static=TRUE, protected=TRUE)
 
 
 
 setMethodS3("getDefaultExtension", "AffymetrixCdfFile", function(static, ...) {
-  "cdf";
-}, static=TRUE, protected=TRUE);
+  "cdf"
+}, static=TRUE, protected=TRUE)
 
 
 ###########################################################################/**
@@ -184,38 +184,38 @@ setMethodS3("findByChipType", "AffymetrixCdfFile", function(static, chipType, ta
   # Argument 'chipType':
   if (is.null(chipType)) {
     # Nothing to do, e.g. may be called via findCdf()
-    return(NULL);
+    return(NULL)
   }
-  chipType <- Arguments$getCharacter(chipType);
+  chipType <- Arguments$getCharacter(chipType)
 
 
-  args <- list(pattern=pattern);
+  args <- list(pattern=pattern)
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Filename extension pattern to be searched for
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  ext <- getDefaultExtension(static);
-  extPattern <- sprintf("[.](%s|%s)", tolower(ext), toupper(ext));
+  ext <- getDefaultExtension(static)
+  extPattern <- sprintf("[.](%s|%s)", tolower(ext), toupper(ext))
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Search in annotationData/chipTypes/<chipType>/
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Create the fullname
-  fullname <- paste(c(chipType, tags), collapse=",");
+  fullname <- paste(c(chipType, tags), collapse=",")
 
   # Extract the name and the tags
-  parts <- unlist(strsplit(fullname, split=",", fixed=TRUE));
-  chipType <- parts[1];
-  tags <- parts[-1];
+  parts <- unlist(strsplit(fullname, split=",", fixed=TRUE))
+  chipType <- parts[1]
+  tags <- parts[-1]
 
   # Fullname pattern
   args <- list(
     chipType=chipType,
     pattern=sprintf("^%s%s$", fullname, extPattern),
     ...
-  );
-  pathname <- do.call(findAnnotationDataByChipType, args=args);
+  )
+  pathname <- do.call(findAnnotationDataByChipType, args=args)
 
   # If not found, look for Windows shortcuts
   if (is.null(pathname)) {
@@ -224,17 +224,17 @@ setMethodS3("findByChipType", "AffymetrixCdfFile", function(static, chipType, ta
       chipType=chipType,
       pattern=sprintf("^%s%s[.]lnk$", fullname, extPattern),
       ...
-    );
-    pathname <- do.call(findAnnotationDataByChipType, args=args);
+    )
+    pathname <- do.call(findAnnotationDataByChipType, args=args)
     if (!is.null(pathname)) {
       # ..and expand it
-      pathname <- Arguments$getReadablePathname(pathname, mustExist=FALSE);
+      pathname <- Arguments$getReadablePathname(pathname, mustExist=FALSE)
       if (!isFile(pathname))
-        pathname <- NULL;
+        pathname <- NULL
     }
   }
 
-  pathname;
+  pathname
 }, static=TRUE, protected=TRUE)
 
 
@@ -277,50 +277,50 @@ setMethodS3("getHeader", "AffymetrixCdfFile", function(this, ...) {
 
 
 setMethodS3("getPlatform", "AffymetrixCdfFile", function(this, ...) {
-  "Affymetrix";
+  "Affymetrix"
 })
 
 
 setMethodS3("getChipType", "AffymetrixCdfFile", function(this, fullname=TRUE, ...) {
   if (!isFile(this)) return(NA_character_)
-  chipType <- getHeader(this)$chiptype;
+  chipType <- getHeader(this)$chiptype
 
   # Get the main chip type?
   if (!fullname) {
     # Handle '-monocell' specially
-    pattern <- "^(.*)-(monocell)$";
+    pattern <- "^(.*)-(monocell)$"
     if (regexpr(pattern, chipType) != -1) {
-      chipType <- gsub(pattern, "\\1", chipType);
-      tags <- "monocell";
+      chipType <- gsub(pattern, "\\1", chipType)
+      tags <- "monocell"
     } else {
-      name <- gsub("[,].*$", "", chipType);
+      name <- gsub("[,].*$", "", chipType)
 
       # Keep anything after the data-set name (and the separator).
-      tags <- substring(chipType, nchar(name)+2);
-      tags <- unlist(strsplit(tags, split=",", fixed=TRUE));
+      tags <- substring(chipType, nchar(name)+2)
+      tags <- unlist(strsplit(tags, split=",", fixed=TRUE))
       if (length(tags) == 0)
-        tags <- NULL;
+        tags <- NULL
 
-      chipType <- name;
+      chipType <- name
     }
-    attr(chipType, "tags") <- tags;
+    attr(chipType, "tags") <- tags
   }
 
-  chipType;
+  chipType
 })
 
 setMethodS3("getDimension", "AffymetrixCdfFile", function(this, ...) {
   if (!isFile(this)) return(c(NA_integer_, NA_integer_))
-  header <- getHeader(this);
-  c(nbrOfRows=header$rows, nbrOfColumns=header$cols);
+  header <- getHeader(this)
+  c(nbrOfRows=header$rows, nbrOfColumns=header$cols)
 })
 
 setMethodS3("nbrOfRows", "AffymetrixCdfFile", function(this, ...) {
-  as.integer(getDimension(this, ...)[1]);
+  as.integer(getDimension(this, ...)[1])
 })
 
 setMethodS3("nbrOfColumns", "AffymetrixCdfFile", function(this, ...) {
-  as.integer(getDimension(this, ...)[2]);
+  as.integer(getDimension(this, ...)[2])
 })
 
 
@@ -356,53 +356,53 @@ setMethodS3("nbrOfColumns", "AffymetrixCdfFile", function(this, ...) {
 # @keyword IO
 #*/###########################################################################
 setMethodS3("getUnitNames", "AffymetrixCdfFile", function(this, units=NULL, ...) {
-  names <- this$.unitNames;
+  names <- this$.unitNames
 
   if (is.null(names)) {
-    names <- .readCdfUnitNames(getPathname(this), ...);
-    this$.unitNames <- names;
+    names <- .readCdfUnitNames(getPathname(this), ...)
+    this$.unitNames <- names
   }
 
   if (!is.null(units))
-    names <- names[units];
+    names <- names[units]
 
-  names;
+  names
 })
 
 
 setMethodS3("hasUnitTypes", "AffymetrixCdfFile", function(this, types, ..., verbose=FALSE) {
   # Argument 'types':
-  types <- Arguments$getIntegers(types, range=c(0,99));
+  types <- Arguments$getIntegers(types, range=c(0,99))
 
   # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
+  verbose <- Arguments$getVerbose(verbose)
   if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
+    pushState(verbose)
+    on.exit(popState(verbose))
   }
 
 
   # Already have unit types cached?
-  unitTypes <- this$.unitTypes;
+  unitTypes <- this$.unitTypes
   if (!is.null(unitTypes)) {
-    hasUnitTypes <- any(unitTypes %in% types);
-    return(hasUnitTypes);
+    hasUnitTypes <- any(unitTypes %in% types)
+    return(hasUnitTypes)
   }
 
   # ...otherwise, scan for unit types
-  allUnits <- seq_len(nbrOfUnits(this));
-  chunkSize <- 5000;
+  allUnits <- seq_len(nbrOfUnits(this))
+  chunkSize <- 5000
   while (length(allUnits) > 0) {
-    idxs <- 1:min(chunkSize, length(allUnits));
-    units <- allUnits[idxs];
-    unitTypes <- getUnitTypes(this, units=units, .cache=FALSE);
-    hasUnitTypes <- any(unitTypes %in% types);
+    idxs <- 1:min(chunkSize, length(allUnits))
+    units <- allUnits[idxs]
+    unitTypes <- getUnitTypes(this, units=units, .cache=FALSE)
+    hasUnitTypes <- any(unitTypes %in% types)
     if (hasUnitTypes)
-      return(TRUE);
-    allUnits <- allUnits[-idxs];
+      return(TRUE)
+    allUnits <- allUnits[-idxs]
   }
 
-  FALSE;
+  FALSE
 })
 
 
@@ -452,13 +452,13 @@ setMethodS3("getUnitTypes", "AffymetrixCdfFile", function(this, units=NULL, ...,
     #   1 - Expression, 2 - Genotyping, 3 - CustomSeq, 4 - Tag,
     #   5 - Copy Number
 
-    map <- c("unknown"=0, "expression"=1, "genotyping"=2, "resequencing"=3, "tag"=4, "copynumber"=5, "genotypingcontrol"=6, "expressioncontrol"=7);
-    storage.mode(map) <- "integer";
+    map <- c("unknown"=0, "expression"=1, "genotyping"=2, "resequencing"=3, "tag"=4, "copynumber"=5, "genotypingcontrol"=6, "expressioncontrol"=7)
+    storage.mode(map) <- "integer"
 
-    res <- match(unitType, names(map)) - as.integer(1);
-    attr(res, "typeMap") <- map;
+    res <- match(unitType, names(map)) - as.integer(1)
+    attr(res, "typeMap") <- map
 
-    res;
+    res
   } # asUnitTypeIndex()
 
 
@@ -466,75 +466,75 @@ setMethodS3("getUnitTypes", "AffymetrixCdfFile", function(this, units=NULL, ...,
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
+  verbose <- Arguments$getVerbose(verbose)
   if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
+    pushState(verbose)
+    on.exit(popState(verbose))
   }
 
-  types <- this$.unitTypes;
+  types <- this$.unitTypes
 
 
   if (.cache) {
     if (force || is.null(types)) {
       # Check in file cache
-      chipType <- getChipType(this);
-      key <- list(method="getUnitTypes", class=class(this)[1], version="2008-09-03", chipType=chipType);
+      chipType <- getChipType(this)
+      key <- list(method="getUnitTypes", class=class(this)[1], version="2008-09-03", chipType=chipType)
       if (getOption(aromaSettings, "devel/useCacheKeyInterface", FALSE)) {
-        key <- getCacheKey(this, method="getUnitTypes", chipType=chipType);
+        key <- getCacheKey(this, method="getUnitTypes", chipType=chipType)
       }
-      dirs <- c("aroma.affymetrix", chipType);
+      dirs <- c("aroma.affymetrix", chipType)
       if (force) {
-        types <- NULL;
+        types <- NULL
       } else {
-        types <- loadCache(key=key, dirs=dirs);
+        types <- loadCache(key=key, dirs=dirs)
       }
 
       if (is.null(types)) {
-        verbose && enter(verbose, "Reading types for *all* units");
+        verbose && enter(verbose, "Reading types for *all* units")
 
 ## ISSUE: readCdfUnits() does not translate the unit types, which means
 ## that the unit type integer different for ASCII and binary CDFs.
-## types <- readCdfUnits(getPathname(this), readType=TRUE, readDirection=FALSE, readIndices=FALSE, readXY=FALSE, readBases=FALSE, readExpos=FALSE);
+## types <- readCdfUnits(getPathname(this), readType=TRUE, readDirection=FALSE, readIndices=FALSE, readXY=FALSE, readBases=FALSE, readExpos=FALSE)
 ## WORKAROUND: Use readCdf() which return unit type strings.
 ## Requires: affxparser v1.13.5 or newer.
 
-        types <- .readCdf(getPathname(this), readXY=FALSE, readBases=FALSE, readIndexpos=FALSE, readAtoms=FALSE, readUnitType=TRUE, readUnitDirection=FALSE, readUnitNumber=FALSE, readUnitAtomNumbers=FALSE, readGroupAtomNumbers=FALSE, readGroupDirection=FALSE, readIndices=FALSE, readIsPm=FALSE);
-        types <- unlist(types, use.names=FALSE);
+        types <- .readCdf(getPathname(this), readXY=FALSE, readBases=FALSE, readIndexpos=FALSE, readAtoms=FALSE, readUnitType=TRUE, readUnitDirection=FALSE, readUnitNumber=FALSE, readUnitAtomNumbers=FALSE, readGroupAtomNumbers=FALSE, readGroupDirection=FALSE, readIndices=FALSE, readIsPm=FALSE)
+        types <- unlist(types, use.names=FALSE)
 
         # Sanity check
         if (length(types) != nbrOfUnits(this)) {
-          throw("Internal error: Number of read unit types does not match the number of units in the CDF: ", length(types), " != ", nbrOfUnits(this));
+          throw("Internal error: Number of read unit types does not match the number of units in the CDF: ", length(types), " != ", nbrOfUnits(this))
         }
 
         # Translate
-        types <- asUnitTypeIndex(types);
+        types <- asUnitTypeIndex(types)
 
-        saveCache(types, key=key, dirs=dirs);
+        saveCache(types, key=key, dirs=dirs)
 
-        this$.unitTypes <- types;
+        this$.unitTypes <- types
 
-        verbose && exit(verbose);
+        verbose && exit(verbose)
       }
     }
 
     if (!is.null(units)) {
-      map <- attr(types, "typeMap");
-      types <- types[units];
-      attr(types, "typeMap") <- map;
+      map <- attr(types, "typeMap")
+      types <- types[units]
+      attr(types, "typeMap") <- map
     }
   } else {
-## ISSUE: types <- readCdfUnits(getPathname(this), units=units, readType=TRUE, readDirection=FALSE, readIndices=FALSE, readXY=FALSE, readBases=FALSE, readExpos=FALSE);
-    types <- .readCdf(getPathname(this), readXY=FALSE, readBases=FALSE, readIndexpos=FALSE, readAtoms=FALSE, readUnitType=TRUE, readUnitDirection=FALSE, readUnitNumber=FALSE, readUnitAtomNumbers=FALSE, readGroupAtomNumbers=FALSE, readGroupDirection=FALSE, readIndices=FALSE, readIsPm=FALSE);
-    types <- unlist(types, use.names=FALSE);
-    types <- asUnitTypeIndex(types);
+## ISSUE: types <- readCdfUnits(getPathname(this), units=units, readType=TRUE, readDirection=FALSE, readIndices=FALSE, readXY=FALSE, readBases=FALSE, readExpos=FALSE)
+    types <- .readCdf(getPathname(this), readXY=FALSE, readBases=FALSE, readIndexpos=FALSE, readAtoms=FALSE, readUnitType=TRUE, readUnitDirection=FALSE, readUnitNumber=FALSE, readUnitAtomNumbers=FALSE, readGroupAtomNumbers=FALSE, readGroupDirection=FALSE, readIndices=FALSE, readIsPm=FALSE)
+    types <- unlist(types, use.names=FALSE)
+    types <- asUnitTypeIndex(types)
   }
 
-  typeMap <- attr(types, "typeMap");
-  types <- as.integer(types);
-  attr(types, "types") <- typeMap;
+  typeMap <- attr(types, "typeMap")
+  types <- as.integer(types)
+  attr(types, "types") <- typeMap
 
-  types;
+  types
 })
 
 
@@ -544,78 +544,78 @@ setMethodS3("getGroupDirections", "AffymetrixCdfFile", function(this, units=NULL
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
+  verbose <- Arguments$getVerbose(verbose)
   if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
+    pushState(verbose)
+    on.exit(popState(verbose))
   }
 
 
-  groupDirections <- this$.groupDirections;
+  groupDirections <- this$.groupDirections
 
   if (force || is.null(groupDirections)) {
     # Check in file cache
-    chipType <- getChipType(this);
-    key <- list(method="getGroupDirections", class=class(this)[1], chipType=chipType);
+    chipType <- getChipType(this)
+    key <- list(method="getGroupDirections", class=class(this)[1], chipType=chipType)
     if (getOption(aromaSettings, "devel/useCacheKeyInterface", FALSE)) {
-      key <- getCacheKey(this, method="getGroupDirections", chipType=chipType);
+      key <- getCacheKey(this, method="getGroupDirections", chipType=chipType)
     }
-    dirs <- c("aroma.affymetrix", chipType);
+    dirs <- c("aroma.affymetrix", chipType)
     if (force) {
-      groupDirections <- NULL;
+      groupDirections <- NULL
     } else {
-      groupDirections <- loadCache(key=key, dirs=dirs);
+      groupDirections <- loadCache(key=key, dirs=dirs)
     }
 
     if (is.null(groupDirections)) {
-      verbose && enter(verbose, "Reading directions for *all* unit groups");
+      verbose && enter(verbose, "Reading directions for *all* unit groups")
       # Have to read some group field in order to get group directions
       groupDirections <- .readCdfUnits(getPathname(this), readExpos=TRUE,
-        readBases=FALSE, readXY=FALSE, readType=FALSE, readDirection=TRUE);
+        readBases=FALSE, readXY=FALSE, readType=FALSE, readDirection=TRUE)
 
-      gc <- gc();
-      verbose && print(verbose, gc);
-      verbose && exit(verbose);
+      gc <- gc()
+      verbose && print(verbose, gc)
+      verbose && exit(verbose)
 
       # Remove all 'expos'
-      verbose && enter(verbose, "Removing all 'expos'");
+      verbose && enter(verbose, "Removing all 'expos'")
       groupDirections <- lapply(groupDirections, FUN=function(unit) {
-        groups <- .subset2(unit, 2);
-        groups <- lapply(groups, FUN=.subset, 2);
-        list(groups=groups);
-      });
+        groups <- .subset2(unit, 2)
+        groups <- lapply(groups, FUN=.subset, 2)
+        list(groups=groups)
+      })
 
-      gc <- gc();
-      verbose && print(verbose, gc);
-      verbose && exit(verbose);
+      gc <- gc()
+      verbose && print(verbose, gc)
+      verbose && exit(verbose)
 
-      verbose && enter(verbose, "Restructuring");
+      verbose && enter(verbose, "Restructuring")
       groupDirections <- restruct(this, groupDirections,
-                                                 verbose=less(verbose, 5));
+                                                 verbose=less(verbose, 5))
 
-      gc <- gc();
-      verbose && print(verbose, gc);
-      verbose && exit(verbose);
+      gc <- gc()
+      verbose && print(verbose, gc)
+      verbose && exit(verbose)
 
-      verbose && enter(verbose, "Unlisting each unit");
+      verbose && enter(verbose, "Unlisting each unit")
       groupDirections <- lapply(groupDirections, FUN=unlist,
-                                                          use.names=FALSE);
+                                                          use.names=FALSE)
 
-      gc <- gc();
-      verbose && print(verbose, gc);
-      verbose && exit(verbose);
+      gc <- gc()
+      verbose && print(verbose, gc)
+      verbose && exit(verbose)
 
-      saveCache(groupDirections, key=key, dirs=dirs);
-      verbose && exit(verbose);
+      saveCache(groupDirections, key=key, dirs=dirs)
+      verbose && exit(verbose)
     }
 
-    this$.groupDirections <- groupDirections;
+    this$.groupDirections <- groupDirections
   }
 
   if (!is.null(units))
-    groupDirections <- groupDirections[units];
+    groupDirections <- groupDirections[units]
 
-  groupDirections;
+  groupDirections
 }, private=TRUE)
 
 
@@ -668,22 +668,22 @@ setMethodS3("getCellIndices", "AffymetrixCdfFile", function(this, units=NULL, ..
   # Local functions
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   getCellIndicesChunk <- function(pathname, ..., verbose=FALSE) {
-    verbose && enter(verbose, "Querying CDF file");
-    cdfChunk <- .readCdfCellIndices(pathname, ...);
-    verbose && exit(verbose);
+    verbose && enter(verbose, "Querying CDF file")
+    cdfChunk <- .readCdfCellIndices(pathname, ...)
+    verbose && exit(verbose)
 
     # Garbage collect
-    gc <- gc();
+    gc <- gc()
 
-    verbose && enter(verbose, "Restructuring");
+    verbose && enter(verbose, "Restructuring")
     # Always call restruct() after a readCdfNnn()!
-    cdfChunk <- restruct(this, cdfChunk, verbose=less(verbose, 5));
-    verbose && exit(verbose);
+    cdfChunk <- restruct(this, cdfChunk, verbose=less(verbose, 5))
+    verbose && exit(verbose)
 
-    gc <- gc();
-    verbose && print(verbose, gc);
+    gc <- gc()
+    verbose && print(verbose, gc)
 
-    cdfChunk;
+    cdfChunk
   } # getCellIndicesChunk()
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -691,14 +691,14 @@ setMethodS3("getCellIndices", "AffymetrixCdfFile", function(this, units=NULL, ..
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'units':
   if (!is.null(units)) {
-    units <- Arguments$getIndices(units, range=c(1, nbrOfCells(this)));
+    units <- Arguments$getIndices(units, range=c(1, nbrOfCells(this)))
   }
 
   # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
+  verbose <- Arguments$getVerbose(verbose)
   if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
+    pushState(verbose)
+    on.exit(popState(verbose))
   }
 
 
@@ -707,85 +707,85 @@ setMethodS3("getCellIndices", "AffymetrixCdfFile", function(this, units=NULL, ..
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   key <- list(method="getCellIndices", class=class(this)[1],
              chipType=getChipType(this), units=units, ...,
-             useNames=useNames, unlist=unlist);
+             useNames=useNames, unlist=unlist)
   if (getOption(aromaSettings, "devel/useCacheKeyInterface", FALSE)) {
-    key <- getCacheKey(this, method="getCellIndices", chipType=getChipType(this), units=units, ..., useNames=useNames, unlist=unlist);
+    key <- getCacheKey(this, method="getCellIndices", chipType=getChipType(this), units=units, ..., useNames=useNames, unlist=unlist)
   }
 
   # This is a trick to store either to memory or file cache
-  key <- getChecksum(key);
+  key <- getChecksum(key)
   if (!force) {
     # (a) Check memory cache
-    res <- this$.cellIndices[[key]];
+    res <- this$.cellIndices[[key]]
 
 ##    # (b) Check file cache
 ##    if (is.null(res)) {
-##      res <- loadCache(key=list(key));
+##      res <- loadCache(key=list(key))
 ##    }
 
     if (!is.null(res)) {
-      verbose && cat(verbose, "getCellIndices.AffymetrixCdfFile(): Returning cached data");
-      return(res);
+      verbose && cat(verbose, "getCellIndices.AffymetrixCdfFile(): Returning cached data")
+      return(res)
     }
   }
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Read from CDF file
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  verbose && enter(verbose, "Reading cell indices from CDF file");
-  verbose && cat(verbose, "Pathname: ", getPathname(this));
-  verbose && cat(verbose, "Units: ");
-  verbose && str(verbose, units);
-  verbose2 <- -as.integer(verbose)-1;
+  verbose && enter(verbose, "Reading cell indices from CDF file")
+  verbose && cat(verbose, "Pathname: ", getPathname(this))
+  verbose && cat(verbose, "Units: ")
+  verbose && str(verbose, units)
+  verbose2 <- -as.integer(verbose)-1
 
-  units0 <- units;
+  units0 <- units
   if (is.null(units)) {
-    units <- seq_len(nbrOfUnits(this));
+    units <- seq_len(nbrOfUnits(this))
   }
-  nbrOfUnits <- length(units);
+  nbrOfUnits <- length(units)
 
 
   if (unlist) {
     cdf <- lapplyInChunks(units, function(unitsChunk) {
-      cdfChunk <- getCellIndicesChunk(getPathname(this), units=unitsChunk, ..., verbose=verbose);
-      res <- vector("list", length(unitsChunk));
-      res[[1]] <- unlist(cdfChunk, use.names=useNames);
-      res;
-    }, chunkSize=100e3, useNames=useNames, verbose=verbose);
-    cdf <- unlist(cdf, use.names=useNames);
+      cdfChunk <- getCellIndicesChunk(getPathname(this), units=unitsChunk, ..., verbose=verbose)
+      res <- vector("list", length(unitsChunk))
+      res[[1]] <- unlist(cdfChunk, use.names=useNames)
+      res
+    }, chunkSize=100e3, useNames=useNames, verbose=verbose)
+    cdf <- unlist(cdf, use.names=useNames)
   } else {
     cdf <- lapplyInChunks(units, function(unitsChunk) {
-      getCellIndicesChunk(getPathname(this), units=unitsChunk, ..., verbose=verbose);
-    }, chunkSize=100e3, useNames=useNames, verbose=verbose);
+      getCellIndicesChunk(getPathname(this), units=unitsChunk, ..., verbose=verbose)
+    }, chunkSize=100e3, useNames=useNames, verbose=verbose)
   }
 
 
-  verbose && exit(verbose);
+  verbose && exit(verbose)
 
-  units <- units0;
+  units <- units0
   # Not needed anymore
-  units0 <- NULL;
+  units0 <- NULL
 
   # Garbage collect
-  gc <- gc();
-  verbose && print(verbose, gc);
+  gc <- gc()
+  verbose && print(verbose, gc)
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Store read units in cache
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (cache) {
-    verbose && cat(verbose, "readUnits.AffymetrixCdfFile(): Updating cache");
+    verbose && cat(verbose, "readUnits.AffymetrixCdfFile(): Updating cache")
     # Cache small objects in memory
     if (object.size(cdf) < 10e6) {
-      this$.cellIndices <- list();
-      this$.cellIndices[[key]] <- cdf;
+      this$.cellIndices <- list()
+      this$.cellIndices[[key]] <- cdf
 ##    } else {
-##      saveCache(cdf, key=list(key));
+##      saveCache(cdf, key=list(key))
     }
   }
 
-  cdf;
+  cdf
 }) # getCellIndices()
 
 
@@ -795,27 +795,27 @@ setMethodS3("restruct", "AffymetrixCdfFile", function(this, cdf, ..., verbose=FA
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
+  verbose <- Arguments$getVerbose(verbose)
   if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
+    pushState(verbose)
+    on.exit(popState(verbose))
   }
 
   # Rearrange CDF structure?
-  fcn <- this$.restructor;
+  fcn <- this$.restructor
   if (!is.null(fcn)) {
-    verbose && enter(verbose, "Restructuring CDF list structure");
-    verbose && cat(verbose, "Restructuring function:");
-    verbose && str(verbose, fcn);
-    verbose && cat(verbose, "First element in list to be restructured:");
-    verbose && str(verbose, cdf[1]);
+    verbose && enter(verbose, "Restructuring CDF list structure")
+    verbose && cat(verbose, "Restructuring function:")
+    verbose && str(verbose, fcn)
+    verbose && cat(verbose, "First element in list to be restructured:")
+    verbose && str(verbose, cdf[1])
 
-    cdf <- fcn(cdf);
+    cdf <- fcn(cdf)
 
-    verbose && exit(verbose);
+    verbose && exit(verbose)
   }
 
-  cdf;
+  cdf
 }, private=TRUE)
 
 
@@ -872,17 +872,17 @@ setMethodS3("setRestructor", "AffymetrixCdfFile", function(this, fcn=NULL, ...) 
   if (is.null(fcn)) {
   } else if (is.function(fcn)) {
   } else {
-    throw("Argument 'fcn' must be NULL or a function: ", mode(fcn));
+    throw("Argument 'fcn' must be NULL or a function: ", mode(fcn))
   }
   if (!identical(this$.restructor, fcn)) {
-    this$.restructor <- fcn;
-    clearCache(this);
+    this$.restructor <- fcn
+    clearCache(this)
   }
-  invisible(this);
+  invisible(this)
 }, private=TRUE)
 
 setMethodS3("getRestructor", "AffymetrixCdfFile", function(this, ...) {
-  this$.restructor;
+  this$.restructor
 }, private=TRUE)
 
 
@@ -925,16 +925,16 @@ setMethodS3("readUnits", "AffymetrixCdfFile", function(this, units=NULL, ..., ve
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
+  verbose <- Arguments$getVerbose(verbose)
   if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
+    pushState(verbose)
+    on.exit(popState(verbose))
   }
 
-  cdf <- .readCdfUnits(filename=getPathname(this), units=units, ...);
+  cdf <- .readCdfUnits(filename=getPathname(this), units=units, ...)
 
   # Always call restruct() after a readCdfNnn()!
-  restruct(this, cdf, verbose=less(verbose, 5));
+  restruct(this, cdf, verbose=less(verbose, 5))
 })
 
 
@@ -982,37 +982,37 @@ setMethodS3("isPm", "AffymetrixCdfFile", function(this, units=NULL, force=FALSE,
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
+  verbose <- Arguments$getVerbose(verbose)
   if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
+    pushState(verbose)
+    on.exit(popState(verbose))
   }
 
-  isPm <- this$.isPm;
+  isPm <- this$.isPm
   if (force || is.null(isPm)) {
     if (cache) {
       # If caching, read all units
-      cdf <- .readCdfIsPm(getPathname(this));
+      cdf <- .readCdfIsPm(getPathname(this))
       # Always call restruct() after a readCdfNnn()!
-      cdf <- restruct(this, cdf, verbose=less(verbose, 5));
-      isPm <- this$.isPm <- cdf;
+      cdf <- restruct(this, cdf, verbose=less(verbose, 5))
+      isPm <- this$.isPm <- cdf
     } else {
       # ...otherwise, read only a subset of units
-      cdf <- .readCdfIsPm(getPathname(this), units=units);
+      cdf <- .readCdfIsPm(getPathname(this), units=units)
       # Always call restruct() after a readCdfNnn()!
-      cdf <- restruct(this, cdf, verbose=less(verbose, 5));
-      isPm <- cdf;
+      cdf <- restruct(this, cdf, verbose=less(verbose, 5))
+      isPm <- cdf
     }
   }
 
   if (cache && !is.null(units)) {
-    isPm <- isPm[units];
+    isPm <- isPm[units]
   }
 
   # Return a vector
-  isPm <- unlist(isPm, use.names=FALSE);
+  isPm <- unlist(isPm, use.names=FALSE)
 
-  isPm;
+  isPm
 })
 
 
@@ -1022,61 +1022,61 @@ setMethodS3("identifyCells", "AffymetrixCdfFile", function(this, indices=NULL, f
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'types':
   if (is.null(types))
-    types <- "all";
+    types <- "all"
 
   # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
+  verbose <- Arguments$getVerbose(verbose)
   if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
+    pushState(verbose)
+    on.exit(popState(verbose))
   }
 
   # Arguments 'from' and 'to':
-  nbrOfCells <- nbrOfCells(this);
-  from <- Arguments$getInteger(from, range=c(1, nbrOfCells));
-  to <- Arguments$getInteger(to, range=c(1, nbrOfCells));
+  nbrOfCells <- nbrOfCells(this)
+  from <- Arguments$getInteger(from, range=c(1, nbrOfCells))
+  to <- Arguments$getInteger(to, range=c(1, nbrOfCells))
 
   # Argument 'indices':
   if (is.numeric(indices)) {
-    getFraction <- (length(indices) == 1 && indices > 0 && indices < 1);
+    getFraction <- (length(indices) == 1 && indices > 0 && indices < 1)
     if (getFraction) {
-      by <- 1/indices;
+      by <- 1/indices
     } else {
-      indices <- Arguments$getIntegers(indices, range=c(1, nbrOfCells));
+      indices <- Arguments$getIntegers(indices, range=c(1, nbrOfCells))
     }
   } else {
-    getFraction <- FALSE;
+    getFraction <- FALSE
   }
 
   if ("all" %in% types) {
-    other <- 1:nbrOfCells;
+    other <- 1:nbrOfCells
   } else {
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Check for cached results (already here)
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Create a cache key (already here)
-    verbose && enter(verbose, "Checking cache");
-    chipType <- getChipType(this);
-    key <- list(method="identifyCells", class=class(this)[1], chipType=chipType, indices=indices, from=from, to=to, types=types, sort=sort);
+    verbose && enter(verbose, "Checking cache")
+    chipType <- getChipType(this)
+    key <- list(method="identifyCells", class=class(this)[1], chipType=chipType, indices=indices, from=from, to=to, types=types, sort=sort)
     if (getOption(aromaSettings, "devel/useCacheKeyInterface", FALSE)) {
-      key <- getCacheKey(this, method="identifyCells", chipType=chipType, indices=indices, from=from, to=to, types=types, sort=sort);
+      key <- getCacheKey(this, method="identifyCells", chipType=chipType, indices=indices, from=from, to=to, types=types, sort=sort)
     }
-    comment <- sprintf("%s: %s", key$method, key$chipType);
-    dirs <- c("aroma.affymetrix", chipType);
+    comment <- sprintf("%s: %s", key$method, key$chipType)
+    dirs <- c("aroma.affymetrix", chipType)
     if (!.force) {
-      cache <- loadCache(key=key, dirs=dirs);
+      cache <- loadCache(key=key, dirs=dirs)
       if (!is.null(cache)) {
-        verbose && exit(verbose, suffix="...hit");
-        return(cache);
+        verbose && exit(verbose, suffix="...hit")
+        return(cache)
       }
     }
-    verbose && exit(verbose);
+    verbose && exit(verbose)
   }
 
   # Argument 'from':
   if (is.null(indices)) {
-    indices <- seq(from=from, to=to, ...);
-    indices <- as.integer(indices+0.5);
+    indices <- seq(from=from, to=to, ...)
+    indices <- as.integer(indices+0.5)
   }
 
 
@@ -1084,64 +1084,64 @@ setMethodS3("identifyCells", "AffymetrixCdfFile", function(this, indices=NULL, f
   # Intersect 'indices' and 'types'
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (!"all" %in% types) {
-    verbose && enter(verbose, "Identifies cells of certain kind");
-    verbose && cat(verbose, "Indices:");
-    verbose && str(verbose, indices);
+    verbose && enter(verbose, "Identifies cells of certain kind")
+    verbose && cat(verbose, "Indices:")
+    verbose && str(verbose, indices)
 
     indices <- getCellIndices(this, useNames=FALSE, unlist=TRUE,
-                                            verbose=less(verbose));
+                                            verbose=less(verbose))
 
-    other <- c();
+    other <- c()
     for (type in types) {
       if (type == "pm") {
-        verbose && cat(verbose, "Using PM only");
-        other <- c(other, indices[isPm(this)]);
+        verbose && cat(verbose, "Using PM only")
+        other <- c(other, indices[isPm(this)])
       } else if (type == "mm") {
-        verbose && cat(verbose, "Using MM only");
-        other <- c(other, indices[!isPm(this)]);
+        verbose && cat(verbose, "Using MM only")
+        other <- c(other, indices[!isPm(this)])
       } else if (type == "pmmm") {
-        verbose && cat(verbose, "Using PM & MM");
-        other <- c(other, indices);
+        verbose && cat(verbose, "Using PM & MM")
+        other <- c(other, indices)
       } else if (type == "qc") {
-        verbose && cat(verbose, "Using QC cells only");
+        verbose && cat(verbose, "Using QC cells only")
         # Get cell indices for all non-regular units, i.e. QCs
-        other <- c(other, setdiff(1:nbrOfCells, indices));
+        other <- c(other, setdiff(1:nbrOfCells, indices))
       }
     }
 
-    other <- unique(other);
-    verbose && exit(verbose);
+    other <- unique(other)
+    verbose && exit(verbose)
   } # if (!"all" ...)
 
   if (is.null(indices)) {
-    indices <- other;
+    indices <- other
     # Not needed anymore
-    other <- NULL;
+    other <- NULL
   } else {
     if (getFraction) {
       # Get the fraction from the already filtered cell indices
-      indices <- other[seq(from=1, to=length(other), by=by)];
+      indices <- other[seq(from=1, to=length(other), by=by)]
     } else if (!"all" %in% types) {
-      indices <- intersect(indices, other);
+      indices <- intersect(indices, other)
     }
   }
 
   if (sort)
-    indices <- sort(indices);
+    indices <- sort(indices)
 
   # Garbage collect
-  gc <- gc();
-  verbose && print(verbose, gc);
+  gc <- gc()
+  verbose && print(verbose, gc)
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Save result to cache
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (!"all" %in% types) {
-    saveCache(indices, key=key, comment=comment, dirs=dirs);
+    saveCache(indices, key=key, comment=comment, dirs=dirs)
   }
 
-  indices;
-}, private=TRUE);
+  indices
+}, private=TRUE)
 
 
 setMethodS3("getFirstCellIndices", "AffymetrixCdfFile", function(this, units=NULL, stratifyBy=NULL, ..., force=FALSE, verbose=FALSE) {
@@ -1149,53 +1149,53 @@ setMethodS3("getFirstCellIndices", "AffymetrixCdfFile", function(this, units=NUL
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
+  verbose <- Arguments$getVerbose(verbose)
   if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
+    pushState(verbose)
+    on.exit(popState(verbose))
   }
 
-  verbose && enter(verbose, "Trying to load cached results");
-  chipType <- getChipType(this);
-  key <- list(method="getFirstCellIndices", class=class(this)[1], chipType=chipType, stratifyBy=stratifyBy, restructor=body(this$.restructor));
+  verbose && enter(verbose, "Trying to load cached results")
+  chipType <- getChipType(this)
+  key <- list(method="getFirstCellIndices", class=class(this)[1], chipType=chipType, stratifyBy=stratifyBy, restructor=body(this$.restructor))
   if (getOption(aromaSettings, "devel/useCacheKeyInterface", FALSE)) {
-    key <- getCacheKey(this, method="getFirstCellIndices", chipType=chipType, stratifyBy=stratifyBy, restructor=body(this$.restructor));
+    key <- getCacheKey(this, method="getFirstCellIndices", chipType=chipType, stratifyBy=stratifyBy, restructor=body(this$.restructor))
   }
-  dirs <- c("aroma.affymetrix", chipType);
+  dirs <- c("aroma.affymetrix", chipType)
   res <- if (force) {
-    NULL;
+    NULL
   } else {
-    loadCache(key=key, dirs=dirs);
+    loadCache(key=key, dirs=dirs)
   }
-  verbose && exit(verbose);
+  verbose && exit(verbose)
 
   if (is.null(res)) {
-    verbose && enter(verbose, "Reading all cell indices (slow)");
-    res <- getCellIndices(this, units=NULL, ..., stratifyBy=stratifyBy, verbose=verbose);
-    verbose && exit(verbose);
+    verbose && enter(verbose, "Reading all cell indices (slow)")
+    res <- getCellIndices(this, units=NULL, ..., stratifyBy=stratifyBy, verbose=verbose)
+    verbose && exit(verbose)
 
-    verbose && enter(verbose, "Extracting the first cell in each unit group");
+    verbose && enter(verbose, "Extracting the first cell in each unit group")
     # For each unit and each group, get the index of the first cell.
     res <- .applyCdfGroups(res, function(groups) {
       # For each group, pull out the first cell.
       lapply(groups, FUN=function(group) {
         # group$indices[1] == group[[1]][1] == ...
-        list(indices=.subset(.subset2(group, 1), 1));
+        list(indices=.subset(.subset2(group, 1), 1))
       })
-    });
-    verbose && exit(verbose);
+    })
+    verbose && exit(verbose)
 
     # Save to cache file
-    verbose && enter(verbose, "Saving results to cache");
-    saveCache(res, key=key, dirs=dirs);
-    verbose && exit(verbose);
+    verbose && enter(verbose, "Saving results to cache")
+    saveCache(res, key=key, dirs=dirs)
+    verbose && exit(verbose)
   }
 
   # Subset?
   if (!is.null(units))
-    res <- res[units];
+    res <- res[units]
 
-  res;
+  res
 }, private=TRUE)
 
 
@@ -1227,15 +1227,15 @@ setMethodS3("getFirstCellIndices", "AffymetrixCdfFile", function(this, units=NUL
 #*/###########################################################################
 setMethodS3("compare", "AffymetrixCdfFile", function(this, other, ...) {
   if (!inherits(other, "AffymetrixCdfFile"))
-    return(FALSE);
+    return(FALSE)
 
   # Check if it is the same object
   if (equals(this, other))
-    return(TRUE);
+    return(TRUE)
 
-  res <- .compareCdfs(getPathname(this), getPathname(other), ...);
+  res <- .compareCdfs(getPathname(this), getPathname(other), ...)
 
-  res;
+  res
 }, private=TRUE)
 
 
@@ -1277,22 +1277,22 @@ setMethodS3("convert", "AffymetrixCdfFile", function(this, chipType=getChipType(
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
+  verbose <- Arguments$getVerbose(verbose)
   if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
+    pushState(verbose)
+    on.exit(popState(verbose))
   }
 
 
   # Create the pathname of the destination CDF
-  name <- paste(c(chipType, suffix), collapse=sep);
-  dest <- sprintf("%s.CDF", name);
-  dest <- Arguments$getWritablePathname(dest, path=path);
+  name <- paste(c(chipType, suffix), collapse=sep)
+  dest <- sprintf("%s.CDF", name)
+  dest <- Arguments$getWritablePathname(dest, path=path)
 
   # Convert CDF
-  src <- getPathname(this);
-  verbose2 <- -getThreshold(verbose);
-  res <- .convertCdf(src, dest, ..., verbose=verbose2);
+  src <- getPathname(this)
+  verbose2 <- -getThreshold(verbose)
+  res <- .convertCdf(src, dest, ..., verbose=verbose2)
 
   # Return an AffymetrixCdfFile object for the new CDF
   cdf <- newInstance(this, dest)
@@ -1344,60 +1344,60 @@ setMethodS3("getGenomeInformation", "AffymetrixCdfFile", function(this, types=c(
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'types':
-  types <- Arguments$getCharacters(types);
-  types <- tolower(types);
+  types <- Arguments$getCharacters(types)
+  types <- tolower(types)
 
   # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
+  verbose <- Arguments$getVerbose(verbose)
   if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
+    pushState(verbose)
+    on.exit(popState(verbose))
   }
 
 
-  verbose && enter(verbose, "Locating a GenomeInformation file");
+  verbose && enter(verbose, "Locating a GenomeInformation file")
 
-  chipType <- getChipType(this, fullname=FALSE);
-  tags <- getTags(this);
-  tags <- setdiff(tags, "monocell");
-  verbose && cat(verbose, "Chip type: ", chipType);
-  verbose && cat(verbose, "Tags: ", paste(tags, collapse=", "));
-  nbrOfUnits <- nbrOfUnits(this);
-  verbose && cat(verbose, "Number of units: ", nbrOfUnits);
+  chipType <- getChipType(this, fullname=FALSE)
+  tags <- getTags(this)
+  tags <- setdiff(tags, "monocell")
+  verbose && cat(verbose, "Chip type: ", chipType)
+  verbose && cat(verbose, "Tags: ", paste(tags, collapse=", "))
+  nbrOfUnits <- nbrOfUnits(this)
+  verbose && cat(verbose, "Number of units: ", nbrOfUnits)
 
-  gi <- this$.gi;
+  gi <- this$.gi
   if (force || is.null(gi)) {
-    gi <- NULL;
+    gi <- NULL
     for (type in types) {
-      verbose && enter(verbose, "Searching for type '", type, "'");
+      verbose && enter(verbose, "Searching for type '", type, "'")
 
       tryCatch({
         if (type == "ugp") {
           gi <- UgpGenomeInformation$byChipType(chipType, tags=tags,
-                     nbrOfUnits=nbrOfUnits, verbose=less(verbose, 5));
-          break;
+                     nbrOfUnits=nbrOfUnits, verbose=less(verbose, 5))
+          break
         } else if (type == "dchip") {
           gi <- DChipGenomeInformation$byChipType(chipType,
-                     nbrOfUnits=nbrOfUnits, verbose=less(verbose, 5));
+                     nbrOfUnits=nbrOfUnits, verbose=less(verbose, 5))
 
-          break;
+          break
         }
       }, error = function(ex) {})
 
-      verbose && exit(verbose);
+      verbose && exit(verbose)
     } # for (type ...)
 
     if (is.null(gi)) {
       throw("Failed to retrieve genome information for this chip type: ",
-                                                               chipType);
+                                                               chipType)
     }
 
-    setGenomeInformation(this, gi);
+    setGenomeInformation(this, gi)
   }
 
-  verbose && exit(verbose);
+  verbose && exit(verbose)
 
-  gi;
+  gi
 })
 
 
@@ -1407,22 +1407,22 @@ setMethodS3("setGenomeInformation", "AffymetrixCdfFile", function(this, gi=NULL,
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'gi':
   if (!is.null(gi)) {
-    gi <- Arguments$getInstanceOf(gi, "GenomeInformation");
+    gi <- Arguments$getInstanceOf(gi, "GenomeInformation")
   }
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Sanity checks
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  isCompatible <- isCompatibleWithCdf(gi, this);
+  isCompatible <- isCompatibleWithCdf(gi, this)
   if (!isCompatible) {
-    throw("Cannot set genome information. The object 'gi' ('", getFullName(gi), "') of ", class(gi)[1], " is not compatible with the CDF ('", getFullName(this), "'). The reason was: ", attr(isCompatible, "reason"));
+    throw("Cannot set genome information. The object 'gi' ('", getFullName(gi), "') of ", class(gi)[1], " is not compatible with the CDF ('", getFullName(this), "'). The reason was: ", attr(isCompatible, "reason"))
   }
 
 
-  this$.gi <- gi;
+  this$.gi <- gi
 
-  invisible(this);
+  invisible(this)
 }, protected=TRUE)
 
 
@@ -1431,59 +1431,59 @@ setMethodS3("getSnpInformation", "AffymetrixCdfFile", function(this, types=c("UF
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'types':
-  types <- Arguments$getCharacters(types);
-  types <- tolower(types);
+  types <- Arguments$getCharacters(types)
+  types <- tolower(types)
 
   # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
+  verbose <- Arguments$getVerbose(verbose)
   if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
+    pushState(verbose)
+    on.exit(popState(verbose))
   }
 
 
-  verbose && enter(verbose, "Locating a SnpInformation file");
+  verbose && enter(verbose, "Locating a SnpInformation file")
 
-  chipType <- getChipType(this, fullname=FALSE);
-  tags <- getTags(this);
-  tags <- setdiff(tags, "monocell");
-  verbose && cat(verbose, "Chip type: ", chipType);
-  verbose && cat(verbose, "Tags: ", paste(tags, collapse=", "));
-  nbrOfUnits <- nbrOfUnits(this);
-  verbose && cat(verbose, "Number of units: ", nbrOfUnits);
+  chipType <- getChipType(this, fullname=FALSE)
+  tags <- getTags(this)
+  tags <- setdiff(tags, "monocell")
+  verbose && cat(verbose, "Chip type: ", chipType)
+  verbose && cat(verbose, "Tags: ", paste(tags, collapse=", "))
+  nbrOfUnits <- nbrOfUnits(this)
+  verbose && cat(verbose, "Number of units: ", nbrOfUnits)
 
-  si <- this$.si;
+  si <- this$.si
   if (force || is.null(si)) {
-    gi <- NULL;
+    gi <- NULL
     for (type in types) {
-      verbose && enter(verbose, "Searching for type '", type, "'");
+      verbose && enter(verbose, "Searching for type '", type, "'")
 
       tryCatch({
         if (type == "ufl") {
           si <- UflSnpInformation$byChipType(chipType, tags=tags,
-                     nbrOfUnits=nbrOfUnits, verbose=less(verbose, 5));
-          break;
+                     nbrOfUnits=nbrOfUnits, verbose=less(verbose, 5))
+          break
         } else if (type == "dchip") {
           si <- DChipSnpInformation$byChipType(chipType,
-                     nbrOfUnits=nbrOfUnits, verbose=less(verbose, 5));
-          break;
+                     nbrOfUnits=nbrOfUnits, verbose=less(verbose, 5))
+          break
         }
       }, error = function(ex) {})
 
-      verbose && exit(verbose);
+      verbose && exit(verbose)
     } # for (type ...)
 
     if (is.null(si)) {
       throw("Failed to retrieve SNP information for this chip type: ",
-                                                            chipType);
+                                                            chipType)
     }
 
-    setSnpInformation(this, si);
+    setSnpInformation(this, si)
   }
 
-  verbose && exit(verbose);
+  verbose && exit(verbose)
 
-  si;
+  si
 }, private=TRUE)
 
 
@@ -1493,21 +1493,21 @@ setMethodS3("setSnpInformation", "AffymetrixCdfFile", function(this, si=NULL, ..
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'si':
   if (!is.null(si)) {
-    si <- Arguments$getInstanceOf(si, "SnpInformation");
+    si <- Arguments$getInstanceOf(si, "SnpInformation")
   }
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Sanity checks
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  isCompatible <- isCompatibleWithCdf(si, this);
+  isCompatible <- isCompatibleWithCdf(si, this)
   if (!isCompatible) {
-    throw("Cannot set genome information. The object 'si' ('", getFullName(si), "') of ", class(si)[1], " is not compatible with the CDF ('", getFullName(this), "'). The reason was: ", attr(isCompatible, "reason"));
+    throw("Cannot set genome information. The object 'si' ('", getFullName(si), "') of ", class(si)[1], " is not compatible with the CDF ('", getFullName(this), "'). The reason was: ", attr(isCompatible, "reason"))
   }
 
-  this$.si <- si;
+  this$.si <- si
 
-  invisible(this);
+  invisible(this)
 }, protected=TRUE)
 
 
@@ -1547,24 +1547,24 @@ setMethodS3("convertUnits", "AffymetrixCdfFile", function(this, units=NULL, keep
   if (is.null(units)) {
     # Return all units
     if (keepNULL)
-      return(NULL);
-    units <- 1:nbrOfUnits(this);
+      return(NULL)
+    units <- 1:nbrOfUnits(this)
   } else if (is.character(units)) {
     # Identify units by their names
-    unitNames <- units;
-    units <- indexOf(this, names=unitNames);
-    missing <- unitNames[is.na(units)];
-    n <- length(missing);
+    unitNames <- units
+    units <- indexOf(this, names=unitNames)
+    missing <- unitNames[is.na(units)]
+    n <- length(missing)
     if (n > 0) {
       throw(sprintf("Argument 'units' contains unknown unit names: %s [%d]",
-                                                      hpaste(missing), n));
+                                                      hpaste(missing), n))
     }
   } else {
     # Validate unit indices
-    units <- Arguments$getIndices(units, max=nbrOfUnits(this));
+    units <- Arguments$getIndices(units, max=nbrOfUnits(this))
   }
 
-  units;
+  units
 }, private=TRUE)
 
 
@@ -1573,12 +1573,12 @@ setMethodS3("validate", "AffymetrixCdfFile", function(this, ...) {
   # Local functions
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   assertUnits <- function(expr, fmtstr="%d unit(s) (i.e. %s) are invalid: %s") {
-    units <- which(expr);
-    nunits <- length(units);
+    units <- which(expr)
+    nunits <- length(units)
     if (nunits > 0L) {
-      fmtstr <- paste("Detected invalid/corrupt CDF: ", fmtstr, sep="");
-      msg <- sprintf(fmtstr, nunits, hpaste(units), getPathname(this));
-      throw(msg);
+      fmtstr <- paste("Detected invalid/corrupt CDF: ", fmtstr, sep="")
+      msg <- sprintf(fmtstr, nunits, hpaste(units), getPathname(this))
+      throw(msg)
     }
   } # assertUnits()
 
@@ -1596,8 +1596,8 @@ setMethodS3("validate", "AffymetrixCdfFile", function(this, ...) {
   # Examples:
   # o HTHGU133A_Hs_ENTREZG.cdf (v 12.0.0) [as above]
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  ns <- nbrOfGroupsPerUnit(this);
-  assertUnits(ns == 0L, "%d unit(s) (i.e. %s) with zero unit groups: %s");
+  ns <- nbrOfGroupsPerUnit(this)
+  assertUnits(ns == 0L, "%d unit(s) (i.e. %s) with zero unit groups: %s")
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -1613,9 +1613,9 @@ setMethodS3("validate", "AffymetrixCdfFile", function(this, ...) {
   # Examples:
   # o HTHGU133A_Hs_ENTREZG.cdf (v 12.0.0) [as above]
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  unitNames <- getUnitNames(this);
-  assertUnits(((ns == 0L) & (!nzchar(unitNames))), "%d unit(s) (i.e. %s) with zero unit groups and empty unit names: %s");
+  unitNames <- getUnitNames(this)
+  assertUnits(((ns == 0L) & (!nzchar(unitNames))), "%d unit(s) (i.e. %s) with zero unit groups and empty unit names: %s")
 
 
-  invisible(this);
+  invisible(this)
 }, protected=TRUE)

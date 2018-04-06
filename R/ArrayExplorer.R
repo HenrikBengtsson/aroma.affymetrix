@@ -28,7 +28,7 @@ setConstructorS3("ArrayExplorer", function(csTuple=NULL, ...) {
   # Argument 'csTuple':
   if (!is.null(csTuple)) {
     if (!inherits(csTuple, "AffymetrixCelSetTuple")) {
-      csTuple <- AffymetrixCelSetTuple(csTuple);
+      csTuple <- AffymetrixCelSetTuple(csTuple)
     }
   }
 
@@ -41,64 +41,64 @@ setConstructorS3("ArrayExplorer", function(csTuple=NULL, ...) {
 
 setMethodS3("as.character", "ArrayExplorer", function(x, ...) {
   # To please R CMD check
-  this <- x;
+  this <- x
 
-  s <- sprintf("%s:", class(this)[1]);
-  s <- c(s, sprintf("Name: %s", getName(this)));
-  s <- c(s, sprintf("Tags: %s", paste(getTags(this), collapse=",")));
-  s <- c(s, sprintf("Number of chip types: %d", nbrOfChipTypes(this)));
-  s <- c(s, paste("Number of arrays:", nbrOfArrays(this)));
-  colorMaps <- getColorMaps(this);
+  s <- sprintf("%s:", class(this)[1])
+  s <- c(s, sprintf("Name: %s", getName(this)))
+  s <- c(s, sprintf("Tags: %s", paste(getTags(this), collapse=",")))
+  s <- c(s, sprintf("Number of chip types: %d", nbrOfChipTypes(this)))
+  s <- c(s, paste("Number of arrays:", nbrOfArrays(this)))
+  colorMaps <- getColorMaps(this)
   if (length(colorMaps) == 0) {
-    colorMaps <- "<not specified>";
+    colorMaps <- "<not specified>"
   } else {
     colorMaps <- paste(colorMaps, collapse="; ")
   }
-  s <- c(s, paste("Color maps:", colorMaps));
-  s <- c(s, sprintf("Main path: %s", getMainPath(this)));
+  s <- c(s, paste("Color maps:", colorMaps))
+  s <- c(s, sprintf("Main path: %s", getMainPath(this)))
 
-  GenericSummary(s);
+  GenericSummary(s)
 }, protected=TRUE)
 
 
 
 setMethodS3("getListOfReporters", "ArrayExplorer", function(this, ...) {
-  reporters <- this$.reporters;
+  reporters <- this$.reporters
 
   if (is.null(reporters)) {
     # No need to add the tags, because they are now automatically inferred from
     # the input set.  This is done by the new AffymetrixFileSetReporter superclass
     # of SpatialReporter.  /HB 2008-03-29
-#    tags <- getTags(this);
-    setTuple <- getSetTuple(this);
-    csList <- getSets(setTuple);
+#    tags <- getTags(this)
+    setTuple <- getSetTuple(this)
+    csList <- getSets(setTuple)
     reporters <- lapply(csList, FUN=function(cs) {
-      reporter <- SpatialReporter(cs, tags="*");
-      reporter;
-    });
-    this$.reporters <- reporters;
+      reporter <- SpatialReporter(cs, tags="*")
+      reporter
+    })
+    this$.reporters <- reporters
   }
 
-  reporters;
-}, protected=TRUE);
+  reporters
+}, protected=TRUE)
 
 
 setMethodS3("setAlias", "ArrayExplorer", function(this, ...) {
-  NextMethod("setAlias");
-  reporters <- getListOfReporters(this);
-  lapply(reporters, FUN=setAlias, ...);
-  invisible(this);
+  NextMethod("setAlias")
+  reporters <- getListOfReporters(this)
+  lapply(reporters, FUN=setAlias, ...)
+  invisible(this)
 }, protected=TRUE)
 
 
 setMethodS3("getAlias", "ArrayExplorer", function(this, ...) {
-  reporters <- getListOfReporters(this);
-  getAlias(reporters[[1]], ...);
+  reporters <- getListOfReporters(this)
+  getAlias(reporters[[1]], ...)
 }, protected=TRUE)
 
 
 setMethodS3("getAsteriskTags", "ArrayExplorer", function(this, ...) {
-  "";
+  ""
 }, protected=TRUE)
 
 
@@ -127,43 +127,43 @@ setMethodS3("getAsteriskTags", "ArrayExplorer", function(this, ...) {
 # }
 #*/###########################################################################
 setMethodS3("getDataSet", "ArrayExplorer", function(this, ...) {
-  csTuple <- getSetTuple(this);
-  csList <- getSets(csTuple);
+  csTuple <- getSetTuple(this)
+  csList <- getSets(csTuple)
   csList[[1]];  # AD HOC for now. /HB 2007-03-19
 })
 
 setMethodS3("getSetTuple", "ArrayExplorer", function(this, ...) {
-  this$.csTuple;
+  this$.csTuple
 })
 
 setMethodS3("getNameOfInput", "ArrayExplorer", function(this, ...) {
-  st <- getSetTuple(this);
-  getName(st, ...);
+  st <- getSetTuple(this)
+  getName(st, ...)
 }, protected=TRUE)
 
 
 setMethodS3("getTagsOfInput", "ArrayExplorer", function(this, ...) {
-  st <- getSetTuple(this);
-  getTags(st, ...);
+  st <- getSetTuple(this)
+  getTags(st, ...)
 }, protected=TRUE)
 
 
 setMethodS3("nbrOfChipTypes", "ArrayExplorer", function(this, ...) {
-  nbrOfChipTypes(getSetTuple(this));
+  nbrOfChipTypes(getSetTuple(this))
 })
 
 setMethodS3("getListOfUnitNamesFiles", "ArrayExplorer", function(this, ...) {
-  getListOfUnitNamesFiles(getSetTuple(this));
+  getListOfUnitNamesFiles(getSetTuple(this))
 }, private=TRUE)
 
 setMethodS3("getListOfUnitTypesFiles", "ArrayExplorer", function(this, ...) {
-  getListOfUnitTypesFiles(getSetTuple(this));
+  getListOfUnitTypesFiles(getSetTuple(this))
 }, private=TRUE)
 
 
 setMethodS3("getArraysOfInput", "ArrayExplorer", function(this, ...) {
-  setTuple <- getSetTuple(this);
-  getNames(setTuple);
+  setTuple <- getSetTuple(this)
+  getNames(setTuple)
 }, protected=TRUE)
 
 
@@ -194,48 +194,48 @@ setMethodS3("getArraysOfInput", "ArrayExplorer", function(this, ...) {
 # }
 #*/###########################################################################
 setMethodS3("setArrays", "ArrayExplorer", function(this, ...) {
-  tuple <- getSetTuple(this);
-  idxs <- indexOf(tuple, ...);
+  tuple <- getSetTuple(this)
+  idxs <- indexOf(tuple, ...)
 
   # Get the names of the arrays
-  arrayNames <- getNames(tuple)[idxs];
+  arrayNames <- getNames(tuple)[idxs]
 
   # Sanity check
-  stopifnot(!any(duplicated(arrayNames)));
+  stopifnot(!any(duplicated(arrayNames)))
 
-  this$.arrays <- arrayNames;
+  this$.arrays <- arrayNames
 })
 
 
 
 setMethodS3("addColorMap", "ArrayExplorer", function(this, ...) {
-  reporters <- getListOfReporters(this);
-  res <- lapply(reporters, FUN=addColorMap, ...);
-  invisible(res);
+  reporters <- getListOfReporters(this)
+  res <- lapply(reporters, FUN=addColorMap, ...)
+  invisible(res)
 })
 
 
 setMethodS3("setColorMaps", "ArrayExplorer", function(this, ...) {
-  reporters <- getListOfReporters(this);
-  res <- lapply(reporters, FUN=setColorMaps, ...);
-  invisible(res);
+  reporters <- getListOfReporters(this)
+  res <- lapply(reporters, FUN=setColorMaps, ...)
+  invisible(res)
 })
 
 setMethodS3("getColorMaps", "ArrayExplorer", function(this, parsed=FALSE, ...) {
   # All reporters should have the same color maps
-  reporter <- getListOfReporters(this)[[1]];
-  getColorMaps(reporter, ...);
+  reporter <- getListOfReporters(this)[[1]]
+  getColorMaps(reporter, ...)
 })
 
 
 setMethodS3("updateSetupExplorerFile", "ArrayExplorer", function(this, ...) {
-  setTuple <- getSetTuple(this);
-  env <- new.env();
-  env$reporters <- getListOfReporters(this);
-  env$chipTypes <- getChipTypes(setTuple, fullname=TRUE);
-  env$arrays <- getFullNames(setTuple);
+  setTuple <- getSetTuple(this)
+  env <- new.env()
+  env$reporters <- getListOfReporters(this)
+  env$chipTypes <- getChipTypes(setTuple, fullname=TRUE)
+  env$arrays <- getFullNames(setTuple)
 
-  NextMethod("updateSetupExplorerFile", data=env);
+  NextMethod("updateSetupExplorerFile", data=env)
 }, private=TRUE)
 
 
@@ -273,36 +273,36 @@ setMethodS3("process", "ArrayExplorer", function(this, arrays=NULL, ..., verbose
   # Argument 'arrays':
   if (is.null(arrays)) {
   } else {
-    arrays <- Arguments$getIndices(arrays, max=nbrOfArrays(this));
+    arrays <- Arguments$getIndices(arrays, max=nbrOfArrays(this))
   }
 
   # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
+  verbose <- Arguments$getVerbose(verbose)
   if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
+    pushState(verbose)
+    on.exit(popState(verbose))
   }
 
 
-  verbose && enter(verbose, "Generating ", class(this)[1], " report");
+  verbose && enter(verbose, "Generating ", class(this)[1], " report")
 
   # Setup HTML, CSS, Javascript files first
-  setup(this, ..., verbose=less(verbose));
+  setup(this, ..., verbose=less(verbose))
 
   # Get the array aliases
-  aliases <- names(getArrays(this));
+  aliases <- names(getArrays(this))
   if (!is.null(arrays)) {
-    aliases <- aliases[arrays];
+    aliases <- aliases[arrays]
   }
 
   # Generate bitmap images
-  reporters <- getListOfReporters(this);
+  reporters <- getListOfReporters(this)
   res <- lapply(reporters, FUN=function(reporter) {
-    writeImages(reporter, arrays=arrays, aliases=aliases, ..., verbose=less(verbose));
-  });
+    writeImages(reporter, arrays=arrays, aliases=aliases, ..., verbose=less(verbose))
+  })
 
   # Update Javascript files
-  updateSetupExplorerFile(this, ..., verbose=less(verbose));
+  updateSetupExplorerFile(this, ..., verbose=less(verbose))
 
-  verbose && exit(verbose);
+  verbose && exit(verbose)
 })

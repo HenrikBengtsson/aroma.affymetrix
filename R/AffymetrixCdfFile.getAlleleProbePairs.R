@@ -65,9 +65,6 @@ setMethodS3("getAlleleProbePairs", "AffymetrixCdfFile", function(this, units=NUL
   if (!force) {
     probeSets <- loadCache(key=key, dirs=dirs);
     if (!is.null(probeSets)) {
-      # Backward compatibility; remove October 2008. /HB
-      if (is.list(probeSets$nonSNPs))
-        break;
       verbose && cat(verbose, "Loaded from file cache");
       gc <- gc();
       verbose && print(verbose, gc);

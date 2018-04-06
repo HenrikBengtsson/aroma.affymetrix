@@ -59,8 +59,8 @@
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Instead of asking users to write affxparser::writeCdf() when
 # aroma.affymetrix is loaded...
-writeCdf.default <- function(...) {
+setMethodS3("writeCdf", "default", function(...) {
   ns <- loadNamespace("affxparser");
   `affxparser::writeCdf` <- get("writeCdf", envir=ns, mode="function");
   `affxparser::writeCdf`(...)
-}
+})

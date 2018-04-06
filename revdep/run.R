@@ -1,4 +1,4 @@
-library("devtools")
+options(warn = 1)
 
 availableCores <- function() {
   getenv <- function(name) {
@@ -15,6 +15,9 @@ availableCores <- function() {
   1L
 }
 
-revdep_check(bioconductor = TRUE, recursive = TRUE, threads = availableCores(), cleanup = FALSE)
-revdep_check_save_summary()
-revdep_check_print_problems()
+reset <- isTRUE(as.logical(toupper(Sys.getenv("_R_CHECK_REVDEP_RESET_", "FALSE"))))
+library("revdepcheck")
+if (reset) revdep_reset()
+timeout <- as.difftime(30, units = "mins")
+revdep_check(num_workers = availableCores(), timeout = timeout, quiet = FALSE,
+             bioc = TRUE)

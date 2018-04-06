@@ -1,7 +1,7 @@
 # @author "HB"
 #
 # \references{
-#   [1] http://wiki.transvar.org/confluence/display/igbman/File+Formats
+#   [1] https://wiki.transvar.org/confluence/display/igbman/File+Formats
 # }
 setMethodS3("writeSgr", "AffymetrixCelSet", function(this, units=NULL, ..., tags=getTags(this), verbose=FALSE, fileExtension="sgr", fileSep="\t", nbrOfFigures=3) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

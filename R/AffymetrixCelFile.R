@@ -864,8 +864,8 @@ setMethodS3("readRawData", "AffymetrixCelFile", function(this, indices=NULL, fie
   cel <- do.call(readCel, args=args);
 
   # Sanity check
-  stopifnot(is.list(cel));
-  stopifnot(length(cel) > 0);
+  stop_if_not(is.list(cel));
+  stop_if_not(length(cel) > 0);
 
   if (hasNAs) {
     for (kk in seq_along(cel)) {
@@ -891,8 +891,8 @@ setMethodS3("readRawData", "AffymetrixCelFile", function(this, indices=NULL, fie
     cel <- cel[fields];
 
     # Sanity check
-    stopifnot(is.list(cel));
-    stopifnot(length(cel) > 0);
+    stop_if_not(is.list(cel));
+    stop_if_not(length(cel) > 0);
   }
 
   if (readZeroElements) {

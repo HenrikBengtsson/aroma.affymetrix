@@ -93,7 +93,7 @@ setMethodS3("exportTotalAndFracB", "DChipDcpSet", function(this, ..., overwrite=
     verbose && enter(verbose, sprintf("File %d ('%s') of %d", kk, getName(ce), nbrOfFiles));
 
     # Sanity check
-    stopifnot(nbrOfUnits(ce) == nbrOfUnitsSrc);
+    stop_if_not(nbrOfUnits(ce) == nbrOfUnitsSrc);
 
     filename <- sprintf("%s,total.asb", getFullName(ce));
     pathname <- file.path(outPath, filename);
@@ -118,7 +118,7 @@ setMethodS3("exportTotalAndFracB", "DChipDcpSet", function(this, ..., overwrite=
     verbose && enter(verbose, "Reading data from DCP file");
     data <- extractTheta(ce, drop=TRUE, verbose=verbose);
     # Sanity check
-    stopifnot(length(data) == nbrOfUnitsSrc);
+    stop_if_not(length(data) == nbrOfUnitsSrc);
     verbose && exit(verbose);
 
     verbose && enter(verbose, "Updating temporary output file");

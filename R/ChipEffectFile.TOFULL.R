@@ -57,7 +57,7 @@ setMethodS3("getExpandedCellMap", "ChipEffectFile", function(this, resetFields=N
   # Not needed anymore
   cells <- cellsX <- NULL;
 
-  stopifnot(length(map) == nbrOfCells(this));
+  stop_if_not(length(map) == nbrOfCells(this));
 
   map;
 }, protected=TRUE)
@@ -99,7 +99,7 @@ setMethodS3("getCellMapForMainCdf", "ChipEffectFile", function(this, ..., verbos
   readMap <- writeMap <- NULL;
 
   # Sanity check
-  stopifnot(length(readMap2) == nbrOfCells(cdf));
+  stop_if_not(length(readMap2) == nbrOfCells(cdf));
 
   readMap2;
 }, protected=TRUE)

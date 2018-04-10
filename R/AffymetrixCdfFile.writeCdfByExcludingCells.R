@@ -100,7 +100,7 @@ setMethodS3("writeCdfByExcludingCells", "AffymetrixCdfFile", function(this, tags
     verbose && str(verbose, unitsChunk);
 
     # Sanity check
-    stopifnot(length(unitsChunk) > 0);
+    stop_if_not(length(unitsChunk) > 0);
 
     verbose && enter(verbose, "Reading subset of units from source CDF");
     cdfListChunk <- .readCdf(pathname, readIndices=TRUE, units=unitsChunk);
@@ -147,7 +147,7 @@ setMethodS3("writeCdfByExcludingCells", "AffymetrixCdfFile", function(this, tags
   } # while (nbrOfUnitsLeft > 0)
 
   # Sanity check
-  stopifnot(length(cdfListF) == nbrOfUnits);
+  stop_if_not(length(cdfListF) == nbrOfUnits);
 
 
 
@@ -196,7 +196,7 @@ setMethodS3("writeCdfByExcludingCells", "AffymetrixCdfFile", function(this, tags
   cellsF <- getCellIndices(cdfT, unlist=TRUE, useNames=FALSE);
 
   # Sanity check
-  stopifnot(!any(is.element(cellsToExclude, cellsF)));
+  stop_if_not(!any(is.element(cellsToExclude, cellsF)));
 
   # Rename temporary file
   popTemporaryFile(pathnameT, verbose=verbose);

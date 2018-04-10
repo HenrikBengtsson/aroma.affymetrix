@@ -87,7 +87,7 @@ setMethodS3("bpmapCluster2Cdf", "default", function(pathname, chipType, tags=NUL
       seqInfo$groupname;
     });
     # Sanity check
-    stopifnot(length(names) == length(bpmapList));
+    stop_if_not(length(names) == length(bpmapList));
     names;
   } # getGroupNames()
 
@@ -198,7 +198,7 @@ setMethodS3("bpmapCluster2Cdf", "default", function(pathname, chipType, tags=NUL
   bpmapList <- .readBpmap(pathname, readMatchScore=TRUE, ...);
   nbrOfSeqs <- length(bpmapList);
   # Sanity check
-  stopifnot(nbrOfSeqs <= hdr$numSequences);
+  stop_if_not(nbrOfSeqs <= hdr$numSequences);
   # Not needed anymore
   hdr <- NULL; # Not needed anymore
   verbose && exit(verbose);
@@ -235,7 +235,7 @@ setMethodS3("bpmapCluster2Cdf", "default", function(pathname, chipType, tags=NUL
   verbose && cat(verbose, "Number of unique group names: ", length(t));
   verbose && print(verbose, t);
   # Sanity check
-  stopifnot(length(groupNames) == nbrOfSeqs);
+  stop_if_not(length(groupNames) == nbrOfSeqs);
 
   keep <- (groupNames == groupName);
   bpmapList <- bpmapList[keep];
@@ -295,7 +295,7 @@ setMethodS3("bpmapCluster2Cdf", "default", function(pathname, chipType, tags=NUL
   verbose && cat(verbose, "Number of sequences: ", nbrOfSeqs);
   bpmapdfList <- lapply(bpmapList, FUN=bpmapUnit2df);
   # Sanity check
-  stopifnot(length(bpmapdfList) == nbrOfSeqs);
+  stop_if_not(length(bpmapdfList) == nbrOfSeqs);
   verbose && exit(verbose);
   # Not needed anymore
   bpmapList <- NULL; # Not needed anymore
@@ -343,7 +343,7 @@ setMethodS3("bpmapCluster2Cdf", "default", function(pathname, chipType, tags=NUL
 
     sp <- bpmapdf$startpos;
     # Sanity check
-    stopifnot(all(is.finite(sp)));
+    stop_if_not(all(is.finite(sp)));
 
     # Splitting when distances between neighboring probes are too large
     d <- diff(sp);
@@ -360,9 +360,9 @@ setMethodS3("bpmapCluster2Cdf", "default", function(pathname, chipType, tags=NUL
     counts <- (ends-starts)+1L;
 ##    verbose && print(verbose, data.frame(start=starts, end=ends, nbrOfProbes=counts));
     # Sanity check
-    stopifnot(all(is.finite(starts)));
-    stopifnot(all(is.finite(ends)));
-    stopifnot(all(counts > 0L));
+    stop_if_not(all(is.finite(starts)));
+    stop_if_not(all(is.finite(ends)));
+    stop_if_not(all(counts > 0L));
 
     # Dropping probesets with too few probes
     if (flavor == "v2") {
@@ -399,7 +399,7 @@ setMethodS3("bpmapCluster2Cdf", "default", function(pathname, chipType, tags=NUL
       idxsJJ <- startJJ:endJJ;
       nbrOfProbesJJ <- length(idxsJJ);
       # Sanity check
-      stopifnot(nbrOfProbesJJ >= minNbrOfProbes);
+      stop_if_not(nbrOfProbesJJ >= minNbrOfProbes);
 
       spJJ <- sp[idxsJJ];
 
@@ -446,8 +446,8 @@ setMethodS3("bpmapCluster2Cdf", "default", function(pathname, chipType, tags=NUL
   nbrOfUnits <- length(cdfList);
 
   # Sanity check
-  stopifnot(nbrOfUnits == length(unitNames));
-  stopifnot(nbrOfUnits == length(startPositionList));
+  stop_if_not(nbrOfUnits == length(unitNames));
+  stop_if_not(nbrOfUnits == length(startPositionList));
 
   names(cdfList) <- unitNames;
   names(startPositionList) <- unitPrefixes;

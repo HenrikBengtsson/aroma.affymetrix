@@ -182,7 +182,7 @@ setMethodS3("fit", "ProbeLevelModel", function(this, units="remaining", ..., for
 ##       cells <- getCellIndices(this, units=units, unlist=TRUE, useNames=FALSE, ...);
 ##       verbose && str(verbose, cells);
 ##       # Sanity check
-##       stopifnot(length(cells) == length(singleCellUnits));
+##       stop_if_not(length(cells) == length(singleCellUnits));
 ##       verbose && exit(verbose);
 ##       verbose && exit(verbose);
 ##
@@ -396,7 +396,7 @@ setMethodS3("fit", "ProbeLevelModel", function(this, units="remaining", ..., for
       verbose && str(verbose, unitsChunk);
 
       # Sanitcy check
-      stopifnot(length(idxs) > 0);
+      stop_if_not(length(idxs) > 0);
 
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       # Get the CEL intensities by units

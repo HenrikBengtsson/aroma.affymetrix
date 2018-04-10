@@ -96,7 +96,7 @@ setMethodS3("fitPlasqUnit", "matrix", function(ly, ptype, maxIter=1000, acc=0.1,
 #  ptype[ isPm &  isA &  isFwd & !isCentered] <- 13;
 #  ptype[ isPm &  isA & !isFwd &  isCentered] <- 14;
 #  ptype[ isPm &  isA &  isFwd &  isCentered] <- 15;
-#  stopifnot(identical(ptype, ptype0));
+#  stop_if_not(identical(ptype, ptype0));
 
   pmA <- which(isPm &  isA);
   pmB <- which(isPm & !isA);
@@ -324,7 +324,7 @@ setMethodS3("fitPlasqUnit", "matrix", function(ly, ptype, maxIter=1000, acc=0.1,
 ##     pMat <- params <- NULL; # Not needed anymore
 ##     mu11 <- list(mu0, mu1, mu2);
 ##
-##     stopifnot(identical(mu00, mu11));
+##     stop_if_not(identical(mu00, mu11));
 
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

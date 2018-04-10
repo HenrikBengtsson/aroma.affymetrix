@@ -53,7 +53,7 @@ setMethodS3("plotCovariateEffects", "GcContentNormalization2", function(this, ar
   # Not needed anymore
   keep <- NULL;
   # Sanity check
-  stopifnot(length(units) == length(X));
+  stop_if_not(length(units) == length(X));
 
   yR <- NULL;
   if (is.character(ref)) {

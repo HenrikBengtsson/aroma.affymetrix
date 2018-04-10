@@ -201,7 +201,7 @@ setMethodS3("setArrays", "ArrayExplorer", function(this, ...) {
   arrayNames <- getNames(tuple)[idxs];
 
   # Sanity check
-  stopifnot(!any(duplicated(arrayNames)));
+  stop_if_not(!any(duplicated(arrayNames)));
 
   this$.arrays <- arrayNames;
 })

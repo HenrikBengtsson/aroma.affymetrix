@@ -247,7 +247,7 @@ print(pattern);
       values <- as.integer(topRow[idxs]);
       verbose && print(verbose, values);
       # Sanity check
-      stopifnot(all(is.finite(values)));
+      stop_if_not(all(is.finite(values)));
 
       # Guess remaining
       nidxs <- length(idxs);

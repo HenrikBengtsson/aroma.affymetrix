@@ -240,7 +240,7 @@ setMethodS3("getUnitGroupCellChromosomePositionMap", "AffymetrixCdfFile", functi
   verbose && str(verbose, cpMap);
 
   # Sanity check
-  stopifnot(nrow(ugcMap) == nrow(cpMap));
+  stop_if_not(nrow(ugcMap) == nrow(cpMap));
 
   # Merge the two maps
   map <- cbind(ugcMap, cpMap);

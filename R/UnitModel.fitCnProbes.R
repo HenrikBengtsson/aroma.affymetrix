@@ -119,7 +119,7 @@ setMethodS3("fitCnProbes", "UnitModel", function(this, ..., verbose=FALSE) {
 
       verbose && enter(verbose, "Reading signals");
       y <- extractMatrix(df, cells=cells, drop=TRUE);
-      stopifnot(length(y) == length(cells));
+      stop_if_not(length(y) == length(cells));
       verbose && str(verbose, y);
       verbose && exit(verbose);
 

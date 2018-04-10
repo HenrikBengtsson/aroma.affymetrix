@@ -198,8 +198,8 @@ setMethodS3("getNormalEquations", "LinearModelProbeSequenceNormalization", funct
     yCC <- y[cc];
 
     # Sanity check
-    stopifnot(nrow(X) == length(cells[cc]));
-    stopifnot(nrow(X) == length(yCC));
+    stop_if_not(nrow(X) == length(cells[cc]));
+    stop_if_not(nrow(X) == length(yCC));
     verbose && exit(verbose);
 
 

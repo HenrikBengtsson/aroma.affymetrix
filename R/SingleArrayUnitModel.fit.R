@@ -102,7 +102,7 @@ setMethodS3("fitOneArray", "SingleArrayUnitModel", function(this, array="remaini
   cef <- ces[[array]];
 
   # Sanity check
-  stopifnot(identical(getFullName(df), getFullName(cef)));
+  stop_if_not(identical(getFullName(df), getFullName(cef)));
 
   name <- getName(df);
   verbose && enter(verbose, sprintf("Fitting array #%d ('%s')", array, name));

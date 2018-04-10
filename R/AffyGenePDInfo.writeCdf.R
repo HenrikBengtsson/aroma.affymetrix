@@ -110,7 +110,7 @@ setMethodS3("writeCdf", "AffyGenePDInfo", function(this, tags=c("*"), unitsBy=c(
   pkgNameT <- .cleanPlatformName(chipType);
 
   # Sanity check
-  stopifnot(pkgNameT == pkgName);
+  stop_if_not(pkgNameT == pkgName);
   # Not needed anymore
   pkgNameT <- NULL;
 
@@ -246,7 +246,7 @@ setMethodS3("writeCdf", "AffyGenePDInfo", function(this, tags=c("*"), unitsBy=c(
 
   # Fix missing values in 'probeset_id'
   id <- ff$probeset_id;
-  stopifnot(!is.null(id)); # Sanity check
+  stop_if_not(!is.null(id)); # Sanity check
   nok <- which(is.na(id));
   if (length(nok) > 0L) {
     id <- as.character(id);
@@ -283,8 +283,8 @@ setMethodS3("writeCdf", "AffyGenePDInfo", function(this, tags=c("*"), unitsBy=c(
 
 
   # Sanity checks
-  stopifnot(length(ffs) == nbrOfUnits);
-  stopifnot(all(is.element(names(ffs), unitNames)));
+  stop_if_not(length(ffs) == nbrOfUnits);
+  stop_if_not(all(is.element(names(ffs), unitNames)));
 
   verbose && str(verbose, head(ffs, n=3L));
 

@@ -93,7 +93,7 @@ setMethodS3("readGeneAssignments", "AffymetrixNetAffxCsvFile", function(this, ..
       # Update
       ok <- !sapply(pairs, FUN=function(x) any(is.na(x)));
       # Sanity check
-      stopifnot(all(ok));
+      stop_if_not(all(ok));
       verbose && cat(verbose, "Number of entries: ", length(rows));
       verbose && cat(verbose, "Number of unique probesetIds: ", length(unique(map$probesetId[rows])));
       verbose && cat(verbose, "Number of unique transcriptClusterIds: ", length(unique(map$transcriptClusterId[rows])));
@@ -112,8 +112,8 @@ setMethodS3("readGeneAssignments", "AffymetrixNetAffxCsvFile", function(this, ..
       ns <- sapply(x, FUN=length);
       n <- unique(ns);
       # Sanity check
-      stopifnot(length(n) == 1);
-      stopifnot(is.element(n, nFields));
+      stop_if_not(length(n) == 1);
+      stop_if_not(is.element(n, nFields));
       nFields <- n;
       verbose && cat(verbose, "Number of annotation fields: ", nFields);
       verbose && exit(verbose);
@@ -127,7 +127,7 @@ setMethodS3("readGeneAssignments", "AffymetrixNetAffxCsvFile", function(this, ..
       x <- strsplit(x, split=" // ", fixed=TRUE);
       ns <- sapply(x, FUN=length);
       # Sanity check
-      stopifnot(all(ns == nFields));
+      stop_if_not(all(ns == nFields));
       x <- unlist(x, use.names=FALSE);
       dimNA(x) <- c(nFields,NA);
       t(x);
@@ -179,7 +179,7 @@ setMethodS3("readGeneAssignments", "AffymetrixNetAffxCsvFile", function(this, ..
     }
 
     # Sanity check
-    stopifnot(length(pairs) == length(rows));
+    stop_if_not(length(pairs) == length(rows));
 
 
     # Flatten?
@@ -188,7 +188,7 @@ setMethodS3("readGeneAssignments", "AffymetrixNetAffxCsvFile", function(this, ..
       verbose && cat(verbose, "Number of entries: ", length(rows));
 
       # Sanity check
-      stopifnot(all(ok));
+      stop_if_not(all(ok));
 
       verbose && enter(verbose, "Identifying blocks of unique sizes");
       ns <- sapply(pairs, FUN=NROW, simplify=TRUE, USE.NAMES=FALSE);
@@ -224,8 +224,8 @@ setMethodS3("readGeneAssignments", "AffymetrixNetAffxCsvFile", function(this, ..
       } # for (ii ...)
   
       # Sanity checks
-      stopifnot(length(unitNames) == length(idxs));
-      stopifnot(length(idxs) == sum(ns));
+      stop_if_not(length(unitNames) == length(idxs));
+      stop_if_not(length(idxs) == sum(ns));
       verbose && exit(verbose);
 
   
@@ -257,7 +257,7 @@ setMethodS3("readGeneAssignments", "AffymetrixNetAffxCsvFile", function(this, ..
   
       verbose && enter(verbose, "Building final table");
       # Sanity check
-      stopifnot(length(unitNames) == nrow(data));
+      stop_if_not(length(unitNames) == nrow(data));
       data <- cbind(unitName=unitNames, index=idxs, data);
       rownames(data) <- NULL;
       verbose && exit(verbose);

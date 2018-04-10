@@ -105,7 +105,7 @@ setMethodS3("fromDataSet", "ResidualSet", function(static, dataSet, path, fullna
                                                        verbose=less(verbose));
     verbose && cat(verbose, "Residual file class: ", class(rf)[1]);
     # Assert correctness
-    stopifnot(inherits(rf, "ResidualFile"));
+    stop_if_not(inherits(rf, "ResidualFile"));
 
     if (is.null(cdf)) {
       verbose && enter(verbose, "Retrieving the CDF for the residual file");

@@ -409,12 +409,12 @@ setMethodS3("getFitUnitGroupFunction", "RmaPlm", function(this, ..., verbose=FAL
     if (hasPriors) {
       paf <- priors$probeAffinities[[1]];
       # Sanity check
-      stopifnot(!is.null(paf));
+      stop_if_not(!is.null(paf));
       phi <- paf$phi;
       # Sanity check
-      stopifnot(!is.null(phi));
+      stop_if_not(!is.null(phi));
       # Sanity check
-      stopifnot(length(phi) == K);
+      stop_if_not(length(phi) == K);
 
       sdPhi <- paf$sdPhi;
 
@@ -630,7 +630,7 @@ setMethodS3("getFitUnitGroupFunction", "RmaPlm", function(this, ..., verbose=FAL
   verbose && cat(verbose, "Has priors: ", hasPriors);
   if (hasPriors) {
     # Sanity check
-    stopifnot(is.element("probeAffinities", names(priors)));
+    stop_if_not(is.element("probeAffinities", names(priors)));
   }
 
   # Shift signals?

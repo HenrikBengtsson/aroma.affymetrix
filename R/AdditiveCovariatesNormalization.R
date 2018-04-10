@@ -784,7 +784,7 @@ setMethodS3("process", "AdditiveCovariatesNormalization", function(this, ..., fo
     verbose && summary(verbose, rho);
 
     # Sanity check
-    stopifnot(length(rho) == nrow(theta));
+    stop_if_not(length(rho) == nrow(theta));
 
     # Normalize the theta:s (on the intensity scale)
     ok <- which(is.finite(rho));

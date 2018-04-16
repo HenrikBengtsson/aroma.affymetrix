@@ -9,7 +9,7 @@
 |language |en                           |
 |collate  |en_US.UTF-8                  |
 |tz       |America/Los_Angeles          |
-|date     |2018-04-05                   |
+|date     |2018-04-16                   |
 
 # Dependencies
 
@@ -22,7 +22,7 @@
 |base64enc        |0.1-4  |0.1-4      |   |
 |digest           |0.6.15 |0.6.15     |   |
 |DNAcopy          |1.52.0 |1.52.0     |   |
-|future           |1.7.0  |1.7.0      |   |
+|future           |1.8.0  |1.8.0      |   |
 |future.apply     |0.1.0  |0.1.0      |   |
 |globals          |0.11.0 |0.11.0     |   |
 |listenv          |0.7.0  |0.7.0      |   |
@@ -31,7 +31,7 @@
 |R.cache          |0.13.0 |0.13.0     |   |
 |RColorBrewer     |1.1-2  |1.1-2      |   |
 |R.devices        |2.15.1 |2.15.1     |   |
-|R.filesets       |2.12.0 |2.12.0     |   |
+|R.filesets       |2.12.1 |2.12.1     |   |
 |R.huge           |0.9.0  |0.9.0      |   |
 |R.methodsS3      |1.7.1  |1.7.1      |   |
 |R.oo             |1.21.0 |1.21.0     |   |
@@ -45,9 +45,9 @@
 |package                            |version |error |warning |note |
 |:----------------------------------|:-------|:-----|:-------|:----|
 |[ACNE](problems.md#acne)           |0.8.1   |      |1       |     |
-|[NSA](problems.md#nsa)             |0.0.32  |      |1       |5    |
+|[NSA](problems.md#nsa)             |0.0.32  |      |1       |4 -1 |
 |[PECA](problems.md#peca)           |1.14.0  |      |        |1    |
-|[REIDS](problems.md#reids)         |0.0.1   |      |1       |     |
-|[Repitools](problems.md#repitools) |1.24.0  |      |        |1    |
+|[REIDS](problems.md#reids)         |0.0.2   |      |1       |     |
+|[Repitools](problems.md#repitools) |1.24.0  |1     |        |1    |
 |[TIN](problems.md#tin)             |1.10.0  |      |        |2    |
 

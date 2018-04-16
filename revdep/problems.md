@@ -19,6 +19,34 @@ Version: 0.8.1
 
 Version: 0.0.32
 
+## Newly fixed
+
+*   checking R code for possible problems ... NOTE
+    ```
+    ...
+      ‘str’
+      (/home/hb/repositories/aroma.affymetrix/revdep/checks/NSA/old/NSA.Rcheck/00_pkg_src/NSA/R/snpsNByTotalAndFracB.R:49)
+    snpsNByTotalAndFracB.matrix: no visible global function definition for
+      ‘rowAlls’
+      (/home/hb/repositories/aroma.affymetrix/revdep/checks/NSA/old/NSA.Rcheck/00_pkg_src/NSA/R/snpsNByTotalAndFracB.R:54)
+    snpsNByTotalAndFracB.matrix: no visible global function definition for
+      ‘str’
+      (/home/hb/repositories/aroma.affymetrix/revdep/checks/NSA/old/NSA.Rcheck/00_pkg_src/NSA/R/snpsNByTotalAndFracB.R:73)
+    Undefined global functions or variables:
+      AffymetrixCdfFile CNA Object approxfun aromaSettings byPath extend
+      extractMatrix findUnitsTodo getAsteriskTags getChipType getFile
+      getFullName getFullNames getGenomeInformation getName getNames
+      getPath getPathname getPathnames getPositions getRam getRootPath
+      getTags getUnitsOnChromosome hist median nbrOfFiles newInstance
+      packageDescription rowAlls rowMedians segment setTags str throw trim
+      verbose
+    Consider adding
+      importFrom("graphics", "hist")
+      importFrom("stats", "approxfun", "median")
+      importFrom("utils", "packageDescription", "str")
+    to your NAMESPACE file.
+    ```
+
 ## In both
 
 *   checking CRAN incoming feasibility ... WARNING
@@ -84,32 +112,6 @@ Version: 0.0.32
     manual.
     ```
 
-*   checking R code for possible problems ... NOTE
-    ```
-    ...
-      ‘str’
-      (/home/hb/repositories/aroma.affymetrix/revdep/checks/NSA/new/NSA.Rcheck/00_pkg_src/NSA/R/snpsNByTotalAndFracB.R:49)
-    snpsNByTotalAndFracB.matrix: no visible global function definition for
-      ‘rowAlls’
-      (/home/hb/repositories/aroma.affymetrix/revdep/checks/NSA/new/NSA.Rcheck/00_pkg_src/NSA/R/snpsNByTotalAndFracB.R:54)
-    snpsNByTotalAndFracB.matrix: no visible global function definition for
-      ‘str’
-      (/home/hb/repositories/aroma.affymetrix/revdep/checks/NSA/new/NSA.Rcheck/00_pkg_src/NSA/R/snpsNByTotalAndFracB.R:73)
-    Undefined global functions or variables:
-      AffymetrixCdfFile CNA Object approxfun aromaSettings byPath extend
-      extractMatrix findUnitsTodo getAsteriskTags getChipType getFile
-      getFullName getFullNames getGenomeInformation getName getNames
-      getPath getPathname getPathnames getPositions getRam getRootPath
-      getTags getUnitsOnChromosome hist median nbrOfFiles newInstance
-      packageDescription rowAlls rowMedians segment setTags str throw trim
-      verbose
-    Consider adding
-      importFrom("graphics", "hist")
-      importFrom("stats", "approxfun", "median")
-      importFrom("utils", "packageDescription", "str")
-    to your NAMESPACE file.
-    ```
-
 # PECA
 
 Version: 1.14.0
@@ -131,7 +133,7 @@ Version: 1.14.0
 
 # REIDS
 
-Version: 0.0.1
+Version: 0.0.2
 
 ## In both
 
@@ -139,11 +141,9 @@ Version: 0.0.1
     ```
     Maintainer: ‘Marijke Van Moerbeke <marijke.vanmoerbeke@uhasselt.be>’
     
-    Insufficient package version (submitted: 0.0.1, existing: 0.0.1)
+    Insufficient package version (submitted: 0.0.2, existing: 0.0.2)
     
-    The Date field is over a month old.
-    
-    This build time stamp is over a month old.
+    Days since last update: 3
     ```
 
 # Repitools
@@ -151,6 +151,29 @@ Version: 0.0.1
 Version: 1.24.0
 
 ## In both
+
+*   checking examples ... ERROR
+    ```
+    Running examples in ‘Repitools-Ex.R’ failed
+    The error most likely occurred in:
+    
+    > ### Name: gcContentCalc
+    > ### Title: Calculate The gcContent of a Region
+    > ### Aliases: gcContentCalc gcContentCalc,GRanges,BSgenome-method
+    > ###   gcContentCalc,data.frame,BSgenome-method
+    > 
+    > ### ** Examples
+    > 
+    > require(BSgenome.Hsapiens.UCSC.hg18)
+    Loading required package: BSgenome.Hsapiens.UCSC.hg18
+    Warning in library(package, lib.loc = lib.loc, character.only = TRUE, logical.return = TRUE,  :
+      there is no package called ‘BSgenome.Hsapiens.UCSC.hg18’
+    > TSSTable <- data.frame(chr = paste("chr", c(1,2), sep = ""), position = c(100000, 200000))
+    > gcContentCalc(TSSTable, 200, organism=Hsapiens)
+    Error in gcContentCalc(TSSTable, 200, organism = Hsapiens) : 
+      object 'Hsapiens' not found
+    Execution halted
+    ```
 
 *   checking CRAN incoming feasibility ... NOTE
     ```

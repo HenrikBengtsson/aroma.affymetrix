@@ -48,38 +48,38 @@ setConstructorS3("AffymetrixCelFile", function(..., cdf=NULL) {
   )
 
   if (!is.null(cdf))
-    setCdf(this, cdf);
+    setCdf(this, cdf)
 
-  pathname <- getPathname(this);
+  pathname <- getPathname(this)
   if (!is.null(pathname)) {
     # Make sure the name is non-empty
-    name <- getName(this);
+    name <- getName(this)
     if (!nzchar(name)) {
-      throw("An ", class(this)[1], " must have a name of at least length one: ", pathname);
+      throw("An ", class(this)[1], " must have a name of at least length one: ", pathname)
     }
   }
 
   # Parse attributes (all subclasses must call this in the constructor).
   setAttributesByTags(this)
 
-  this;
+  this
 })
 
 
 setMethodS3("clone", "AffymetrixCelFile", function(this, ..., verbose=TRUE) {
   # Clone itself (and clear the cached fields)
-  object <- NextMethod("clone", clear=TRUE);
+  object <- NextMethod("clone", clear=TRUE)
 
   # Clone the CDF here.
   if (!is.null(object$.cdf))
-    object$.cdf <- clone(object$.cdf);
+    object$.cdf <- clone(object$.cdf)
 
-  object;
+  object
 }, protected=TRUE)
 
 
 setMethodS3("getExtensionPattern", "AffymetrixCelFile", function(static, ...) {
-  "[.](cel|CEL)$";
+  "[.](cel|CEL)$"
 }, static=TRUE, protected=TRUE)
 
 
@@ -112,14 +112,14 @@ setMethodS3("getFileFormat", "AffymetrixCelFile", function(this, asString=TRUE, 
 
 setMethodS3("as.character", "AffymetrixCelFile", function(x, ...) {
   # To please R CMD check
-  this <- x;
+  this <- x
 
-  s <- NextMethod("as.character");
-  s <- c(s, sprintf("File format: %s", getFileFormat(this, asString=TRUE)));
-  s <- c(s, sprintf("Platform: %s", getPlatform(this)));
-  s <- c(s, sprintf("Chip type: %s", getChipType(this)));
-  s <- c(s, sprintf("Timestamp: %s", as.character(getTimestamp(this))));
-  s;
+  s <- NextMethod("as.character")
+  s <- c(s, sprintf("File format: %s", getFileFormat(this, asString=TRUE)))
+  s <- c(s, sprintf("Platform: %s", getPlatform(this)))
+  s <- c(s, sprintf("Chip type: %s", getChipType(this)))
+  s <- c(s, sprintf("Timestamp: %s", as.character(getTimestamp(this))))
+  s
 }, protected=TRUE)
 
 
@@ -129,28 +129,28 @@ setMethodS3("getIdentifier", "AffymetrixCelFile", function(this, ..., force=FALS
     if (!isFile(this)) return(NA_character_)
 
     # Get header
-    hdr <- getHeader(this);
+    hdr <- getHeader(this)
 
     # AD HOC fix for backward compatibility.
     # Ideally we should not create an identifier based
     # on the pathname. /HB 2011-02-24
-    pathname <- hdr$filename;
-    path <- dirname(pathname);
-    path <- dropRootPathTags(path, depth=2);
-    filename <- basename(pathname);
-    pathname <- file.path(path, filename);
-    hdr$filename <- pathname;
+    pathname <- hdr$filename
+    path <- dirname(pathname)
+    path <- dropRootPathTags(path, depth=2)
+    filename <- basename(pathname)
+    pathname <- file.path(path, filename)
+    hdr$filename <- pathname
 
     # Get subset of data
-    nbrOfCells <- hdr$total;
-    mid <- nbrOfCells %/% 2;
-    subset <- seq(from=mid - 500, to=mid + 500);
-    data <- getData(this, indices=subset);
-    key <- list(hdr=hdr, data=data);
-    id <- getChecksum(key);
-    this$.identifier <- id;
+    nbrOfCells <- hdr$total
+    mid <- nbrOfCells %/% 2
+    subset <- seq(from=mid - 500, to=mid + 500)
+    data <- getData(this, indices=subset)
+    key <- list(hdr=hdr, data=data)
+    id <- getChecksum(key)
+    this$.identifier <- id
   }
-  identifier;
+  identifier
 }, private=TRUE)
 
 
@@ -190,30 +190,30 @@ setMethodS3("getIdentifier", "AffymetrixCelFile", function(this, ..., force=FALS
 #*/###########################################################################
 setMethodS3("fromFile", "AffymetrixCelFile", function(static, filename, path=NULL, ..., verbose=FALSE, .checkArgs=TRUE) {
   # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
+  verbose <- Arguments$getVerbose(verbose)
   if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
+    pushState(verbose)
+    on.exit(popState(verbose))
   }
 
   if (.checkArgs) {
     # Argument 'filename' and 'path':
-    pathname <- Arguments$getReadablePathname(filename, path=path, mustExist=TRUE);
+    pathname <- Arguments$getReadablePathname(filename, path=path, mustExist=TRUE)
   } else {
-    pathname <- filename;
+    pathname <- filename
   }
 
 
   # WORKAROUND: Currently the affxparser code crash R if the file is not
   # a valid CEL file.  The best we can do now is to test against the
   # filename.
-  isCel <- (regexpr("[.](c|C)(e|E)(l|L)$", pathname) != -1);
+  isCel <- (regexpr("[.](c|C)(e|E)(l|L)$", pathname) != -1)
   if (!isCel) {
-    throw("Could not read CEL file. Filename format error: ", pathname);
+    throw("Could not read CEL file. Filename format error: ", pathname)
   }
 
   # Create a new instance of the same class
-  newInstance(static, pathname);
+  newInstance(static, pathname)
 }, static=TRUE, protected=TRUE)
 
 
@@ -249,26 +249,26 @@ setMethodS3("fromFile", "AffymetrixCelFile", function(static, filename, path=NUL
 # @keyword IO
 #*/###########################################################################
 setMethodS3("getCdf", "AffymetrixCelFile", function(this, ...) {
-  cdf <- this$.cdf;
+  cdf <- this$.cdf
   if (is.null(cdf)) {
     if (!isFile(this)) return(AffymetrixCdfFile())
 
-    hdr <- getHeader(this);
-    chipType <- hdr$chiptype;
-    nbrOfCells <- hdr$total;
-    cdf <- AffymetrixCdfFile$byChipType(chipType, nbrOfCells=nbrOfCells);
-    this$.cdf <- cdf;
+    hdr <- getHeader(this)
+    chipType <- hdr$chiptype
+    nbrOfCells <- hdr$total
+    cdf <- AffymetrixCdfFile$byChipType(chipType, nbrOfCells=nbrOfCells)
+    this$.cdf <- cdf
   }
-  cdf;
+  cdf
 })
 
 
 setMethodS3("getUnitNamesFile", "AffymetrixCelFile", function(this, ...) {
-  getCdf(this, ...);
+  getCdf(this, ...)
 })
 
 setMethodS3("getUnitTypesFile", "AffymetrixCelFile", function(this, ...) {
-  getCdf(this, ...);
+  getCdf(this, ...)
 })
 
 
@@ -305,25 +305,25 @@ setMethodS3("getUnitTypesFile", "AffymetrixCelFile", function(this, ...) {
 setMethodS3("setCdf", "AffymetrixCelFile", function(this, cdf, ..., .checkArgs=TRUE) {
   if (.checkArgs) {
     # Argument 'cdf':
-    cdf <- Arguments$getInstanceOf(cdf, "AffymetrixCdfFile");
+    cdf <- Arguments$getInstanceOf(cdf, "AffymetrixCdfFile")
 
     # Assure that the CDF is compatible with the CEL file
     if (nbrOfCells(cdf) != nbrOfCells(this)) {
-      throw("Cannot set CDF. The specified CDF structure ('", getChipType(cdf), "') is not compatible with the chip type ('", getChipType(this), "') of the CEL file. The number of cells do not match: ", nbrOfCells(cdf), " != ", nbrOfCells(this));
+      throw("Cannot set CDF. The specified CDF structure ('", getChipType(cdf), "') is not compatible with the chip type ('", getChipType(this), "') of the CEL file. The number of cells do not match: ", nbrOfCells(cdf), " != ", nbrOfCells(this))
     }
 
     # Nothing to do?
-#    oldCdf <- getCdf(this);
+#    oldCdf <- getCdf(this)
 #    if (equals(cdf, oldCdf))
-#      return(invisible(this));
+#      return(invisible(this))
   }
 
   # Have to clear the cache
-  clearCache(this);
+  clearCache(this)
 
-  this$.cdf <- cdf;
+  this$.cdf <- cdf
 
-  invisible(this);
+  invisible(this)
 })
 
 
@@ -357,13 +357,13 @@ setMethodS3("setCdf", "AffymetrixCelFile", function(this, cdf, ..., .checkArgs=T
 # @keyword IO
 #*/###########################################################################
 setMethodS3("getHeader", "AffymetrixCelFile", function(this, ...) {
-  header <- this$.header;
+  header <- this$.header
   if (is.null(header) && isFile(this)) {
-    pathname <- getPathname(this);
-    header <- .readCelHeader(pathname);
-    this$.header <- header;
+    pathname <- getPathname(this)
+    header <- .readCelHeader(pathname)
+    this$.header <- header
   }
-  header;
+  header
 }, private=TRUE)
 
 
@@ -371,21 +371,21 @@ setMethodS3("getHeaderV3", "AffymetrixCelFile", function(this, ...) {
   if (!isFile(this)) return(NULL)
 
   # Get the CEL header
-  header <- getHeader(this);
+  header <- getHeader(this)
 
   # Get the CEL v3 header
-  header <- header$header;
+  header <- header$header
 
   # Parse it
-  header <- unlist(strsplit(header, split="\n"));
-  header <- trim(header);
-  header <- header[nzchar(header)];
-  header <- strsplit(header, split="=");
-  names <- sapply(header, FUN=function(s) s[1]);
-  header <- lapply(header, FUN=function(s) s[-1]);
-  names(header) <- names;
+  header <- unlist(strsplit(header, split="\n"))
+  header <- trim(header)
+  header <- header[nzchar(header)]
+  header <- strsplit(header, split="=")
+  names <- sapply(header, FUN=function(s) s[1])
+  header <- lapply(header, FUN=function(s) s[-1])
+  names(header) <- names
 
-  header;
+  header
 }, private=TRUE)
 
 
@@ -429,26 +429,26 @@ setMethodS3("getTimestamp", "AffymetrixCelFile", function(this, format="%m/%d/%y
   getTimestampFromDatHeader <- function(headerDAT, chipType) {
     # Find the element with a date. It is part of the same string as the
     # one containing the chip type.  Get the chip type from the header.
-    pattern <- sprintf(" %s.1sq ", chipType);
-    header <- grep(pattern, headerDAT, value=TRUE);
+    pattern <- sprintf(" %s.1sq ", chipType)
+    header <- grep(pattern, headerDAT, value=TRUE)
 
     # Fallback, in case a early-access chiptype string (or none) is used
     # in the DAT header.
     if (length(header) == 0L) {
-      pattern <- " (.*).1sq ";
-      header <- grep(pattern, headerDAT, value=TRUE);
+      pattern <- " (.*).1sq "
+      header <- grep(pattern, headerDAT, value=TRUE)
     }
 
-    hasTimestamp <- FALSE;
+    hasTimestamp <- FALSE
     if (length(header) == 1L) {
       # Extract the date timestamp
-      pattern <- ".*([01][0-9]/[0-3][0-9]/[0-9][0-9] [0-2][0-9]:[0-5][0-9]:[0-5][0-9]).*";
+      pattern <- ".*([01][0-9]/[0-3][0-9]/[0-9][0-9] [0-2][0-9]:[0-5][0-9]:[0-5][0-9]).*"
 
-      hasTimestamp <- (regexpr(pattern, header) != -1L);
+      hasTimestamp <- (regexpr(pattern, header) != -1L)
     }
 
     if (hasTimestamp) {
-      timestamp <- gsub(pattern, "\\1", header);
+      timestamp <- gsub(pattern, "\\1", header)
 
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       # Alternative:
@@ -457,34 +457,34 @@ setMethodS3("getTimestamp", "AffymetrixCelFile", function(this, format="%m/%d/%y
       # From the DAT header specification (Affymetrix Data File Formats, April
       # 2006), we know that the date and the timestamp is 18 characters long.
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    ##   nTemp <- 7;
-    ##   nPower <- 4;
-    ##   nTimestamp <- 18;
+    ##   nTemp <- 7
+    ##   nPower <- 4
+    ##   nTimestamp <- 18
     ##   # Expected start position
-    ##   pos <- nTemp + 1 + nPower + 1;
+    ##   pos <- nTemp + 1 + nPower + 1
     ##   # ...however, the files we have start at the next position. /HB 2006-12-01
-    ##   pos <- pos + 1;
-    ##   timestamp <- substring(header, first=pos, last=pos+nTimestamp-1);
+    ##   pos <- pos + 1
+    ##   timestamp <- substring(header, first=pos, last=pos+nTimestamp-1)
 
       timestamp <- trim(timestamp); # Unnecessary?
 
       # Parse the identified timestamp into POSIXct
-      res <- strptime(timestamp, format=format, ...);
+      res <- strptime(timestamp, format=format, ...)
     } else {
-      res <- NULL;
+      res <- NULL
     }
 
     # If no valid timestamp was found, return NA.
     if (length(as.character(res)) == 0) {
-      res <- as.POSIXct(NA);
+      res <- as.POSIXct(NA)
     }
 
     # Keep the non-parsed timetstamp etc for debugging.
-    attr(res, "text") <- timestamp;
-    attr(res, "header") <- header;
-    attr(res, "headerDAT") <- headerDAT;
+    attr(res, "text") <- timestamp
+    attr(res, "header") <- header
+    attr(res, "headerDAT") <- headerDAT
 
-    res;
+    res
   } # getTimestampFromDatHeader()
 
 
@@ -492,40 +492,40 @@ setMethodS3("getTimestamp", "AffymetrixCelFile", function(this, format="%m/%d/%y
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'format':
-  format <- Arguments$getCharacter(format, length=c(1,1));
+  format <- Arguments$getCharacter(format, length=c(1,1))
 
   if (!isFile(this)) return(as.POSIXct(NA))
 
-  chipType <- getHeader(this)$chiptype;
+  chipType <- getHeader(this)$chiptype
 
-  fileFormat <- getFileFormat(this, asString=FALSE);
+  fileFormat <- getFileFormat(this, asString=FALSE)
 
   if (fileFormat == 1) {
     suppressWarnings({
-      hdr <- .readCcgHeader(getPathname(this));
-    });
+      hdr <- .readCcgHeader(getPathname(this))
+    })
 
     # Get the DAT header
-    params <- hdr$dataHeader$parents[[1]]$parameters;
-    headerDAT <- params[["affymetrix-dat-header"]];
+    params <- hdr$dataHeader$parents[[1]]$parameters
+    headerDAT <- params[["affymetrix-dat-header"]]
     if (is.null(headerDAT)) {
-      headerDAT <- params[["affymetrix-partial-dat-header"]];
+      headerDAT <- params[["affymetrix-partial-dat-header"]]
     }
 
     # Extract the timestamp
-    res <- getTimestampFromDatHeader(headerDAT, chipType=chipType);
+    res <- getTimestampFromDatHeader(headerDAT, chipType=chipType)
   } else if (fileFormat %in% c(3,4)) {
     # Get the DAT header
-    header <- getHeaderV3(this);
-    headerDAT <- header$DatHeader;
+    header <- getHeaderV3(this)
+    headerDAT <- header$DatHeader
 
     # Extract the timestamp
-    res <- getTimestampFromDatHeader(headerDAT, chipType=chipType);
+    res <- getTimestampFromDatHeader(headerDAT, chipType=chipType)
   } else {
-    res <- as.POSIXct(NA);
+    res <- as.POSIXct(NA)
   }
 
-  res;
+  res
 }, private=TRUE)
 
 
@@ -565,14 +565,14 @@ setMethodS3("nbrOfCells", "AffymetrixCelFile", function(this, ...) {
 # @keyword IO
 #*/###########################################################################
 setMethodS3("getChipType", "AffymetrixCelFile", function(this, ...) {
-  unf <- getUnitNamesFile(this);
+  unf <- getUnitNamesFile(this)
   if (!isFile(unf)) return(NA_character_)
-  getChipType(unf, ...);
+  getChipType(unf, ...)
 }, private=TRUE)
 
 
 setMethodS3("getPlatform", "AffymetrixCelFile", function(this, ...) {
-  "Affymetrix";
+  "Affymetrix"
 }, private=TRUE)
 
 
@@ -616,7 +616,7 @@ setMethodS3("getPlatform", "AffymetrixCelFile", function(this, ...) {
 #*/###########################################################################
 setMethodS3("readUnits", "AffymetrixCelFile", function(this, units=NULL, cdf=NULL, ..., stratifyBy=NULL, force=FALSE, cache=FALSE, verbose=FALSE) {
   # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
+  verbose <- Arguments$getVerbose(verbose)
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -624,19 +624,19 @@ setMethodS3("readUnits", "AffymetrixCelFile", function(this, units=NULL, cdf=NUL
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (is.null(cdf)) {
     suppressWarnings({
-      cdf <- readUnits(getCdf(this), units=units, stratifyBy=stratifyBy);
-    });
+      cdf <- readUnits(getCdf(this), units=units, stratifyBy=stratifyBy)
+    })
   }
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Retrieve data
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  pathname <- getPathname(this);
+  pathname <- getPathname(this)
   suppressWarnings({
-    res <- .readCelUnits(pathname, cdf=cdf, dropArrayDim=TRUE, ...);
+    res <- .readCelUnits(pathname, cdf=cdf, dropArrayDim=TRUE, ...)
   })
 
-  res;
+  res
 }, private=TRUE)
 
 
@@ -671,9 +671,9 @@ setMethodS3("readUnits", "AffymetrixCelFile", function(this, units=NULL, cdf=NUL
 # @keyword IO
 #*/###########################################################################
 setMethodS3("updateUnits", "AffymetrixCelFile", function(this, data, ...) {
-  pathname <- getPathname(this);
-  pathname <- Arguments$getWritablePathname(pathname);
-  .updateCelUnits(pathname, data=data, ...);
+  pathname <- getPathname(this)
+  pathname <- Arguments$getWritablePathname(pathname)
+  .updateCelUnits(pathname, data=data, ...)
 }, private=TRUE)
 
 
@@ -718,41 +718,41 @@ setMethodS3("clearData", "AffymetrixCelFile", function(this, fields=c("intensiti
   # Argument 'fields':
 
   # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
+  verbose <- Arguments$getVerbose(verbose)
 
   if (!identical(.forSure, TRUE))
-    throw("Did you call clearData() by mistake? If not, use .forSure=TRUE.");
+    throw("Did you call clearData() by mistake? If not, use .forSure=TRUE.")
 
   # Nothing do to?
   if (length(fields) == 0L) {
-    verbose && cat(verbose, "No fields to be cleared.");
-    return(invisible(fields));
+    verbose && cat(verbose, "No fields to be cleared.")
+    return(invisible(fields))
   }
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Clear
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  verbose && enter(verbose, "Clearing Affymetrix CEL file");
+  verbose && enter(verbose, "Clearing Affymetrix CEL file")
 
   # Asserting file permissions
-  pathname <- getPathname(this);
-  pathname <- Arguments$getWritablePathname(pathname);
+  pathname <- getPathname(this)
+  pathname <- Arguments$getWritablePathname(pathname)
 
   verbose && cat(verbose, "Fields to be cleared: ",
-                                             paste(fields, collapse=", "));
-  bfr <- rep(value, length.out=nbrOfCells(this));
-  intensities <- stdvs <- pixels <- NULL;
+                                             paste(fields, collapse=", "))
+  bfr <- rep(value, length.out=nbrOfCells(this))
+  intensities <- stdvs <- pixels <- NULL
   if ("intensities" %in% fields)
-    intensities <- bfr;
+    intensities <- bfr
   if ("stdvs" %in% fields)
-    stdvs <- bfr;
+    stdvs <- bfr
   if ("pixels" %in% fields)
-    pixels <- bfr;
+    pixels <- bfr
 
-  .updateCel(pathname, intensities=bfr, stdvs=bfr, pixels=bfr);
-  verbose && exit(verbose);
+  .updateCel(pathname, intensities=bfr, stdvs=bfr, pixels=bfr)
+  verbose && exit(verbose)
 
-  invisible(fields);
+  invisible(fields)
 }, static=TRUE, private=TRUE)
 
 
@@ -805,45 +805,45 @@ setMethodS3("readRawData", "AffymetrixCelFile", function(this, indices=NULL, fie
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'indices':
-  nbrOfCells <- nbrOfCells(getCdf(this));
+  nbrOfCells <- nbrOfCells(getCdf(this))
   if (is.null(indices)) {
   } else {
-    indices <- Arguments$getIndices(indices, max=nbrOfCells, disallow="NaN");
-    nbrOfCells <- length(indices);
+    indices <- Arguments$getIndices(indices, max=nbrOfCells, disallow="NaN")
+    nbrOfCells <- length(indices)
   }
 
   # Argument 'fields':
-  fields <- match.arg(fields, several.ok=TRUE);
+  fields <- match.arg(fields, several.ok=TRUE)
   if (length(fields) == 0) {
-    throw("Argument 'fields' is empty.");
+    throw("Argument 'fields' is empty.")
   }
 
   # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
+  verbose <- Arguments$getVerbose(verbose)
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Retrieve data
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Special case: requesting zero indices?
-  readZeroElements <- (length(indices) == 0 && !is.null(indices));
+  readZeroElements <- (length(indices) == 0 && !is.null(indices))
   if (readZeroElements) {
     # A work around...
-    indices <- 1;
+    indices <- 1
   }
 
   # Workaround for readCel() not handling NA indices
   if (!is.null(indices)) {
-    nas <- which(is.na(indices));
-    hasNAs <- length(nas);
+    nas <- which(is.na(indices))
+    hasNAs <- length(nas)
     if (hasNAs)
-      indices[nas] <- 1;
+      indices[nas] <- 1
   } else {
-    hasNAs <- FALSE;
+    hasNAs <- FALSE
   }
 
-  cVerbose <- -(as.numeric(verbose) + 50);
-  pathname <- getPathname(this);
+  cVerbose <- -(as.numeric(verbose) + 50)
+  pathname <- getPathname(this)
   args <- list(
     filename=pathname,
     indices=indices,
@@ -856,22 +856,22 @@ setMethodS3("readRawData", "AffymetrixCelFile", function(this, indices=NULL, fie
     readMasked=FALSE,
     ...,
     verbose=cVerbose
-  );
+  )
 
-  fcn <- get("readCel", mode="function");
-  keep <- intersect(names(args), names(formals(fcn)));
-  args <- args[keep];
-  cel <- do.call(readCel, args=args);
+  fcn <- get("readCel", mode="function")
+  keep <- intersect(names(args), names(formals(fcn)))
+  args <- args[keep]
+  cel <- do.call(readCel, args=args)
 
   # Sanity check
-  stopifnot(is.list(cel));
-  stopifnot(length(cel) > 0);
+  stopifnot(is.list(cel))
+  stopifnot(length(cel) > 0)
 
   if (hasNAs) {
     for (kk in seq_along(cel)) {
-      naValue <- NA;
-      storage.mode(naValue) <- storage.mode(cel[[kk]]);
-      cel[[kk]][nas] <- naValue;
+      naValue <- NA
+      storage.mode(naValue) <- storage.mode(cel[[kk]])
+      cel[[kk]][nas] <- naValue
     }
   }
 
@@ -879,57 +879,57 @@ setMethodS3("readRawData", "AffymetrixCelFile", function(this, indices=NULL, fie
   # Clean up
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Split (x,y)
-  isXY <- which(fields == "xy");
+  isXY <- which(fields == "xy")
   if (length(isXY) > 0) {
-    fields <- as.list(fields);
-    fields[[isXY]] <- c("x", "y");
-    fields <- unlist(fields, use.names=TRUE);
+    fields <- as.list(fields)
+    fields[[isXY]] <- c("x", "y")
+    fields <- unlist(fields, use.names=TRUE)
   }
 
   # Keep only requested fields
   if (!identical(names(cel), fields)) {
-    cel <- cel[fields];
+    cel <- cel[fields]
 
     # Sanity check
-    stopifnot(is.list(cel));
-    stopifnot(length(cel) > 0);
+    stopifnot(is.list(cel))
+    stopifnot(length(cel) > 0)
   }
 
   if (readZeroElements) {
-    cel <- lapply(cel, FUN=.subset, integer(0));
+    cel <- lapply(cel, FUN=.subset, integer(0))
   }
 
   # Drop dimensions?
   if (drop && length(cel) == 1) {
-    cel <- cel[[1]];
+    cel <- cel[[1]]
   } else {
     # Return as data frame
-    attr(cel, "row.names") <- seq_along(cel[[1]]);
-    class(cel) <- "data.frame";
+    attr(cel, "row.names") <- seq_along(cel[[1]])
+    class(cel) <- "data.frame"
   }
 
-  cel;
+  cel
 }, private=TRUE)
 
 
 setMethodS3("range", "AffymetrixCelFile", function(this, ..., na.rm=TRUE) {
-  x <- getData(this, ...);
-  range(x, na.rm=na.rm);
+  x <- getData(this, ...)
+  range(x, na.rm=na.rm)
 }, protected=TRUE)
 
 
 setMethodS3("readRawDataRectangle", "AffymetrixCelFile", function(this, xrange=c(0,Inf), yrange=c(0,Inf), fields=c("intensities", "stdvs", "pixels"), ..., drop=FALSE) {
-  pathname <- getPathname(this);
-  data <- .readCelRectangle(pathname, xrange=xrange, yrange=yrange, readIntensities=("intensities" %in% fields), readStdvs=("stdvs" %in% fields), readPixels=("pixels" %in% fields), readHeader=FALSE, readOutliers=FALSE, readMasked=FALSE);
+  pathname <- getPathname(this)
+  data <- .readCelRectangle(pathname, xrange=xrange, yrange=yrange, readIntensities=("intensities" %in% fields), readStdvs=("stdvs" %in% fields), readPixels=("pixels" %in% fields), readHeader=FALSE, readOutliers=FALSE, readMasked=FALSE)
 
   if (drop && length(data) == 1) {
-    data <- data[[1]];
+    data <- data[[1]]
   }
 
-  data;
+  data
 }, private=TRUE)
 
 
 setMethodS3("getRectangle", "AffymetrixCelFile", function(this, ...) {
-  readRawDataRectangle(this, ...);
+  readRawDataRectangle(this, ...)
 }, private=TRUE)

@@ -3,17 +3,17 @@
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 setMethodS3("importFrom", "AromaUnitTabularBinaryFile", function(this, src, ...) {
   if (inherits(src, "AffymetrixNetAffxCsvFile")) {
-    importFromAffymetrixNetAffxCsvFile(this, src, ...);
+    importFromAffymetrixNetAffxCsvFile(this, src, ...)
   } else if (inherits(src, "DChipGenomeInformation")) {
-    importFromDChipGenomeInformation(this, src, ...);
+    importFromDChipGenomeInformation(this, src, ...)
   } else if (inherits(src, "GenomeInformation")) {
-    importFromGenomeInformation(this, src, ...);
+    importFromGenomeInformation(this, src, ...)
   } else if (inherits(src, "AffymetrixTabularFile")) {
-    importFromAffymetrixTabularFile(this, src, ...);
+    importFromAffymetrixTabularFile(this, src, ...)
   } else if (inherits(src, "GenericTabularFile")) {
-    importFromGenericTabularFile(this, src, ...);
+    importFromGenericTabularFile(this, src, ...)
   } else {
-    throw("Do not know how to import from an src of class ", class(src)[1]);
+    throw("Do not know how to import from an src of class ", class(src)[1])
   }
 })
 
@@ -24,13 +24,13 @@ setMethodS3("getCdf", "AromaUnitTabularBinaryFile", function(this, ..., force=FA
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
+  verbose <- Arguments$getVerbose(verbose)
   if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
+    pushState(verbose)
+    on.exit(popState(verbose))
   }
 
-  cdf <- this$.cdf;
+  cdf <- this$.cdf
   if (force || is.null(cdf)) {
     if (.old) {
       # Generate all possible fullname 'chipTypes' and search for the existance
@@ -38,35 +38,35 @@ setMethodS3("getCdf", "AromaUnitTabularBinaryFile", function(this, ..., force=FA
       # This is AD HOC! We should really store the full chiptype of the
       # corresponding CDF in the internal file header. /HB 2007-12-10
 
-      verbose && enter(verbose, "Searching for a match CDF");
+      verbose && enter(verbose, "Searching for a match CDF")
 
-      verbose && cat(verbose, "Filename: ", getFilename(this));
-      name <- getName(this, ...);
-      tags <- getTags(this, collapse=NULL, ...);
+      verbose && cat(verbose, "Filename: ", getFilename(this))
+      name <- getName(this, ...)
+      tags <- getTags(this, collapse=NULL, ...)
 
       validator <- function(cdf, ...) {
-        (nbrOfUnits(cdf) == nbrOfUnits(this));
+        (nbrOfUnits(cdf) == nbrOfUnits(this))
       }
       pathname <- findByCdf2(chipType=name, tags=tags, validator=validator,
-                                                    verbose=less(verbose, 1));
+                                                    verbose=less(verbose, 1))
       if (is.null(pathname)) {
         throw("Failed to locate a CDF for ", class(this)[1],
-              " that have ", nbrOfUnits, " units: ", getFullName(this));
+              " that have ", nbrOfUnits, " units: ", getFullName(this))
       }
 
-      cdf <- AffymetrixCdfFile$fromFile(pathname);
+      cdf <- AffymetrixCdfFile$fromFile(pathname)
 
-      verbose && exit(verbose);
+      verbose && exit(verbose)
     } else {
-      chipType <- getChipType(this);
-      nbrOfUnits <- nbrOfUnits(this);
-      cdf <- AffymetrixCdfFile$byChipType(chipType, nbrOfUnits=nbrOfUnits);
+      chipType <- getChipType(this)
+      nbrOfUnits <- nbrOfUnits(this)
+      cdf <- AffymetrixCdfFile$byChipType(chipType, nbrOfUnits=nbrOfUnits)
     }
 
-    this$.cdf <- cdf;
+    this$.cdf <- cdf
   }
 
-  cdf;
+  cdf
 })
 
 
@@ -109,9 +109,9 @@ setMethodS3("getCdf", "AromaUnitTabularBinaryFile", function(this, ..., force=FA
 #*/###########################################################################
 setMethodS3("allocateFromCdf", "AromaUnitTabularBinaryFile", function(static, cdf, ...) {
   # Argument 'cdf':
-  cdf <- Arguments$getInstanceOf(cdf, "AffymetrixCdfFile");
+  cdf <- Arguments$getInstanceOf(cdf, "AffymetrixCdfFile")
 
-  allocateFromUnitNamesFile(static, unf=cdf, ...);
+  allocateFromUnitNamesFile(static, unf=cdf, ...)
 }, static=TRUE)
 
 
@@ -122,25 +122,25 @@ setMethodS3("allocateFromCdf", "AromaUnitTabularBinaryFile", function(static, cd
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 
-setMethodS3("importFromGenericTabularFile", "AromaUnitTabularBinaryFile", abstract=TRUE);
+setMethodS3("importFromGenericTabularFile", "AromaUnitTabularBinaryFile", abstract=TRUE)
 
 
 setMethodS3("importFromAffymetrixTabularFile", "AromaUnitTabularBinaryFile", function(this, src, ...) {
   # Argument 'src':
-  src <- Arguments$getInstanceOf(src, "AffymetrixTabularFile");
+  src <- Arguments$getInstanceOf(src, "AffymetrixTabularFile")
 
-  importFromGenomeInformation(this, src, ...);
-});
-
-
-setMethodS3("importFromAffymetrixNetAffxCsvFile", "AromaUnitTabularBinaryFile", abstract=TRUE, protected=TRUE);
-
-setMethodS3("importFromDChipGenomeInformation", "AromaUnitTabularBinaryFile", function(this, src, ...) {
-  # Argument 'src':
-  src <- Arguments$getInstanceOf(src, "DChipGenomeInformation");
-
-  importFromGenomeInformation(this, src, ...);
+  importFromGenomeInformation(this, src, ...)
 })
 
 
-setMethodS3("importFromGenomeInformation", "AromaUnitTabularBinaryFile", abstract=TRUE, protected=TRUE);
+setMethodS3("importFromAffymetrixNetAffxCsvFile", "AromaUnitTabularBinaryFile", abstract=TRUE, protected=TRUE)
+
+setMethodS3("importFromDChipGenomeInformation", "AromaUnitTabularBinaryFile", function(this, src, ...) {
+  # Argument 'src':
+  src <- Arguments$getInstanceOf(src, "DChipGenomeInformation")
+
+  importFromGenomeInformation(this, src, ...)
+})
+
+
+setMethodS3("importFromGenomeInformation", "AromaUnitTabularBinaryFile", abstract=TRUE, protected=TRUE)

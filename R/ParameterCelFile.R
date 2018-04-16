@@ -51,30 +51,30 @@ setConstructorS3("ParameterCelFile", function(..., encodeFunction=NULL, decodeFu
     "cached:.readUnitsCache" = NULL,
     encodeFunction = encodeFunction,
     decodeFunction = decodeFunction
-  );
+  )
 
   # Parse attributes (all subclasses must call this in the constructor).
   setAttributesByTags(this)
 
-  this;
+  this
 })
 
 setMethodS3("setEncodeFunction", "ParameterCelFile", function(this, fcn, ...) {
   if (is.null(fcn)) {
   } else if (!is.function(fcn)) {
-    throw("Argument 'fcn' is not a function: ", mode(fcn));
+    throw("Argument 'fcn' is not a function: ", mode(fcn))
   }
-  this$encodeFunction <- fcn;
-  invisible(this);
+  this$encodeFunction <- fcn
+  invisible(this)
 }, private=TRUE)
 
 setMethodS3("setDecodeFunction", "ParameterCelFile", function(this, fcn, ...) {
   if (is.null(fcn)) {
   } else if (!is.function(fcn)) {
-    throw("Argument 'fcn' is not a function: ", mode(fcn));
+    throw("Argument 'fcn' is not a function: ", mode(fcn))
   }
-  this$decodeFunction <- fcn;
-  invisible(this);
+  this$decodeFunction <- fcn
+  invisible(this)
 }, private=TRUE)
 
 # There was a lot of overhead for calling functions in the previous
@@ -82,19 +82,19 @@ setMethodS3("setDecodeFunction", "ParameterCelFile", function(this, fcn, ...) {
 # every unit individually. Same for decode() and decodeUnits(). The
 # new mechanism skips the uncodeUnit() and decodeUnit() step.
 setMethodS3("encode", "ParameterCelFile", function(this, units, ...) {
-  encodeUnitGroup <- this$encodeFunction;
+  encodeUnitGroup <- this$encodeFunction
   if (!is.null(encodeUnitGroup)) {
-    units <- lapply(units, FUN=lapply, encodeUnitGroup);
+    units <- lapply(units, FUN=lapply, encodeUnitGroup)
   }
-  units;
+  units
 }, private=TRUE)
 
 setMethodS3("decode", "ParameterCelFile", function(this, units, ...) {
-  decodeUnitGroup <- this$decodeFunction;
+  decodeUnitGroup <- this$decodeFunction
   if (!is.null(decodeUnitGroup)) {
-    units <- lapply(units, FUN=lapply, decodeUnitGroup);
+    units <- lapply(units, FUN=lapply, decodeUnitGroup)
   }
-  units;
+  units
 }, private=TRUE)
 
 
@@ -103,30 +103,30 @@ setMethodS3("readUnits", "ParameterCelFile", function(this, ..., readStdvs=FALSE
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
+  verbose <- Arguments$getVerbose(verbose)
   if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
+    pushState(verbose)
+    on.exit(popState(verbose))
   }
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Check for cached data
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  args <- list(..., readStdvs=readStdvs, readPixels=readPixels, stratifyBy=stratifyBy);
+  args <- list(..., readStdvs=readStdvs, readPixels=readPixels, stratifyBy=stratifyBy)
   if (object.size(args) > 1e6) {
     verbose && printf(verbose, "No caching. Argument list too large: %s\n", hsize(object.size(args), digits = 2L, standard = "IEC"))
-    cache <- FALSE;
+    cache <- FALSE
   } else {
-    verbose && enter(verbose, "Generating hashcode key for cache");
-    id <- getChecksum(args);
-    verbose && exit(verbose);
+    verbose && enter(verbose, "Generating hashcode key for cache")
+    id <- getChecksum(args)
+    verbose && exit(verbose)
     if (!force) {
-      verbose && enter(verbose, "Trying to obtain cached data");
-      res <- this$.readUnitsCache[[id]];
-      verbose && exit(verbose);
+      verbose && enter(verbose, "Trying to obtain cached data")
+      res <- this$.readUnitsCache[[id]]
+      verbose && exit(verbose)
       if (!is.null(res)) {
-        verbose && cat(verbose, "readUnits.ParameterCelFile(): Returning cached data");
-        return(res);
+        verbose && cat(verbose, "readUnits.ParameterCelFile(): Returning cached data")
+        return(res)
       }
     }
   }
@@ -134,23 +134,23 @@ setMethodS3("readUnits", "ParameterCelFile", function(this, ..., readStdvs=FALSE
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Retrieve and decoding data
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  verbose && enter(verbose, "Reading units");
-  units <- NextMethod("readUnits", readStdvs=readStdvs, readPixels=readPixels, stratifyBy=stratifyBy, verbose=less(verbose));
-  verbose && exit(verbose);
+  verbose && enter(verbose, "Reading units")
+  units <- NextMethod("readUnits", readStdvs=readStdvs, readPixels=readPixels, stratifyBy=stratifyBy, verbose=less(verbose))
+  verbose && exit(verbose)
 
-  verbose && enter(verbose, "Decoding ", length(units), " units");
-  units <- decode(this, units, verbose=less(verbose));
-  verbose && exit(verbose);
+  verbose && enter(verbose, "Decoding ", length(units), " units")
+  units <- decode(this, units, verbose=less(verbose))
+  verbose && exit(verbose)
 
   # Store read units in cache?
   if (cache) {
-    verbose && cat(verbose, "readUnits.ParameterCelFile(): Updating cache");
-    this$.readUnitsCache <- list();
-    this$.readUnitsCache[[id]] <- units;
+    verbose && cat(verbose, "readUnits.ParameterCelFile(): Updating cache")
+    this$.readUnitsCache <- list()
+    this$.readUnitsCache[[id]] <- units
   }
 
-  units;
-});
+  units
+})
 
 
 setMethodS3("updateUnits", "ParameterCelFile", function(this, data, cdf=NULL, ..., verbose=FALSE) {
@@ -158,24 +158,24 @@ setMethodS3("updateUnits", "ParameterCelFile", function(this, data, cdf=NULL, ..
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
+  verbose <- Arguments$getVerbose(verbose)
   if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
+    pushState(verbose)
+    on.exit(popState(verbose))
   }
 
-  verbose && enter(verbose, "Updating units");
+  verbose && enter(verbose, "Updating units")
 
-  verbose && enter(verbose, "Encoding units");
-  data <- encode(this, data);
-  verbose && exit(verbose);
+  verbose && enter(verbose, "Encoding units")
+  data <- encode(this, data)
+  verbose && exit(verbose)
 
-#  verbose && str(verbose, cdf[1]);
-#  verbose && str(verbose, data[1]);
+#  verbose && str(verbose, cdf[1])
+#  verbose && str(verbose, data[1])
 
-  NextMethod("updateUnits", cdf=cdf, data=data, verbose=less(verbose));
+  NextMethod("updateUnits", cdf=cdf, data=data, verbose=less(verbose))
 
-  verbose && exit(verbose);
+  verbose && exit(verbose)
 
-  invisible(data);
+  invisible(data)
 }, private=TRUE)

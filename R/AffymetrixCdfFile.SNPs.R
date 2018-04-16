@@ -25,26 +25,26 @@
 # }
 #*/###########################################################################
 setMethodS3("isSnpChip", "AffymetrixCdfFile", function(this, ...) {
-  chipType <- getChipType(this);
+  chipType <- getChipType(this)
 
   # First some hardwired return values
   if (regexpr("^Mapping(10K|50K|250K)_.*$", chipType) != -1)
-    return(TRUE);
+    return(TRUE)
 
   if (regexpr("^Cent(Hind|Xba).*$", chipType) != -1)
-    return(TRUE);
+    return(TRUE)
 
   if (regexpr("^GenomeWideSNP_.*$", chipType) != -1)
-    return(TRUE);
+    return(TRUE)
 
   if (regexpr("^Cyto.*Array$", chipType) != -1)
-    return(TRUE);
+    return(TRUE)
 
   # Then, check for genotype units
-  types <- getUnitTypes(this, ...);
-  hasSnpUnits <- any(types == 2);
+  types <- getUnitTypes(this, ...)
+  hasSnpUnits <- any(types == 2)
 
-  hasSnpUnits;
+  hasSnpUnits
 }, private=TRUE)
 
 
@@ -79,9 +79,9 @@ setMethodS3("isSnpChip", "AffymetrixCdfFile", function(this, ...) {
 # }
 #*/###########################################################################
 setMethodS3("getSnpNames", "AffymetrixCdfFile", function(this, ...) {
-  types <- getUnitTypes(this, ...);
-  units <- (types == 2);
-  getUnitNames(this, units=units, ...);
+  types <- getUnitTypes(this, ...)
+  units <- (types == 2)
+  getUnitNames(this, units=units, ...)
 }, private=TRUE)
 
 
@@ -117,9 +117,9 @@ setMethodS3("getSnpNames", "AffymetrixCdfFile", function(this, ...) {
 # }
 #*/###########################################################################
 setMethodS3("getCnNames", "AffymetrixCdfFile", function(this, ...) {
-  types <- getUnitTypes(this, ...);
-  units <- (types == 5);
-  getUnitNames(this, units=units, ...);
+  types <- getUnitTypes(this, ...)
+  units <- (types == 5)
+  getUnitNames(this, units=units, ...)
 }, private=TRUE)
 
 
@@ -153,5 +153,5 @@ setMethodS3("getCnNames", "AffymetrixCdfFile", function(this, ...) {
 # }
 #*/###########################################################################
 setMethodS3("nbrOfSnps", "AffymetrixCdfFile", function(this, ...) {
-  length(getSnpNames(this, ...));
+  length(getSnpNames(this, ...))
 }, private=TRUE)

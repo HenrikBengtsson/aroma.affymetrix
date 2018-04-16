@@ -25,71 +25,71 @@
 # @author "KS, HB"
 #*/###########################################################################
 setConstructorS3("ExonChipEffectSet", function(..., mergeGroups=TRUE) {
-  this <- extend(ChipEffectSet(...), "ExonChipEffectSet");
-  setMergeGroups(this, mergeGroups);
-  this;
+  this <- extend(ChipEffectSet(...), "ExonChipEffectSet")
+  setMergeGroups(this, mergeGroups)
+  this
 })
 
 setMethodS3("byPath", "ExonChipEffectSet", function(static, ..., mergeGroups="auto") {
-  NextMethod("byPath", mergeGroups=mergeGroups);
+  NextMethod("byPath", mergeGroups=mergeGroups)
 }, static=TRUE, protected=TRUE)
 
 
 
 setMethodS3("getAverageFile", "ExonChipEffectSet", function(this, ...) {
-  res <- NextMethod("getAverageFile");
-  res$mergeGroups <- getMergeGroups(this);
-  res;
+  res <- NextMethod("getAverageFile")
+  res$mergeGroups <- getMergeGroups(this)
+  res
 })
 
 
 
 setMethodS3("getChipEffectFileClass", "ExonChipEffectSet", function(static, ...) {
-  ExonChipEffectFile;
+  ExonChipEffectFile
 }, static=TRUE, private=TRUE)
 
 setMethodS3("getMergeGroups", "ExonChipEffectSet", function(this, ...) {
   if (length(this) == 0L)
-    return(FALSE);
-  ce <- getOneFile(this);
-  ce$mergeGroups;
+    return(FALSE)
+  ce <- getOneFile(this)
+  ce$mergeGroups
 })
 
 setMethodS3("setMergeGroups", "ExonChipEffectSet", function(this, status, ...) {
   if (length(this) == 0)
-    return(FALSE);
+    return(FALSE)
 
-  oldStatus <- getMergeGroups(this);
+  oldStatus <- getMergeGroups(this)
 
 #  if (identical(status, "auto"))
-#    status <- inferParameters(this)$mergeGroups;
+#    status <- inferParameters(this)$mergeGroups
 
   # Argument 'status':
-  status <- Arguments$getLogical(status);
+  status <- Arguments$getLogical(status)
 
   # Update all chip-effect files
   lapply(this, FUN=function(ce) {
-    ce$mergeGroups <- status;
+    ce$mergeGroups <- status
   })
 
-  invisible(oldStatus);
+  invisible(oldStatus)
 })
 
 setMethodS3("getFirstCellPerUnitIndices", "ExonChipEffectSet", function(this, ...) {
 
-  cdf <- getCdf(this);
-  idx <- getFirstCellIndices(cdf, ...);
-  idx <- lapply(lapply(idx, FUN=.subset2, 1), FUN=.subset2, 1);
-  idx <- unlist(idx, use.names=FALSE);
-  idx;
+  cdf <- getCdf(this)
+  idx <- getFirstCellIndices(cdf, ...)
+  idx <- lapply(lapply(idx, FUN=.subset2, 1), FUN=.subset2, 1)
+  idx <- unlist(idx, use.names=FALSE)
+  idx
 }, protected=TRUE)
 
 
 setMethodS3("findUnitsTodo", "ExonChipEffectSet", function(this, ...) {
   # Look into the chip-effect file that comes last in a lexicographic
   # order, becuase that is updated last.
-  names <- getFullNames(this);
-  idx <- order(names, decreasing=TRUE)[1];
-  df <- this[[idx]];
-  findUnitsTodo(df, ...);
+  names <- getFullNames(this)
+  idx <- order(names, decreasing=TRUE)[1]
+  df <- this[[idx]]
+  findUnitsTodo(df, ...)
 })

@@ -35,53 +35,53 @@ setMethodS3("fitQuantileNormFcn", "AffymetrixCelFile", function(this, yTarget, s
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
+  verbose <- Arguments$getVerbose(verbose)
 
   # Argument 'yTarget':
   if (!identical(attr(yTarget, "isSorted"), TRUE)) {
     # Sort target signals
-    verbose && enter(verbose, "Sorting ", length(yTarget), " target signals");
-    yTarget <- sort(yTarget);
-    attr(yTarget, "isSorted") <- TRUE;
-    verbose && exit(verbose);
+    verbose && enter(verbose, "Sorting ", length(yTarget), " target signals")
+    yTarget <- sort(yTarget)
+    attr(yTarget, "isSorted") <- TRUE
+    verbose && exit(verbose)
   }
 
   # Argument 'controlParams':
-#  spar <- controlParams$spar;
-#  nknots <- controlParams$nknots;
+#  spar <- controlParams$spar
+#  nknots <- controlParams$nknots
 
 
-  verbose && enter(verbose, "Fitting (quantile) normalization function");
+  verbose && enter(verbose, "Fitting (quantile) normalization function")
 
   # Read the probe intensities
-  y <- getData(this, fields="intensities", verbose=less(verbose));
+  y <- getData(this, fields="intensities", verbose=less(verbose))
 
   # Sort signals
-  verbose && enter(verbose, "Sorting probe signals");
-  y <- sort(y);
-  verbose && exit(verbose);
+  verbose && enter(verbose, "Sorting probe signals")
+  y <- sort(y)
+  verbose && exit(verbose)
 
   # Fit normalization function
-  verbose && enter(verbose, "Fitting smooth spline");
-  ok <- !is.na(yTarget) & !is.na(y);
+  verbose && enter(verbose, "Fitting smooth spline")
+  ok <- !is.na(yTarget) & !is.na(y)
   sp <- smooth.spline(x=y[ok], y=yTarget[ok], spar=spar, nknots=nknots,
-                                                          keep.data=FALSE);
-  verbose && exit(verbose);
+                                                          keep.data=FALSE)
+  verbose && exit(verbose)
 
   # Create a minimal 'smooth.spline' object for prediction.
   # Note: You can not do predict(sp$fit, ...) because then there
   # will be a problem with Recall().  See r-devel on 2006-04-05.
   fit <- structure(list(fit=sp$fit), class=class(sp))
 
-  env <- new.env(parent=baseenv());
-  assign("fit", fit, envir=env);
+  env <- new.env(parent=baseenv())
+  assign("fit", fit, envir=env)
   # Create transformation function
   fcn <- function(x, ...) {
-    stats::predict(fit, x, ...)$y;
+    stats::predict(fit, x, ...)$y
   }
-  environment(fcn) <- env;
+  environment(fcn) <- env
 
-  verbose && exit(verbose);
+  verbose && exit(verbose)
 
-  fcn;
+  fcn
 }, private=TRUE) # fitQuantileNormFcn()

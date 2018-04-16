@@ -42,98 +42,98 @@ setMethodS3("normalizeQuantile", "AffymetrixCelFile", function(this, path=file.p
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'path':
-  path <- Arguments$getWritablePathname(path);
+  path <- Arguments$getWritablePathname(path)
   if (identical(getPath(this), path)) {
-    throw("Cannot not normalize data file. Argument 'path' refers to the same path as the path of the data file to be normalized: ", path);
+    throw("Cannot not normalize data file. Argument 'path' refers to the same path as the path of the data file to be normalized: ", path)
   }
 
 
-  cdf <- getCdf(this);
-  nbrOfCells <- nbrOfCells(cdf);
+  cdf <- getCdf(this)
+  nbrOfCells <- nbrOfCells(cdf)
 
   # Argument 'subsetToUpdate':
   getFraction <- (length(subsetToUpdate) == 1) &&
-                               (subsetToUpdate >= 0) && (subsetToUpdate < 1);
+                               (subsetToUpdate >= 0) && (subsetToUpdate < 1)
   if (!getFraction) {
-    subsetToUpdate <- Arguments$getIndices(subsetToUpdate, max=nbrOfCells);
+    subsetToUpdate <- Arguments$getIndices(subsetToUpdate, max=nbrOfCells)
   }
 
   # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
+  verbose <- Arguments$getVerbose(verbose)
   if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
+    pushState(verbose)
+    on.exit(popState(verbose))
   }
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Generating output pathname
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  filename <- basename(getPathname(this));
+  filename <- basename(getPathname(this))
   filename <- gsub("[.]cel$", ".CEL", filename);  # Only output upper case!
   pathname <- Arguments$getWritablePathname(filename, path=path,
-                                         mustNotExist=(!overwrite && !skip));
-  pathname <- AffymetrixFile$renameToUpperCaseExt(pathname);
+                                         mustNotExist=(!overwrite && !skip))
+  pathname <- AffymetrixFile$renameToUpperCaseExt(pathname)
 
   # Already normalized?
   if (skip && isFile(pathname)) {
-    verbose && cat(verbose, "Normalized data file already exists: ", pathname);
+    verbose && cat(verbose, "Normalized data file already exists: ", pathname)
     # CDF inheritance
-    res <- fromFile(this, pathname);
-    setCdf(res, cdf);
-    return(res);
+    res <- fromFile(this, pathname)
+    setCdf(res, cdf)
+    return(res)
   }
 
   # Get all probe signals
-  verbose && enter(verbose, "Reading probe intensities");
-  x <- getData(this, fields="intensities", ..., verbose=less(verbose,2));
-  x <- x$intensities;
-  verbose && exit(verbose);
+  verbose && enter(verbose, "Reading probe intensities")
+  x <- getData(this, fields="intensities", ..., verbose=less(verbose,2))
+  x <- x$intensities
+  verbose && exit(verbose)
 
   # Identify the subset of probes to be updated?
   if (getFraction || !is.null(typesToUpdate)) {
-    verbose && enter(verbose, "Identifying probes to be updated");
+    verbose && enter(verbose, "Identifying probes to be updated")
     subsetToUpdate <- identifyCells(cdf, indices=subsetToUpdate,
-                                types=typesToUpdate, verbose=less(verbose));
-    verbose && exit(verbose);
+                                types=typesToUpdate, verbose=less(verbose))
+    verbose && exit(verbose)
   }
 
   # Normalize intensities
-  verbose && enter(verbose, "Normalizing to empirical target distribution");
-  x[subsetToUpdate] <- .normalizeQuantile(x[subsetToUpdate], xTarget=xTarget);
+  verbose && enter(verbose, "Normalizing to empirical target distribution")
+  x[subsetToUpdate] <- .normalizeQuantile(x[subsetToUpdate], xTarget=xTarget)
   # Not needed anymore
-  subsetToUpdate <- NULL;
-  verbose && exit(verbose);
+  subsetToUpdate <- NULL
+  verbose && exit(verbose)
 
   # Write normalized data to file
-  verbose && enter(verbose, "Writing normalized probe signals");
+  verbose && enter(verbose, "Writing normalized probe signals")
 
   # Write to a temporary file
   # (allow rename of existing one if forced)
-  isFile <- (!skip && isFile(pathname));
-  pathnameT <- pushTemporaryFile(pathname, isFile=isFile, verbose=less(verbose,10));
+  isFile <- (!skip && isFile(pathname))
+  pathnameT <- pushTemporaryFile(pathname, isFile=isFile, verbose=less(verbose,10))
 
   # Create CEL file to store results, if missing
-  verbose && enter(verbose, "Creating CEL file for results, if missing");
-  createFrom(this, filename=pathnameT, path=NULL, verbose=less(verbose));
-  verbose && exit(verbose);
+  verbose && enter(verbose, "Creating CEL file for results, if missing")
+  createFrom(this, filename=pathnameT, path=NULL, verbose=less(verbose))
+  verbose && exit(verbose)
 
-  verbose && enter(verbose, "Writing normalized intensities");
-  .updateCel(pathnameT, intensities=x);
-  verbose && exit(verbose);
-  verbose && exit(verbose);
+  verbose && enter(verbose, "Writing normalized intensities")
+  .updateCel(pathnameT, intensities=x)
+  verbose && exit(verbose)
+  verbose && exit(verbose)
 
   # Rename temporary file
-  popTemporaryFile(pathnameT, verbose=less(verbose,10));
+  popTemporaryFile(pathnameT, verbose=less(verbose,10))
 
   # Return new normalized data file object
-  res <- fromFile(this, pathname);
+  res <- fromFile(this, pathname)
 
   # CDF inheritance
-  setCdf(res, cdf);
+  setCdf(res, cdf)
 
   ## Create checksum file
   resZ <- getChecksumFile(res)
 
-  res;
+  res
 }, private=TRUE)

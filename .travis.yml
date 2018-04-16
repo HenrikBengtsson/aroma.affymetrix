@@ -31,6 +31,8 @@ matrix:
       env: NB='w/ covr' ## Just a label
     - os: linux
       r: devel
+    - os: linux
+      r: devel
       env:
       - R_KEEP_PKG_SOURCE=yes
       - _R_S3_METHOD_LOOKUP_BASEENV_AFTER_GLOBALENV_=true

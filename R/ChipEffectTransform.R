@@ -33,7 +33,7 @@ setConstructorS3("ChipEffectTransform", function(dataSet=NULL, ...) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'dataSet':
   if (!is.null(dataSet)) {
-    dataSet <- Arguments$getInstanceOf(dataSet, "ChipEffectSet");
+    dataSet <- Arguments$getInstanceOf(dataSet, "ChipEffectSet")
   }
 
   extend(Transform(dataSet=dataSet, ...), "ChipEffectTransform")
@@ -41,18 +41,5 @@ setConstructorS3("ChipEffectTransform", function(dataSet=NULL, ...) {
 
 
 setMethodS3("getRootPath", "ChipEffectTransform", function(this, ...) {
-  "plmData";
+  "plmData"
 }, protected=TRUE)
-
-
-############################################################################
-# HISTORY:
-# 2009-05-09
-# o CLEANUP: Removed getOutputDataSet() of ChipEffectTransform.  It is now
-#   taken care of by the superclass.
-# 2007-09-18
-# o Now getOutputDataSet() of Transform carry down certain arguments from
-#   the input data set. This will speed up things.
-# 2006-12-08
-# o Created.
-############################################################################

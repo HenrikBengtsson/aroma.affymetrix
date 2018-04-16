@@ -49,76 +49,60 @@ setMethodS3("plotDensity", "AffymetrixCelSet", function(this, subset=NULL, types
   } else if (is.numeric(subset)) {
   }
 
-  nbrOfArrays <- length(this);
+  nbrOfArrays <- length(this)
 
   # Argument 'col':
   if (is.null(col)) {
-    col <- seq_len(nbrOfArrays);
+    col <- seq_len(nbrOfArrays)
   } else {
-    col <- rep(col, length.out=nbrOfArrays);
+    col <- rep(col, length.out=nbrOfArrays)
   }
 
   # Argument 'lty':
   if (!is.null(lty))
-    lty <- rep(lty, length.out=nbrOfArrays);
+    lty <- rep(lty, length.out=nbrOfArrays)
 
   # Argument 'lwd':
   if (!is.null(lwd))
-    lwd <- rep(lwd, length.out=nbrOfArrays);
+    lwd <- rep(lwd, length.out=nbrOfArrays)
 
   # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
+  verbose <- Arguments$getVerbose(verbose)
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Identify the subset of probes to be updated
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  cdf <- getCdf(this);
-  verbose && enter(verbose, "Identifying subset of probes");
+  cdf <- getCdf(this)
+  verbose && enter(verbose, "Identifying subset of probes")
   suppressWarnings({
     subset <- identifyCells(cdf, indices=subset, types=types,
-                                                    verbose=less(verbose));
+                                                    verbose=less(verbose))
   })
-  verbose && exit(verbose);
+  verbose && exit(verbose)
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Plot densities
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   for (kk in seq_len(nbrOfArrays)) {
-    df <- this[[kk]];
+    df <- this[[kk]]
     verbose && enter(verbose, sprintf("Array #%d ('%s') of %d", kk,
-                                                getName(df), nbrOfArrays));
+                                                getName(df), nbrOfArrays))
 
-    verbose && cat(verbose, "Using cell indices:");
-    verbose && str(verbose, subset);
+    verbose && cat(verbose, "Using cell indices:")
+    verbose && str(verbose, subset)
 
-    add <- add || (kk > 1);
+    add <- add || (kk > 1)
     plotDensity(df, subset=subset, ..., col=col[kk], lty=lty[kk],
-              lwd=lwd[kk], annotate=FALSE, add=add, verbose=less(verbose));
+              lwd=lwd[kk], annotate=FALSE, add=add, verbose=less(verbose))
 
     if (annotate) {
-      stextChipType(getChipType(this));
-      stextSize(df, size=length(subset));
-      annotate <- FALSE;
+      stextChipType(getChipType(this))
+      stextSize(df, size=length(subset))
+      annotate <- FALSE
     }
 
-    verbose && exit(verbose);
+    verbose && exit(verbose)
   }
 })
-
-
-
-
-############################################################################
-# HISTORY:
-# 2009-09-17
-# o Now argument 'subset' of plotDensity() of AffymetrixCelSet defaults
-#   to NULL (all probes).  Before it was 1/2 (a fraction).
-# o Added verbose output to plotDensity() to AffymetrixCelSet show what
-#   cells are used.
-# 2007-04-16
-# o Added more verbose output.
-# 2006-05-16
-# o Created.
-############################################################################

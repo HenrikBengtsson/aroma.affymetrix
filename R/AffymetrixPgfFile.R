@@ -35,36 +35,36 @@ setConstructorS3("AffymetrixPgfFile", function(...) {
             uses("UnitNamesFile", "UnitTypesFile", "AromaPlatformInterface")),
     "cached:.header" = NULL,
     "cached:.data" = NULL
-  );
+  )
 
   # Parse attributes (all subclasses must call this in the constructor).
   setAttributesByTags(this)
 
-  this;
+  this
 })
 
 
 setMethodS3("getExtensionPattern", "AffymetrixPgfFile", function(static, ...) {
-  "[.](pgf|PGF)$";
+  "[.](pgf|PGF)$"
 }, static=TRUE, protected=TRUE)
 
 
 setMethodS3("getUnitNamesFile", "AffymetrixPgfFile", function(this, ...) {
-  this;
+  this
 }, protected=TRUE)
 
 
 
 setMethodS3("as.character", "AffymetrixPgfFile", function(x, ...) {
   # To please R CMD check
-  this <- x;
+  this <- x
 
-  s <- NextMethod("as.character");
-  s <- c(s, sprintf("Dimension: %s", paste(getDimension(this), collapse="x")));
-  s <- c(s, sprintf("Number of cells: %d", nbrOfCells(this)));
-  s <- c(s, sprintf("Number of units: %d", nbrOfUnits(this)));
-  s <- c(s, sprintf("Cells per unit: %.2f", nbrOfCells(this)/nbrOfUnits(this)));
-  s;
+  s <- NextMethod("as.character")
+  s <- c(s, sprintf("Dimension: %s", paste(getDimension(this), collapse="x")))
+  s <- c(s, sprintf("Number of cells: %d", nbrOfCells(this)))
+  s <- c(s, sprintf("Number of units: %d", nbrOfUnits(this)))
+  s <- c(s, sprintf("Cells per unit: %.2f", nbrOfCells(this)/nbrOfUnits(this)))
+  s
 }, protected=TRUE)
 
 
@@ -102,19 +102,19 @@ setMethodS3("as.character", "AffymetrixPgfFile", function(x, ...) {
 setMethodS3("fromFile", "AffymetrixPgfFile", function(static, filename, path=NULL, ...) {
   # Arguments 'filename' and 'path':
   pathname <- Arguments$getReadablePathname(filename, path=path,
-                                                              mustExist=TRUE);
+                                                              mustExist=TRUE)
 
   # Assert that it is a PGF file
-  header <- .readPgfHeader(pathname);
+  header <- .readPgfHeader(pathname)
 
-  NextMethod("fromFile", filename=pathname);
+  NextMethod("fromFile", filename=pathname)
 }, static=TRUE, protected=TRUE)
 
 
 
 setMethodS3("getDefaultExtension", "AffymetrixPgfFile", function(static, ...) {
-  "pgf";
-}, static=TRUE, protected=TRUE);
+  "pgf"
+}, static=TRUE, protected=TRUE)
 
 
 ###########################################################################/**
@@ -154,37 +154,37 @@ setMethodS3("findByChipType", "AffymetrixPgfFile", function(static, chipType, ta
   # Argument 'chipType':
   if (is.null(chipType)) {
     # Nothing to do, e.g. may be called via findPgf()
-    return(NULL);
+    return(NULL)
   }
-  chipType <- Arguments$getCharacter(chipType);
+  chipType <- Arguments$getCharacter(chipType)
 
 
-  args <- list(pattern=pattern);
+  args <- list(pattern=pattern)
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Filename extension pattern to be searched for
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  ext <- getDefaultExtension(static);
-  extPattern <- sprintf("[.](%s|%s)", tolower(ext), toupper(ext));
+  ext <- getDefaultExtension(static)
+  extPattern <- sprintf("[.](%s|%s)", tolower(ext), toupper(ext))
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Search in annotationData/chipTypes/<chipType>/
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  fullname <- paste(c(chipType, tags), collapse=",");
+  fullname <- paste(c(chipType, tags), collapse=",")
 
   # Extract the name and the tags
-  parts <- unlist(strsplit(fullname, split=",", fixed=TRUE));
-  chipType <- parts[1];
-  tags <- parts[-1];
+  parts <- unlist(strsplit(fullname, split=",", fixed=TRUE))
+  chipType <- parts[1]
+  tags <- parts[-1]
 
   # Fullname pattern
   args <- list(
     chipType=chipType,
     pattern=sprintf("^%s%s$", fullname, extPattern),
     ...
-  );
-  pathname <- do.call(findAnnotationDataByChipType, args=args);
+  )
+  pathname <- do.call(findAnnotationDataByChipType, args=args)
 
   # If not found, look for Windows shortcuts
   if (is.null(pathname)) {
@@ -193,17 +193,17 @@ setMethodS3("findByChipType", "AffymetrixPgfFile", function(static, chipType, ta
       chipType=chipType,
       pattern=sprintf("^%s%s[.]lnk$", fullname, extPattern),
       ...
-    );
-    pathname <- do.call(findAnnotationDataByChipType, args=args);
+    )
+    pathname <- do.call(findAnnotationDataByChipType, args=args)
     if (!is.null(pathname)) {
       # ..and expand it
-      pathname <- Arguments$getReadablePathname(pathname, mustExist=FALSE);
+      pathname <- Arguments$getReadablePathname(pathname, mustExist=FALSE)
       if (!isFile(pathname))
-        pathname <- NULL;
+        pathname <- NULL
     }
   }
 
-  pathname;
+  pathname
 }, static=TRUE, protected=TRUE)
 
 
@@ -235,106 +235,106 @@ setMethodS3("findByChipType", "AffymetrixPgfFile", function(static, chipType, ta
 # @keyword IO
 #*/###########################################################################
 setMethodS3("getHeader", "AffymetrixPgfFile", function(this, ...) {
-  hdr <- this$.header;
+  hdr <- this$.header
   if (is.null(hdr)) {
-    pathname <- getPathname(this);
-    hdr <- .readPgfHeader(pathname)$header;
+    pathname <- getPathname(this)
+    hdr <- .readPgfHeader(pathname)$header
     for (ff in c("rows", "cols", "probesets", "datalines")) {
-      hdr[[ff]] <- Arguments$getInteger(hdr[[ff]], .name=ff);
+      hdr[[ff]] <- Arguments$getInteger(hdr[[ff]], .name=ff)
     }
-    names <- names(hdr);
-    names <- gsub("_", " ", names, fixed=TRUE);
-    names <- toCamelCase(names);
-    names(hdr) <- names;
-    this$.header <- hdr;
+    names <- names(hdr)
+    names <- gsub("_", " ", names, fixed=TRUE)
+    names <- toCamelCase(names)
+    names(hdr) <- names
+    this$.header <- hdr
   }
-  hdr;
+  hdr
 }, private=TRUE)
 
 
 setMethodS3("getPlatform", "AffymetrixPgfFile", function(this, ...) {
-  "Affymetrix";
+  "Affymetrix"
 })
 
 
 setMethodS3("getChipType", "AffymetrixPgfFile", function(this, fullname=TRUE, ...) {
-  chipType <- getHeader(this)$chipType;
+  chipType <- getHeader(this)$chipType
 
   # Get the main chip type?
   if (!fullname) {
-    name <- gsub("[,].*$", "", chipType);
+    name <- gsub("[,].*$", "", chipType)
 
     # Keep anything after the data-set name (and the separator).
-    tags <- substring(chipType, nchar(name)+2);
-    tags <- unlist(strsplit(tags, split=",", fixed=TRUE));
+    tags <- substring(chipType, nchar(name)+2)
+    tags <- unlist(strsplit(tags, split=",", fixed=TRUE))
     if (length(tags) == 0)
-      tags <- NULL;
+      tags <- NULL
 
-    chipType <- name;
-    attr(chipType, "tags") <- tags;
+    chipType <- name
+    attr(chipType, "tags") <- tags
   }
 
-  chipType;
+  chipType
 })
 
 setMethodS3("getDimension", "AffymetrixPgfFile", function(this, ...) {
-  header <- getHeader(this);
-  c(nbrOfRows=header$rows, nbrOfColumns=header$cols);
+  header <- getHeader(this)
+  c(nbrOfRows=header$rows, nbrOfColumns=header$cols)
 })
 
 setMethodS3("nbrOfRows", "AffymetrixPgfFile", function(this, ...) {
-  as.integer(getDimension(this, ...)[1]);
+  as.integer(getDimension(this, ...)[1])
 })
 
 setMethodS3("nbrOfColumns", "AffymetrixPgfFile", function(this, ...) {
-  as.integer(getDimension(this, ...)[2]);
+  as.integer(getDimension(this, ...)[2])
 })
 
 
 setMethodS3("nbrOfCells", "AffymetrixPgfFile", function(this, ...) {
-  as.integer(prod(getDimension(this, ...)));
+  as.integer(prod(getDimension(this, ...)))
 })
 
 setMethodS3("nbrOfUnits", "AffymetrixPgfFile", function(this, ...) {
-  getHeader(this)$probesets;
+  getHeader(this)$probesets
 })
 
 
 setMethodS3("readRawData", "AffymetrixPgfFile", function(this, ...) {
-  rawData <- this$.rawData;
+  rawData <- this$.rawData
   if (is.null(rawData)) {
-    pathname <- getPathname(this);
-    env <- .readPgfEnv(pathname, ...);
-    env$header <- NULL;
+    pathname <- getPathname(this)
+    env <- .readPgfEnv(pathname, ...)
+    env$header <- NULL
 
-    keys <- ls(envir=env);
-    fields <- grep("^probeset", keys, value=TRUE);
-    data <- mget(fields, envir=env);
-    names(data) <- toCamelCase(gsub("^probeset", "", names(data)));
-    data$type <- as.factor(data$type);
-    unitData <- as.data.frame(data, stringsAsFactors=FALSE);
-    for (ff in fields) rm(list=ff, envir=env);
+    keys <- ls(envir=env)
+    fields <- grep("^probeset", keys, value=TRUE)
+    data <- mget(fields, envir=env)
+    names(data) <- toCamelCase(gsub("^probeset", "", names(data)))
+    data$type <- as.factor(data$type)
+    unitData <- as.data.frame(data, stringsAsFactors=FALSE)
+    for (ff in fields) rm(list=ff, envir=env)
 
-    keys <- ls(envir=env);
-    fields <- grep("^probe", keys, value=TRUE);
-    data <- mget(fields, envir=env);
-    names(data) <- toCamelCase(gsub("^probe", "", names(data)));
-    data$type <- as.factor(data$type);
-    cellData <- as.data.frame(data, stringsAsFactors=FALSE);
-    for (ff in fields) rm(list=ff, envir=env);
+    keys <- ls(envir=env)
+    fields <- grep("^probe", keys, value=TRUE)
+    data <- mget(fields, envir=env)
+    names(data) <- toCamelCase(gsub("^probe", "", names(data)))
+    data$type <- as.factor(data$type)
+    cellData <- as.data.frame(data, stringsAsFactors=FALSE)
+    for (ff in fields) rm(list=ff, envir=env)
 
-    keys <- ls(envir=env);
-    fields <- grep("^atom", keys, value=TRUE);
-    data <- mget(fields, envir=env);
-    names(data) <- toCamelCase(gsub("^atom", "", names(data)));
-    atomData <- as.data.frame(data, stringsAsFactors=FALSE);
-    for (ff in fields) rm(list=ff, envir=env);
+    keys <- ls(envir=env)
+    fields <- grep("^atom", keys, value=TRUE)
+    data <- mget(fields, envir=env)
+    names(data) <- toCamelCase(gsub("^atom", "", names(data)))
+    atomData <- as.data.frame(data, stringsAsFactors=FALSE)
+    for (ff in fields) rm(list=ff, envir=env)
 
-    rawData <- list(unitData=unitData, cellData=cellData, atomData=atomData);
-    this$.rawData <- rawData;
+    rawData <- list(unitData=unitData, cellData=cellData, atomData=atomData)
+    this$.rawData <- rawData
   }
 
-  rawData;
+  rawData
 }, private=TRUE)
 
 
@@ -371,17 +371,10 @@ setMethodS3("readRawData", "AffymetrixPgfFile", function(this, ...) {
 # @keyword IO
 #*/###########################################################################
 setMethodS3("getUnitNames", "AffymetrixPgfFile", function(this, units=NULL, ...) {
-  data <- readRawData(this, ...);
-  names <- data$unitData$name;
+  data <- readRawData(this, ...)
+  names <- data$unitData$name
   if (!is.null(units)) {
-    names <- names[units];
+    names <- names[units]
   }
-  names;
+  names
 })
-
-
-############################################################################
-# HISTORY:
-# 2012-06-14
-# o Created from AffymetrixCdfFile.R.
-############################################################################

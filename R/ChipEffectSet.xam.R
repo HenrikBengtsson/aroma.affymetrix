@@ -41,106 +41,106 @@ setMethodS3("getAM", "ChipEffectSet", function(this, other, units=NULL, ..., ver
   if (is.null(other)) {
     # Do not calculate ratios relative to a reference
   } else {
-    other <- Arguments$getInstanceOf(other, "ChipEffectFile");
+    other <- Arguments$getInstanceOf(other, "ChipEffectFile")
   }
 
   # Argument 'units':
-  cdf <- getCdf(this);
+  cdf <- getCdf(this)
   if (is.null(units)) {
-    nunits <- nbrOfUnits(cdf);
+    nunits <- nbrOfUnits(cdf)
   } else {
-    units <- Arguments$getIndices(units, max=nbrOfUnits(cdf));
-    nunits <- length(units);
+    units <- Arguments$getIndices(units, max=nbrOfUnits(cdf))
+    nunits <- length(units)
   }
 
   # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
+  verbose <- Arguments$getVerbose(verbose)
   if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
+    pushState(verbose)
+    on.exit(popState(verbose))
   }
 
 
-  verbose && enter(verbose, "Getting (A,M)-transformed chip effects for a set of arrays");
+  verbose && enter(verbose, "Getting (A,M)-transformed chip effects for a set of arrays")
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Get cell map
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  verbose && enter(verbose, "Get unit-to-cell map");
-  cf <- getOneFile(this, mustExist=TRUE);
-  map <- getUnitGroupCellMap(cf, units=units, verbose=less(verbose));
-  verbose && exit(verbose);
+  verbose && enter(verbose, "Get unit-to-cell map")
+  cf <- getOneFile(this, mustExist=TRUE)
+  map <- getUnitGroupCellMap(cf, units=units, verbose=less(verbose))
+  verbose && exit(verbose)
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Allocate return array
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  arrayNames <- getNames(this);
-  dimnames <- list(map[,"unit"], arrayNames, c("A", "M"));
-  dim <- sapply(dimnames, FUN=length);
-  am <- array(NA_real_, dim=dim, dimnames=dimnames);
+  arrayNames <- getNames(this)
+  dimnames <- list(map[,"unit"], arrayNames, c("A", "M"))
+  dim <- sapply(dimnames, FUN=length)
+  am <- array(NA_real_, dim=dim, dimnames=dimnames)
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Get thetas from the other
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (!is.null(other)) {
-    verbose && enter(verbose, "Retrieving other thetas");
+    verbose && enter(verbose, "Retrieving other thetas")
 
     # Workaround for now (just in case). /HB 2006-09-26 TODO
     if (inherits(other, "SnpChipEffectFile")) {
-      other$mergeStrands <- this$mergeStrands;
+      other$mergeStrands <- this$mergeStrands
       if (inherits(other, "CnChipEffectFile")) {
-        other$combineAlleles <- this$combineAlleles;
+        other$combineAlleles <- this$combineAlleles
       }
     }
 
     # Get the other theta estimates
-    thetaR <- getDataFlat(other, units=map, fields="theta", verbose=less(verbose))[,"theta"];
-    nTheta <- length(thetaR);
-    stopifnot(identical(nTheta, nrow(map)));
-    verbose && exit(verbose);
+    thetaR <- getDataFlat(other, units=map, fields="theta", verbose=less(verbose))[,"theta"]
+    nTheta <- length(thetaR)
+    stopifnot(identical(nTheta, nrow(map)))
+    verbose && exit(verbose)
   } # if (!is.null(other))
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Get thetas from the samples
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  verbose && enter(verbose, "Retrieving sample thetas");
+  verbose && enter(verbose, "Retrieving sample thetas")
   for (aa in seq_along(this)) {
-    cf <- this[[aa]];
-    theta <- getDataFlat(cf, units=map, fields="theta", verbose=less(verbose))[,"theta"];
+    cf <- this[[aa]]
+    theta <- getDataFlat(cf, units=map, fields="theta", verbose=less(verbose))[,"theta"]
     if (!identical(length(theta), nTheta)) {
-      verbose && str(verbose, theta);
-      verbose && print(verbose, nunits);
-      throw("Internal error: The number of chip-effect values is not equal to the number of units requested: ", length(theta), " != ", nTheta);
+      verbose && str(verbose, theta)
+      verbose && print(verbose, nunits)
+      throw("Internal error: The number of chip-effect values is not equal to the number of units requested: ", length(theta), " != ", nTheta)
     }
 
     # Calculate raw copy numbers relative to reference?
     # AD HOC /HB 2009-11-22 (get[X]AM() should be dropped in the future)
     if (is.null(other)) {
-      M <- theta;
-      A <- theta;
+      M <- theta
+      A <- theta
     } else {
-      M <- theta / thetaR;
-      A <- theta * thetaR;
+      M <- theta / thetaR
+      A <- theta * thetaR
     }
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Log2 scale
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    M <- log(M, base=2);
-    A <- log(A, base=2)/2;
-    stopifnot(identical(length(M), nTheta));
+    M <- log(M, base=2)
+    A <- log(A, base=2)/2
+    stopifnot(identical(length(M), nTheta))
 
-    am[,aa,"A"] <- A;
-    am[,aa,"M"] <- M;
+    am[,aa,"A"] <- A
+    am[,aa,"M"] <- M
 
     # Not needed anymore
-    theta <- A <- M <- NULL;
+    theta <- A <- M <- NULL
   } # for (aa in ...)
-  verbose && exit(verbose);
+  verbose && exit(verbose)
 
-  verbose && exit(verbose);
+  verbose && exit(verbose)
 
-  am;
+  am
 }) # getAM()
 
 
@@ -189,79 +189,69 @@ setMethodS3("getXAM", "ChipEffectSet", function(this, other, chromosome, units=N
   if (is.null(other)) {
     # Do not calculate ratios relative to a reference
   } else {
-    other <- Arguments$getInstanceOf(other, "ChipEffectFile");
+    other <- Arguments$getInstanceOf(other, "ChipEffectFile")
   }
 
   # Argument 'chromosome':
-  chromosome <- Arguments$getChromosome(chromosome);
+  chromosome <- Arguments$getChromosome(chromosome)
 
   # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
+  verbose <- Arguments$getVerbose(verbose)
   if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
+    pushState(verbose)
+    on.exit(popState(verbose))
   }
 
 
-  verbose && enter(verbose, "Getting (X,A,M)-transformed chip effects");
+  verbose && enter(verbose, "Getting (X,A,M)-transformed chip effects")
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Retrieve genome information, i.e. chromosome positions
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  verbose && enter(verbose, "Retrieving genome information");
-  cdf <- getCdf(this);
-  gi <- getGenomeInformation(cdf);
+  verbose && enter(verbose, "Retrieving genome information")
+  cdf <- getCdf(this)
+  gi <- getGenomeInformation(cdf)
 
   # Extract the units from the given chromosome.  Requested units not on
   # chromosome are ignored.
   if (!is.null(units))
-    verbose && str(verbose, units);
-  units <- getUnitIndices(gi, chromosome=chromosome, units=units, verbose=less(verbose));
-  nunits <- length(units);
+    verbose && str(verbose, units)
+  units <- getUnitIndices(gi, chromosome=chromosome, units=units, verbose=less(verbose))
+  nunits <- length(units)
   if (nunits == 0)
-    throw("No units found on requested chromosome: ", chromosome);
+    throw("No units found on requested chromosome: ", chromosome)
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Get the relative copy-number estimates
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  am <- getAM(this, other=other, units=units, verbose=less(verbose));
+  am <- getAM(this, other=other, units=units, verbose=less(verbose))
 
   # Get the unit indices for all unit groups
-  units <- as.integer(rownames(am));
+  units <- as.integer(rownames(am))
 
   # Get the positions of all unit groups
-  x <- getPositions(gi, units=units);
-  verbose && exit(verbose);
+  x <- getPositions(gi, units=units)
+  verbose && exit(verbose)
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Remove SNPs for which we have no position information
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  keep <- which(!is.na(x));
-  nexcl <- length(x) - length(keep);
+  keep <- which(!is.na(x))
+  nexcl <- length(x) - length(keep)
   if (nexcl > 0) {
-    msg <- sprintf("Could not find position information on %d unit groups: ", nexcl);
-    verbose && cat(verbose, msg);
-    warning(msg);
-    x <- x[keep];
-    units <- units[keep];
+    msg <- sprintf("Could not find position information on %d unit groups: ", nexcl)
+    verbose && cat(verbose, msg)
+    warning(msg)
+    x <- x[keep]
+    units <- units[keep]
   }
 
   am <- am[,c("M","A"), drop=FALSE]; # Ad hoc /HB 2007-02-19
-  xam <- cbind(x=x, am);
+  xam <- cbind(x=x, am)
 
-  verbose && exit(verbose);
+  verbose && exit(verbose)
 
-  xam;
+  xam
 }, protected=TRUE) # getXAM()
-
-
-############################################################################
-# HISTORY:
-# 2009-11-22
-# o Now get[X]AM() accepts other=NULL.
-# 2007-03-04
-# o Added getAM().
-# o Created from ChipEffectFile.xam.R.
-############################################################################

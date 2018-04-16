@@ -61,20 +61,20 @@ setConstructorS3("ExonProbeAffinityFile", function(..., mergeGroups=FALSE) {
 #*/###########################################################################
 setMethodS3("getCellIndices", "ExonProbeAffinityFile", function(this, ..., unlist=FALSE) {
   # Argument 'unlist':
-  unlist <- Arguments$getLogical(unlist);
+  unlist <- Arguments$getLogical(unlist)
 
 
   # Supported case?
-  mergeGroups <- this$mergeGroups;
+  mergeGroups <- this$mergeGroups
   if (unlist && mergeGroups) {
-    throw("Unsupported request: Argument 'unlist' have to be TRUE when parameter 'mergeGroups' is TRUE: ", unlist);
+    throw("Unsupported request: Argument 'unlist' have to be TRUE when parameter 'mergeGroups' is TRUE: ", unlist)
   }
 
-  cells <- NextMethod("getCellIndices");
+  cells <- NextMethod("getCellIndices")
 
   # Merge groups?
   if (mergeGroups) {
-    cells <- .applyCdfGroups(cells, cdfMergeGroups);
+    cells <- .applyCdfGroups(cells, cdfMergeGroups)
   }
 
 
@@ -82,22 +82,14 @@ setMethodS3("getCellIndices", "ExonProbeAffinityFile", function(this, ..., unlis
   # Unlist?
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (unlist) {
-    cells <- unlist(cells, use.names=FALSE);
+    cells <- unlist(cells, use.names=FALSE)
   }
 
 
-  cells;
+  cells
 }, protected=TRUE) # getCellIndices()
 
 
 setMethodS3("setMergeGroups", "ExonProbeAffinityFile", function(this, status, ...) {
-  this$mergeGroups <- status;
+  this$mergeGroups <- status
 }, protected=TRUE)
-
-
-############################################################################
-# HISTORY:
-# 2007-02-07
-# o Created (based on SnpProbeAffinityFile.R following chat with HB on
-#   2007-02-07).
-############################################################################

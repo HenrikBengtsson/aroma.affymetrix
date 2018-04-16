@@ -37,7 +37,7 @@
 # @keyword programming
 #*/###########################################################################
 setMethodS3("extractFeatureSet", "AffymetrixCelSet", function(this, ..., verbose=FALSE) {
-  requireNamespace("oligo") || throw("Package not loaded: oligo");
+  requireNamespace("oligo") || throw("Package not loaded: oligo")
   read.celfiles <- oligo::read.celfiles
 
 
@@ -45,24 +45,24 @@ setMethodS3("extractFeatureSet", "AffymetrixCelSet", function(this, ..., verbose
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
+  verbose <- Arguments$getVerbose(verbose)
   if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
+    pushState(verbose)
+    on.exit(popState(verbose))
   }
 
 
-  verbose && enter(verbose, "Reading ", class(this)[1L], "as a FeatureSet");
-  verbose && cat(verbose, "Number of data files: ", length(this));
-  verbose && cat(verbose, "Chip type: ", getChipType(this));
+  verbose && enter(verbose, "Reading ", class(this)[1L], "as a FeatureSet")
+  verbose && cat(verbose, "Number of data files: ", length(this))
+  verbose && cat(verbose, "Chip type: ", getChipType(this))
 
-  pathnames <- getPathnames(this);
-  verbose2 <- as.logical(verbose);
-  res <- read.celfiles(pathnames, ..., verbose=verbose2);
+  pathnames <- getPathnames(this)
+  verbose2 <- as.logical(verbose)
+  res <- read.celfiles(pathnames, ..., verbose=verbose2)
 
-  verbose && exit(verbose);
+  verbose && exit(verbose)
 
-  res;
+  res
 }) # extractFeatureSet()
 
 
@@ -71,32 +71,21 @@ setMethodS3("extractSnpFeatureSet", "AffymetrixCelSet", function(this, ..., verb
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
+  verbose <- Arguments$getVerbose(verbose)
   if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
+    pushState(verbose)
+    on.exit(popState(verbose))
   }
 
-  verbose && enter(verbose, "Reading complete SnpFeatureSet");
-  res <- extractFeatureSet(this, ...);
+  verbose && enter(verbose, "Reading complete SnpFeatureSet")
+  res <- extractFeatureSet(this, ...)
 
   # Sanity check
   if (!inherits(res, "SnpFeatureSet")) {
-    throw("The read data is not of class 'SnpFeatureSet': ", class(res)[1L]);
+    throw("The read data is not of class 'SnpFeatureSet': ", class(res)[1L])
   }
 
-  verbose && exit(verbose);
+  verbose && exit(verbose)
 
-  res;
+  res
 }, protected=TRUE) # extractSnpFeatureSet()
-
-
-############################################################################
-# HISTORY:
-# 2013-04-27
-# o Documented extractFeatureSet() for AffymetrixCelSet.
-# o Renamed extractSnpFeatureSet() to extractFeatureSet().  Keeping
-#   old one for backward compatibility.
-# 2009-10-16
-# o Created.
-############################################################################

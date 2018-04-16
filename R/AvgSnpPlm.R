@@ -30,24 +30,14 @@ setConstructorS3("AvgSnpPlm", function(..., mergeStrands=FALSE) {
 
 setMethodS3("getAsteriskTags", "AvgSnpPlm", function(this, collapse=NULL, ...) {
   # Returns 'AVG[,<flavor>]'
-  tags <- NextMethod("getAsteriskTags", collapse=NULL);
+  tags <- NextMethod("getAsteriskTags", collapse=NULL)
 
   # Add class specific parameter tags
   if (!this$mergeStrands)
-    tags <- c(tags, "+-");
+    tags <- c(tags, "+-")
 
   # Collapse
-  tags <- paste(tags, collapse=collapse);
+  tags <- paste(tags, collapse=collapse)
 
-  tags;
+  tags
 }, protected=TRUE)
-
-
-
-############################################################################
-# HISTORY:
-# 2007-12-06
-# o Added getAsteriskTag() for AvgSnpPlm.
-# 2007-09-08
-# o Created from the MbeiSnpPlm.R.
-############################################################################

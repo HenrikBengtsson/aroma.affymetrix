@@ -3,7 +3,7 @@ readCdfGroupStrands <- function(..., what=c("probe", "target")) {
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'what':
-  what <- match.arg(what);
+  what <- match.arg(what)
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -11,43 +11,37 @@ readCdfGroupStrands <- function(..., what=c("probe", "target")) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   cdf <- .readCdf(..., readUnitDirection=TRUE, readGroupDirection=TRUE,
          readXY=FALSE, readBases=FALSE, readIndexpos=FALSE, readIsPm=FALSE,
-                                      readAtoms=FALSE, readUnitType=FALSE);
+                                      readAtoms=FALSE, readUnitType=FALSE)
 
-  getTarget <- (what == "target");
+  getTarget <- (what == "target")
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Extract the strandinformation
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  swapIdxs <- c();
+  swapIdxs <- c()
   for (uu in seq_along(cdf)) {
-    unit <- .subset2(cdf, uu);
+    unit <- .subset2(cdf, uu)
 
-    unitDirection <- .subset2(unit, "unitdirection");
-    strands <- unlist(.subset2(unit, "groups"), use.names=FALSE);
+    unitDirection <- .subset2(unit, "unitdirection")
+    strands <- unlist(.subset2(unit, "groups"), use.names=FALSE)
     if (identical(unitDirection, "antisense")) {
-      strands <- c(sense="antisense", antisense="sense")[strands];
-      swapIdxs <- c(swapIdxs, uu);
+      strands <- c(sense="antisense", antisense="sense")[strands]
+      swapIdxs <- c(swapIdxs, uu)
     }
 
     # Get strands for target?
     if (getTarget)
-      strands <- c(sense="antisense", antisense="sense")[strands];
-    strands <- unname(strands);
+      strands <- c(sense="antisense", antisense="sense")[strands]
+    strands <- unname(strands)
 
-    cdf[[uu]] <- strands;
+    cdf[[uu]] <- strands
   }
 
-  attr(cdf, "swapIdxs") <- swapIdxs;
+  attr(cdf, "swapIdxs") <- swapIdxs
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Return a list of character vector
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  cdf;
+  cdf
 }
-
-############################################################################
-# HISTORY:
-# 2006-12-12
-# o Created. Should be added to affxparser.
-############################################################################

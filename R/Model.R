@@ -33,19 +33,19 @@ setConstructorS3("Model", function(dataSet=NULL, tags="*", ..., .onUnknownArgs=c
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'dataSet':
   if (!is.null(dataSet)) {
-    dataSet <- Arguments$getInstanceOf(dataSet, "AffymetrixCelSet");
+    dataSet <- Arguments$getInstanceOf(dataSet, "AffymetrixCelSet")
   }
 
   # Arguments '...':
-  args <- list(...);
+  args <- list(...)
   if (length(args) > 0) {
     if (is.element(.onUnknownArgs, c("error", "warning"))) {
-      argsStr <- paste(names(args), collapse=", ");
-      msg <- sprintf("Unknown arguments: %s", argsStr);
+      argsStr <- paste(names(args), collapse=", ")
+      msg <- sprintf("Unknown arguments: %s", argsStr)
       if (.onUnknownArgs == "error") {
-        throw(msg);
+        throw(msg)
       } else if (.onUnknownArgs == "warning") {
-        warning(msg);
+        warning(msg)
       }
     }
   }
@@ -53,30 +53,30 @@ setConstructorS3("Model", function(dataSet=NULL, tags="*", ..., .onUnknownArgs=c
   this <- extend(Object(), c("Model", uses("ParametersInterface")),
     .dataSet = dataSet,
     .tags = NULL
-  );
+  )
 
   # Interpret and append tags
-  setTags(this, tags);
+  setTags(this, tags)
 
-  this;
+  this
 }, abstract=TRUE)
 
 
 
 setMethodS3("as.character", "Model", function(x, ...) {
   # To please R CMD check
-  this <- x;
+  this <- x
 
-  s <- sprintf("%s:", class(this)[1]);
-  ds <- getDataSet(this);
-  s <- c(s, sprintf("Data set: %s", getName(ds)));
-  s <- c(s, sprintf("Chip type: %s", getChipType(getCdf(ds))));
-  s <- c(s, sprintf("Input tags: %s", getTags(ds, collapse=",")));
-  s <- c(s, sprintf("Output tags: %s", getTags(this, collapse=",")));
-  s <- c(s, sprintf("Parameters: %s", getParametersAsString(this)));
-  s <- c(s, sprintf("Path: %s", getPath(this)));
+  s <- sprintf("%s:", class(this)[1])
+  ds <- getDataSet(this)
+  s <- c(s, sprintf("Data set: %s", getName(ds)))
+  s <- c(s, sprintf("Chip type: %s", getChipType(getCdf(ds))))
+  s <- c(s, sprintf("Input tags: %s", getTags(ds, collapse=",")))
+  s <- c(s, sprintf("Output tags: %s", getTags(this, collapse=",")))
+  s <- c(s, sprintf("Parameters: %s", getParametersAsString(this)))
+  s <- c(s, sprintf("Path: %s", getPath(this)))
 
-  GenericSummary(s);
+  GenericSummary(s)
 }, protected=TRUE)
 
 
@@ -107,7 +107,7 @@ setMethodS3("as.character", "Model", function(x, ...) {
 #*/###########################################################################
 setMethodS3("getRootPath", "Model", function(this, ...) {
   # Default root path
-  paste("model", class(this)[1], sep="");
+  paste("model", class(this)[1], sep="")
 }, protected=TRUE)
 
 
@@ -138,14 +138,14 @@ setMethodS3("getRootPath", "Model", function(this, ...) {
 # }
 #*/###########################################################################
 setMethodS3("getName", "Model", function(this, ...) {
-  name <- getAlias(this);
+  name <- getAlias(this)
 
   if (is.null(name)) {
-    ds <- getDataSet(this);
-    name <- getName(ds);
+    ds <- getDataSet(this)
+    name <- getName(ds)
   }
 
-  name;
+  name
 })
 
 
@@ -175,7 +175,7 @@ setMethodS3("getName", "Model", function(this, ...) {
 # }
 #*/###########################################################################
 setMethodS3("getAlias", "Model", function(this, ...) {
-  this$.alias;
+  this$.alias
 }, protected=TRUE)
 
 
@@ -209,46 +209,46 @@ setMethodS3("setAlias", "Model", function(this, alias=NULL, ...) {
   # Argument 'alias':
   if (!is.null(alias)) {
     # An alias must be a valid filename
-    alias <- Arguments$getFilename(alias);
+    alias <- Arguments$getFilename(alias)
 
     # Assert that no commas are used.
     if (regexpr("[,]", alias) != -1) {
-      throw("Aliases (names) must not contain commas: ", alias);
+      throw("Aliases (names) must not contain commas: ", alias)
     }
   }
 
-  this$.alias <- alias;
+  this$.alias <- alias
 
-  invisible(this);
+  invisible(this)
 }, protected=TRUE)
 
 
 setMethodS3("getAsteriskTags", "Model", function(this, collapse=NULL, ...) {
   # Create a default asterisk tags for any class by extracting all
   # capital letters and pasting them together, e.g. AbcDefGhi => ADG.
-  name <- class(this)[1];
+  name <- class(this)[1]
 
   # Remove any 'Model' suffixes
-  name <- gsub("Model$", "", name);
+  name <- gsub("Model$", "", name)
 
-  name <- capitalize(name);
+  name <- capitalize(name)
 
   # Vectorize
-  name <- strsplit(name, split="")[[1]];
+  name <- strsplit(name, split="")[[1]]
 
   # Identify upper case
-  name <- name[(toupper(name) == name)];
+  name <- name[(toupper(name) == name)]
 
   # Paste
-  name <- paste(name, collapse="");
+  name <- paste(name, collapse="")
 
-  tags <- name;
+  tags <- name
 
   if (!is.null(collapse)) {
-    tags <- paste(tags, collapse=collapse);
+    tags <- paste(tags, collapse=collapse)
   }
 
-  tags;
+  tags
 })
 
 
@@ -281,36 +281,36 @@ setMethodS3("getAsteriskTags", "Model", function(this, collapse=NULL, ...) {
 #*/###########################################################################
 setMethodS3("getTags", "Model", function(this, collapse=NULL, ...) {
   # "Pass down" tags from the input data set
-  ds <- getDataSet(this);
-  inputTags <- getTags(ds);
+  ds <- getDataSet(this)
+  inputTags <- getTags(ds)
 
   # Get class specific tags
-  tags <- this$.tags;
+  tags <- this$.tags
 
   # In case this$.tags is not already split
-  tags <- Arguments$getTags(tags, collapse=NULL);
+  tags <- Arguments$getTags(tags, collapse=NULL)
 
   # Expand asterisk tags
   if (any(tags == "*")) {
-    tags[tags == "*"] <- getAsteriskTags(this, collapse=",");
+    tags[tags == "*"] <- getAsteriskTags(this, collapse=",")
   }
 
   # Combine input tags and local tags
-  tags <- c(inputTags, tags);
+  tags <- c(inputTags, tags)
 
   # Collapsed or split?
   if (!is.null(collapse)) {
-    tags <- paste(tags, collapse=collapse);
+    tags <- paste(tags, collapse=collapse)
   } else {
     if (length(tags) > 0)
-      tags <- unlist(strsplit(tags, split=","));
+      tags <- unlist(strsplit(tags, split=","))
   }
 
   # No tags?
   if (length(tags) == 0)
-    tags <- NULL;
+    tags <- NULL
 
-  tags;
+  tags
 })
 
 
@@ -344,10 +344,10 @@ setMethodS3("getTags", "Model", function(this, collapse=NULL, ...) {
 setMethodS3("setTags", "Model", function(this, tags=NULL, ...) {
   # Argument 'tags':
   if (!is.null(tags)) {
-    tags <- Arguments$getTags(tags, collapse=NULL);
+    tags <- Arguments$getTags(tags, collapse=NULL)
   }
 
-  this$.tags <- tags;
+  this$.tags <- tags
 })
 
 
@@ -376,11 +376,11 @@ setMethodS3("setTags", "Model", function(this, tags=NULL, ...) {
 # }
 #*/###########################################################################
 setMethodS3("getFullName", "Model", function(this, ...) {
-  name <- getName(this);
-  tags <- getTags(this);
-  fullname <- paste(c(name, tags), collapse=",");
-  fullname <- gsub("[,]$", "", fullname);
-  fullname;
+  name <- getName(this)
+  tags <- getTags(this)
+  fullname <- paste(c(name, tags), collapse=",")
+  fullname <- gsub("[,]$", "", fullname)
+  fullname
 })
 
 
@@ -417,21 +417,21 @@ setMethodS3("getPath", "Model", function(this, ...) {
   # Create the (sub-)directory tree for the data set
 
   # Root path
-  rootPath <- getRootPath(this);
+  rootPath <- getRootPath(this)
 
   # Full name
-  fullname <- getFullName(this);
+  fullname <- getFullName(this)
 
   # Chip type
-  ds <- getDataSet(this);
-  cdf <- getCdf(ds);
-  chipType <- getChipType(cdf, fullname=FALSE);
+  ds <- getDataSet(this)
+  cdf <- getCdf(ds)
+  chipType <- getChipType(cdf, fullname=FALSE)
 
   # The full path
-  path <- filePath(rootPath, fullname, chipType);
-  path <- Arguments$getWritablePath(path);
+  path <- filePath(rootPath, fullname, chipType)
+  path <- Arguments$getWritablePath(path)
 
-  path;
+  path
 })
 
 
@@ -459,7 +459,7 @@ setMethodS3("getPath", "Model", function(this, ...) {
 # }
 #*/###########################################################################
 setMethodS3("getDataSet", "Model", function(this, ...) {
-  this$.dataSet;
+  this$.dataSet
 })
 
 
@@ -489,7 +489,7 @@ setMethodS3("getDataSet", "Model", function(this, ...) {
 # @keyword IO
 #*/###########################################################################
 setMethodS3("getCdf", "Model", function(this, ...) {
-  getCdf(getDataSet(this));
+  getCdf(getDataSet(this))
 }, private=TRUE)
 
 
@@ -519,58 +519,18 @@ setMethodS3("getCdf", "Model", function(this, ...) {
 #
 # @keyword IO
 #*/###########################################################################
-setMethodS3("fit", "Model", abstract=TRUE);
+setMethodS3("fit", "Model", abstract=TRUE)
 
 
 setMethodS3("getLabel", "Model", function(this, ...) {
-  label <- this$.label;
+  label <- this$.label
   if (is.null(label))
-    label <- getName(this, ...);
-  label;
+    label <- getName(this, ...)
+  label
 }, private=TRUE)
 
 setMethodS3("setLabel", "Model", function(this, label, ...) {
-  oldLabel <- this$.label;
-  this$.label <- label;
-  invisible(oldLabel);
+  oldLabel <- this$.label
+  this$.label <- label
+  invisible(oldLabel)
 }, private=TRUE)
-
-
-############################################################################
-# HISTORY:
-# 2013-06-02
-# o Added argument '.onUnknownArgs' to Model().
-# 2008-09-03
-# o CLEANUP: Removed 'parSet' argument of Model().
-# 2007-10-11
-# o Now getTags() of Model inserts "asterisk" tags.
-# 2007-04-12
-# o Added default getAsteriskTag().
-# 2007-03-24
-# o BUG FIX: getPath() created the root path before trying to expand
-#   Windows shortcuts.
-# 2007-03-19
-# o Added getAlias() and setAlias().
-# 2007-01-14
-# o Added a test for unknown arguments to constructor.  This was added
-#   after long troubleshooting to find a call to MbeiPlm(mergeStrands=TRUE,
-#   combineAlleles=TRUE) instead of MbeiCnPlm(...).
-# 2007-01-06
-# o Extracted from UnitModel.R.  Intended to cover all types of models,
-#   e.g. RmaPlm, GladModel, PlasqModel etc.
-# 2007-01-01
-# o Created from former UnitGroupsModel with history as follows:
-# 2006-11-19
-# o Started to modify methods of this class to work similar to the
-#   QuantileNormalizer and AllelicCrosstalkCalibrator classes.
-# 2006-09-14
-# o Not cloning the data set anymore.  Each model is responsible for
-#   tranforming the data structure their way.  The advantage with this
-#   approach is that we can cache read data in the data set object.
-# 2006-08-28
-# o Added getLabel(), which defaults to getName(), and setLabel().
-# 2006-08-24
-# o Added some Rdoc comments.
-# 2006-08-17
-# o Created.
-############################################################################

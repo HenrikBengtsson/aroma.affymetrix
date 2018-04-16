@@ -51,140 +51,130 @@ setMethodS3("importFromDChip", "AffymetrixCelSet", function(static, path, name=N
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'path':
-  path <- Arguments$getReadablePath(path, mustExist=TRUE);
+  path <- Arguments$getReadablePath(path, mustExist=TRUE)
 
   # Argument 'rootPath':
-  rootPath <- Arguments$getWritablePath(rootPath);
+  rootPath <- Arguments$getWritablePath(rootPath)
 
   # Argument 'name':
   if (!is.null(name)) {
-    name <- Arguments$getCharacter(name, nchar=c(1,Inf), length=c(1,1));
+    name <- Arguments$getCharacter(name, nchar=c(1,Inf), length=c(1,1))
   }
 
   # Argument 'tags':
 
   # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
+  verbose <- Arguments$getVerbose(verbose)
   if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
+    pushState(verbose)
+    on.exit(popState(verbose))
   }
 
 
-  verbose && enter(verbose, "Importing dChip-exported CEL files");
-  verbose && cat(verbose, "Source path: ", path);
+  verbose && enter(verbose, "Importing dChip-exported CEL files")
+  verbose && cat(verbose, "Source path: ", path)
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Get the dChip CEL set
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  verbose && enter(verbose, "Getting the dChip CEL set");
-  cs <- byPath(static, path=path, ..., verbose=less(verbose));
-  verbose && cat(verbose, "Number of arrays: ", length(cs));
-  verbose && exit(verbose);
+  verbose && enter(verbose, "Getting the dChip CEL set")
+  cs <- byPath(static, path=path, ..., verbose=less(verbose))
+  verbose && cat(verbose, "Number of arrays: ", length(cs))
+  verbose && exit(verbose)
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # dChip rotates exon, tiling, and 500K SNP chips.
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  cdf <- getCdf(cs);
-  chipType <- getChipType(cdf);
+  cdf <- getCdf(cs)
+  chipType <- getChipType(cdf)
 
   if (is.na(rotateBack)) {
-    rotateBack <- FALSE;
+    rotateBack <- FALSE
     if (regexpr("^Mapping250K_", chipType) != -1) {
-      rotateBack <- TRUE;
+      rotateBack <- TRUE
     } else if (regexpr("^HuEx_", chipType) != -1) {
-      rotateBack <- TRUE;
+      rotateBack <- TRUE
     }
   }
 
   # If rotated, get the read map that unrotates the data
   if (rotateBack) {
-    h <- getHeader(cdf);
+    h <- getHeader(cdf)
     # (x,y) chip layout rotated 90 degrees clockwise
-    nrow <- h$cols;
-    ncol <- h$rows;
-    y <- (nrow-1):0;
-    x <- rep(1:ncol, each=nrow);
-    writeMap <- as.vector(y*ncol + x);
-    readMap <- .invertMap(writeMap);
+    nrow <- h$cols
+    ncol <- h$rows
+    y <- (nrow-1):0
+    x <- rep(1:ncol, each=nrow)
+    writeMap <- as.vector(y*ncol + x)
+    readMap <- .invertMap(writeMap)
     # Not needed anymore
-    x <- y <- h <- nrow <- ncol <- writeMap <- NULL;
+    x <- y <- h <- nrow <- ncol <- writeMap <- NULL
   } else {
-    readMap <- NULL;
+    readMap <- NULL
   }
 
   # Garbage collect
-  gc <- gc();
-  verbose && print(verbose, gc);
+  gc <- gc()
+  verbose && print(verbose, gc)
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Generate the output path
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  chipType <- getChipType(cdf);
+  chipType <- getChipType(cdf)
 
   # Infer the name from the input path name
   if (is.null(name)) {
-    name <- basename(path);
+    name <- basename(path)
     # Same as the chip type?
     if (name == chipType) {
       # ...then use the name of the parent directory
-      name <- basename(getParent(path));
+      name <- basename(getParent(path))
     }
   }
 
   # Create the fullname of the data set
-  fullname <- paste(c(name, tags), collapse=",");
+  fullname <- paste(c(name, tags), collapse=",")
 
-  destPath <- file.path(rootPath, fullname, chipType);
-  destPath <- Arguments$getWritablePath(destPath);
-  verbose && cat(verbose, "Destination path: ", destPath);
-  verbose && enter(verbose, "Rotating data back: ", !is.null(readMap));
+  destPath <- file.path(rootPath, fullname, chipType)
+  destPath <- Arguments$getWritablePath(destPath)
+  verbose && cat(verbose, "Destination path: ", destPath)
+  verbose && enter(verbose, "Rotating data back: ", !is.null(readMap))
 
   # Import each CEL file
   for (kk in seq_along(cs)) {
-    verbose && enter(verbose, "Converting ASCII CEL file to binary CEL file");
-    df <- cs[[kk]];
+    verbose && enter(verbose, "Converting ASCII CEL file to binary CEL file")
+    df <- cs[[kk]]
 
-    src <- getPathname(df);
-    dest <- file.path(destPath, basename(src));
-    verbose && cat(verbose, "Source pathname: ", src);
-    verbose && cat(verbose, "Destination pathname: ", dest);
+    src <- getPathname(df)
+    dest <- file.path(destPath, basename(src))
+    verbose && cat(verbose, "Source pathname: ", src)
+    verbose && cat(verbose, "Destination pathname: ", dest)
 
     if (!skip || !isFile(dest)) {
       # Convert ASCII CEL file to binary CEL with possible rotation
-      .convertCel(src, dest, readMap=readMap);
+      .convertCel(src, dest, readMap=readMap)
 
       # Garbage collect
-      gc <- gc();
-      verbose && print(verbose, gc);
+      gc <- gc()
+      verbose && print(verbose, gc)
     }
 
-    verbose && exit(verbose);
+    verbose && exit(verbose)
   }
 
   # Not needed anymore
-  readMap <- NULL;
+  readMap <- NULL
 
   # Garbage collect
-  gc <- gc();
-  verbose && print(verbose, gc);
+  gc <- gc()
+  verbose && print(verbose, gc)
 
-  verbose && exit(verbose);
+  verbose && exit(verbose)
 
   # Get the imported CEL set
-  res <- byPath(static, path=destPath, verbose=less(verbose));
+  res <- byPath(static, path=destPath, verbose=less(verbose))
 
   # Return the imported data
-  res;
+  res
 }, static=TRUE, private=TRUE)
-
-
-############################################################################
-# HISTORY:
-# 2007-03-28
-# o Further memory optimization.
-# 2007-02-03
-# o Verified for Mapping250K_Nsp arrays.
-# o Created.
-############################################################################

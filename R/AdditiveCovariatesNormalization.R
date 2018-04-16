@@ -44,36 +44,36 @@
 # @author
 #*/###########################################################################
 setConstructorS3("AdditiveCovariatesNormalization", function(dataSet=NULL, ..., target=NULL, subsetToFit="-XY", shift=0, onMissing=c("median", "ignore")) {
-  extraTags <- NULL;
+  extraTags <- NULL
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'dataSet':
   if (!is.null(dataSet)) {
-    dataSets <- Arguments$getInstanceOf(dataSet, "SnpChipEffectSet");
+    dataSets <- Arguments$getInstanceOf(dataSet, "SnpChipEffectSet")
   }
 
   # Argument 'target':
   if (!is.null(target)) {
     if (is.function(target)) {
-      target <- list(target);
+      target <- list(target)
     }
     if (is.character(target)) {
       if (target == "zero") {
       } else {
-        throw("Unknown value of argument 'target': ", target);
+        throw("Unknown value of argument 'target': ", target)
       }
     } else if (is.list(target)) {
       # Validate each element
       for (kk in seq_along(target)) {
         if (!is.function(target[[kk]])) {
           throw("One element in 'target' is not a function: ",
-                                             class(target[[kk]])[1]);
+                                             class(target[[kk]])[1])
         }
       }
     } else {
-      throw("Unknown value of argument 'target': ", class(target)[1]);
+      throw("Unknown value of argument 'target': ", class(target)[1])
     }
   }
 
@@ -82,21 +82,21 @@ setConstructorS3("AdditiveCovariatesNormalization", function(dataSet=NULL, ..., 
   } else if (is.character(subsetToFit)) {
     if (subsetToFit %in% c("-X", "-Y", "-XY")) {
     } else {
-      throw("Unknown value of argument 'subsetToFit': ", subsetToFit);
+      throw("Unknown value of argument 'subsetToFit': ", subsetToFit)
     }
-    extraTags <- c(extraTags, subsetToFit=subsetToFit);
+    extraTags <- c(extraTags, subsetToFit=subsetToFit)
   } else {
-    unf <- getUnitNamesFile(dataSet);
-    subsetToFit <- Arguments$getIndices(subsetToFit, max=nbrOfUnits(unf));
-    subsetToFit <- unique(subsetToFit);
-    subsetToFit <- sort(subsetToFit);
+    unf <- getUnitNamesFile(dataSet)
+    subsetToFit <- Arguments$getIndices(subsetToFit, max=nbrOfUnits(unf))
+    subsetToFit <- unique(subsetToFit)
+    subsetToFit <- sort(subsetToFit)
   }
 
   # Argument 'shift':
-  shift <- Arguments$getDouble(shift, disallow=c("NA", "NaN", "Inf"));
+  shift <- Arguments$getDouble(shift, disallow=c("NA", "NaN", "Inf"))
 
   # Argument 'onMissing':
-  onMissing <- match.arg(onMissing);
+  onMissing <- match.arg(onMissing)
 
 
   extend(ChipEffectTransform(dataSet, ...), "AdditiveCovariatesNormalization",
@@ -111,27 +111,27 @@ setConstructorS3("AdditiveCovariatesNormalization", function(dataSet=NULL, ..., 
 
 
 setMethodS3("getAsteriskTags", "AdditiveCovariatesNormalization", function(this, collapse=NULL, ...) {
-  tags <- NextMethod("getAsteriskTags", collapse=collapse);
+  tags <- NextMethod("getAsteriskTags", collapse=collapse)
 
   # Extra tags?
-  tags <- c(tags, this$.extraTags);
+  tags <- c(tags, this$.extraTags)
 
   # Add class-specific tags
-  shift <- as.integer(round(this$shift));
+  shift <- as.integer(round(this$shift))
   if (shift != 0) {
-    tags <- c(tags, sprintf("%+d", shift));
+    tags <- c(tags, sprintf("%+d", shift))
   }
 
   # Collapse?
-  tags <- paste(tags, collapse=collapse);
+  tags <- paste(tags, collapse=collapse)
 
-  tags;
+  tags
 }, protected=TRUE)
 
 
 setMethodS3("getParameters", "AdditiveCovariatesNormalization", function(this, expand=TRUE, ...) {
   # Get parameters from super class
-  params <- NextMethod("getParameters", expand=expand);
+  params <- NextMethod("getParameters", expand=expand)
 
   # Get parameters of this class
   params <- c(params, list(
@@ -139,21 +139,21 @@ setMethodS3("getParameters", "AdditiveCovariatesNormalization", function(this, e
     onMissing = this$.onMissing,
     .target = this$.target,
     shift = this$shift
-  ));
+  ))
 
 
   # Expand?
   if (expand) {
-    subsetToFit <- getSubsetToFit(this);
+    subsetToFit <- getSubsetToFit(this)
   }
 
-  params;
+  params
 }, protected=TRUE)
 
 
 setMethodS3("getCdf", "AdditiveCovariatesNormalization", function(this, ...) {
-  inputDataSet <- getInputDataSet(this);
-  getCdf(inputDataSet);
+  inputDataSet <- getInputDataSet(this)
+  getCdf(inputDataSet)
 })
 
 
@@ -162,56 +162,56 @@ setMethodS3("getOutputDataSet00", "AdditiveCovariatesNormalization", function(th
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
+  verbose <- Arguments$getVerbose(verbose)
   if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
+    pushState(verbose)
+    on.exit(popState(verbose))
   }
 
 
-  verbose && enter(verbose, "Getting input data set");
-  ces <- getInputDataSet(this);
-  verbose && cat(verbose, "Class: ", class(ces)[1]);
-  verbose && exit(verbose);
+  verbose && enter(verbose, "Getting input data set")
+  ces <- getInputDataSet(this)
+  verbose && cat(verbose, "Class: ", class(ces)[1])
+  verbose && exit(verbose)
 
-  verbose && enter(verbose, "Getting output data set for ", class(this)[1]);
+  verbose && enter(verbose, "Getting output data set for ", class(this)[1])
 
-  args <- list(generic="getOutputDataSet", object=this, ...);
+  args <- list(generic="getOutputDataSet", object=this, ...)
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Inherit certain arguments from the input data set
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (inherits(ces, "CnChipEffectSet"))
-    args$combineAlleles <- ces$combineAlleles;
+    args$combineAlleles <- ces$combineAlleles
   if (inherits(ces, "SnpChipEffectSet"))
-    args$mergeStrands <- ces$mergeStrands;
+    args$mergeStrands <- ces$mergeStrands
 
-  verbose && cat(verbose, "Calling NextMethod() with arguments:");
-  verbose && str(verbose, args);
+  verbose && cat(verbose, "Calling NextMethod() with arguments:")
+  verbose && str(verbose, args)
 
-  args$verbose <- less(verbose, 10);
-  res <- do.call(NextMethod, args);
+  args$verbose <- less(verbose, 10)
+  res <- do.call(NextMethod, args)
 
   # Carry over parameters too.  AD HOC for now. /HB 2007-01-07
   if (inherits(res, "SnpChipEffectSet")) {
-    verbose && enter(verbose, "Carrying down parameters for ", class(res)[1]);
+    verbose && enter(verbose, "Carrying down parameters for ", class(res)[1])
 
-    res$mergeStrands <- ces$mergeStrands;
+    res$mergeStrands <- ces$mergeStrands
     if (inherits(res, "CnChipEffectSet")) {
-      res$combineAlleles <- ces$combineAlleles;
+      res$combineAlleles <- ces$combineAlleles
     }
-    verbose && exit(verbose);
+    verbose && exit(verbose)
   }
 
   # Let the set update itself
-  update2(res, verbose=less(verbose, 1));
+  update2(res, verbose=less(verbose, 1))
 
-  verbose && exit(verbose);
+  verbose && exit(verbose)
 
-  res;
+  res
 }, protected=TRUE)
 
-setMethodS3("getCovariates", "AdditiveCovariatesNormalization", abstract=TRUE, protected=TRUE);
+setMethodS3("getCovariates", "AdditiveCovariatesNormalization", abstract=TRUE, protected=TRUE)
 
 
 setMethodS3("getSubsetToFit", "AdditiveCovariatesNormalization", function(this, force=FALSE, ..., verbose=FALSE) {
@@ -219,145 +219,145 @@ setMethodS3("getSubsetToFit", "AdditiveCovariatesNormalization", function(this, 
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
+  verbose <- Arguments$getVerbose(verbose)
   if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
+    pushState(verbose)
+    on.exit(popState(verbose))
   }
 
 
   # Cached?
-  units <- this$.units;
+  units <- this$.units
   if (!is.null(units) && !force)
-    return(units);
+    return(units)
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Identifying all potential units, i.e. SNPs and CN probes
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  verbose && enter(verbose, "Identifying units that are SNP and CN probes");
+  verbose && enter(verbose, "Identifying units that are SNP and CN probes")
 
   # Get SNP information
-  cdf <- getCdf(this);
-  nbrOfUnits <- nbrOfUnits(cdf);
+  cdf <- getCdf(this)
+  nbrOfUnits <- nbrOfUnits(cdf)
 
   # Identify all SNP and CN units (==potential units to be fitted)
-  verbose && enter(verbose, "Identifying SNPs and CN probes");
-  types <- getUnitTypes(cdf, verbose=less(verbose,1));
-  verbose && print(verbose, table(types));
-  units <- which(types == 2 | types == 5);
+  verbose && enter(verbose, "Identifying SNPs and CN probes")
+  types <- getUnitTypes(cdf, verbose=less(verbose,1))
+  verbose && print(verbose, table(types))
+  units <- which(types == 2 | types == 5)
   # Not needed anymore
-  types <- NULL;
-  verbose && cat(verbose, "units:");
-  verbose && str(verbose, units);
-  verbose && exit(verbose);
+  types <- NULL
+  verbose && cat(verbose, "units:")
+  verbose && str(verbose, units)
+  verbose && exit(verbose)
 
-  onMissing <- this$.onMissing;
+  onMissing <- this$.onMissing
   if (onMissing == "ignore") {
     # Keep only those for which we have annotation data covariates on
     # for at least one covariate
-    verbose && enter(verbose, "Reading annotation data covariates");
-    X <- getCovariates(this, units=units, verbose=less(verbose,5));
-    keep <- rep(FALSE, nrow(X));
+    verbose && enter(verbose, "Reading annotation data covariates")
+    X <- getCovariates(this, units=units, verbose=less(verbose,5))
+    keep <- rep(FALSE, nrow(X))
     for (ee in seq_len(ncol(X))) {
-      keep <- keep | is.finite(X[,ee]);
+      keep <- keep | is.finite(X[,ee])
     }
-    units <- units[keep];
-    verbose && printf(verbose, "Number of SNP/CN units without finite covariates: %d out of %d (%.1f%%)\n", sum(!keep), length(keep), 100*sum(!keep)/length(keep));
-    verbose && exit(verbose);
+    units <- units[keep]
+    verbose && printf(verbose, "Number of SNP/CN units without finite covariates: %d out of %d (%.1f%%)\n", sum(!keep), length(keep), 100*sum(!keep)/length(keep))
+    verbose && exit(verbose)
     # Not needed anymore
-    keep <- X <- NULL;
+    keep <- X <- NULL
   }
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Subset with a prespecified set of units?
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  subsetToFit <- this$.subsetToFit;
+  subsetToFit <- this$.subsetToFit
   if (is.character(subsetToFit)) {
     if (subsetToFit %in% c("-X", "-Y", "-XY")) {
-      verbose && enter(verbose, "Identify subset of units from genome information");
-      verbose && cat(verbose, "subsetToFit: ", subsetToFit);
+      verbose && enter(verbose, "Identify subset of units from genome information")
+      verbose && cat(verbose, "subsetToFit: ", subsetToFit)
 
       # Look up in cache
-      subset <- this$.subsetToFitExpanded;
+      subset <- this$.subsetToFitExpanded
       if (is.null(subset)) {
         # Get the genome information (throws an exception if missing)
-        gi <- getGenomeInformation(cdf);
-        verbose && print(verbose, gi);
+        gi <- getGenomeInformation(cdf)
+        verbose && print(verbose, gi)
 
         # Identify units to be excluded
         if (subsetToFit == "-X") {
-          subset <- getUnitsOnChromosomes(gi, 23, .checkArgs=FALSE);
+          subset <- getUnitsOnChromosomes(gi, 23, .checkArgs=FALSE)
         } else if (subsetToFit == "-Y") {
-          subset <- getUnitsOnChromosomes(gi, 24, .checkArgs=FALSE);
+          subset <- getUnitsOnChromosomes(gi, 24, .checkArgs=FALSE)
         } else if (subsetToFit == "-XY") {
-          subset <- getUnitsOnChromosomes(gi, 23:24, .checkArgs=FALSE);
+          subset <- getUnitsOnChromosomes(gi, 23:24, .checkArgs=FALSE)
         }
 
-        verbose && cat(verbose, "Units to exclude: ");
-        verbose && str(verbose, subset);
+        verbose && cat(verbose, "Units to exclude: ")
+        verbose && str(verbose, subset)
 
         # The units to keep
-        subset <- setdiff(seq_len(nbrOfUnits), subset);
+        subset <- setdiff(seq_len(nbrOfUnits), subset)
 
-        verbose && cat(verbose, "Units to include: ");
-        verbose && str(verbose, subset);
+        verbose && cat(verbose, "Units to include: ")
+        verbose && str(verbose, subset)
 
         # Store
-        this$.subsetToFitExpanded <- subset;
+        this$.subsetToFitExpanded <- subset
       }
 
-      subsetToFit <- subset;
+      subsetToFit <- subset
       # Not needed anymore
-      subset <- NULL;
+      subset <- NULL
 
-      verbose && exit(verbose);
+      verbose && exit(verbose)
     }
   }
 
   if (!is.null(subsetToFit)) {
     # A fraction subset?
     if (length(subsetToFit) == 1 && 0 < subsetToFit && subsetToFit < 1) {
-      keep <- seq(from=1, to=length(units), length=subsetToFit*length(units));
+      keep <- seq(from=1, to=length(units), length=subsetToFit*length(units))
     } else {
-      keep <- which(units %in% subsetToFit);
+      keep <- which(units %in% subsetToFit)
     }
 
-    verbose && enter(verbose, "Reading annotation data covariates");
-    X <- getCovariates(this, units=units, verbose=less(verbose,5));
-    verbose && str(verbose, X);
-    verbose && exit(verbose);
+    verbose && enter(verbose, "Reading annotation data covariates")
+    X <- getCovariates(this, units=units, verbose=less(verbose,5))
+    verbose && str(verbose, X)
+    verbose && exit(verbose)
 
     # Make sure to keep data points at the tails too
-    extremeUnits <- c();
+    extremeUnits <- c()
     for (ee in seq_len(ncol(X))) {
-      extremeUnits <- c(extremeUnits, which.min(X[,ee]), which.max(X[,ee]));
+      extremeUnits <- c(extremeUnits, which.min(X[,ee]), which.max(X[,ee]))
     }
     # Not needed anymore
-    X <- NULL;
+    X <- NULL
 
-    keep <- c(keep, extremeUnits);
-    keep <- unique(keep);
+    keep <- c(keep, extremeUnits)
+    keep <- unique(keep)
 
     # Now filter
-    units <- units[keep];
+    units <- units[keep]
     # Not needed anymore
-    keep <- NULL;
+    keep <- NULL
   }
 
   # Sort units
-  units <- sort(units);
+  units <- sort(units)
 
   # Assert correctness
-  units <- Arguments$getIndices(units, max=nbrOfUnits);
+  units <- Arguments$getIndices(units, max=nbrOfUnits)
 
   # Cache
-  this$.units <- units;
+  this$.units <- units
 
-  verbose && exit(verbose);
+  verbose && exit(verbose)
 
-  units;
+  units
 }, private=TRUE)
 
 
@@ -368,14 +368,14 @@ setMethodS3("getTargetFunctions", "AdditiveCovariatesNormalization", function(th
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
+  verbose <- Arguments$getVerbose(verbose)
   if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
+    pushState(verbose)
+    on.exit(popState(verbose))
   }
 
 
-  target <- this$.target;
+  target <- this$.target
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Handling argument 'force'
@@ -383,11 +383,11 @@ setMethodS3("getTargetFunctions", "AdditiveCovariatesNormalization", function(th
   # AD HOC: If forced, make sure to use the original target argument
   if (force) {
     if (!is.null(target)) {
-      targetType <- attr(target, "targetType");
+      targetType <- attr(target, "targetType")
       if (!is.null(targetType))
-        target <- targetType;
+        target <- targetType
       # Not needed anymore
-      targetType <- NULL;
+      targetType <- NULL
     }
   }
 
@@ -395,28 +395,28 @@ setMethodS3("getTargetFunctions", "AdditiveCovariatesNormalization", function(th
   # Predefined target functions?
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (is.character(target)) {
-    verbose && enter(verbose, "Setting up predefined target functions");
-    targetType <- target;
-    verbose && cat(verbose, "Target type: ", targetType);
+    verbose && enter(verbose, "Setting up predefined target functions")
+    targetType <- target
+    verbose && cat(verbose, "Target type: ", targetType)
 
     # Infer the number of covariates
-    X <- getCovariates(this, units=1:5);
-    nbrOfCovariates <- ncol(X);
+    X <- getCovariates(this, units=1:5)
+    nbrOfCovariates <- ncol(X)
     # Not needed anymore
-    X <- NULL;
+    X <- NULL
 
     if (identical(targetType, "zero")) {
-      target <- rep(list(function(...) log2(2200)), nbrOfCovariates);
+      target <- rep(list(function(...) log2(2200)), nbrOfCovariates)
     } else {
-      throw("Unknown target function: ", targetType);
+      throw("Unknown target function: ", targetType)
     }
 
     # Store the original target type in an attribute
-    attr(target, "targetType") <- targetType;
+    attr(target, "targetType") <- targetType
 
-    this$.target <- target;
-    force <- FALSE;
-    verbose && exit(verbose);
+    this$.target <- target
+    force <- FALSE
+    verbose && exit(verbose)
   }
 
 
@@ -425,149 +425,149 @@ setMethodS3("getTargetFunctions", "AdditiveCovariatesNormalization", function(th
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (force || is.null(target)) {
     # Get target set
-    ces <- getInputDataSet(this);
-    verbose && enter(verbose, "Getting average signal across arrays");
-    ceR <- getAverageFile(ces, force=force, verbose=less(verbose));
+    ces <- getInputDataSet(this)
+    verbose && enter(verbose, "Getting average signal across arrays")
+    ceR <- getAverageFile(ces, force=force, verbose=less(verbose))
     # Not needed anymore
     ces <- NULL; # Not needed anymore
-    verbose && exit(verbose);
+    verbose && exit(verbose)
 
     # Garbage collect
-    gc <- gc();
-    verbose && print(verbose, gc);
+    gc <- gc()
+    verbose && print(verbose, gc)
 
     # Get units to fit
-    units <- getSubsetToFit(this);
-    verbose && cat(verbose, "Units:");
-    verbose && str(verbose, units);
+    units <- getSubsetToFit(this)
+    verbose && cat(verbose, "Units:")
+    verbose && str(verbose, units)
 
     # Get target signals for SNPs
-    yR <- extractTheta(ceR, units=units, verbose=less(verbose, 5));
+    yR <- extractTheta(ceR, units=units, verbose=less(verbose, 5))
     # Not needed anymore
     ceR <- NULL; # Not needed anymore
-    verbose && cat(verbose, "(Allele-specific) thetas:");
-    verbose && str(verbose, yR);
+    verbose && cat(verbose, "(Allele-specific) thetas:")
+    verbose && str(verbose, yR)
 
     # If more than one theta per unit, sum them up to get the total signal
     if (ncol(yR) > 1) {
       # Row sums with na.rm=TRUE => NAs are treated as zeros.
-      yR[is.na(yR)] <- 0;
+      yR[is.na(yR)] <- 0
       for (cc in 2:ncol(yR)) {
-        yR[,1] <- yR[,1] + yR[,cc];
+        yR[,1] <- yR[,1] + yR[,cc]
       }
     }
-    yR <- yR[,1,drop=TRUE];
-    verbose && cat(verbose, "Total thetas:");
-    verbose && str(verbose, yR);
+    yR <- yR[,1,drop=TRUE]
+    verbose && cat(verbose, "Total thetas:")
+    verbose && str(verbose, yR)
 
-    verbose && cat(verbose, "Summary of total signals (on the intensity scale):");
-    verbose && summary(verbose, yR);
+    verbose && cat(verbose, "Summary of total signals (on the intensity scale):")
+    verbose && summary(verbose, yR)
 
     # Shift?
-    shift <- this$shift;
+    shift <- this$shift
     if (shift != 0) {
-      verbose && printf(verbose, "Applying shift: %+f\n", shift);
-      yR <- yR + shift;
-      verbose && cat(verbose, "Summary of shifted signals (on the intensity scale):");
-      verbose && summary(verbose, yR);
+      verbose && printf(verbose, "Applying shift: %+f\n", shift)
+      yR <- yR + shift
+      verbose && cat(verbose, "Summary of shifted signals (on the intensity scale):")
+      verbose && summary(verbose, yR)
     }
 
-    yR <- log2(yR);
-    verbose && cat(verbose, "Signals:");
-    verbose && str(verbose, yR);
-    verbose && cat(verbose, "Summary of signals (on the log2 scale):");
-    verbose && summary(verbose, yR);
+    yR <- log2(yR)
+    verbose && cat(verbose, "Signals:")
+    verbose && str(verbose, yR)
+    verbose && cat(verbose, "Summary of signals (on the log2 scale):")
+    verbose && summary(verbose, yR)
 
     # Get PCR fragment lengths for these
-    X <- getCovariates(this, units=units, verbose=less(verbose,5));
+    X <- getCovariates(this, units=units, verbose=less(verbose,5))
     # Not needed anymore
     units <- NULL; # Not needed anymore
-    verbose && cat(verbose, "Annotation data covariates:");
-    verbose && str(verbose, X);
-    verbose && cat(verbose, "Summary of covariates:");
-    verbose && summary(verbose, X);
+    verbose && cat(verbose, "Annotation data covariates:")
+    verbose && str(verbose, X)
+    verbose && cat(verbose, "Summary of covariates:")
+    verbose && summary(verbose, X)
 
     # Fit lowess function
-    verbose && enter(verbose, "Fitting target prediction function to each covariate exclusively");
-    okYR <- is.finite(yR);
-    verbose && cat(verbose, "Distribution of log2 signals that are finite:");
-    verbose && summary(verbose, okYR);
+    verbose && enter(verbose, "Fitting target prediction function to each covariate exclusively")
+    okYR <- is.finite(yR)
+    verbose && cat(verbose, "Distribution of log2 signals that are finite:")
+    verbose && summary(verbose, okYR)
 
-    hasX <- is.finite(X);
-    verbose && cat(verbose, "Distribution of units with known covariates:");
-    verbose && summary(verbose, hasX);
+    hasX <- is.finite(X)
+    verbose && cat(verbose, "Distribution of units with known covariates:")
+    verbose && summary(verbose, hasX)
 
-    nbrOfCovariates <- ncol(X);
-    allCovariates <- seq_len(nbrOfCovariates);
+    nbrOfCovariates <- ncol(X)
+    allCovariates <- seq_len(nbrOfCovariates)
 
-    fits <- list();
+    fits <- list()
     for (ee in allCovariates) {
-      verbose && enter(verbose, "Covariate #", ee, " of ", nbrOfCovariates);
+      verbose && enter(verbose, "Covariate #", ee, " of ", nbrOfCovariates)
 
       # Fit only to units with known length and non-missing data points.
-      ok <- (hasX[,ee] & okYR);
+      ok <- (hasX[,ee] & okYR)
 
-      verbose && cat(verbose, "Distribution of units with known covariates and finite signals:");
-      verbose && summary(verbose, ok);
+      verbose && cat(verbose, "Distribution of units with known covariates and finite signals:")
+      verbose && summary(verbose, ok)
 
       # Exclude multi-covariate units
       for (ff in setdiff(allCovariates, ee)) {
-        ok <- ok & !hasX[,ff];
+        ok <- ok & !hasX[,ff]
       }
 
-      verbose && cat(verbose, "Distribution of units with known covariates and finite signals that are exclusively for this covarite:");
-      verbose && summary(verbose, ok);
+      verbose && cat(verbose, "Distribution of units with known covariates and finite signals that are exclusively for this covarite:")
+      verbose && summary(verbose, ok)
 
 
       # Sanity check
       if (sum(ok) == 0) {
-        throw("Cannot fit target function to covariate, because there are no (finite) data points that are unique to this covariate: ", ee);
+        throw("Cannot fit target function to covariate, because there are no (finite) data points that are unique to this covariate: ", ee)
       }
 
       # Fit effect to single-covariate units
-      fit <- lowess(X[ok,ee], yR[ok]);
-      class(fit) <- "lowess";
+      fit <- lowess(X[ok,ee], yR[ok])
+      class(fit) <- "lowess"
 
       # Not needed anymore
-      ok <- NULL;
+      ok <- NULL
 
-      fits[[ee]] <- fit;
+      fits[[ee]] <- fit
 
       # Not needed anymore
-      fit <- NULL;
+      fit <- NULL
 
-      verbose && exit(verbose);
+      verbose && exit(verbose)
     } # for (ee ...)
 
     # Remove as many promises as possible
     # Not needed anymore
-    target <- nbrOfCovariates <- allCovariates <- X <- hasX <- yR <- okYR <- NULL;
+    target <- nbrOfCovariates <- allCovariates <- X <- hasX <- yR <- okYR <- NULL
 
     # Create a target prediction function for each covariate
-    fcns <- vector("list", length(fits));
+    fcns <- vector("list", length(fits))
     for (ee in seq_along(fits)) {
       fcns[[ee]] <- function(x, ...) {
         predict(fits[[ee]], x, ...);  # Dispatched predict.lowess().
       }
     }
-    verbose && str(verbose, fcns);
-    verbose && exit(verbose);
+    verbose && str(verbose, fcns)
+    verbose && exit(verbose)
 
     # Garbage collect
-    gc <- gc();
-    verbose && print(verbose, gc);
+    gc <- gc()
+    verbose && print(verbose, gc)
 
-    target <- fcns;
+    target <- fcns
     # Not needed anymore
-    fcns <- NULL;
-    this$.target <- target;
-    force <- FALSE;
+    fcns <- NULL
+    this$.target <- target
+    force <- FALSE
 
-    verbose && exit(verbose);
+    verbose && exit(verbose)
   } # if (force || ...)
 
 
-  target;
+  target
 }, private=TRUE)
 
 
@@ -606,24 +606,24 @@ setMethodS3("process", "AdditiveCovariatesNormalization", function(this, ..., fo
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
+  verbose <- Arguments$getVerbose(verbose)
   if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
+    pushState(verbose)
+    on.exit(popState(verbose))
   }
 
-  verbose && enter(verbose, "Normalizing set for PCR fragment-length effects");
+  verbose && enter(verbose, "Normalizing set for PCR fragment-length effects")
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Already done?
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (!force && isDone(this)) {
-    verbose && cat(verbose, "Already normalized");
-    verbose && enter(verbose, "Getting output data set");
-    outputSet <- getOutputDataSet(this, verbose=less(verbose, 10));
-    verbose && exit(verbose);
-    verbose && exit(verbose);
-    return(invisible(outputSet));
+    verbose && cat(verbose, "Already normalized")
+    verbose && enter(verbose, "Getting output data set")
+    outputSet <- getOutputDataSet(this, verbose=less(verbose, 10))
+    verbose && exit(verbose)
+    verbose && exit(verbose)
+    return(invisible(outputSet))
   }
 
 
@@ -631,235 +631,225 @@ setMethodS3("process", "AdditiveCovariatesNormalization", function(this, ..., fo
   # Setup
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Get input data set
-  ces <- getInputDataSet(this);
+  ces <- getInputDataSet(this)
 
-  verbose && enter(verbose, "Identifying SNP and CN units");
+  verbose && enter(verbose, "Identifying SNP and CN units")
   # Get SNP & CN units
-  cdf <- getCdf(ces);
-  types <- getUnitTypes(cdf, verbose=less(verbose,1));
-  verbose && print(verbose, table(types));
-  subsetToUpdate <- which(types == 2 | types == 5);
+  cdf <- getCdf(ces)
+  types <- getUnitTypes(cdf, verbose=less(verbose,1))
+  verbose && print(verbose, table(types))
+  subsetToUpdate <- which(types == 2 | types == 5)
   # Not needed anymore
-  types <- NULL;
-  verbose && cat(verbose, "subsetToUpdate:");
-  verbose && str(verbose, subsetToUpdate);
-  verbose && exit(verbose);
+  types <- NULL
+  verbose && cat(verbose, "subsetToUpdate:")
+  verbose && str(verbose, subsetToUpdate)
+  verbose && exit(verbose)
 
 
-  verbose && enter(verbose, "Identifying the subset used to fit normalization function(s)");
+  verbose && enter(verbose, "Identifying the subset used to fit normalization function(s)")
   # Get subset to fit
-  subsetToFit <- getSubsetToFit(this, verbose=less(verbose));
-  verbose && str(verbose, subsetToFit);
-  verbose && exit(verbose);
+  subsetToFit <- getSubsetToFit(this, verbose=less(verbose))
+  verbose && str(verbose, subsetToFit)
+  verbose && exit(verbose)
 
-  shift <- this$shift;
-  verbose && cat(verbose, "Shift: ", shift);
+  shift <- this$shift
+  verbose && cat(verbose, "Shift: ", shift)
 
-  onMissing <- this$.onMissing;
-  verbose && cat(verbose, "onMissing: ", onMissing);
+  onMissing <- this$.onMissing
+  verbose && cat(verbose, "onMissing: ", onMissing)
 
   # Get (and create) the output path
-  path <- getPath(this);
+  path <- getPath(this)
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Normalize each array
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  X <- NULL;
-  targetFcns <- NULL;
-#  map <- NULL;
-  cellMatrixMap <- NULL;
-  nbrOfArrays <- length(ces);
+  X <- NULL
+  targetFcns <- NULL
+#  map <- NULL
+  cellMatrixMap <- NULL
+  nbrOfArrays <- length(ces)
   for (kk in seq_len(nbrOfArrays)) {
-    ce <- ces[[kk]];
+    ce <- ces[[kk]]
     verbose && enter(verbose, sprintf("Array #%d of %d ('%s')",
-                                            kk, nbrOfArrays, getName(ce)));
+                                            kk, nbrOfArrays, getName(ce)))
 
-    filename <- getFilename(ce);
-    pathname <- filePath(path, filename);
+    filename <- getFilename(ce)
+    pathname <- filePath(path, filename)
     if (!force && isFile(pathname)) {
-      verbose && cat(verbose, "Already normalized. Skipping.");
-      ceN <- fromFile(ce, pathname);
+      verbose && cat(verbose, "Already normalized. Skipping.")
+      ceN <- fromFile(ce, pathname)
 
       # Carry over parameters too.  AD HOC for now. /HB 2007-01-07
       if (inherits(ce, "SnpChipEffectFile")) {
-        ceN$mergeStrands <- ce$mergeStrands;
+        ceN$mergeStrands <- ce$mergeStrands
         if (inherits(ce, "CnChipEffectFile")) {
-          ceN$combineAlleles <- ce$combineAlleles;
+          ceN$combineAlleles <- ce$combineAlleles
         }
       }
 
       # CDF inheritance
-      setCdf(ceN, cdf);
+      setCdf(ceN, cdf)
 
-      verbose && exit(verbose);
-      next;
+      verbose && exit(verbose)
+      next
     }
 
     # Get unit-to-cell? (for optimized reading)
 #    if (is.null(map)) {
 #      # Only loaded if really needed.
-#      verbose && enter(verbose, "Retrieving unit-to-cell map for all arrays");
-#      map <- getUnitGroupCellMap(ce, units=subsetToUpdate, verbose=less(verbose));
-#      verbose && str(verbose, map);
-#      verbose && exit(verbose);
+#      verbose && enter(verbose, "Retrieving unit-to-cell map for all arrays")
+#      map <- getUnitGroupCellMap(ce, units=subsetToUpdate, verbose=less(verbose))
+#      verbose && str(verbose, map)
+#      verbose && exit(verbose)
 #    }
 
     if (is.null(X)) {
       # For the subset to be fitted, get PCR fragment lengths (for all covariates)
-      X <- getCovariates(this, units=subsetToUpdate, verbose=less(verbose,5));
-      verbose && summary(verbose, X);
+      X <- getCovariates(this, units=subsetToUpdate, verbose=less(verbose,5))
+      verbose && summary(verbose, X)
 
       # Get the index in the data vector of subset to be fitted.
       # Note: match() only returns first match, which is why we do
       # it this way.
-      subset <- match(subsetToUpdate, subsetToFit);
-      subset <- subset[!is.na(subset)];
-      subset <- match(subsetToFit[subset], subsetToUpdate);
-      verbose && str(verbose, subset);
+      subset <- match(subsetToUpdate, subsetToFit)
+      subset <- subset[!is.na(subset)]
+      subset <- match(subsetToFit[subset], subsetToUpdate)
+      verbose && str(verbose, subset)
     }
 
     if (is.null(targetFcns)) {
       # Only loaded if really needed.
       # Retrieve/calculate the target function
-      targetFcns <- getTargetFunctions(this, verbose=less(verbose));
+      targetFcns <- getTargetFunctions(this, verbose=less(verbose))
     }
 
     if (is.null(cellMatrixMap)) {
-      verbose && enter(verbose, "Getting cell matrix map");
-      cellMatrixMap <- getUnitGroupCellMatrixMap(ce, units=subsetToUpdate, verbose=less(verbose, 10));
-      verbose && str(verbose, cellMatrixMap);
-      verbose && exit(verbose);
+      verbose && enter(verbose, "Getting cell matrix map")
+      cellMatrixMap <- getUnitGroupCellMatrixMap(ce, units=subsetToUpdate, verbose=less(verbose, 10))
+      verbose && str(verbose, cellMatrixMap)
+      verbose && exit(verbose)
     }
 
     # Get target log2 signals for all SNPs to be updated
-    verbose && enter(verbose, "Getting theta estimates");
-    theta <- extractTheta(ce, units=cellMatrixMap, drop=FALSE, verbose=less(verbose, 5));
-    verbose && str(verbose, theta);
-    verbose && summary(verbose, theta);
-    verbose && exit(verbose);
+    verbose && enter(verbose, "Getting theta estimates")
+    theta <- extractTheta(ce, units=cellMatrixMap, drop=FALSE, verbose=less(verbose, 5))
+    verbose && str(verbose, theta)
+    verbose && summary(verbose, theta)
+    verbose && exit(verbose)
 
-    verbose && enter(verbose, "Calculating total signals");
+    verbose && enter(verbose, "Calculating total signals")
     # Get the total locus signals?
     if (ncol(theta) > 1) {
       # Row sums with na.rm=TRUE => NAs are treated as zeros.
-      y <- theta;
-      y[is.na(y)] <- 0;
+      y <- theta
+      y[is.na(y)] <- 0
       for (cc in 2:ncol(y)) {
-        y[,1] <- y[,1] + y[,cc];
+        y[,1] <- y[,1] + y[,cc]
       }
-      y <- y[,1,drop=TRUE];
+      y <- y[,1,drop=TRUE]
     } else {
-      y <- theta[,1,drop=TRUE];
+      y <- theta[,1,drop=TRUE]
     }
-    verbose && cat(verbose, "Total thetas:");
-    verbose && str(verbose, y);
-    verbose && exit(verbose);
+    verbose && cat(verbose, "Total thetas:")
+    verbose && str(verbose, y)
+    verbose && exit(verbose)
 
     # Extract the values to fit the normalization function
-    verbose && enter(verbose, "Normalizing log2 signals");
+    verbose && enter(verbose, "Normalizing log2 signals")
 
     # Shift?
     if (shift != 0)
-      y <- y + shift;
+      y <- y + shift
 
     # Fit on the log2 scale
-    y <- log2(y);
+    y <- log2(y)
 
-    verbose && cat(verbose, "Log2 signals:");
-    verbose && str(verbose, y);
+    verbose && cat(verbose, "Log2 signals:")
+    verbose && str(verbose, y)
     yN <- .normalizeFragmentLength(y, fragmentLengths=X,
                     targetFcns=targetFcns, subsetToFit=subset,
-                    onMissing=onMissing, ...);
-    verbose && cat(verbose, "Normalized log2 signals:");
-    verbose && summary(verbose, yN);
+                    onMissing=onMissing, ...)
+    verbose && cat(verbose, "Normalized log2 signals:")
+    verbose && summary(verbose, yN)
 
     # Normalization scale factor for each unit (on the log2 scale)
-    rho <- y-yN;
+    rho <- y-yN
     # Not needed anymore
-    y <- yN <- NULL;
+    y <- yN <- NULL
     # On the intensity scale
-    rho <- 2^rho;
-    verbose && cat(verbose, "Normalization scale factors:");
-    verbose && summary(verbose, rho);
+    rho <- 2^rho
+    verbose && cat(verbose, "Normalization scale factors:")
+    verbose && summary(verbose, rho)
 
     # Sanity check
-    stopifnot(length(rho) == nrow(theta));
+    stopifnot(length(rho) == nrow(theta))
 
     # Normalize the theta:s (on the intensity scale)
-    ok <- which(is.finite(rho));
-    verbose && str(verbose, ok);
-    theta[ok,] <- theta[ok,]/rho[ok];
+    ok <- which(is.finite(rho))
+    verbose && str(verbose, ok)
+    theta[ok,] <- theta[ok,]/rho[ok]
     # Not needed anymore
-    ok <- rho <- NULL;
+    ok <- rho <- NULL
 
-    verbose && cat(verbose, "Normalized thetas:");
-    verbose && str(verbose, theta);
-    verbose && summary(verbose, theta);
+    verbose && cat(verbose, "Normalized thetas:")
+    verbose && str(verbose, theta)
+    verbose && summary(verbose, theta)
 
-    verbose && exit(verbose);
+    verbose && exit(verbose)
 
     # Write to a temporary file (allow rename of existing one if forced)
-    isFile <- (force && isFile(pathname));
-    pathnameT <- pushTemporaryFile(pathname, isFile=isFile, verbose=verbose);
+    isFile <- (force && isFile(pathname))
+    pathnameT <- pushTemporaryFile(pathname, isFile=isFile, verbose=verbose)
 
     # Create CEL file to store results, if missing
-    verbose && enter(verbose, "Creating CEL file for results, if missing");
-    ceN <- createFrom(ce, filename=pathnameT, path=NULL, verbose=less(verbose));
-    verbose && exit(verbose);
+    verbose && enter(verbose, "Creating CEL file for results, if missing")
+    ceN <- createFrom(ce, filename=pathnameT, path=NULL, verbose=less(verbose))
+    verbose && exit(verbose)
 
     # Carry over parameters too.  AD HOC for now. /HB 2007-01-07
     if (inherits(ce, "SnpChipEffectFile")) {
-      ceN$mergeStrands <- ce$mergeStrands;
+      ceN$mergeStrands <- ce$mergeStrands
       if (inherits(ce, "CnChipEffectFile")) {
-        ceN$combineAlleles <- ce$combineAlleles;
+        ceN$combineAlleles <- ce$combineAlleles
       }
     }
 
     # CDF inheritance
-    setCdf(ceN, cdf);
+    setCdf(ceN, cdf)
 
-    verbose && enter(verbose, "Storing normalized signals");
-    ok <- which(is.finite(cellMatrixMap));
-    cells <- cellMatrixMap[ok];
-    data <- theta[ok];
+    verbose && enter(verbose, "Storing normalized signals")
+    ok <- which(is.finite(cellMatrixMap))
+    cells <- cellMatrixMap[ok]
+    data <- theta[ok]
     # Not needed anymore
-    ok <- theta <- NULL;
+    ok <- theta <- NULL
 
-    verbose2 <- -as.integer(verbose) - 5;
-    pathnameN <- getPathname(ceN);
-    .updateCel(pathnameN, indices=cells, intensities=data, verbose=verbose2);
+    verbose2 <- -as.integer(verbose) - 5
+    pathnameN <- getPathname(ceN)
+    .updateCel(pathnameN, indices=cells, intensities=data, verbose=verbose2)
     # Not needed anymore
-    cells <- data <- NULL;
-    verbose && exit(verbose);
+    cells <- data <- NULL
+    verbose && exit(verbose)
 
     # Rename temporary file
-    popTemporaryFile(pathnameT, verbose=verbose);
+    popTemporaryFile(pathnameT, verbose=verbose)
 
     ## Create checksum
     ceNZ <- getChecksumFile(pathname)
 
     # Garbage collect
-    gc <- gc();
-    verbose && print(verbose, gc);
+    gc <- gc()
+    verbose && print(verbose, gc)
 
-    verbose && exit(verbose);
+    verbose && exit(verbose)
   } # for (kk in ...)
 
   # Create the output set
-  outputSet <- getOutputDataSet(this, verbose=less(verbose,5));
+  outputSet <- getOutputDataSet(this, verbose=less(verbose,5))
 
-  verbose && exit(verbose);
+  verbose && exit(verbose)
 
-  outputSet;
+  outputSet
 })
-
-############################################################################
-# HISTORY:
-# 2013-06-01
-# o Argument process(..., force=TRUE) for AdditiveCovariatesNormalization
-#   did not force reprocessing.
-# 2009-03-22
-# o Generalized by creating abstract getCovariates() method.
-# o Created from FragmentLengthNormalization.R.
-############################################################################

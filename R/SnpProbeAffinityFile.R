@@ -26,12 +26,12 @@
 setConstructorS3("SnpProbeAffinityFile", function(..., mergeStrands=FALSE) {
   this <- extend(ProbeAffinityFile(...), "SnpProbeAffinityFile",
     mergeStrands=mergeStrands
-  );
+  )
 
   # Parse attributes (all subclasses must call this in the constructor).
   setAttributesByTags(this)
 
-  this;
+  this
 })
 
 
@@ -69,19 +69,19 @@ setMethodS3("getCellIndices", "SnpProbeAffinityFile", function(this, ..., unlist
 
 
   # Argument 'unlist':
-  unlist <- Arguments$getLogical(unlist);
+  unlist <- Arguments$getLogical(unlist)
 
   # Supported case?
-  mergeStrands <- this$mergeStrands;
+  mergeStrands <- this$mergeStrands
   if (unlist && mergeStrands) {
-    throw("Unsupported request: Argument 'unlist' have to be TRUE when parameter 'mergeStrands' is TRUE: ", unlist);
+    throw("Unsupported request: Argument 'unlist' have to be TRUE when parameter 'mergeStrands' is TRUE: ", unlist)
   }
 
-  cells <- NextMethod("getCellIndices");
+  cells <- NextMethod("getCellIndices")
 
   # Merge strands?
   if (mergeStrands) {
-    cells <- .applyCdfGroups(cells, cdfMergeStrands);
+    cells <- .applyCdfGroups(cells, cdfMergeStrands)
   }
 
 
@@ -89,21 +89,14 @@ setMethodS3("getCellIndices", "SnpProbeAffinityFile", function(this, ..., unlist
   # Unlist?
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (unlist) {
-    cells <- unlist(cells, use.names=FALSE);
+    cells <- unlist(cells, use.names=FALSE)
   }
 
 
-  cells;
+  cells
 }, protected=TRUE) # getCellIndices()
 
 
 setMethodS3("setMergeStrands", "SnpProbeAffinityFile", function(this, status, ...) {
-  this$mergeStrands <- status;
+  this$mergeStrands <- status
 }, protected=TRUE)
-
-
-############################################################################
-# HISTORY:
-# 2006-09-11
-# o Created.
-############################################################################

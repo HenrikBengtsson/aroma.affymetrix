@@ -87,20 +87,20 @@
 
 \examples{\dontrun{
 # The exon-only CDF
-cdf <- AffymetrixCdfFile$byChipType("HuEx-1_0-st-v2");
+cdf <- AffymetrixCdfFile$byChipType("HuEx-1_0-st-v2")
 
 # The NetAffx probeset annotation data file
-csv <- AffymetrixNetAffxCsvFile("HuEx-1_0-st-v2.na24.hg18.probeset.csv", path=getPath(cdf));
+csv <- AffymetrixNetAffxCsvFile("HuEx-1_0-st-v2.na24.hg18.probeset.csv", path=getPath(cdf))
 
 # Create a CDF containing all core probesets:
-cdfT <- createExonByTranscriptCdf(cdf, csv=csv, tags=c("*,HB20110911"));
-print(cdfT);
+cdfT <- createExonByTranscriptCdf(cdf, csv=csv, tags=c("*,HB20110911"))
+print(cdfT)
 
 # Create CDF containing the core probesets with 3 or 4 probes:
 cdfT2 <- createExonByTranscriptCdf(cdf, csv=csv,
             tags=c("*,bySize=3-4,HB20110911"),
-            subsetBy="probeCount", within=c("3", "4"));
-print(cdfT2);
+            subsetBy="probeCount", within=c("3", "4"))
+print(cdfT2)
 }}
 
 \author{

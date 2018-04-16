@@ -84,92 +84,92 @@ setConstructorS3("AllelicCrosstalkCalibration", function(dataSet=NULL, ..., mode
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  extraTags <- NULL;
+  extraTags <- NULL
 
   # Argument 'dataSet':
   if (!is.null(dataSet)) {
-    dataSet <- Arguments$getInstanceOf(dataSet, "AffymetrixCelSet");
+    dataSet <- Arguments$getInstanceOf(dataSet, "AffymetrixCelSet")
 
     # Argument 'model':
-    model <- match.arg(model);
+    model <- match.arg(model)
     if (model == "auto") {
-      chipType <- getChipType(cdf);
+      chipType <- getChipType(cdf)
       if (regexpr("^Mapping[0-9]+K_", chipType) != -1) {
-        model <- "CRMA";
+        model <- "CRMA"
       } else if (regexpr("^GenomeWideSNP_", chipType) != -1) {
-        model <- "CRMAv2";
+        model <- "CRMAv2"
       } else {
-        model <- "CRMAv2";
+        model <- "CRMAv2"
       }
     }
 
     if (model == "CRMA") {
-      alpha <- c(0.1, 0.075, 0.05, 0.03, 0.01);
-      q <- 2;
-      Q <- 98;
-      lambda <- 2;
-      mergeShifts <- TRUE;
-      B <- 1;
-      rescaleBy <- "auto";
-      pairBy <- "CDF";
+      alpha <- c(0.1, 0.075, 0.05, 0.03, 0.01)
+      q <- 2
+      Q <- 98
+      lambda <- 2
+      mergeShifts <- TRUE
+      B <- 1
+      rescaleBy <- "auto"
+      pairBy <- "CDF"
     } else if (model == "CRMAv2") {
-      alpha <- c(0.1, 0.075, 0.05, 0.03, 0.01, 0.0025, 1e-3, 1e-4);
-      q <- 2;
-      Q <- 98;
-      lambda <- 2;
-      mergeShifts <- TRUE;
-      B <- 1;
-      rescaleBy <- "auto";
-      pairBy <- "sequence";
+      alpha <- c(0.1, 0.075, 0.05, 0.03, 0.01, 0.0025, 1e-3, 1e-4)
+      q <- 2
+      Q <- 98
+      lambda <- 2
+      mergeShifts <- TRUE
+      B <- 1
+      rescaleBy <- "auto"
+      pairBy <- "sequence"
     }
 
-    cdf <- getCdf(dataSet);
+    cdf <- getCdf(dataSet)
 
     # Argument 'rescaleBy':
-    rescaleBy <- match.arg(rescaleBy);
+    rescaleBy <- match.arg(rescaleBy)
     if (rescaleBy == "auto") {
       # First, hardwired...
       # Extract the CDF
-      chipType <- getChipType(cdf);
+      chipType <- getChipType(cdf)
       if (regexpr("^Mapping[0-9]+K_", chipType) != -1) {
-        rescaleBy <- "groups";
+        rescaleBy <- "groups"
       } else if (regexpr("^GenomeWideSNP_", chipType) != -1) {
-        rescaleBy <- "all";
+        rescaleBy <- "all"
       } else if (regexpr("^Cyto(genetics|ScanHD)_Array$", chipType) != -1) {
-        rescaleBy <- "all";
+        rescaleBy <- "all"
       } else if (regexpr("^MOUSEDIVm520650$", chipType) != -1) {
-        rescaleBy <- "all";
+        rescaleBy <- "all"
       } else {
         # Heuristics so that we can work with "future/unknown" chip types.
-        types <- getUnitTypes(cdf);
+        types <- getUnitTypes(cdf)
         # 5 == Copy Number
-        hasCns <- is.element(5, types);
+        hasCns <- is.element(5, types)
         # Not needed anymore
-        types <- NULL;
+        types <- NULL
 
         if (hasCns) {
-          rescaleBy <- "all";
+          rescaleBy <- "all"
         } else {
-          rescaleBy <- "groups";
+          rescaleBy <- "groups"
         }
       }
     }
 
     if (rescaleBy == "all") {
-      targetAvg <- targetAvg[1];
+      targetAvg <- targetAvg[1]
       extraTags <- c(extraTags, rescaleBy="ra");  # rescale all together
     } else if (rescaleBy == "groups") {
       # For backward compatibility, no extra tag (at the moment) /2007-12-01
-      extraTags <- c(extraTags);
+      extraTags <- c(extraTags)
     } else if (rescaleBy == "none") {
       extraTags <- c(extraTags, rescaleBy="rn");  # rescale nothing
     }
 
     # Argument 'targetAvg':
     if (!is.null(targetAvg)) {
-      targetAvg <- Arguments$getDoubles(targetAvg, range=c(0, Inf));
+      targetAvg <- Arguments$getDoubles(targetAvg, range=c(0, Inf))
       if (!length(targetAvg) %in% 1:2) {
-        throw("Argument 'targetAvg' must be of length one or two: ", length(targetAvg));
+        throw("Argument 'targetAvg' must be of length one or two: ", length(targetAvg))
       }
     }
 
@@ -178,41 +178,41 @@ setConstructorS3("AllelicCrosstalkCalibration", function(dataSet=NULL, ..., mode
     } else if (is.character(subsetToAvg)) {
       if (subsetToAvg %in% c("-X", "-Y", "-XY")) {
       } else {
-        throw("Unknown value of argument 'subsetToAvg': ", subsetToAvg);
+        throw("Unknown value of argument 'subsetToAvg': ", subsetToAvg)
       }
-      extraTags <- c(extraTags, subsetToAvg=subsetToAvg);
+      extraTags <- c(extraTags, subsetToAvg=subsetToAvg)
     } else {
-      subsetToAvg <- Arguments$getIndices(subsetToAvg, max=nbrOfCells(cdf));
-      subsetToAvg <- unique(subsetToAvg);
-      subsetToAvg <- sort(subsetToAvg);
+      subsetToAvg <- Arguments$getIndices(subsetToAvg, max=nbrOfCells(cdf))
+      subsetToAvg <- unique(subsetToAvg)
+      subsetToAvg <- sort(subsetToAvg)
     }
   }
 
   # Argument 'mergeShifts':
-  mergeShifts <- Arguments$getLogical(mergeShifts);
+  mergeShifts <- Arguments$getLogical(mergeShifts)
 
   # Argument 'B':
-  B <- Arguments$getInteger(B, range=c(0,3));
+  B <- Arguments$getInteger(B, range=c(0,3))
   if (B > 1) {
     if (B %% 2 != 1) {
-      throw("Argument 'B' must be zero or and odd integer: ", B);
+      throw("Argument 'B' must be zero or and odd integer: ", B)
     }
   }
 
   # Argument 'flavor':
-  flavor <- match.arg(flavor);
+  flavor <- match.arg(flavor)
 
   # Argument 'pairBy':
-  pairBy <- match.arg(pairBy);
+  pairBy <- match.arg(pairBy)
 
   # Argument 'alpha':
-  alpha <- Arguments$getDoubles(alpha, range=c(0,1));
+  alpha <- Arguments$getDoubles(alpha, range=c(0,1))
 
   if (flavor == "sfit") {
-    algorithmParameters <- list(alpha=alpha, q=q, Q=Q);
+    algorithmParameters <- list(alpha=alpha, q=q, Q=Q)
   } else if (flavor == "expectile") {
-    alpha <- alpha[length(alpha)];
-    algorithmParameters <- list(alpha=alpha, lambda=lambda);
+    alpha <- alpha[length(alpha)]
+    algorithmParameters <- list(alpha=alpha, lambda=lambda)
   }
 
 
@@ -233,31 +233,31 @@ setConstructorS3("AllelicCrosstalkCalibration", function(dataSet=NULL, ..., mode
 
 
 setMethodS3("getAsteriskTags", "AllelicCrosstalkCalibration", function(this, collapse=NULL, ...) {
-  tags <- NextMethod("getAsteriskTags", collapse=NULL);
+  tags <- NextMethod("getAsteriskTags", collapse=NULL)
 
   # shift tag?
   if (!this$.mergeShifts) {
-    tags <- c(tags, "byShift");
+    tags <- c(tags, "byShift")
   }
   # flavor tag
-  flavor <- this$.flavor;
+  flavor <- this$.flavor
   if (flavor != "sfit") {
-    tags <- c(tags, flavor);
+    tags <- c(tags, flavor)
   }
 
   # B tag?
-  B <- as.integer(this$.B);
+  B <- as.integer(this$.B)
   if (B != 1) {
-    tags <- c(tags, sprintf("B=%d", B));
+    tags <- c(tags, sprintf("B=%d", B))
   }
 
   # Extra tags?
-  tags <- c(tags, this$.extraTags);
+  tags <- c(tags, this$.extraTags)
 
   # Collapse?
-  tags <- paste(tags, collapse=collapse);
+  tags <- paste(tags, collapse=collapse)
 
-  tags;
+  tags
 }, protected=TRUE)
 
 
@@ -267,74 +267,74 @@ setMethodS3("getSubsetToAvg", "AllelicCrosstalkCalibration", function(this, ...,
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
+  verbose <- Arguments$getVerbose(verbose)
   if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
+    pushState(verbose)
+    on.exit(popState(verbose))
   }
 
-  subsetToAvg <- this$.subsetToAvg;
+  subsetToAvg <- this$.subsetToAvg
 
   # Expand?
   if (is.character(subsetToAvg)) {
     if (subsetToAvg %in% c("-X", "-Y", "-XY")) {
-      verbose && enter(verbose, "Identify subset of units from genome information");
-      verbose && cat(verbose, "subsetToAvg: ", subsetToAvg);
+      verbose && enter(verbose, "Identify subset of units from genome information")
+      verbose && cat(verbose, "subsetToAvg: ", subsetToAvg)
 
       # Look up in cache
-      subset <- this$.subsetToAvgExpanded;
+      subset <- this$.subsetToAvgExpanded
       if (is.null(subset)) {
-        dataSet <- getInputDataSet(this);
-        cdf <- getCdf(dataSet);
+        dataSet <- getInputDataSet(this)
+        cdf <- getCdf(dataSet)
 
         # Get the genome information (throws an exception if missing)
-        gi <- getGenomeInformation(cdf);
-        verbose && print(verbose, gi);
+        gi <- getGenomeInformation(cdf)
+        verbose && print(verbose, gi)
 
         # Identify units to be excluded
         if (subsetToAvg == "-X") {
-          subset <- getUnitsOnChromosomes(gi, 23, .checkArgs=FALSE);
+          subset <- getUnitsOnChromosomes(gi, 23, .checkArgs=FALSE)
         } else if (subsetToAvg == "-Y") {
-          subset <- getUnitsOnChromosomes(gi, 24, .checkArgs=FALSE);
+          subset <- getUnitsOnChromosomes(gi, 24, .checkArgs=FALSE)
         } else if (subsetToAvg == "-XY") {
-          subset <- getUnitsOnChromosomes(gi, 23:24, .checkArgs=FALSE);
+          subset <- getUnitsOnChromosomes(gi, 23:24, .checkArgs=FALSE)
         }
 
-        verbose && cat(verbose, "Units to exclude: ");
-        verbose && str(verbose, subset);
+        verbose && cat(verbose, "Units to exclude: ")
+        verbose && str(verbose, subset)
 
         # Identify the cell indices for these units
         subset <- getCellIndices(cdf, units=subset,
-                                 useNames=FALSE, unlist=TRUE);
-        verbose && cat(verbose, "Cells to exclude: ");
-        verbose && str(verbose, subset);
+                                 useNames=FALSE, unlist=TRUE)
+        verbose && cat(verbose, "Cells to exclude: ")
+        verbose && str(verbose, subset)
 
         # The cells to keep
-        subset <- setdiff(1:nbrOfCells(cdf), subset);
+        subset <- setdiff(1:nbrOfCells(cdf), subset)
 
-        verbose && cat(verbose, "Cells to include: ");
-        verbose && str(verbose, subset);
+        verbose && cat(verbose, "Cells to include: ")
+        verbose && str(verbose, subset)
 
         # Store
-        this$.subsetToAvgExpanded <- subset;
+        this$.subsetToAvgExpanded <- subset
       }
 
-      subsetToAvg <- subset;
+      subsetToAvg <- subset
       # Not needed anymore
-      subset <- NULL;
+      subset <- NULL
 
-      verbose && exit(verbose);
+      verbose && exit(verbose)
     }
   }
 
-  subsetToAvg;
-}, protected=TRUE);
+  subsetToAvg
+}, protected=TRUE)
 
 
 
 setMethodS3("getParameters", "AllelicCrosstalkCalibration", function(this, expand=TRUE, ...) {
   # Get parameters from super class
-  params <- NextMethod("getParameters", expand=expand);
+  params <- NextMethod("getParameters", expand=expand)
 
   params <- c(params, list(
     rescaleBy = this$.rescaleBy,
@@ -344,14 +344,14 @@ setMethodS3("getParameters", "AllelicCrosstalkCalibration", function(this, expan
     B = this$.B,
     flavor = this$.flavor,
     algorithmParameters = this$.algorithmParameters
-  ));
+  ))
 
   # Expand?
   if (expand) {
-    params$subsetToAvg <- getSubsetToAvg(this);
+    params$subsetToAvg <- getSubsetToAvg(this)
   }
 
-  params;
+  params
 }, protected=TRUE)
 
 
@@ -359,187 +359,187 @@ setMethodS3("getParameters", "AllelicCrosstalkCalibration", function(this, expan
 
 setMethodS3("rescale", "AllelicCrosstalkCalibration", function(this, yAll, params, ...) {
   if (params$rescaleBy == "all") {
-    yAll <- rescaleByAll(this, yAll=yAll, params=params, ...);
+    yAll <- rescaleByAll(this, yAll=yAll, params=params, ...)
   } else if (params$rescaleBy == "groups") {
-    yAll <- rescaleByGroups(this, yAll=yAll, params=params, ...);
+    yAll <- rescaleByGroups(this, yAll=yAll, params=params, ...)
   } else if (params$rescaleBy == "none") {
     # Do nothing.
   }
 
-  yAll;
+  yAll
 }, protected=TRUE)
 
 
 setMethodS3("rescaleByAll", "AllelicCrosstalkCalibration", function(this, yAll, params, ..., verbose=FALSE) {
-  targetAvg <- params$targetAvg;
-  nt <- length(targetAvg);
+  targetAvg <- params$targetAvg
+  nt <- length(targetAvg)
   if (nt != 1) {
-    throw("In order rescale towards a global target average ('rescaleBy' == \"all\"), argument 'targetAvg' must be a scalar: ", paste(targetAvg, collapse=","));
+    throw("In order rescale towards a global target average ('rescaleBy' == \"all\"), argument 'targetAvg' must be a scalar: ", paste(targetAvg, collapse=","))
   }
 
   if (verbose) {
-    enter(verbose, "Rescaling toward target average");
-    printf(verbose, "Rescale by: %s\n", params$rescaleBy);
-    cat(verbose, "Target average: ", targetAvg);
+    enter(verbose, "Rescaling toward target average")
+    printf(verbose, "Rescale by: %s\n", params$rescaleBy)
+    cat(verbose, "Target average: ", targetAvg)
     if (!is.null(params$subsetToAvg)) {
-      cat(verbose, "Using subset of cells for estimate of target average:");
-      src <- attr(params$subsetToAvg, "src");
+      cat(verbose, "Using subset of cells for estimate of target average:")
+      src <- attr(params$subsetToAvg, "src")
       if (is.null(src))
-         src <- params$subsetToAvg;
-      str(verbose, src);
+         src <- params$subsetToAvg
+      str(verbose, src)
     }
-    cat(verbose, "yAll: ");
-    str(verbose, yAll);
+    cat(verbose, "yAll: ")
+    str(verbose, yAll)
   }
 
   # Total number of values
-  n0 <- length(yAll);
+  n0 <- length(yAll)
 
   # Average of *all* values
-  yAvg0 <- median(yAll, na.rm=TRUE);
+  yAvg0 <- median(yAll, na.rm=TRUE)
 
   if (!is.null(params$subsetToAvg)) {
-    y <- yAll[params$subsetToAvg];
-    n <- length(y);
+    y <- yAll[params$subsetToAvg]
+    n <- length(y)
     if (n == 0) {
-      throw("Cannot rescale to target average. There are no cells to average over.");
+      throw("Cannot rescale to target average. There are no cells to average over.")
     }
-    yAvg <- median(y, na.rm=TRUE);
-    verbose && printf(verbose, "yAvg (using %d/%.1f%% summed pairs): %.2f of %.2f (%.1f%%)\n", n, 100*n/n0, yAvg, yAvg0, 100*yAvg/yAvg0);
+    yAvg <- median(y, na.rm=TRUE)
+    verbose && printf(verbose, "yAvg (using %d/%.1f%% summed pairs): %.2f of %.2f (%.1f%%)\n", n, 100*n/n0, yAvg, yAvg0, 100*yAvg/yAvg0)
     # Not needed anymore
-    y <- n <- NULL;
+    y <- n <- NULL
   } else {
-    yAvg <- yAvg0;
-    verbose && printf(verbose, "yAvg (100%%): %.2f\n", yAvg);
+    yAvg <- yAvg0
+    verbose && printf(verbose, "yAvg (100%%): %.2f\n", yAvg)
   }
 
   if (!is.finite(yAvg)) {
-    throw("Cannot rescale to target average. Signal average is non-finite: ", yAvg);
+    throw("Cannot rescale to target average. Signal average is non-finite: ", yAvg)
   }
 
-  b <- targetAvg/yAvg;
-  verbose && printf(verbose, "Scale factor: %.2f\n", b);
-  yAll <- b*yAll;
-  fit <- list(all=list(b=b));
-  verbose && exit(verbose);
+  b <- targetAvg/yAvg
+  verbose && printf(verbose, "Scale factor: %.2f\n", b)
+  yAll <- b*yAll
+  fit <- list(all=list(b=b))
+  verbose && exit(verbose)
 
-  attr(yAll, "fit") <- fit;
+  attr(yAll, "fit") <- fit
 
-  verbose && cat(verbose, "Rescaling parameter estimates:");
-  verbose && str(verbose, fit);
-  verbose && exit(verbose);
+  verbose && cat(verbose, "Rescaling parameter estimates:")
+  verbose && str(verbose, fit)
+  verbose && exit(verbose)
 
-  yAll;
+  yAll
 }, protected=TRUE)
 
 
 setMethodS3("rescaleByGroups", "AllelicCrosstalkCalibration", function(this, yAll, params, setsOfProbes, ..., verbose=FALSE) {
-  basepairs <- names(setsOfProbes$snps);
-  nbrOfPairs <- length(basepairs);
+  basepairs <- names(setsOfProbes$snps)
+  nbrOfPairs <- length(basepairs)
 
   # Infer method?
-  targetAvg <- params$targetAvg;
-  nt <- length(targetAvg);
+  targetAvg <- params$targetAvg
+  nt <- length(targetAvg)
   if (nt == 1) {
-    method <- "sum";
+    method <- "sum"
   } else if (nt == 2) {
-    method <- "allele";
+    method <- "allele"
   } else {
-    throw("In order rescale towards target average, argument 'targetAvg' must be either a scalar or a vector of length two: ", paste(targetAvg, collapse=","));
+    throw("In order rescale towards target average, argument 'targetAvg' must be either a scalar or a vector of length two: ", paste(targetAvg, collapse=","))
   }
 
   if (verbose) {
-    enter(verbose, "Rescaling toward target average");
-    printf(verbose, "Rescale by: %s\n", params$rescaleBy);
-    cat(verbose, "Target average(s): ", paste(targetAvg, collapse=", "));
-    printf(verbose, "Method: %s\n", method);
+    enter(verbose, "Rescaling toward target average")
+    printf(verbose, "Rescale by: %s\n", params$rescaleBy)
+    cat(verbose, "Target average(s): ", paste(targetAvg, collapse=", "))
+    printf(verbose, "Method: %s\n", method)
     if (!is.null(params$subsetToAvg)) {
-      cat(verbose, "Using subset of cells for estimate of target average:");
-      src <- attr(params$subsetToAvg, "src");
+      cat(verbose, "Using subset of cells for estimate of target average:")
+      src <- attr(params$subsetToAvg, "src")
       if (is.null(src))
-         src <- params$subsetToAvg;
-      str(verbose, src);
+         src <- params$subsetToAvg
+      str(verbose, src)
     }
   }
 
 
-  snps <- vector("list", nbrOfPairs);
-  names(snps) <- basepairs;
-  subset <- list(snps=snps, nonSNPs=NULL);
+  snps <- vector("list", nbrOfPairs)
+  names(snps) <- basepairs
+  subset <- list(snps=snps, nonSNPs=NULL)
   # Not needed anymore
-  snps <- NULL;
+  snps <- NULL
   fit <- list(
     dimY = dim(yAll),
     params = params,
     method = method,
     subset = subset
-  );
+  )
   # Not needed anymore
-  subset <- NULL;
+  subset <- NULL
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Rescale based on y = yA+yB
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (method == "sum") {
     for (kk in seq_len(nbrOfPairs)) {
-      name <- basepairs[kk];
-      verbose && enter(verbose, sprintf("Allele-pair group #%d ('%s') of %d", kk, name, nbrOfPairs));
+      name <- basepairs[kk]
+      verbose && enter(verbose, sprintf("Allele-pair group #%d ('%s') of %d", kk, name, nbrOfPairs))
 
       # Get data pairs
-      idxAB <- setsOfProbes$snps[[name]];
-      idxAB <- matrix(idxAB, ncol=2, byrow=FALSE);
+      idxAB <- setsOfProbes$snps[[name]]
+      idxAB <- matrix(idxAB, ncol=2, byrow=FALSE)
 
       # Sum y=yA+yB
-      y <- yAll[idxAB[,1]]+yAll[idxAB[,2]];
-      n <- length(y);
-      n0 <- n;
+      y <- yAll[idxAB[,1]]+yAll[idxAB[,2]]
+      n <- length(y)
+      n0 <- n
 
       # Calculate current average
-      yAvg <- median(y, na.rm=TRUE);
-      yAvg0 <- yAvg;
+      yAvg <- median(y, na.rm=TRUE)
+      yAvg0 <- yAvg
       # Not needed anymore
-      y <- NULL;
+      y <- NULL
 
       if (!is.null(params$subsetToAvg)) {
-        keep <- matrix((idxAB %in% params$subsetToAvg), ncol=2, byrow=FALSE);
-        keep <- (keep[,1] & keep[,2]);
-        idxAB <- idxAB[keep,,drop=FALSE];
+        keep <- matrix((idxAB %in% params$subsetToAvg), ncol=2, byrow=FALSE)
+        keep <- (keep[,1] & keep[,2])
+        idxAB <- idxAB[keep,,drop=FALSE]
         # Not needed anymore
-        keep <- NULL;
+        keep <- NULL
 
         # Sum y=yA+yB
-        y <- yAll[idxAB[,1]]+yAll[idxAB[,2]];
-        n <- length(y);
+        y <- yAll[idxAB[,1]]+yAll[idxAB[,2]]
+        n <- length(y)
 
         if (n == 0) {
-          throw("Cannot rescale to target average. After taking the intersect of the subset of cells to be used, there are no cells left.");
+          throw("Cannot rescale to target average. After taking the intersect of the subset of cells to be used, there are no cells left.")
         }
 
-        yAvg <- median(y, na.rm=TRUE);
+        yAvg <- median(y, na.rm=TRUE)
         # Not needed anymore
-        y <- NULL;
+        y <- NULL
 
-        verbose && printf(verbose, "yAvg (using %d/%.1f%% summed pairs): %.2f of %.2f (%.1f%%)\n", n, 100*n/n0, yAvg, yAvg0, 100*yAvg/yAvg0);
+        verbose && printf(verbose, "yAvg (using %d/%.1f%% summed pairs): %.2f of %.2f (%.1f%%)\n", n, 100*n/n0, yAvg, yAvg0, 100*yAvg/yAvg0)
       } else {
-        verbose && printf(verbose, "yAvg (100%%): %.2f\n", yAvg);
+        verbose && printf(verbose, "yAvg (100%%): %.2f\n", yAvg)
       }
 
       if (!is.finite(yAvg))
-        throw("Cannot rescale to target average. Signal average is non-finite: ", yAvg);
+        throw("Cannot rescale to target average. Signal average is non-finite: ", yAvg)
 
       # Rescale
-      b <- targetAvg/yAvg;
-      verbose && printf(verbose, "scale factor: %.2f\n", b);
+      b <- targetAvg/yAvg
+      verbose && printf(verbose, "scale factor: %.2f\n", b)
 
-      idxAB <- setsOfProbes$snps[[name]];
-      yAll[idxAB] <- b*yAll[idxAB];
+      idxAB <- setsOfProbes$snps[[name]]
+      yAll[idxAB] <- b*yAll[idxAB]
 
       # Not needed anymore
-      idx <- NULL;
+      idx <- NULL
 
-      fit$subset$snps[[name]] <- list(b=b);
+      fit$subset$snps[[name]] <- list(b=b)
 
-      verbose && exit(verbose);
+      verbose && exit(verbose)
     } # for (kk in ...)
   } # if (method == "sum")
 
@@ -548,64 +548,64 @@ setMethodS3("rescaleByGroups", "AllelicCrosstalkCalibration", function(this, yAl
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (method == "allele") {
     for (kk in seq_len(nbrOfPairs)) {
-      name <- basepairs[kk];
-      verbose && enter(verbose, sprintf("Allele-pair group #%d ('%s') of %d", kk, name, nbrOfPairs));
+      name <- basepairs[kk]
+      verbose && enter(verbose, sprintf("Allele-pair group #%d ('%s') of %d", kk, name, nbrOfPairs))
 
       # Get data pairs
-      idxAB <- setsOfProbes$snps[[name]];
-      idxAB <- matrix(idxAB, ncol=2, byrow=FALSE);
+      idxAB <- setsOfProbes$snps[[name]]
+      idxAB <- matrix(idxAB, ncol=2, byrow=FALSE)
 
       # Default scale factors
-      b <- c(1,1);
+      b <- c(1,1)
 
       # For each allele
       for (cc in 1:2) {
-        idx <- idxAB[,cc];
-        y <- yAll[idx];
-        n <- length(y);
-        n0 <- n;
+        idx <- idxAB[,cc]
+        y <- yAll[idx]
+        n <- length(y)
+        n0 <- n
 
         # Calculate current average
-        yAvg <- median(y, na.rm=TRUE);
-        yAvg0 <- yAvg;
+        yAvg <- median(y, na.rm=TRUE)
+        yAvg0 <- yAvg
         # Not needed anymore
-        y <- NULL;
+        y <- NULL
 
         if (!is.null(params$subsetToAvg)) {
-          idx <- idxAB[,cc];
-          idx <- intersect(idx, params$subsetToAvg);
-          y <- yAll[idx];
-          n <- length(y);
+          idx <- idxAB[,cc]
+          idx <- intersect(idx, params$subsetToAvg)
+          y <- yAll[idx]
+          n <- length(y)
 
           if (n == 0) {
-            throw("Cannot rescale to target average. After taking the intersect of the subset of cells to be used, there are no cells left.");
+            throw("Cannot rescale to target average. After taking the intersect of the subset of cells to be used, there are no cells left.")
           }
 
-          yAvg <- median(y, na.rm=TRUE);
+          yAvg <- median(y, na.rm=TRUE)
           # Not needed anymore
-          y <- NULL;
+          y <- NULL
 
-          verbose && printf(verbose, "yAvg (using %d/%.1f%% pairs): %.2f of %.2f (%.1f%%)\n", n, 100*n/n0, yAvg, yAvg0, 100*yAvg/yAvg0);
+          verbose && printf(verbose, "yAvg (using %d/%.1f%% pairs): %.2f of %.2f (%.1f%%)\n", n, 100*n/n0, yAvg, yAvg0, 100*yAvg/yAvg0)
         } else {
-          verbose && printf(verbose, "yAvg (100%%): %.2f\n", yAvg);
+          verbose && printf(verbose, "yAvg (100%%): %.2f\n", yAvg)
         }
 
         if (!is.finite(yAvg))
-          throw("Cannot rescale to target average. Signal average is non-finite: ", yAvg);
+          throw("Cannot rescale to target average. Signal average is non-finite: ", yAvg)
 
         # Rescale
-        b[cc] <- targetAvg[cc]/yAvg;
-        verbose && printf(verbose, "scale factor: %.2f\n", b[cc]);
+        b[cc] <- targetAvg[cc]/yAvg
+        verbose && printf(verbose, "scale factor: %.2f\n", b[cc])
 
-        idx <- idxAB[,cc];
-        yAll[idx] <- b[cc]*yAll[idx];
+        idx <- idxAB[,cc]
+        yAll[idx] <- b[cc]*yAll[idx]
 
         # Not needed anymore
-        idx <- NULL;
+        idx <- NULL
       } # for (cc ...)
 
-      fit$subset$snps[[name]] <- list(b=b);
-      verbose && exit(verbose);
+      fit$subset$snps[[name]] <- list(b=b)
+      verbose && exit(verbose)
     } # for (kk in ...)
   } # if (method == "allelic")
 
@@ -613,21 +613,21 @@ setMethodS3("rescaleByGroups", "AllelicCrosstalkCalibration", function(this, yAl
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Rescaling non-SNP cells
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  verbose && enter(verbose, "Non-SNP cells");
-  idx <- setsOfProbes$nonSNPs;
+  verbose && enter(verbose, "Non-SNP cells")
+  idx <- setsOfProbes$nonSNPs
 
   if (!is.null(params$subsetToAvg)) {
-    idx <- intersect(idx, params$subsetToAvg);
+    idx <- intersect(idx, params$subsetToAvg)
   }
 
-  y <- yAll[idx];
-  n <- length(y);
+  y <- yAll[idx]
+  n <- length(y)
   if (n > 0) {
-    yAvg <- median(y, na.rm=TRUE);
+    yAvg <- median(y, na.rm=TRUE)
     # Not needed anymore
-    y <- NULL;
+    y <- NULL
     if (!is.finite(yAvg))
-      throw("Cannot rescale to target average. Signal average is non-finite: ", yAvg);
+      throw("Cannot rescale to target average. Signal average is non-finite: ", yAvg)
 
     # Rescale (to half of the allele target averages)
     #  AA : P(2A,0B)=0.25
@@ -643,27 +643,27 @@ setMethodS3("rescaleByGroups", "AllelicCrosstalkCalibration", function(this, yAl
     if (method == "allele") {
       #  c = targetAvg[1], d = targetAvg[2]
       #  => (c+d) = sum(targetAvg)
-      targetAvg <- sum(params$targetAvg);
+      targetAvg <- sum(params$targetAvg)
     } else if (method == "sum") {
       #  2c = targetAvg
-      targetAvg <- params$targetAvg;
+      targetAvg <- params$targetAvg
     }
-    b <- targetAvg/yAvg;
-    verbose && printf(verbose, "scale factor: %.2f\n", b);
-    yAll[idx] <- b*yAll[idx];
-    fit$subset$nonSNPs <- list(b=b);
+    b <- targetAvg/yAvg
+    verbose && printf(verbose, "scale factor: %.2f\n", b)
+    yAll[idx] <- b*yAll[idx]
+    fit$subset$nonSNPs <- list(b=b)
   } # if (n > 0)
   # Not needed anymore
-  idx <- NULL;
-  verbose && exit(verbose);
+  idx <- NULL
+  verbose && exit(verbose)
 
-  attr(yAll, "fit") <- fit;
+  attr(yAll, "fit") <- fit
 
-  verbose && cat(verbose, "Rescaling parameter estimates:");
-  verbose && str(verbose, fit);
-  verbose && exit(verbose);
+  verbose && cat(verbose, "Rescaling parameter estimates:")
+  verbose && str(verbose, fit)
+  verbose && exit(verbose)
 
-  yAll;
+  yAll
 }, protected=TRUE)
 
 
@@ -700,65 +700,65 @@ setMethodS3("process", "AllelicCrosstalkCalibration", function(this, ..., force=
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
+  verbose <- Arguments$getVerbose(verbose)
   if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
+    pushState(verbose)
+    on.exit(popState(verbose))
   }
 
 
-  verbose && enter(verbose, "Calibrating data set for allelic cross talk");
+  verbose && enter(verbose, "Calibrating data set for allelic cross talk")
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Already done?
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (!force && isDone(this)) {
-    verbose && cat(verbose, "Already calibrated");
-    verbose && exit(verbose);
-    outputDataSet <- getOutputDataSet(this);
-    return(invisible(outputDataSet));
+    verbose && cat(verbose, "Already calibrated")
+    verbose && exit(verbose)
+    outputDataSet <- getOutputDataSet(this)
+    return(invisible(outputDataSet))
   }
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Setup
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Get input data set
-  ds <- getInputDataSet(this);
+  ds <- getInputDataSet(this)
 
   # Get algorithm parameters
-  params <- getParameters(this);
+  params <- getParameters(this)
 
   # Get (and create) the output path
-  outputPath <- getPath(this);
+  outputPath <- getPath(this)
 
   # Model flavor and parameters
-  flavor <- params$flavor;
-  algorithmParameters <- params$algorithmParameters;
+  flavor <- params$flavor
+  algorithmParameters <- params$algorithmParameters
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # For hooks
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  hookName <- "process.AllelicCrosstalkCalibration";
+  hookName <- "process.AllelicCrosstalkCalibration"
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Precalculate some model fit parameters
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  verbose && enter(verbose, "Compressing model parameter to a short format");
-  paramsShort <- params;
-  paramsShort$subsetToAvg <- NULL;
-#  paramsShort$subsetToAvgIntervals <- seqToIntervals(params$subsetToAvg);
-  verbose && exit(verbose);
+  verbose && enter(verbose, "Compressing model parameter to a short format")
+  paramsShort <- params
+  paramsShort$subsetToAvg <- NULL
+#  paramsShort$subsetToAvgIntervals <- seqToIntervals(params$subsetToAvg)
+  verbose && exit(verbose)
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Calibrate each array
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  cdf <- getCdf(ds);
-  nbrOfArrays <- length(ds);
-  verbose && enter(verbose, "Calibrating ", nbrOfArrays, " arrays");
-  verbose && cat(verbose, "Path: ", outputPath);
+  cdf <- getCdf(ds)
+  nbrOfArrays <- length(ds)
+  verbose && enter(verbose, "Calibrating ", nbrOfArrays, " arrays")
+  verbose && cat(verbose, "Path: ", outputPath)
 
   res <- listenv()
 
@@ -800,7 +800,7 @@ setMethodS3("process", "AllelicCrosstalkCalibration", function(this, ..., force=
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       # Calibrating
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-      ## callHooks(sprintf("%s.onBegin", hookName), df=df, setsOfProbes=setsOfProbes, ...);
+      ## callHooks(sprintf("%s.onBegin", hookName), df=df, setsOfProbes=setsOfProbes, ...)
 
       modelFit <- list(
         paramsShort=paramsShort
@@ -1026,14 +1026,14 @@ setMethodS3("process", "AllelicCrosstalkCalibration", function(this, ..., force=
       ## Create checksum file
       dfCZ <- getChecksumFile(dfC)
 
-      ## callHooks(sprintf("%s.onExit", hookName), df=df, dfC=dfC, ...);
+      ## callHooks(sprintf("%s.onExit", hookName), df=df, dfC=dfC, ...)
 
       dfC
     } ## %<-%
 
-    verbose && exit(verbose);
+    verbose && exit(verbose)
   } # for (kk in seq_len(nbrOfArrays))
-  verbose && exit(verbose);
+  verbose && exit(verbose)
 
   ## Not needed anymore
   ds <- setsOfProbes <- NULL
@@ -1043,16 +1043,16 @@ setMethodS3("process", "AllelicCrosstalkCalibration", function(this, ..., force=
   res <- NULL
 
   ## Garbage collect
-#  clearCache(this);
-  gc <- gc();
-  verbose && print(verbose, gc);
+#  clearCache(this)
+  gc <- gc()
+  verbose && print(verbose, gc)
 
 
-  outputDataSet <- getOutputDataSet(this, force=TRUE);
+  outputDataSet <- getOutputDataSet(this, force=TRUE)
 
-  verbose && exit(verbose);
+  verbose && exit(verbose)
 
-  invisible(outputDataSet);
+  invisible(outputDataSet)
 })
 
 
@@ -1060,147 +1060,147 @@ setMethodS3("process", "AllelicCrosstalkCalibration", function(this, ..., force=
 
 setMethodS3("plotBasepair", "AllelicCrosstalkCalibration", function(this, array, basepairs=NULL, what=c("before", "after"), ..., plotFcn=NULL, xlim=c(-500,65535), ylim=xlim, linesFcn=NULL, lwd=4, lcol="red", scale=1, force=FALSE, verbose=FALSE) {
   linesAllelicCrosstalk <- function(a, B, max=1e5, ...) {
-    bA <- B[1,2]/B[1,1];
-    bB <- B[2,1]/B[2,2];
-    lines(x=a[1]+c(0,1)*max, y=a[2]+c(0,1)*max*bA, ...);
-    lines(x=a[1]+c(0,1)*max*bB, y=a[2]+c(0,1)*max, ...);
+    bA <- B[1,2]/B[1,1]
+    bB <- B[2,1]/B[2,2]
+    lines(x=a[1]+c(0,1)*max, y=a[2]+c(0,1)*max*bA, ...)
+    lines(x=a[1]+c(0,1)*max*bB, y=a[2]+c(0,1)*max, ...)
   } # linesAllelicCrosstalk()
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
+  verbose <- Arguments$getVerbose(verbose)
   if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
+    pushState(verbose)
+    on.exit(popState(verbose))
   }
 
   # Argument 'what':
-  what <- match.arg(what);
+  what <- match.arg(what)
 
   if (what == "before") {
-    cs <- getInputDataSet(this);
+    cs <- getInputDataSet(this)
   } else if (what == "after") {
-    cs <- getOutputDataSet(this);
+    cs <- getOutputDataSet(this)
   }
   if (is.null(cs)) {
-    throw("Requested data set does not exist: ", what);
+    throw("Requested data set does not exist: ", what)
   }
 
   # Argument 'array':
-  array <- Arguments$getIndex(array, max=length(cs));
+  array <- Arguments$getIndex(array, max=length(cs))
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Identify the cell indices for each possible allele basepair.
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  verbose && enter(verbose, "Identifying PM cell indices for each possible allele basepair");
-  setsOfProbes <- getSetsOfProbes(this, verbose=less(verbose, 1));
-  verbose && exit(verbose);
+  verbose && enter(verbose, "Identifying PM cell indices for each possible allele basepair")
+  setsOfProbes <- getSetsOfProbes(this, verbose=less(verbose, 1))
+  verbose && exit(verbose)
 
   # Argument 'basepair':
-  knownBasepairs <- names(setsOfProbes$snps);
+  knownBasepairs <- names(setsOfProbes$snps)
   if (is.null(basepairs)) {
-    basepairs <- knownBasepairs;
+    basepairs <- knownBasepairs
   } else {
     if (!all(basepairs %in% knownBasepairs)) {
-      throw("Argument 'basepairs' refers one or several unknown basepairs: ", paste(basepairs, collapse=", "));
+      throw("Argument 'basepairs' refers one or several unknown basepairs: ", paste(basepairs, collapse=", "))
     }
   }
 
   # Argument 'plotFcn':
   if (is.null(plotFcn)) {
     plotFcn <- function(..., pch=NA, transformation=function(x) x^0.33) {
-      smoothScatter(..., pch=pch, transformation=transformation);
+      smoothScatter(..., pch=pch, transformation=transformation)
     }
   } else if (!is.function(plotFcn)) {
-    throw("Argument 'plotFcn' is not a function: ", mode(plotFcn));
+    throw("Argument 'plotFcn' is not a function: ", mode(plotFcn))
   }
 
 
   # Argument 'linesFcn':
   if (is.null(linesFcn)) {
-    linesFcn <- linesAllelicCrosstalk;
+    linesFcn <- linesAllelicCrosstalk
   } else if (!is.function(linesFcn)) {
-    throw("Argument 'linesFcn' is not a function: ", mode(linesFcn));
+    throw("Argument 'linesFcn' is not a function: ", mode(linesFcn))
   }
 
   # Get the data file
-  cf <- cs[[array]];
-  verbose && print(verbose, cf);
+  cf <- cs[[array]]
+  verbose && print(verbose, cf)
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Load model parameter estimates
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (what == "before") {
-    fullname <- getFullName(cf);
-    filename <- sprintf("%s,fit.RData", fullname);
-    pathname <- Arguments$getWritablePathname(filename, path=getPath(this), ...);
+    fullname <- getFullName(cf)
+    filename <- sprintf("%s,fit.RData", fullname)
+    pathname <- Arguments$getWritablePathname(filename, path=getPath(this), ...)
     if (!isFile(pathname)) {
-      throw("File containing parameter estimates not found: ", pathname);
+      throw("File containing parameter estimates not found: ", pathname)
     }
 
-    modelFit <- loadObject(pathname);
-    missing <- basepairs[!(basepairs %in% names(modelFit$accFits))];
+    modelFit <- loadObject(pathname)
+    missing <- basepairs[!(basepairs %in% names(modelFit$accFits))]
     if (length(missing) > 0) {
       throw("Loaded model fit does not contain estimates for some basepairs: ",
-                                                paste(missing, collapse=", "));
+                                                paste(missing, collapse=", "))
     }
   }
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Reading data
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  verbose && enter(verbose, "Reading all probe intensities");
-  yAll <- getData(cf, fields="intensities", ...)$intensities;
-  yAll <- scale * yAll;
-  verbose && summary(verbose, yAll);
-  verbose && exit(verbose);
+  verbose && enter(verbose, "Reading all probe intensities")
+  yAll <- getData(cf, fields="intensities", ...)$intensities
+  yAll <- scale * yAll
+  verbose && summary(verbose, yAll)
+  verbose && exit(verbose)
 
-  hookName <- "process.AllelicCrosstalkCalibration";
+  hookName <- "process.AllelicCrosstalkCalibration"
 
-  nbrOfPairs <- length(basepairs);
-  verbose && enter(verbose, "Plotting (PMA,PMB) for ", nbrOfPairs, " basepair(s) ", what, " calibration");
+  nbrOfPairs <- length(basepairs)
+  verbose && enter(verbose, "Plotting (PMA,PMB) for ", nbrOfPairs, " basepair(s) ", what, " calibration")
   for (kk in seq_along(basepairs)) {
-    name <- basepairs[kk];
-    verbose && enter(verbose, "Plotting (PMA,PMB) for basepair ", name, " in array ", array, " ('", getName(cf), "')");
+    name <- basepairs[kk]
+    verbose && enter(verbose, "Plotting (PMA,PMB) for basepair ", name, " in array ", array, " ('", getName(cf), "')")
 
-    alleles <- strsplit(name, split="")[[1]];
+    alleles <- strsplit(name, split="")[[1]]
 
     # Extracting data
-    idx <- setsOfProbes$snps[[name]];
-    y <- matrix(yAll[idx], ncol=2, byrow=FALSE);
-    colnames(y) <- alleles;
+    idx <- setsOfProbes$snps[[name]]
+    y <- matrix(yAll[idx], ncol=2, byrow=FALSE)
+    colnames(y) <- alleles
 
     # Exclude data points outside plot area (faster)
-    y[y < xlim[1]-0.1*diff(xlim) | y > xlim[2] + 0.1*diff(xlim)] <- NA;
-    keep <- (!is.na(y[,1]) & !is.na(y[,2]));
-    y <- y[keep,,drop=FALSE];
+    y[y < xlim[1]-0.1*diff(xlim) | y > xlim[2] + 0.1*diff(xlim)] <- NA
+    keep <- (!is.na(y[,1]) & !is.na(y[,2]))
+    y <- y[keep,,drop=FALSE]
     # Not needed anymore
-    keep <- NULL;
+    keep <- NULL
 
-    plotFcn(y, xlim=xlim, ylim=ylim, ...);
+    plotFcn(y, xlim=xlim, ylim=ylim, ...)
 
     if (!is.null(linesFcn)) {
       if (what == "before") {
-        fit <- modelFit$accFits[[name]];
-        verbose && cat(verbose, "Parameter estimates:", level=-20);
-        verbose && str(verbose, fit, level=-20);
+        fit <- modelFit$accFits[[name]]
+        verbose && cat(verbose, "Parameter estimates:", level=-20)
+        verbose && str(verbose, fit, level=-20)
       } else if (what == "after") {
-        fit <- list(origin=c(0,0), W=matrix(c(1,0,0,1), ncol=2, byrow=FALSE));
+        fit <- list(origin=c(0,0), W=matrix(c(1,0,0,1), ncol=2, byrow=FALSE))
       }
 
-      linesFcn(a=fit$origin, B=fit$W, lwd=lwd, col=lcol, ...);
+      linesFcn(a=fit$origin, B=fit$W, lwd=lwd, col=lcol, ...)
     }
 
     # Not needed anymore
     y <- idx <- fit <- NULL; # Not needed anymore
-    gc <- gc();
+    gc <- gc()
 
-    verbose && exit(verbose);
+    verbose && exit(verbose)
   } # for (kk in ...)
-  verbose && exit(verbose);
+  verbose && exit(verbose)
 
 }, protected=TRUE)
 
@@ -1214,165 +1214,41 @@ setMethodS3("getDataPairs", "AllelicCrosstalkCalibration", function(this, array,
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
+  verbose <- Arguments$getVerbose(verbose)
   if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
+    pushState(verbose)
+    on.exit(popState(verbose))
   }
 
   if (is.null(cs)) {
-    cs <- getInputDataSet(this);
+    cs <- getInputDataSet(this)
   }
 
-  verbose && enter(verbose, "Identifying cell indices for each possible allele basepair");
-  setsOfProbes <- getSetsOfProbes(this, verbose=less(verbose, 1));
-  verbose && exit(verbose);
+  verbose && enter(verbose, "Identifying cell indices for each possible allele basepair")
+  setsOfProbes <- getSetsOfProbes(this, verbose=less(verbose, 1))
+  verbose && exit(verbose)
 
-  verbose && enter(verbose, "Reading all probe intensities");
-  cf <- cs[[array]];
-  yAll <- getData(cf, fields="intensities", ...)$intensities;
-  verbose && exit(verbose);
+  verbose && enter(verbose, "Reading all probe intensities")
+  cf <- cs[[array]]
+  yAll <- getData(cf, fields="intensities", ...)$intensities
+  verbose && exit(verbose)
 
-  nbrOfPairs <- length(setsOfProbes$snps);
-  res <- vector("list", nbrOfPairs);
-  names(res) <- names(setsOfProbes$snps);
+  nbrOfPairs <- length(setsOfProbes$snps)
+  res <- vector("list", nbrOfPairs)
+  names(res) <- names(setsOfProbes$snps)
 
-  verbose && enter(verbose, "Extracting data pairs");
+  verbose && enter(verbose, "Extracting data pairs")
   for (kk in seq_len(nbrOfPairs)) {
-    name <- names(setsOfProbes$snps)[kk];
-    basepair <- unlist(strsplit(name, split=""));
-    idx <- setsOfProbes$snps[[name]];
-    y <- matrix(yAll[idx], ncol=2, byrow=FALSE);
-    colnames(y) <- c("A", "B");
-    res[[kk]] <- y;
+    name <- names(setsOfProbes$snps)[kk]
+    basepair <- unlist(strsplit(name, split=""))
+    idx <- setsOfProbes$snps[[name]]
+    y <- matrix(yAll[idx], ncol=2, byrow=FALSE)
+    colnames(y) <- c("A", "B")
+    res[[kk]] <- y
     # Not needed anymore
-    y <- NULL;
+    y <- NULL
   }
-  verbose && exit(verbose);
+  verbose && exit(verbose)
 
-  res;
-}, protected=TRUE);
-
-
-
-############################################################################
-# HISTORY:
-# 2011-11-19
-# o SPEEDUP: Constructor for AllelicCrosstalkCalibration no longer calls
-#   the very slow hasUnitTypes() for AffymetrixCdfFile, but instead only
-#   the much faster getUnitTypes().
-# 2011-03-14
-# o SPEEDUP: Added MOUSEDIVm520650 to the set of predefined chip types
-#   in AllelicCrosstalkCalibration.
-# 2010-05-10
-# o Now the constructor AllelicCrosstalkCalibration() is set to recognize
-#   the Cytogenetics_Array chip type.  This avoids having to scan the CDF
-#   for unit types and check for SNPs, which is slow and not really wanted
-#   for a constructor function.  The allele pairs are inferred from the
-#   CDF (by default).
-# 2010-02-15
-# o MEMORY OPTIMIZATION: Now process() of AllelicCrosstalkCalibration
-#   clears the in-memory cache when finished.
-# 2009-09-04
-# o Now smoothScatter() is loaded via aroma.core.
-# 2008-12-17
-# o process() had a nested for loop with the same iteration variable 'kk'
-#   was used for in the inner and the outer loop.  I was surprised to find
-#   that this worked and is valid in R, cf. help(for).  However, for
-#   readability I've changed it to use to 'kk' and 'pp'.
-# 2008-12-10
-# o BUG FIX: Now process() avoids sets of pairs with too few probe pairs.
-#   This could happen because of the new getSetsOfProbes() working off
-#   the probe sequence files.
-# 2008-11-28
-# o Added argument 'model' for quick specification of default parameter
-#   settings according to the CRMA or CRMA v2 model.
-# o Added argument 'pairBy' to specify how the allele probe pairs are
-#   identified.  Historically we inferred this from the CDF, but it is
-#   safer and more generic to do this from the probe sequences, which then
-#   requires an ACS cell-sequence annotation file.
-# 2008-08-31
-# o BUG FIX: The allele pairs identified was not correct for GWS arrays.
-# o Updated AllelicCrosstalkCalibration to support flavor 'expectile' too.
-# 2008-08-30
-# o Added argument 'mergeShifts=TRUE' and 'B=1'.  Currently B=0 and B=1
-#   is supported.
-# 2008-08-29
-# o Added protected getSetsOfProbes().  By overriding this method, other
-#   sets of probes can be used.  This function might later also recognize
-#   user specified function generating the sets.
-# 2008-08-04
-# o Added support to fit the genotype "cone" using the 'expectile' package
-#   instead of the 'sfit' package. This is controlled by the 'flavor'
-#   argument of the constructor.
-# 2008-07-14
-# o Now explicitly using matrix(..., byrow=FALSE).
-# 2008-05-30
-# o BUG FIX: The constructor of AllelicCrosstalkCalibration used
-#   non-defined variable 'verbose'.
-# 2008-02-21
-# o Now SNPs and CN probes are infered from getUnitTypes(cdf) and no longer
-#   from the unit names.
-# 2008-02-14
-# o Now 'verbose' is passed as a logical argument to fitGenotypeCone().
-# 2007-12-01
-# o MEMORY OPTIMIZATION: Added clearCache() to AllelicCrosstalkCalibration.
-# o BUG FIX: The AllelicCrosstalkCalibration introduced in previous version
-#   was broken for 10K (maybe 100K and 500K as well).
-# o Now 'subsetToAvg' of AllelicCrosstalkCalibration accepts '-XY' (and
-#   '-X' and '-Y') for automatic look up of all units and exclude those
-#   that are on ChrX and ChrY.  Note, '-XY' will work on all chip types,
-#   also older ones for which there are no ChrY units.
-# o The new constructor argument 'rescaleBy' now sets a "subtag", e.g.
-#   'ACC,ra' where the 'ra' indicates that 'rescaleBy=all' was used.
-# 2007-11-27
-# o Added specific getAsteriskTag() for AllelicCrosstalkCalibration.
-# o Added the option to rescale towards a target average of *all* probes.
-# o Now rescale() throws an error if length(params$targetAvg) is not 1 or 2.
-#   This should never happend, but was added just in case.
-# 2007-09-14
-# o BUG FIX: Now the target average of non-SNP probes is half of the target
-#   average of alleles.
-# 2007-09-09
-# o Added alpha version of plotBasepair() to AllelicCrosstalkCalibration.
-# 2007-09-08
-# o Now AllelicCrosstalkCalibration corrects also non-SNP PM cells by
-#   substracting a global offset and rescaling towards target average.
-#   The global offset is calculated as the weighted average of all
-#   allelic offsets.  This is the simplest way to incorporate a calibration
-#   for non-SNP cells.  A more advanced version would be to stratify by
-#   middle nucleotide, and use the corresponding estimates from the SNP
-#   cells, but that would require information about the middle nucleotide
-#   for all cells, which got some overhead.  Hopefully the simpler version
-#   is good enough.
-# 2007-09-05
-# o Now the rescaling can be done either on (yA,yB) separately or on
-#   y=yA+yB.  If targetAvg has two values the former, otherwise the latter.
-# o Now AllelicCrosstalkCalibration recognizes argument 'subsetToAvg'.
-# o Now process() stores the crosstalk settings and estimated parameters
-#   to file. May be useful if one wants to go back and look at the details.
-#   One day we might get around to store this information in the CEL file
-#   headers.
-# o Now process() first fits the crosstalk model for all basepairs, then
-#   backtransform the signals, then optional rescale signals to target
-#   average, then saves the calibrated signals.
-# o SPEED UP: Now getAlleleProbePairs() is only called if data needs to be
-#   calibrated, i.e. if already calibrated it is not loaded.
-# o CLEAN UP: Now the code of calibrateAllelicCrosstalk() is included here.
-# 2007-03-29
-# o Now 'targetAvg' defaults to 2200 so that allele A and allele B signals
-#   are rescaled to be one the same scale.  If so,  it does not make sense
-#   to do background correction afterwards.
-# o Added getParameters().
-# o Added support for arguments 'targetAvg', 'alpha', 'q', and 'Q'.
-# 2006-12-08
-# o Now this class inherits from the ProbePreprocessing class.
-# o Now this pre-processor output results to probeData/.
-# o Renamed from AllelicCrosstalkCalibrator.
-# 2006-11-18
-# o Removed version and subversion tags, and related functions.
-#   Now getTags() returns the tags of the input data set plus any tags
-#   of this instance.
-# 2006-11-02
-# o Created from QuantileNormalizer.R.
-############################################################################
+  res
+}, protected=TRUE)

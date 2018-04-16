@@ -33,17 +33,9 @@ setConstructorS3("ProbeLevelTransform", function(...) {
 
 setMethodS3("getRootPath", "ProbeLevelTransform", function(this, ...) {
   # Ad hoc fix: /HB 2007-04-11
-  ds <- getInputDataSet(this);
+  ds <- getInputDataSet(this)
   if (inherits(ds, "ChipEffectSet"))
-    return("plmData");
+    return("plmData")
 
-  "probeData";
+  "probeData"
 }, protected=TRUE)
-
-
-
-############################################################################
-# HISTORY:
-# 2006-12-08
-# o Created.
-############################################################################

@@ -36,15 +36,15 @@ setConstructorS3("ProbeLevelTransform3", function(dataSet=NULL, ..., unitsToFit=
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  extraTags <- NULL;
+  extraTags <- NULL
 
   # Argument 'dataSet':
   if (!is.null(dataSet)) {
-    dataSet <- Arguments$getInstanceOf(dataSet, "AffymetrixCelSet");
+    dataSet <- Arguments$getInstanceOf(dataSet, "AffymetrixCelSet")
 
     # Argument 'typesToUpdate':
     if (!is.null(typesToUpdate)) {
-      typesToUpdate <- match.arg(typesToUpdate, choices=c("pm", "mm", "pmmm"));
+      typesToUpdate <- match.arg(typesToUpdate, choices=c("pm", "mm", "pmmm"))
     }
 
     # Argument 'unitsToUpdate':
@@ -52,20 +52,20 @@ setConstructorS3("ProbeLevelTransform3", function(dataSet=NULL, ..., unitsToFit=
     } else if (is.character(unitsToUpdate)) {
       if (unitsToUpdate %in% c("-X", "-Y", "-XY")) {
       } else {
-        throw("Unknown value of argument 'unitsToUpdate': ", unitsToUpdate);
+        throw("Unknown value of argument 'unitsToUpdate': ", unitsToUpdate)
       }
-      extraTags <- c(extraTags, unitsToUpdate=unitsToUpdate);
+      extraTags <- c(extraTags, unitsToUpdate=unitsToUpdate)
     } else {
-      df <- getOneFile(dataSet);
-      nbrOfCells <- nbrOfCells(df);
-      unitsToUpdate <- Arguments$getIndices(unitsToUpdate, max=nbrOfCells);
-      unitsToUpdate <- unique(unitsToUpdate);
-      unitsToUpdate <- sort(unitsToUpdate);
+      df <- getOneFile(dataSet)
+      nbrOfCells <- nbrOfCells(df)
+      unitsToUpdate <- Arguments$getIndices(unitsToUpdate, max=nbrOfCells)
+      unitsToUpdate <- unique(unitsToUpdate)
+      unitsToUpdate <- sort(unitsToUpdate)
     }
 
     # Argument 'typesToFit':
     if (!is.null(typesToFit)) {
-      typesToFit <- match.arg(typesToFit, choices=c("pm", "mm", "pmmm"));
+      typesToFit <- match.arg(typesToFit, choices=c("pm", "mm", "pmmm"))
     }
 
     # Argument 'unitsToFit':
@@ -73,20 +73,20 @@ setConstructorS3("ProbeLevelTransform3", function(dataSet=NULL, ..., unitsToFit=
     } else if (is.character(unitsToFit)) {
       if (unitsToFit %in% c("-X", "-Y", "-XY")) {
       } else {
-        throw("Unknown value of argument 'unitsToFit': ", unitsToFit);
+        throw("Unknown value of argument 'unitsToFit': ", unitsToFit)
       }
-      extraTags <- c(extraTags, unitsToFit=unitsToFit);
+      extraTags <- c(extraTags, unitsToFit=unitsToFit)
     } else {
-      df <- getOneFile(dataSet);
-      nbrOfCells <- nbrOfCells(df);
-      unitsToFit <- Arguments$getIndices(unitsToFit, max=nbrOfCells);
-      unitsToFit <- unique(unitsToFit);
-      unitsToFit <- sort(unitsToFit);
+      df <- getOneFile(dataSet)
+      nbrOfCells <- nbrOfCells(df)
+      unitsToFit <- Arguments$getIndices(unitsToFit, max=nbrOfCells)
+      unitsToFit <- unique(unitsToFit)
+      unitsToFit <- sort(unitsToFit)
     }
   }
 
   # Argument 'shift':
-  shift <- Arguments$getDouble(shift, disallow=c("NA", "NaN", "Inf"));
+  shift <- Arguments$getDouble(shift, disallow=c("NA", "NaN", "Inf"))
 
 
   extend(ProbeLevelTransform(dataSet=dataSet, ...), "ProbeLevelTransform3",
@@ -103,43 +103,43 @@ setConstructorS3("ProbeLevelTransform3", function(dataSet=NULL, ..., unitsToFit=
 
 
 setMethodS3("getAsteriskTags", "ProbeLevelTransform3", function(this, collapse=NULL, ...) {
-  tags <- NextMethod("getAsteriskTags", collapse=NULL);
+  tags <- NextMethod("getAsteriskTags", collapse=NULL)
 
   # Extra tags?
-  tags <- c(tags, this$.extraTags);
+  tags <- c(tags, this$.extraTags)
 
   # Add class-specific tags
-  shift <- as.integer(round(this$shift));
+  shift <- as.integer(round(this$shift))
   if (shift != 0) {
-    tags <- c(tags, sprintf("%+d", shift));
+    tags <- c(tags, sprintf("%+d", shift))
   }
 
   # Collapse?
-  tags <- paste(tags, collapse=collapse);
+  tags <- paste(tags, collapse=collapse)
 
-  tags;
+  tags
 }, protected=TRUE)
 
 
 
 setMethodS3("getUnitsTo", "ProbeLevelTransform3", function(this, what, ..., force=FALSE) {
-  what <- capitalize(what);
-  idxField <- sprintf(".unitsTo%s", what);
-  units <- this[[idxField]];
-  dataSet <- getInputDataSet(this);
-  cdf <- getCdf(dataSet);
-  units <- getSubsetOfUnits(cdf, units=units, ..., force=force);
-  units;
+  what <- capitalize(what)
+  idxField <- sprintf(".unitsTo%s", what)
+  units <- this[[idxField]]
+  dataSet <- getInputDataSet(this)
+  cdf <- getCdf(dataSet)
+  units <- getSubsetOfUnits(cdf, units=units, ..., force=force)
+  units
 }, protected=TRUE)
 
 
 setMethodS3("getUnitsToFit", "ProbeLevelTransform3", function(this, ...) {
-  getUnitsTo(this, what="fit", ...);
+  getUnitsTo(this, what="fit", ...)
 }, protected=TRUE)
 
 
 setMethodS3("getUnitsToUpdate", "ProbeLevelTransform3", function(this, ...) {
-  getUnitsTo(this, what="update", ...);
+  getUnitsTo(this, what="update", ...)
 }, protected=TRUE)
 
 
@@ -153,42 +153,42 @@ setMethodS3("getCellsToInternal", "ProbeLevelTransform3", function(this, units, 
   if (is.null(units)) {
   } else if (is.numeric(units)) {
   } else {
-    throw("Internal error. Unknown data type for argument 'units': ", mode(units));
+    throw("Internal error. Unknown data type for argument 'units': ", mode(units))
   }
 
   # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
+  verbose <- Arguments$getVerbose(verbose)
   if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
+    pushState(verbose)
+    on.exit(popState(verbose))
   }
 
 
-  verbose && enter(verbose, "Getting cell indices for subset of units");
+  verbose && enter(verbose, "Getting cell indices for subset of units")
 
-  dataSet <- getInputDataSet(this);
-  cdf <- getCdf(dataSet);
-  chipType <- getChipType(cdf);
+  dataSet <- getInputDataSet(this)
+  cdf <- getCdf(dataSet)
+  chipType <- getChipType(cdf)
 
-  verbose && cat(verbose, "Dataset class:");
-  verbose && cat(verbose, class(dataSet)[1]);
-  verbose && cat(verbose, "Chip type: ", chipType);
-  verbose && cat(verbose, "Units:");
-  verbose && str(verbose, units);
+  verbose && cat(verbose, "Dataset class:")
+  verbose && cat(verbose, class(dataSet)[1])
+  verbose && cat(verbose, "Chip type: ", chipType)
+  verbose && cat(verbose, "Units:")
+  verbose && str(verbose, units)
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Treat ChipEffectSet specially
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (inherits(dataSet, "ChipEffectSet")) {
-    verbose && enter(verbose, "Treating ", class(dataSet)[1], " specially");
-    verbose && cat(verbose, "Requested 'units': ");
-    verbose && str(verbose, units);
-    stratifyBy <- NULL;
-    extractKey <- list(class(dataSet)[1], params=getParameters(dataSet));
-    verbose && exit(verbose);
+    verbose && enter(verbose, "Treating ", class(dataSet)[1], " specially")
+    verbose && cat(verbose, "Requested 'units': ")
+    verbose && str(verbose, units)
+    stratifyBy <- NULL
+    extractKey <- list(class(dataSet)[1], params=getParameters(dataSet))
+    verbose && exit(verbose)
   } else {
-    extractKey <- NULL;
+    extractKey <- NULL
   }
 
 
@@ -198,13 +198,13 @@ setMethodS3("getCellsToInternal", "ProbeLevelTransform3", function(this, units, 
   key <- list(method="getCellsToInternal", class=class(this)[1],
     chipType=chipType, units=units, stratifyBy=stratifyBy,
     extractKey=extractKey
-  );
-  dirs <- c("aroma.affymetrix", chipType);
-  res <- loadCache(key=key, dirs=dirs);
+  )
+  dirs <- c("aroma.affymetrix", chipType)
+  res <- loadCache(key=key, dirs=dirs)
   if (!force && !is.null(res)) {
-    verbose && cat(verbose, "Found cached results!");
-    verbose && exit(verbose);
-    return(res);
+    verbose && cat(verbose, "Found cached results!")
+    verbose && exit(verbose)
+    return(res)
   }
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -212,14 +212,14 @@ setMethodS3("getCellsToInternal", "ProbeLevelTransform3", function(this, units, 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Get the subset of cells according to the CDF
   cells <- getSubsetOfCellIndices(cdf, units=units, stratifyBy=stratifyBy,
-                                                 verbose=less(verbose, 5));
-  verbose && cat(verbose, "Cells: ");
-  verbose && str(verbose, cells);
+                                                 verbose=less(verbose, 5))
+  verbose && cat(verbose, "Cells: ")
+  verbose && str(verbose, cells)
 
 
-  verbose && cat(verbose, "Identified cells:");
-  verbose && str(verbose, cells);
-  verbose && exit(verbose);
+  verbose && cat(verbose, "Identified cells:")
+  verbose && str(verbose, cells)
+  verbose && exit(verbose)
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -233,26 +233,26 @@ setMethodS3("getCellsToInternal", "ProbeLevelTransform3", function(this, units, 
   # whole restructuring to the CDF with a more intuitive API.
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (inherits(dataSet, "ChipEffectSet")) {
-    df <- getOneFile(dataSet);
+    df <- getOneFile(dataSet)
 
     # Cannot use 'unlist=TRUE' next, because restructuring might occur.
-    possibleCells <- getCellIndices(df, verbose=less(verbose));
-    possibleCells <- unlist(possibleCells, use.names=FALSE);
-    possibleCells <- sort(possibleCells);
-    verbose && cat(verbose, "Cells used by this ", class(df)[1], ":");
-    verbose && str(verbose, possibleCells);
+    possibleCells <- getCellIndices(df, verbose=less(verbose))
+    possibleCells <- unlist(possibleCells, use.names=FALSE)
+    possibleCells <- sort(possibleCells)
+    verbose && cat(verbose, "Cells used by this ", class(df)[1], ":")
+    verbose && str(verbose, possibleCells)
 
     # Take the intersection
     if (is.null(cells)) {
-      cells <- possibleCells;
+      cells <- possibleCells
     } else {
-      cells <- intersect(cells, possibleCells);
+      cells <- intersect(cells, possibleCells)
     }
     # Not needed anymore
-    possibleCells <- NULL;
+    possibleCells <- NULL
 
-    verbose && cat(verbose, "Cells: ");
-    verbose && str(verbose, cells);
+    verbose && cat(verbose, "Cells: ")
+    verbose && str(verbose, cells)
   }
 
 
@@ -260,46 +260,46 @@ setMethodS3("getCellsToInternal", "ProbeLevelTransform3", function(this, units, 
   # Cache results
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (cache)
-    saveCache(cells, key=key, dirs=dirs);
+    saveCache(cells, key=key, dirs=dirs)
 
-  cells;
+  cells
 }, private=TRUE)
 
 
 
 
 setMethodS3("getCellsTo", "ProbeLevelTransform3", function(this, what, ..., force=FALSE) {
-  what <- capitalize(what);
-  idxField <- sprintf(".cellsTo%s", what);
+  what <- capitalize(what)
+  idxField <- sprintf(".cellsTo%s", what)
 
   # Check for cached results
-  cells <- this[[idxField]];
+  cells <- this[[idxField]]
   if (!force && !is.null(cells))
-    return(cells);
+    return(cells)
 
   # Get the units
-  units <- getUnitsTo(this, what=what, ..., force=force);
+  units <- getUnitsTo(this, what=what, ..., force=force)
 
   # Construct subset
-  typesField <- sprintf(".typesTo%s", what);
-  stratifyBy <- this[[typesField]];
+  typesField <- sprintf(".typesTo%s", what)
+  stratifyBy <- this[[typesField]]
 
-  cells <- getCellsToInternal(this, units=units, stratifyBy=stratifyBy, ..., force=force);
+  cells <- getCellsToInternal(this, units=units, stratifyBy=stratifyBy, ..., force=force)
 
   # Cache results
-  this[[idxField]] <- cells;
+  this[[idxField]] <- cells
 
-  cells;
+  cells
 }, protected=TRUE)
 
 
 setMethodS3("getCellsToFit", "ProbeLevelTransform3", function(this, ...) {
-  getCellsTo(this, what="fit", ...);
+  getCellsTo(this, what="fit", ...)
 }, protected=TRUE)
 
 
 setMethodS3("getCellsToUpdate", "ProbeLevelTransform3", function(this, ...) {
-  getCellsTo(this, what="update", ...);
+  getCellsTo(this, what="update", ...)
 }, protected=TRUE)
 
 
@@ -311,16 +311,16 @@ setMethodS3("getParameters", "ProbeLevelTransform3", function(this, expand=TRUE,
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
+  verbose <- Arguments$getVerbose(verbose)
   if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
+    pushState(verbose)
+    on.exit(popState(verbose))
   }
 
-  verbose && enter(verbose, "Getting algorithm parameters");
+  verbose && enter(verbose, "Getting algorithm parameters")
 
   # Get parameters from super class
-  params <- NextMethod("getParameters", expand=expand);
+  params <- NextMethod("getParameters", expand=expand)
 
   # Get local parameters
   params2 <- list(
@@ -329,25 +329,25 @@ setMethodS3("getParameters", "ProbeLevelTransform3", function(this, expand=TRUE,
     unitsToUpdate = this$.unitsToUpdate,
     typesToUpdate = this$.typesToUpdate,
     shift = this$shift
-  );
+  )
 
   # Expand to unit and cell indices?
   if (expand) {
-    verbose && enter(verbose, "Expanding unit indices");
-    params2$unitsToFit <- getUnitsToFit(this, verbose=verbose);
-    params2$unitsToUpdate <- getUnitsToUpdate(this, verbose=verbose);
-    verbose && exit(verbose);
-    verbose && enter(verbose, "Expanding cell indices");
-    params2$cellsToFit <- getCellsToFit(this, verbose=verbose);
-    params2$cellsToUpdate <- getCellsToUpdate(this, verbose=verbose);
-    verbose && exit(verbose);
+    verbose && enter(verbose, "Expanding unit indices")
+    params2$unitsToFit <- getUnitsToFit(this, verbose=verbose)
+    params2$unitsToUpdate <- getUnitsToUpdate(this, verbose=verbose)
+    verbose && exit(verbose)
+    verbose && enter(verbose, "Expanding cell indices")
+    params2$cellsToFit <- getCellsToFit(this, verbose=verbose)
+    params2$cellsToUpdate <- getCellsToUpdate(this, verbose=verbose)
+    verbose && exit(verbose)
   }
 
-  params <- c(params, params2);
+  params <- c(params, params2)
 
-  verbose && exit(verbose);
+  verbose && exit(verbose)
 
-  params;
+  params
 }, protected=TRUE)
 
 
@@ -357,7 +357,7 @@ setMethodS3("writeSignals", "ProbeLevelTransform3", function(this, pathname, cel
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'templateFile':
-  templateFile <- Arguments$getInstanceOf(templateFile, "AffymetrixCelFile");
+  templateFile <- Arguments$getInstanceOf(templateFile, "AffymetrixCelFile")
 
   # Argument 'cells':
   if (is.null(cells)) {
@@ -366,51 +366,37 @@ setMethodS3("writeSignals", "ProbeLevelTransform3", function(this, pathname, cel
   }
 
   # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
+  verbose <- Arguments$getVerbose(verbose)
   if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
+    pushState(verbose)
+    on.exit(popState(verbose))
   }
 
 
-  verbose && enter(verbose, "Writing probe signals");
-  verbose && cat(verbose, "Output pathname: ", pathname);
-  verbose && cat(verbose, "Cells:");
-  verbose && str(verbose, cells);
-  verbose && cat(verbose, "Arguments:");
-  verbose && str(verbose, list(...));
+  verbose && enter(verbose, "Writing probe signals")
+  verbose && cat(verbose, "Output pathname: ", pathname)
+  verbose && cat(verbose, "Cells:")
+  verbose && str(verbose, cells)
+  verbose && cat(verbose, "Arguments:")
+  verbose && str(verbose, list(...))
 
   # Create CEL file to store results, if missing
-  verbose && enter(verbose, "Creating CEL file for results, if missing");
+  verbose && enter(verbose, "Creating CEL file for results, if missing")
 
   # Write to a temporary file
-  pathnameT <- pushTemporaryFile(pathname, isFile=FALSE, verbose=verbose);
+  pathnameT <- pushTemporaryFile(pathname, isFile=FALSE, verbose=verbose)
 
-  createFrom(templateFile, filename=pathnameT, path=NULL, verbose=verbose);
-  verbose && exit(verbose);
+  createFrom(templateFile, filename=pathnameT, path=NULL, verbose=verbose)
+  verbose && exit(verbose)
 
-  verbose && enter(verbose, "Storing normalized signals");
-  .updateCel(pathnameT, indices=cells, ...);
-  verbose && exit(verbose);
+  verbose && enter(verbose, "Storing normalized signals")
+  .updateCel(pathnameT, indices=cells, ...)
+  verbose && exit(verbose)
 
   # Rename temporary file
-  popTemporaryFile(pathnameT, verbose=verbose);
+  popTemporaryFile(pathnameT, verbose=verbose)
 
-  verbose && exit(verbose);
+  verbose && exit(verbose)
 
-  invisible(pathname);
+  invisible(pathname)
 }, protected=TRUE)
-
-
-
-############################################################################
-# HISTORY:
-# 2008-07-25
-# o Added protected writeSignals(), which write signals to a CEL file,
-#   which is created from a template CEL file, if missing.  This method
-#   cen then later be designed to be atomic.
-# o Now getSubsetTo() also handles ChipEffectSet, which might use
-#   so called "restructors".
-# 2008-07-20
-# o Extracted from BaseCountNormalization.R.
-############################################################################

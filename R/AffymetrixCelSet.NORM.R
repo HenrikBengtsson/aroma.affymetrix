@@ -48,50 +48,50 @@ setMethodS3("normalizeQuantile", "AffymetrixCelSet", function(this, path=NULL, n
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  cdf <- getCdf(this);
+  cdf <- getCdf(this)
 
   # Argument 'path':
   if (is.null(path)) {
     # Path structure: /normQuantile/<data set name>/chip_data/<chip type>/
-    path <- file.path(name, getName(this), "chip_data", getChipType(cdf));
+    path <- file.path(name, getName(this), "chip_data", getChipType(cdf))
   }
   if (!is.null(path)) {
     # Verify this path (and create if missing)
-    path <- Arguments$getWritablePath(path);
+    path <- Arguments$getWritablePath(path)
   }
 
   if (identical(getPath(this), path)) {
-    throw("Cannot calibrate data file. Argument 'path' refers to the same path as the path of the data file to be calibrated: ", path);
+    throw("Cannot calibrate data file. Argument 'path' refers to the same path as the path of the data file to be calibrated: ", path)
   }
 
   # Argument 'xTarget':
   if (is.null(xTarget)) {
-    throw("DEPRECATED: normalizeQuantile() must no longer be called with xTarget=NULL.");
+    throw("DEPRECATED: normalizeQuantile() must no longer be called with xTarget=NULL.")
   }
 
   # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
+  verbose <- Arguments$getVerbose(verbose)
   if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
+    pushState(verbose)
+    on.exit(popState(verbose))
   }
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Identify the subset of probes to be updated
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  verbose && enter(verbose, "Identifying the probes to be updated");
+  verbose && enter(verbose, "Identifying the probes to be updated")
   subsetToUpdate <- identifyCells(cdf, indices=subsetToUpdate,
-                                                     types=typesToUpdate);
-  verbose && exit(verbose);
+                                                     types=typesToUpdate)
+  verbose && exit(verbose)
 
-  verbose && cat(verbose, "Normalizing ", length(subsetToUpdate), " probes");
+  verbose && cat(verbose, "Normalizing ", length(subsetToUpdate), " probes")
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Normalize each array
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   nbrOfArrays <- length(this)
-  verbose && enter(verbose, "Normalizing ", nbrOfArrays, " arrays");
+  verbose && enter(verbose, "Normalizing ", nbrOfArrays, " arrays")
 
   dataFiles <- listenv()
 
@@ -180,109 +180,109 @@ setMethodS3("averageQuantile", "AffymetrixCelSet", function(this, probes=NULL, e
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  cdf <- getCdf(this);
+  cdf <- getCdf(this)
 
   # Argument 'probes':
   probes <- identifyCells(cdf, indices=probes);  # TODO!
   # "TODO" since when? ;) /HB 2007-04-11
 
   # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
+  verbose <- Arguments$getVerbose(verbose)
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Setup
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Arrays of interest
-  arrays <- getNames(this);
-  nbrOfChannels <- length(arrays);
+  arrays <- getNames(this)
+  nbrOfChannels <- length(arrays)
 
   if (is.null(probes)) {
-    nbrOfObservations <- nbrOfCells(this);
+    nbrOfObservations <- nbrOfCells(this)
   } else {
-    nbrOfObservations <- length(probes);
+    nbrOfObservations <- length(probes)
   }
 
   # Construct the sample quantiles
-  quantiles <- (0:(nbrOfObservations-1))/(nbrOfObservations-1);
+  quantiles <- (0:(nbrOfObservations-1))/(nbrOfObservations-1)
 
   # Create a vector to hold the target distribution
-  xTarget <- vector("double", length=nbrOfObservations);
+  xTarget <- vector("double", length=nbrOfObservations)
 
-  verbose && enter(verbose, "Calculating the average empircal distribution across ", nbrOfChannels, " arrays");
+  verbose && enter(verbose, "Calculating the average empircal distribution across ", nbrOfChannels, " arrays")
 
   verbose && printf(verbose, "Number of probes: %d (%.1f%%)\n",
-                   nbrOfObservations, 100*nbrOfObservations/nbrOfCells(cdf));
+                   nbrOfObservations, 100*nbrOfObservations/nbrOfCells(cdf))
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Get the sample quantile for all channels (columns)
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   for (cc in 1:nbrOfChannels) {
-    verbose && enter(verbose, "Array #", cc);
+    verbose && enter(verbose, "Array #", cc)
 
-    verbose && printf(verbose, "reading...\n");
-    df <- this[[cc]];
-    Xcc <- getData(df, indices=probes, fields="intensities", ..., verbose=less(verbose, 2));
-    Xcc <- as.vector(Xcc$intensities);
-#    verbose && str(verbose, Xcc);
+    verbose && printf(verbose, "reading...\n")
+    df <- this[[cc]]
+    Xcc <- getData(df, indices=probes, fields="intensities", ..., verbose=less(verbose, 2))
+    Xcc <- as.vector(Xcc$intensities)
+#    verbose && str(verbose, Xcc)
 
     # Exclude cells?
     if (!is.null(excludeCells))
-      Xcc[excludeCells] <- NA;
+      Xcc[excludeCells] <- NA
 
     # Garbage collect
-    gc();
+    gc()
 
     # Order and sort the values
-    verbose && printf(verbose, "sorting...\n");
-    Scc <- sort(Xcc);
-#    verbose && str(verbose, Scc);
+    verbose && printf(verbose, "sorting...\n")
+    Scc <- sort(Xcc)
+#    verbose && str(verbose, Scc)
 
     # Garbage collect
-    gc();
+    gc()
 
     # The number of non-NA observations
-    nobs <- length(Scc);
+    nobs <- length(Scc)
 
     # Has NAs?
-    nbrOfNAs <- (nbrOfObservations - nobs);
+    nbrOfNAs <- (nbrOfObservations - nobs)
     if(nbrOfNAs > 0) {
       verbose && printf(verbose, "Detected %d NAs (%.2f%%),\n",
-                           nbrOfNAs, 100*nbrOfNAs/nbrOfObservations);
+                           nbrOfNAs, 100*nbrOfNAs/nbrOfObservations)
       tt <- !is.na(Xcc);  # TODO?!? /HB 2006-07-22
       # Not needed anymore
-      Xcc <- tt <- NULL;
+      Xcc <- tt <- NULL
 
       # Get the sample quantiles for those values
-      bins <- (0:(nobs-1))/(nobs-1);
+      bins <- (0:(nobs-1))/(nobs-1)
 
       # Interpolate to get the values at positions specified by
       # 'quantile' using data points given by 'bins' and 'Scc'.
-      Scc <- approx(x=bins, y=Scc, xout=quantiles, ties="ordered")$y;
+      Scc <- approx(x=bins, y=Scc, xout=quantiles, ties="ordered")$y
       # Not needed anymore
-      bins <- NULL;
+      bins <- NULL
     } else {
       # Not needed anymore
-      Xcc <- NULL;
+      Xcc <- NULL
     }
 
     # Incremental mean
-    verbose && printf(verbose, "summing...\n");
-    xTarget <- xTarget + Scc;
+    verbose && printf(verbose, "summing...\n")
+    xTarget <- xTarget + Scc
     # Not needed anymore
-    Scc <- NULL;
+    Scc <- NULL
 
     # Garbage collect
-    gc();
+    gc()
 
-    verbose && exit(verbose);
+    verbose && exit(verbose)
   }
 
-  xTarget <- xTarget/nbrOfChannels;
+  xTarget <- xTarget/nbrOfChannels
 
-  verbose && exit(verbose);
+  verbose && exit(verbose)
 
-  xTarget;
+  xTarget
 }, protected=TRUE) # averageQuantile()
 
 
@@ -294,68 +294,45 @@ setMethodS3("transformAffine", "AffymetrixCelSet", function(this, outPath=file.p
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'outPath':
-  outPath <- Arguments$getReadablePathname(outPath, mustExist=FALSE);
+  outPath <- Arguments$getReadablePathname(outPath, mustExist=FALSE)
 
   # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
+  verbose <- Arguments$getVerbose(verbose)
 
   # Argument 'offset':
-  offset <- Arguments$getDouble(offset);
+  offset <- Arguments$getDouble(offset)
 
   # Argument 'scale':
-  scale <- Arguments$getDouble(scale, range=c(0,Inf));
+  scale <- Arguments$getDouble(scale, range=c(0,Inf))
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Identify the subset of probes to be updated
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  verbose && enter(verbose, "Identifying the probes to be updated");
-  cdf <- getCdf(this);
+  verbose && enter(verbose, "Identifying the probes to be updated")
+  cdf <- getCdf(this)
   subsetToUpdate <- identifyCells(cdf, indices=subsetToUpdate,
-                                                     types=typesToUpdate);
-  verbose && exit(verbose);
+                                                     types=typesToUpdate)
+  verbose && exit(verbose)
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Normalize each array
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   verbose && enter(verbose, "Transforming ", length(subsetToUpdate),
-                               " probes on ", length(this), " arrays");
-  dataFiles <- list();
+                               " probes on ", length(this), " arrays")
+  dataFiles <- list()
   for (kk in seq_along(this)) {
-    df <- this[[kk]];
-    verbose && enter(verbose, "Array #", kk, " (", getName(df), ")");
+    df <- this[[kk]]
+    verbose && enter(verbose, "Array #", kk, " (", getName(df), ")")
     dataFiles[[kk]] <- transformAffine(df, outPath=outPath,
                   offset=offset, scale=scale, subsetToUpdate=subsetToUpdate,
-                                                ..., verbose=less(verbose));
-    verbose && exit(verbose);
+                                                ..., verbose=less(verbose))
+    verbose && exit(verbose)
   }
-  verbose && exit(verbose);
+  verbose && exit(verbose)
 
   # CDF inheritance
-  res <- newInstance(this, dataFiles);
-  setCdf(res, cdf);
-  res;
+  res <- newInstance(this, dataFiles)
+  setCdf(res, cdf)
+  res
 }, private=TRUE) # transformAffine()
-
-
-############################################################################
-# HISTORY:
-# 2012-10-21 [HB]
-# o CLEANUP: Dropped unneeded mkdirs(), because they were all preceeded
-#   by an Arguments$getWritablePath().
-# 2007-04-11
-# o Added more verbose output to averageQuantile() in the case when NAs
-#   are detected.  Added some Rdoc comments on how NAs are handles.
-# 2006-09-15
-# o Modified some argument names for normalizeQuantile().
-# 2006-09-14
-# o Recreated from old AffymetrixDataSet.NORM.R.
-# 2006-07-27
-# o Added transformAffine().
-# o BUG FIX: The 'outPath' argument of normalizeQuantile() in the
-#   AffymetrixDataSet class was not recognized.
-# 2006-05-15
-# o Extracted from AffymetrixDataSet.R.
-# 2006-03-18
-# o Added argument 'subset' to calcAvgProbeSignals() & normalizeQuantile().
-############################################################################

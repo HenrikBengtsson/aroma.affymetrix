@@ -33,17 +33,17 @@ setConstructorS3("OpticalBackgroundCorrection", function(..., minimum=1) {
 
 setMethodS3("getParameters", "OpticalBackgroundCorrection", function(this, ...) {
   # Get parameters from super class
-  params <- NextMethod("getParameters");
+  params <- NextMethod("getParameters")
 
   # Get parameters of this class
   params2 <- list(
     minimum = this$.minimum
-  );
+  )
 
   # Append the two sets
-  params <- c(params, params2);
+  params <- c(params, params2)
 
-  params;
+  params
 }, protected=TRUE)
 
 
@@ -175,7 +175,7 @@ setMethodS3("process", "OpticalBackgroundCorrection", function(this, ..., force=
       verbose && enter(verbose, "Writing adjusted probe signals")
 
       # Write to a temporary file (allow rename of existing one if forced)
-      isFile <- (force && isFile(pathname));
+      isFile <- (force && isFile(pathname))
       pathnameT <- pushTemporaryFile(pathname, isFile=isFile, verbose=verbose)
 
       # Create CEL file to store results, if missing
@@ -222,18 +222,3 @@ setMethodS3("process", "OpticalBackgroundCorrection", function(this, ..., force=
 
   outputDataSet
 })
-
-
-
-############################################################################
-# HISTORY:
-# 2012-11-20
-# o CLEANUP: process() for OpticalBackgroundCorrection now processes
-#   each file by itself, i.e. it no longer calls bgAdjustOptical() for
-#   AffymetrixCelSet (which has been removed).
-# 2007-08-24
-# o BUG FIX: Forgot to pass argument '.deprecated=FALSE' to bgAdjustGcrma()
-#   because the latter is deprecated at the user-API level.
-# 2007-03-22
-# o Created.
-############################################################################

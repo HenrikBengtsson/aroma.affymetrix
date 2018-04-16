@@ -30,7 +30,7 @@
 #*/###########################################################################
 setConstructorS3("SnpChipEffectGroupMerge", function(..., mergeStrands=FALSE, mean=c("arithmetic", "geometric")) {
   # Argument 'mean':
-  mean <- match.arg(mean);
+  mean <- match.arg(mean)
 
   extend(ChipEffectGroupMerge(...), "SnpChipEffectGroupMerge",
     mergeStrands = mergeStrands,
@@ -44,76 +44,66 @@ setMethodS3("getMergeFunction", "SnpChipEffectGroupMerge", function(this, ...) {
   # Local functions
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   mergeStrandsMatrix <- function(y, g=function(x) x, h=function(x) x, ...) {
-    n <- nrow(y);
+    n <- nrow(y)
     if (n %in% c(2,4)) {
-      yy <- y[1:2,,drop=FALSE];
-      yy <- g(yy);
-      yy <- colMeans(yy, na.rm=TRUE);
-      yy <- h(yy);
-      y[1,] <- yy;
-      y[2,] <- 0;
+      yy <- y[1:2,,drop=FALSE]
+      yy <- g(yy)
+      yy <- colMeans(yy, na.rm=TRUE)
+      yy <- h(yy)
+      y[1,] <- yy
+      y[2,] <- 0
       if (n == 4) {
-        yy <- y[3:4,,drop=FALSE];
-        yy <- log2(yy);
-        yy <- colMeans(yy, na.rm=TRUE);
-        yy <- 2^yy;
-        y[3,] <- yy;
-        y[4,] <- 0;
+        yy <- y[3:4,,drop=FALSE]
+        yy <- log2(yy)
+        yy <- colMeans(yy, na.rm=TRUE)
+        yy <- 2^yy
+        y[3,] <- yy
+        y[4,] <- 0
       }
     }
-    y;
+    y
   }
 
 
   # Get the merge function
-  mean <- this$.mean;
-  fcn <- NULL;
+  mean <- this$.mean
+  fcn <- NULL
   if (this$mergeStrands) {
     if (mean == "geometric") {
       fcn <- function(y) {
-        mergeStrandsMatrix(y, g=log2, h=function(x) 2^x);
+        mergeStrandsMatrix(y, g=log2, h=function(x) 2^x)
       }
     } else if (mean == "arithmetic") {
       fcn <- function(y) {
-        mergeStrandsMatrix(y);
+        mergeStrandsMatrix(y)
       }
     }
   }
 
-  fcn;
+  fcn
 })
 
 
 setMethodS3("getAsteriskTags", "SnpChipEffectGroupMerge", function(this, ...) {
-  tags <- NULL;
+  tags <- NULL
   if (this$mergeStrands)
-    tags <- c(tags, "F+R");
+    tags <- c(tags, "F+R")
 
-  tags;
+  tags
 }, protected=TRUE)
 
 
 setMethodS3("getParameters", "SnpChipEffectGroupMerge", function(this, ...) {
   # Get parameters from super class
-  params <- NextMethod("getParameters");
+  params <- NextMethod("getParameters")
 
   # Get parameters of this class
   params2 <- list(
     mergeStrands = this$mergeStrands
-  );
+  )
 
   # Append the two sets
-  params <- c(params, params2);
+  params <- c(params, params2)
 
-  params;
+  params
 }, protected=TRUE)
-
-
-############################################################################
-# HISTORY:
-# 2007-06-11
-# o BUG FIX: getMergeFunction() of SnpChipEffectGroupMerge used non-existing
-#   'x...' instead of 'x'.
-# 2007-02-20
-# o Created.
-############################################################################

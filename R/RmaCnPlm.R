@@ -34,23 +34,14 @@ setConstructorS3("RmaCnPlm", function(..., combineAlleles=FALSE) {
 
 setMethodS3("getAsteriskTags", "RmaCnPlm", function(this, collapse=NULL, ...) {
   # Returns 'RMA[,<flavor>][,+-]'
-  tags <- NextMethod("getAsteriskTags", collapse=NULL);
+  tags <- NextMethod("getAsteriskTags", collapse=NULL)
 
   # Add class specific parameter tags
   if (this$combineAlleles)
-    tags <- c(tags, "A+B");
+    tags <- c(tags, "A+B")
 
   # Collapse
-  tags <- paste(tags, collapse=collapse);
+  tags <- paste(tags, collapse=collapse)
 
-  tags;
+  tags
 }, protected=TRUE)
-
-
-############################################################################
-# HISTORY:
-# 2007-12-06
-# o Added getAsteriskTag() for RmaSnpPlm.
-# 2006-09-10
-# o Recreated.
-############################################################################

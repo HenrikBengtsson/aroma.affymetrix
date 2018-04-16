@@ -30,24 +30,14 @@ setConstructorS3("MbeiCnPlm", function(..., combineAlleles=FALSE) {
 
 setMethodS3("getAsteriskTags", "MbeiCnPlm", function(this, collapse=NULL, ...) {
   # Returns 'MBEI[,<flavor>][,+-]'
-  tags <- NextMethod("getAsteriskTags", collapse=NULL);
+  tags <- NextMethod("getAsteriskTags", collapse=NULL)
 
   # Add class specific parameter tags
   if (this$combineAlleles)
-    tags <- c(tags, "A+B");
+    tags <- c(tags, "A+B")
 
   # Collapse
-  tags <- paste(tags, collapse=collapse);
+  tags <- paste(tags, collapse=collapse)
 
-  tags;
+  tags
 }, protected=TRUE)
-
-
-
-############################################################################
-# HISTORY:
-# 2007-12-06
-# o Added getAsteriskTag() for MbeiCnPlm.
-# 2006-09-12
-# o Recreated.
-############################################################################

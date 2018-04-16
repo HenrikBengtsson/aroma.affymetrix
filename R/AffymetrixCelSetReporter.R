@@ -30,16 +30,16 @@ setConstructorS3("AffymetrixCelSetReporter", function(..., .setClass="Affymetrix
 
 setMethodS3("as.character", "AffymetrixCelSetReporter", function(x, ...) {
   # To please R CMD check
-  this <- x;
+  this <- x
 
-  s <- sprintf("%s:", class(this)[1]);
-  s <- c(s, paste("Name:", getName(this)));
-  s <- c(s, paste("Tags:", paste(getTags(this), collapse=",")));
-  s <- c(s, paste("Chip type:", getChipType(this)));
-  s <- c(s, paste("Number of arrays:", length(this)));
-  s <- c(s, sprintf("Path: %s", getPath(this)));
+  s <- sprintf("%s:", class(this)[1])
+  s <- c(s, paste("Name:", getName(this)))
+  s <- c(s, paste("Tags:", paste(getTags(this), collapse=",")))
+  s <- c(s, paste("Chip type:", getChipType(this)))
+  s <- c(s, paste("Number of arrays:", length(this)))
+  s <- c(s, sprintf("Path: %s", getPath(this)))
 
-  GenericSummary(s);
+  GenericSummary(s)
 }, protected=TRUE)
 
 
@@ -69,40 +69,33 @@ setMethodS3("as.character", "AffymetrixCelSetReporter", function(x, ...) {
 # }
 #*/###########################################################################
 setMethodS3("getDataSet", "AffymetrixCelSetReporter", function(this, ...) {
-  getFileSet(this);
+  getFileSet(this)
 })
 
 setMethodS3("nbrOfArrays", "AffymetrixCelSetReporter", function(this, ...) {
-  length(getDataSet(this));
+  length(getDataSet(this))
 }, protected=TRUE)
 
 
 setMethodS3("getChipType", "AffymetrixCelSetReporter", function(this, ...) {
-  cs <- getDataSet(this);
-  cdf <- getCdf(cs);
-  getChipType(cdf, ...);
+  cs <- getDataSet(this)
+  cdf <- getCdf(cs)
+  getChipType(cdf, ...)
 }, protected=TRUE)
 
 
 setMethodS3("getPath", "AffymetrixCelSetReporter", function(this, ...) {
-  mainPath <- getMainPath(this);
+  mainPath <- getMainPath(this)
 
   # Chip type
-  chipType <- getChipType(this);
+  chipType <- getChipType(this)
 
   # Get report set
-  set <- getReportSet(this);
+  set <- getReportSet(this)
 
   # The full path
-  path <- filePath(mainPath, chipType, set);
-  path <- Arguments$getWritablePath(path);
+  path <- filePath(mainPath, chipType, set)
+  path <- Arguments$getWritablePath(path)
 
-  path;
+  path
 }, protected=TRUE)
-
-
-##############################################################################
-# HISTORY:
-# 2007-03-19
-# o Created from ArrayExplorer.R.
-##############################################################################

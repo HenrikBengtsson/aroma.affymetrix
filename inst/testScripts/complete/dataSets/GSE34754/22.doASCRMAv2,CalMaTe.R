@@ -1,6 +1,7 @@
 ##########################################################################
 # Allele-specific CRMAv2
 ##########################################################################
+future::plan("multiprocess")
 library("aroma.affymetrix");
 library("calmate");
 verbose <- Arguments$getVerbose(-8, timestamp=TRUE);

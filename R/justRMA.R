@@ -57,60 +57,49 @@ setMethodS3("justRMA", "AffymetrixCelSet", function(csR, flavor=c("oligo", "affy
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'csR':
-  className <- "AffymetrixCelSet";
+  className <- "AffymetrixCelSet"
   if (!inherits(csR, className)) {
-    throw(sprintf("Argument 'csR' is not a %s: %s", className, class(csR)[1]));
+    throw(sprintf("Argument 'csR' is not a %s: %s", className, class(csR)[1]))
   }
 
   # Argument 'flavor':
-  flavor <- match.arg(flavor);
+  flavor <- match.arg(flavor)
 
   # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
+  verbose <- Arguments$getVerbose(verbose)
 
-  verbose && enter(verbose, "justRMA() via aroma.affymetrix");
+  verbose && enter(verbose, "justRMA() via aroma.affymetrix")
 
   # Run RMA
-  ces <- doRMA(csR, drop=TRUE, flavor=flavor, ..., verbose=verbose);
+  ces <- doRMA(csR, drop=TRUE, flavor=flavor, ..., verbose=verbose)
 
   # Extract estimates
   eset <- extractExpressionSet(ces, orderUnitsBy="lexicographic",
-                               annotationPkg="ChipDb", verbose=verbose);
+                               annotationPkg="ChipDb", verbose=verbose)
 
   # BACKWARD COMPATIBIILTY/AD HOC:
   # Coerce std errors to missing values in case they are all 1.
   se.exprs <- .assayData(eset)$se.exprs
   if (all(se.exprs == 1)) {
-    is.na(se.exprs) <- TRUE;
-    .assayData(eset)$se.exprs <- se.exprs;
+    is.na(se.exprs) <- TRUE
+    .assayData(eset)$se.exprs <- se.exprs
   }
-  se.exprs <- NULL;
+  se.exprs <- NULL
 
   # Set the protocol data; scan dates
-  data <- data.frame(ScanDate=getTimestamps(csR));
-  rownames(data) <- gsub(",chipEffects", "", getFullNames(ces), fixed=TRUE);
-  data <- as(data, "AnnotatedDataFrame");
-  .protocolData(eset) <- data;
-  data <- NULL;
+  data <- data.frame(ScanDate=getTimestamps(csR))
+  rownames(data) <- gsub(",chipEffects", "", getFullNames(ces), fixed=TRUE)
+  data <- as(data, "AnnotatedDataFrame")
+  .protocolData(eset) <- data
+  data <- NULL
 
-  verbose && print(verbose, eset);
-  verbose && exit(verbose);
+  verbose && print(verbose, eset)
+  verbose && exit(verbose)
 
-  eset;
+  eset
 }, protected=TRUE) # justRMA()
 
 
 setMethodS3("justRMA", "default", function(...) {
-  affy::justRMA(...);
+  affy::justRMA(...)
 }, protected=TRUE) # justRMA()
-
-
-
-###########################################################################
-# HISTORY:
-# 2014-04-28
-# o Added default justRMA() which calls the 'affy' implementation.
-# o Added Rdoc comments.
-# 2014-04-27
-# o Added  ...finally!
-###########################################################################

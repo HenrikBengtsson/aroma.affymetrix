@@ -57,12 +57,12 @@ setConstructorS3("SingleArrayUnitModel", function(...) {
 #   @seeclass
 # }
 #*/###########################################################################
-setMethodS3("getFitUnitGroupFunction", "SingleArrayUnitModel", abstract=TRUE, static=TRUE, private=TRUE);
+setMethodS3("getFitUnitGroupFunction", "SingleArrayUnitModel", abstract=TRUE, static=TRUE, private=TRUE)
 
 
 setMethodS3("getFitUnitFunction", "SingleArrayUnitModel", function(this, ...) {
   # Get the fit function for a single set of intensities
-  fitfcn <- getFitUnitGroupFunction(this, ...);
+  fitfcn <- getFitUnitGroupFunction(this, ...)
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Create the one for all blocks in a unit
@@ -72,7 +72,7 @@ setMethodS3("getFitUnitFunction", "SingleArrayUnitModel", function(this, ...) {
       lapply(unit, FUN=function(group) {
         y <- .subset2(group, 1); # Get intensities
         y <- y[1,] - y[2,];  # PM-MM
-        fitfcn(y);
+        fitfcn(y)
       })
     }
   } else if (this$probeModel == "min1(pm-mm)") {
@@ -81,7 +81,7 @@ setMethodS3("getFitUnitFunction", "SingleArrayUnitModel", function(this, ...) {
         y <- .subset2(group, 1); # Get intensities
         y <- y[1,] - y[2,];  # PM-MM
         y[y < 1] <- 1;       # min1(PM-MM)=min(PM-MM,1)
-        fitfcn(y);
+        fitfcn(y)
       })
     }
   } else if (this$probeModel == "pm+mm") {
@@ -89,7 +89,7 @@ setMethodS3("getFitUnitFunction", "SingleArrayUnitModel", function(this, ...) {
       lapply(unit, FUN=function(group) {
         y <- .subset2(group, 1); # Get intensities
         y <- y[1,] + y[2,];  # PM+MM
-        fitfcn(y);
+        fitfcn(y)
       })
     }
   } else {
@@ -98,14 +98,14 @@ setMethodS3("getFitUnitFunction", "SingleArrayUnitModel", function(this, ...) {
         if (length(group) > 0) {
           y <- .subset2(group, 1); # Get intensities
         } else {
-          y <- NULL;
+          y <- NULL
         }
-        fitfcn(y);
+        fitfcn(y)
       })
     }
   }
 
-  fitUnit;
+  fitUnit
 }, private=TRUE)
 
 
@@ -144,53 +144,43 @@ setMethodS3("getFitUnitFunction", "SingleArrayUnitModel", function(this, ...) {
 # @keyword IO
 #*/###########################################################################
 setMethodS3("readUnits", "SingleArrayUnitModel", function(this, array, units=NULL, ..., verbose=FALSE) {
-  ds <- getDataSet(this);
-  nbrOfArrays <- length(ds);
+  ds <- getDataSet(this)
+  nbrOfArrays <- length(ds)
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'array':
-  array <- Arguments$getIndex(array, max=nbrOfArrays);
+  array <- Arguments$getIndex(array, max=nbrOfArrays)
 
   # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
+  verbose <- Arguments$getVerbose(verbose)
   if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
+    pushState(verbose)
+    on.exit(popState(verbose))
   }
 
 
-  verbose && enter(verbose, "Reading probe intensities from array #", array);
-  df <- ds[[array]];
-  verbose && print(verbose, df);
+  verbose && enter(verbose, "Reading probe intensities from array #", array)
+  df <- ds[[array]]
+  verbose && print(verbose, df)
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Get the CDF cell indices
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  verbose && enter(verbose, "Identifying CDF cell indices");
-  cdfUnits <- getCellIndices(this, units=units, ...);
-  verbose && print(verbose, cdfUnits[1]);
-  verbose && exit(verbose);
+  verbose && enter(verbose, "Identifying CDF cell indices")
+  cdfUnits <- getCellIndices(this, units=units, ...)
+  verbose && print(verbose, cdfUnits[1])
+  verbose && exit(verbose)
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Get the CEL intensities by units
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  res <- getUnitIntensities(df, units=cdfUnits, ...);
-  verbose && str(verbose, res[1]);
+  res <- getUnitIntensities(df, units=cdfUnits, ...)
+  verbose && str(verbose, res[1])
 
-  verbose && exit(verbose);
+  verbose && exit(verbose)
 
-  res;
+  res
 }, private=TRUE)
-
-
-
-
-
-############################################################################
-# HISTORY:
-# 2008-09-03
-# o Created from MultiArrayUnitModel.R.
-############################################################################

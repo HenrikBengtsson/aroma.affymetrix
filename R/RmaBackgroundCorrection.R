@@ -46,7 +46,7 @@
 setConstructorS3("RmaBackgroundCorrection", function(..., addJitter=FALSE, jitterSd=0.2, seed=6022007) {
   # Argument 'seed':
   if (!is.null(seed)) {
-    seed <- Arguments$getInteger(seed);
+    seed <- Arguments$getInteger(seed)
   }
 
   extend(BackgroundCorrection(..., typesToUpdate="pm"),
@@ -54,15 +54,15 @@ setConstructorS3("RmaBackgroundCorrection", function(..., addJitter=FALSE, jitte
     .addJitter=addJitter,
     .jitterSd=jitterSd,
     .seed=seed
-  );
+  )
 })
 
 
 setMethodS3("getParameters", "RmaBackgroundCorrection", function(this, ...) {
   # Get parameters from super class
-  params <- NextMethod("getParameters");
+  params <- NextMethod("getParameters")
 
-  pmOnly <- (this$.typesToUpdate == "pm");
+  pmOnly <- (this$.typesToUpdate == "pm")
 
   # Get parameters of this class
   params2 <- list(
@@ -70,12 +70,12 @@ setMethodS3("getParameters", "RmaBackgroundCorrection", function(this, ...) {
     jitterSd = this$.jitterSd,
     seed = this$.seed,
     pmonly = pmOnly
-  );
+  )
 
   # Append the two sets
-  params <- c(params, params2);
+  params <- c(params, params2)
 
-  params;
+  params
 }, protected=TRUE)
 
 
@@ -276,21 +276,3 @@ setMethodS3("process", "RmaBackgroundCorrection", function(this, ..., force=FALS
 
   outputDataSet
 })
-
-
-############################################################################
-# HISTORY:
-# 2015-11-19
-# o CLEANUP: Migrated bgAdjustRma() for AffymetrixCelFile into process().
-# o CLEANUP: Using readRawData() instead of getData().
-# 2012-11-20
-# o CLEANUP: process() for RmaBackgroundCorrection now processes
-#   each file by itself, i.e. it no longer calls bgAdjustRma() for
-#   AffymetrixCelSet (which has been removed).
-# 2007-06-30
-# o Added Rdoc comments about jitter.
-# 2007-05-26
-# o Updated the Rdocs.
-# 2007-03-21
-# o Created.
-############################################################################

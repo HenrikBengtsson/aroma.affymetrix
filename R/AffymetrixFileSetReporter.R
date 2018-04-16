@@ -28,7 +28,7 @@ setConstructorS3("AffymetrixFileSetReporter", function(set=NULL, ..., .setClass=
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'set':
   if (!is.null(set)) {
-    set <- Arguments$getInstanceOf(set, .setClass);
+    set <- Arguments$getInstanceOf(set, .setClass)
   }
 
 
@@ -39,29 +39,16 @@ setConstructorS3("AffymetrixFileSetReporter", function(set=NULL, ..., .setClass=
 
 
 setMethodS3("getFileSet", "AffymetrixFileSetReporter", function(this, ...) {
-  this$.set;
+  this$.set
 }, protected=TRUE)
 
 
 setMethodS3("getInputName", "AffymetrixFileSetReporter", function(this, ...) {
-  set <- getFileSet(this);
-  getName(set);
+  set <- getFileSet(this)
+  getName(set)
 })
 
 setMethodS3("getInputTags", "AffymetrixFileSetReporter", function(this, ...) {
-  set <- getFileSet(this);
-  getTags(set);
+  set <- getFileSet(this)
+  getTags(set)
 })
-
-
-
-##############################################################################
-# HISTORY:
-# 2007-04-12
-# o Now inheriting from the new GenericReporter class.
-# 2007-03-24
-# o BUG FIX: getPath() created the root path before trying to expand
-#   Windows shortcuts.
-# 2007-03-19
-# o Created from Explorer.R.
-##############################################################################

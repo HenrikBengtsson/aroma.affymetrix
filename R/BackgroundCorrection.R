@@ -35,24 +35,24 @@ setConstructorS3("BackgroundCorrection", function(..., subsetToUpdate=NULL, type
 
 
 setMethodS3("getSubsetToUpdate", "BackgroundCorrection", function(this, ...) {
-  this$.subsetToUpdate;
+  this$.subsetToUpdate
 }, private=TRUE)
 
 
 setMethodS3("getParameters", "BackgroundCorrection", function(this, ...) {
   # Get parameters from super class
-  params <- NextMethod("getParameters");
+  params <- NextMethod("getParameters")
 
   # Get parameters of this class
   params2 <- list(
     subsetToUpdate = this$.subsetToUpdate,
     typesToUpdate = this$.typesToUpdate
-  );
+  )
 
   # Append the two sets
-  params <- c(params, params2);
+  params <- c(params, params2)
 
-  params;
+  params
 }, protected=TRUE)
 
 
@@ -84,12 +84,4 @@ setMethodS3("getParameters", "BackgroundCorrection", function(this, ...) {
 #   @seeclass
 # }
 #*/###########################################################################
-setMethodS3("process", "BackgroundCorrection", abstract=TRUE);
-
-
-
-############################################################################
-# HISTORY:
-# 2007-03-21
-# o Created.
-############################################################################
+setMethodS3("process", "BackgroundCorrection", abstract=TRUE)

@@ -24,38 +24,31 @@
 # @author "HB"
 #*/###########################################################################
 setConstructorS3("SmoothRmaModel", function(...) {
-  extend(SmoothMultiarrayModel(...), "SmoothRmaModel");
+  extend(SmoothMultiarrayModel(...), "SmoothRmaModel")
 })
 
 
 setMethodS3("getAsteriskTags", "SmoothRmaModel", function(this, collapse=NULL, ...) {
-  tags <- NextMethod("getAsteriskTags", collapse=NULL);
+  tags <- NextMethod("getAsteriskTags", collapse=NULL)
 
   # Replace first tags
-  tags[1] <- "SRMA";
+  tags[1] <- "SRMA"
 
   # Collapsed or split?
   if (!is.null(collapse)) {
-    tags <- paste(tags, collapse=collapse);
+    tags <- paste(tags, collapse=collapse)
   } else {
-    tags <- unlist(strsplit(tags, split=","));
+    tags <- unlist(strsplit(tags, split=","))
   }
 
-  tags;
+  tags
 }, protected=TRUE)
 
 setMethodS3("getRootPath", "SmoothRmaModel", function(this, ...) {
-  "plmData";
+  "plmData"
 }, protected=TRUE)
 
 
 setMethodS3("getFitUnitGroupFunction", "SmoothRmaModel", function(this, ...) {
-  smoothWRMA;
+  smoothWRMA
 }, protected=TRUE)
-
-
-##############################################################################
-# HISTORY:
-# 2007-09-20
-# o Created.
-##############################################################################

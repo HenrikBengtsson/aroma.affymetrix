@@ -34,18 +34,18 @@ setConstructorS3("AffymetrixCnChpSet", function(files=NULL, ...) {
   # Arguments 'files':
   if (is.null(files)) {
   } else if (is.list(files)) {
-    reqFileClass <- "AffymetrixCnChpFile";
+    reqFileClass <- "AffymetrixCnChpFile"
     lapply(files, FUN=function(df) {
-      df <- Arguments$getInstanceOf(df, reqFileClass, .name="files");
+      df <- Arguments$getInstanceOf(df, reqFileClass, .name="files")
     })
   } else if (inherits(files, "AffymetrixCnChpSet")) {
-    return(as.AffymetrixCnChpSet(files));
+    return(as.AffymetrixCnChpSet(files))
   } else {
-    throw("Argument 'files' is of unknown type: ", mode(files));
+    throw("Argument 'files' is of unknown type: ", mode(files))
   }
 
 
-  extend(AffymetrixFileSet(files=files, ...), "AffymetrixCnChpSet");
+  extend(AffymetrixFileSet(files=files, ...), "AffymetrixCnChpSet")
 })
 
 
@@ -78,21 +78,21 @@ setConstructorS3("AffymetrixCnChpSet", function(files=NULL, ...) {
 #*/###########################################################################
 setMethodS3("as.character", "AffymetrixCnChpSet", function(x, ...) {
   # To please R CMD check
-  this <- x;
+  this <- x
 
-  s <- sprintf("%s:", class(this)[1]);
-  s <- c(s, sprintf("Name: %s", getName(this)));
-  tags <- getTags(this);
-  tags <- paste(tags, collapse=",");
-  s <- c(s, sprintf("Tags: %s", tags));
-  s <- c(s, sprintf("Path: %s", getPath(this)));
-  n <- length(this);
-  s <- c(s, sprintf("Number of arrays: %d", n));
-  names <- getNames(this);
-  s <- c(s, sprintf("Names: %s [%d]", hpaste(names), n));
+  s <- sprintf("%s:", class(this)[1])
+  s <- c(s, sprintf("Name: %s", getName(this)))
+  tags <- getTags(this)
+  tags <- paste(tags, collapse=",")
+  s <- c(s, sprintf("Tags: %s", tags))
+  s <- c(s, sprintf("Path: %s", getPath(this)))
+  n <- length(this)
+  s <- c(s, sprintf("Number of arrays: %d", n))
+  names <- getNames(this)
+  s <- c(s, sprintf("Names: %s [%d]", hpaste(names), n))
   s <- c(s, sprintf("Total file size: %s", hsize(getFileSize(this), digits = 2L, standard = "IEC")))
 
-  GenericSummary(s);
+  GenericSummary(s)
 }, protected=TRUE)
 
 
@@ -103,17 +103,17 @@ setMethodS3("findByName", "AffymetrixCnChpSet", function(static, ..., paths="chp
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Arguments 'paths':
   if (is.null(paths)) {
-    paths <- eval(formals(findByName.AffymetrixCnChpSet)[["paths"]]);
+    paths <- eval(formals(findByName.AffymetrixCnChpSet)[["paths"]])
   }
 
-  NextMethod("findByName", paths=paths);
+  NextMethod("findByName", paths=paths)
 }, static=TRUE)
 
 
 setMethodS3("byName", "AffymetrixCnChpSet", function(static, name, tags=NULL, chipType=NULL, cdf=NULL, paths=NULL, ...) {
   # Argument 'cdf':
   if (!is.null(cdf)) {
-    cdf <- Arguments$getInstanceOf(cdf, "AffymetrixCdfFile");
+    cdf <- Arguments$getInstanceOf(cdf, "AffymetrixCdfFile")
   }
 
   # Argument 'chipType':
@@ -121,20 +121,20 @@ setMethodS3("byName", "AffymetrixCnChpSet", function(static, name, tags=NULL, ch
     if (!is.null(cdf)) {
       chipType <- getChipType(cdf, fullname=FALSE);  # Without tags
     } else {
-      throw("Argument 'chipType' must be specified unless argument 'cdf' is specified.");
+      throw("Argument 'chipType' must be specified unless argument 'cdf' is specified.")
     }
   }
 
   suppressWarnings({
-    path <- findByName(static, name, tags=tags, chipType=chipType, paths=paths, ...);
+    path <- findByName(static, name, tags=tags, chipType=chipType, paths=paths, ...)
   })
   if (is.null(path)) {
-    path <- file.path(paste(c(name, tags), collapse=","), chipType);
-    throw("Cannot create ", class(static)[1], ".  No such directory: ", path);
+    path <- file.path(paste(c(name, tags), collapse=","), chipType)
+    throw("Cannot create ", class(static)[1], ".  No such directory: ", path)
   }
 
   suppressWarnings({
-    byPath(static, path=path, cdf=cdf, ...);
+    byPath(static, path=path, cdf=cdf, ...)
   })
 }, static=TRUE, protected=TRUE)
 
@@ -144,17 +144,17 @@ setMethodS3("byPath", "AffymetrixCnChpSet", function(static, path, pattern="[.](
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'path':
-  path <- Arguments$getReadablePath(path, mustExist=TRUE);
+  path <- Arguments$getReadablePath(path, mustExist=TRUE)
 
   # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
+  verbose <- Arguments$getVerbose(verbose)
   if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
+    pushState(verbose)
+    on.exit(popState(verbose))
   }
 
 
-  verbose && enter(verbose, "Defining ", class(static)[1], " from files");
+  verbose && enter(verbose, "Defining ", class(static)[1], " from files")
 
   # Call the "next" method
   # WORKAROUND: For unknown reasons it is not possible to specify
@@ -165,54 +165,54 @@ setMethodS3("byPath", "AffymetrixCnChpSet", function(static, path, pattern="[.](
   # to R-devel thread 'Do *not* pass '...' to NextMethod() - it'll do it
   # for you; missing documentation, a bug or just me?' on Oct 16, 2012.
   # [https://stat.ethz.ch/pipermail/r-devel/2012-October/065016.html]
-  ##  set <- NextMethod("byPath", path=path, pattern=pattern, fileClass=fileClass, verbose=less(verbose));
-  set <- NextMethod("byPath", pattern=pattern, fileClass=fileClass, verbose=less(verbose));
+  ##  set <- NextMethod("byPath", path=path, pattern=pattern, fileClass=fileClass, verbose=less(verbose))
+  set <- NextMethod("byPath", pattern=pattern, fileClass=fileClass, verbose=less(verbose))
 
-  verbose && cat(verbose, "Retrieved files: ", length(set));
+  verbose && cat(verbose, "Retrieved files: ", length(set))
 
   if (length(set) > 0) {
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Scan all CHP files for possible chip types
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Chip type according to the directory structure
-    path <- getPath(set);
-    chipType <- basename(path);
+    path <- getPath(set)
+    chipType <- basename(path)
     verbose && cat(verbose,
-                   "The chip type according to the path is: ", chipType);
+                   "The chip type according to the path is: ", chipType)
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Use the same CDF object for all CEL files.
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     if (is.null(cdf)) {
-      verbose && enter(verbose, "Retrieving the CDF for chip type '", chipType, "' inferred from path");
-      cdf <- AffymetrixCdfFile$byChipType(chipType);
-      verbose && exit(verbose);
+      verbose && enter(verbose, "Retrieving the CDF for chip type '", chipType, "' inferred from path")
+      cdf <- AffymetrixCdfFile$byChipType(chipType)
+      verbose && exit(verbose)
 
-      verbose && enter(verbose, "Check compatibility with 1st CEL file");
-      verbose && cat(verbose, "Chip type: ", chipType);
-      cf <- getOneFile(set);
+      verbose && enter(verbose, "Check compatibility with 1st CEL file")
+      verbose && cat(verbose, "Chip type: ", chipType)
+      cf <- getOneFile(set)
       if (nbrOfCells(cdf) != nbrOfCells(cf)) {
-        cdf <- getCdf(cf);
-        chipType <- getChipType(cdf);
-        verbose && cat(verbose, "Chip type (updated): ", chipType);
+        cdf <- getCdf(cf)
+        chipType <- getChipType(cdf)
+        verbose && cat(verbose, "Chip type (updated): ", chipType)
       }
-      verbose && exit(verbose);
+      verbose && exit(verbose)
     } else {
       verbose && cat(verbose, "Using prespecified CDF: ",
-                     getChipType(cdf, fullname=TRUE));
+                     getChipType(cdf, fullname=TRUE))
     }
   }
 
-  verbose && enter(verbose, "Updating the CDF for all files");
-  setCdf(set, cdf);
-  verbose && exit(verbose);
+  verbose && enter(verbose, "Updating the CDF for all files")
+  setCdf(set, cdf)
+  verbose && exit(verbose)
 
   # Let the new CEL set update itself
-  update2(set, verbose=less(verbose, 1));
+  update2(set, verbose=less(verbose, 1))
 
-  verbose && exit(verbose);
+  verbose && exit(verbose)
 
-  set;
+  set
 }, protected=TRUE)
 
 
@@ -243,15 +243,15 @@ setMethodS3("byPath", "AffymetrixCnChpSet", function(static, path, pattern="[.](
 # }
 #*/###########################################################################
 setMethodS3("as.AffymetrixCnChpSet", "AffymetrixCnChpSet", function(object, ...) {
-  object;
+  object
 })
 
 setMethodS3("as.AffymetrixCnChpSet", "list", function(object, ...) {
-  AffymetrixCnChpSet(object, ...);
+  AffymetrixCnChpSet(object, ...)
 })
 
 setMethodS3("as.AffymetrixCnChpSet", "default", function(object, ...) {
-  throw("Cannot coerce object to an AffymetrixCnChpSet object: ", mode(object));
+  throw("Cannot coerce object to an AffymetrixCnChpSet object: ", mode(object))
 })
 
 
@@ -263,69 +263,69 @@ setMethodS3("extractLogRatios", "AffymetrixCnChpSet", function(this, units=NULL,
   # Argument 'units':
 
   # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
+  verbose <- Arguments$getVerbose(verbose)
   if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
+    pushState(verbose)
+    on.exit(popState(verbose))
   }
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Extract log ratios
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  readMap <- NULL;
-  data <- NULL;
-  nbrOfArrays <- length(this);
-  gcCount <- 0;
+  readMap <- NULL
+  data <- NULL
+  nbrOfArrays <- length(this)
+  gcCount <- 0
   for (kk in seq_len(nbrOfArrays)) {
-    df <- this[[kk]];
-    verbose && enter(verbose, sprintf("Array #%d ('%s') of %d", kk, getName(df), nbrOfArrays));
+    df <- this[[kk]]
+    verbose && enter(verbose, sprintf("Array #%d ('%s') of %d", kk, getName(df), nbrOfArrays))
 
     if (!is.null(readMap)) {
-      setUnitReadMap(df, readMap=readMap);
+      setUnitReadMap(df, readMap=readMap)
     }
 
-    dataKK <- extractLogRatios(df, units=units, ..., verbose=less(verbose, 5));
+    dataKK <- extractLogRatios(df, units=units, ..., verbose=less(verbose, 5))
 
     if (is.null(readMap)) {
-      readMap <- getUnitReadMap(df);
+      readMap <- getUnitReadMap(df)
     }
 
-    verbose && str(verbose, dataKK);
+    verbose && str(verbose, dataKK)
     if (is.null(data)) {
-      dim <- c(length(dataKK), nbrOfArrays);
-      dimnames <- list(NULL, getNames(this));
-      naValue <- as.double(NA);
-      data <- array(naValue, dim=dim, dimnames=dimnames);
+      dim <- c(length(dataKK), nbrOfArrays)
+      dimnames <- list(NULL, getNames(this))
+      naValue <- as.double(NA)
+      data <- array(naValue, dim=dim, dimnames=dimnames)
     }
-    data[,kk] <- dataKK;
+    data[,kk] <- dataKK
     # Not needed anymore
-    dataKK <- NULL;
+    dataKK <- NULL
 
     # Garbage collect?
-    gcCount <- gcCount + 1;
+    gcCount <- gcCount + 1
     if (gcCount %% 10 == 0) {
-      gc <- gc();
-      verbose && print(verbose, gc);
+      gc <- gc()
+      verbose && print(verbose, gc)
     }
 
-    verbose && exit(verbose);
+    verbose && exit(verbose)
   } # for (kk ...)
 
   # Drop singleton dimensions
   if (drop) {
-    data <- drop(data);
+    data <- drop(data)
   }
 
-  verbose && cat(verbose, "Log ratios:");
-  verbose && str(verbose, data);
+  verbose && cat(verbose, "Log ratios:")
+  verbose && str(verbose, data)
 
-  data;
+  data
 })
 
 
 setMethodS3("getCdf", "AffymetrixCnChpSet", function(this, ...) {
-  getCdf(getOneFile(this), ...);
+  getCdf(getOneFile(this), ...)
 })
 
 
@@ -335,42 +335,30 @@ setMethodS3("setCdf", "AffymetrixCnChpSet", function(this, cdf, verbose=FALSE, .
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (.checkArgs) {
     # Argument 'cdf':
-    cdf <- Arguments$getInstanceOf(cdf, "AffymetrixCdfFile");
+    cdf <- Arguments$getInstanceOf(cdf, "AffymetrixCdfFile")
   }
 
   # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
+  verbose <- Arguments$getVerbose(verbose)
   if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
+    pushState(verbose)
+    on.exit(popState(verbose))
   }
 
-  verbose && enter(verbose, "Setting CDF for CEL set");
-  verbose && print(verbose, cdf);
+  verbose && enter(verbose, "Setting CDF for CEL set")
+  verbose && print(verbose, cdf)
 
   # Set the CDF for all CEL files
-  verbose && enter(verbose, "Setting CDF for each CEL file");
-  lapply(this, FUN=setCdf, cdf, .checkArgs=FALSE, ...);
-  verbose && exit(verbose);
+  verbose && enter(verbose, "Setting CDF for each CEL file")
+  lapply(this, FUN=setCdf, cdf, .checkArgs=FALSE, ...)
+  verbose && exit(verbose)
 
   # Have to clear the cache
-  verbose && enter(verbose, "Clearing data-set cache");
-  clearCache(this);
-  verbose && exit(verbose);
+  verbose && enter(verbose, "Clearing data-set cache")
+  clearCache(this)
+  verbose && exit(verbose)
 
-  verbose && exit(verbose);
+  verbose && exit(verbose)
 
-  invisible(this);
+  invisible(this)
 })
-
-
-############################################################################
-# HISTORY:
-# 2011-02-24
-# o Expanded the searched root paths to be chpData(|,.*)/
-# 2009-08-12
-# o Now findByName() of AffymetrixCnChpSet utilizes ditto of
-#   AffymetrixCelSet, because its code was identical to the latter.
-# 2008-08-22
-# o Created.
-############################################################################

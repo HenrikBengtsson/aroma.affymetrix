@@ -26,7 +26,7 @@ setConstructorS3("GenericReporter", function(tags="*", ...) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'tags':
   if (!is.null(tags)) {
-    tags <- Arguments$getTags(tags, collapse=NULL);
+    tags <- Arguments$getTags(tags, collapse=NULL)
   }
 
 
@@ -39,14 +39,14 @@ setConstructorS3("GenericReporter", function(tags="*", ...) {
 
 setMethodS3("as.character", "GenericReporter", function(x, ...) {
   # To please R CMD check
-  this <- x;
+  this <- x
 
-  s <- sprintf("%s:", class(this)[1]);
-  s <- c(s, paste("Name:", getName(this)));
-  s <- c(s, paste("Tags:", paste(getTags(this), collapse=",")));
-  s <- c(s, sprintf("Path: %s", getPath(this)));
+  s <- sprintf("%s:", class(this)[1])
+  s <- c(s, paste("Name:", getName(this)))
+  s <- c(s, paste("Tags:", paste(getTags(this), collapse=",")))
+  s <- c(s, sprintf("Path: %s", getPath(this)))
 
-  GenericSummary(s);
+  GenericSummary(s)
 }, protected=TRUE)
 
 
@@ -78,7 +78,7 @@ setMethodS3("as.character", "GenericReporter", function(x, ...) {
 # }
 #*/###########################################################################
 setMethodS3("getAlias", "GenericReporter", function(this, ...) {
-  this$.alias;
+  this$.alias
 }, protected=TRUE)
 
 
@@ -120,11 +120,11 @@ setMethodS3("setAlias", "GenericReporter", function(this, alias=NULL, ...) {
 
     # Assert that no commas are used.
     if (regexpr("[,]", alias) != -1) {
-      throw("Aliases (names) must not contain commas: ", alias);
+      throw("Aliases (names) must not contain commas: ", alias)
     }
   }
 
-  this$.alias <- alias;
+  this$.alias <- alias
 }, protected=TRUE)
 
 
@@ -156,11 +156,11 @@ setMethodS3("setAlias", "GenericReporter", function(this, alias=NULL, ...) {
 # }
 #*/###########################################################################
 setMethodS3("getName", "GenericReporter", function(this, ...) {
-  name <- getAlias(this);
+  name <- getAlias(this)
   if (is.null(name)) {
-    name <- getInputName(this);
+    name <- getInputName(this)
   }
-  name;
+  name
 })
 
 
@@ -190,35 +190,35 @@ setMethodS3("getName", "GenericReporter", function(this, ...) {
 # }
 #*/###########################################################################
 setMethodS3("getTags", "GenericReporter", function(this, collapse=NULL, ...) {
-  tags <- getInputTags(this);
+  tags <- getInputTags(this)
 
-  tags <- c(tags, this$.tags);
+  tags <- c(tags, this$.tags)
 
   # In case this$.tags is not already split
-  tags <- Arguments$getTags(tags, collapse=NULL);
+  tags <- Arguments$getTags(tags, collapse=NULL)
 
-  tags <- locallyUnique(tags);
+  tags <- locallyUnique(tags)
 
   # Update asterisk tags
-  tags[tags == "*"] <- getAsteriskTags(this, collapse=",");
+  tags[tags == "*"] <- getAsteriskTags(this, collapse=",")
 
   # Keep non-empty tags
-  tags <- tags[nzchar(tags)];
+  tags <- tags[nzchar(tags)]
 
-  tags <- locallyUnique(tags);
+  tags <- locallyUnique(tags)
 
   # Collapsed or split?
   if (!is.null(collapse)) {
-    tags <- paste(tags, collapse=collapse);
+    tags <- paste(tags, collapse=collapse)
   } else {
     if (length(tags) > 0)
-      tags <- unlist(strsplit(tags, split=","));
+      tags <- unlist(strsplit(tags, split=","))
   }
 
   if (length(tags) == 0)
-    tags <- NULL;
+    tags <- NULL
 
-  tags;
+  tags
 })
 
 setMethodS3("getInputName", "GenericReporter", abstract=TRUE, protected=TRUE)
@@ -226,24 +226,24 @@ setMethodS3("getInputName", "GenericReporter", abstract=TRUE, protected=TRUE)
 setMethodS3("getInputTags", "GenericReporter", abstract=TRUE, protected=TRUE)
 
 setMethodS3("getAsteriskTags", "GenericReporter", function(this, ...) {
-  "";
+  ""
 }, protected=TRUE)
 
 
 setMethodS3("getFullName", "GenericReporter", function(this, ...) {
-  name <- getName(this);
-  tags <- getTags(this);
-  fullname <- paste(c(name, tags), collapse=",");
-  fullname <- gsub("[,]$", "", fullname);
-  fullname;
+  name <- getName(this)
+  tags <- getTags(this)
+  fullname <- paste(c(name, tags), collapse=",")
+  fullname <- gsub("[,]$", "", fullname)
+  fullname
 })
 
 
-setMethodS3("getReportSet", "GenericReporter", abstract=TRUE, protected=TRUE);
+setMethodS3("getReportSet", "GenericReporter", abstract=TRUE, protected=TRUE)
 
 
 setMethodS3("getRootPath", "GenericReporter", function(this, ...) {
-  "reports";
+  "reports"
 }, protected=TRUE)
 
 
@@ -251,30 +251,30 @@ setMethodS3("getMainPath", "GenericReporter", function(this, ...) {
   # Create the (sub-)directory tree for the report set
 
   # Root path
-  rootPath <- getRootPath(this);
+  rootPath <- getRootPath(this)
 
   # Full name
-  name <- getName(this);
+  name <- getName(this)
 
   # Tags
-  tags <- getTags(this, collapse=",");
+  tags <- getTags(this, collapse=",")
   if (length(tags) == 0 || !nzchar(tags)) {
     tags <- "raw";  # Default
   }
 
   # The full path
-  path <- filePath(rootPath, name, tags);
-  path <- Arguments$getWritablePath(path);
+  path <- filePath(rootPath, name, tags)
+  path <- Arguments$getWritablePath(path)
 
-  path;
+  path
 }, protected=TRUE)
 
 
 
-setMethodS3("getPath", "GenericReporter", abstract=TRUE);
+setMethodS3("getPath", "GenericReporter", abstract=TRUE)
 
 
-setMethodS3("setup", "GenericReporter", abstract=TRUE);
+setMethodS3("setup", "GenericReporter", abstract=TRUE)
 
 
 ###########################################################################/**
@@ -300,12 +300,4 @@ setMethodS3("setup", "GenericReporter", abstract=TRUE);
 #   @seeclass
 # }
 #*/###########################################################################
-setMethodS3("process", "GenericReporter", abstract=TRUE);
-
-
-
-##############################################################################
-# HISTORY:
-# 2008-04-12
-# o Created from AffymetrixCelSetReporter.R.
-##############################################################################
+setMethodS3("process", "GenericReporter", abstract=TRUE)

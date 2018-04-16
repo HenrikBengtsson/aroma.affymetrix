@@ -51,61 +51,46 @@ setMethodS3("extractAffyBatch", "AffymetrixCelSet", function(this, ..., verbose=
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
+  verbose <- Arguments$getVerbose(verbose)
   if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
+    pushState(verbose)
+    on.exit(popState(verbose))
   }
 
-  cdf <- getCdf(this);
-  chipType <- getChipType(cdf, fullname=FALSE);
-  cdfPkgName <- cleancdfname(chipType);
+  cdf <- getCdf(this)
+  chipType <- getChipType(cdf, fullname=FALSE)
+  cdfPkgName <- cleancdfname(chipType)
   suppressWarnings({
     .require <- require # To please R CMD check
-    res <- .require(cdfPkgName, character.only=TRUE);
-  });
+    res <- .require(cdfPkgName, character.only=TRUE)
+  })
   if (!res) {
-    warning("CDF enviroment package '", cdfPkgName, "' not installed. The 'affy' package will later try to download it from Bioconductor and install it.");
+    warning("CDF enviroment package '", cdfPkgName, "' not installed. The 'affy' package will later try to download it from Bioconductor and install it.")
   }
 
-  filenames <- getPathnames(this);
-  verbose && enter(verbose, "Creating AffyBatch from ", length(filenames), " CEL files");
-  verbose && cat(verbose, "Filenames: ", paste(filenames, collapse=", "));
-  sampleNames <- getFullNames(this);
-  verbose && cat(verbose, "Sample names: ", paste(sampleNames, collapse=", "));
+  filenames <- getPathnames(this)
+  verbose && enter(verbose, "Creating AffyBatch from ", length(filenames), " CEL files")
+  verbose && cat(verbose, "Filenames: ", paste(filenames, collapse=", "))
+  sampleNames <- getFullNames(this)
+  verbose && cat(verbose, "Sample names: ", paste(sampleNames, collapse=", "))
 
   # Sanity check
-  dups <- sort(sampleNames[duplicated(sampleNames)]);
+  dups <- sort(sampleNames[duplicated(sampleNames)])
   if (length(dups) > 0) {
-    throw(sprintf("Cannot load %s as an AffyBatch. Detected %d files that share the same sample names: %s", class(this)[1], length(dups)+length(unique(dups)), paste(unique(dups), collapse=", ")));
+    throw(sprintf("Cannot load %s as an AffyBatch. Detected %d files that share the same sample names: %s", class(this)[1], length(dups)+length(unique(dups)), paste(unique(dups), collapse=", ")))
   }
 
   # Specify ReadAffy() of 'affy' to avoid conflicts with the one
   # in 'oligo'.
-  read.affybatch <- affy::read.affybatch;
-  ReadAffy <- affy::ReadAffy;
-  res <- ReadAffy(filenames=filenames, sampleNames=sampleNames, ..., verbose=as.logical(verbose));
+  read.affybatch <- affy::read.affybatch
+  ReadAffy <- affy::ReadAffy
+  res <- ReadAffy(filenames=filenames, sampleNames=sampleNames, ..., verbose=as.logical(verbose))
 
-  verbose && exit(verbose);
-  res;
+  verbose && exit(verbose)
+  res
 }) # extractAffyBatch()
 
 
 setMethodS3("extractAffyBatch", "ChipEffectSet", function(this, ...) {
-  throw("Cannot extract AffyBatch from an ", class(this)[1], " object because it contains estimates that are summarized over sets of probes, whereas an AffyBatch should contain probe-level signals: ", getPath(this));
+  throw("Cannot extract AffyBatch from an ", class(this)[1], " object because it contains estimates that are summarized over sets of probes, whereas an AffyBatch should contain probe-level signals: ", getPath(this))
 }, protected=TRUE)
-
-
-
-############################################################################
-# HISTORY:
-# 2010-11-17
-# o ROBUSTNESS: Now extractAffyBatch() for AffymetrixCelSet asserts that
-#   the sample names are unique, which affy::ReadAffy() requires.
-#   Moreover, the sample names are now the fullnames not just the names.
-# 2010-09-06
-# o ROBUSTNESS: Added extractAffyBatch() for ChipEffectSet that gives an
-#   informative error message explaining why it doesn't make sense to do so.
-# 2006-10-02
-# o Created. A first small step toward an interface to Bioconductor.
-############################################################################

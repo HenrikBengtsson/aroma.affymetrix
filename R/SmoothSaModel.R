@@ -24,34 +24,27 @@
 # @author "HB"
 #*/###########################################################################
 setConstructorS3("SmoothSaModel", function(...) {
-  extend(SmoothMultiarrayModel(...), "SmoothSaModel");
+  extend(SmoothMultiarrayModel(...), "SmoothSaModel")
 })
 
 
 setMethodS3("getAsteriskTags", "SmoothSaModel", function(this, collapse=NULL, ...) {
-  tags <- NextMethod("getAsteriskTags", collapse=NULL);
+  tags <- NextMethod("getAsteriskTags", collapse=NULL)
 
   # Replace first tags
-  tags[1] <- "SA";
+  tags[1] <- "SA"
 
   # Collapsed or split?
   if (!is.null(collapse)) {
-    tags <- paste(tags, collapse=collapse);
+    tags <- paste(tags, collapse=collapse)
   } else {
-    tags <- unlist(strsplit(tags, split=","));
+    tags <- unlist(strsplit(tags, split=","))
   }
 
-  tags;
+  tags
 }, protected=TRUE)
 
 
 setMethodS3("getFitUnitGroupFunction", "SmoothSaModel", function(this, ...) {
-  smoothWSA;
+  smoothWSA
 }, protected=TRUE)
-
-
-##############################################################################
-# HISTORY:
-# 2007-09-20
-# o Created.
-##############################################################################

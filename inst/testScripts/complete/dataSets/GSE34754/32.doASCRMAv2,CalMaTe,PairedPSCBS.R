@@ -1,6 +1,7 @@
 ##########################################################################
 # AS-CRMAv2 and Paired PSCBS
 ##########################################################################
+future::plan("multiprocess")
 library("aroma.affymetrix");
 library("aroma.cn");  # PairedPscbsModel
 verbose <- Arguments$getVerbose(-8, timestamp=TRUE);
@@ -44,7 +45,7 @@ print(dsC);
 # AD HOC: For now, just hardwire the path.
 path <- file.path("testScripts/complete/dataSets", dataSet);
 db <- TabularTextFile(sprintf("%s,samples.txt", dataSet), path=path);
-setColumnNameTranslator(db, function(names, ...) {
+setColumnNamesTranslator(db, function(names, ...) {
   names <- gsub("id", "fixed", names);
   names <- gsub("fullname", "replacement", names);
   names;

@@ -51,33 +51,33 @@ setConstructorS3("AffinePlm", function(..., background=TRUE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Load required packages
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  args <- list(...);
+  args <- list(...)
   if (length(args) > 0 && !is.null(args[[1]])) {
     # Early error, iff package is missing
-    requireNamespace("aroma.light") || throw("Package not loaded: aroma.light");
+    requireNamespace("aroma.light") || throw("Package not loaded: aroma.light")
   }
 
   this <- extend(ProbeLevelModel(...), "AffinePlm",
     background = background
-  );
-  validate(this);
-  this;
+  )
+  validate(this)
+  this
 })
 
 
 setMethodS3("getAsteriskTags", "AffinePlm", function(this, collapse=NULL, ...) {
   # Returns 'PLM[,<shift>]'
-  tags <- NextMethod("getAsteriskTags", collapse=NULL);
-  tags[1] <- "AFF";
+  tags <- NextMethod("getAsteriskTags", collapse=NULL)
+  tags[1] <- "AFF"
 
   # Add class specific parameter tags
   if (!this$background)
-    tags <- c(tags, "lin");
+    tags <- c(tags, "lin")
 
   # Collapse
-  tags <- paste(tags, collapse=collapse);
+  tags <- paste(tags, collapse=collapse)
 
-  tags;
+  tags
 }, protected=TRUE)
 
 
@@ -85,38 +85,38 @@ setMethodS3("getProbeAffinityFile", "AffinePlm", function(this, ...) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Get the probe affinities (and create files etc)
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  paf <- NextMethod("getProbeAffinityFile");
+  paf <- NextMethod("getProbeAffinityFile")
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Update the encode and decode functions
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   setEncodeFunction(paf, function(groupData, ...) {
-    phi <- .subset2(groupData, "phi");
-    stdvs <- .subset2(groupData, "sdPhi");
-    outliers <- .subset2(groupData, "phiOutliers");
+    phi <- .subset2(groupData, "phi")
+    stdvs <- .subset2(groupData, "sdPhi")
+    outliers <- .subset2(groupData, "phiOutliers")
 
     # Encode outliers as the sign of 'pixels'; -1 = TRUE, +1 = FALSE
-    pixels <- sign(0.5 - as.integer(outliers));
+    pixels <- sign(0.5 - as.integer(outliers))
 
-    list(intensities=phi, stdvs=stdvs, pixels=pixels);
+    list(intensities=phi, stdvs=stdvs, pixels=pixels)
   })
 
   setDecodeFunction(paf,  function(groupData, ...) {
-    intensities <- .subset2(groupData, "intensities");
-    stdvs <- .subset2(groupData, "stdvs");
-    pixels <- .subset2(groupData, "pixels");
+    intensities <- .subset2(groupData, "intensities")
+    stdvs <- .subset2(groupData, "stdvs")
+    pixels <- .subset2(groupData, "pixels")
 
     # Outliers are encoded by the sign of 'pixels'.
-    outliers <- as.logical(1-sign(pixels));
+    outliers <- as.logical(1-sign(pixels))
 
     list(
       phi=intensities,
       sdPhi=stdvs,
       phiOutliers=outliers
-    );
+    )
   })
 
-  paf;
+  paf
 })
 
 
@@ -148,66 +148,46 @@ setMethodS3("getProbeAffinityFile", "AffinePlm", function(this, ...) {
 # }
 #*/###########################################################################
 setMethodS3("getFitUnitGroupFunction", "AffinePlm", function(this, ...) {
-  standardize <- this$standardize;
-  center <- this$background;
-  shift <- this$shift;
+  standardize <- this$standardize
+  center <- this$background
+  shift <- this$shift
   if (is.null(shift))
-    shift <- 0;
+    shift <- 0
 
   affineFit <- function(y, ...) {
     # Add shift
-    y <- y + shift;
+    y <- y + shift
 
     # NOTE: If center=FALSE => constraint a=0 /HB 2006-09-11
-    y <- t(y);
-    f <- .calibrateMultiscan(y, center=center, project=TRUE);
-    theta <- as.vector(f);
-    phi <- as.vector(attr(f, "modelFit")$b);
+    y <- t(y)
+    f <- .calibrateMultiscan(y, center=center, project=TRUE)
+    theta <- as.vector(f)
+    phi <- as.vector(attr(f, "modelFit")$b)
 
-    I <- length(theta);
-    K <- length(phi);
+    I <- length(theta)
+    K <- length(phi)
 
     # Rescale such that prod(phi) = 1?
     if (standardize) {
-      c <- prod(phi)^(1/K);
-      phi <- phi/c;
-      theta <- theta*c;
+      c <- prod(phi)^(1/K)
+      phi <- phi/c
+      theta <- theta*c
     }
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # A fit function must return: theta, sdTheta, thetaOutliers,
     # phi, sdPhi, phiOutliers.
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    sdTheta <- rep(1, I);
-    thetaOutliers <- rep(FALSE, I);
-    sdPhi <- rep(1, K);
-    phiOutliers <- rep(FALSE, K);
+    sdTheta <- rep(1, I)
+    thetaOutliers <- rep(FALSE, I)
+    sdPhi <- rep(1, K)
+    phiOutliers <- rep(FALSE, K)
 
 
     # Return data on the intensity scale
     list(theta=theta, sdTheta=sdTheta, thetaOutliers=thetaOutliers,
-         phi=phi, sdPhi=sdPhi, phiOutliers=phiOutliers);
+         phi=phi, sdPhi=sdPhi, phiOutliers=phiOutliers)
   } # affineFit()
 
-  affineFit;
+  affineFit
 }, protected=TRUE)
-
-
-
-############################################################################
-# HISTORY:
-# 2007-12-06
-# o The tag for the affine PLM is now 'AFF' (before it was APLM).
-# 2007-10-06
-# o Now the asterisk tag ('*') is no longer assigned in the constructor,
-#   but in getTags().
-# 2007-09-16
-# o Renamed the variables such that index I is for samples and K is for
-#   probes, as in the paper.
-# 2007-03-29
-# o Changed tag 'linear' to 'lin'.
-# 2006-09-11
-# o Added argument 'background' to fit background or not.
-# 2006-08-28
-# o Created from the Li & Wong model.
-############################################################################

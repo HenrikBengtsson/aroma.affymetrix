@@ -49,35 +49,35 @@ setConstructorS3("DChipSnpInformation", function(...) {
 setMethodS3("findByChipType", "DChipSnpInformation", function(static, chipType, version=NULL, ...) {
   # Argument 'version':
   if (is.null(version))
-    version <- ".*";
+    version <- ".*"
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Search in annotationData/chipTypes/<chipType>/
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  pattern <- sprintf("^.*( |_)snp( |_)info(| |_).*%s[.](txt|xls)$", version);
-  pathname <- findAnnotationDataByChipType(chipType, pattern);
+  pattern <- sprintf("^.*( |_)snp( |_)info(| |_).*%s[.](txt|xls)$", version)
+  pathname <- findAnnotationDataByChipType(chipType, pattern)
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # As a backup search the "old" style
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (is.null(pathname)) {
-    path <- filePath("annotations", chipType);
-    path <- Arguments$getReadablePath(path, mustExist=FALSE);
+    path <- filePath("annotations", chipType)
+    path <- Arguments$getReadablePath(path, mustExist=FALSE)
 
     if (isDirectory(path)) {
-      pathnames <- list.files(path=path, pattern=pattern, full.names=TRUE);
-      nfiles <- length(pathnames);
+      pathnames <- list.files(path=path, pattern=pattern, full.names=TRUE)
+      nfiles <- length(pathnames)
       if (nfiles > 1) {
-        pathnames <- sort(pathnames);
-        warning("Found more than one matching dChip genome information file, but returning only the last one: ", paste(pathnames, collapse=", "));
-        pathnames <- rev(pathnames);
-        pathname <- pathnames[1];
+        pathnames <- sort(pathnames)
+        warning("Found more than one matching dChip genome information file, but returning only the last one: ", paste(pathnames, collapse=", "))
+        pathnames <- rev(pathnames)
+        pathname <- pathnames[1]
       }
     }
   }
 
-  pathname;
+  pathname
 }, static=TRUE, protected=TRUE)
 
 
@@ -121,42 +121,42 @@ setMethodS3("byChipType", "DChipSnpInformation", function(static, chipType, vers
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
+  verbose <- Arguments$getVerbose(verbose)
   if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
+    pushState(verbose)
+    on.exit(popState(verbose))
   }
 
-  verbose && enter(verbose, "Defining ", class(static)[1], " from chip type");
-  verbose && cat(verbose, "Chip type: ", chipType);
-  verbose && cat(verbose, "Version: ", version);
+  verbose && enter(verbose, "Defining ", class(static)[1], " from chip type")
+  verbose && cat(verbose, "Chip type: ", chipType)
+  verbose && cat(verbose, "Version: ", version)
 
   # Search for the genome information file
-  pathname <- findByChipType(static, chipType, version=version, ..., verbose=verbose);
-  verbose && cat(verbose, "Located pathname: ", pathname);
+  pathname <- findByChipType(static, chipType, version=version, ..., verbose=verbose)
+  verbose && cat(verbose, "Located pathname: ", pathname)
 
   if (is.null(pathname))
-    throw("Failed to located dChip genome information: ", chipType);
+    throw("Failed to located dChip genome information: ", chipType)
 
-  verbose && enter(verbose, "Instantiating ", class(static)[1]);
-  res <- newInstance(static, pathname);
-  verbose && print(verbose, res);
-  verbose && exit(verbose);
+  verbose && enter(verbose, "Instantiating ", class(static)[1])
+  res <- newInstance(static, pathname)
+  verbose && print(verbose, res)
+  verbose && exit(verbose)
 
-  verbose && exit(verbose);
+  verbose && exit(verbose)
 
-  res;
+  res
 })
 
 
 setMethodS3("verify", "DChipSnpInformation", function(this, ...) {
   tryCatch({
-    df <- readDataFrame(this, nrow=10);
+    df <- readDataFrame(this, nrow=10)
   }, error = function(ex) {
     throw("File format error of the dChip SNP information file (",
-                                 ex$message, "): ", getPathname(this));
+                                 ex$message, "): ", getPathname(this))
   })
-  invisible(TRUE);
+  invisible(TRUE)
 }, private=TRUE)
 
 
@@ -165,18 +165,18 @@ setMethodS3("readDataFrame", "DChipSnpInformation", function(this, ...) {
     "^Mapping10K" = read10K,
     "^Mapping50K" = read50K,
     "^Mapping250K" = read250K
-  );
+  )
 
-  chipType <- getChipType(this);
+  chipType <- getChipType(this)
 
   # Try to read with the designated read function.
-  res <- NULL;
+  res <- NULL
   for (kk in seq_along(readFcns)) {
-    pattern <- names(readFcns)[kk];
+    pattern <- names(readFcns)[kk]
     if (regexpr(pattern, chipType) != -1) {
-      readFcn <- readFcns[[kk]];
+      readFcn <- readFcns[[kk]]
       tryCatch({
-        res <- readFcn(this, ...);
+        res <- readFcn(this, ...)
       }, error=function(ex) {})
     }
   }
@@ -184,20 +184,20 @@ setMethodS3("readDataFrame", "DChipSnpInformation", function(this, ...) {
   # If failed, re-try using all read functions.
   if (is.null(res)) {
     for (kk in seq_along(readFcns)) {
-      readFcn <- readFcns[[kk]];
+      readFcn <- readFcns[[kk]]
       tryCatch({
-        res <- readFcn(this, ...);
+        res <- readFcn(this, ...)
       }, error=function(ex) {})
       if (!is.null(res))
-        break;
+        break
     }
   }
 
   if (is.null(res)) {
-    throw("Cannot read dChip SNP information file.  No predefined read function available for this chip type: ", chipType);
+    throw("Cannot read dChip SNP information file.  No predefined read function available for this chip type: ", chipType)
   }
 
-  res;
+  res
 })
 
 
@@ -215,8 +215,8 @@ setMethodS3("read250K", "DChipSnpInformation", function(this, ..., exclude=c("db
     "FreqAsia"="double",
     "FreqAfAm"="double",
     "FreqCauc"="double"
-  );
-  readTableInternal(this, pathname=getPathname(this), colClasses=colClasses, exclude=exclude, ...);
+  )
+  readTableInternal(this, pathname=getPathname(this), colClasses=colClasses, exclude=exclude, ...)
 }, private=TRUE)
 
 setMethodS3("read50K", "DChipSnpInformation", function(this, ..., exclude=c("dbSNP RS ID", "Flank", "FreqAsian", "FreqAfAm", "FreqCauc")) {
@@ -228,8 +228,8 @@ setMethodS3("read50K", "DChipSnpInformation", function(this, ..., exclude=c("dbS
     "FreqAsian"="double",
     "FreqAfAm"="double",
     "FreqCauc"="double"
-  );
-  readTableInternal(this, pathname=getPathname(this), colClasses=colClasses, exclude=exclude, ...);
+  )
+  readTableInternal(this, pathname=getPathname(this), colClasses=colClasses, exclude=exclude, ...)
 }, private=TRUE)
 
 setMethodS3("read10K", "DChipSnpInformation", function(this, ..., exclude=c("dbSNP RS ID", "Flank", "Freq Asian", "Freq AfAm", "Freq Cauc"), fill=TRUE) {
@@ -241,22 +241,6 @@ setMethodS3("read10K", "DChipSnpInformation", function(this, ..., exclude=c("dbS
     "Freq Asian"="double",
     "Freq AfAm"="double",
     "Freq Cauc"="double"
-  );
-  readTableInternal(this, pathname=getPathname(this), colClasses=colClasses, exclude=exclude, fill=fill, ...);
+  )
+  readTableInternal(this, pathname=getPathname(this), colClasses=colClasses, exclude=exclude, fill=fill, ...)
 }, private=TRUE)
-
-
-############################################################################
-# HISTORY:
-# 2007-01-22
-# o Rename argument 'path' to 'rootPath' and added argument 'pattern' to
-#   method fromChipType().
-# o Just like for genome information file, fromChipType() and readData()
-#   were updated to better locate and read dChip SNP information files.
-# o Made readData() to support also unknown chip types. That is, if a chip
-#   type is not among the hardwired ones, the method will still try to read
-#   it using one of the known read functions.  For instance, the genome info
-#   file for 10K chips have the same format as the one for the 100K chips.
-# 2006-09-17
-# o Created from DChipGenomeInformation.R.
-############################################################################

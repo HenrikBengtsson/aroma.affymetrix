@@ -30,24 +30,14 @@ setConstructorS3("HetLogAddSnpPlm", function(..., mergeStrands=FALSE) {
 
 setMethodS3("getAsteriskTags", "HetLogAddSnpPlm", function(this, collapse=NULL, ...) {
   # Returns 'HLA[,<flavor>]'
-  tags <- NextMethod("getAsteriskTags", collapse=NULL);
+  tags <- NextMethod("getAsteriskTags", collapse=NULL)
 
   # Add class specific parameter tags
   if (!this$mergeStrands)
-    tags <- c(tags, "+-");
+    tags <- c(tags, "+-")
 
   # Collapse
-  tags <- paste(tags, collapse=collapse);
+  tags <- paste(tags, collapse=collapse)
 
-  tags;
+  tags
 }, protected=TRUE)
-
-
-
-############################################################################
-# HISTORY:
-# 2007-12-06
-# o Added getAsteriskTag() for HetLogAddSnpPlm.
-# 2007-10-06
-# o Created.
-############################################################################

@@ -1,6 +1,34 @@
 Package: aroma.affymetrix
 =========================
 
+Version: 3.1.1 [2018-04-16]
+
+SIGNIFICANT CHANGES:
+
+ o Package requires R (>= 3.2.0) and BioC (>= 3.1) both released
+   in April 2015.
+
+BUG FIX:
+
+ o Removed invalid 'break' statement in getAlleleProbePairs() for
+   AffymetrixCdfFile.
+
+CODE REFACTORING:
+
+ o Using indexByRow(dim(x)) internally since indexByRow(x) will soon be
+   deprecated in matrixStats.
+ 
+DEPRECATED AND DEFUNCT:
+
+ o Passing argument 'ram' to any of the doNnn() methods is now defunct and
+   gives an informative error message. It has been given a warning since
+   v2.8.4 (May 2013).  Use setOption(aromaSettings, 'memory/ram', ram).
+
+ o Monocell CDF files named with a very very old "-monocell.cdf" suffix are
+   now ignored.  There has been an informative error that these are defunct
+   since v 2.6.3 (October 2012).
+
+
 Version: 3.1.0 [2017-03-23]
 
 NEW FEATURES:

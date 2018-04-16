@@ -41,150 +41,140 @@ setMethodS3("getAlleleCellPairs", "AffymetrixCdfFile", function(this, units=NULL
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'units':
   if (!is.null(units)) {
-    units <- Arguments$getIndices(units, max=nbrOfUnits(this));
+    units <- Arguments$getIndices(units, max=nbrOfUnits(this))
   }
 
   # Argument 'stratifyBy':
-  stratifyBy <- match.arg(stratifyBy);
+  stratifyBy <- match.arg(stratifyBy)
 
   # Argument 'force':
-  force <- Arguments$getLogical(force);
+  force <- Arguments$getLogical(force)
 
   # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
+  verbose <- Arguments$getVerbose(verbose)
   if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
+    pushState(verbose)
+    on.exit(popState(verbose))
   }
 
 
-  verbose && enter(verbose, "Identifying the probe pairs");
-  verbose && cat(verbose, "Units:");
-  verbose && str(verbose, units);
+  verbose && enter(verbose, "Identifying the probe pairs")
+  verbose && cat(verbose, "Units:")
+  verbose && str(verbose, units)
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Check for cached results?
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  chipType <- getChipType(this);
+  chipType <- getChipType(this)
   key <- list(method="getAlleleCellPairs", class=class(this)[1],
-                    chipType=chipType, units=units, stratifyBy=stratifyBy);
+                    chipType=chipType, units=units, stratifyBy=stratifyBy)
   if (getOption(aromaSettings, "devel/useCacheKeyInterface", FALSE)) {
-    key <- getCacheKey(this, method="getAlleleCellPairs", chipType=chipType, units=units, stratifyBy=stratifyBy);
+    key <- getCacheKey(this, method="getAlleleCellPairs", chipType=chipType, units=units, stratifyBy=stratifyBy)
   }
-  dirs <- c("aroma.affymetrix", chipType);
+  dirs <- c("aroma.affymetrix", chipType)
   if (!force) {
-    verbose && enter(verbose, "Checking for cached results");
-    res <- loadCache(key=key, dirs=dirs);
+    verbose && enter(verbose, "Checking for cached results")
+    res <- loadCache(key=key, dirs=dirs)
     if (!is.null(res)) {
-      verbose && cat(verbose, "Found cached results");
-      verbose && exit(verbose);
-      verbose && exit(verbose);
-      return(res);
+      verbose && cat(verbose, "Found cached results")
+      verbose && exit(verbose)
+      verbose && exit(verbose)
+      return(res)
     }
-    verbose && exit(verbose);
+    verbose && exit(verbose)
   }
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Identify genotype units
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  verbose && enter(verbose, "Identifying genotyping units (with 2 or 4 groups)");
+  verbose && enter(verbose, "Identifying genotyping units (with 2 or 4 groups)")
   # Use only units that are SNPs...
-  verbose && enter(verbose, "Reading unit types");
-  unitTypes <- getUnitTypes(this, units=units, verbose=less(verbose, 1));
-  verbose && exit(verbose);
+  verbose && enter(verbose, "Reading unit types")
+  unitTypes <- getUnitTypes(this, units=units, verbose=less(verbose, 1))
+  verbose && exit(verbose)
 
-  keep <- which(unitTypes == 2);
+  keep <- which(unitTypes == 2)
   if (is.null(units)) {
-    units <- keep;
+    units <- keep
   } else {
-    units <- units[keep];
+    units <- units[keep]
   }
   # Not needed anymore
-  unitTypes <- keep <- NULL;
+  unitTypes <- keep <- NULL
 
   # ...and with either 2 or 4 groups
-  verbose && enter(verbose, "Reading number of groups per SNP unit");
-  unitSizes <- nbrOfGroupsPerUnit(this, units=units);
-  verbose && cat(verbose, "Detected unit sizes:");
-  verbose && print(verbose, table(unitSizes));
-  verbose && exit(verbose);
+  verbose && enter(verbose, "Reading number of groups per SNP unit")
+  unitSizes <- nbrOfGroupsPerUnit(this, units=units)
+  verbose && cat(verbose, "Detected unit sizes:")
+  verbose && print(verbose, table(unitSizes))
+  verbose && exit(verbose)
 
-  keep <- which(is.element(unitSizes, c(2,4)));
-  units <- units[keep];
+  keep <- which(is.element(unitSizes, c(2,4)))
+  units <- units[keep]
   # Not needed anymore
-  unitSizes <- keep <- NULL;
+  unitSizes <- keep <- NULL
 
-  nbrOfUnits <- length(units);
-  verbose && cat(verbose, "Number of SNP units to query: ", nbrOfUnits);
+  nbrOfUnits <- length(units)
+  verbose && cat(verbose, "Number of SNP units to query: ", nbrOfUnits)
 
-  verbose && exit(verbose);
+  verbose && exit(verbose)
 
   if (nbrOfUnits == 0) {
-    verbose && exit(verbose);
-    return(NULL);
+    verbose && exit(verbose)
+    return(NULL)
   }
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Read data in chunks
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  verbose && enter(verbose, "Reading cell indices");
-  verbose && cat(verbose, "Stratify by: ", stratifyBy);
+  verbose && enter(verbose, "Reading cell indices")
+  verbose && cat(verbose, "Stratify by: ", stratifyBy)
   cells <- getCellIndices(this, units=units, stratifyBy=stratifyBy,
-                                          useNames=FALSE, verbose=verbose);
+                                          useNames=FALSE, verbose=verbose)
   # Not needed anymore
-  units <- NULL;
+  units <- NULL
 
-  verbose && enter(verbose, "Merging groups by allele pair");
-  verbose && printf(verbose, "Units left: ");
+  verbose && enter(verbose, "Merging groups by allele pair")
+  verbose && printf(verbose, "Units left: ")
   for (uu in seq_along(cells)) {
     if (uu %% 5000 == 0)
-      verbose && writeRaw(verbose, length(cells)-uu, ", ");
-    unit <- cells[[uu]];
-    groups <- unit$groups;
-    groups <- cdfMergeAlleles(groups);
-    unit$groups <- groups;
-    cells[[uu]] <- unit;
+      verbose && writeRaw(verbose, length(cells)-uu, ", ")
+    unit <- cells[[uu]]
+    groups <- unit$groups
+    groups <- cdfMergeAlleles(groups)
+    unit$groups <- groups
+    cells[[uu]] <- unit
     if (uu %% 100000 == 0) {
-      gc <- gc();
-      verbose && print(verbose, gc);
+      gc <- gc()
+      verbose && print(verbose, gc)
     }
   }
-  verbose && writeRaw(verbose, "0.\n");
+  verbose && writeRaw(verbose, "0.\n")
   # Not needed anymore
-  unit <- groups <- uu <- NULL;
-  verbose && exit(verbose);
+  unit <- groups <- uu <- NULL
+  verbose && exit(verbose)
 
-  cells <- unlist(cells, use.names=FALSE);
-  cells <- matrix(cells, nrow=2);
-  rownames(cells) <- c("A", "B");
+  cells <- unlist(cells, use.names=FALSE)
+  cells <- matrix(cells, nrow=2)
+  rownames(cells) <- c("A", "B")
 
-  gc <- gc();
-  verbose && print(verbose, gc);
+  gc <- gc()
+  verbose && print(verbose, gc)
 
-  verbose && exit(verbose);
+  verbose && exit(verbose)
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Save to cache
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  verbose && enter(verbose, "Caching result");
-  saveCache(cells, key=key, dirs=dirs);
-  verbose && exit(verbose);
+  verbose && enter(verbose, "Caching result")
+  saveCache(cells, key=key, dirs=dirs)
+  verbose && exit(verbose)
 
-  verbose && exit(verbose);
+  verbose && exit(verbose)
 
-  cells;
+  cells
 }, protected=TRUE) # getAlleleCellPairs()
-
-
-
-############################################################################
-# HISTORY:
-# 2008-09-02
-# o Added getAlleleCellPairs() for AffymetrixCdfFile.
-# o Created.
-############################################################################
-

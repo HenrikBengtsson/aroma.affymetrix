@@ -33,24 +33,24 @@ setConstructorS3("UgpGenomeInformation", function(..., .ugp=NULL, .verify=TRUE) 
 
 
 setMethodS3("getAromaUgpFile", "UgpGenomeInformation", function(this, ..., force=FALSE) {
-  ugp <- this$.ugp;
+  ugp <- this$.ugp
   if (force || is.null(ugp)) {
-    ugp <- AromaUgpFile(getPathname(this), ...);
-    this$.ugp <- ugp;
+    ugp <- AromaUgpFile(getPathname(this), ...)
+    this$.ugp <- ugp
   }
-  ugp;
-}, protected=TRUE);
+  ugp
+}, protected=TRUE)
 
 
 setMethodS3("getChipType", "UgpGenomeInformation", function(this, ...) {
-  ugp <- getAromaUgpFile(this, ...);
-  chipType <- getChipType(ugp, ...);
-  chipType;
+  ugp <- getAromaUgpFile(this, ...)
+  chipType <- getChipType(ugp, ...)
+  chipType
 })
 
 
 setMethodS3("findByChipType", "UgpGenomeInformation", function(static, ...) {
-  AromaUgpFile$findByChipType(...);
+  AromaUgpFile$findByChipType(...)
 }, static=TRUE, protected=TRUE)
 
 
@@ -91,218 +91,194 @@ setMethodS3("byChipType", "UgpGenomeInformation", function(static, chipType, tag
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'chipType':
-  chipType <- Arguments$getCharacter(chipType, length=c(1,1));
+  chipType <- Arguments$getCharacter(chipType, length=c(1,1))
 
   # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
+  verbose <- Arguments$getVerbose(verbose)
   if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
+    pushState(verbose)
+    on.exit(popState(verbose))
   }
 
 
-  ugp <- AromaUgpFile$byChipType(chipType, tags=tags, nbrOfUnits=nbrOfUnits, ...);
-  pathname <- getPathname(ugp);
+  ugp <- AromaUgpFile$byChipType(chipType, tags=tags, nbrOfUnits=nbrOfUnits, ...)
+  pathname <- getPathname(ugp)
 
-  verbose && enter(verbose, "Instantiating ", class(static)[1]);
-  verbose && cat(verbose, "Pathname: ", pathname);
-  verbose && cat(verbose, "Arguments:");
-  verbose && str(verbose, list(...));
+  verbose && enter(verbose, "Instantiating ", class(static)[1])
+  verbose && cat(verbose, "Pathname: ", pathname)
+  verbose && cat(verbose, "Arguments:")
+  verbose && str(verbose, list(...))
 
-  res <- newInstance(static, filename=pathname, path=NULL, .ugp=ugp, ...);
-  verbose && print(verbose, res);
+  res <- newInstance(static, filename=pathname, path=NULL, .ugp=ugp, ...)
+  verbose && print(verbose, res)
 
-  verbose && exit(verbose);
+  verbose && exit(verbose)
 
-  res;
+  res
 }, static=TRUE)
 
 
 
 setMethodS3("nbrOfUnits", "UgpGenomeInformation", function(this, ...) {
-  ugp <- getAromaUgpFile(this);
-  nbrOfUnits(ugp);
+  ugp <- getAromaUgpFile(this)
+  nbrOfUnits(ugp)
 })
 
 setMethodS3("isCompatibleWithCdf", "UgpGenomeInformation", function(this, cdf, ...) {
   # Argument 'cdf':
-  cdf <- Arguments$getInstanceOf(cdf, "AffymetrixCdfFile");
+  cdf <- Arguments$getInstanceOf(cdf, "AffymetrixCdfFile")
 
-  res <- FALSE;
+  res <- FALSE
 
   if (nbrOfUnits(this) != nbrOfUnits(cdf)) {
-    attr(res, "reason") <- sprintf("The number of units of the %s and the %s does not match: %s != %s", class(this)[1], class(cdf)[1], nbrOfUnits(this), nbrOfUnits(cdf));
-    return(res);
+    attr(res, "reason") <- sprintf("The number of units of the %s and the %s does not match: %s != %s", class(this)[1], class(cdf)[1], nbrOfUnits(this), nbrOfUnits(cdf))
+    return(res)
   }
 
-  TRUE;
+  TRUE
 })
 
 
 
 setMethodS3("verify", "UgpGenomeInformation", function(this, ...) {
   tryCatch({
-    df <- readDataFrame(this, nrow=10);
+    df <- readDataFrame(this, nrow=10)
   }, error = function(ex) {
     throw("File format error of the UGP genome information file (",
-                                 ex$message, "): ", getPathname(this));
+                                 ex$message, "): ", getPathname(this))
   })
-  invisible(TRUE);
+  invisible(TRUE)
 }, private=TRUE)
 
 
 setMethodS3("readDataFrame", "UgpGenomeInformation", function(this, units=NULL, nrow=NULL, ..., verbose=FALSE) {
   # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
+  verbose <- Arguments$getVerbose(verbose)
   if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
+    pushState(verbose)
+    on.exit(popState(verbose))
   }
 
 
-  verbose && enter(verbose, "Reading data from UGP file");
-  ugp <- getAromaUgpFile(this);
-  verbose && print(verbose, ugp, level=-20);
+  verbose && enter(verbose, "Reading data from UGP file")
+  ugp <- getAromaUgpFile(this)
+  verbose && print(verbose, ugp, level=-20)
 
   # Validate 'units'
   if (is.null(units)) {
     if (is.null(nrow)) {
-      units <- 1:nbrOfUnits(ugp);
+      units <- 1:nbrOfUnits(ugp)
     } else {
-      units <- 1:nrow;
+      units <- 1:nrow
     }
   }
-  units <- Arguments$getIndices(units, max=nbrOfUnits(ugp));
+  units <- Arguments$getIndices(units, max=nbrOfUnits(ugp))
 
 
-  verbose && enter(verbose, "Reading ", length(units), " units");
-  res <- ugp[units,,drop=FALSE];
-  verbose && exit(verbose);
+  verbose && enter(verbose, "Reading ", length(units), " units")
+  res <- ugp[units,,drop=FALSE]
+  verbose && exit(verbose)
 
-  colnames(res) <- c("chromosome", "physicalPosition");
-  verbose && str(verbose, res);
-  verbose && exit(verbose);
+  colnames(res) <- c("chromosome", "physicalPosition")
+  verbose && str(verbose, res)
+  verbose && exit(verbose)
 
-  res;
+  res
 })
 
 
 setMethodS3("getDataColumns", "UgpGenomeInformation", function(this, ...) {
-  c("chromosome", "physicalPosition");
+  c("chromosome", "physicalPosition")
 }, private=TRUE)
 
 
 setMethodS3("getData", "UgpGenomeInformation", function(this, units=NULL, fields=getDataColumns(this), orderBy=NULL, ..., force=FALSE, verbose=FALSE) {
   # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
+  verbose <- Arguments$getVerbose(verbose)
   if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
+    pushState(verbose)
+    on.exit(popState(verbose))
   }
 
 
-  data <- this$.data;
+  data <- this$.data
   if (is.null(data) || force) {
-    verbose && enter(verbose, "Retrieving genome information from file");
+    verbose && enter(verbose, "Retrieving genome information from file")
 
     # Now read the genome information data
-    ugp <- getAromaUgpFile(this);
-    cc <- match(fields, getDataColumns(this));
-    missing <- fields[is.na(cc)];
+    ugp <- getAromaUgpFile(this)
+    cc <- match(fields, getDataColumns(this))
+    missing <- fields[is.na(cc)]
     if (length(missing)) {
-      throw("Unknown fields: ", paste(missing, collapse=", "));
+      throw("Unknown fields: ", paste(missing, collapse=", "))
     }
 
-    verbose && enter(verbose, "Reading genome information data");
-    data <- ugp[,,drop=FALSE];
-    colnames(data) <- getDataColumns(this);
-    verbose && str(verbose, data);
-    verbose && exit(verbose);
+    verbose && enter(verbose, "Reading genome information data")
+    data <- ugp[,,drop=FALSE]
+    colnames(data) <- getDataColumns(this)
+    verbose && str(verbose, data)
+    verbose && exit(verbose)
 
     # Store in cache
-    this$.data <- data;
+    this$.data <- data
 
     # Garbage collect
-    gc <- gc();
-    verbose && print(verbose, gc);
+    gc <- gc()
+    verbose && print(verbose, gc)
 
-    verbose && exit(verbose);
+    verbose && exit(verbose)
   }
 
   # Subset by unit?
   if (!is.null(units)) {
     # Map the unit indicies to the row names
-    data <- data[units,,drop=FALSE];
+    data <- data[units,,drop=FALSE]
   }
 
   # Stratify by field values?
-  args <- list(...);
+  args <- list(...)
   if (length(args) > 0) {
     for (key in names(args)) {
       # Get the values to be stratified upon.
-      values <- data[,key,drop=FALSE];
+      values <- data[,key,drop=FALSE]
 
       # Get the test (value or function)
-      test <- args[[key]];
-      test <- na.omit(test);
+      test <- args[[key]]
+      test <- na.omit(test)
       if (is.function(test)) {
-        keep <- test(values);
+        keep <- test(values)
       } else {
-        keep <- (values == test);
-        keep <- (keep & !is.na(keep));
+        keep <- (values == test)
+        keep <- (keep & !is.na(keep))
       }
-      data <- data[keep,,drop=FALSE];
+      data <- data[keep,,drop=FALSE]
     }
     # Not needed anymore
-    keep <- NULL;
+    keep <- NULL
   }
 
   # Reorder?
   if (!is.null(orderBy)) {
-    o <- do.call(order, args=as.list(data[,orderBy,drop=FALSE]));
-    data <- data[o,,drop=FALSE];
+    o <- do.call(order, args=as.list(data[,orderBy,drop=FALSE]))
+    data <- data[o,,drop=FALSE]
     # Not needed anymore
-    o <- NULL;
+    o <- NULL
   }
 
   # Extract a subset of fields?
   if (!is.null(fields))
-    data <- data[,fields, drop=FALSE];
+    data <- data[,fields, drop=FALSE]
 
-  data;
+  data
 })
 
 
 setMethodS3("getChromosomes", "UgpGenomeInformation", function(this, force=FALSE, ...) {
-  ugp <- getAromaUgpFile(this);
-  getChromosomes(ugp, force=force, ...);
+  ugp <- getAromaUgpFile(this)
+  getChromosomes(ugp, force=force, ...)
 })
 
 setMethodS3("getUnitsOnChromosome", "UgpGenomeInformation", function(this, ...) {
-  ugp <- getAromaUgpFile(this);
-  getUnitsAt(ugp, ...);
+  ugp <- getAromaUgpFile(this)
+  getUnitsAt(ugp, ...)
 })
-
-############################################################################
-# HISTORY:
-# 2009-02-16
-# o Removed argument 'validate' from byChipType().
-# 2008-12-29
-# o Added argument 'units' to readDataFrame().
-# 2008-07-23
-# o Now isCompatibleWithCdf() adds attribute 'reason' to FALSE explaining
-#   why the object is not compatible.
-# 2008-05-20
-# o Added argument 'validate' to byChipType().
-# 2008-01-19
-# o ROBUSTNESS: Added argument 'tags' to fromChipType() for class
-#   UgpGenomeInformation.
-# 2007-12-10
-# o Added getChipType() to UgpGenomeInformation.
-# 2007-12-09
-# o Added nbrOfUnits().
-# 2007-11-20
-# o Added clearCache() to clear cached UGP file.
-# 2007-09-11
-# o Created.
-############################################################################

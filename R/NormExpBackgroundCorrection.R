@@ -32,48 +32,38 @@
 setConstructorS3("NormExpBackgroundCorrection", function(..., method=c("rma", "saddle", "mle")) {
   # Argument 'method':
   if (!is.null(method)) {
-    method <- match.arg(method);
+    method <- match.arg(method)
   }
 
   extend(LimmaBackgroundCorrection(...), "NormExpBackgroundCorrection",
     .method = method
-  );
+  )
 })
 
 
 
 setMethodS3("getAsteriskTags", "NormExpBackgroundCorrection", function(this, collapse=NULL, ...) {
-  tags <- NextMethod("getAsteriskTags", collapse=NULL);
+  tags <- NextMethod("getAsteriskTags", collapse=NULL)
 
   # Drop added 'normexp' tag
-  tags <- setdiff(tags, "normexp");
+  tags <- setdiff(tags, "normexp")
 
   # Collapse?
-  tags <- paste(tags, collapse=collapse);
+  tags <- paste(tags, collapse=collapse)
 
-  tags;
+  tags
 }, protected=TRUE)
 
 
 setMethodS3("getParameters", "NormExpBackgroundCorrection", function(this, ...) {
   # Get parameters from super class
-  params <- NextMethod("getParameters");
+  params <- NextMethod("getParameters")
 
   # Overload the 'args' for calling limma
-  args <- params$args;
-  args$method <- "normexp";
-  args$normexp.method <- this$.method;
-  params$args <- args;
+  args <- params$args
+  args$method <- "normexp"
+  args$normexp.method <- this$.method
+  params$args <- args
 
-  params;
+  params
 }, protected=TRUE)
-
-
-############################################################################
-# HISTORY:
-# 2009-04-16
-# o Added redundancy test that the default NormExpBackgroundCorrection
-#   gives identical results to older RmaBackgroundCorrection.
-# o Created NormExpBackgroundCorrection which extends more generic
-#   LimmaBackgroundCorrection.
-############################################################################

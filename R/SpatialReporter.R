@@ -28,63 +28,63 @@ setConstructorS3("SpatialReporter", function(..., reference=NULL) {
     .reference = NULL
   )
 
-  setReference(this, reference);
+  setReference(this, reference)
 
-  this;
+  this
 })
 
 setMethodS3("as.character", "SpatialReporter", function(x, ...) {
   # To please R CMD check
-  this <- x;
+  this <- x
 
-  s <- sprintf("%s:", class(this)[1]);
-  s <- c(s, paste("Name:", getName(this)));
-  s <- c(s, paste("Tags:", paste(getTags(this), collapse=",")));
-  s <- c(s, paste("Number of arrays:", length(this)));
+  s <- sprintf("%s:", class(this)[1])
+  s <- c(s, paste("Name:", getName(this)))
+  s <- c(s, paste("Tags:", paste(getTags(this), collapse=",")))
+  s <- c(s, paste("Number of arrays:", length(this)))
 
   # Reference?
-  refFile <- getReference(this);
+  refFile <- getReference(this)
   if (!is.null(refFile)) {
-    s <- c(s, paste("<Relative to reference>"));
-    s <- c(s, paste("Name:", getName(refFile)));
-    s <- c(s, paste("Tags:", getTags(refFile, collapse=",")));
+    s <- c(s, paste("<Relative to reference>"))
+    s <- c(s, paste("Name:", getName(refFile)))
+    s <- c(s, paste("Tags:", getTags(refFile, collapse=",")))
   }
 
-  colorMaps <- getColorMaps(this);
+  colorMaps <- getColorMaps(this)
   if (length(colorMaps) == 0)
-    colorMaps <- "<no color maps; set before processing>";
-  s <- c(s, paste("Color maps:", paste(colorMaps, collapse="; ")));
-  s <- c(s, sprintf("Path: %s", getPath(this)));
+    colorMaps <- "<no color maps; set before processing>"
+  s <- c(s, paste("Color maps:", paste(colorMaps, collapse="; ")))
+  s <- c(s, sprintf("Path: %s", getPath(this)))
 
-  GenericSummary(s);
+  GenericSummary(s)
 }, protected=TRUE)
 
 
 setMethodS3("getReportSet", "SpatialReporter", function(this, ...) {
-  "spatial";
+  "spatial"
 }, protected=TRUE)
 
 
 
 setMethodS3("getReference", "SpatialReporter", function(this, ...) {
-  this$.reference;
+  this$.reference
 }, protected=TRUE)
 
 
 setMethodS3("setReference", "SpatialReporter", function(this, refFile, ...) {
   # Argument 'refFile':
   if (!is.null(refFile)) {
-    refFile <- Arguments$getInstanceOf(refFile, "AffymetrixCelFile");
+    refFile <- Arguments$getInstanceOf(refFile, "AffymetrixCelFile")
 
-    ds <- getDataSet(this);
-    df <- getOneFile(ds);
+    ds <- getDataSet(this)
+    df <- getOneFile(ds)
 
     if (!is.element(class(refFile)[1L], class(df))) {
-      throw("Cannot set reference. Argument 'refFile' is not of a class compatible with the data set: ", class(refFile)[1]);
+      throw("Cannot set reference. Argument 'refFile' is not of a class compatible with the data set: ", class(refFile)[1])
     }
   }
 
-  this$.reference <- refFile;
+  this$.reference <- refFile
 }, protected=TRUE)
 
 
@@ -93,38 +93,38 @@ setMethodS3("addColorMap", "SpatialReporter", function(this, colorMap, ...) {
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'colorMap':
-  colorMap <- Arguments$getCharacter(colorMap, nchar=c(1,Inf), length=c(1,1));
+  colorMap <- Arguments$getCharacter(colorMap, nchar=c(1,Inf), length=c(1,1))
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Parser argument 'colorMap'
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  parts <- strsplit(colorMap, split=",")[[1]];
-  tags <- paste(parts, collapse=",");
-  n <- length(parts);
+  parts <- strsplit(colorMap, split=",")[[1]]
+  tags <- paste(parts, collapse=",")
+  n <- length(parts)
   if (n > 3) {
     throw("Argument 'colorMap' must not contain more than three parts: ",
-                                                                   tags);
+                                                                   tags)
   }
   if (n == 1) {
-    transforms <- list();
+    transforms <- list()
   } else {
-    transforms <- as.list(parts[-n]);
+    transforms <- as.list(parts[-n])
   }
-  palette <- parts[n];
+  palette <- parts[n]
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Setup transforms
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (length(transforms) == 0) {
-    transforms <- list(sqrt);
+    transforms <- list(sqrt)
   } else {
     transforms <- lapply(transforms, FUN=function(transform) {
       # Check transform
       if (!exists(transform, mode="function")) {
         throw("Argument 'colorMap' specifies an unknown transform function ('",
-                                                 transform, "'): ", colorMap);
+                                                 transform, "'): ", colorMap)
       }
-      get(transform, mode="function");
+      get(transform, mode="function")
     })
   }
 
@@ -133,64 +133,64 @@ setMethodS3("addColorMap", "SpatialReporter", function(this, colorMap, ...) {
   # Setup palette
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (is.null(palette)) {
-    palette <- gray.colors(256);
+    palette <- gray.colors(256)
   } else if (is.character(palette)) {
     # Parse color palette tag
-    pattern <- "^([^_]*)(|[_][0-9]*)$";
-    name <- gsub(pattern, "\\1", palette);
-    nbrOfColors <- gsub(pattern, "\\2", palette);
-    nbrOfColors <- gsub("[_]", "", nbrOfColors);
-    nbrOfColors <- as.integer(nbrOfColors);
+    pattern <- "^([^_]*)(|[_][0-9]*)$"
+    name <- gsub(pattern, "\\1", palette)
+    nbrOfColors <- gsub(pattern, "\\2", palette)
+    nbrOfColors <- gsub("[_]", "", nbrOfColors)
+    nbrOfColors <- as.integer(nbrOfColors)
     if (is.na(nbrOfColors))
-      nbrOfColors <- 256;
+      nbrOfColors <- 256
 
     # Search for function <palette>() and then <palette>.colors()
     if (!exists(name, mode="function")) {
-      name <- sprintf("%s.colors", palette);
+      name <- sprintf("%s.colors", palette)
       if (!exists(name, mode="function")) {
         throw("Argument 'colorMap' specifies an unknown palette function ('",
-                                                   name, "'): ", colorMap);
+                                                   name, "'): ", colorMap)
       }
     }
-    fcn <- get(name, mode="function");
-    palette <- fcn(nbrOfColors);
+    fcn <- get(name, mode="function")
+    palette <- fcn(nbrOfColors)
   }
 
   map <- list(list(
     tags = tags,
     transforms = transforms,
     palette = palette
-  ));
-  names(map) <- map$tags;
+  ))
+  names(map) <- map$tags
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Add color map
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  colorMaps <- this$.colorMaps;
+  colorMaps <- this$.colorMaps
   if (is.null(colorMaps))
-    colorMaps <- list();
-  colorMaps <- c(colorMaps, map);
-  this$.colorMaps <- colorMaps;
+    colorMaps <- list()
+  colorMaps <- c(colorMaps, map)
+  this$.colorMaps <- colorMaps
 })
 
 
 setMethodS3("setColorMaps", "SpatialReporter", function(this, colorMaps=c("sqrt,yellow", "sqrt,rainbow"), ...) {
-  this$.colorMaps <- NULL;
+  this$.colorMaps <- NULL
   for (colorMap in colorMaps) {
-    addColorMap(this, colorMap, ...);
+    addColorMap(this, colorMap, ...)
   }
 })
 
 setMethodS3("getColorMaps", "SpatialReporter", function(this, parsed=FALSE, ...) {
-  colorMaps <- this$.colorMaps;
+  colorMaps <- this$.colorMaps
   if (!parsed) {
-    colorMaps <- sapply(colorMaps, .subset2, "tags");
-    colorMaps <- unlist(colorMaps);
-    colorMaps <- unique(colorMaps);
-    colorMaps <- sort(colorMaps);
+    colorMaps <- sapply(colorMaps, .subset2, "tags")
+    colorMaps <- unlist(colorMaps)
+    colorMaps <- unique(colorMaps)
+    colorMaps <- sort(colorMaps)
   }
 
-  colorMaps;
+  colorMaps
 })
 
 
@@ -199,70 +199,71 @@ setMethodS3("writeImages", "SpatialReporter", function(this, arrays=NULL, aliase
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'arrays':
-  cs <- getDataSet(this);
-  nbrOfArrays <- length(cs);
+  cs <- getDataSet(this)
+  nbrOfArrays <- length(cs)
   if (is.null(arrays)) {
-    arrays <- seq_len(nbrOfArrays);
+    arrays <- seq_len(nbrOfArrays)
   } else {
-    arrays <- Arguments$getIndices(arrays, max=nbrOfArrays);
-    nbrOfArrays <- length(arrays);
+    arrays <- Arguments$getIndices(arrays, max=nbrOfArrays)
+    nbrOfArrays <- length(arrays)
   }
 
   # Argument 'aliases':
   if (!is.null(aliases)) {
-    aliases <- Arguments$getCharacters(aliases, length=nbrOfArrays);
+    aliases <- Arguments$getCharacters(aliases, length=nbrOfArrays)
   }
 
   # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
+  verbose <- Arguments$getVerbose(verbose)
   if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
+    pushState(verbose)
+    on.exit(popState(verbose))
   }
 
 
   # Get the path to the image directory
-  path <- getPath(this);
+  path <- getPath(this)
 
   # Relative to a reference?
-  refFile <- getReference(this);
+  refFile <- getReference(this)
 
   # Get the color maps to be generated
-  colorMaps <- getColorMaps(this, parsed=TRUE);
+  colorMaps <- getColorMaps(this, parsed=TRUE)
   if (length(colorMaps) == 0) {
-    warning("No color maps specified. Nothing to do.");
-    return(invisible(path));
+    warning("No color maps specified. Nothing to do.")
+    return(invisible(path))
   }
 
   # For each array...
   for (kk in seq_along(arrays)) {
-    df <- cs[[arrays[kk]]];
+    df <- cs[[arrays[kk]]]
 
     # Aliases are deprecated
     if (!is.null(aliases)) {
-      setAlias(df, aliases[kk]);
+      .Deprecated(msg = "The use of 'aliases' in SpatialReporter is deprecated")
+      setAlias(df, aliases[kk])
     }
 
     verbose && enter(verbose, sprintf("Array #%d of %d ('%s')",
-                                             kk, nbrOfArrays, getName(df)));
+                                             kk, nbrOfArrays, getName(df)))
 
     # For each color map...
     for (ll in seq_along(colorMaps)) {
-      colorMap <- colorMaps[[ll]];
-      tags <- colorMap$tags;
-      verbose && enter(verbose, sprintf("Color map #%d ('%s')", ll, tags));
-#      verbose && str(verbose, colorMap$transforms);
-#      verbose && str(verbose, colorMap$palette);
+      colorMap <- colorMaps[[ll]]
+      tags <- colorMap$tags
+      verbose && enter(verbose, sprintf("Color map #%d ('%s')", ll, tags))
+#      verbose && str(verbose, colorMap$transforms)
+#      verbose && str(verbose, colorMap$palette)
       writeImage(df, other=refFile, path=path,
                  transforms=colorMap$transforms, palette=colorMap$palette,
-                                  tags=tags, ..., verbose=less(verbose, 5));
-#      gc <- gc();
-      verbose && exit(verbose);
+                                  tags=tags, ..., verbose=less(verbose, 5))
+#      gc <- gc()
+      verbose && exit(verbose)
     }
-    verbose && exit(verbose);
+    verbose && exit(verbose)
   }
 
-  invisible(path);
+  invisible(path)
 }, private=TRUE)
 
 
@@ -296,171 +297,155 @@ setMethodS3("process", "SpatialReporter", function(this, ..., verbose=FALSE) {
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
+  verbose <- Arguments$getVerbose(verbose)
   if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
+    pushState(verbose)
+    on.exit(popState(verbose))
   }
 
-  verbose && enter(verbose, "Generating ", class(this)[1], " report");
+  verbose && enter(verbose, "Generating ", class(this)[1], " report")
 
   # Generate bitmap images
-  writeImages(this, ..., verbose=less(verbose));
+  writeImages(this, ..., verbose=less(verbose))
 
-  verbose && exit(verbose);
+  verbose && exit(verbose)
 })
 
 
 setMethodS3("readRawDataRectangle", "SpatialReporter", function(this, array, ..., field="intensities", transforms=list(), verbose=FALSE) {
-  ds <- getDataSet(this);
-  df <- ds[[array]];
+  ds <- getDataSet(this)
+  df <- ds[[array]]
 
-  y <- readRawDataRectangle(df, fields=field, ..., drop=TRUE, verbose=less(verbose, 5));
-##    verbose && str(verbose, y);
+  y <- readRawDataRectangle(df, fields=field, ..., drop=TRUE, verbose=less(verbose, 5))
+##    verbose && str(verbose, y)
 
   # Relative signals?
-  refFile <- getReference(this);
+  refFile <- getReference(this)
   if (!is.null(refFile)) {
-    yR <- readRawDataRectangle(refFile, fields=field, ..., drop=TRUE, verbose=less(verbose, 5));
-##    verbose && str(verbose, yR);
-    y <- y/yR;
+    yR <- readRawDataRectangle(refFile, fields=field, ..., drop=TRUE, verbose=less(verbose, 5))
+##    verbose && str(verbose, yR)
+    y <- y/yR
     # Not needed anymore
-    yR <- NULL;
-##    verbose && str(verbose, y);
+    yR <- NULL
+##    verbose && str(verbose, y)
   }
 
   # Transform data
   for (transform in transforms) {
-    y <- transform(y);
+    y <- transform(y)
   }
 
-  y;
+  y
 }, protected=TRUE)
 
 
 setMethodS3("calculateMargins", "SpatialReporter", function(this, unshift=TRUE, ..., verbose=FALSE) {
   colMedians <- function(x, ...) {
-    x <- t(x);
-    rowMedians(x, ...);
+    x <- t(x)
+    rowMedians(x, ...)
   }
 
   # Read data
-  y <- readRawDataRectangle(this, ...);
+  y <- readRawDataRectangle(this, ...)
 
   # Remove average?
   if (unshift) {
-    yAvg <- median(y, na.rm=TRUE);;
-    y <- y - yAvg;
+    yAvg <- median(y, na.rm=TRUE)
+    y <- y - yAvg
   }
 
   # Calculate margins
-  yR <- rowMedians(y, na.rm=TRUE);
-  yC <- colMedians(y, na.rm=TRUE);
+  yR <- rowMedians(y, na.rm=TRUE)
+  yC <- colMedians(y, na.rm=TRUE)
 
-  list(rowAvgs=yR, colAvgs=yC);
+  list(rowAvgs=yR, colAvgs=yC)
 }, protected=TRUE)
 
 
 setMethodS3("plotMargins", "SpatialReporter", function(this, array, margins=c("rows", "columns"), ..., pch=20, cex=0.7, ylim=NULL, ylab=NULL, rotate=0, verbose=FALSE) {plotMargins
   # Argument 'margins':
 #  if (!all(margins %in% formals(plotMargins.SpatialReporter)$margins)) {
-#    throw("Unknown value(s) in argument 'margins': ", paste(margins));
+#    throw("Unknown value(s) in argument 'margins': ", paste(margins))
 #  }
 
   # Get the array file
-  ds <- getDataSet(this);
-  df <- ds[[array]];
+  ds <- getDataSet(this)
+  df <- ds[[array]]
 
-  yMargins <- calculateMargins(this, array=array, ..., verbose=verbose);
-  keep <- is.element(c("rows", "columns"), margins);
-  yMargins <- yMargins[keep];
+  yMargins <- calculateMargins(this, array=array, ..., verbose=verbose)
+  keep <- is.element(c("rows", "columns"), margins)
+  yMargins <- yMargins[keep]
 
   if (is.null(ylim)) {
-    ylim <- c(NA, NA);
+    ylim <- c(NA, NA)
     for (kk in seq_along(yMargins)) {
-      ylim <- range(c(ylim, range(yMargins[[1]], na.rm=TRUE)));
+      ylim <- range(c(ylim, range(yMargins[[1]], na.rm=TRUE)))
     }
   }
 
   if (is.null(ylab)) {
-    ylab <- "signal";
+    ylab <- "signal"
   }
 
-  xlabs <- margins;
-  mains <- paste("Average signal per", substring(margins, 1, nchar(margins)-1));
+  xlabs <- margins
+  mains <- paste("Average signal per", substring(margins, 1, nchar(margins)-1))
 
   if (length(yMargins) > 1) {
-    layout(matrix(seq_along(yMargins), ncol=1));
+    layout(matrix(seq_along(yMargins), ncol=1))
   }
 
   for (ff in seq_along(yMargins)) {
-    xlab <- xlabs[ff];
-    main <- mains[ff];
-    y <- yMargins[[ff]];
+    xlab <- xlabs[ff]
+    main <- mains[ff]
+    y <- yMargins[[ff]]
 
-    x <- seq_along(y);
+    x <- seq_along(y)
     if (rotate == -90) {
-      x <- rev(x);
+      x <- rev(x)
     }
 
-    fit <- list();
-    fit[[1]] <- .robustSmoothSpline(x, y, spar=0.3);
-    fit[[2]] <- .robustSmoothSpline(x, y, spar=0.9);
+    fit <- list()
+    fit[[1]] <- .robustSmoothSpline(x, y, spar=0.3)
+    fit[[2]] <- .robustSmoothSpline(x, y, spar=0.9)
 
     if (rotate == 0) {
-      plot(x, y, pch=pch, cex=cex, ylim=ylim, xlab=xlab, ylab=ylab);
-      abline(h=0, lwd=2, col="gray");
-      side <- 3;
+      plot(x, y, pch=pch, cex=cex, ylim=ylim, xlab=xlab, ylab=ylab)
+      abline(h=0, lwd=2, col="gray")
+      side <- 3
     } else if (rotate == 90) {
-      mar <- par("mar");
-      mar <- mar[c(2,3,4,1)];
-      par(mar=mar);
-      plot(y, x, pch=pch, cex=cex, xlim=ylim, ylab=xlab, xlab=ylab, axes=FALSE);
-      axis(side=1); axis(side=4); box();
-      abline(v=0, lwd=2, col="gray");
+      mar <- par("mar")
+      mar <- mar[c(2,3,4,1)]
+      par(mar=mar)
+      plot(y, x, pch=pch, cex=cex, xlim=ylim, ylab=xlab, xlab=ylab, axes=FALSE)
+      axis(side=1); axis(side=4); box()
+      abline(v=0, lwd=2, col="gray")
       for (kk in 1:2) {
-        t <- fit[[kk]]$x;
-        fit[[kk]]$x <- fit[[kk]]$y;
-        fit[[kk]]$y <- t;
+        t <- fit[[kk]]$x
+        fit[[kk]]$x <- fit[[kk]]$y
+        fit[[kk]]$y <- t
       }
-      side <- 2;
+      side <- 2
     } else if (rotate == -90) {
-      mar <- par("mar");
-      mar <- mar[c(2,3,4,1)];
-      par(mar=mar);
-      plot(y, x, pch=pch, cex=cex, xlim=ylim, ylab=xlab, xlab=ylab, axes=FALSE);
-      axis(side=1); axis(side=4); box();
-      abline(v=0, lwd=2, col="gray");
+      mar <- par("mar")
+      mar <- mar[c(2,3,4,1)]
+      par(mar=mar)
+      plot(y, x, pch=pch, cex=cex, xlim=ylim, ylab=xlab, xlab=ylab, axes=FALSE)
+      axis(side=1); axis(side=4); box()
+      abline(v=0, lwd=2, col="gray")
       for (kk in 1:2) {
-        t <- fit[[kk]]$x;
-        fit[[kk]]$x <- fit[[kk]]$y;
-        fit[[kk]]$y <- t;
+        t <- fit[[kk]]$x
+        fit[[kk]]$x <- fit[[kk]]$y
+        fit[[kk]]$y <- t
       }
-      side <- 2;
+      side <- 2
     }
-    lines(fit[[1]], col="blue", lwd=3);
-    lines(fit[[2]], col="red", lwd=5);
+    lines(fit[[1]], col="blue", lwd=3)
+    lines(fit[[2]], col="red", lwd=5)
 
     # Plot annotation
-    stext(side=side, pos=0, sprintf("Array: %s", getFullName(df)), cex=0.7);
-    stext(side=side, pos=1, sprintf("Chip type: %s", getChipType(df)), cex=0.7);
+    stext(side=side, pos=0, sprintf("Array: %s", getFullName(df)), cex=0.7)
+    stext(side=side, pos=1, sprintf("Chip type: %s", getChipType(df)), cex=0.7)
   }
 
-  invisible(yMargins);
+  invisible(yMargins)
 })
-
-
-##############################################################################
-# HISTORY:
-# 2008-08-19
-# o Now writeImages() takes argument 'arrays'.
-# 2008-03-17
-# o Added readRawDataRectangle(), calculateMargins(), plotMargins(). Will
-#   probably be moved elsewhere.
-# o Added support for a reference (file).
-# 2007-08-09
-# o Now getColorMaps(parsed=FALSE) returns a unique sorted set of color maps.
-# 2007-03-19
-# o Updated addColorMap() to accept multiple transforms.
-# o Created from ArrayExplorer.R.
-##############################################################################

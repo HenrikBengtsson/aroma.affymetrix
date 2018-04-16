@@ -30,23 +30,14 @@ setConstructorS3("MbeiSnpPlm", function(..., mergeStrands=FALSE) {
 
 setMethodS3("getAsteriskTags", "MbeiSnpPlm", function(this, collapse=NULL, ...) {
   # Returns 'MBEI[,<flavor>]'
-  tags <- NextMethod("getAsteriskTags", collapse=NULL);
+  tags <- NextMethod("getAsteriskTags", collapse=NULL)
 
   # Add class specific parameter tags
   if (!this$mergeStrands)
-    tags <- c(tags, "+-");
+    tags <- c(tags, "+-")
 
   # Collapse
-  tags <- paste(tags, collapse=collapse);
+  tags <- paste(tags, collapse=collapse)
 
-  tags;
+  tags
 }, protected=TRUE)
-
-
-############################################################################
-# HISTORY:
-# 2007-12-06
-# o Added getAsteriskTag() for MbeiSnpPlm.
-# 2006-09-11
-# o Created from the RmaSnpPlm.
-############################################################################

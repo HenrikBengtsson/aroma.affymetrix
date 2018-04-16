@@ -31,23 +31,14 @@ setConstructorS3("AffineSnpPlm", function(..., mergeStrands=FALSE) {
 
 setMethodS3("getAsteriskTags", "AffineSnpPlm", function(this, collapse=NULL, ...) {
   # Returns 'AFF[,<flavor>]'
-  tags <- NextMethod("getAsteriskTags", collapse=collapse);
+  tags <- NextMethod("getAsteriskTags", collapse=collapse)
 
   # Add class specific parameter tags
   if (!this$mergeStrands)
-    tags <- c(tags, "+-");
+    tags <- c(tags, "+-")
 
   # Collapse
-  tags <- paste(tags, collapse=collapse);
+  tags <- paste(tags, collapse=collapse)
 
-  tags;
+  tags
 }, protected=TRUE)
-
-
-############################################################################
-# HISTORY:
-# 2007-12-06
-# o Added getAsteriskTag() for AffineSnpPlm.
-# 2006-09-11
-# o Created from the MbeiSnpPlm.
-############################################################################

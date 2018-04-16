@@ -116,7 +116,7 @@ setConstructorS3("FragmentLengthNormalization", function(dataSet=NULL, ..., targ
   # Argument 'lengthRange':
   if (!is.null(lengthRange)) {
     lengthRange <- Arguments$getDoubles(lengthRange);
-    stop_if_not(lengthRange[1] <= lengthRange[2]);
+    stopifnot(lengthRange[1] <= lengthRange[2]);
   }
 
   # Argument 'onMissing':
@@ -885,7 +885,7 @@ setMethodS3("process", "FragmentLengthNormalization", function(this, ..., force=
   #    data <- getDataFlat(ce, units=map, fields="theta", verbose=less(verbose));
   #    verbose && str(verbose, data);
   #    y0 <- data[,"theta",drop=TRUE];
-  #    stop_if_not(identical(y,y0));
+  #    stopifnot(identical(y,y0));
   #    verbose && str(verbose, y);
   #    verbose && exit(verbose);
 
@@ -918,7 +918,7 @@ setMethodS3("process", "FragmentLengthNormalization", function(this, ..., force=
       verbose && summary(verbose, rho);
 
       # Sanity check
-      stop_if_not(length(rho) == nrow(theta));
+      stopifnot(length(rho) == nrow(theta));
 
       # Normalize the theta:s (on the intensity scale)
       ok <- which(is.finite(rho));

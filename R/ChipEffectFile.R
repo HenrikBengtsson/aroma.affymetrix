@@ -654,7 +654,7 @@ setMethodS3("getUnitGroupCellChromosomePositionMap", "ChipEffectFile", function(
   verbose && str(verbose, cpMap);
 
   # Sanity check
-  stop_if_not(nrow(ugcMap) == nrow(cpMap));
+  stopifnot(nrow(ugcMap) == nrow(cpMap));
 
   # Merge the two maps
   map <- cbind(ugcMap, cpMap);

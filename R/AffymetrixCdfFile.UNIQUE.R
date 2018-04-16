@@ -546,21 +546,21 @@ setMethodS3("createUniqueCdf", "AffymetrixCdfFile", function(this, chipType=getC
   verbose && enter(verbose, "Final set of sanity checks");
 
   verbose && cat(verbose, "Number of units");
-  stop_if_not(nbrOfUnits(cdfU) == nbrOfUnits(this));
+  stopifnot(nbrOfUnits(cdfU) == nbrOfUnits(this));
 
   verbose && cat(verbose, "Number of groups per unit");
-  stop_if_not(identical(nbrOfGroupsPerUnit(cdfU), nbrOfGroupsPerUnit(this)));
+  stopifnot(identical(nbrOfGroupsPerUnit(cdfU), nbrOfGroupsPerUnit(this)));
 
   verbose && cat(verbose, "Groups names per unit");
-  stop_if_not(identical(.readCdfGroupNames(getPathname(cdfU)), .readCdfGroupNames(getPathname(this))));
+  stopifnot(identical(.readCdfGroupNames(getPathname(cdfU)), .readCdfGroupNames(getPathname(this))));
 
   verbose && cat(verbose, "Number of cells per unit group");
-  stop_if_not(identical(nbrOfCellsPerUnitGroup(cdfU), nbrOfCellsPerUnitGroup(this)));
+  stopifnot(identical(nbrOfCellsPerUnitGroup(cdfU), nbrOfCellsPerUnitGroup(this)));
 
   verbose && cat(verbose, "Consecutive ordering of cell indices");
   cells <- getCellIndices(cdfU, unlist=TRUE, useNames=FALSE);
-  stop_if_not(length(cells) <= nbrOfCells(cdfU));
-  stop_if_not(identical(unique(diff(cells)), 1L));
+  stopifnot(length(cells) <= nbrOfCells(cdfU));
+  stopifnot(identical(unique(diff(cells)), 1L));
 
   ## Create checksum file
   cdfUZ <- getChecksumFile(cdfU)

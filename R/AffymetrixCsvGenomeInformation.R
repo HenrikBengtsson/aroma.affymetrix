@@ -91,7 +91,7 @@ setMethodS3("readDataFrame", "AffymetrixCsvGenomeInformation", function(this, ..
   verbose && str(verbose, as.list(colClasses));
 
   # Make sure we haven't added or removed columns
-  stop_if_not(length(colClasses) == nbrOfColumns);
+  stopifnot(length(colClasses) == nbrOfColumns);
 
   # Read the data table
   df <- read.table(pathname, colClasses=colClasses, header=TRUE, sep=",", quote="\"", fill=TRUE, check.names=FALSE, na.strings=c("---"), ...);

@@ -95,7 +95,7 @@ setMethodS3("applyAnyOrder", "CopyNumberChromosomalModel", function(this, chipTy
   nbrOfArrays <- length(cesTuple);
 
   # Sanity check
-  stop_if_not(length(refTuple) == nbrOfArrays);
+  stopifnot(length(refTuple) == nbrOfArrays);
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -80,7 +80,7 @@ setMethodS3("exportTotalAndFracB", "SnpChipEffectSet", function(this, fields=c("
       verbose && print(verbose, ass);
 
       # Sanity check?
-      stop_if_not(!anyNA(keep));
+      stopifnot(!anyNA(keep));
       # Not needed anymore
       keep <- NULL;
 

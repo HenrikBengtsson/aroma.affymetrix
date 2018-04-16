@@ -128,7 +128,7 @@ setMethodS3("createExonByTranscriptCdf", "AffymetrixCdfFile", function(cdf, csv,
     # Find those exons (=units) in the "exon-only" CDF
     groupUnits <- indexOf(cdf, names=groupNames);  ## <= FAST - cached!
     # Sanity check
-    stop_if_not(all(is.finite(groupUnits)));
+    stopifnot(all(is.finite(groupUnits)));
 
     # Read the CDF units of those exons
     cdfList <- getCdfUnits(units=groupUnits);
@@ -137,26 +137,26 @@ setMethodS3("createExonByTranscriptCdf", "AffymetrixCdfFile", function(cdf, csv,
     groups <- lapply(cdfList, FUN=.subset2, "groups");
     # Sanity check (of the assumption of single group exon units)
     nGroups <- sapply(groups, FUN=length);
-    stop_if_not(all(nGroups == 1));
+    stopifnot(all(nGroups == 1));
     groups <- lapply(groups, FUN=.subset2, 1);
 
     # Identify the unit type
     unittypes <- sapply(cdfList, FUN=.subset2, "unittype");
     unittype <- unittypes[1];
     # Sanity check (of assumption)
-    stop_if_not(all(unittypes == unittype));
+    stopifnot(all(unittypes == unittype));
 
     # Identify the unit direction
     unitdirections <- sapply(cdfList, FUN=.subset2, "unitdirection");
     unitdirection <- unitdirections[1];
     # Sanity check (of assumption)
-    stop_if_not(all(unitdirections == unitdirection));
+    stopifnot(all(unitdirections == unitdirection));
 
     # Identify the number of cells per atom
     ncellsperatoms <- sapply(cdfList, FUN=.subset2, "ncellsperatom");
     ncellsperatom <- ncellsperatoms[1];
     # Sanity check (of assumption)
-    stop_if_not(all(ncellsperatoms == ncellsperatom));
+    stopifnot(all(ncellsperatoms == ncellsperatom));
 
     # Identify the number of atoms
     natoms <- lapply(cdfList, FUN=.subset2, "natoms");
@@ -346,7 +346,7 @@ setMethodS3("createExonByTranscriptCdf", "AffymetrixCdfFile", function(cdf, csv,
 
   # Sanity check
   units <- indexOf(cdf, names=psData[,"probesetId"]);
-  stop_if_not(all(is.finite(units)));
+  stopifnot(all(is.finite(units)));
   # Not needed anymore
   units <- NULL;
   verbose && exit(verbose);
@@ -386,7 +386,7 @@ setMethodS3("createExonByTranscriptCdf", "AffymetrixCdfFile", function(cdf, csv,
   # Sanity check
   nbrOfExons2 <- sum(sapply(cdfList, FUN=function(unit) length(unit$group)));
 #  verbose && cat(verbose, "Number of exons included: ", nbrOfExons);
-  stop_if_not(nbrOfExons2 == nbrOfExons);
+  stopifnot(nbrOfExons2 == nbrOfExons);
 
   # Not needed anymore
   # Not needed anymore

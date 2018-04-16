@@ -596,7 +596,7 @@ setMethodS3("process", "MatNormalization", function(this, ..., ram=NULL, force=F
   } ## for (ii ...)
   ## Assert proper temporary files
   pathnamesT <- unlist(pathnamesT)
-  stop_if_not(length(pathnamesT) == nbrOfArrays)
+  stopifnot(length(pathnamesT) == nbrOfArrays)
 
   verbose && exit(verbose);
 

@@ -316,7 +316,7 @@ setMethodS3("computeAffinities", "AffymetrixCdfFile", function(this, safe=TRUE, 
   verbose && print(verbose, gc);
 
   # Sanity checks
-  stop_if_not(length(affinities) == nbrOfCells(this));
+  stopifnot(length(affinities) == nbrOfCells(this));
 
   # Saving to cache
   comment <- paste(unlist(key, use.names=FALSE), collapse=";");

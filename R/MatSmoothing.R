@@ -156,7 +156,7 @@ setMethodS3("getExpectedOutputFullnames", "MatSmoothing", function(this, ..., ve
   verbose && str(verbose, fullnames);
 
   # Sanity check (backup)
-  stop_if_not(!is.null(fullnames));
+  stopifnot(!is.null(fullnames));
 
   verbose && exit(verbose);
 
@@ -418,7 +418,7 @@ setMethodS3("process", "MatSmoothing", function(this, ..., units=NULL, force=FAL
   # Sanity check to validate that each group for tiling array
   # has this 1 element
   nbrGroupsPerUnit <- nbrOfGroupsPerUnit(cdf);
-  stop_if_not(all(nbrGroupsPerUnit == 1));
+  stopifnot(all(nbrGroupsPerUnit == 1));
 
   verbose && enter(verbose, "Loading cell PM indices structured according to the CDF");
   cdfCellsList <- getCellIndices(cdf, units=units, stratifyBy="pm");
@@ -437,7 +437,7 @@ setMethodS3("process", "MatSmoothing", function(this, ..., units=NULL, force=FAL
 
   fullnamesOut <- colnames(design);
   # Sanity check (backup)
-  stop_if_not(!is.null(fullnamesOut));
+  stopifnot(!is.null(fullnamesOut));
   verbose && cat(verbose, "Result/output names:");
   verbose && str(verbose, fullnamesOut);
 
@@ -480,7 +480,7 @@ setMethodS3("process", "MatSmoothing", function(this, ..., units=NULL, force=FAL
     sampsKeep <- which(design[,ii] != 0);
 
     # Sanity check (already done in the setup checks, but a 2nd backup)
-    stop_if_not(length(sampsKeep) > 0);
+    stopifnot(length(sampsKeep) > 0);
 
     posOrNeg <- design[sampsKeep,ii];
 
@@ -567,7 +567,7 @@ setMethodS3("process", "MatSmoothing", function(this, ..., units=NULL, force=FAL
       scaleFactor <- nullDists$sd["pos"] / nullDists$sd["neg"];
       verbose && printf(verbose, "Scale factor: %.4g\n", scaleFactor);
       # Sanity check
-      stop_if_not(is.finite(scaleFactor));
+      stopifnot(is.finite(scaleFactor));
       # Not needed anymore
       nullDists <- NULL;
       verbose && exit(verbose);
@@ -590,7 +590,7 @@ setMethodS3("process", "MatSmoothing", function(this, ..., units=NULL, force=FAL
     verbose && exit(verbose);
 
     # Sanity check
-    stop_if_not(length(matScores) == length(allInds));
+    stopifnot(length(matScores) == length(allInds));
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Storing results
@@ -644,7 +644,7 @@ setMethodS3("process", "MatSmoothing", function(this, ..., units=NULL, force=FAL
   outputDataSet <- getOutputDataSet(this, force=TRUE);
 
   # Sanity check
-  stop_if_not(length(outputDataSet) == ncol(design));
+  stopifnot(length(outputDataSet) == ncol(design));
 
   verbose && exit(verbose);
 

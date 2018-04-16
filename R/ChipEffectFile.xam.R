@@ -110,7 +110,7 @@ setMethodS3("getAM", "ChipEffectFile", function(this, other, units=NULL, ..., ve
     # Get the other theta estimates
     thetaR <- getDataFlat(other, units=ugcMap, fields="theta",
                                             verbose=less(verbose))[,"theta"];
-    stop_if_not(identical(length(thetaR), nTheta));
+    stopifnot(identical(length(thetaR), nTheta));
     verbose && exit(verbose);
   } # if (!is.null(other))
 
@@ -129,7 +129,7 @@ setMethodS3("getAM", "ChipEffectFile", function(this, other, units=NULL, ..., ve
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   M <- log(M, base=2);
   A <- log(A, base=2)/2;
-  stop_if_not(identical(length(M), nTheta));
+  stopifnot(identical(length(M), nTheta));
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -123,7 +123,7 @@ setMethodS3("setupExampleData", "AromaAffymetrix", function(pkg, dataset=NULL, c
       if (validate) {
         cdfD <- AffymetrixCdfFile(pathnameD)
         formatD <- getFileFormat(cdfD)
-        stop_if_not(regexpr("v4", formatD) != -1L)
+        stopifnot(regexpr("v4", formatD) != -1L)
       }
     }
   }

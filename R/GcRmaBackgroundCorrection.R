@@ -345,7 +345,7 @@ setMethodS3("process", "GcRmaBackgroundCorrection", function(this, ..., force=FA
         ncs <- getData(df, indices=indicesNegativeControl)$intensities
         verbose && cat(verbose, "Negative-control signals:")
         verbose && str(verbose, ncs)
-        stop_if_not(length(ncs) == length(anc))
+        stopifnot(length(ncs) == length(anc))
         verbose && exit(verbose)
       } else {
         ncs <- NULL

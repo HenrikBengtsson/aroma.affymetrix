@@ -6,7 +6,7 @@ setMethodS3("calculateResidualSet", "ProbeLevelModel", function(this, units=NULL
   qsort <- function(x) {
 ##    o0 <- .Internal(qsort(x, TRUE));
 ##    o <- sort.int(x, index.return=TRUE, method="quick");
-##    stop_if_not(identical(o, o0));
+##    stopifnot(identical(o, o0));
     sort.int(x, index.return=TRUE, method="quick");
   } # qsort()
 
@@ -305,7 +305,7 @@ setMethodS3("calculateResidualSet", "ProbeLevelModel", function(this, units=NULL
 
 #    verbose && enter(verbose, "Verifying");
 #    eps2 <- getData(rf, indices=cells, fields="intensities")$intensities[oinv];
-#    stop_if_not(all.equal(eps, eps2, tolerance=.Machine$double.eps^0.25));
+#    stopifnot(all.equal(eps, eps2, tolerance=.Machine$double.eps^0.25));
 #    verbose && exit(verbose);
 #    # Not needed anymore
 #    eps2 <- NULL;

@@ -33,7 +33,7 @@ dropCellsFromCdfList <- function(cdfList, maxNbrOfCells, cellsToExclude, ..., ve
   toExclude[cellsToExclude] <- TRUE;
 
   # Sanity check (cannot drop all cells)
-  stop_if_not(!all(toExclude));
+  stopifnot(!all(toExclude));
 
   # Nothing todo?
   if (!any(toExclude)) {
@@ -88,7 +88,7 @@ dropCellsFromCdfList <- function(cdfList, maxNbrOfCells, cellsToExclude, ..., ve
       nDropGG <- length(drop);
 
       # Sanity check (assuming not all cells are dropped)
-      ## stop_if_not(nDropGG < nCellsGG);
+      ## stopifnot(nDropGG < nCellsGG);
 
       nbrOfCellsGG <- nCellsGG - nDropGG;
 

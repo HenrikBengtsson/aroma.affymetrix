@@ -153,7 +153,7 @@ setMethodS3("groupUnitsByDimension", "AffymetrixCdfFile", function(this, units=N
   unitsT <- lapply(res, FUN=function(x) x$units);
   unitsT <- unlist(unitsT, use.names=FALSE);
   unitsT <- sort(unitsT);
-  stop_if_not(identical(unitsT, allUnits));
+  stopifnot(identical(unitsT, allUnits));
 
   # (b) Check units in subelements
   setsT <- lapply(res, FUN=function(x) x$sets);
@@ -162,7 +162,7 @@ setMethodS3("groupUnitsByDimension", "AffymetrixCdfFile", function(this, units=N
   });
   unitsT <- unlist(unitsT, use.names=FALSE);
   unitsT2 <- sort(unitsT);
-  stop_if_not(identical(unitsT2, allUnits));
+  stopifnot(identical(unitsT2, allUnits));
 
   # Flatten sets
   sets <- lapply(res, FUN=function(x) { x$sets });
@@ -179,7 +179,7 @@ setMethodS3("groupUnitsByDimension", "AffymetrixCdfFile", function(this, units=N
   dims <- dims[,c(1L,3L,2L)];
 
   # Sanity check
-  stop_if_not(sum(dims[,"nbrOfUnits"]) == length(allUnits));
+  stopifnot(sum(dims[,"nbrOfUnits"]) == length(allUnits));
   verbose && exit(verbose);
 
   res <- list(nestedSets=res, sets=sets, setDimensions=dims);

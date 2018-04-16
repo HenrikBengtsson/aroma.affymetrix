@@ -43,7 +43,7 @@ setMethodS3("exportTotalCnRatioSet", "AffymetrixCnChpSet", function(this, ..., o
     verbose && enter(verbose, sprintf("File %d ('%s') of %d", kk, getName(ce), nbrOfFiles));
 
 #    # Sanity check
-#    stop_if_not(nbrOfUnits(ce) == nbrOfUnits);
+#    stopifnot(nbrOfUnits(ce) == nbrOfUnits);
 
     filename <- sprintf("%s,log2ratio,total.asb", getFullName(ce));
     pathname <- file.path(outPath, filename);
@@ -59,7 +59,7 @@ setMethodS3("exportTotalCnRatioSet", "AffymetrixCnChpSet", function(this, ..., o
     data <- extractLogRatios(ce, verbose=verbose);
     verbose && str(verbose, data);
     # Sanity check
-    stop_if_not(length(data) == nbrOfUnits);
+    stopifnot(length(data) == nbrOfUnits);
     verbose && exit(verbose);
 
     verbose && enter(verbose, "Allocating (temporary) output file");

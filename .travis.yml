@@ -37,6 +37,14 @@ matrix:
       - R_KEEP_PKG_SOURCE=yes
       - _R_S3_METHOD_LOOKUP_BASEENV_AFTER_GLOBALENV_=true
       - _R_S3_METHOD_LOOKUP_USE_TOPENV_AS_DEFENV_=true
+    - os: linux
+      r: devel
+      r_github_packages:
+      - HenrikBengtsson/aroma.core@develop
+      env:
+      - R_KEEP_PKG_SOURCE=yes
+      - _R_S3_METHOD_LOOKUP_BASEENV_AFTER_GLOBALENV_=true
+      - _R_S3_METHOD_LOOKUP_USE_TOPENV_AS_DEFENV_=true
     - os: osx
       r: oldrel
     - os: osx

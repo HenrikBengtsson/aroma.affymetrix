@@ -40,6 +40,7 @@ sourceTestScript <- function(pathname, devel=FALSE, ...) {
     cat("************************************************\n");
     cat("** ", rep(c(" ER", "ROR "), times=6), " **\n", sep="");
     print(ex);
+    print(traceback())
     print(sessionInfo());
     cat("************************************************\n");
     cat("** PATHNAME FAILED: ", pathname, "\n", sep="");

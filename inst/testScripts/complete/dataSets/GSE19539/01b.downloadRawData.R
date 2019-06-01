@@ -1,8 +1,8 @@
-path <- system.file("testScripts/R", package="aroma.affymetrix");
-pathname <- file.path(path, "downloadUtils.R");
-source(pathname);
+path <- system.file("testScripts/R", package="aroma.affymetrix")
+pathname <- file.path(path, "downloadUtils.R")
+source(pathname)
 
-verbose && enter(verbose, "Downloading raw data");
+verbose && enter(verbose, "Downloading raw data")
 
 
 
@@ -22,14 +22,14 @@ verbose && enter(verbose, "Downloading raw data");
 #
 # URL: http://www.ncbi.nlm.nih.gov/projects/geo/query/acc.cgi?acc=GSE19539
 ##########################################################################
-dataSet <- "GSE19539";
-chipType <- "GenomeWideSNP_6";
+dataSet <- "GSE19539"
+chipType <- "GenomeWideSNP_6"
 
-verbose && cat(verbose, "Data set: ", dataSet);
+verbose && cat(verbose, "Data set: ", dataSet)
 
 ds <- downloadGeoRawDataSet(dataSet, chipType=chipType, 
-                   chipTypeAliases=c("GenomeWideEx_6"="GenomeWideSNP_6"));
-print(ds);
+                   chipTypeAliases=c("GenomeWideEx_6"="GenomeWideSNP_6"))
+print(ds)
 
 
-verbose && exit(verbose);
+verbose && exit(verbose)

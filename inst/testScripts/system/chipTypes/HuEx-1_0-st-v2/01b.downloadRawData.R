@@ -1,8 +1,8 @@
-path <- system.file("testScripts/R", package="aroma.affymetrix");
-pathname <- file.path(path, "downloadUtils.R");
-source(pathname);
+path <- system.file("testScripts/R", package="aroma.affymetrix")
+pathname <- file.path(path, "downloadUtils.R")
+source(pathname)
 
-verbose && enter(verbose, "Downloading raw data");
+verbose && enter(verbose, "Downloading raw data")
 
 
 ##########################################################################
@@ -15,12 +15,12 @@ verbose && enter(verbose, "Downloading raw data");
 #
 # URL: http://www.affymetrix.com/support/technical/sample_data/exon_array_data.affx
 ##########################################################################
-dataSet <- "Affymetrix-HeartBrain";
-chipType <- "HuEx-1_0-st-v2";
+dataSet <- "Affymetrix-HeartBrain"
+chipType <- "HuEx-1_0-st-v2"
 
 
-ds <- downloadAffymetrixDataSet(dataSet, chipType=chipType, pathname="support/downloads/demo_data/HuEx-1_0-st-v2.tissue-mixture-data-set.gcos-files.zip");
-print(ds);
+ds <- downloadAffymetrixDataSet(dataSet, chipType=chipType, pathname="support/downloads/demo_data/HuEx-1_0-st-v2.tissue-mixture-data-set.gcos-files.zip")
+print(ds)
 ## AffymetrixCelSet:
 ## Name: Affymetrix-HeartBrain
 ## Tags:
@@ -33,4 +33,4 @@ print(ds);
 ## Total file size: 3360.35MB
 ## RAM: 0.06MB
 
-verbose && exit(verbose);
+verbose && exit(verbose)

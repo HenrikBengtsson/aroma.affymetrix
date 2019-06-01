@@ -1,8 +1,8 @@
-path <- system.file("testScripts/R", package="aroma.affymetrix");
-pathname <- file.path(path, "downloadUtils.R");
-source(pathname);
+path <- system.file("testScripts/R", package="aroma.affymetrix")
+pathname <- file.path(path, "downloadUtils.R")
+source(pathname)
 
-verbose && enter(verbose, "Downloading raw data");
+verbose && enter(verbose, "Downloading raw data")
 
 
 ##########################################################################
@@ -24,13 +24,13 @@ verbose && enter(verbose, "Downloading raw data");
 
 
 
-dataSet <- "GSE34754";
-chipType <- "Mapping250K_Nsp";
+dataSet <- "GSE34754"
+chipType <- "Mapping250K_Nsp"
 
-verbose && cat(verbose, "Data set: ", dataSet);
+verbose && cat(verbose, "Data set: ", dataSet)
 
-ds <- downloadGeoRawDataSet(dataSet, chipType=chipType);
-print(ds);
+ds <- downloadGeoRawDataSet(dataSet, chipType=chipType)
+print(ds)
 ## AffymetrixCelSet:
 ## Name: GSE34754
 ## Tags:
@@ -44,4 +44,4 @@ print(ds);
 ## RAM: 0.02MB
 
 
-verbose && exit(verbose);
+verbose && exit(verbose)

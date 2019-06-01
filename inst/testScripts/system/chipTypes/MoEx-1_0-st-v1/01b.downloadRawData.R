@@ -1,8 +1,8 @@
-path <- system.file("testScripts/R", package="aroma.affymetrix");
-pathname <- file.path(path, "downloadUtils.R");
-source(pathname);
+path <- system.file("testScripts/R", package="aroma.affymetrix")
+pathname <- file.path(path, "downloadUtils.R")
+source(pathname)
 
-verbose && enter(verbose, "Downloading raw data");
+verbose && enter(verbose, "Downloading raw data")
 
 
 ##########################################################################
@@ -23,12 +23,12 @@ verbose && enter(verbose, "Downloading raw data");
 #
 # URL: http://www.ncbi.nlm.nih.gov/projects/geo/query/acc.cgi?acc=GSE20403
 ##########################################################################
-dataSet <- "GSE20403";
-chipType <- "MoEx-1_0-st-v1";
-verbose && cat(verbose, "Data set: ", dataSet);
+dataSet <- "GSE20403"
+chipType <- "MoEx-1_0-st-v1"
+verbose && cat(verbose, "Data set: ", dataSet)
 
-ds <- downloadGeoRawDataSet(dataSet, chipType=chipType);
-print(ds);
+ds <- downloadGeoRawDataSet(dataSet, chipType=chipType)
+print(ds)
 ## AffymetrixCelSet:
 ## Name: GSE20403
 ## Tags:
@@ -41,4 +41,4 @@ print(ds);
 ## Total file size: 756.62MB
 ## RAM: 0.02MB
 
-verbose && exit(verbose);
+verbose && exit(verbose)

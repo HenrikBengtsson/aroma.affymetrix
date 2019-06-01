@@ -1,29 +1,29 @@
 ############################################################################
 # ROBUSTNESS TEST
 ############################################################################
-library("aroma.affymetrix");
-verbose <- Arguments$getVerbose(-4, timestamp=TRUE);
+library("aroma.affymetrix")
+verbose <- Arguments$getVerbose(-4, timestamp=TRUE)
 
-dataSet <- "GSE8605";
-chipType <- "Mapping10K_Xba142";
+dataSet <- "GSE8605"
+chipType <- "Mapping10K_Xba142"
 
-csR <- AffymetrixCelSet$byName(dataSet, chipType=chipType);
-csR <- csR[1:6];
-print(csR);
+csR <- AffymetrixCelSet$byName(dataSet, chipType=chipType)
+csR <- csR[1:6]
+print(csR)
 
-cesN <- doASCRMAv1(csR, verbose=verbose, drop=FALSE)$cesN;
+cesN <- doASCRMAv1(csR, verbose=verbose, drop=FALSE)$cesN
 
 # This should throw "Exception: Unsupported chip effects. ..."
-cbs <- NULL;
+cbs <- NULL
 tryCatch({
-  cbs <- CbsModel(cesN);
+  cbs <- CbsModel(cesN)
 }, error = function(ex) {
-  print(ex);
+  print(ex)
 })
-print(cbs);
+print(cbs)
 
 # Sanity check
-stopifnot(is.null(cbs));
+stopifnot(is.null(cbs))
 
 
 ############################################################################

@@ -620,7 +620,7 @@ setMethodS3("updateSampleAnnotationSet", "AffymetrixCelSet", function(this, ...,
 }, private=TRUE)  # updateSampleAnnotationSet()
 
 
-setMethodS3("byPath", "AffymetrixCelSet", function(static, path, cdf=NULL, pattern="[.](c|C)(e|E)(l|L)$", ..., checkChipType=is.null(cdf), onDuplicates=c("keep", "exclude", "error"), fileClass="AffymetrixCelFile", force=TRUE, verbose=FALSE) {
+setMethodS3("byPath", "AffymetrixCelSet", function(static, path, cdf=NULL, pattern="[.](c|C)(e|E)(l|L)(|[.]lnk|[.]LNK)$", ..., checkChipType=is.null(cdf), onDuplicates=c("keep", "exclude", "error"), fileClass="AffymetrixCelFile", force=TRUE, verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

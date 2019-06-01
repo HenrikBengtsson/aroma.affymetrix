@@ -207,7 +207,7 @@ setMethodS3("fromFile", "AffymetrixCelFile", function(static, filename, path=NUL
   # WORKAROUND: Currently the affxparser code crash R if the file is not
   # a valid CEL file.  The best we can do now is to test against the
   # filename.
-  isCel <- (regexpr("[.](c|C)(e|E)(l|L)$", pathname) != -1)
+  isCel <- (regexpr("[.](c|C)(e|E)(l|L)(|[.]lnk|[.]LNK)$", pathname) != -1)
   if (!isCel) {
     throw("Could not read CEL file. Filename format error: ", pathname)
   }

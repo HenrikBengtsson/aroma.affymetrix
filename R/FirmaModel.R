@@ -235,7 +235,7 @@ setMethodS3("getFirmaSet", "FirmaModel", function(this, ..., verbose=FALSE) {
   # Gets the Class object
   clazz <- getFileSetClass(this)
   fs <- clazz$fromDataSet(dataSet=ds, path=getPath(this), cdf=cdfMono,
-         pattern=",FIRMAscores[.](c|C)(e|E)(l|L)$", verbose=less(verbose))
+         pattern=",FIRMAscores[.](c|C)(e|E)(l|L)(|[.]lnk|[.]LNK)$", verbose=less(verbose))
   verbose && exit(verbose)
 
   # Store in cache

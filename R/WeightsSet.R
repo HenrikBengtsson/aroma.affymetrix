@@ -62,7 +62,7 @@ setMethodS3("getWeightsFileClass", "WeightsSet", function(static, ...) {
 }, static=TRUE, private=TRUE)
 
 
-setMethodS3("byPath", "WeightsSet", function(static, ..., pattern=",weights[.](c|C)(e|E)(l|L)$", fileClass=NULL) {
+setMethodS3("byPath", "WeightsSet", function(static, ..., pattern=",weights[.](c|C)(e|E)(l|L)(|[.]lnk|[.]LNK)$", fileClass=NULL) {
   # Argument 'fileClass':
   if (is.null(fileClass))
     fileClass <- gsub("Set$", "File", class(static)[1])

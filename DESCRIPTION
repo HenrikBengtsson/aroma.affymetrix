@@ -43,7 +43,7 @@ SuggestsNote:
   aroma.light,
   affxparser,
   DNAcopy
-Date: 2018-04-05
+Date: 2018-05-31
 Title: Analysis of Large Affymetrix Microarray Data Sets
 Authors@R: c(
   person("Henrik", "Bengtsson", role=c("aut", "cre", "cph"),

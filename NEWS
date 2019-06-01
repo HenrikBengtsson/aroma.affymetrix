@@ -1,9 +1,15 @@
 Package: aroma.affymetrix
 =========================
 
-Version: 3.1.1-9000 [2018-04-16]
+Version: 3.1.1-9000 [2018-05-31]
 
  o ...
+ 
+BUG FIXES:
+
+ o findByChipType() for AffymetrixCdfFile and AffymetrixPdfFile would
+   only recognize Windows Shortcut Links with a filename extension
+   in lower case (*.lnk) but not in upper case (*.LNK).
  
 
 Version: 3.1.1 [2018-04-16]
@@ -13,7 +19,7 @@ SIGNIFICANT CHANGES:
  o Package requires R (>= 3.2.0) and BioC (>= 3.1) both released
    in April 2015.
 
-BUG FIX:
+BUG FIXES:
 
  o Removed invalid 'break' statement in getAlleleProbePairs() for
    AffymetrixCdfFile.

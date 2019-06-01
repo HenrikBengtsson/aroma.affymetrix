@@ -56,7 +56,7 @@ Authors@R: c(
   person("Ken", "Simpson", role="ctb"))
 Description: A cross-platform R framework that facilitates processing of any number of Affymetrix microarray samples regardless of computer system.  The only parameter that limits the number of chips that can be processed is the amount of available disk space.  The Aroma Framework has successfully been used in studies to process tens of thousands of arrays.  This package has actively been used since 2006.
 License: LGPL (>= 2.1)
-URL: http://www.aroma-project.org/, https://github.com/HenrikBengtsson/aroma.affymetrix
+URL: https://www.aroma-project.org/, https://github.com/HenrikBengtsson/aroma.affymetrix
 BugReports: https://github.com/HenrikBengtsson/aroma.affymetrix/issues
 LazyLoad: TRUE
 biocViews: Infrastructure, ProprietaryPlatforms, ExonArray, Microarray, OneChannel, GUI, DataImport, DataRepresentation, Preprocessing, QualityControl, Visualization, ReportWriting, aCGH, CopyNumberVariants, DifferentialExpression, GeneExpression, SNP, Transcription

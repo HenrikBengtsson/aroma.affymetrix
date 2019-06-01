@@ -3,13 +3,19 @@ Package: aroma.affymetrix
 
 Version: 3.1.1-9000 [2018-05-31]
 
- * ...
+NEW FEATURES:
+
+ * Windows Shortcut links (*.lnk) to CEL files are now also recognized
+   as CEL files.
  
 BUG FIXES:
 
  * findByChipType() for AffymetrixCdfFile and AffymetrixPdfFile would
    only recognize Windows Shortcut Links with a filename extension
    in lower case (*.lnk) but not in upper case (*.LNK).
+
+ * TESTS: Package test on CEL files would produce an error on MS Windows
+   if only Windows Shortcut links were supported but not symbolic links.
  
 
 Version: 3.1.1 [2018-04-16]

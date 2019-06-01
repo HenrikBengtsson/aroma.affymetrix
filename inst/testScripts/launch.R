@@ -1,3 +1,5 @@
+#!/usr/bin/env Rscript
+
 ############################################################################
 # EXAMPLES:
 #
@@ -13,100 +15,100 @@
 # // Run one of the complete analyses
 # Rscript testScripts/launch.R --group=complete --pattern=GSE12702
 ############################################################################
-library("R.utils");
+library("R.utils")
 
-cat("==========================================================\n");
-cat("BEGIN OF SESSION:\n");
+cat("==========================================================\n")
+cat("BEGIN OF SESSION:\n")
 
-cat("Command line arguments:\n");
-args <- cmdArgs();
-print(args);
+cat("Command line arguments:\n")
+args <- cmdArgs()
+print(args)
 
-printf("Hostname: %s\n", System$getHostname());
-printf("Username: %s\n", System$getUsername());
-printf("Current directory: %s\n", getwd());
+printf("Hostname: %s\n", System$getHostname())
+printf("Username: %s\n", System$getUsername())
+printf("Current directory: %s\n", getwd())
 
-cat("R system environment variables:\n");
-sysenv <- c("R_LIBS", "R_LIBS_USER", "R_LIBS_SITE");
-sysenv <- sapply(sysenv, FUN=Sys.getenv, USE.NAMES=TRUE, simplify=FALSE);
-str(sysenv);
+cat("R system environment variables:\n")
+sysenv <- c("R_LIBS", "R_LIBS_USER", "R_LIBS_SITE")
+sysenv <- sapply(sysenv, FUN=Sys.getenv, USE.NAMES=TRUE, simplify=FALSE)
+str(sysenv)
 
-cat(".libPaths():\n");
-print(.libPaths());
+cat(".libPaths():\n")
+print(.libPaths())
 
-print(sessionInfo());
+print(sessionInfo())
 
-cat("Memory statistics:\n");
-print(gc());
+cat("Memory statistics:\n")
+print(gc())
 if (.Platform$OS.type == "windows") {
-  printf("Current memory usage: %g MB\n", memory.size(max=FALSE));
-  printf("Maximum memory usage: %g MB\n", memory.size(max=TRUE));
-  printf("Maximum memory limit: %g MB\n", memory.size(max=NA));
+  printf("Current memory usage: %g MB\n", memory.size(max=FALSE))
+  printf("Maximum memory usage: %g MB\n", memory.size(max=TRUE))
+  printf("Maximum memory limit: %g MB\n", memory.size(max=NA))
 }
-cat("==========================================================\n");
+cat("==========================================================\n")
 
 
 # Load aroma.affymetrix (in a fault-tolerant way)
-kk <- 1L;
+kk <- 1L
 while (kk < 10L) {
-  printf("#%02d. Trying to load aroma.affymetrix...\n", kk);
+  printf("#%02d. Trying to load aroma.affymetrix...\n", kk)
   tryCatch({
-    library("aroma.affymetrix");
-    break;
+    library("aroma.affymetrix")
+    break
   }, error = function(ex) {
-    print(traceback());
-    print(ex);
+    print(traceback())
+    print(ex)
     # Sleep for a while and try again
-    Sys.sleep(10);
-    FALSE;
-  });
-  kk <- kk + 1L;
+    Sys.sleep(10)
+    FALSE
+  })
+  kk <- kk + 1L
 } # while()
-if (kk >= 10L) throw("Failed to load aroma.affymetrix.");
+if (kk >= 10L) throw("Failed to load aroma.affymetrix.")
 
-path <- Arguments$getReadablePath("testScripts/R", mustExist=FALSE);
+path <- Arguments$getReadablePath("testScripts/R", mustExist=FALSE)
 if (!isDirectory(path)) {
-  path <- system.file(package="aroma.affymetrix");
-  path <- file.path(path, "testScripts", "R");
+  path <- system.file(package="aroma.affymetrix")
+  path <- file.path(path, "testScripts", "R")
 }
-path <- Arguments$getReadablePath(path);
+path <- Arguments$getReadablePath(path)
 
-pathname <- file.path(path, "launchUtils.R");
-pathname <- Arguments$getReadablePathname(pathname);
+pathname <- file.path(path, "launchUtils.R")
+pathname <- Arguments$getReadablePathname(pathname)
 
-source(pathname);
+source(pathname)
 
-do.call(launchTestGroups, args);
+do.call(launchTestGroups, args)
 
 
-cat("==========================================================\n");
-cat("END OF SESSION:\n");
+cat("==========================================================\n")
+cat("END OF SESSION:\n")
 # Override default settings with command line arguments
-args <- commandArgs(asValues=TRUE);
-print(args);
+args <- commandArgs(asValues=TRUE)
+print(args)
 
-printf("Hostname: %s\n", System$getHostname());
-printf("Username: %s\n", System$getUsername());
-printf("Current directory: %s\n", getwd());
+printf("Hostname: %s\n", System$getHostname())
+printf("Username: %s\n", System$getUsername())
+printf("Current directory: %s\n", getwd())
 
-cat("R system environment variables:\n");
-sysenv <- c("R_LIBS", "R_LIBS_USER", "R_LIBS_SITE");
-sysenv <- sapply(sysenv, FUN=Sys.getenv, USE.NAMES=TRUE, simplify=FALSE);
-str(sysenv);
+cat("R system environment variables:\n")
+sysenv <- c("R_LIBS", "R_LIBS_USER", "R_LIBS_SITE")
+sysenv <- sapply(sysenv, FUN=Sys.getenv, USE.NAMES=TRUE, simplify=FALSE)
+str(sysenv)
 
-cat(".libPaths():\n");
-print(.libPaths());
+cat(".libPaths():\n")
+print(.libPaths())
 
-print(sessionInfo());
+print(sessionInfo())
 
-cat("Memory statistics:\n");
-print(gc());
+cat("Memory statistics:\n")
+print(gc())
 if (.Platform$OS.type == "windows") {
-  printf("Current memory usage: %g MB\n", memory.size(max=FALSE));
-  printf("Maximum memory usage: %g MB\n", memory.size(max=TRUE));
-  printf("Maximum memory limit: %g MB\n", memory.size(max=NA));
+  printf("Current memory usage: %g MB\n", memory.size(max=FALSE))
+  printf("Maximum memory usage: %g MB\n", memory.size(max=TRUE))
+  printf("Maximum memory limit: %g MB\n", memory.size(max=NA))
 }
-cat("==========================================================\n");
+cat("==========================================================\n")
 
 
 ############################################################################

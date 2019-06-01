@@ -18,7 +18,7 @@ verbose && enter(verbose, "Downloading raw data")
 #  1 replicate of NCI-H2347 (lung adenocarcinoma)
 #  http://www.broad.mit.edu/cancer/pub/solexa_copy_numbers
 #
-# URL: http://www.ncbi.nlm.nih.gov/projects/geo/query/acc.cgi?acc=GSE12019
+# URL: https://www.ncbi.nlm.nih.gov/projects/geo/query/acc.cgi?acc=GSE12019
 ##########################################################################
 dataSet <- "GSE12019,testset"
 chipType <- "Mapping250K_Sty"

@@ -13,7 +13,7 @@ verbose && enter(verbose, "Downloading raw data")
 #
 # Overall design:
 #
-# URL: http://www.affymetrix.com/support/technical/sample_data/exon_array_data.affx
+# URL: https://www.affymetrix.com/support/technical/sample_data/exon_array_data.affx
 ##########################################################################
 dataSet <- "Affymetrix-HeartBrain"
 chipType <- "HuEx-1_0-st-v2"

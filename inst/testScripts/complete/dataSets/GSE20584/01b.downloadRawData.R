@@ -20,7 +20,7 @@ verbose && enter(verbose, "Downloading raw data")
 #  HB 2012-09-15: It doesn't look like there is a patient id available.
 #  Lets just name him 'Patient1'.
 #
-# URL: http://www.ncbi.nlm.nih.gov/projects/geo/query/acc.cgi?acc=GSE20584
+# URL: https://www.ncbi.nlm.nih.gov/projects/geo/query/acc.cgi?acc=GSE20584
 #      ftp://ftp.ncbi.nlm.nih.gov/sra/Submissions/SRA012/SRA012097
 ##########################################################################
 dataSet <- "GSE20584"

@@ -13,7 +13,7 @@ verbose && enter(verbose, "Downloading raw data")
 #
 # Overall design:
 #
-# URL: http://www.affymetrix.com/support/technical/sample_data/genomewide_snp5_data.affx
+# URL: https://www.affymetrix.com/support/technical/sample_data/genomewide_snp5_data.affx
 ##########################################################################
 dataSet <- "Affymetrix-HapMap,CEU,set1"
 chipType <- "GenomeWideSNP_5"

@@ -19,7 +19,7 @@ verbose && enter(verbose, "Downloading raw data")
 #  NCI-H2347BL (matched normal).
 #  http://www.broad.mit.edu/cancer/pub/solexa_copy_numbers/
 #
-# URL: http://www.ncbi.nlm.nih.gov/projects/geo/query/acc.cgi?acc=GSE13372
+# URL: https://www.ncbi.nlm.nih.gov/projects/geo/query/acc.cgi?acc=GSE13372
 ##########################################################################
 dataSet <- "GSE13372,testset"
 chipType <- "GenomeWideSNP_6"

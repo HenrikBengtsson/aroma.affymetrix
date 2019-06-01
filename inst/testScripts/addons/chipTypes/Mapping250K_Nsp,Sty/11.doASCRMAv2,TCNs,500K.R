@@ -9,7 +9,7 @@
 # DATA SET:
 # GEO data set 'GSE12702'. Affymetrix CEL files are available from:
 #
-#   http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE12702
+#   https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE12702
 #
 # Place them in rawData/GSE12702/Mapping250K_{Nsp|Sty}/*.CEL.  In total
 # there are 20 tumor-normal pairs (40 CEL files) per chip type.
@@ -24,7 +24,7 @@
 #  (GenericHuman/
 #    GenericHuman,10kb,HB20090503.ugp.gz)
 #
-# [1] http://aroma-project.org/data/annotationData/chipTypes/
+# [1] https://aroma-project.org/data/annotationData/chipTypes/
 ##########################################################################
 library("aroma.affymetrix")
 library("aroma.cn")

@@ -20,7 +20,7 @@ verbose && enter(verbose, "Downloading raw data")
 #  These 68 array samples and have been run in 10 batches by the same 
 #  user. Batch number is recorded under characteristics.
 #
-# URL: http://www.ncbi.nlm.nih.gov/projects/geo/query/acc.cgi?acc=GSE19539
+# URL: https://www.ncbi.nlm.nih.gov/projects/geo/query/acc.cgi?acc=GSE19539
 ##########################################################################
 dataSet <- "GSE19539"
 chipType <- "GenomeWideSNP_6"

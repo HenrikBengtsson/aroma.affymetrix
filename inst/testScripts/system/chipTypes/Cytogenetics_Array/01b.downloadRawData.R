@@ -13,7 +13,7 @@ verbose && enter(verbose, "Downloading raw data")
 #
 # Overall design:
 #
-# URL: http://www.affymetrix.com/support/technical/byproduct.affx?product=cytogenetics_array
+# URL: https://www.affymetrix.com/support/technical/byproduct.affx?product=cytogenetics_array
 ##########################################################################
 dataSet <- "Affymetrix-CytoSampleData"
 chipType <- "Cytogenetics_Array"

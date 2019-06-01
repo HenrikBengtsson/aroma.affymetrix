@@ -243,7 +243,7 @@ downloadGeoRawDataFiles <- function(..., sampleNames, skip=TRUE) {
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Affymetrix
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-downloadAffymetrixFile <- function(pathname, ..., urlRoot=Sys.getenv("AFFY_URLROOT", "http://www.affymetrix.com/Auth"), skip=TRUE) {
+downloadAffymetrixFile <- function(pathname, ..., urlRoot=Sys.getenv("AFFY_URLROOT", "https://www.affymetrix.com/Auth"), skip=TRUE) {
   # Argument 'pathname':
   filename <- basename(pathname)
   filename <- Arguments$getFilename(filename)

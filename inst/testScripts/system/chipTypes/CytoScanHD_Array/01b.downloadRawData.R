@@ -13,7 +13,7 @@ verbose && enter(verbose, "Downloading raw data")
 #
 # Overall design:
 #
-# URL: http://www.affymetrix.com/estore/browse/products.jsp?productId=prod520004#1_3
+# URL: https://www.affymetrix.com/estore/browse/products.jsp?productId=prod520004#1_3
 ##########################################################################
 dataSet <- "Affymetrix-CytoScanHD"
 chipType <- "CytoScanHD_Array"

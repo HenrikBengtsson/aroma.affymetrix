@@ -19,7 +19,7 @@ verbose && enter(verbose, "Downloading raw data")
 #  B lymphoblastoid cells HCC38-BL and HCC1143-BL, respectively,
 #  in ratios (w/w) 100:0, 80:20, 60:40, 40:60, and 20:80.
 #
-# URL: http://www.ncbi.nlm.nih.gov/projects/geo/query/acc.cgi?acc=GSE34754
+# URL: https://www.ncbi.nlm.nih.gov/projects/geo/query/acc.cgi?acc=GSE34754
 ##########################################################################
 
 

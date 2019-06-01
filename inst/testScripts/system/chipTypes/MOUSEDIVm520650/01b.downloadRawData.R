@@ -18,7 +18,7 @@ verbose && enter(verbose, "Downloading raw data")
 #  analysis was performed for the mouse mammary tumors using genomic DNA
 #  from normal mammary tissue as the reference for copy number inference.
 #
-# URL: http://www.ncbi.nlm.nih.gov/projects/geo/query/acc.cgi?acc=GSE27691
+# URL: https://www.ncbi.nlm.nih.gov/projects/geo/query/acc.cgi?acc=GSE27691
 ##########################################################################
 dataSet <- "GSE27691"
 chipType <- "MOUSEDIVm520650"

@@ -22,7 +22,7 @@ verbose && enter(verbose, "Downloading raw data")
 #  tumor/normal sample in there.  This can be checked using
 #  (beta, beta) plots.
 #
-# URL: http://www.ncbi.nlm.nih.gov/projects/geo/query/acc.cgi?acc=GSE27691
+# URL: https://www.ncbi.nlm.nih.gov/projects/geo/query/acc.cgi?acc=GSE27691
 ##########################################################################
 dataSet <- "GSE27691"
 chipType <- "MOUSEDIVm520650"

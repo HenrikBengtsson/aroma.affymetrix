@@ -70,7 +70,7 @@ setMethodS3("update", "AromaAffymetrix", function(object, ..., verbose=FALSE) {
 
   state <- 0
 
-  url <- "http://www.braju.com/R/hbLite.R"
+  url <- "https://www.braju.com/R/hbLite.R"
   verbose && enter(verbose, "Trying to download update script")
   verbose && cat(verbose, "URL: ", url)
   hbInstall <- NULL

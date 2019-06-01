@@ -25,7 +25,7 @@ verbose && enter(verbose, "Downloading raw data");
 #  number aberration detection and comparisons of tiling array data to
 #  sequencing readouts.
 #
-# URL: http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE24546
+# URL: https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE24546
 ##########################################################################
 dataSet <- "GSE24546";
 tags <- "testset";
@@ -61,7 +61,7 @@ missing <- !sapply(pathnames, FUN=isFile);
 if (any(missing)) {
   filenames <- filenames[missing];
   filenamesGZ <- sprintf("%s.gz",filenames);
-  urlRoot <- "http://aroma-project.org/data";
+  urlRoot <- "https://aroma-project.org/data";
   urlPath <- file.path(urlRoot, "rawData", getFullName(ds), chipType);
   urls <- file.path(urlPath, filenamesGZ);
   pathnamesD <- sapply(urls, FUN=function(url) {

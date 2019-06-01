@@ -21,7 +21,7 @@ verbose && enter(verbose, "Downloading raw data")
 #  Console Software and analysed used the Bioconductor package with R and
 #  the network-based visualisation tool BioLayout Express3D.
 #
-# URL: http://www.ncbi.nlm.nih.gov/projects/geo/query/acc.cgi?acc=GSE20403
+# URL: https://www.ncbi.nlm.nih.gov/projects/geo/query/acc.cgi?acc=GSE20403
 ##########################################################################
 dataSet <- "GSE20403"
 chipType <- "MoEx-1_0-st-v1"

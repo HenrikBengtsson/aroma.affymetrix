@@ -22,7 +22,7 @@ verbose && enter(verbose, "Downloading raw data")
 #  corresponding normal pair to define copy number alterations
 #  (CNA) in that tumor.
 #
-# URL: http://www.ncbi.nlm.nih.gov/projects/geo/query/acc.cgi?acc=GSE12702
+# URL: https://www.ncbi.nlm.nih.gov/projects/geo/query/acc.cgi?acc=GSE12702
 ##########################################################################
 dataSet <- "GSE12702"
 chipTypes <- c("Mapping250K_Nsp", "Mapping250K_Sty")

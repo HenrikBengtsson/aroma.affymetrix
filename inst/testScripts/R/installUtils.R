@@ -18,10 +18,10 @@ installPkg <- function(pkg, ...) {
     if (repos == "CRAN") {
       install.packages(pkg)
     } else if (repos == "BioC") {
-      source("http://www.bioconductor.org/biocLite.R")
+      source("https://www.bioconductor.org/biocLite.R")
       biocLite(pkg, suppressUpdates=TRUE, ask=FALSE)
     } else if (repos == "R-Forge") {
-      install.packages(pkg, repos="http://R-Forge.R-project.org")
+      install.packages(pkg, repos="https://R-Forge.R-project.org")
     }
   }, error = function(ex) {
     print(ex)

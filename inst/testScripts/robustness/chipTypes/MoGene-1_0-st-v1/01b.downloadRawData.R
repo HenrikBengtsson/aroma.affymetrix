@@ -21,7 +21,7 @@ verbose && enter(verbose, "Downloading raw data")
 #  RANKL-treatment, epithelial cells were isolated from small intestine,
 #  and used for microarray analysis.
 #
-# URL: http://www.ncbi.nlm.nih.gov/projects/geo/query/acc.cgi?acc=GSE37861
+# URL: https://www.ncbi.nlm.nih.gov/projects/geo/query/acc.cgi?acc=GSE37861
 ##########################################################################
 dataSet <- "GSE37861"
 chipType <- "MoGene-1_0-st-v1"

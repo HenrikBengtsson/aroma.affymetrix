@@ -2,7 +2,7 @@
 # How is the Regional GC Correction algorithm enhancement implemented?
 # The Regional GC Correction enhancement in the copy number algorithm utilizes information on GC content from the NetAffx NA26.1 annotation. For each marker, the annotation file reports the percent GC content in a half-megabase window. The CN algorithm bins the markers based on this GC content and normalizes the log2 ratios within each bin. Then the algorithm calculates an adjustment factor and applies this factor to each log2 ratio. This generates the GC-corrected log2 ratio for each marker. Please see the Copy Number Algorithm GC Waviness Correction white paper for complete details on the GC Correction algorithm enhancement.
 # Reference:
-# http://www.affymetrix.com/support/help/faqs/genotyping_console/copy_number_analysis/faq_5.jsp
+# https://www.affymetrix.com/support/help/faqs/genotyping_console/copy_number_analysis/faq_5.jsp
 
 setMethodS3("plotCovariateEffects", "GcContentNormalization2", function(this, arrays=NULL, units=NULL, ref="zero", ..., pch=".", lwd=2, xlim=NULL, ylim="auto", xlab="GC fraction", ylab="auto", verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

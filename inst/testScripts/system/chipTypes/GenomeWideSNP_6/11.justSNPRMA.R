@@ -1,14 +1,14 @@
-library("aroma.affymetrix");
-verbose <- Arguments$getVerbose(-8, timestamp=TRUE);
+library("aroma.affymetrix")
+verbose <- Arguments$getVerbose(-8, timestamp=TRUE)
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Setup
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-dataSet <- "GSE13372,testset";
-chipType <- "GenomeWideSNP_6";
+dataSet <- "GSE13372,testset"
+chipType <- "GenomeWideSNP_6"
 
-cdf <- AffymetrixCdfFile$byChipType(chipType);
-csR <- AffymetrixCelSet$byName(dataSet, cdf=cdf);
+cdf <- AffymetrixCdfFile$byChipType(chipType)
+csR <- AffymetrixCelSet$byName(dataSet, cdf=cdf)
 
 # Process only a subset of the arrays.  Since this data set
 # contains many replicates (cf. GEO), they need to be for
@@ -28,22 +28,22 @@ sampleNamesMap <- c(
 #  GSM337703="HCC1954BL_TRIGS_G11",
   GSM337707="NCI-H2347",
   GSM337708="NCI-H2347BL"
-);
-sampleNames <- names(sampleNamesMap);
+)
+sampleNames <- names(sampleNamesMap)
 
-sampleNames <- rev(sampleNames);
-csR <- csR[sampleNames];
-setFullName(csR, sprintf("%s,crlmmSubset", dataSet));
-print(csR);
+sampleNames <- rev(sampleNames)
+csR <- csR[sampleNames]
+setFullName(csR, sprintf("%s,crlmmSubset", dataSet))
+print(csR)
 
 # Assert that the file header of the first CEL file in
 # truly a GenomeWideSNP_6 (and not GenomeWideEx_6 because
 # oligo::justSNPRMA() cannot handle chip type aliases)
-stopifnot(getHeader(csR[[1]])$chiptype == chipType);
+stopifnot(getHeader(csR[[1]])$chiptype == chipType)
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # SNPRMA according to aroma.affymetrix
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-eSet <- justSNPRMA(csR, normalizeToHapmap=TRUE, verbose=verbose);
-print(eSet);
+eSet <- justSNPRMA(csR, normalizeToHapmap=TRUE, verbose=verbose)
+print(eSet)

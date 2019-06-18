@@ -1,8 +1,8 @@
-path <- system.file("testScripts/R", package="aroma.affymetrix");
-pathname <- file.path(path, "downloadUtils.R");
-source(pathname);
+path <- system.file("testScripts/R", package="aroma.affymetrix")
+pathname <- file.path(path, "downloadUtils.R")
+source(pathname)
 
-verbose && enter(verbose, "Downloading raw data");
+verbose && enter(verbose, "Downloading raw data")
 
 
 ##########################################################################
@@ -13,13 +13,13 @@ verbose && enter(verbose, "Downloading raw data");
 #
 # Overall design:
 #
-# URL: http://www.affymetrix.com/estore/browse/products.jsp?productId=prod520004#1_3
+# URL: https://www.affymetrix.com/estore/browse/products.jsp?productId=prod520004#1_3
 ##########################################################################
-dataSet <- "Affymetrix-CytoScanHD";
-chipType <- "CytoScanHD_Array";
+dataSet <- "Affymetrix-CytoScanHD"
+chipType <- "CytoScanHD_Array"
 
-ds <- downloadAffymetrixDataSet(dataSet, chipType=chipType, pathname="support/downloads/data/cytoscan_demo_data.zip");
-print(ds);
+ds <- downloadAffymetrixDataSet(dataSet, chipType=chipType, pathname="support/downloads/data/cytoscan_demo_data.zip")
+print(ds)
 ## AffymetrixCelSet:
 ## Name: Affymetrix-HeartBrain
 ## Tags:
@@ -33,4 +33,4 @@ print(ds);
 ## RAM: 0.01MB
 
 
-verbose && exit(verbose);
+verbose && exit(verbose)

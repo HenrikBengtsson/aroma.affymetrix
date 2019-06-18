@@ -2,23 +2,23 @@ Package: aroma.affymetrix
 Version: 3.1.1-9000
 Depends:
   R (>= 3.2.0),
-  R.utils (>= 2.6.0),
-  aroma.core (>= 3.1.1)
+  R.utils (>= 2.9.0),
+  aroma.core (>= 3.2.0)
 Imports:
   methods,
   R.methodsS3 (>= 1.7.1),
   R.oo (>= 1.21.0),
   R.cache (>= 0.13.0),
-  R.devices (>= 2.15.1),
-  R.filesets (>= 2.11.0),
+  R.devices (>= 2.16.0),
+  R.filesets (>= 2.13.0),
   aroma.apd (>= 0.6.0),
   MASS,
   splines,
-  matrixStats (>= 0.52.2),
+  matrixStats (>= 0.54.0),
   listenv,
   future
 Suggests:
-  DBI (>= 0.5-1),
+  DBI (>= 1.0.0),
   gsmoothr (>= 0.1.7),
   RColorBrewer (>= 1.1-2),
   Biobase (>= 2.28.0),
@@ -43,7 +43,7 @@ SuggestsNote:
   aroma.light,
   affxparser,
   DNAcopy
-Date: 2018-04-05
+Date: 2018-06-17
 Title: Analysis of Large Affymetrix Microarray Data Sets
 Authors@R: c(
   person("Henrik", "Bengtsson", role=c("aut", "cre", "cph"),
@@ -56,8 +56,8 @@ Authors@R: c(
   person("Ken", "Simpson", role="ctb"))
 Description: A cross-platform R framework that facilitates processing of any number of Affymetrix microarray samples regardless of computer system.  The only parameter that limits the number of chips that can be processed is the amount of available disk space.  The Aroma Framework has successfully been used in studies to process tens of thousands of arrays.  This package has actively been used since 2006.
 License: LGPL (>= 2.1)
-URL: http://www.aroma-project.org/, https://github.com/HenrikBengtsson/aroma.affymetrix
+URL: https://www.aroma-project.org/, https://github.com/HenrikBengtsson/aroma.affymetrix
 BugReports: https://github.com/HenrikBengtsson/aroma.affymetrix/issues
 LazyLoad: TRUE
 biocViews: Infrastructure, ProprietaryPlatforms, ExonArray, Microarray, OneChannel, GUI, DataImport, DataRepresentation, Preprocessing, QualityControl, Visualization, ReportWriting, aCGH, CopyNumberVariants, DifferentialExpression, GeneExpression, SNP, Transcription
-RoxygenNote: 6.0.1
+

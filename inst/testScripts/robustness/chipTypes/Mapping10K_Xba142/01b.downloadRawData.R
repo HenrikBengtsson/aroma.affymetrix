@@ -1,8 +1,8 @@
-path <- system.file("testScripts/R", package="aroma.affymetrix");
-pathname <- file.path(path, "downloadUtils.R");
-source(pathname);
+path <- system.file("testScripts/R", package="aroma.affymetrix")
+pathname <- file.path(path, "downloadUtils.R")
+source(pathname)
 
-verbose && enter(verbose, "Downloading raw data");
+verbose && enter(verbose, "Downloading raw data")
 
 
 ##########################################################################
@@ -16,16 +16,16 @@ verbose && enter(verbose, "Downloading raw data");
 #  Focus arrays in duplicate. Correlations were made with copynumber 
 #  profiles from arrayCGH and SNP arrays.
 #
-# URL: http://www.ncbi.nlm.nih.gov/projects/geo/query/acc.cgi?acc=GSE8605
+# URL: https://www.ncbi.nlm.nih.gov/projects/geo/query/acc.cgi?acc=GSE8605
 ##########################################################################
-dataSet <- "GSE8605";
-chipType <- "Mapping10K_Xba142";
+dataSet <- "GSE8605"
+chipType <- "Mapping10K_Xba142"
 
-verbose && cat(verbose, "Data set: ", dataSet);
+verbose && cat(verbose, "Data set: ", dataSet)
 
 ds <- downloadGeoRawDataSet(dataSet, chipType=chipType,
-                            chipTypeAliases=c("Focus"="HG-Focus"));
-verbose && print(verbose, ds);
+                            chipTypeAliases=c("Focus"="HG-Focus"))
+verbose && print(verbose, ds)
 ## AffymetrixCelSet:
 ## Name: GSE8605
 ## Tags:
@@ -38,4 +38,4 @@ verbose && print(verbose, ds);
 ## Total file size: 41.38MB
 ## RAM: 0.01MB
 
-verbose && exit(verbose);
+verbose && exit(verbose)

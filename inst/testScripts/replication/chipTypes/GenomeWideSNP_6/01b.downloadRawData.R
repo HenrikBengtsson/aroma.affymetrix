@@ -1,8 +1,8 @@
-path <- system.file("testScripts/R", package="aroma.affymetrix");
-pathname <- file.path(path, "downloadUtils.R");
-source(pathname);
+path <- system.file("testScripts/R", package="aroma.affymetrix")
+pathname <- file.path(path, "downloadUtils.R")
+source(pathname)
 
-verbose && enter(verbose, "Downloading raw data");
+verbose && enter(verbose, "Downloading raw data")
 
 
 ##########################################################################
@@ -19,10 +19,10 @@ verbose && enter(verbose, "Downloading raw data");
 #  NCI-H2347BL (matched normal).
 #  http://www.broad.mit.edu/cancer/pub/solexa_copy_numbers/
 #
-# URL: http://www.ncbi.nlm.nih.gov/projects/geo/query/acc.cgi?acc=GSE13372
+# URL: https://www.ncbi.nlm.nih.gov/projects/geo/query/acc.cgi?acc=GSE13372
 ##########################################################################
-dataSet <- "GSE13372,testset";
-chipType <- "GenomeWideSNP_6";
+dataSet <- "GSE13372,testset"
+chipType <- "GenomeWideSNP_6"
 
 sampleNamesMap <- c(
   GSM337641="HCC1143_GLEYS_A02",
@@ -39,11 +39,11 @@ sampleNamesMap <- c(
 #  GSM337703="HCC1954BL_TRIGS_G11",
   GSM337707="NCI-H2347",
   GSM337708="NCI-H2347BL"
-);
-sampleNames <- names(sampleNamesMap);
+)
+sampleNames <- names(sampleNamesMap)
 
-ds <- downloadGeoRawDataFiles(dataSet, chipType=chipType, sampleNames=sampleNames);
-print(ds);
+ds <- downloadGeoRawDataFiles(dataSet, chipType=chipType, sampleNames=sampleNames)
+print(ds)
 ## AffymetrixCelSet:
 ## Name: GSE13372
 ## Tags: testset
@@ -56,4 +56,4 @@ print(ds);
 ## Total file size: 395.33MB
 ## RAM: 0.01MB
 
-verbose && exit(verbose);
+verbose && exit(verbose)

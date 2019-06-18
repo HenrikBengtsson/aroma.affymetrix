@@ -1,8 +1,8 @@
-path <- system.file("testScripts/R", package="aroma.affymetrix");
-pathname <- file.path(path, "downloadUtils.R");
-source(pathname);
+path <- system.file("testScripts/R", package="aroma.affymetrix")
+pathname <- file.path(path, "downloadUtils.R")
+source(pathname)
 
-verbose && enter(verbose, "Downloading raw data");
+verbose && enter(verbose, "Downloading raw data")
 
 
 
@@ -20,23 +20,23 @@ verbose && enter(verbose, "Downloading raw data");
 #  HB 2012-09-15: It doesn't look like there is a patient id available.
 #  Lets just name him 'Patient1'.
 #
-# URL: http://www.ncbi.nlm.nih.gov/projects/geo/query/acc.cgi?acc=GSE20584
+# URL: https://www.ncbi.nlm.nih.gov/projects/geo/query/acc.cgi?acc=GSE20584
 #      ftp://ftp.ncbi.nlm.nih.gov/sra/Submissions/SRA012/SRA012097
 ##########################################################################
-dataSet <- "GSE20584";
-chipType <- "GenomeWideSNP_6";
+dataSet <- "GSE20584"
+chipType <- "GenomeWideSNP_6"
 
 sampleNamesMap <- c(
   GSM517071="Patient1,T,lung",
   GSM517072="Patient1,N,adjacent"
-);
-sampleNames <- names(sampleNamesMap);
+)
+sampleNames <- names(sampleNamesMap)
 
-verbose && cat(verbose, "Data set: ", dataSet);
+verbose && cat(verbose, "Data set: ", dataSet)
 
 ds <- downloadGeoRawDataSet(dataSet, chipType=chipType, 
-                   chipTypeAliases=c("GenomeWideEx_6"="GenomeWideSNP_6"));
-print(ds);
+                   chipTypeAliases=c("GenomeWideEx_6"="GenomeWideSNP_6"))
+print(ds)
 
 
-verbose && exit(verbose);
+verbose && exit(verbose)

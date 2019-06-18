@@ -2,25 +2,25 @@
 # Allele-specific CRMAv2
 ##########################################################################
 future::plan("multiprocess")
-library("aroma.affymetrix");
-verbose <- Arguments$getVerbose(-8, timestamp=TRUE);
+library("aroma.affymetrix")
+verbose <- Arguments$getVerbose(-8, timestamp=TRUE)
   
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Setup
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-dataSet <- "GSE12702";
-chipType <- "Mapping250K_Nsp";
+dataSet <- "GSE12702"
+chipType <- "Mapping250K_Nsp"
 
-csR <- AffymetrixCelSet$byName(dataSet, chipType=chipType);
-print(csR);
+csR <- AffymetrixCelSet$byName(dataSet, chipType=chipType)
+print(csR)
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # AS-CRMAv2
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-dsNList <- doASCRMAv2(csR, verbose=verbose);
-print(dsNList);
+dsNList <- doASCRMAv2(csR, verbose=verbose)
+print(dsNList)
 
-dsN <- exportAromaUnitPscnBinarySet(dsNList);
-print(dsN);
+dsN <- exportAromaUnitPscnBinarySet(dsNList)
+print(dsN)

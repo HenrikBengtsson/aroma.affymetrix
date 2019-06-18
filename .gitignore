@@ -5,3 +5,5 @@
 .test
 *Data
 .Rproj.user
+.make
+revdep/

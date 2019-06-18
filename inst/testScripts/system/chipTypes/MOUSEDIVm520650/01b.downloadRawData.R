@@ -1,8 +1,8 @@
-path <- system.file("testScripts/R", package="aroma.affymetrix");
-pathname <- file.path(path, "downloadUtils.R");
-source(pathname);
+path <- system.file("testScripts/R", package="aroma.affymetrix")
+pathname <- file.path(path, "downloadUtils.R")
+source(pathname)
 
-verbose && enter(verbose, "Downloading raw data");
+verbose && enter(verbose, "Downloading raw data")
 
 
 ##########################################################################
@@ -18,14 +18,14 @@ verbose && enter(verbose, "Downloading raw data");
 #  analysis was performed for the mouse mammary tumors using genomic DNA
 #  from normal mammary tissue as the reference for copy number inference.
 #
-# URL: http://www.ncbi.nlm.nih.gov/projects/geo/query/acc.cgi?acc=GSE27691
+# URL: https://www.ncbi.nlm.nih.gov/projects/geo/query/acc.cgi?acc=GSE27691
 ##########################################################################
-dataSet <- "GSE27691";
-chipType <- "MOUSEDIVm520650";
-verbose && cat(verbose, "Data set: ", dataSet);
+dataSet <- "GSE27691"
+chipType <- "MOUSEDIVm520650"
+verbose && cat(verbose, "Data set: ", dataSet)
 
-ds <- downloadGeoRawDataSet(dataSet, chipType=chipType);
-print(ds);
+ds <- downloadGeoRawDataSet(dataSet, chipType=chipType)
+print(ds)
 ## AffymetrixCelSet:
 ## Name: GSE27691
 ## Tags:
@@ -38,4 +38,4 @@ print(ds);
 ## Total file size: 460.79MB
 ## RAM: 0.01MB
 
-verbose && exit(verbose);
+verbose && exit(verbose)

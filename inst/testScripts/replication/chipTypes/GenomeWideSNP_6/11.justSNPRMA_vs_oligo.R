@@ -11,37 +11,37 @@
 # Created: 2008-12-04
 # Last modified: 2010-09-01
 ###########################################################################
-library("aroma.affymetrix");
-library("oligo");
-verbose <- Arguments$getVerbose(-8, timestamp=TRUE);
+library("aroma.affymetrix")
+library("oligo")
+verbose <- Arguments$getVerbose(-8, timestamp=TRUE)
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Local functions
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 compareESets <- function(eSet1, eSet2, tolerance=1e-4) {
   # Default
-  res <- all.equal(eSet1, eSet2, tolerance=tolerance);
-  if (!isTRUE(res)) return(res);
+  res <- all.equal(eSet1, eSet2, tolerance=tolerance)
+  if (!isTRUE(res)) return(res)
 
   # Compare assayData()
-  data1 <- assayData(eSet1);
-  data2 <- assayData(eSet2);
-  data1 <- as.list(data1);
-  data2 <- as.list(data2);
-  res <- all.equal(data1, data2, tolerance=tolerance);
-  if (!isTRUE(res)) return(res);
-  TRUE;
+  data1 <- assayData(eSet1)
+  data2 <- assayData(eSet2)
+  data1 <- as.list(data1)
+  data2 <- as.list(data2)
+  res <- all.equal(data1, data2, tolerance=tolerance)
+  if (!isTRUE(res)) return(res)
+  TRUE
 } # compareESets()
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Setup
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-dataSet <- "GSE13372,testset";
-chipType <- "GenomeWideSNP_6";
+dataSet <- "GSE13372,testset"
+chipType <- "GenomeWideSNP_6"
 
-cdf <- AffymetrixCdfFile$byChipType(chipType);
-csR <- AffymetrixCelSet$byName(dataSet, cdf=cdf);
+cdf <- AffymetrixCdfFile$byChipType(chipType)
+csR <- AffymetrixCelSet$byName(dataSet, cdf=cdf)
 
 # Process only a subset of the arrays.  Since this data set
 # contains many replicates (cf. GEO), they need to be for
@@ -61,45 +61,45 @@ sampleNamesMap <- c(
 #  GSM337703="HCC1954BL_TRIGS_G11",
   GSM337707="NCI-H2347",
   GSM337708="NCI-H2347BL"
-);
-sampleNames <- names(sampleNamesMap);
+)
+sampleNames <- names(sampleNamesMap)
 
-sampleNames <- rev(sampleNames);
-csR <- csR[sampleNames];
-setFullName(csR, sprintf("%s,crlmmSubset", dataSet));
-print(csR);
+sampleNames <- rev(sampleNames)
+csR <- csR[sampleNames]
+setFullName(csR, sprintf("%s,crlmmSubset", dataSet))
+print(csR)
 
 # Assert that the file header of the first CEL file in
 # truly a GenomeWideSNP_6 (and not GenomeWideEx_6 because
 # oligo::justSNPRMA() cannot handle chip type aliases)
-stopifnot(getHeader(csR[[1]])$chiptype == chipType);
+stopifnot(getHeader(csR[[1]])$chiptype == chipType)
 
 # Assert that the correct Platform Design package is installed
-pdPkgName <- cleanPlatformName(chipType);
-library(pdPkgName, character.only=TRUE);
+pdPkgName <- cleanPlatformName(chipType)
+library(pdPkgName, character.only=TRUE)
 
 for (normalizeToHapmap in c(FALSE, TRUE)) {
-  verbose && enter(verbose, sprintf("justSNPRMA(..., normalizeToHapMap=%s)", normalizeToHapmap));
+  verbose && enter(verbose, sprintf("justSNPRMA(..., normalizeToHapMap=%s)", normalizeToHapmap))
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # SNPRMA according to aroma.affymetrix
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  eSet <- justSNPRMA(csR, normalizeToHapmap=normalizeToHapmap, verbose=verbose);
-  print(eSet);
+  eSet <- justSNPRMA(csR, normalizeToHapmap=normalizeToHapmap, verbose=verbose)
+  print(eSet)
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # SNPRMA according to oligo
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  eSet0 <- justSNPRMA(getPathnames(csR), normalizeToHapmap=normalizeToHapmap, verbose=as.logical(verbose));
-  print(eSet0);
+  eSet0 <- justSNPRMA(getPathnames(csR), normalizeToHapmap=normalizeToHapmap, verbose=as.logical(verbose))
+  print(eSet0)
 
   if (!normalizeToHapmap) {
     # CLEAN UP: justSNPRMA() stores a target distribution file
     # in the working directory that we don't need
-    filename <- sprintf("%s.quantileReference.rda", pdPkgName);
+    filename <- sprintf("%s.quantileReference.rda", pdPkgName)
     if (isFile(filename)) {
-      file.remove(filename);
+      file.remove(filename)
     }
   }
 
@@ -107,11 +107,11 @@ for (normalizeToHapmap in c(FALSE, TRUE)) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Compare
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  res <- compareESets(eSet, eSet0, tolerance=0.02);
-  verbose && print(verbose, res);
+  res <- compareESets(eSet, eSet0, tolerance=0.02)
+  verbose && print(verbose, res)
 
   # Sanity check
-  stopifnot(res);
+  stopifnot(res)
 
-  verbose && exit(verbose);
+  verbose && exit(verbose)
 } # for (normalizeToHapmap ...)

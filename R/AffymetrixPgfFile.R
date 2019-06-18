@@ -191,7 +191,7 @@ setMethodS3("findByChipType", "AffymetrixPgfFile", function(static, chipType, ta
     # Search for a Windows shortcut
     args <- list(
       chipType=chipType,
-      pattern=sprintf("^%s%s[.]lnk$", fullname, extPattern),
+      pattern=sprintf("^%s%s[.](lnk|LNK)$", fullname, extPattern),
       ...
     )
     pathname <- do.call(findAnnotationDataByChipType, args=args)

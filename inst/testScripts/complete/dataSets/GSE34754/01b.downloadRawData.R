@@ -1,8 +1,8 @@
-path <- system.file("testScripts/R", package="aroma.affymetrix");
-pathname <- file.path(path, "downloadUtils.R");
-source(pathname);
+path <- system.file("testScripts/R", package="aroma.affymetrix")
+pathname <- file.path(path, "downloadUtils.R")
+source(pathname)
 
-verbose && enter(verbose, "Downloading raw data");
+verbose && enter(verbose, "Downloading raw data")
 
 
 ##########################################################################
@@ -19,18 +19,18 @@ verbose && enter(verbose, "Downloading raw data");
 #  B lymphoblastoid cells HCC38-BL and HCC1143-BL, respectively,
 #  in ratios (w/w) 100:0, 80:20, 60:40, 40:60, and 20:80.
 #
-# URL: http://www.ncbi.nlm.nih.gov/projects/geo/query/acc.cgi?acc=GSE34754
+# URL: https://www.ncbi.nlm.nih.gov/projects/geo/query/acc.cgi?acc=GSE34754
 ##########################################################################
 
 
 
-dataSet <- "GSE34754";
-chipType <- "Mapping250K_Nsp";
+dataSet <- "GSE34754"
+chipType <- "Mapping250K_Nsp"
 
-verbose && cat(verbose, "Data set: ", dataSet);
+verbose && cat(verbose, "Data set: ", dataSet)
 
-ds <- downloadGeoRawDataSet(dataSet, chipType=chipType);
-print(ds);
+ds <- downloadGeoRawDataSet(dataSet, chipType=chipType)
+print(ds)
 ## AffymetrixCelSet:
 ## Name: GSE34754
 ## Tags:
@@ -44,4 +44,4 @@ print(ds);
 ## RAM: 0.02MB
 
 
-verbose && exit(verbose);
+verbose && exit(verbose)

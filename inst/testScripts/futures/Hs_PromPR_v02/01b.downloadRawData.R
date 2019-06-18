@@ -20,7 +20,7 @@ verbose && enter(verbose, "Downloading raw data")
 #  number aberration detection and comparisons of tiling array data to
 #  sequencing readouts.
 #
-# URL: http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE24546
+# URL: https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE24546
 ##########################################################################
 dataSet <- "GSE24546"
 tags <- "testset"

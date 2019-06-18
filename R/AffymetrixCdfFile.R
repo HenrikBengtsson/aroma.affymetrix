@@ -222,7 +222,7 @@ setMethodS3("findByChipType", "AffymetrixCdfFile", function(static, chipType, ta
     # Search for a Windows shortcut
     args <- list(
       chipType=chipType,
-      pattern=sprintf("^%s%s[.]lnk$", fullname, extPattern),
+      pattern=sprintf("^%s%s[.](lnk|LNK)$", fullname, extPattern),
       ...
     )
     pathname <- do.call(findAnnotationDataByChipType, args=args)
@@ -1591,7 +1591,7 @@ setMethodS3("validate", "AffymetrixCdfFile", function(this, ...) {
   #    Error: Detected 1 unit(s) (i.e. 11973) with zero unit groups: ...
   #   because it's CDF header claims to have 11,973 units, whereas there
   #   are only 11,972.  See also thread '[customcdf] ENTREZG, AUGUSTUST
-  #   for pig species is updated' on May 8, 2012 [http://goo.gl/Xg1pp]
+  #   for pig species is updated' on May 8, 2012 [https://goo.gl/Xg1pp]
   #
   # Examples:
   # o HTHGU133A_Hs_ENTREZG.cdf (v 12.0.0) [as above]
@@ -1608,7 +1608,7 @@ setMethodS3("validate", "AffymetrixCdfFile", function(this, ...) {
   #    Error: Detected 1 unit(s) (i.e. 11973) with empty unit names: ...
   #   because it's CDF header claims to have 11,973 units, whereas there
   #   are only 11,972.  See also thread '[customcdf] ENTREZG, AUGUSTUST
-  #   for pig species is updated' on May 8, 2012 [http://goo.gl/Xg1pp]
+  #   for pig species is updated' on May 8, 2012 [https://goo.gl/Xg1pp]
   #
   # Examples:
   # o HTHGU133A_Hs_ENTREZG.cdf (v 12.0.0) [as above]

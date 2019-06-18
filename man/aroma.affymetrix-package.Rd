@@ -22,19 +22,19 @@
 
   The preferred way to install this package is:
   \preformatted{
-   source("http://callr.org/install#aroma.affymetrix")
+   source("https://callr.org/install#aroma.affymetrix")
   }
 }
 
 \section{To get started}{
   To get started, see the online user guides and the vignettes
-  \url{http://www.aroma-project.org/}.
+  \url{https://www.aroma-project.org/}.
 }
 
 \section{How to cite this package}{
  In order to keep improving and providing support for this project,
  please cite references [1], [2], or any applicable publication listed on
- \url{http://aroma-project.org/publications/}, whenever you publish
+ \url{https://aroma-project.org/publications/}, whenever you publish
  work that have been used any of the Aroma Framework.
 }
 
@@ -58,6 +58,6 @@
  [3] H. Bengtsson, \emph{The R.oo package - Object-Oriented Programming with References Using Standard R Code}, In Kurt Hornik, Friedrich Leisch and Achim Zeileis, editors, Proceedings of the 3rd International Workshop on Distributed Statistical Computing (DSC 2003), March 20-22, Vienna, Austria. \url{http://www.ci.tuwien.ac.at/Conferences/DSC-2003/Proceedings/}
  \cr
 
- For a complete list, see \url{http://aroma-project.org/publications/}.
+ For a complete list, see \url{https://aroma-project.org/publications/}.
 }
 \keyword{package}

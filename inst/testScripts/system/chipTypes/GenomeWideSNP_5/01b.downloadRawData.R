@@ -1,8 +1,8 @@
-path <- system.file("testScripts/R", package="aroma.affymetrix");
-pathname <- file.path(path, "downloadUtils.R");
-source(pathname);
+path <- system.file("testScripts/R", package="aroma.affymetrix")
+pathname <- file.path(path, "downloadUtils.R")
+source(pathname)
 
-verbose && enter(verbose, "Downloading raw data");
+verbose && enter(verbose, "Downloading raw data")
 
 
 ##########################################################################
@@ -13,13 +13,13 @@ verbose && enter(verbose, "Downloading raw data");
 #
 # Overall design:
 #
-# URL: http://www.affymetrix.com/support/technical/sample_data/genomewide_snp5_data.affx
+# URL: https://www.affymetrix.com/support/technical/sample_data/genomewide_snp5_data.affx
 ##########################################################################
-dataSet <- "Affymetrix-HapMap,CEU,set1";
-chipType <- "GenomeWideSNP_5";
+dataSet <- "Affymetrix-HapMap,CEU,set1"
+chipType <- "GenomeWideSNP_5"
 
-ds <- downloadAffymetrixDataSet(dataSet, chipType=chipType, pathname="support/downloads/data/GW_SNP5_GCOS_CEL_1.zip");
-print(ds);
+ds <- downloadAffymetrixDataSet(dataSet, chipType=chipType, pathname="support/downloads/data/GW_SNP5_GCOS_CEL_1.zip")
+print(ds)
 ## AffymetrixCelSet:
 ## Name: Affymetrix-HapMap
 ## Tags: CEU,testSet
@@ -33,4 +33,4 @@ print(ds);
 ## RAM: 0.03MB
 
 
-verbose && exit(verbose);
+verbose && exit(verbose)

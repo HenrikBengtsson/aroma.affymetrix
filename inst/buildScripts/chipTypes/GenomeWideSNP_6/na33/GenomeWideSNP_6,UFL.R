@@ -1,6 +1,6 @@
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Data sources
-#http://www.affymetrix.com/estore/browse/products.jsp?productId=131533
+#https://www.affymetrix.com/estore/browse/products.jsp?productId=131533
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 if (interactive()) savehistory();
 library("aroma.affymetrix");

@@ -16,7 +16,7 @@ verbose && enter(verbose, "Downloading raw data")
 #  Focus arrays in duplicate. Correlations were made with copynumber
 #  profiles from arrayCGH and SNP arrays.
 #
-# URL: http://www.ncbi.nlm.nih.gov/projects/geo/query/acc.cgi?acc=GSE8605
+# URL: https://www.ncbi.nlm.nih.gov/projects/geo/query/acc.cgi?acc=GSE8605
 ##########################################################################
 dataSet <- "GSE8605"
 chipType <- "Mapping10K_Xba142"

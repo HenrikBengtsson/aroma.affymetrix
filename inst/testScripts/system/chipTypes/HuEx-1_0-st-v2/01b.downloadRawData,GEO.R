@@ -14,7 +14,7 @@ verbose && enter(verbose, "Downloading raw data")
 #     GSM605957.CEL
 #
 #
-# URL: http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE34184
+# URL: https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE34184
 ##########################################################################
 dataSet <- "GSE34184"
 tags <- "testset"

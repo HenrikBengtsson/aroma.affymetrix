@@ -1,8 +1,8 @@
-path <- system.file("testScripts/R", package="aroma.affymetrix");
-pathname <- file.path(path, "downloadUtils.R");
-source(pathname);
+path <- system.file("testScripts/R", package="aroma.affymetrix")
+pathname <- file.path(path, "downloadUtils.R")
+source(pathname)
 
-verbose && enter(verbose, "Downloading raw data");
+verbose && enter(verbose, "Downloading raw data")
 
 
 ##########################################################################
@@ -21,14 +21,14 @@ verbose && enter(verbose, "Downloading raw data");
 #  RANKL-treatment, epithelial cells were isolated from small intestine,
 #  and used for microarray analysis.
 #
-# URL: http://www.ncbi.nlm.nih.gov/projects/geo/query/acc.cgi?acc=GSE37861
+# URL: https://www.ncbi.nlm.nih.gov/projects/geo/query/acc.cgi?acc=GSE37861
 ##########################################################################
-dataSet <- "GSE37861";
-chipType <- "MoGene-1_0-st-v1";
-verbose && cat(verbose, "Data set: ", dataSet);
+dataSet <- "GSE37861"
+chipType <- "MoGene-1_0-st-v1"
+verbose && cat(verbose, "Data set: ", dataSet)
 
-ds <- downloadGeoRawDataSet(dataSet, chipType=chipType);
-print(ds);
+ds <- downloadGeoRawDataSet(dataSet, chipType=chipType)
+print(ds)
 ## AffymetrixCelSet:
 ## Name: GSE37861
 ## Tags:
@@ -41,4 +41,4 @@ print(ds);
 ## Total file size: 158.41MB
 ## RAM: 0.02MB
 
-verbose && exit(verbose);
+verbose && exit(verbose)

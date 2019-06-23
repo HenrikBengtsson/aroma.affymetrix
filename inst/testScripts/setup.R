@@ -1,22 +1,25 @@
-library("aroma.affymetrix");
+#!/usr/bin/env Rscript
 
-pathT <- system.file("testScripts", package="aroma.affymetrix");
-pathT <- Arguments$getReadablePath(pathT);
+library("aroma.affymetrix")
 
-path <- "testScripts/";
-path <- filePath(path, expandLinks="any");
+pathT <- system.file("testScripts", package="aroma.affymetrix")
+pathT <- Arguments$getReadablePath(pathT)
+
+path <- "testScripts/"
+path <- filePath(path, expandLinks="any")
 if (!isDirectory(path)) {
-  createLink(target=pathT);
+  createLink(target=pathT)
 }
-path <- Arguments$getReadablePath(path);
+path <- Arguments$getReadablePath(path)
 
-pathname <- "menu.Rex";
+pathname <- "menu.Rex"
 if (!isFile(pathname)) {
   code <- c(
-    'if (interactive()) savehistory();',
-    'library("R.menu");',
-    'launchMenu("testScripts");'
-  );
-  cat(file=pathname, code, sep="\n");
+    'if (interactive()) savehistory()',
+    'library("R.menu")',
+    'launchMenu("testScripts")'
+  )
+  cat(file=pathname, code, sep="\n")
 }
-pathname <- Arguments$getReadablePathname(pathname);
+pathname <- Arguments$getReadablePathname(pathname)
+

@@ -63,7 +63,7 @@ setMethodS3("getResidualFileClass", "ResidualSet", function(static, ...) {
 }, static=TRUE, private=TRUE)
 
 
-setMethodS3("byPath", "ResidualSet", function(static, ..., pattern=",residuals[.](c|C)(e|E)(l|L)$", cdf=NULL, fileClass=NULL) {
+setMethodS3("byPath", "ResidualSet", function(static, ..., pattern=",residuals[.](c|C)(e|E)(l|L)(|[.]lnk|[.]LNK)$", cdf=NULL, fileClass=NULL) {
   # Argument 'cdf':
   if (!is.null(cdf)) {
     cdf <- Arguments$getInstanceOf(cdf, "AffymetrixCdfFile")

@@ -1,8 +1,8 @@
-path <- system.file("testScripts/R", package="aroma.affymetrix");
-pathname <- file.path(path, "downloadUtils.R");
-source(pathname);
+path <- system.file("testScripts/R", package="aroma.affymetrix")
+pathname <- file.path(path, "downloadUtils.R")
+source(pathname)
 
-verbose && enter(verbose, "Downloading raw data");
+verbose && enter(verbose, "Downloading raw data")
 
 
 ##########################################################################
@@ -13,15 +13,15 @@ verbose && enter(verbose, "Downloading raw data");
 #
 # URL: ftp://ftp.ncbi.nlm.nih.gov/hapmap/raw_data/affy100k/
 ##########################################################################
-dataSet <- "HapMap,CEU,testset";
-chipTypes <- c("Mapping50K_Hind240", "Mapping50K_Xba240");
+dataSet <- "HapMap,CEU,testset"
+chipTypes <- c("Mapping50K_Hind240", "Mapping50K_Xba240")
 sampleNames <- c("CEU_NA06985", "CEU_NA06991", "CEU_NA06993",
-                 "CEU_NA06994", "CEU_NA07000", "CEU_NA07019");
+                 "CEU_NA06994", "CEU_NA07000", "CEU_NA07019")
 
-verbose && cat(verbose, "Data set: ", dataSet);
+verbose && cat(verbose, "Data set: ", dataSet)
 
-ds <- downloadHapMapSamples(dataSet, chipType=chipTypes[1], sampleNames=sampleNames);
-print(ds);
+ds <- downloadHapMapSamples(dataSet, chipType=chipTypes[1], sampleNames=sampleNames)
+print(ds)
 ## AffymetrixCelSet:
 ## Name: HapMap
 ## Tags: CEU
@@ -34,4 +34,4 @@ print(ds);
 ## Total file size: 146.86MB
 ## RAM: 0.01MB
 
-verbose && exit(verbose);
+verbose && exit(verbose)

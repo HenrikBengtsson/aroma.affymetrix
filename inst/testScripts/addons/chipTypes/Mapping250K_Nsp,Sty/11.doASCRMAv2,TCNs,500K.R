@@ -9,7 +9,7 @@
 # DATA SET:
 # GEO data set 'GSE12702'. Affymetrix CEL files are available from:
 #
-#   http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE12702
+#   https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE12702
 #
 # Place them in rawData/GSE12702/Mapping250K_{Nsp|Sty}/*.CEL.  In total
 # there are 20 tumor-normal pairs (40 CEL files) per chip type.
@@ -24,24 +24,24 @@
 #  (GenericHuman/
 #    GenericHuman,10kb,HB20090503.ugp.gz)
 #
-# [1] http://aroma-project.org/data/annotationData/chipTypes/
+# [1] https://aroma-project.org/data/annotationData/chipTypes/
 ##########################################################################
-library("aroma.affymetrix");
-library("aroma.cn");
-verbose <- Arguments$getVerbose(-8, timestamp=TRUE);
+library("aroma.affymetrix")
+library("aroma.cn")
+verbose <- Arguments$getVerbose(-8, timestamp=TRUE)
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # AS-CRMAv2
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-dataSet <- "GSE12702";
-chipTypes <- c("Mapping250K_Nsp", "Mapping250K_Sty");
+dataSet <- "GSE12702"
+chipTypes <- c("Mapping250K_Nsp", "Mapping250K_Sty")
 dsList <- lapply(chipTypes, FUN=function(chipType) {
-  dsNList <- doASCRMAv2(dataSet, chipType=chipType, verbose=verbose);
-  dsNList$total;
-});
-names(dsList) <- chipTypes;
-print(dsList);
+  dsNList <- doASCRMAv2(dataSet, chipType=chipType, verbose=verbose)
+  dsNList$total
+})
+names(dsList) <- chipTypes
+print(dsList)
 ## $Mapping250K_Nsp
 ## AromaUnitTotalCnBinarySet:
 ## Name: GSE12702
@@ -150,18 +150,18 @@ GSM318809	T	Patient80
 GSM318810	N	Patient80
 GSM318811	T	Patient96
 GSM318812	N	Patient96
-");
+")
 
-# Apply fullname translators;
+# Apply fullname translators
 # this avoids having to rename the actual files
 fnt <- function(names, ...) {
-  names <- gsub(",total", "", names);
-  data <- sad[names,];
-  paste(data$sampleName, data$sampleType, names, "total", sep=",");
+  names <- gsub(",total", "", names)
+  data <- sad[names,]
+  paste(data$sampleName, data$sampleType, names, "total", sep=",")
 }
-dsList <- lapply(dsList, FUN=setFullNamesTranslator, fnt);
+dsList <- lapply(dsList, FUN=setFullNamesTranslator, fnt)
 
-# Example without translators;
+# Example without translators
 # the names do not pair up across the two chip types
 print(getFullNames(dsList[[1]], translate=FALSE)[1:2])
 print(getFullNames(dsList[[2]], translate=FALSE)[1:2])
@@ -173,8 +173,8 @@ print(getFullNames(dsList[[2]], translate=TRUE)[1:2])
 
 
 # Order both datasets by <sampleName>,<sampleType>
-names <- gsub(",GSM.*", "", getFullNames(dsList[[1]]));
-dsList <- lapply(dsList, FUN=`[`, names);
+names <- gsub(",GSM.*", "", getFullNames(dsList[[1]]))
+dsList <- lapply(dsList, FUN=`[`, names)
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -182,36 +182,36 @@ dsList <- lapply(dsList, FUN=`[`, names);
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Extract tumors and normals
 dsTList <- lapply(dsList, FUN=function(ds) {
-  ds[sapply(ds, FUN=hasTag, "T")];
-});
+  ds[sapply(ds, FUN=hasTag, "T")]
+})
 
 dsNList <- lapply(dsList, FUN=function(ds) {
-  ds[sapply(ds, FUN=hasTag, "N")];
-});
+  ds[sapply(ds, FUN=hasTag, "N")]
+})
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # (A) Paired tumor-normal segmentation when the tumors and the normals
 #     are hybridized on the same (Mapping250K_Nsp) chip type
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-dsT <- dsTList$Mapping250K_Nsp;
-dsN <- dsNList$Mapping250K_Nsp;
-seg <- CbsModel(dsT, ref=dsN);
-print(seg);
+dsT <- dsTList$Mapping250K_Nsp
+dsN <- dsNList$Mapping250K_Nsp
+seg <- CbsModel(dsT, ref=dsN)
+print(seg)
 
-ce <- ChromosomeExplorer(seg);
+ce <- ChromosomeExplorer(seg)
 
 # Segment Chr8 of tumor GSM318736 (cf. FigS3 of the CalMaTe paper).
-sampleName <- sad["GSM318736", "sampleName"];
-idx <- match(sampleName, getNames(ce));
-process(ce, arrays=idx, chromosomes=c(2,8), verbose=verbose);
+sampleName <- sad["GSM318736", "sampleName"]
+idx <- match(sampleName, getNames(ce))
+process(ce, arrays=idx, chromosomes=c(2,8), verbose=verbose)
 
 # Look at the segmentation in ChromosomeExplorer
-display(ce);
+display(ce)
 
 # Or open manually in the following directory
-path <- print(getParent(getPath(ce), 2));
-print(path);
+path <- print(getParent(getPath(ce), 2))
+print(path)
 
 
 
@@ -244,11 +244,11 @@ print(path);
 # This can for instance be HapMap samples.  In this example, in order
 # avoid making this analysis too big, we simply use the set of normal
 # samples in the GSE12702 data.
-dsRList <- dsNList;
+dsRList <- dsNList
 
 # Calculate the reference as the average across reference samples
-dfRList <- lapply(dsRList, FUN=getAverageFile);
-print(dfRList);
+dfRList <- lapply(dsRList, FUN=getAverageFile)
+print(dfRList)
 ## $Mapping250K_Nsp
 ## AromaUnitTotalCnBinaryFile:
 ## Name: .average-signals-median-mad
@@ -299,24 +299,24 @@ print(dfRList);
 # where C_T is from Mapping250_Nsp and C_N is from Mapping250_Sty
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # C_T = 2*T/R_T
-dsT <- dsTList$Mapping250K_Nsp;
-dfRT <- dfRList$Mapping250K_Nsp;
-dsCT <- exportTotalCnRatioSet(dsT, ref=dfRT);
+dsT <- dsTList$Mapping250K_Nsp
+dfRT <- dfRList$Mapping250K_Nsp
+dsCT <- exportTotalCnRatioSet(dsT, ref=dfRT)
 # Workaround: Currently exportTotalCnRatioSet() returns everything
 # it finds in the output directory and not (as it should) only the
 # samples corresponding to the input data set.  The following does
 # the latter for us, in this particular example (just in case).
-names <- gsub(",GSM.*", "", getFullNames(dsT));
-dsCT <- dsCT[names];
+names <- gsub(",GSM.*", "", getFullNames(dsT))
+dsCT <- dsCT[names]
 
 
 # C_N = 2*N/R_N
-dsN <- dsNList$Mapping250K_Sty;
-dfRN <- dfRList$Mapping250K_Sty;
-dsCN <- exportTotalCnRatioSet(dsN, ref=dfRN);
+dsN <- dsNList$Mapping250K_Sty
+dfRN <- dfRList$Mapping250K_Sty
+dsCN <- exportTotalCnRatioSet(dsN, ref=dfRN)
 # Same workaround
-names <- gsub(",GSM.*", "", getFullNames(dsN));
-dsCN <- dsCN[names];
+names <- gsub(",GSM.*", "", getFullNames(dsN))
+dsCN <- dsCN[names]
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -324,8 +324,8 @@ dsCN <- dsCN[names];
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # To bin only one sample, subset dsCT and dsCN here, e.g.
   sampleName <- sad["GSM318736", "sampleName"]; # => Patient45
-  dsCT <- dsCT[sampleName];
-  dsCN <- dsCN[sampleName];
+  dsCT <- dsCT[sampleName]
+  dsCN <- dsCN[sampleName]
 
 # Bin one chip type to the other. If one chip type has many more
 # loci than another, bin the former to the latter to increase the
@@ -342,39 +342,39 @@ dsCN <- dsCN[names];
 # different weights in the segmentation.  This is currently not
 # done, mainly because none of the bin counts are recorded by
 # TotalCnBinnedSmoothing.
-ugpCT <- getAromaUgpFile(dsCT);
-ugpCN <- getAromaUgpFile(dsCN);
+ugpCT <- getAromaUgpFile(dsCT)
+ugpCN <- getAromaUgpFile(dsCN)
 if (nbrOfUnits(ugpCT) > nbrOfUnits(ugpCN)) {
-  targetUgp <- ugpCN;
+  targetUgp <- ugpCN
 } else {
-  targetUgp <- ugpCT;
+  targetUgp <- ugpCT
 }
 
 # Alternatively, one can bin to uniformly distributed set of loci,
 # e.g. 10kb bins.  The downside of this is that both chip types
 # have to be binned, which means longer processing times.  Example:
-#  targetUgp <- AromaUgpFile$byChipType("GenericHuman", tags="10kb");
+#  targetUgp <- AromaUgpFile$byChipType("GenericHuman", tags="10kb")
 
 # Calculate C'_T by binning C_T ratios
-isBinningNeeded <- (!equals(getAromaUgpFile(dsCT), targetUgp));
+isBinningNeeded <- (!equals(getAromaUgpFile(dsCT), targetUgp))
 if (isBinningNeeded) {
-  tcsCT <- TotalCnBinnedSmoothing(dsCT, targetUgp=targetUgp);
-  print(tcsCT);
-  dsCTs <- process(tcsCT, verbose=verbose);
+  tcsCT <- TotalCnBinnedSmoothing(dsCT, targetUgp=targetUgp)
+  print(tcsCT)
+  dsCTs <- process(tcsCT, verbose=verbose)
 } else {
-  dsCTs <- dsCT;
+  dsCTs <- dsCT
 }
-print(dsCTs);
+print(dsCTs)
 
 # Calculate C'_N by binning C_N ratios
-isBinningNeeded <- (!equals(getAromaUgpFile(dsCN), targetUgp));
+isBinningNeeded <- (!equals(getAromaUgpFile(dsCN), targetUgp))
 if (isBinningNeeded) {
-  tcsCN <- TotalCnBinnedSmoothing(dsCN, targetUgp=targetUgp);
-  print(tcsCN);
-  dsCNs <- process(tcsCN, verbose=verbose);
-  print(dsCNs);
+  tcsCN <- TotalCnBinnedSmoothing(dsCN, targetUgp=targetUgp)
+  print(tcsCN)
+  dsCNs <- process(tcsCN, verbose=verbose)
+  print(dsCNs)
 } else {
-  dsCNs <- dsCN;
+  dsCNs <- dsCN
 }
 
 
@@ -386,31 +386,31 @@ if (isBinningNeeded) {
 # they'll get really long otherwise.
 fnt <- function(names, ...) {
   # Drop GSM... and ref=... tags
-  gsub(",GSM[0-9]*,ref=[^,]*,[^,]*", "", names);
-};
-setFullNamesTranslator(dsCTs, fnt);
-setFullNamesTranslator(dsCNs, fnt);
+  gsub(",GSM[0-9]*,ref=[^,]*,[^,]*", "", names)
+}
+setFullNamesTranslator(dsCTs, fnt)
+setFullNamesTranslator(dsCNs, fnt)
 
 # Add custom tags to segmentation output to indiciate whether
 # one or the other chip types was mapped to the other.
-segTags <- NULL;
+segTags <- NULL
 if (!equals(dsCTs, dsCT) && !equals(dsCNs, dsCN)) {
 } else if (!equals(dsCTs, dsCT)) {
-  segTags <- "remappedT";
+  segTags <- "remappedT"
 } else if (!equals(dsCNs, dsCN)) {
-  segTags <- "remappedN";
+  segTags <- "remappedN"
 }
 
 # Setup paired tumor-normal segmentation model on binned data
-segS <- CbsModel(dsCTs, ref=dsCNs, tags=c(segTags, "*"), maxNAFraction=1);
-print(segS);
+segS <- CbsModel(dsCTs, ref=dsCNs, tags=c(segTags, "*"), maxNAFraction=1)
+print(segS)
 
-ce <- ChromosomeExplorer(segS);
+ce <- ChromosomeExplorer(segS)
 
 # Segment Chr8 of tumor GSM318736 as in FigS3 of the CalMaTe paper.
-sampleName <- sad["GSM318736", "sampleName"];
-idx <- match(sampleName, getNames(ce));
-process(ce, arrays=idx, chromosomes=c(8), verbose=verbose);
+sampleName <- sad["GSM318736", "sampleName"]
+idx <- match(sampleName, getNames(ce))
+process(ce, arrays=idx, chromosomes=c(8), verbose=verbose)
 
 
 ##########################################################################

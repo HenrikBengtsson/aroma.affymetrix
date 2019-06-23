@@ -1,8 +1,8 @@
-path <- system.file("testScripts/R", package="aroma.affymetrix");
-pathname <- file.path(path, "downloadUtils.R");
-source(pathname);
+path <- system.file("testScripts/R", package="aroma.affymetrix")
+pathname <- file.path(path, "downloadUtils.R")
+source(pathname)
 
-verbose && enter(verbose, "Downloading raw data");
+verbose && enter(verbose, "Downloading raw data")
 
 
 ##########################################################################
@@ -13,13 +13,13 @@ verbose && enter(verbose, "Downloading raw data");
 #
 # Overall design:
 #
-# URL: http://www.affymetrix.com/support/technical/byproduct.affx?product=cytogenetics_array
+# URL: https://www.affymetrix.com/support/technical/byproduct.affx?product=cytogenetics_array
 ##########################################################################
-dataSet <- "Affymetrix-CytoSampleData";
-chipType <- "Cytogenetics_Array";
+dataSet <- "Affymetrix-CytoSampleData"
+chipType <- "Cytogenetics_Array"
 
-ds <- downloadAffymetrixDataSet(dataSet, chipType=chipType, pathname="support/downloads/data/cytogenetics2_7m_sampledata.zip");
-print(ds);
+ds <- downloadAffymetrixDataSet(dataSet, chipType=chipType, pathname="support/downloads/data/cytogenetics2_7m_sampledata.zip")
+print(ds)
 ## AffymetrixCelSet:
 ## Name: Affymetrix-CytoSampleData
 ## Tags:
@@ -33,4 +33,4 @@ print(ds);
 ## RAM: 0.01MB
 
 
-verbose && exit(verbose);
+verbose && exit(verbose)

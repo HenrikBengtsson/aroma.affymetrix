@@ -71,7 +71,7 @@ setMethodS3("findByName", "ChipEffectSet", function(static, ..., paths="plmData(
 }, static=TRUE, protected=TRUE)
 
 
-setMethodS3("byPath", "ChipEffectSet", function(static, path="plmData/", pattern=",chipEffects[.](c|C)(e|E)(l|L)$", cdf=NULL, checkChipType=FALSE, ..., fileClass=NULL) {
+setMethodS3("byPath", "ChipEffectSet", function(static, path="plmData/", pattern=",chipEffects[.](c|C)(e|E)(l|L)(|[.]lnk|[.]LNK)$", cdf=NULL, checkChipType=FALSE, ..., fileClass=NULL) {
   # Argument 'cdf':
   if (!is.null(cdf)) {
     cdf <- Arguments$getInstanceOf(cdf, "AffymetrixCdfFile")

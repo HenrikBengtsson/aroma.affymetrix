@@ -3,6 +3,11 @@ Package: aroma.affymetrix
 
 Version: 3.2.0 [2018-06-22]
 
+ * ...
+ 
+
+Version: 3.2.0 [2018-06-22]
+
 NEW FEATURES:
 
  * Windows Shortcut links (*.lnk) to CEL files are now also recognized

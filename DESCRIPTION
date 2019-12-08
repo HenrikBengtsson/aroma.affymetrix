@@ -9,12 +9,12 @@ Imports:
   R.methodsS3 (>= 1.7.1),
   R.oo (>= 1.23.0),
   R.cache (>= 0.13.0),
-  R.devices (>= 2.16.0),
+  R.devices (>= 2.16.1),
   R.filesets (>= 2.13.0),
   aroma.apd (>= 0.6.0),
   MASS,
   splines,
-  matrixStats (>= 0.54.0),
+  matrixStats (>= 0.55.0),
   listenv,
   future
 Suggests:

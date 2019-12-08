@@ -7,7 +7,7 @@ Depends:
 Imports:
   methods,
   R.methodsS3 (>= 1.7.1),
-  R.oo (>= 1.21.0),
+  R.oo (>= 1.23.0),
   R.cache (>= 0.13.0),
   R.devices (>= 2.16.0),
   R.filesets (>= 2.13.0),

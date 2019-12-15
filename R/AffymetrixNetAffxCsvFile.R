@@ -287,7 +287,7 @@ setMethodS3("readDataUnitFragmentLength", "AffymetrixNetAffxCsvFile", function(t
 
     verbose && enter(verbose, "Sorting data by enzyme")
     # Reorganize as an JxE matrix (transposed compared with 'fln'!)
-    naValue <- as.integer(NA)
+    naValue <- NA_integer_
     fln2 <- matrix(naValue, nrow=ncol(fln), ncol=nbrOfEnzymes)
     for (ee in seq_along(allEnzymes)) {
       for (rr in seq_along(allEnzymes)) {
@@ -302,7 +302,7 @@ setMethodS3("readDataUnitFragmentLength", "AffymetrixNetAffxCsvFile", function(t
         }
       }
     } # for (ee ...)
-    colnames(fln2) <- c(allEnzymes, rep(NA, ncol(fln2)-length(allEnzymes)))
+    colnames(fln2) <- c(allEnzymes, rep(NA_character_, times=ncol(fln2)-length(allEnzymes)))
     verbose && str(verbose, fln2)
 
     # Keep only requested enzymes

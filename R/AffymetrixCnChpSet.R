@@ -295,7 +295,7 @@ setMethodS3("extractLogRatios", "AffymetrixCnChpSet", function(this, units=NULL,
     if (is.null(data)) {
       dim <- c(length(dataKK), nbrOfArrays)
       dimnames <- list(NULL, getNames(this))
-      naValue <- as.double(NA)
+      naValue <- NA_real_
       data <- array(naValue, dim=dim, dimnames=dimnames)
     }
     data[,kk] <- dataKK

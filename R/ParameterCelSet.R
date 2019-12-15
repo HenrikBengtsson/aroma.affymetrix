@@ -119,9 +119,9 @@ setMethodS3("extractMatrix", "ParameterCelSet", function(this, units=NULL, ..., 
   arrayNames <- getNames(this)
   nbrOfArrays <- length(arrayNames)
   if (field %in% c("pixels")) {
-    naValue <- as.integer(NA)
+    naValue <- NA_integer_
   } else {
-    naValue <- as.double(NA)
+    naValue <- NA_real_
   }
   df <- matrix(naValue, nrow=nrow(ugcMap), ncol=nbrOfArrays)
   colnames(df) <- arrayNames

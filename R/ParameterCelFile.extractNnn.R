@@ -39,9 +39,9 @@ setMethodS3("extractMatrix", "ParameterCelFile", function(this, units=NULL, ...,
     throw("Nothing to return.")
 
   if (field %in% c("pixels")) {
-    naValue <- as.integer(NA)
+    naValue <- NA_integer_
   } else {
-    naValue <- as.double(NA)
+    naValue <- NA_real_
   }
   data <- matrix(naValue, nrow=nrow(ugcMap), ncol=1)
   colnames(data) <- getName(this)

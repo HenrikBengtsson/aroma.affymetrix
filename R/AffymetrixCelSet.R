@@ -297,7 +297,7 @@ setMethodS3("getIdentifier", "AffymetrixCelSet", function(this, ..., force=FALSE
 #*/###########################################################################
 setMethodS3("getChipType", "AffymetrixCelSet", function(this, ...) {
   if (length(this) == 0) {
-    return(as.character(NA))
+    return(NA_character_)
   }
   unf <- getUnitNamesFile(this)
   getChipType(unf, ...)
@@ -919,9 +919,9 @@ setMethodS3("getData", "AffymetrixCelSet", function(this, indices=NULL, fields=c
   names(res) <- fields
   for (field in fields) {
     if (field %in% c("x", "y", "pixels")) {
-      naValue <- as.integer(NA)
+      naValue <- NA_integer_
     } else {
-      naValue <- as.double(NA)
+      naValue <- NA_real_
     }
     res[[field]] <- matrix(naValue, nrow=nbrOfCells, ncol=nbrOfArrays)
   }

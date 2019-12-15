@@ -276,7 +276,7 @@ setMethodS3("getAverageFile", "AffymetrixCelSet", function(this, name=NULL, pref
     # TODO: Ideally, affxparser::readCel() should support
     # multiple filenames turning every data fields into a
     # matrix. /HB 2007-01-07
-    X <- matrix(as.double(NA), nrow=length(ii), ncol=nbrOfArrays)
+    X <- matrix(NA_real_, nrow=length(ii), ncol=nbrOfArrays)
     for (kk in seq_len(nbrOfArrays)) {
       X[,kk] <- .readCel(filename = pathnames[kk],
                         indices = indices[ii],

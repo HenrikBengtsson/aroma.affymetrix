@@ -271,7 +271,7 @@ setMethodS3("getFilteredFragmentLengths", "FragmentLengthNormalization", functio
   range <- params$lengthRange
 
   if (!is.null(range)) {
-    naValue <- as.double(NA)
+    naValue <- NA_real_
     for (ee in seq_len(ncol(fl))) {
       flEE <- fl[,ee]
       ok <- (!is.na(flEE))

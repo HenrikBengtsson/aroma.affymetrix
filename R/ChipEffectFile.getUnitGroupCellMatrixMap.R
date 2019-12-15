@@ -54,7 +54,7 @@ setMethodS3("getUnitGroupCellMatrixMap", "ChipEffectFile", function(this, units=
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
   allUnits <- unique(ugcMap[,"unit"])
   nbrOfGroups <- length(groups)
-  naValue <- as.integer(NA)
+  naValue <- NA_integer_
   map <- matrix(naValue, nrow=nbrOfUnits, ncol=nbrOfGroups)
   
   for (gg in seq_len(nbrOfGroups)) {
@@ -152,7 +152,7 @@ setMethodS3("getUnitGroupCellArrayMap", "ChipEffectFile", function(this, units=N
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
   allUnits <- unique(ugcMap[,"unit"])
   nbrOfGroups <- length(groups)
-  naValue <- as.integer(NA)
+  naValue <- NA_integer_
   map <- matrix(naValue, nrow=nbrOfUnits, ncol=nbrOfGroups)
   
   for (gg in seq_len(nbrOfGroups)) {

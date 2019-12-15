@@ -198,7 +198,7 @@ setMethodS3("process", "DChipQuantileNormalization", function(this, ..., force=F
   # than 'x' and 'w'.  /HB 2007-04-11. DONE 2008-02-23.
   if (length(xTarget) != nbrOfCells(cdf)) {
     # See normalizeQuantileSpline() for why this is ok/the way to do it.
-    xTarget <- c(xTarget, rep(NA, nbrOfCells(cdf)-length(xTarget)))
+    xTarget <- c(xTarget, rep(NA_real_, times=nbrOfCells(cdf)-length(xTarget)))
     verbose && cat(verbose, "Expanded target distribution (now with NAs): ")
     verbose && str(verbose, xTarget)
   }
@@ -217,7 +217,7 @@ setMethodS3("process", "DChipQuantileNormalization", function(this, ..., force=F
   if (length(excl) > 0) {
     verbose && enter(verbose, "Excluded some cells when fitting normalization function")
 
-    w <- rep(1, nbrOfCells(cdf))
+    w <- rep(1, times=nbrOfCells(cdf))
     w[excl] <- 0
 
     # If not all cells, get weights in the same order as the data points 'x'.

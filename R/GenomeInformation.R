@@ -274,7 +274,7 @@ setMethodS3("getChromosomeStats", "GenomeInformation", function(this, na.rm=TRUE
   if (is.null(stats) || force) {
     chromosomes <- getChromosomes(this)
     nbrOfChromosomes <- length(chromosomes)
-    naValue <- as.double(NA)
+    naValue <- NA_real_
     stats <- matrix(naValue, nrow=nbrOfChromosomes, ncol=3)
     colnames(stats) <- c("min", "max", "n")
     rownames(stats) <- chromosomes

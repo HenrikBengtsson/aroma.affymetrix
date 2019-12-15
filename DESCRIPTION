@@ -8,7 +8,7 @@ Imports:
   methods,
   R.methodsS3 (>= 1.7.1),
   R.oo (>= 1.23.0),
-  R.cache (>= 0.13.0),
+  R.cache (>= 0.14.0),
   R.devices (>= 2.16.1),
   R.filesets (>= 2.13.0),
   aroma.apd (>= 0.6.0),

@@ -122,7 +122,7 @@ setMethodS3("extractTotalAndFreqB", "CnChipEffectFile", function(this, units=NUL
 
   # Calculating Allele B frequency
   if (this$combineAlleles) {
-    freqB <- rep(NA, nbrOfUnits)
+    freqB <- rep(NA_real_, times=nbrOfUnits)
     # Not needed anymore
     theta <- NULL
   } else {

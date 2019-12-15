@@ -28,7 +28,7 @@ setMethodS3("extractMatrix", "AffymetrixCelFile", function(this, cells=NULL, ...
   # Allocate return matrix
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   verbose && enter(verbose, "Allocating matrix")
-  naValue <- as.double(NA)
+  naValue <- NA_real_
   df <- matrix(naValue, nrow=ncells, ncol=1)
   colnames(df) <- getName(this)
   verbose && str(verbose, df)

@@ -72,9 +72,9 @@ setMethodS3("extractMatrix", "AffymetrixCelSet", function(this, cells=NULL, ...,
   arrayNames <- getNames(this)
   nbrOfArrays <- length(arrayNames)
   if (field %in% c("pixels")) {
-    naValue <- as.integer(NA)
+    naValue <- NA_integer_
   } else {
-    naValue <- as.double(NA)
+    naValue <- NA_real_
   }
   df <- matrix(naValue, nrow=ncells, ncol=nbrOfArrays)
   colnames(df) <- arrayNames

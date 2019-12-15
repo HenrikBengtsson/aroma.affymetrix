@@ -512,7 +512,7 @@ setMethodS3("predictOne", "BaseCountNormalization", function(this, fit, ..., ver
           if (cc == 1) {
             mu <- fit$mu
           } else {
-            mu <- rep(as.double(NA), times=nrow(X))
+            mu <- rep(NA_real_, times=nrow(X))
             if (mode(X) == "raw") {
               # Note: 'X' may be a "raw" matrix (to save memory)
               idxs <- which(X[,cc] != as.raw(255))

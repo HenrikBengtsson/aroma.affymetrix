@@ -197,9 +197,9 @@ setMethodS3("getFitUnitGroupFunction", "AvgPlm", function(this, ...) {
     # If input data are dimensionless, return NAs.
     if (is.null(dim(y))) {
       nbrOfArrays <- length(getDataSet(this))
-      return(list(theta=rep(NA, nbrOfArrays),
-                  sdTheta=rep(NA, nbrOfArrays),
-                  thetaOutliers=rep(NA, nbrOfArrays),
+      return(list(theta=rep(NA_real_, nbrOfArrays),
+                  sdTheta=rep(NA_real_, nbrOfArrays),
+                  thetaOutliers=rep(NA_real_, nbrOfArrays),
                   phi=c(),
                   sdPhi=c(),
                   phiOutliers=c()

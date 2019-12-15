@@ -61,7 +61,7 @@ setMethodS3("extractTheta", "ChipEffectSet", function(this, units=NULL, groups=N
   nbrOfArrays <- length(this)
   dim <- c(nbrOfUnits, nbrOfGroups, nbrOfArrays)
   dimnames <- list(NULL, NULL, getNames(this))
-  naValue <- as.double(NA)
+  naValue <- NA_real_
   theta <- array(naValue, dim=dim, dimnames=dimnames)
   for (kk in seq_len(nbrOfArrays)) {
     ce <- this[[kk]]

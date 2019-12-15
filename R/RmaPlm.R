@@ -307,9 +307,9 @@ setMethodS3("getFitUnitGroupFunction", "RmaPlm", function(this, ..., verbose=FAL
     dim <- dim(y)
     if (is.null(dim)) {
       nbrOfArrays <- length(getDataSet(this))
-      return(list(theta=rep(NA, nbrOfArrays),
-                  sdTheta=rep(NA, nbrOfArrays),
-                  thetaOutliers=rep(NA, nbrOfArrays),
+      return(list(theta=rep(NA_real_, times=nbrOfArrays),
+                  sdTheta=rep(NA_real_, times=nbrOfArrays),
+                  thetaOutliers=rep(NA_real_, times=nbrOfArrays),
                   phi=c(),
                   sdPhi=c(),
                   phiOutliers=c()
@@ -330,7 +330,7 @@ setMethodS3("getFitUnitGroupFunction", "RmaPlm", function(this, ..., verbose=FAL
     if (K > skipThreshold[1] && I > skipThreshold[2]) {
       warning("Ignoring a unit group when fitting probe-level model, because it has a ridiculously large number of data points: ", paste(dim, collapse="x"), " > ", paste(skipThreshold, collapse="x"))
 
-      naValue <- as.double(NA)
+      naValue <- NA_real_
       return(list(theta=rep(naValue, times=I),
                   sdTheta=rep(naValue, times=I),
                   thetaOutliers=rep(naValue, times=I),
@@ -363,12 +363,12 @@ setMethodS3("getFitUnitGroupFunction", "RmaPlm", function(this, ..., verbose=FAL
         if (treatNAsAs == "weights") {
           badCells <- colAlls(isNA)
           if (any(badCells)) {
-            return(list(theta=rep(NA, I),
-                        sdTheta=rep(NA, I),
-                        thetaOutliers=rep(NA, I),
-                        phi=rep(NA, K),
-                        sdPhi=rep(NA, K),
-                        phiOutliers=rep(NA, K)
+            return(list(theta=rep(NA_real_, times=I),
+                        sdTheta=rep(NA_real_, times=I),
+                        thetaOutliers=rep(NA_real_, times=I),
+                        phi=rep(NA_real_, times=K),
+                        sdPhi=rep(NA_real_, times=K),
+                        phiOutliers=rep(NA_real_, times=K)
                        )
                   )
           }
@@ -388,12 +388,12 @@ setMethodS3("getFitUnitGroupFunction", "RmaPlm", function(this, ..., verbose=FAL
 
           # No valid cells left?
           if (nrow(y) == 0) {
-            return(list(theta=rep(NA, I),
-                        sdTheta=rep(NA, I),
-                        thetaOutliers=rep(NA, I),
-                        phi=rep(NA, K0),
-                        sdPhi=rep(NA, K0),
-                        phiOutliers=rep(NA, K0)
+            return(list(theta=rep(NA_real_, times=I),
+                        sdTheta=rep(NA_real_, times=I),
+                        thetaOutliers=rep(NA_real_, times=I),
+                        phi=rep(NA_real_, times=K0),
+                        sdPhi=rep(NA_real_, times=K0),
+                        phiOutliers=rep(NA_real_, times=K0)
                        )
                   )
           }
@@ -487,7 +487,7 @@ setMethodS3("getFitUnitGroupFunction", "RmaPlm", function(this, ..., verbose=FAL
     # Handle NAs?
     if (nasRemoved) {
       if (treatNAsAs == "NA") {
-        naValue <- as.double(NA)
+        naValue <- NA_real_
         phi0 <- rep(naValue, times=K0)
         phi0[okCells] <- phi
         phi <- phi0
@@ -563,12 +563,12 @@ setMethodS3("getFitUnitGroupFunction", "RmaPlm", function(this, ..., verbose=FAL
     if (K > skipThreshold[1] && I > skipThreshold[2]) {
       warning("Ignoring a unit group when fitting probe-level model, because it has a ridiculously large number of data points: ", paste(dim, collapse="x"), " > ", paste(skipThreshold, collapse="x"))
 
-      return(list(theta=rep(NA, I),
-                  sdTheta=rep(NA, I),
-                  thetaOutliers=rep(NA, I),
-                  phi=rep(NA, K),
-                  sdPhi=rep(NA, K),
-                  phiOutliers=rep(NA, K)
+      return(list(theta=rep(NA_real_, times=I),
+                  sdTheta=rep(NA_real_, times=I),
+                  thetaOutliers=rep(NA_real_, times=I),
+                  phi=rep(NA_real_, times=K),
+                  sdPhi=rep(NA_real_, times=K),
+                  phiOutliers=rep(NA_real_, times=K)
                  )
             )
     }

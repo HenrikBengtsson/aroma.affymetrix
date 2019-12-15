@@ -79,7 +79,7 @@ setMethodS3("fitPlasqUnit", "matrix", function(ly, ptype, maxIter=1000, acc=0.1,
 
 #  # Create 'ptype'
 #  ptype0 <- ptype
-#  ptype <- rep(NA, nbrOfProbes)
+#  ptype <- rep(NA_real_, times=nbrOfProbes)
 #  ptype[!isPm & !isA & !isFwd & !isCentered] <-  0
 #  ptype[!isPm & !isA &  isFwd & !isCentered] <-  1
 #  ptype[!isPm & !isA & !isFwd &  isCentered] <-  2
@@ -104,7 +104,7 @@ setMethodS3("fitPlasqUnit", "matrix", function(ly, ptype, maxIter=1000, acc=0.1,
   mmAo <- which(!isPm &  isA & !isCentered)
   mmBo <- which(!isPm & !isA & !isCentered)
 
-  isFwd <- rep(isFwd, nbrOfSamples)
+  isFwd <- rep(isFwd, times=nbrOfSamples)
   fIdxs <- which(isFwd)
   rIdxs <- which(!isFwd)
   nbrOfFwd <- length(fIdxs)
@@ -142,7 +142,7 @@ setMethodS3("fitPlasqUnit", "matrix", function(ly, ptype, maxIter=1000, acc=0.1,
   # z_il = E[Z_il]
 
   # Note: here we use z_li, not z_il.
-  naValue <- as.double(NA)
+  naValue <- NA_real_
   zs <- matrix(naValue, nrow=3, ncol=nbrOfSamples)
   ok <- !is.na(ly[1,])
   for (ii in iis[ok]) {
@@ -238,7 +238,7 @@ setMethodS3("fitPlasqUnit", "matrix", function(ly, ptype, maxIter=1000, acc=0.1,
         betasF <- coef(fit)[c(1,2,2,3,3)]
         sigF <- sqrt(sum(residuals(fit, "deviance")^2)/(nbrOfFwd-3))
       } else {
-        betasF <- rep(NA, 5)
+        betasF <- rep(NA_real_, times=5)
         sigF <- NA
       }
 
@@ -248,7 +248,7 @@ setMethodS3("fitPlasqUnit", "matrix", function(ly, ptype, maxIter=1000, acc=0.1,
         betasR <- coef(fit)[c(1,2,2,3,3)]
         sigR <- sqrt(sum(residuals(fit, "deviance")^2)/(nbrOfRev-3))
       } else {
-        betasR <- rep(NA, 5)
+        betasR <- rep(NA_real_, times=5)
         sigR <- NA
       }
     } else {
@@ -258,7 +258,7 @@ setMethodS3("fitPlasqUnit", "matrix", function(ly, ptype, maxIter=1000, acc=0.1,
         betasF <- coef(fit)
         sigF <- sqrt(sum(residuals(fit, "response")^2)/(nbrOfFwd-5))
       } else {
-        betasF <- rep(NA, 5)
+        betasF <- rep(NA_real_, times=5)
         sigF <- NA
       }
 
@@ -268,7 +268,7 @@ setMethodS3("fitPlasqUnit", "matrix", function(ly, ptype, maxIter=1000, acc=0.1,
         betasR <- coef(fit)
         sigR <- sqrt(sum(residuals(fit, "response")^2)/(nbrOfRev-5))
       } else {
-        betasR <- rep(NA,5)
+        betasR <- rep(NA_real_, times=5)
         sigR <- NA
       }
     }

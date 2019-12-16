@@ -206,6 +206,7 @@ importFrom("matrixStats", "rowAnys")
 importFrom("matrixStats", "rowMads")
 importFrom("matrixStats", "rowMedians") ## Multi-sources: matrixStats, Biobase
 importFrom("matrixStats", "rowSds")
+importFrom("matrixStats", "rowSums2")
 importFrom("methods", "new")
 importFrom("R.cache", "getChecksum") ## Multi-sources: R.cache, R.filesets
 importFrom("R.cache", "loadCache")

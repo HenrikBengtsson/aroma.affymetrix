@@ -34,7 +34,7 @@ dsR <- dsT[1:5]
 dfR <- getAverageFile(dsR)
 print(dfR)
 
-seg <- CbsModel(dsT, ref=dfR, tags=c(getTags(dsT), "commonRef"))
+seg <- CbsModel(dsT, refTuple=dfR, tags=c(getTags(dsT), "commonRef"))
 print(seg)
 
 # Try to segment

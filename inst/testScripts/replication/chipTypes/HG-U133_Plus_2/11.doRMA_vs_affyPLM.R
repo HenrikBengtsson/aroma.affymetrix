@@ -59,7 +59,7 @@ verbose && print(verbose, sessionInfo())
 raw <- ReadAffy(filenames=getPathnames(csR))
 verbose && print(verbose, raw)
 
-fit <- fitPLM(raw, verbos=9)
+fit <- fitPLM(raw, verbosity.level=9)
 theta0 <- coefs(fit)
 
 verbose && exit(verbose)

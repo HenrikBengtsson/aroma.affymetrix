@@ -18,8 +18,15 @@ installPkg <- function(pkg, ...) {
     if (repos == "CRAN") {
       install.packages(pkg)
     } else if (repos == "BioC") {
-      source("https://www.bioconductor.org/biocLite.R")
-      biocLite(pkg, suppressUpdates=TRUE, ask=FALSE)
+      if (getRversion() < "3.5.0") {
+        source("https://www.bioconductor.org/biocLite.R")
+        biocLite(pkg, suppressUpdates=TRUE, ask=FALSE)
+      } else {
+        if (!requireNamespace("BiocManager", quietly = TRUE)) {
+          install.packages("BiocManager")
+        }
+        BiocManager::install(pkg)
+      }
     } else if (repos == "R-Forge") {
       install.packages(pkg, repos="https://R-Forge.R-project.org")
     }

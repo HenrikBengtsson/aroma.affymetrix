@@ -9,7 +9,7 @@ library("R.utils")
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 verbose && enter(verbose, "Installing test-specific packages")
 
-pkgs <- c("BioC:limma", "BioC:oligo")
+pkgs <- c("BioC:limma", "BioC:affy", "BioC:gcrma", "BioC:oligo")
 pkgs <- c(pkgs, "BioC:hgu133plus2cdf")
 pkgs <- c(pkgs, "BioC:hgu133plus2.db")
 pkgs <- c(pkgs, "BioC:pd.hg.u133.plus.2")

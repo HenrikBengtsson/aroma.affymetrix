@@ -1,6 +1,7 @@
 library("aroma.core")
 verbose <- Arguments$getVerbose(-8, timestamp=TRUE)
-ar <- AromaRepository(verbose=TRUE)
+
+ar <- AromaRepository(verbose=-100)
 
 verbose && enter(verbose, "Downloading annotation data")
 

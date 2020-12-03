@@ -6,4 +6,5 @@
 *Data
 .Rproj.user
 .make
+.local
 revdep/

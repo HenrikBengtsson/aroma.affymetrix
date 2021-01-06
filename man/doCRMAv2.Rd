@@ -35,7 +35,7 @@
 \arguments{
  \item{csR, dataSet}{An \code{\link{AffymetrixCelSet}} (or the name of an \code{\link{AffymetrixCelSet}}).}
  \item{combineAlleles}{A \code{\link[base]{logical}} specifying whether allele probe pairs
-  should be summed before modelling or not.}
+  should be summed before modeling or not.}
  \item{lengthRange}{An optional \code{\link[base]{numeric}} vector of length two passed
   to \code{\link{FragmentLengthNormalization}}.}
  \item{arrays}{A \code{\link[base]{integer}} \code{\link[base]{vector}} specifying the subset of arrays

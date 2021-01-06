@@ -25,7 +25,7 @@
 # \arguments{
 #  \item{csR, dataSet}{An @see "AffymetrixCelSet" (or the name of an @see "AffymetrixCelSet").}
 #  \item{combineAlleles}{A @logical specifying whether allele probe pairs
-#   should be summed before modelling or not.}
+#   should be summed before modeling or not.}
 #  \item{lengthRange}{An optional @numeric vector of length two passed
 #   to @see "FragmentLengthNormalization".}
 #  \item{arrays}{A @integer @vector specifying the subset of arrays

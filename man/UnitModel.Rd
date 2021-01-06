@@ -46,7 +46,7 @@ UnitModel(dataSet=NULL, probeModel=c("pm", "mm", "pm-mm", "min1(pm-mm)", "pm+mm"
   \item{dataSet}{An \code{\link{AffymetrixCelSet}} to which this model should
      be fitted.}
   \item{probeModel}{A \code{\link[base]{character}} string specifying how PM and MM values
-     should be modelled.  By default only PM signals are used.}
+     should be modeled.  By default only PM signals are used.}
   \item{shift}{An optional amount the signals should be shifted
      (translated) before fitting the model.}
   \item{...}{Arguments passed to the constructor of \code{\link{Model}}.}

@@ -16,7 +16,7 @@
 #   \item{dataSet}{An @see "AffymetrixCelSet" to which this model should
 #      be fitted.}
 #   \item{probeModel}{A @character string specifying how PM and MM values
-#      should be modelled.  By default only PM signals are used.}
+#      should be modeled.  By default only PM signals are used.}
 #   \item{shift}{An optional amount the signals should be shifted
 #      (translated) before fitting the model.}
 #   \item{...}{Arguments passed to the constructor of @see "Model".}

@@ -13,10 +13,10 @@
 \alias{ChipEffectFile.fromDataFile}
 \alias{fromDataFile,ChipEffectFile-method}
 
-\title{Retrive an existing CEL file, or create from CDF template if missing}
+\title{Retrieve an existing CEL file, or create from CDF template if missing}
 
 \description{
- Retrive an existing CEL file, or create from CDF template if missing.
+ Retrieve an existing CEL file, or create from CDF template if missing.
 }
 
 \usage{

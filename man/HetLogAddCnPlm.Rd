@@ -57,7 +57,7 @@ HetLogAddCnPlm(..., combineAlleles=FALSE)
 \arguments{
   \item{...}{Arguments passed to \code{\link{HetLogAddCnPlm}}.}
   \item{combineAlleles}{If \code{\link[base:logical]{FALSE}}, allele A and allele B are treated
-     seperately, otherwise together.}
+     separately, otherwise together.}
 }
 
 \section{Fields and Methods}{

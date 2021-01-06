@@ -70,7 +70,7 @@
 #   If still done, due to confounded effects of non-perfect enzyme
 #   mixtures etc, there will be a significant bias between raw CNs
 #   for SNPs and CN probes.
-#   Instead, for such chip types \emph{all probe signales} should be
+#   Instead, for such chip types \emph{all probe signals} should be
 #   rescale together towards the target average (\code{rescaleBy="all"}).
 # }
 #

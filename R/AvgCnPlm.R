@@ -12,7 +12,7 @@
 # \arguments{
 #   \item{...}{Arguments passed to @see "AvgSnpPlm".}
 #   \item{combineAlleles}{If @FALSE, allele A and allele B are treated
-#      seperately, otherwise together.}
+#      separately, otherwise together.}
 # }
 #
 # \section{Fields and Methods}{

@@ -794,7 +794,7 @@ setMethodS3("calculateConfidenceScores", "CrlmmModel", function(this, ..., force
   snrs <- unlist(snrs, use.names=FALSE)
   # Sanity check
   if (length(snrs) != nbrOfArrays) {
-    throw("Number of SNRs read from CRLMM parameter set does not match the number of arrays modelled: ", length(snrs), " != ", nbrOfArrays)
+    throw("Number of SNRs read from CRLMM parameter set does not match the number of arrays modeled: ", length(snrs), " != ", nbrOfArrays)
   }
   names(snrs) <- NULL
   verbose && cat(verbose, "SNRs:")

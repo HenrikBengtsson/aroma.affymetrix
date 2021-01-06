@@ -10,10 +10,10 @@
 \alias{pdInfo2Cdf}
 
 
-\title{Generates an Affymetrix CDF file from a Platform Design (PD) package and a auxillary CEL file for the same chip type}
+\title{Generates an Affymetrix CDF file from a Platform Design (PD) package and a auxiliary CEL file for the same chip type}
 
 \description{
-  Generates an Affymetrix CDF file from a Platform Design (PD) package and a auxillary CEL file for the same chip type.
+  Generates an Affymetrix CDF file from a Platform Design (PD) package and a auxiliary CEL file for the same chip type.
   Platform Design (PD) packages are also known as "pdInfo" packages.
 
   \emph{Disclaimer: This is a user-contributed function.}
@@ -29,7 +29,7 @@ pdInfo2Cdf(pdpkg, celfile, overwrite=FALSE, verbose=TRUE, ...)
 
 \arguments{
  \item{pdpkg}{A \code{\link[base]{character}} string for an existing PD package.}
- \item{celfile}{The pathname to an auxillary CEL for the same chip type.}
+ \item{celfile}{The pathname to an auxiliary CEL for the same chip type.}
  \item{overwrite}{If \code{\link[base:logical]{TRUE}}, an existing CDF is overwritten, otherwise
    an exception is thrown.}
  \item{verbose}{A \code{\link[base]{logical}} or \code{\link[R.utils]{Verbose}}.}

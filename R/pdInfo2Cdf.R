@@ -1,7 +1,7 @@
 ###########################################################################/**
 # @RdocFunction pdInfo2Cdf
 #
-# @title "Generates an Affymetrix CDF file from a Platform Design (PD) package and a auxillary CEL file for the same chip type"
+# @title "Generates an Affymetrix CDF file from a Platform Design (PD) package and a auxiliary CEL file for the same chip type"
 #
 # \description{
 #   @get "title".
@@ -18,7 +18,7 @@
 #
 # \arguments{
 #  \item{pdpkg}{A @character string for an existing PD package.}
-#  \item{celfile}{The pathname to an auxillary CEL for the same chip type.}
+#  \item{celfile}{The pathname to an auxiliary CEL for the same chip type.}
 #  \item{overwrite}{If @TRUE, an existing CDF is overwritten, otherwise
 #    an exception is thrown.}
 #  \item{verbose}{A @logical or @see "R.utils::Verbose".}
@@ -119,7 +119,7 @@ pdInfo2Cdf <- function(pdpkg, celfile, overwrite=FALSE, verbose=TRUE, ...) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Retrieving information from the CEL file
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  verbose && enter(verbose, "Reading auxillary CEL file")
+  verbose && enter(verbose, "Reading auxiliary CEL file")
   verbose && cat(verbose, "Pathname: ", celfile)
 
   verbose && enter(verbose, "Reading CEL file header")

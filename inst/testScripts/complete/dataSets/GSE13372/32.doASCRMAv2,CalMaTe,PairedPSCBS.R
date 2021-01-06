@@ -1,7 +1,7 @@
 ##########################################################################
 # AS-CRMAv2 and Paired PSCBS
 ##########################################################################
-future::plan("multiprocess")
+future::plan("multisession")
 library("aroma.affymetrix")
 library("aroma.cn");  # PairedPscbsModel
 verbose <- Arguments$getVerbose(-8, timestamp=TRUE)

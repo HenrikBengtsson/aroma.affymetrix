@@ -16,12 +16,6 @@ checksum <- NULL
 
 strategies <- future:::supportedStrategies()
 strategies <- setdiff(strategies, "multiprocess")
-if (require("future.BatchJobs")) {
-  strategies <- c(strategies, "batchjobs_local")
-  if (any(grepl("PBS_", names(Sys.getenv())))) {
-    strategies <- c(strategies, "batchjobs_torque")
-  }
-}
 if (require("future.batchtools")) {
   strategies <- c(strategies, "batchtools_local")
   if (any(grepl("PBS_", names(Sys.getenv())))) {

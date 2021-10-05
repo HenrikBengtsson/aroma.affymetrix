@@ -302,7 +302,6 @@ importFrom("R.utils", "CmdArgsFunction")
 ## importFrom("base", "readLines") ## Multi-sources: R.filesets, base
 ## importFrom("base", "gc") ## Multi-sources: R.oo, base
 ## importFrom("base", "warnings") ## Multi-sources: R.utils, base
-## importFrom("inherits", "inherits") ## Multi-sources: R.utils, base
 
 ## Importing other objects
 importFrom("aroma.core", "aromaSettings")

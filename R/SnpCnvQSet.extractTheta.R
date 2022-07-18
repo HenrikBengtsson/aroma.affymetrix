@@ -31,7 +31,7 @@ setMethodS3("extractTheta", "SnpCnvQSet", function(this, ..., transform=function
   snpNames <- .featureNames(eSet)
 
   # Allocate result object
-  naValue <- as.double(NA)
+  naValue <- NA_real_
   theta <- array(naValue, dim=c(nbrOfUnits, nbrOfGroups, nbrOfSamples))
   dimnames(theta)[[3L]] <- sampleNames
   if (addNames)

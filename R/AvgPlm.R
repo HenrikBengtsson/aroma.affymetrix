@@ -9,7 +9,7 @@
 #  This class represents a PLM where the probe intensities are averaged
 #  assuming identical probe affinities.
 #  For instance, one may assume that replicated probes with identical
-#  sequences have the same probe affinities, cf. the GenomeWideSNP\_6
+#  sequences have the same probe affinities, cf. the GenomeWideSNP_6
 #  chip type.
 # }
 #
@@ -197,9 +197,9 @@ setMethodS3("getFitUnitGroupFunction", "AvgPlm", function(this, ...) {
     # If input data are dimensionless, return NAs.
     if (is.null(dim(y))) {
       nbrOfArrays <- length(getDataSet(this))
-      return(list(theta=rep(NA, nbrOfArrays),
-                  sdTheta=rep(NA, nbrOfArrays),
-                  thetaOutliers=rep(NA, nbrOfArrays),
+      return(list(theta=rep(NA_real_, nbrOfArrays),
+                  sdTheta=rep(NA_real_, nbrOfArrays),
+                  thetaOutliers=rep(NA_real_, nbrOfArrays),
                   phi=c(),
                   sdPhi=c(),
                   phiOutliers=c()

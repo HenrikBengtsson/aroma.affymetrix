@@ -2,7 +2,7 @@
 # @set "class=ChipEffectFile"
 # @RdocMethod fromDataFile
 #
-# @title "Retrive an existing CEL file, or create from CDF template if missing"
+# @title "Retrieve an existing CEL file, or create from CDF template if missing"
 #
 # \description{
 #  @get "title".

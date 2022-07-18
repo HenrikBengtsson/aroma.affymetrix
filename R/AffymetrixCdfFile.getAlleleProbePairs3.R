@@ -26,8 +26,8 @@
 # \section{Benchmarking}{
 #   On an IBM Thinkpad A31 with 1.8GHz and 1GB RAM:
 #   \itemize{
-#    \item{Mapping10K\_Xba142}{10208 units & 432964 cells: 11 seconds.}
-#    \item{Mapping50K\_Xba240}{58960 SNPs & 589,600 (PMA,PMB) probe pairs: 11 seconds.}
+#    \item{Mapping10K_Xba142}{10208 units & 432964 cells: 11 seconds.}
+#    \item{Mapping50K_Xba240}{58960 SNPs & 589,600 (PMA,PMB) probe pairs: 11 seconds.}
 #   }
 # }
 #

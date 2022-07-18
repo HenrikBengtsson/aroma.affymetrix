@@ -517,7 +517,7 @@ setMethodS3("getUnitGroupCellMap", "ChipEffectFile", function(this, units=NULL, 
   # Instead, updated size by size
   verbose && printf(verbose, "Allocating matrix of size %dx%d.\n",
                                      max(uUnitSizes), length(unitNames))
-  naValue <- as.integer(NA)
+  naValue <- NA_integer_
   units2 <- groups <- matrix(naValue, nrow=max(uUnitSizes), ncol=length(unitNames))
   for (size in uUnitSizes) {
     # Identify units with a certain number of groups

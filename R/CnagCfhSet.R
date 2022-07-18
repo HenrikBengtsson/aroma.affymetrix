@@ -548,9 +548,9 @@ setMethodS3("getData", "CnagCfhSet", function(this, indices=NULL, fields=c("x", 
   names(res) <- fields
   for (field in fields) {
     if (field %in% c("x", "y", "pixels")) {
-      naValue <- as.integer(NA)
+      naValue <- NA_integer_
     } else {
-      naValue <- as.double(NA)
+      naValue <- NA_real_
     }
     res[[field]] <- matrix(naValue, nrow=nbrOfCells, ncol=nbrOfArrays)
   }
@@ -928,7 +928,7 @@ setMethodS3("getAverageFile", "CnagCfhSet", function(this, name=NULL, prefix="av
     # TODO: Ideally, affxparser::readCel() should support
     # multiple filenames turning every data fields into a
     # matrix. /HB 2007-01-07
-    naValue <- as.double(NA)
+    naValue <- NA_real_
     X <- matrix(naValue, nrow=length(ii), ncol=nbrOfArrays)
     for (kk in seq_len(nbrOfArrays)) {
       X[,kk] <- .readCel(filename = pathnames[kk],

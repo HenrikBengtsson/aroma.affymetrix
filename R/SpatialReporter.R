@@ -377,7 +377,7 @@ setMethodS3("plotMargins", "SpatialReporter", function(this, array, margins=c("r
   yMargins <- yMargins[keep]
 
   if (is.null(ylim)) {
-    ylim <- c(NA, NA)
+    ylim <- c(NA_real_, NA_real_)
     for (kk in seq_along(yMargins)) {
       ylim <- range(c(ylim, range(yMargins[[1]], na.rm=TRUE)))
     }

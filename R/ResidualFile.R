@@ -355,7 +355,7 @@ setMethodS3("getUnitGroupCellMap", "ResidualFile", function(this, units=NULL, ..
   #  groups <- sapply(unitSizes, FUN=function(n) seq_len(n))
 
   # Instead, updated size by size
-  naValue <- as.integer(NA)
+  naValue <- NA_real_
   groups <- matrix(naValue, nrow=max(uUnitSizes), ncol=length(unitNames))
   for (size in uUnitSizes) {
     cc <- which(unitSizes == size)

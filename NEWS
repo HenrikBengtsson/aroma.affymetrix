@@ -1,7 +1,16 @@
 Package: aroma.affymetrix
 =========================
 
-Version: 3.2.0 [2018-06-22]
+Version: 3.2.0-9000 [2019-12-14]
+
+PERFORMANCE:
+
+ * MEMORY: Some parameter estimates where pre-allocated as logical (NA)
+   values, instead of as numeric (NA_real_) values, which would result in
+   an unnecessary coercion from logical to numeric.
+ 
+
+Version: 3.2.0 [2019-06-22]
 
 NEW FEATURES:
 

@@ -7,7 +7,7 @@
 # \description{
 #  @classhierarchy
 #
-#  This class represents affine model in Bengtsson \& Hossjer (2006).
+#  This class represents affine model in Bengtsson & Hossjer (2006).
 # }
 #
 # @synopsis
@@ -44,7 +44,7 @@
 # @author "HB"
 #
 # \references{
-#   Bengtsson \& Hossjer (2006). \cr
+#   Bengtsson & Hossjer (2006). \cr
 # }
 #*/###########################################################################
 setConstructorS3("AffinePlm", function(..., background=TRUE) {

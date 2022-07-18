@@ -35,7 +35,7 @@
 \arguments{
  \item{csR, dataSet}{An \code{\link{AffymetrixCelSet}} (or the name of an \code{\link{AffymetrixCelSet}}).}
  \item{combineAlleles}{A \code{\link[base]{logical}} specifying whether allele probe pairs
-  should be summed before modelling or not.}
+  should be summed before modeling or not.}
  \item{lengthRange}{An optional \code{\link[base]{numeric}} vector of length two passed
   to \code{\link{FragmentLengthNormalization}}.}
  \item{arrays}{A \code{\link[base]{integer}} \code{\link[base]{vector}} specifying the subset of arrays
@@ -70,7 +70,7 @@
  [1] H. Bengtsson, P. Wirapati & T.P. Speed.
      \emph{A single-array preprocessing method for estimating
      full-resolution raw copy numbers from all Affymetrix
-     genotyping arrays including GenomeWideSNP 5 \& 6},
+     genotyping arrays including GenomeWideSNP 5 & 6},
      Bioinformatics, 2009.\cr
 }
 

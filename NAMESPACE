@@ -1,7 +1,7 @@
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # IMPORTS
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-importFrom("R.methodsS3", "throw")
+importFrom("R.oo", "throw")
 importFrom("R.methodsS3", "setMethodS3")
 importFrom("R.oo", "setConstructorS3")
 importFrom("R.oo", "extend")
@@ -206,6 +206,7 @@ importFrom("matrixStats", "rowAnys")
 importFrom("matrixStats", "rowMads")
 importFrom("matrixStats", "rowMedians") ## Multi-sources: matrixStats, Biobase
 importFrom("matrixStats", "rowSds")
+importFrom("matrixStats", "rowSums2")
 importFrom("methods", "new")
 importFrom("R.cache", "getChecksum") ## Multi-sources: R.cache, R.filesets
 importFrom("R.cache", "loadCache")
@@ -301,7 +302,6 @@ importFrom("R.utils", "CmdArgsFunction")
 ## importFrom("base", "readLines") ## Multi-sources: R.filesets, base
 ## importFrom("base", "gc") ## Multi-sources: R.oo, base
 ## importFrom("base", "warnings") ## Multi-sources: R.utils, base
-## importFrom("inherits", "inherits") ## Multi-sources: R.utils, base
 
 ## Importing other objects
 importFrom("aroma.core", "aromaSettings")

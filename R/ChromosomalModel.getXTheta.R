@@ -20,7 +20,7 @@ setMethodS3("getPcuTheta", "ChromosomalModel", function(this, chromosome, reorde
   cesList <- getSets(this)
 
   # Allocate return structure
-  naValue <- as.double(NA)
+  naValue <- NA_real_
   theta <- matrix(naValue, nrow=nrow(pcu), ncol=length(this))
 
   for (kk in seq_along(cesList)) {

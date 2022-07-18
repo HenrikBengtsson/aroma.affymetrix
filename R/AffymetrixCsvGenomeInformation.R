@@ -94,7 +94,7 @@ setMethodS3("readDataFrame", "AffymetrixCsvGenomeInformation", function(this, ..
   stopifnot(length(colClasses) == nbrOfColumns)
 
   # Read the data table
-  df <- read.table(pathname, colClasses=colClasses, header=TRUE, sep=",", quote="\"", fill=TRUE, check.names=FALSE, na.strings=c("---"), ...)
+  df <- read.table(pathname, colClasses=colClasses, header=TRUE, sep=",", quote="\"", fill=TRUE, check.names=FALSE, na.strings=c("---"), stringsAsFactors = FALSE, ...)
 
   # Update the column names
   colnames <- colnames(df)

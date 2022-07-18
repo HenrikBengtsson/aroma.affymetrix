@@ -1,6 +1,8 @@
 library("R.utils")
 verbose <- Arguments$getVerbose(-8, timestamp=TRUE)
 
+## utils::download.file() will timeout after 60 seconds
+options(timeout=6*60)
 
 verbose && enter(verbose, "Downloading raw data for all tests")
 

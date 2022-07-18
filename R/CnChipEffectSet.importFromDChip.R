@@ -71,7 +71,7 @@ setMethodS3("importFromDChip", "CnChipEffectSet", function(static, filename, pat
     # Skip the last empty column (due to the extra tab outputted by dChip)
     colClasses <- rep("NULL", nbrOfColumns+1)
     colClasses[1] <- "character"
-    unitNames <- read.table(file=con, colClasses=colClasses, sep=sep, header=FALSE)
+    unitNames <- read.table(file=con, colClasses=colClasses, sep=sep, header=FALSE, stringsAsFactors = FALSE)
     unitNames <- unlist(unitNames, use.names=FALSE)
 
     nbrOfUnits <- length(unitNames)
@@ -374,7 +374,8 @@ setMethodS3("importFromDChip", "CnChipEffectSet", function(static, filename, pat
     colClasses[cols] <- sampleColClasses
     seek(con, where=dataOffset, rw="read")
     data <- read.table(file=con, colClasses=colClasses, sep=sep,
-                 header=FALSE, comment.char="", quote="", fill=FALSE)
+                 header=FALSE, comment.char="", quote="", fill=FALSE,
+                 stringsAsFactors = FALSE)
     data <- as.matrix(data[keep,,drop=FALSE])
     dimnames(data) <- NULL
     verbose && str(verbose, data)

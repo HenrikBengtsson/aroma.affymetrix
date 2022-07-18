@@ -7,7 +7,7 @@
 #  @classhierarchy
 #
 #  This abstract class represents a transform that transforms chip-effect
-#  estimates obtained from probe-level modelling.
+#  estimates obtained from probe-level modeling.
 # }
 #
 # @synopsis

@@ -30,7 +30,7 @@
   \item{pch}{The plot symbol.}
   \item{xlim,ylim}{The range of the x and the y axes.}
   \item{xlab,ylab}{The labels on the x and the y axes.}
-  \item{...}{Additional arguments passed to \code{\link[graphics]{plot}}.}
+  \item{...}{Additional arguments passed to \code{\link[graphics]{plot}}().}
   \item{annotate}{If \code{\link[base:logical]{TRUE}}, the plot is annotated with information about
     the data plotted, otherwise not.}
 }

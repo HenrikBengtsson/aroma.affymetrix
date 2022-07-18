@@ -129,7 +129,16 @@ downloadHapMapDataSet <- function(dataSet, tags=NULL, chipType=c("GenomeWideSNP_
 # GEO
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 getGeoDataSetURL <- function(dataSet, ...) {
-  sprintf("ftp://ftp.ncbi.nlm.nih.gov/pub/geo/DATA/supplementary/series/%s/%s_RAW.tar", dataSet, dataSet)
+  filename <- sprintf("%s_RAW.tar", dataSet)
+  
+  ## Previously:
+  # path <- sprintf("ftp://ftp.ncbi.nlm.nih.gov/pub/geo/DATA/supplementary/series/%s", dataSet)
+  
+  ## Verified 2020-12-02
+  dataSetNNN <- gsub("[0-9]{3}$", "nnn", dataSet)
+  path <- sprintf("ftp://ftp.ncbi.nlm.nih.gov/geo/series/%s/%s/suppl", dataSetNNN, dataSet)
+  
+  file.path(path, filename, fsep = "/")
 } # getGeoDataSetURL()
 
 getGeoDataFileURL <- function(sampleName, ext, ...) {
@@ -144,13 +153,16 @@ getGeoDataFileURL <- function(sampleName, ext, ...) {
   ext <- Arguments$getCharacter(ext)
 
   # Create GEO download URL
-  urlRoot <- "ftp://ftp.ncbi.nlm.nih.gov/pub/geo/DATA/supplementary/samples"
+  ## Previously:
+  # urlRoot <- "ftp://ftp.ncbi.nlm.nih.gov/pub/geo/DATA/supplementary/samples"
+  ## Verified 2020-12-02:
+  urlRoot <- "ftp://ftp.ncbi.nlm.nih.gov/geo/samples"
   filename <- sprintf("%s.%s.gz", sampleName, ext)
   sampleSet <- gsub("[0-9]{3}$", "nnn", sampleName)
   url <- file.path(urlRoot, sampleSet, sampleName, filename)
 
   url
-} # getGeoDataSetURL()
+} # getGeoDataFileURL()
 
 
 downloadGeoRawDataSet <- function(dataSet, tags=NULL, chipType, ..., chipTypeAliases=NULL, url=getGeoDataSetURL(dataSet), gunzip=TRUE, skip=TRUE) {

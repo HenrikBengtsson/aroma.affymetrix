@@ -189,7 +189,7 @@ setMethodS3("getConfidenceScoreSet", "CrlmmModel", function(this, ..., verbose=F
       verbose && enter(verbose, "Allocating new file")
      chipTypeF <- getChipType(this)
       agc <- AromaUnitSignalBinaryFile$allocate(filename=pathname, platform=platform, chipType=chipTypeF, nbrOfRows=nbrOfUnits, verbose=verbose)
-      naValue <- as.double(NA)
+      naValue <- NA_real_
       agc[,1] <- naValue
       verbose && exit(verbose)
     }
@@ -550,7 +550,7 @@ setMethodS3("fit", "CrlmmModel", function(this, units="remaining", force=FALSE, 
     verbose && exit(verbose); # "Fitting SNP mixtures"
 
     verbose && enter(verbose, "Genotype calling")
-    naValue <- as.integer(NA)
+    naValue <- NA_integer_
     calls <- matrix(naValue, nrow=nrow(eSet), ncol=ncol(eSet))
     index <- which(!hapmapCallIndex)
     if (length(index) > 0) {
@@ -617,7 +617,7 @@ setMethodS3("fit", "CrlmmModel", function(this, units="remaining", force=FALSE, 
 
     if (recalibrate) {
       verbose && enter(verbose, "Recalibrating")
-      naValue <- as.integer(NA)
+      naValue <- NA_integer_
       for (gg in 1:3) {
         calls[calls == gg & llr < minLLRforCalls[gg]] <- naValue
       }
@@ -794,7 +794,7 @@ setMethodS3("calculateConfidenceScores", "CrlmmModel", function(this, ..., force
   snrs <- unlist(snrs, use.names=FALSE)
   # Sanity check
   if (length(snrs) != nbrOfArrays) {
-    throw("Number of SNRs read from CRLMM parameter set does not match the number of arrays modelled: ", length(snrs), " != ", nbrOfArrays)
+    throw("Number of SNRs read from CRLMM parameter set does not match the number of arrays modeled: ", length(snrs), " != ", nbrOfArrays)
   }
   names(snrs) <- NULL
   verbose && cat(verbose, "SNRs:")
@@ -825,7 +825,7 @@ setMethodS3("calculateConfidenceScores", "CrlmmModel", function(this, ..., force
   verbose && exit(verbose); # "Calculating transformed SNRs using prior lm fit"
 
   # Allocate results
-  naValue <- as.double(NA)
+  naValue <- NA_real_
   conf <- matrix(naValue, nrow=nbrOfUnits, ncol=nbrOfArrays)
 
   params <- list(

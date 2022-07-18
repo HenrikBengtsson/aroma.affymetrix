@@ -678,7 +678,7 @@ setMethodS3("normalizeOneArrayVector", "FragmentEquivalentClassNormalization", f
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Normalizing all units
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  naValue <- as.double(NA)
+  naValue <- NA_real_
   deltas2 <- matrix(naValue, nrow=length(y), ncol=nbrOfEnzymes)
   for (ee in seq_len(nbrOfEnzymes)) {
     verbose && enter(verbose, "Enzyme #", ee, " of ", nbrOfEnzymes)

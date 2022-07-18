@@ -1,5 +1,4 @@
 library("aroma.affymetrix")
-## setParallelEngine(aromaSettings, "BatchJobs")
 
 verbose <- Arguments$getVerbose(-4, timestamp=TRUE)
 

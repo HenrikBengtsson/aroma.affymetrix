@@ -40,7 +40,7 @@ extends \emph{\link[aroma.affymetrix]{ProbeLevelModel}}\cr
 
 
  This class represents the \emph{model-based expression indexes} (MBEI)
- multiplicative model in Li \& Wong (2001).
+ multiplicative model in Li & Wong (2001).
 }
 
 \usage{

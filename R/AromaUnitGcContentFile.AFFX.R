@@ -6,7 +6,7 @@ setMethodS3("allocateFromCdf", "AromaUnitGcContentFile", function(static, cdf, .
   sizes <- 4L
 
   res <- NextMethod("allocateFromCdf", types=types, sizes=sizes)
-  res[,1] <- as.double(NA)
+  res[,1] <- NA_real_
 
   res
 }, static=TRUE)

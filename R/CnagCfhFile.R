@@ -308,7 +308,7 @@ setMethodS3("getTimestamp", "CnagCfhFile", function(this, format="%m/%d/%y %H:%M
 
 
 setMethodS3("nbrOfCells", "CnagCfhFile", function(this, ...) {
-  as.integer(NA)
+  NA_integer_
 })
 
 
@@ -420,7 +420,7 @@ setMethodS3("readUnits", "CnagCfhFile", function(this, units=NULL, ..., verbose=
   # Remap according to units
   if (!is.null(units)) {
     idxs <- match(snps[idxs], units)
-    naValue <- as.double(NA)
+    naValue <- NA_real_
     tmp <- matrix(naValue, ncol=2, nrow=length(units))
     tmp[idxs,] <- theta
     theta <- tmp

@@ -193,7 +193,7 @@ setMethodS3("computeAffinities", "AffymetrixCdfFile", function(this, safe=TRUE, 
   dimension <- NULL; # Not needed anymore
 
   # Allocate empty vector of affinities
-  naValue <- as.double(NA)
+  naValue <- NA_real_
   affinities <- rep(naValue, times=nbrOfCells)
 
   if(isPMMMChip) {
@@ -259,7 +259,7 @@ setMethodS3("computeAffinities", "AffymetrixCdfFile", function(this, safe=TRUE, 
     # new code to compute affinities from the MM probes
     # (antigenomic or whatever) on PM-only arrays  -- MR 2009-03-28
     # ---------------------------------------------------------
-    naValue <- as.double(NA)
+    naValue <- NA_real_
     apm <- rep(naValue, times=nbrOfSequences)
 
     indexAll <- sequenceInfo$cell
@@ -465,7 +465,7 @@ setMethodS3("computeAffinitiesByACS", "AffymetrixCdfFile", function(this, ..., m
   verbose && enter(verbose, "Calculating chip-type specific gcRMA probe affinities")
 
   # Allocate empty vector of affinities
-  naValue <- as.double(NA)
+  naValue <- NA_real_
   affinities <- rep(naValue, times=nbrOfCells)
 
   if (method == "v1") {

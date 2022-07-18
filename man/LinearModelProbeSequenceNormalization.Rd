@@ -43,7 +43,7 @@ extends \emph{\link[aroma.affymetrix]{AbstractProbeSequenceNormalization}}\cr
 
  This abstract class represents a normalization method that corrects
  for systematic effects in the probe intensities due to probe-sequence
- dependent effects that can be modelled using a linear model.
+ dependent effects that can be modeled using a linear model.
 }
 
 \usage{

@@ -70,7 +70,7 @@ setMethodS3("getFileFormat", "AffymetrixCnChpFile", function(this, ...) {
   if (rawToChar(raw[1:5]) == "[CEL]")
     return("v3 (text; ASCII)")
 
-  naValue <- as.character(NA)
+  naValue <- NA_character_
   return(naValue)
 })
 

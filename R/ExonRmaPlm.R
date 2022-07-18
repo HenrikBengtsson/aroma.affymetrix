@@ -187,9 +187,9 @@ setMethodS3("getFitUnitGroupFunction", "ExonRmaPlm", function(this, ..., verbose
     dim <- dim(y)
     if (is.null(dim)) {
       nbrOfArrays <- length(getDataSet(this))
-      return(list(theta=rep(NA, nbrOfArrays),
-                  sdTheta=rep(NA, nbrOfArrays),
-                  thetaOutliers=rep(NA, nbrOfArrays),
+      return(list(theta=rep(NA_real_, times=nbrOfArrays),
+                  sdTheta=rep(NA_real_, times=nbrOfArrays),
+                  thetaOutliers=rep(NA_real_, times=nbrOfArrays),
                   phi=c(),
                   sdPhi=c(),
                   phiOutliers=c()))
@@ -208,12 +208,12 @@ setMethodS3("getFitUnitGroupFunction", "ExonRmaPlm", function(this, ..., verbose
     if (K > skipThreshold[1] && I > skipThreshold[2]) {
       warning("Ignoring a unit group when fitting probe-level model, because it has a ridiculously large number of data points: ", paste(dim, collapse="x"), " > ", paste(skipThreshold, collapse="x"))
 
-      return(list(theta=rep(NA, I),
-                  sdTheta=rep(NA, I),
-                  thetaOutliers=rep(NA, I),
-                  phi=rep(NA, K),
-                  sdPhi=rep(NA, K),
-                  phiOutliers=rep(NA, K)
+      return(list(theta=rep(NA_real_, times=I),
+                  sdTheta=rep(NA_real_, times=I),
+                  thetaOutliers=rep(NA_real_, times=I),
+                  phi=rep(NA_real_, times=K),
+                  sdPhi=rep(NA_real_, times=K),
+                  phiOutliers=rep(NA_real_, times=K)
                  )
             )
     }

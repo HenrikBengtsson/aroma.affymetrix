@@ -237,7 +237,7 @@ setMethodS3("extractTheta", "DChipDcpSet", function(this, units=NULL, ..., drop=
     if (is.null(data)) {
       dim <- c(nrow(dataKK), ncol(dataKK), nbrOfArrays)
       dimnames <- list(NULL, NULL, getNames(this))
-      naValue <- as.double(NA)
+      naValue <- NA_real_
       data <- array(naValue, dim=dim, dimnames=dimnames)
     }
     data[,,kk] <- dataKK

@@ -89,7 +89,7 @@ $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCa
 }
 
 \section{Jitter noise}{
-  The fitting algorithm of the normal+exponentital background correction
+  The fitting algorithm of the normal+exponential background correction
   model may not converge if there too many small and discrete signals.
   To overcome this problem, a small amount of noise may be added to the
   signals before fitting the model.  This is an ad hoc solution that

@@ -163,7 +163,7 @@ setMethodS3("getColumnNames", "AffymetrixProbeTabFile", function(this, ..., tran
     topRow <- getHeader(this)$topRows[[1]]
     nbrOfColumns <- length(topRow)
     defColumns <- sprintf("V%02d", 1:nbrOfColumns)
-    columns <- rep(NA, nbrOfColumns)
+    columns <- rep(NA_character_, times=nbrOfColumns)
 
     if (hasColumnHeader(this)) {
       columns <- topRow
@@ -498,7 +498,7 @@ setMethodS3("getIndexToRowMap", "AffymetrixProbeTabFile", function(this, ..., fo
     indices <- nbrOfColumns(cdf) * df$y + df$x + 1
 
     # Get the cell index to (x,y) map.
-    map <- rep(NA, nbrOfCells(cdf))
+    map <- rep(NA_integer_, times=nbrOfCells(cdf))
     map[indices] <- seq_along(indices)
 
     this$.indexToRowMap <- map

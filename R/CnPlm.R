@@ -6,7 +6,7 @@
 # \description{
 #  @classhierarchy
 #
-#  This suport class represents a @see "SnpPlm" specially designed for
+#  This support class represents a @see "SnpPlm" specially designed for
 #  copy-number analysis.
 # }
 #
@@ -24,7 +24,7 @@
 #   Models implementing this copy-number PLM, provides either
 #   allele-specific or total copy-number estimates.
 #   For allele-specific CNs the underlying @see "SnpPlm" model is fitted as
-#   is, i.e. for each allele seperately with or without the strands first
+#   is, i.e. for each allele separately with or without the strands first
 #   being merged.
 #
 #   For total CNs the probe signals for the two alleles are combined

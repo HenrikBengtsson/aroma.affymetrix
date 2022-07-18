@@ -1,5 +1,5 @@
 Package: aroma.affymetrix
-Version: 3.2.0-9000
+Version: 3.2.0-9001
 Depends:
   R (>= 3.2.0),
   R.utils (>= 2.9.0),
@@ -59,4 +59,3 @@ URL: https://www.aroma-project.org/, https://github.com/HenrikBengtsson/aroma.af
 BugReports: https://github.com/HenrikBengtsson/aroma.affymetrix/issues
 LazyLoad: TRUE
 biocViews: Infrastructure, ProprietaryPlatforms, ExonArray, Microarray, OneChannel, GUI, DataImport, DataRepresentation, Preprocessing, QualityControl, Visualization, ReportWriting, aCGH, CopyNumberVariants, DifferentialExpression, GeneExpression, SNP, Transcription
-

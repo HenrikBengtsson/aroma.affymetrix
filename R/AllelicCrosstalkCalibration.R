@@ -66,7 +66,7 @@
 #   Rescaling each allele-pair group (e.g. AC, AG, AT, CG, CT, GC)
 #   towards a target average (\code{rescaleBy="groups"})
 #   \emph{must not} be used for multi-enzyme chip types,
-#   e.g. GenomeWideSNP\_6.
+#   e.g. GenomeWideSNP_6.
 #   If still done, due to confounded effects of non-perfect enzyme
 #   mixtures etc, there will be a significant bias between raw CNs
 #   for SNPs and CN probes.

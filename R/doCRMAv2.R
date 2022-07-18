@@ -60,7 +60,7 @@
 #  [1] H. Bengtsson, P. Wirapati & T.P. Speed.
 #      \emph{A single-array preprocessing method for estimating
 #      full-resolution raw copy numbers from all Affymetrix
-#      genotyping arrays including GenomeWideSNP 5 \& 6},
+#      genotyping arrays including GenomeWideSNP 5 & 6},
 #      Bioinformatics, 2009.\cr
 # }
 #

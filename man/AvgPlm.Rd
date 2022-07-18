@@ -42,7 +42,7 @@ extends \emph{\link[aroma.affymetrix]{ProbeLevelModel}}\cr
  This class represents a PLM where the probe intensities are averaged
  assuming identical probe affinities.
  For instance, one may assume that replicated probes with identical
- sequences have the same probe affinities, cf. the GenomeWideSNP\_6
+ sequences have the same probe affinities, cf. the GenomeWideSNP_6
  chip type.
 }
 

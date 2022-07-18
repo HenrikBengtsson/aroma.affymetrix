@@ -19,7 +19,7 @@ The package has been verified using `R CMD check --as-cran` on:
 | ------------- | ------ | -------- | --------------- |
 | 4.0.x         | L      |          |                 |
 | 4.1.x         | L M W  |          |                 |
-| 4.2.x         | L M W  | . M M1 . | M1 W            |
+| 4.2.x         | L M W  | . M M1 . |  . W            |
 | devel         | L M W  | .        |    W            |
 
 *Legend: OS: L = Linux, M = macOS, M1 = macOS M1, W = Windows*

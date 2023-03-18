@@ -64,7 +64,7 @@ setMethodS3("findByName", "ChipEffectSet", function(static, ..., paths="plmData(
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Arguments 'paths':
   if (is.null(paths)) {
-    paths <- eval(formals(findByName.ChipEffectSet)[["paths"]])
+    paths <- eval(formals(findByName.ChipEffectSet)[["paths"]], enclos = baseenv())
   }
 
   NextMethod("findByName", paths=paths)

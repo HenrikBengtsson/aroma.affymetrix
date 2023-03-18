@@ -1,5 +1,5 @@
 Package: aroma.affymetrix
-Version: 3.2.1-9000
+Version: 3.2.1-9001
 Depends:
   R (>= 3.2.0),
   R.utils (>= 2.9.0),

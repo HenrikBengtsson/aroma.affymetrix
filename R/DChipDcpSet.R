@@ -103,7 +103,7 @@ setMethodS3("findByName", "DChipDcpSet", function(static, ..., paths=c("rawData(
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Arguments 'paths':
   if (is.null(paths)) {
-    paths <- eval(formals(findByName.DChipDcpSet)[["paths"]])
+    paths <- eval(formals(findByName.DChipDcpSet)[["paths"]], enclos = baseenv())
   }
 
   NextMethod("findByName", paths=paths)

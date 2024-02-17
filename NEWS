@@ -1,9 +1,11 @@
 Package: aroma.affymetrix
 =========================
 
-Version: 3.2.1-9000 [2022-07-18]
+Version: 3.2.1-9000 [2024-02-17]
 
- * ...
+DOCUMENTATION:
+
+ * Fix minor Rd help-page issues.
 
 
 Version: 3.2.1 [2022-07-18]

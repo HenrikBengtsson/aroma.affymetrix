@@ -30,9 +30,7 @@
 \arguments{
  \item{chipType}{A \code{\link[base]{character}} string.}
  \item{tags}{...}
- \item{version}{An optional \code{\link[base]{character}} string specifying the version
-   string, if more than one version is available.}
- \item{...}{Not used.}
+ \item{...}{Additional arguments passed to \code{\link{UgpGenomeInformation}}.}
  \item{verbose}{See \code{\link[R.utils]{Verbose}}.}
 }
 

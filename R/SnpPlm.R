@@ -23,7 +23,7 @@
 # \section{Requirements}{
 #   Classes inheriting from this @see "R.oo::Interface" must provide the
 #   following fields:
-#   \itemize{
+#   \describe{
 #    \item{mergeStrands}{A @logical value indicating if strands should be
 #       merged or not.}
 #   }

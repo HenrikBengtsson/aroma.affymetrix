@@ -68,9 +68,7 @@ setMethodS3("findByChipType", "UgpGenomeInformation", function(static, ...) {
 # \arguments{
 #  \item{chipType}{A @character string.}
 #  \item{tags}{...}
-#  \item{version}{An optional @character string specifying the version
-#    string, if more than one version is available.}
-#  \item{...}{Not used.}
+#  \item{...}{Additional arguments passed to @see "UgpGenomeInformation".}
 #  \item{verbose}{See @see "R.utils::Verbose".}
 # }
 #

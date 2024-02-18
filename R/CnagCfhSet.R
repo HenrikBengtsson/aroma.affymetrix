@@ -302,7 +302,7 @@ setMethodS3("findByName", "CnagCfhSet", function(static, ..., paths="cnagData(|,
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Arguments 'paths':
   if (is.null(paths)) {
-    paths <- eval(formals(findByName.CnagCfhSet)[["paths"]])
+    paths <- eval(formals(findByName.CnagCfhSet)[["paths"]], enclos = baseenv())
   }
 
   NextMethod("findByName", paths=paths)

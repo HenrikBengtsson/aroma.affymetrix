@@ -103,7 +103,7 @@ setMethodS3("findByName", "AffymetrixCnChpSet", function(static, ..., paths="chp
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Arguments 'paths':
   if (is.null(paths)) {
-    paths <- eval(formals(findByName.AffymetrixCnChpSet)[["paths"]])
+    paths <- eval(formals(findByName.AffymetrixCnChpSet)[["paths"]], enclos = baseenv())
   }
 
   NextMethod("findByName", paths=paths)

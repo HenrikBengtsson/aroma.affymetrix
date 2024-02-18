@@ -22,8 +22,6 @@
 }
 
 \arguments{
- \item{units}{Unit indices to be retrieved.
-              If \code{\link[base]{NULL}}, all units are considered.}
  \item{...}{Additional arguments passed to \code{getCellIndices()}
             of \code{\link{ChipEffectFile}}.}
  \item{unlist}{If \code{\link[base:logical]{TRUE}}, the cell indices are returned as a \code{\link[base]{vector}}.}

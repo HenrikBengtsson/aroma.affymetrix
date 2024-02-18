@@ -22,8 +22,6 @@
 }
 
 \arguments{
-  \item{arrays}{A \code{\link[base]{character}} (or \code{\link[base]{integer}}) \code{\link[base]{vector}} of arrays to be
-     considered. If \code{\link[base]{NULL}}, all arrays of the data set are considered.}
   \item{...}{Not used.}
 }
 

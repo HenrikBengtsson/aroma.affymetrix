@@ -69,9 +69,6 @@ setMethodS3("getParameters", "BackgroundCorrection", function(this, ...) {
 #
 # \arguments{
 #   \item{...}{Not used.}
-#   \item{force}{If @TRUE, data already processed is re-processed,
-#       otherwise not.}
-#   \item{verbose}{See @see "R.utils::Verbose".}
 # }
 #
 # \value{

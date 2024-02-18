@@ -1,5 +1,6 @@
 ###########################################################################/**
 # @RdocClass AffymetrixCelSet
+# @alias nbrOfArrays.AffymetrixCelSet
 #
 # @title "The AffymetrixCelSet class"
 #
@@ -450,7 +451,7 @@ setMethodS3("findByName", "AffymetrixCelSet", function(static, ..., chipType=NUL
 
   # Arguments 'paths':
   if (is.null(paths)) {
-    paths <- eval(formals(findByName.AffymetrixCelSet)[["paths"]])
+    paths <- eval(formals(findByName.AffymetrixCelSet)[["paths"]], enclos = baseenv())
   }
 
   # Call the "next" method

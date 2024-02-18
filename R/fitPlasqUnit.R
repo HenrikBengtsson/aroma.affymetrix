@@ -17,7 +17,7 @@ plasqGaussian <- function(link="exponential") {
   if (!is.character(linktemp)) {
     linktemp <- deparse(linktemp)
     if (linktemp == "link")
-      linktemp <- eval(link)
+      linktemp <- eval(link, enclos = baseenv())
   }
 
   if (linktemp == "exponential") {

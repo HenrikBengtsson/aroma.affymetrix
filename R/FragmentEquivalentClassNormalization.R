@@ -687,7 +687,9 @@ setMethodS3("normalizeOneArrayVector", "FragmentEquivalentClassNormalization", f
     delta <- deltas[[ee]]
 
     # Identify the class IDs, e.g. 0x14
-    classIds <- sapply(names(delta), FUN=function(x) eval(parse(text=x)))
+    classIds <- sapply(names(delta), FUN=function(x) {
+      eval(parse(text = x), enclos = baseenv())
+    })
 
     # Normalize on log2-scale?
     if (log2) {

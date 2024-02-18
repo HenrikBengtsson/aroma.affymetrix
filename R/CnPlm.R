@@ -36,7 +36,7 @@
 # \section{Requirements}{
 #   Classes inheriting from this @see "R.oo::Interface" must provide the
 #   following fields, in addition to the ones according to @see "SnpPlm":
-#   \itemize{
+#   \describe{
 #    \item{combineAlleles}{A @logical indicating if total or allele-specific
 #      copy numbers should be estimated according to the above averaging.}
 #   }

@@ -420,7 +420,6 @@ setMethodS3("hasUnitTypes", "AffymetrixCdfFile", function(this, types, ..., verb
 #
 # \arguments{
 #   \item{units}{The units of interest. If @NULL, all units are considered.}
-#   \item{map}{A @character string specifying the mapping used.}
 #   \item{...}{Not used.}
 # }
 #
@@ -834,7 +833,6 @@ setMethodS3("restruct", "AffymetrixCdfFile", function(this, cdf, ..., verbose=FA
 # @synopsis
 #
 # \arguments{
-#   \item{units}{The units of interest. If @NULL, all units are considered.}
 #   \item{...}{Additional arguments passed to
 #      @see "affxparser::readCdfCellIndices".}
 # }

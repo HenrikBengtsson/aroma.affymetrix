@@ -59,8 +59,6 @@ setMethodS3("getParameters", "ExonChipEffectFile", function(this, ...) {
 # @synopsis
 #
 # \arguments{
-#  \item{units}{Unit indices to be retrieved.
-#               If @NULL, all units are considered.}
 #  \item{...}{Additional arguments passed to \code{getCellIndices()}
 #             of @see "ChipEffectFile".}
 #  \item{unlist}{If @TRUE, the cell indices are returned as a @vector.}

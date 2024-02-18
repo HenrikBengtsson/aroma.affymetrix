@@ -22,8 +22,6 @@
 }
 
 \arguments{
- \item{chipType}{A \code{\link[base]{character}} string.}
- \item{tags}{An optional \code{\link[base]{character}} \code{\link[base]{vector}} of tags.}
  \item{...}{Additional arguments.}
 }
 

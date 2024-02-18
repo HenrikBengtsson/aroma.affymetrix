@@ -61,7 +61,7 @@ extend, print, uses
 \section{Requirements}{
   Classes inheriting from this \code{\link[R.oo]{Interface}} must provide the
   following fields:
-  \itemize{
+  \describe{
    \item{mergeStrands}{A \code{\link[base]{logical}} value indicating if strands should be
       merged or not.}
   }

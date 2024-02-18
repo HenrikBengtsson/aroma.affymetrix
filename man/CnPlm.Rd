@@ -79,7 +79,7 @@ extend, print, uses
 \section{Requirements}{
   Classes inheriting from this \code{\link[R.oo]{Interface}} must provide the
   following fields, in addition to the ones according to \code{\link{SnpPlm}}:
-  \itemize{
+  \describe{
    \item{combineAlleles}{A \code{\link[base]{logical}} indicating if total or allele-specific
      copy numbers should be estimated according to the above averaging.}
   }

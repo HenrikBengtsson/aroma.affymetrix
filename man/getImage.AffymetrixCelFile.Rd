@@ -35,7 +35,6 @@
      \code{stdvs}, or \code{pixels}.}
   \item{zoom}{A \code{\link[base]{numeric}} scale factor in (0,+Inf) for resizing the
     imaging. If \code{1}, no resizing is done.}
-  \item{palette}{An optional \code{\link[base]{vector}} of color code.}
   \item{...}{Additional arguments passed to
      \code{\link[aroma.affymetrix:readRawDataRectangle.AffymetrixCelFile]{*readRawDataRectangle}()} and more function.}
   \item{readRectFcn}{A \code{\link[base]{function}} taking arguments 'xrange' and 'yrange',

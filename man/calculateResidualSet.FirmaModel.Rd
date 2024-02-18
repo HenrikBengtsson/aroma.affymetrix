@@ -27,7 +27,6 @@
 
 \arguments{
   \item{...}{Not used.}
-  \item{verbose}{A \code{\link[base]{logical}} or a \code{\link[R.utils]{Verbose}}.}
 }
 
 \value{

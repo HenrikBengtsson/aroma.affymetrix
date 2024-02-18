@@ -31,7 +31,6 @@ setMethodS3("getOutputFiles", "Transform", function(this, pattern=NULL, ...) {
 #
 # \arguments{
 #   \item{...}{Not used.}
-#   \item{force}{If @TRUE, any in-memory cached results are ignored.}
 #   \item{verbose}{See @see "R.utils::Verbose".}
 # }
 #

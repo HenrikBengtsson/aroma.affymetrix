@@ -180,8 +180,6 @@ setMethodS3("getArraysOfInput", "ArrayExplorer", function(this, ...) {
 # @synopsis
 #
 # \arguments{
-#   \item{arrays}{A @character (or @integer) @vector of arrays to be
-#      considered. If @NULL, all arrays of the data set are considered.}
 #   \item{...}{Not used.}
 # }
 #

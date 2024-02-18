@@ -23,9 +23,6 @@
 }
 
 \arguments{
-  \item{data}{A \code{\link[base]{data.frame}} with columns \code{M} (log-ratio) and
-     \code{x} (locus position).
-  }
   \item{chromosome}{An \code{\link[base]{integer}} specifying the index of the chromosome to
      be fitted.}
   \item{...}{Additional arguments passed down to the internal fit function.}

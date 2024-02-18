@@ -94,14 +94,9 @@ setMethodS3("findByChipType", "DChipSnpInformation", function(static, chipType, 
 #
 # \arguments{
 #  \item{chipType}{A @character string.}
-#  \item{rootPath}{A @character string specifying the root path, i.e.
-#    the annotation directory.}
 #  \item{version}{An optional @character string specifying the version
 #    string, if more than one version is available.}
-#  \item{pattern}{An optional filename pattern used to locate the
-#    dChip genome file.  If @NULL, a default pattern is used.}
-#  \item{...}{Not used.}
-#  \item{verbose}{See @see "R.utils::Verbose".}
+#  \item{...}{Additional arguments passed to @seemethod "findByChipType".}
 # }
 #
 # \value{

@@ -11,6 +11,7 @@
 \alias{setupExampleData.AromaAffymetrix}
 \alias{AromaAffymetrix.setupExampleData}
 \alias{setupExampleData,AromaAffymetrix-method}
+\alias{setupExampleData}
 
 \title{Setups example data in the current directory}
 

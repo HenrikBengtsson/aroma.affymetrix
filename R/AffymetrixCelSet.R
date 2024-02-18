@@ -1,5 +1,6 @@
 ###########################################################################/**
 # @RdocClass AffymetrixCelSet
+# @alias nbrOfArrays.AffymetrixCelSet
 #
 # @title "The AffymetrixCelSet class"
 #

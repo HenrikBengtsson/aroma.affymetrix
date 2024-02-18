@@ -14,9 +14,6 @@ setMethodS3("getFitUnitGroupFunction", "SmoothMultiarrayModel", abstract=TRUE, p
 # @synopsis
 #
 # \arguments{
-#   \item{data}{A @data.frame with columns \code{M} (log-ratio) and
-#      \code{x} (locus position).
-#   }
 #   \item{chromosome}{An @integer specifying the index of the chromosome to
 #      be fitted.}
 #   \item{...}{Additional arguments passed down to the internal fit function.}

@@ -24,7 +24,6 @@
 
 \arguments{
   \item{...}{Not used.}
-  \item{force}{If \code{\link[base:logical]{TRUE}}, any in-memory cached results are ignored.}
   \item{verbose}{See \code{\link[R.utils]{Verbose}}.}
 }
 

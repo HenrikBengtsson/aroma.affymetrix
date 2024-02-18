@@ -313,8 +313,8 @@ setMethodS3("smoothScatterMvsA", "AffymetrixCelFile", function(this, reference, 
 #   \item{x}{The other variable.  A @double @vector.}
 #   \item{indices}{Indices of the probe signals to be plotted.}
 #   \item{pch}{The plot symbol.}
-#   \item{xlim,ylim}{The range of the x and the y axes.}
-#   \item{xlab,ylab}{The labels on the x and the y axes.}
+#   \item{ylim}{The range of the y axes.}
+#   \item{ylab}{The labels on the y axes.}
 #   \item{...}{Additional arguments passed to @see "graphics::plot".}
 #   \item{annotate}{If @TRUE, the plot is annotated with information about
 #     the data plotted, otherwise not.}
@@ -495,7 +495,6 @@ setMethodS3("image270", "AffymetrixCelFile", function(this, xrange=c(0,Inf), yra
 #      \code{stdvs}, or \code{pixels}.}
 #   \item{zoom}{A @numeric scale factor in (0,+Inf) for resizing the
 #     imaging. If \code{1}, no resizing is done.}
-#   \item{palette}{An optional @vector of color code.}
 #   \item{...}{Additional arguments passed to
 #      @seemethod "readRawDataRectangle" and more function.}
 #   \item{readRectFcn}{A @function taking arguments 'xrange' and 'yrange',

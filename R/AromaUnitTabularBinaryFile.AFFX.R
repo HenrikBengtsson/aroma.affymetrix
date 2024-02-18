@@ -86,11 +86,6 @@ setMethodS3("getCdf", "AromaUnitTabularBinaryFile", function(this, ..., force=FA
 # \arguments{
 #   \item{cdf}{The @see "AffymetrixCdfFile" used as a template and from
 #      which the (full) chip type is taken.}
-#   \item{path}{The path where to store the new file.}
-#   \item{tags}{A @character @vector of optional tags appended to
-#      the filename.}
-#   \item{footer}{A nested named @list structure of additional attributes
-#      that are saved in the file footer after the mandatory ones.}
 #   \item{...}{Additional arguments passed to \code{allocate()} of
 #      @see "aroma.core::AromaTabularBinaryFile".}
 # }

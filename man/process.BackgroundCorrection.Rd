@@ -23,9 +23,6 @@
 
 \arguments{
   \item{...}{Not used.}
-  \item{force}{If \code{\link[base:logical]{TRUE}}, data already processed is re-processed,
-      otherwise not.}
-  \item{verbose}{See \code{\link[R.utils]{Verbose}}.}
 }
 
 \value{

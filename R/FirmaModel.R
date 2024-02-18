@@ -263,7 +263,6 @@ setMethodS3("getFirmaScores", "FirmaModel", function(this, ...) {
 #
 # \arguments{
 #   \item{...}{Not used.}
-#   \item{verbose}{A @logical or a @see "R.utils::Verbose".}
 # }
 #
 # \value{

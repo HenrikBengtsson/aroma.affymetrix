@@ -23,14 +23,9 @@
 
 \arguments{
  \item{chipType}{A \code{\link[base]{character}} string.}
- \item{rootPath}{A \code{\link[base]{character}} string specifying the root path, i.e.
-   the annotation directory.}
  \item{version}{An optional \code{\link[base]{character}} string specifying the version
    string, if more than one version is available.}
- \item{pattern}{An optional filename pattern used to locate the
-   dChip genome file.  If \code{\link[base]{NULL}}, a default pattern is used.}
- \item{...}{Not used.}
- \item{verbose}{See \code{\link[R.utils]{Verbose}}.}
+ \item{...}{Additional arguments passed to \code{\link[aroma.affymetrix:findByChipType.DChipSnpInformation]{*findByChipType}()}.}
 }
 
 \value{

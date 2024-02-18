@@ -356,8 +356,6 @@ setMethodS3("getChipType", "CnagCfhFile", function(this, ...) {
 #
 # \arguments{
 #   \item{units}{The units to be read. If @NULL, all units are read.}
-#   \item{cdf}{An alternative CDF structure to be used.  This overrides
-#     the \code{units} arguments.}
 #   \item{...}{Arguments passed to \code{getUnits()} of the
 #     @see "AffymetrixCdfFile" class (if \code{cdf} was not specified),
 #     but also to the @see "affxparser::readCelUnits" methods.}

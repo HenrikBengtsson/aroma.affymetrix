@@ -23,7 +23,6 @@
 
 \arguments{
   \item{units}{The units of interest. If \code{\link[base]{NULL}}, all units are considered.}
-  \item{map}{A \code{\link[base]{character}} string specifying the mapping used.}
   \item{...}{Not used.}
 }
 

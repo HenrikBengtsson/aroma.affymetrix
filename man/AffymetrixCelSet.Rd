@@ -10,6 +10,7 @@
 \docType{class}
 \alias{AffymetrixCelSet}
 
+\alias{nbrOfArrays.AffymetrixCelSet}
 
 \title{The AffymetrixCelSet class}
 

@@ -23,8 +23,6 @@
 
 \arguments{
   \item{units}{The units to be read. If \code{\link[base]{NULL}}, all units are read.}
-  \item{cdf}{An alternative CDF structure to be used.  This overrides
-    the \code{units} arguments.}
   \item{...}{Arguments passed to \code{getUnits()} of the
     \code{\link{AffymetrixCdfFile}} class (if \code{cdf} was not specified),
     but also to the \code{\link[affxparser]{readCelUnits}} methods.}

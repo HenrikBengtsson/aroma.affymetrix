@@ -229,8 +229,6 @@ setMethodS3("getDefaultExtension", "AromaChipTypeAnnotationFile", function(stati
 # @synopsis
 #
 # \arguments{
-#  \item{chipType}{A @character string.}
-#  \item{tags}{An optional @character @vector of tags.}
 #  \item{...}{Additional arguments.}
 # }
 #

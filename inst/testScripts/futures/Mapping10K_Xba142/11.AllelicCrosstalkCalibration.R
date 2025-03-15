@@ -27,8 +27,8 @@ if (require("future.batchtools")) {
 message("Future strategies: ", paste(sQuote(strategies), collapse = ", "))
 mprint(future::sessionDetails())
 mprint(list(
-  availableCores = future::availableCores(which = "all"),
-  availableWorkers = future::availableWorkers(which = "all")
+  availableCores = parallelly::availableCores(which = "all"),
+  availableWorkers = parallelly::availableWorkers(which = "all")
 ))
 
 for (strategy in strategies) {

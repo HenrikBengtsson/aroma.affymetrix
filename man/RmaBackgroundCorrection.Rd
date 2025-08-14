@@ -61,7 +61,7 @@ RmaBackgroundCorrection(..., addJitter=FALSE, jitterSd=0.2, seed=6022007)
 \section{Fields and Methods}{
  \bold{Methods:}\cr
 \tabular{rll}{
- \tab \code{process} \tab  -\cr
+ \tab \code{\link[aroma.affymetrix:process.RmaBackgroundCorrection]{process}} \tab Performs background correction.\cr
 }
 
 

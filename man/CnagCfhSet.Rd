@@ -50,17 +50,17 @@ CnagCfhSet(files=NULL, ...)
  \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{as} \tab  -\cr
- \tab \code{as.CnagCfhSet} \tab  -\cr
+ \tab \code{\link[aroma.affymetrix:as.CnagCfhSet.CnagCfhSet]{as.CnagCfhSet}} \tab Coerce an object to an CnagCfhSet object.\cr
  \tab \code{byName} \tab  -\cr
  \tab \code{getAverage} \tab  -\cr
  \tab \code{getAverageAsinh} \tab  -\cr
- \tab \code{getAverageFile} \tab  -\cr
+ \tab \code{\link[aroma.affymetrix:getAverageFile.CnagCfhSet]{getAverageFile}} \tab Calculates the mean and the standard deviation of the cell signal (intensity, standard deviation etc.) across the CFH set.\cr
  \tab \code{getAverageLog} \tab  -\cr
- \tab \code{getCdf} \tab  -\cr
+ \tab \code{\link[aroma.affymetrix:getCdf.CnagCfhSet]{getCdf}} \tab Gets the CDF structure for this CFH set.\cr
  \tab \code{getData} \tab  -\cr
  \tab \code{getTimestamps} \tab  -\cr
  \tab \code{readUnits} \tab  -\cr
- \tab \code{setCdf} \tab  -\cr
+ \tab \code{\link[aroma.affymetrix:setCdf.CnagCfhSet]{setCdf}} \tab Sets the CDF structure for this CFH set.\cr
 }
 
 

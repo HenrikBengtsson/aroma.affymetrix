@@ -56,7 +56,7 @@ AffymetrixCnChpSet(files=NULL, ...)
  \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{as} \tab  -\cr
- \tab \code{as.AffymetrixCnChpSet} \tab  -\cr
+ \tab \code{\link[aroma.affymetrix:as.AffymetrixCnChpSet.AffymetrixCnChpSet]{as.AffymetrixCnChpSet}} \tab Coerce an object to an AffymetrixCnChpSet object.\cr
  \tab \code{exportTotalCnRatioSet} \tab  -\cr
  \tab \code{extractLogRatios} \tab  -\cr
  \tab \code{findByName} \tab  -\cr

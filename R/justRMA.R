@@ -24,7 +24,7 @@
 #  \item{flavor}{A @character string specifying the estimators used in
 #   the RMA summarization step.}
 #  \item{...}{Additional arguments passed to @see "doRMA" used internally.}
-#  \item{verbose}{See @see "Verbose".}
+#  \item{verbose}{See @see "R.utils::Verbose".}
 # }
 #
 # \value{

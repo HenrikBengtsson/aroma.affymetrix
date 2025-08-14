@@ -29,7 +29,7 @@
 \arguments{
  \item{...}{Additional arguments passed to the constructor of the static
     (calling) class.}
- \item{fileClass}{The name of the \code{\link{GenericDataFile}} class.}
+ \item{fileClass}{The name of the \code{\link[R.filesets]{GenericDataFile}} class.}
 }
 
 \value{

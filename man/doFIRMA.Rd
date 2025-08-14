@@ -30,7 +30,7 @@
  \item{flavor}{A \code{\link[base]{character}} string specifying the flavor of FIRMA to use.}
  \item{drop}{If \code{\link[base:logical]{TRUE}}, the FIRMA scores are returned, otherwise
   a named \code{\link[base]{list}} of all intermediate and final results.}
- \item{verbose}{See \code{\link{Verbose}}.}
+ \item{verbose}{See \code{\link[R.utils]{Verbose}}.}
 }
 
 \value{

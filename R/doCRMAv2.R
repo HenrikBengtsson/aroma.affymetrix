@@ -34,7 +34,7 @@
 #   probe-summarization model to used.}
 #  \item{drop}{If @TRUE, the summaries are returned, otherwise
 #   a named @list of all intermediate and final results.}
-#  \item{verbose}{See @see "Verbose".}
+#  \item{verbose}{See @see "R.utils::Verbose".}
 #  \item{...}{Additional arguments used to set up @see "AffymetrixCelSet" (when argument \code{dataSet} is specified).}
 # }
 #

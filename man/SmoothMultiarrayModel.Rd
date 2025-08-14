@@ -40,7 +40,7 @@ SmoothMultiarrayModel(..., typoOfWeights=c("none", "1/s2"), bandwidth=10000, tag
 }
 
 \arguments{
-  \item{...}{Arguments passed to the constructor of \code{\link{ChromosomalModel}}.}
+  \item{...}{Arguments passed to the constructor of \code{\link[aroma.core]{ChromosomalModel}}.}
   \item{typoOfWeights}{A \code{\link[base]{character}} string.}
   \item{bandwidth}{A single \code{\link[base]{numeric}} specifying the smoothing bandwidth
     in units of nucleotides.}
@@ -68,6 +68,6 @@ $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCa
 \author{Henrik Bengtsson}
 
 \seealso{
- \code{\link{CopyNumberSegmentationModel}}.
+ \code{\link[aroma.core]{CopyNumberSegmentationModel}}.
 }
 \keyword{classes}

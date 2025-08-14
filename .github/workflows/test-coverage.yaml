@@ -24,6 +24,11 @@ jobs:
         with:
           use-public-rspm: true
 
+      - name: Install archived 'gsmoothr' package
+        run: |
+          install.packages("https://cran.r-project.org/src/contrib/Archive/gsmoothr/gsmoothr_0.1.7.tar.gz")
+        shell: Rscript {0}
+
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
           extra-packages: any::covr, any::xml2

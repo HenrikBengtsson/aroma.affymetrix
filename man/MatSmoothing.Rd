@@ -78,5 +78,10 @@ $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCa
 
 }
 
+\details{
+ This class requires the \bold{gsmoothr} package, which was archived on
+ CRAN in May 2025.
+}
+
 \author{Mark Robinson, Henrik Bengtsson}
 \keyword{classes}

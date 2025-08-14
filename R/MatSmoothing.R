@@ -24,6 +24,11 @@
 #  @allmethods "public"
 # }
 #
+# \details{
+#  This class requires the \bold{gsmoothr} package, which was archived on
+#  CRAN in May 2025.
+# }
+#
 # @author "MR, HB"
 #*/###########################################################################
 setConstructorS3("MatSmoothing", function(..., design=NULL, probeWindow=300, nProbes=10, meanTrim=0.1) {
@@ -193,8 +198,9 @@ setMethodS3("getExpectedOutputFullnames", "MatSmoothing", function(this, ..., ve
 # }
 #*/###########################################################################
 setMethodS3("process", "MatSmoothing", function(this, ..., units=NULL, force=FALSE, verbose=FALSE) {
-  requireNamespace("gsmoothr") || throw("Package not loaded: gsmoothr")
-  ns <- getNamespace("gsmoothr")
+  pkg <- "gsmoothr"
+  requireNamespace(pkg) || throw(sprintf("Package not loaded: %s", pkg))
+  ns <- getNamespace(pkg)
   tmeanC <- get("tmeanC", mode = "function", envir = ns, inherits = TRUE)
 
 

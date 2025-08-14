@@ -1,5 +1,5 @@
 Package: aroma.affymetrix
-Version: 3.2.2-9002
+Version: 3.2.2-9003
 Depends:
   R (>= 3.2.0),
   R.utils (>= 2.9.0),
@@ -19,7 +19,6 @@ Imports:
   future
 Suggests:
   DBI (>= 1.0.0),
-  gsmoothr (>= 0.1.7),
   RColorBrewer (>= 1.1-2),
   Biobase (>= 2.28.0),
   BiocGenerics (>= 0.14.0),

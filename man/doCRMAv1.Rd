@@ -41,7 +41,7 @@
   to process.  If \code{\link[base]{NULL}}, all arrays are considered.}
  \item{drop}{If \code{\link[base:logical]{TRUE}}, the summaries are returned, otherwise
   a named \code{\link[base]{list}} of all intermediate and final results.}
- \item{verbose}{See \code{\link{Verbose}}.}
+ \item{verbose}{See \code{\link[R.utils]{Verbose}}.}
  \item{...}{Additional arguments used to set up \code{\link{AffymetrixCelSet}} (when argument \code{dataSet} is specified).}
 }
 

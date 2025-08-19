@@ -102,7 +102,7 @@ setMethodS3("as.AffymetrixFileSet", "default", function(object, ...) {
 # \arguments{
 #  \item{...}{Additional arguments passed to the constructor of the static
 #     (calling) class.}
-#  \item{fileClass}{The name of the @see "GenericDataFile" class.}
+#  \item{fileClass}{The name of the @see "R.filesets::GenericDataFile" class.}
 # }
 #
 # \value{

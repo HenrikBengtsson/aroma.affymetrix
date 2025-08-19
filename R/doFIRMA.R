@@ -21,7 +21,7 @@
 #  \item{flavor}{A @character string specifying the flavor of FIRMA to use.}
 #  \item{drop}{If @TRUE, the FIRMA scores are returned, otherwise
 #   a named @list of all intermediate and final results.}
-#  \item{verbose}{See @see "Verbose".}
+#  \item{verbose}{See @see "R.utils::Verbose".}
 # }
 #
 # \value{

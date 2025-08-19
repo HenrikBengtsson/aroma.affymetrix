@@ -76,7 +76,7 @@ GcRmaBackgroundCorrection(..., indicesNegativeControl=NULL, affinities=NULL,
 \section{Fields and Methods}{
  \bold{Methods:}\cr
 \tabular{rll}{
- \tab \code{process} \tab  -\cr
+ \tab \code{\link[aroma.affymetrix:process.GcRmaBackgroundCorrection]{process}} \tab Performs background correction.\cr
 }
 
 

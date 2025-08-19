@@ -24,6 +24,11 @@
 #  @allmethods "public"
 # }
 #
+# \details{
+#  This class requires the \bold{gsmoothr} package, which was archived on
+#  CRAN in May 2025.
+# }
+#
 # @author "MR, HB"
 #*/###########################################################################
 setConstructorS3("MatSmoothing", function(..., design=NULL, probeWindow=300, nProbes=10, meanTrim=0.1) {
@@ -193,22 +198,22 @@ setMethodS3("getExpectedOutputFullnames", "MatSmoothing", function(this, ..., ve
 # }
 #*/###########################################################################
 setMethodS3("process", "MatSmoothing", function(this, ..., units=NULL, force=FALSE, verbose=FALSE) {
-  requireNamespace("gsmoothr") || throw("Package not loaded: gsmoothr")
-  tmeanC <- gsmoothr::tmeanC
+  pkg <- "gsmoothr"
+  requireNamespace(pkg) || throw(sprintf("Package not loaded: %s", pkg))
+  ns <- getNamespace(pkg)
+  tmeanC <- get("tmeanC", mode = "function", envir = ns, inherits = TRUE)
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local functions
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # internal function to do trimmed mean smoothing
-  # Lookup gsmoothr::tmeanC() once; '::' is expensive
-  gsmoothr_tmeanC <- gsmoothr::tmeanC
   calcSmoothed <- function(posVector, dataMatrix, probeWindow, nProbes, meanTrim) {
     nc <- ncol(dataMatrix)
     posM <- matrix(posVector, nrow=length(posVector), ncol=nc)
     o <- order(posM);  # calculate ordering
 
-    smoothedScore <- gsmoothr_tmeanC(posM[o], dataMatrix[o],
+    smoothedScore <- tmeanC(posM[o], dataMatrix[o],
            probeWindow=probeWindow, nProbes=nProbes*nc, trim=meanTrim)
     subsetInd <- seq(from=1, to=length(o), by=nc)
     return(smoothedScore[subsetInd])

@@ -28,7 +28,7 @@
 # @author "HB"
 #
 # \seealso{
-#   @see "getAverageFile".
+#   @see "aroma.core::getAverageFile".
 #   @seeclass
 # }
 #*/###########################################################################

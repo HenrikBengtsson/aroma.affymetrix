@@ -41,7 +41,7 @@
 \author{Henrik Bengtsson}
 
 \seealso{
-  \code{\link{getAverageFile}}().
+  \code{\link[aroma.core]{getAverageFile}}.
   For more information see \code{\link{ChipEffectSet}}.
 }
 \keyword{internal}

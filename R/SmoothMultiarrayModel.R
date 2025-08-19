@@ -13,7 +13,7 @@
 # @synopsis
 #
 # \arguments{
-#   \item{...}{Arguments passed to the constructor of @see "ChromosomalModel".}
+#   \item{...}{Arguments passed to the constructor of @see "aroma.core::ChromosomalModel".}
 #   \item{typoOfWeights}{A @character string.}
 #   \item{bandwidth}{A single @numeric specifying the smoothing bandwidth
 #     in units of nucleotides.}
@@ -27,7 +27,7 @@
 # @author "HB"
 #
 # \seealso{
-#  @see "CopyNumberSegmentationModel".
+#  @see "aroma.core::CopyNumberSegmentationModel".
 # }
 #*/###########################################################################
 setConstructorS3("SmoothMultiarrayModel", function(..., typoOfWeights=c("none", "1/s2"), bandwidth=10e3, tags="*") {

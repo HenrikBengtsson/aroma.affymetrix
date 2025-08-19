@@ -33,7 +33,7 @@
  \item{flavor}{A \code{\link[base]{character}} string specifying the estimators used in
   the RMA summarization step.}
  \item{...}{Additional arguments passed to \code{\link{doRMA}}() used internally.}
- \item{verbose}{See \code{\link{Verbose}}.}
+ \item{verbose}{See \code{\link[R.utils]{Verbose}}.}
 }
 
 \value{

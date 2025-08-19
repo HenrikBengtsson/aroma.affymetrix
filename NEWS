@@ -1,6 +1,11 @@
 Package: aroma.affymetrix
 =========================
 
+Version: (development version)
+
+ * ...
+
+
 Version: 3.2.3 [2025-08-18]
 
  * Add missing package anchors for a few Rd links.

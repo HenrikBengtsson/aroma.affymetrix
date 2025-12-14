@@ -296,7 +296,7 @@ sessionInfo()
 
 --------------------------------------------------------------------
 Last generated: <%=format(Sys.time(), "%Y-%m-%d %H:%M:%S UTC%z")%>.
-Powered by [RSP](http://cran.r-project.org/package=R.rsp).
+Powered by [RSP](https://cran.r-project.org/package=R.rsp).
 
 
 [MAT]: http://liulab.dfci.harvard.edu/MAT/ "Model-based Analysis of Tiling-array"

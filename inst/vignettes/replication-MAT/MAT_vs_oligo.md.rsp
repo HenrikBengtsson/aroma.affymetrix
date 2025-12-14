@@ -299,4 +299,4 @@ Last generated: <%=format(Sys.time(), "%Y-%m-%d %H:%M:%S UTC%z")%>.
 Powered by [RSP](https://cran.r-project.org/package=R.rsp).
 
 
-[MAT]: http://liulab.dfci.harvard.edu/MAT/ "Model-based Analysis of Tiling-array"
+[MAT]: https://web.archive.org/web/20191123054056/http://liulab.dfci.harvard.edu/MAT/ "Model-based Analysis of Tiling-array"
